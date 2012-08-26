@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Interfaces">
+      <UniqueIdentifier>{e197bffa-6a3f-4a5e-8f44-75d2ab9da7fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\LiquidSystem">
+      <UniqueIdentifier>{9b266cd9-6a65-4111-a69f-da62a8a03b4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Net">
+      <UniqueIdentifier>{34ce60c3-910e-407b-a7c7-91b54a25110b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Effect">
+      <UniqueIdentifier>{e6fa178c-d8e2-479f-86d1-86a64daee645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Interfaces">
+      <UniqueIdentifier>{48ea1af9-d7ff-49e2-b5be-6c032b27528b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LiquidSystem">
+      <UniqueIdentifier>{65a3224c-db1c-4054-9843-ba1c5da13f9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Net">
+      <UniqueIdentifier>{e12cd923-0118-4250-89cb-19407020e374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EffectSystem">
+      <UniqueIdentifier>{ab2416a4-6935-4503-b3b1-ba1c49dd0488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sprites">
+      <UniqueIdentifier>{f02c42b6-6b12-4604-8036-f047b596bde2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Item">
+      <UniqueIdentifier>{bb6d458e-2e25-4303-8c7c-5e5d2a0390c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Item">
+      <UniqueIdentifier>{e85cfa21-8911-4c83-837c-8b8dbf8dec2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sprites">
+      <UniqueIdentifier>{8a46d9bf-4181-4527-86c0-0a8cf377365f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Main">
+      <UniqueIdentifier>{d182c29a-8fac-475a-9d97-8491c3f300cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Main">
+      <UniqueIdentifier>{20df47e1-c6ce-4dc6-bdbb-e309049af97c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sources\ApproxGLImage.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ASpritesClass.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\CAliveMob.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\constheader.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\CSmallItem.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\EffectSystem.h">
+      <Filter>Header Files\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\FastIsType.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Firebullet.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\FireEffect.h">
+      <Filter>Header Files\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\GLSprite.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\hashes.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Idptr.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\DrawInt.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ItemFabric.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Kivsjak.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Liquid.h">
+      <Filter>Header Files\LiquidSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\LiquidHolder.h">
+      <Filter>Header Files\LiquidSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\LiquidSystem.h">
+      <Filter>Header Files\LiquidSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Macroses.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MacrosesSavevars.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MagicStrings.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MainInt.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MapClass.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Message.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MessageReceiver.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Mob.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MobInt.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MonstrClass.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MoveEffect.h">
+      <Filter>Header Files\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\NetClass.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\NetClientImpl.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\NetInterface.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\NetServerImpl.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\OnMapInt.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Ork.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Screen.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ServerConnection.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\sprite.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\sync_random.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SyncQueue.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Text.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Teleportator.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Testmob.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Turf.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TypelistOfItems.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Sources\ApproxGLImage.cpp">
+      <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ASpritesClass.cpp">
+      <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\CAliveMob.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\constcpp.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\CSmallItem.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Firebullet.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\DrawInt.cpp">
+      <Filter>Source Files\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\FireEffect.cpp">
+      <Filter>Source Files\EffectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\GLSprite.cpp">
+      <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Idptr.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ItemFabric.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Kivsjak.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Liquid.cpp">
+      <Filter>Source Files\LiquidSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\LiquidHolder.cpp">
+      <Filter>Source Files\LiquidSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\main.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MainInt.cpp">
+      <Filter>Source Files\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MapClass.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Message.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Mob.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MobInt.cpp">
+      <Filter>Source Files\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MonstrClass.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MoveEffect.cpp">
+      <Filter>Source Files\EffectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\NetClass.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\NetClientImpl.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\NetServerImpl.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\OnMapInt.cpp">
+      <Filter>Source Files\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Ork.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Screen.cpp">
+      <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ServerConnection.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\sprite.cpp">
+      <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\sync_random.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Teleportator.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Testmob.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Text.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Turf.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\TypelistOfItems.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
