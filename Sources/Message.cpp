@@ -62,18 +62,25 @@ bool RecvSocketMessage(Poco::Net::StreamSocket& socket, Message* message)
     std::stringstream convertor;
     std::string number;
 
+   // SYSTEM_STREAM << "Begin receive message length" << std::endl;
+
     char c = '`'; // Just symbol
     try
     {
-    while (c != ' ')
-        while (socket.receiveBytes(&c, 1))
-            number.push_back(c);
+        while (c != ' ')
+        {
+            while (socket.receiveBytes(&c, 1) == 0) {};
+
+            number.append(&c, 1);
+        }
     }
     catch (Poco::Exception& e)
     {
         SYSTEM_STREAM << e.displayText() << std::endl;
         return false;
     }
+
+   // SYSTEM_STREAM << "Length of message received: " << number << std::endl;
 
     size_t length;
 
@@ -90,6 +97,8 @@ bool RecvSocketMessage(Poco::Net::StreamSocket& socket, Message* message)
     convertor.str("");
 
     char* raw_message = new char[length];
+
+   // SYSTEM_STREAM << "Begin main message receive" << std::endl;
 
     size_t pos = 0;
     try
@@ -111,7 +120,7 @@ bool RecvSocketMessage(Poco::Net::StreamSocket& socket, Message* message)
     size_t itr = 0;
     int counter = 0;
     while (itr != string_message.length() && counter != 4)
-        if (string_message[itr] == ' ')
+        if (string_message[itr++] == ' ')
             ++counter;
     if (itr == string_message.length())
     {
@@ -134,5 +143,13 @@ bool RecvSocketMessage(Poco::Net::StreamSocket& socket, Message* message)
         return false;
     }
 
+    /*SYSTEM_STREAM 
+        << "Received message : \n"
+        << "number: " << message->message_number
+        << "from: "   << message->from
+        << "to: "     << message->to
+        << "type: "   << message->type
+        << "text: "   << message->text;
+        */
     return true;
 }

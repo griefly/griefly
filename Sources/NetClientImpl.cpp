@@ -1,5 +1,6 @@
 #include "NetClientImpl.h"
 #include "MagicStrings.h"
+#include "Mob.h"
 
 #include <assert.h>
 
@@ -37,7 +38,7 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
         main_socket_ = new Poco::Net::StreamSocket(connect_address);
         task_ = new NetClient::RecvFromServer(this);
 
-        Message message(NET_LOGIN_DATA);
+       /* Message message(NET_LOGIN_DATA);
         message.from = data.who;
         message.to = data.word_for_who;
 
@@ -74,7 +75,7 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
 
         // TODO: do mutex lock
         IMainItem::fabric->loadMap(convertor);
-        convertor.str("");
+        convertor.str("");*/
 
         recv_client_ = new Poco::Thread;
         recv_client_->start(*task_);
@@ -166,7 +167,8 @@ void NetClient::RecvFromServer::run()
     {
         Message message;
         if(RecvSocketMessage(*client_->main_socket_, &message) == false)
-            return; // Fail
+            break; // Fail
+        SYSTEM_STREAM << "Some message received: " << message.text << std::endl;
 
         if (message.text == NET_NEXTTICK)
         {

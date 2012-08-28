@@ -1,6 +1,5 @@
 #include "MapClass.h"
 #include "MainInt.h"
-#include "NetClass.h"
 
 #include <math.h>
 #include <sstream>

@@ -3,7 +3,7 @@
 
 #include "ItemFabric.h"
 #include "MapClass.h"
-#include "NetClass.h"
+//#include "NetClass.h"
 
 ItemFabric::ItemFabric()
 {
@@ -113,39 +113,6 @@ void ItemFabric::loadMap(std::stringstream& savefile)
         i->loadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
-}
-
-void ItemFabric::loadMapFromNet()
-{
-    SYSTEM_STREAM << "\nBegin load map from net\n";
-    clearMap();
-    std::stringstream savefile;
-    char c;
-    while(NetMaster->sockstr->receiveBytes(&c, 1) == 0);
-    while(c != '~')
-    {
-        savefile << c;
-        while(NetMaster->sockstr->receiveBytes(&c, 1) == 0);
-    }
-    
-
-
-    savefile >> MAIN_TICK;
-    savefile >> id_;
-    size_t loc;
-    savefile >> loc;
-    SYSTEM_STREAM << "\n" << MAIN_TICK;
-    SYSTEM_STREAM << "\n" << id_;
-    SYSTEM_STREAM << "\n" << loc;
-
-    idTable_.resize(id_ + 1);
-    IMainItem::map->mobi->thisMob = loc;
-    loadMap(savefile);
-    id_ptr_on<IMob> i;
-    i = loc;
-    //std::stringstream ssloc_real;
-    IMainItem::map->mobi->thisMob = loc;
-    IMainItem::map->mobi->changeMob(IMainItem::map->mobi->thisMob);
 }
 
 IMainItem* ItemFabric::newVoidItem(unsigned int type)

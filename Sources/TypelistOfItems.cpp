@@ -161,4 +161,5 @@ int Hash2Num(unsigned int hash)
         if(Num2HashData[i] == hash)
             return i;
     assert(false);
+    return -1;
 };

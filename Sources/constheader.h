@@ -10,9 +10,6 @@
 #include <sstream>
 #include <algorithm>
 
-const int DEFAULT_PORT = 7456;
-const char DEFAULT_ADRS[] = "127.0.0.1";
-
 extern int DELAY_MAIN;//How often do process()
 
 extern int FPS_MAX;//max fps

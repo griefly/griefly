@@ -15,6 +15,7 @@
 #include "Screen.h"
 #include "Text.h"
 
+class NetClient;
 class MapMaster;
 
 struct point;
@@ -43,7 +44,7 @@ public:
     int threadPathfind(void* data);
 
     void changeMob(id_ptr_on<IMob>& i);
-    Manager(Mode mode, std::string adrs = DEFAULT_ADRS);
+    Manager(Mode mode, std::string adrs);
 
     bool isMove;
     int numOfDeer;
@@ -68,6 +69,9 @@ public:
     //
     id_ptr_on<IMob> thisMob;
     MapMaster* map;
+
+    NetClient net_client;
+
     Poco::Mutex map_access;
     Mode GetMode(){return mode_;}
 

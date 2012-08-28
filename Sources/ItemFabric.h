@@ -36,7 +36,6 @@ public:
     void saveMap(std::stringstream& str);//to strstream
     void loadMap(const char* path);
     void loadMap(std::stringstream& str);
-    void loadMapFromNet();
     void clearMap();
 
     template<typename T>

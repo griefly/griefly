@@ -2,8 +2,6 @@
 
 #include "MapClass.h"
 
-#include "NetClass.h"
-
 void Teleportator::processGUImsg(std::string& msg)
 {   
     SYSTEM_STREAM << "void Teleportator::processGUImsg(std::string& msg)\n";

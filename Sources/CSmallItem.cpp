@@ -1,11 +1,8 @@
+#include "NetClientImpl.h"
 #include "CSmallItem.h"
 #include "MapClass.h"
 #include "sync_random.h"
 
-//itemAdder<CMeat> adder1;
-//itemAdder<ForceSpear> adder3;
-//itemAdder<Spear> adder4;
-//itemAdder<CWeed> adder2;
 CMeat::CMeat()
 {
     SetSprite("icons/meat.png");
