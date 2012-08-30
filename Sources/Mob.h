@@ -3,7 +3,6 @@
 
 #include <SDL.h>
 #include <list>
-#include <Poco/Mutex.h>
 
 #include "OnMapInt.h"
 #include "Testmob.h"
@@ -23,7 +22,6 @@ struct point;
 class Manager
 {
 public:
-    CSprite* image;
     void move(int direct);
     void touchEach(Dir direct);//Say items that they must move
     void moveEach(Dir direct);
@@ -64,15 +62,13 @@ public:
     SDL_Surface* sFPS;
     ///////////
     int tick_recv;
-    Poco::Mutex tick_recvm;
     void process_in_msg();
     //
     id_ptr_on<IMob> thisMob;
     MapMaster* map;
 
-    NetClient net_client;
+    INetClient* net_client;
 
-    Poco::Mutex map_access;
     Mode GetMode(){return mode_;}
 
     TextPainter texts;
@@ -81,7 +77,6 @@ public:
 private:
     Mode mode_;
     std::string adrs_;
-//    std::list<char*>* msg;
 };
 
 #endif

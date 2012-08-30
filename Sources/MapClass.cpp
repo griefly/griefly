@@ -88,9 +88,6 @@ void MapMaster::centerFromTo(int beginPosx, int beginPosy, int nowPosx, int nowP
 MapMaster::MapMaster()
 {
     ms_last_draw = 0;
-    aSpr.font = TTF_OpenFont("font.ttf", 10);
-    if(!aSpr.font)
-        SYSTEM_STREAM << "Unable to load font: font.ttf, "<< TTF_GetError() << std::endl;
     pathf.map = this;
     losf.map = this;  
 };

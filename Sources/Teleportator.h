@@ -3,7 +3,6 @@
 #include <queue>
 
 #include "MessageReceiver.h"
-#include "SyncQueue.h"
 
 class Teleportator : public IMessageReceiver
 {
@@ -16,7 +15,7 @@ public:
 protected:
     void CreateItem(size_t hash);
 private:
-    SynchronizedQueue<size_t> wait_queue_;
+    std::queue<size_t> wait_queue_;
 };
 
 ADD_TO_TYPELIST(Teleportator);

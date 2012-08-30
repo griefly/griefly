@@ -20,7 +20,7 @@ void ItemFabric::Sync()
 void ItemFabric::foreachProcess()
 {
     size_t table_size = idTable_.size();
-    for (int i = 1; i < table_size; ++i)
+    for (size_t i = 1; i < table_size; ++i)
         if (idTable_[i] != nullptr)
             idTable_[i]->process();
 }
@@ -130,7 +130,7 @@ IMainItem* ItemFabric::newVoidItemSaved(unsigned int type)
 void ItemFabric::clearMap()
 {
     size_t table_size = idTable_.size();
-    for (int i = 1; i < table_size; ++i)
+    for (size_t i = 1; i < table_size; ++i)
         if (idTable_[i] != nullptr)
             idTable_[i]->delThis();
 };
@@ -139,7 +139,7 @@ unsigned int ItemFabric::hash_all()
 {
     unsigned int h = 0;
     size_t table_size = idTable_.size();
-    for (int i = 1; i < table_size; ++i)
+    for (size_t i = 1; i < table_size; ++i)
         if (idTable_[i] != nullptr)
             h += idTable_[i]->hashSelf();
     return h;

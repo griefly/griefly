@@ -4,7 +4,6 @@
 #include "Turf.h"
 
 #include "NetClientImpl.h"
-#include "SyncQueue.h"
 #include "EffectSystem.h"
 #include "MoveEffect.h"
 #include "sync_random.h"
@@ -125,6 +124,7 @@ Manager::Manager(Mode mode, std::string adrs)
     done = 0;
     pause = 0;
     last_fps = FPS_MAX;
+    net_client = NetClient::Init(this);
 };
  
 void Manager::process()
@@ -132,8 +132,7 @@ void Manager::process()
 
     map->numOfPathfind = 0;
     SDL_Color color = {255, 255, 255, 0};
-    if (!NODRAW)
-        sFPS = TTF_RenderText_Blended( map->aSpr.font, " ", color);
+
     int delay = 0;
     int lastTimeFps = SDL_GetTicks();
     int lastTimeC = SDL_GetTicks();
@@ -141,72 +140,73 @@ void Manager::process()
     bool process_in = false;
     while(done == 0)
     { 
-      map_access.lock();
         *IMainItem::mob = **thisMob;
-      if (!NODRAW)
+        if (!NODRAW)
         processInput();
-      IMainItem::fabric->Sync();
-      if(net_client.Ready())
-      {
-          process_in = true;
-          process_in_msg();
-          MAIN_TICK++;
-      }
-      if (thisMob.ret_id())
+        IMainItem::fabric->Sync();
+        if(net_client->Ready())
+        {
+            process_in = true;
+            process_in_msg();
+            MAIN_TICK++;
+        }
+        if (thisMob.ret_id())
         *IMainItem::mob = **thisMob;
 
-    if(process_in)
-    {
-        numOfDeer = 0;
-        IMainItem::fabric->foreachProcess();
-    }
-      *IMainItem::mob = **thisMob;
+        if(process_in)
+        {
+            numOfDeer = 0;
+            IMainItem::fabric->foreachProcess();
+        }
+        *IMainItem::mob = **thisMob;
          
-      if (!NODRAW)
-      {
-          map->Draw();
-          FabricProcesser::Get()->process();
-      }
+        if (!NODRAW)
+        {
+            map->Draw();
+            FabricProcesser::Get()->process();
+        }
         *IMainItem::mob = **thisMob;
-      char loc[10];
       
-      //checkMoveMob();
-      if (!NODRAW)
-        thisMob->processGUI();
+        //checkMoveMob();
+        if (!NODRAW)
+            thisMob->processGUI();
 
-      texts.Process();
+        texts.Process();
 
-      if((SDL_GetTicks() - lastTimeFps) >= 1000)
-      {
-          visiblePoint->clear();
+        if((SDL_GetTicks() - lastTimeFps) >= 1000)
+        {
+            visiblePoint->clear();
             visiblePoint = map->losf.calculateVisisble(visiblePoint, thisMob->posx, thisMob->posy, thisMob->level); 
-          _itoa_s(fps, loc, 10);
-          //SYSTEM_STREAM << loc << std::endl;
-          if (!NODRAW)
-          {
-              //SDL_FreeSurface(sFPS);
-              //sFPS = TTF_RenderText_Blended(map->aSpr.font, loc, color);
-          }
-          if(!(fps > FPS_MAX - 10 && fps < FPS_MAX - 10))
+            //SYSTEM_STREAM << loc << std::endl;
+            if (!NODRAW)
+            {
+                //SDL_FreeSurface(sFPS);
+                //sFPS = TTF_RenderText_Blended(map->aSpr.font, loc, color);
+            }
+            if(!(fps > FPS_MAX - 10 && fps < FPS_MAX - 10))
             delay = (int)(1000.0 / FPS_MAX + delay - 1000.0 / fps);
-          lastTimeFps = SDL_GetTicks();
-          last_fps = fps;
-          fps = 0;
+            lastTimeFps = SDL_GetTicks();
+            last_fps = fps;
+            fps = 0;
           
 
-          map->numOfPathfind = 0;
-      }
+            map->numOfPathfind = 0;
+        }
+        ++fps;
+        if(delay > 0) 
+            SDL_Delay(delay);
+        else 
+            delay = 0;
 
-      map_access.unlock();
-      ++fps;
-      if(delay > 0) 
-          SDL_Delay(delay);
-      else 
-          delay = 0;
-
-      gl_screen->Swap();
-      //++MAIN_TICK;
-      process_in = false;
+        gl_screen->Swap();
+        //++MAIN_TICK;
+        process_in = false;
+        if (net_client->Process() == false)
+        {
+            SYSTEM_STREAM << "Fail receive messages" << std::endl;
+            SDL_Delay(10000);
+            break;
+        }
     }
     TTF_Quit();
     SDL_Quit();
@@ -223,7 +223,7 @@ void Manager::checkMoveMob()
           { \
               Message msg; \
               msg.text = #key; \
-              net_client.Send(msg); \
+              net_client->Send(msg); \
               lastShoot = (int)MAIN_TICK; \
           } \
       }
@@ -309,13 +309,18 @@ void Manager::initWorld()
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0)
     { 
         SYSTEM_STREAM << "Unable to init SDL: " << SDL_GetError() << std::endl; 
-        exit(1); 
+        SDL_Delay(10000);
+        return;
     }
     atexit(SDL_Quit);
     SYSTEM_STREAM << "Begin TTF init\n";
     SYSTEM_STREAM << TTF_Init() << " - return\n";
     SYSTEM_STREAM << " End TTF init\n";
     atexit(TTF_Quit);
+    SYSTEM_STREAM << "Begin NET init\n";
+    SYSTEM_STREAM << SDLNet_Init() << " - return\n";
+    SYSTEM_STREAM << " End NET init\n";
+    atexit(SDLNet_Quit);
     IMainItem::fabric = new ItemFabric;
     map = new MapMaster;
     SDL_WM_SetCaption("GOS", "GOS");
@@ -347,7 +352,9 @@ void Manager::initWorld()
     LiquidHolder::LoadReaction();
 
     LoginData data;
-    net_client.Connect(adrs_, DEFAULT_PORT, data);
+    data.who = newmob.ret_id();
+    data.word_for_who = 1;
+    net_client->Connect(adrs_, DEFAULT_PORT, data);
 
     texts["FPS"].SetUpdater
     ([this](std::string* str)
@@ -376,7 +383,7 @@ void Manager::process_in_msg()
     Message msg;
     while(true)
     {
-        net_client.Recv(&msg);
+        net_client->Recv(&msg);
         if(msg.text == NET_NEXTTICK)
             return;
         

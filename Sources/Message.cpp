@@ -3,7 +3,6 @@
 #include "constheader.h"
 
 #include <sstream>
-#include <Poco\Exception.h>
 
 const char* const ORDINARY_TYPE = "ordinary";
 
@@ -21,7 +20,16 @@ Message::Message(const std::string& new_text)
     to(-1),
     type(ORDINARY_TYPE) {}
 
-bool SendSocketMessage(Poco::Net::StreamSocket& socket, const Message& message)
+bool SocketReady(TCPsocket& socket)
+{
+    static SDLNet_SocketSet set = SDLNet_AllocSocketSet(1); 
+    SDLNet_TCP_AddSocket(set, socket);
+    bool retval = (SDLNet_CheckSockets(set, 0) != 0);
+    SDLNet_TCP_DelSocket(set, socket);
+    return retval;
+}
+
+bool SendSocketMessage(TCPsocket& socket, const Message& message)
 {
     std::stringstream convertor;
     convertor << message.message_number << " " 
@@ -41,21 +49,15 @@ bool SendSocketMessage(Poco::Net::StreamSocket& socket, const Message& message)
     size_t pos = 0;
     const char* begin_pos = sendval.c_str();
     size_t length = sendval.length();
-    try
+    if (SDLNet_TCP_Send(socket, begin_pos, length) != length)
     {
-        while (pos != length)
-            pos += socket.sendBytes(begin_pos + pos, length - pos);
-        return true;
-    }
-    catch (Poco::Exception& e)
-    {
-        SYSTEM_STREAM << "Error send bytes: " << std::endl;
-        SYSTEM_STREAM << e.displayText() << std::endl;
+        SYSTEM_STREAM << SDLNet_GetError() << std::endl;
         return false;
     }
+    return true;
 }
 
-bool RecvSocketMessage(Poco::Net::StreamSocket& socket, Message* message)
+bool RecvSocketMessage(TCPsocket& socket, Message* message)
 {
     message->text.clear();
 
@@ -64,23 +66,17 @@ bool RecvSocketMessage(Poco::Net::StreamSocket& socket, Message* message)
 
    // SYSTEM_STREAM << "Begin receive message length" << std::endl;
 
-    char c = '`'; // Just symbol
-    try
+    char local_char = '`'; // Just symbol
+    while (local_char != ' ')
     {
-        while (c != ' ')
+        if (SDLNet_TCP_Recv(socket, &local_char, 1) <= 0)
         {
-            while (socket.receiveBytes(&c, 1) == 0) {};
-
-            number.append(&c, 1);
-        }
+            SYSTEM_STREAM << "Fail read message length" << std::endl;
+            SYSTEM_STREAM << SDLNet_GetError() << std::endl;
+            return false;
+        };
+        number.append(&local_char, 1);
     }
-    catch (Poco::Exception& e)
-    {
-        SYSTEM_STREAM << e.displayText() << std::endl;
-        return false;
-    }
-
-   // SYSTEM_STREAM << "Length of message received: " << number << std::endl;
 
     size_t length;
 
@@ -98,18 +94,10 @@ bool RecvSocketMessage(Poco::Net::StreamSocket& socket, Message* message)
 
     char* raw_message = new char[length];
 
-   // SYSTEM_STREAM << "Begin main message receive" << std::endl;
-
-    size_t pos = 0;
-    try
-    {
-        while (pos != length)
-            pos += socket.receiveBytes(raw_message + pos, length - pos);
-    }
-    catch (Poco::Exception& e)
+    if (SDLNet_TCP_Recv(socket, raw_message, length) != length)
     {
         SYSTEM_STREAM << "Error receive byted: " << std::endl; 
-        SYSTEM_STREAM << e.displayText() << std::endl;
+        SYSTEM_STREAM << SDLNet_GetError() << std::endl;
         delete[] raw_message;
         return false;
     }
@@ -124,7 +112,7 @@ bool RecvSocketMessage(Poco::Net::StreamSocket& socket, Message* message)
             ++counter;
     if (itr == string_message.length())
     {
-        SYSTEM_STREAM << "Wrong message receive" << std::endl;
+        SYSTEM_STREAM << "Wrong message receive: " << string_message << std::endl;
         return false;
     }
 

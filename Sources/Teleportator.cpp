@@ -20,10 +20,12 @@ void Teleportator::CreateItem(size_t hash)
     SYSTEM_STREAM << "NEW MOB CREATE HIS ID " << newmob.ret_id() << "\n";
     newmob->onMobControl = true;
     if (IMainItem::mobMaster->GetMode() == SERVER)
-        wait_queue_.Put(newmob.ret_id());
+        wait_queue_.push(newmob.ret_id());
 }
 
 size_t Teleportator::WaitCreateItem()
 {
-    return wait_queue_.Get();
+    auto retval = wait_queue_.front();
+    wait_queue_.pop();
+    return retval;
 }

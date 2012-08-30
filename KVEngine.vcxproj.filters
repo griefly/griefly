@@ -165,9 +165,6 @@
     <ClInclude Include="Sources\sync_random.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\SyncQueue.h">
-      <Filter>Header Files\Net</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Text.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
