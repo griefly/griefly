@@ -65,22 +65,28 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
 
     data_.who = message.from;
     data_.word_for_who = message.to;
-    data_.jid = message.text;
+    data_.jid = data.jid;
 
-    /*// Map
+    if (message.text == NET_NOMAP)
+    {
+        connected_ = true;
+        return true;
+    }
+
     if (RecvSocketMessage(*main_socket_, &message) == false)
     {
         SYSTEM_STREAM << "Fail receive map information" << std::endl;
         delete main_socket_;
-        delete task_;
         return !(fail_ = true);
     }
 
     std::stringstream convertor;
     convertor << message.text;
 
+    // TODO: change owner
+
     IMainItem::fabric->loadMap(convertor);
-    convertor.str("");*/
+    convertor.str("");
 
     connected_ = true;
     return true;

@@ -3,7 +3,7 @@
 
 #include "ItemFabric.h"
 #include "MapClass.h"
-//#include "NetClass.h"
+#include "sync_random.h"
 
 ItemFabric::ItemFabric()
 {
@@ -25,6 +25,34 @@ void ItemFabric::foreachProcess()
             idTable_[i]->process();
 }
 
+void ItemFabric::saveMapHeader(std::stringstream& savefile)
+{
+    savefile << MAIN_TICK << std::endl;
+    savefile << id_ << std::endl;
+    savefile << IMainItem::map->mobi->thisMob.ret_id() << std::endl;
+
+    // Random save
+    savefile << random_helpers::get_seed() << std::endl;
+    savefile << random_helpers::get_calls_counter() << std::endl;
+}
+
+void ItemFabric::loadMapHeader(std::stringstream& savefile)
+{
+    savefile >> MAIN_TICK;
+    savefile >> id_;
+    size_t loc;
+    savefile >> loc;
+    IMainItem::map->mobi->thisMob = loc;
+    
+    unsigned int new_seed;
+    unsigned int new_calls_counter;
+    savefile >> new_seed;
+    savefile >> new_calls_counter;
+    random_helpers::set_rand(new_seed, new_calls_counter);
+
+    idTable_.resize(id_ + 1);
+}
+
 void ItemFabric::saveMap(const char* path)
 {
     std::fstream rfile;
@@ -35,15 +63,13 @@ void ItemFabric::saveMap(const char* path)
         return;
     }
     std::stringstream savefile;
-    savefile << MAIN_TICK << std::endl;
-    savefile << id_ << std::endl;
-    savefile << IMainItem::map->mobi->thisMob.ret_id() << std::endl;
     saveMap(savefile);
     rfile << savefile.str();
     rfile.close();
 }
 void ItemFabric::saveMap(std::stringstream& savefile)
 {
+    saveMapHeader(savefile);
     auto it = ++idTable_.begin();
     while(it != idTable_.end())
         if(*it) 
@@ -73,14 +99,6 @@ void ItemFabric::loadMap(const char* path)
     savefile << buff;
     delete[] buff;
     //
-    savefile >> MAIN_TICK;
-    savefile >> id_;
-    size_t loc;
-    savefile >> loc;
-    IMainItem::map->mobi->thisMob = loc;
-    
-    idTable_.resize(id_ + 1);
-
     loadMap(savefile);
     IMainItem::map->mobi->changeMob(IMainItem::map->mobi->thisMob);
     //savefile.close();
@@ -88,6 +106,7 @@ void ItemFabric::loadMap(const char* path)
 
 void ItemFabric::loadMap(std::stringstream& savefile)
 {
+    loadMapHeader(savefile);
     int j = 0;
     while(!savefile.eof())
     {

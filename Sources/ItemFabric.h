@@ -32,10 +32,14 @@ public:
 
     unsigned int hash_all();
 
+    void saveMapHeader(std::stringstream& str);
     void saveMap(const char* path);
-    void saveMap(std::stringstream& str);//to strstream
+    void saveMap(std::stringstream& str);
+
+    void loadMapHeader(std::stringstream& savefile);
     void loadMap(const char* path);
     void loadMap(std::stringstream& str);
+    
     void clearMap();
 
     template<typename T>

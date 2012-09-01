@@ -389,7 +389,7 @@ void Manager::process_in_msg()
         
         if(msg.text == "rand")
         {
-            set_rand(msg.from);
+            SYSTEM_STREAM << "ALERT! RAND MUST NOT RECEIVED!" << std::endl;
             continue;
         }
         id_ptr_on<IMessageReceiver> i;
