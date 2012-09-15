@@ -144,16 +144,10 @@
     <ClInclude Include="Sources\MoveEffect.h">
       <Filter>Header Files\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\NetClass.h">
-      <Filter>Header Files\Net</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\NetClientImpl.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
     <ClInclude Include="Sources\NetInterface.h">
-      <Filter>Header Files\Net</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\NetServerImpl.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
     <ClInclude Include="Sources\OnMapInt.h">
@@ -165,17 +159,11 @@
     <ClInclude Include="Sources\Screen.h">
       <Filter>Header Files\Sprites</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\ServerConnection.h">
-      <Filter>Header Files\Net</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\sprite.h">
       <Filter>Header Files\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="Sources\sync_random.h">
       <Filter>Header Files\Main</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\SyncQueue.h">
-      <Filter>Header Files\Net</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Text.h">
       <Filter>Header Files\Main</Filter>
@@ -260,13 +248,7 @@
     <ClCompile Include="Sources\MoveEffect.cpp">
       <Filter>Source Files\EffectSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\NetClass.cpp">
-      <Filter>Source Files\Net</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\NetClientImpl.cpp">
-      <Filter>Source Files\Net</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\NetServerImpl.cpp">
       <Filter>Source Files\Net</Filter>
     </ClCompile>
     <ClCompile Include="Sources\OnMapInt.cpp">
@@ -277,9 +259,6 @@
     </ClCompile>
     <ClCompile Include="Sources\Screen.cpp">
       <Filter>Source Files\Sprites</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\ServerConnection.cpp">
-      <Filter>Source Files\Net</Filter>
     </ClCompile>
     <ClCompile Include="Sources\sprite.cpp">
       <Filter>Source Files\Sprites</Filter>

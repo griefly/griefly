@@ -3,7 +3,6 @@
 #include <queue>
 
 #include "MessageReceiver.h"
-#include "SyncQueue.h"
 
 class Teleportator : public IMessageReceiver
 {
@@ -11,12 +10,9 @@ public:
     DECLARE_SAVED(Teleportator, IMessageReceiver);
     DECLARE_GET_TYPE_ITEM(Teleportator);
     Teleportator();
-    virtual void processGUImsg(std::string& msg) override;
-    size_t WaitCreateItem();
+    virtual void processGUImsg(const Message& msg) override;
 protected:
-    void CreateItem(size_t hash);
-private:
-    SynchronizedQueue<size_t> wait_queue_;
+    void CreateItem(unsigned int from_id, size_t hash);
 };
 
 ADD_TO_TYPELIST(Teleportator);

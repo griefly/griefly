@@ -32,11 +32,14 @@ public:
 
     unsigned int hash_all();
 
+    void saveMapHeader(std::stringstream& str);
     void saveMap(const char* path);
-    void saveMap(std::stringstream& str);//to strstream
+    void saveMap(std::stringstream& str);
+
+    void loadMapHeader(std::stringstream& savefile, size_t real_this_mob = 0);
     void loadMap(const char* path);
-    void loadMap(std::stringstream& str);
-    void loadMapFromNet();
+    void loadMap(std::stringstream& str, size_t real_this_mob = 0);
+    
     void clearMap();
 
     template<typename T>

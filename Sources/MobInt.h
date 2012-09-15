@@ -14,7 +14,7 @@ public:
     virtual void InitGUI(){};
     virtual void DeinitGUI(){};
     virtual void processGUI();//draw
-    virtual void processGUImsg(std::string& msg) override;
+    virtual void processGUImsg(const Message& msg) override;
     
     virtual bool checkMove(Dir direct) override;
     bool KV_SAVEBLE(onMobControl);

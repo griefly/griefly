@@ -1,6 +1,5 @@
 #include "MapClass.h"
 #include "MainInt.h"
-#include "NetClass.h"
 
 #include <math.h>
 #include <sstream>
@@ -89,9 +88,6 @@ void MapMaster::centerFromTo(int beginPosx, int beginPosy, int nowPosx, int nowP
 MapMaster::MapMaster()
 {
     ms_last_draw = 0;
-    aSpr.font = TTF_OpenFont("font.ttf", 10);
-    if(!aSpr.font)
-        SYSTEM_STREAM << "Unable to load font: font.ttf, "<< TTF_GetError() << std::endl;
     pathf.map = this;
     losf.map = this;  
 };
@@ -208,6 +204,7 @@ bool MapMaster::isVisible(int posx, int posy, bool level)
 
 void MapMaster::addItemOnMap(id_ptr_on<IOnMapItem> pushval)
 {
+    // TODO: сортировка в правильном порядке, и вообще потом
     int posx = pushval->posx, posy = pushval->posy;
     auto itr = squares[posx][posy].begin();
     while(itr != squares[posx][posy].end())

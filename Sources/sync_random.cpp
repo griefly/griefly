@@ -2,6 +2,8 @@
 
 #include "sync_random.h"
 
+#include <memory>
+
 typedef std::ranlux24 RandomGenerator;
 
 RandomGenerator& GetGenerator(unsigned int seed = 0)
@@ -12,13 +14,36 @@ RandomGenerator& GetGenerator(unsigned int seed = 0)
     return *generator;
 }
 
+unsigned int calls_counter;
+unsigned int seed;
+
 unsigned int get_rand()
 {
+    ++calls_counter;
     unsigned int retval = GetGenerator()();
     return retval;
 }
-void set_rand(unsigned int seed)
+
+namespace random_helpers
 {
-    GetGenerator(seed);
+    void set_rand(unsigned int new_seed, unsigned int new_calls_counter)
+    {
+        calls_counter = new_calls_counter;
+        seed = new_seed;
+
+        GetGenerator(new_seed).discard(new_calls_counter);
+    }
+
+    unsigned int get_seed()
+    {
+        return seed;
+    }
+
+    unsigned int get_calls_counter()
+    {
+        return calls_counter;
+    }
 }
+
+
 

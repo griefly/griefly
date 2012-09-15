@@ -3,7 +3,7 @@
 
 #include "ItemFabric.h"
 #include "MapClass.h"
-#include "NetClass.h"
+#include "sync_random.h"
 
 ItemFabric::ItemFabric()
 {
@@ -20,9 +20,46 @@ void ItemFabric::Sync()
 void ItemFabric::foreachProcess()
 {
     size_t table_size = idTable_.size();
-    for (int i = 1; i < table_size; ++i)
+    for (size_t i = 1; i < table_size; ++i)
         if (idTable_[i] != nullptr)
             idTable_[i]->process();
+}
+
+void ItemFabric::saveMapHeader(std::stringstream& savefile)
+{
+    savefile << MAIN_TICK << std::endl;
+    savefile << id_ << std::endl;
+    savefile << IMainItem::map->mobi->thisMob.ret_id() << std::endl;
+
+    // Random save
+    savefile << random_helpers::get_seed() << std::endl;
+    savefile << random_helpers::get_calls_counter() << std::endl;
+
+    savefile << IMainItem::mobMaster->GetCreator() << std::endl;
+}
+
+void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob)
+{
+    savefile >> MAIN_TICK;
+    savefile >> id_;
+    size_t loc;
+    savefile >> loc;
+    if (real_this_mob == 0)
+        IMainItem::map->mobi->thisMob = loc;
+    else
+        IMainItem::map->mobi->thisMob = real_this_mob;
+    
+    unsigned int new_seed;
+    unsigned int new_calls_counter;
+    savefile >> new_seed;
+    savefile >> new_calls_counter;
+    random_helpers::set_rand(new_seed, new_calls_counter);
+
+    size_t new_creator;
+    savefile >> new_creator;
+    IMainItem::mobMaster->SetCreator(new_creator);
+
+    idTable_.resize(id_ + 1);
 }
 
 void ItemFabric::saveMap(const char* path)
@@ -35,15 +72,13 @@ void ItemFabric::saveMap(const char* path)
         return;
     }
     std::stringstream savefile;
-    savefile << MAIN_TICK << std::endl;
-    savefile << id_ << std::endl;
-    savefile << IMainItem::map->mobi->thisMob.ret_id() << std::endl;
     saveMap(savefile);
     rfile << savefile.str();
     rfile.close();
 }
 void ItemFabric::saveMap(std::stringstream& savefile)
 {
+    saveMapHeader(savefile);
     auto it = ++idTable_.begin();
     while(it != idTable_.end())
         if(*it) 
@@ -73,21 +108,15 @@ void ItemFabric::loadMap(const char* path)
     savefile << buff;
     delete[] buff;
     //
-    savefile >> MAIN_TICK;
-    savefile >> id_;
-    size_t loc;
-    savefile >> loc;
-    IMainItem::map->mobi->thisMob = loc;
-    
-    idTable_.resize(id_ + 1);
-
     loadMap(savefile);
     IMainItem::map->mobi->changeMob(IMainItem::map->mobi->thisMob);
     //savefile.close();
 }
 
-void ItemFabric::loadMap(std::stringstream& savefile)
+void ItemFabric::loadMap(std::stringstream& savefile, size_t real_this_mob)
 {
+    clearMap();
+    loadMapHeader(savefile, real_this_mob);
     int j = 0;
     while(!savefile.eof())
     {
@@ -115,39 +144,6 @@ void ItemFabric::loadMap(std::stringstream& savefile)
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
 }
 
-void ItemFabric::loadMapFromNet()
-{
-    SYSTEM_STREAM << "\nBegin load map from net\n";
-    clearMap();
-    std::stringstream savefile;
-    char c;
-    while(NetMaster->sockstr->receiveBytes(&c, 1) == 0);
-    while(c != '~')
-    {
-        savefile << c;
-        while(NetMaster->sockstr->receiveBytes(&c, 1) == 0);
-    }
-    
-
-
-    savefile >> MAIN_TICK;
-    savefile >> id_;
-    size_t loc;
-    savefile >> loc;
-    SYSTEM_STREAM << "\n" << MAIN_TICK;
-    SYSTEM_STREAM << "\n" << id_;
-    SYSTEM_STREAM << "\n" << loc;
-
-    idTable_.resize(id_ + 1);
-    IMainItem::map->mobi->thisMob = loc;
-    loadMap(savefile);
-    id_ptr_on<IMob> i;
-    i = loc;
-    //std::stringstream ssloc_real;
-    IMainItem::map->mobi->thisMob = loc;
-    IMainItem::map->mobi->changeMob(IMainItem::map->mobi->thisMob);
-}
-
 IMainItem* ItemFabric::newVoidItem(unsigned int type)
 {
     static Initer init;
@@ -163,7 +159,7 @@ IMainItem* ItemFabric::newVoidItemSaved(unsigned int type)
 void ItemFabric::clearMap()
 {
     size_t table_size = idTable_.size();
-    for (int i = 1; i < table_size; ++i)
+    for (size_t i = 1; i < table_size; ++i)
         if (idTable_[i] != nullptr)
             idTable_[i]->delThis();
 };
@@ -172,7 +168,7 @@ unsigned int ItemFabric::hash_all()
 {
     unsigned int h = 0;
     size_t table_size = idTable_.size();
-    for (int i = 1; i < table_size; ++i)
+    for (size_t i = 1; i < table_size; ++i)
         if (idTable_[i] != nullptr)
             h += idTable_[i]->hashSelf();
     return h;

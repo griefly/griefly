@@ -1,7 +1,19 @@
 #pragma once
 
-const char* const NET_SIGNAL = "signal";
-const char* const NET_NEXTTICK = "nexttick";
-const char* const NET_END = "end";
-const char* const NET_HASH = "hash";
-const char* const NET_LOGIN_DATA = "login_data";
+namespace Net
+{
+    const char* const SIGNAL = "signal";
+    const char* const NEXTTICK = "nexttick";
+    const char* const END = "end";
+    const char* const HASH = "hash";
+    const char* const LOGIN_DATA = "login_data";
+    const char* const NOMAP = "nomap";
+    const char* const MAP = "map";
+    const char* const MAKE_NEW = "make_new_mob";
+    const char* const NEW_MAKED = "create";
+    const char* const MAP_REQUEST = "need_map";
+
+    const char* const SYSTEM_TYPE = "system";
+    const char* const ORDINARY_TYPE = "ordinary";
+    const char* const MAP_TYPE = "map";
+}

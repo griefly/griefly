@@ -1,16 +1,12 @@
 #pragma comment (lib, "Libs/SDLmain.lib")
 #pragma comment (lib, "Libs/SDL.lib")
 #pragma comment (lib, "Libs/SDL_image.lib")
-#pragma comment (lib, "Libs/SDL_net.lib")
 #pragma comment (lib, "Libs/SDL_ttf.lib")
-#pragma comment (lib, "Libs/SDL_gfx.lib")
-#pragma comment (lib, "Libs/PocoFoundation.lib")
-#pragma comment (lib, "Libs/PocoNet.lib")
+#pragma comment (lib, "Libs/SDL_net.lib")
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL.h>
-#include <SDL_net.h>
 #include <SDL_thread.h>
 #include "MapClass.h"
 #include <iostream>

@@ -59,15 +59,7 @@ public:
 Initer::Initer()
 {
     InitializeDCData<ItemsTypelist>::Init();
-    /*for(int i = 0; i < ItemsTLLength; i++)
-    {
-        for(int j = 0; j < ItemsTLLength; j++)
-            SYSTEM_STREAM << FastDC[i][j] << " ";
-        SYSTEM_STREAM << "\n";
-    }*/
 }
-
-//Loki::TL::IndexOf<ItemsTypelist, IMainItem>::value
 
 template<typename T>
 class InitRealTypes;
@@ -161,4 +153,5 @@ int Hash2Num(unsigned int hash)
         if(Num2HashData[i] == hash)
             return i;
     assert(false);
+    return -1;
 };

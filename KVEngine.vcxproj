@@ -40,16 +40,12 @@
     <ClInclude Include="Sources\MobInt.h" />
     <ClInclude Include="Sources\MonstrClass.h" />
     <ClInclude Include="Sources\MoveEffect.h" />
-    <ClInclude Include="Sources\NetClass.h" />
     <ClInclude Include="Sources\NetClientImpl.h" />
     <ClInclude Include="Sources\NetInterface.h" />
-    <ClInclude Include="Sources\NetServerImpl.h" />
     <ClInclude Include="Sources\OnMapInt.h" />
     <ClInclude Include="Sources\Ork.h" />
     <ClInclude Include="Sources\Screen.h" />
-    <ClInclude Include="Sources\ServerConnection.h" />
     <ClInclude Include="Sources\sprite.h" />
-    <ClInclude Include="Sources\SyncQueue.h" />
     <ClInclude Include="Sources\sync_random.h" />
     <ClInclude Include="Sources\Teleportator.h" />
     <ClInclude Include="Sources\Testmob.h" />
@@ -80,13 +76,10 @@
     <ClCompile Include="Sources\MobInt.cpp" />
     <ClCompile Include="Sources\MonstrClass.cpp" />
     <ClCompile Include="Sources\MoveEffect.cpp" />
-    <ClCompile Include="Sources\NetClass.cpp" />
     <ClCompile Include="Sources\NetClientImpl.cpp" />
-    <ClCompile Include="Sources\NetServerImpl.cpp" />
     <ClCompile Include="Sources\OnMapInt.cpp" />
     <ClCompile Include="Sources\Ork.cpp" />
     <ClCompile Include="Sources\Screen.cpp" />
-    <ClCompile Include="Sources\ServerConnection.cpp" />
     <ClCompile Include="Sources\sprite.cpp" />
     <ClCompile Include="Sources\sync_random.cpp" />
     <ClCompile Include="Sources\Teleportator.cpp" />
@@ -125,14 +118,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\zlib127\zlib-1.2.7;C:\Program Files %28x86%29\Visual Leak Detector\include;D:\poco-1.4.3p1\poco-1.4.3p1\Net\include;D:\poco-1.4.3p1\poco-1.4.3p1\Foundation\include;D:\loki-0.1.7\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;D:\poco-1.4.3p1\poco-1.4.3p1\lib;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\lib;$(LibraryPath)</LibraryPath>
-    <TargetName>$(ProjectName)d</TargetName>
+    <IncludePath>D:\zlib127\zlib-1.2.7;D:\loki-0.1.7\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\Libs;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\SDL_gfx-2.0.23\SDL_gfx-2.0.23;D:\poco-1.4.3p1\poco-1.4.3p1\Foundation\include;D:\poco-1.4.3p1\poco-1.4.3p1\Net\include;D:\loki-0.1.7\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7\VisualC;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\loki-0.1.7\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7\VisualC;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -144,14 +137,14 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;PocoNetd.lib;PocoFoundationd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ShowProgress>LinkVerbose</ShowProgress>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <IgnoreSpecificDefaultLibraries>PocoNet.lib;PocoFoundation.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -162,6 +155,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -169,7 +164,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreSpecificDefaultLibraries>PocoNet.lib;PocoFoundation.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,7 @@
 #include <algorithm>
 
+#include "NetClientImpl.h"
+
 #include "CAliveMob.h"
 #include "MapClass.h"
 
@@ -8,8 +10,6 @@
 #include "sprite.h"
 
 #include "FireEffect.h"
-
-#include "NetClass.h"
 #include "sync_random.h"
 
 CAliveMob::CAliveMob()
@@ -48,7 +48,7 @@ void CAliveMob::aaMind() {};
 void CAliveMob::live()
 { 
     unsigned int now_blood = inside->amountOfAll();
-    if(injuries > 1 && now_blood > 0 && get_rand() % std::max(1, max_dmg * 7 - injuries * 7) == 0)
+    if(injuries > 1 && now_blood > 0 && get_rand() % max(1, max_dmg * 7 - injuries * 7) == 0)
         (*map->squares[posx][posy].begin())->insertLiquid(inside->removeLiquid(injuries));
     if (burn_power > 0)
         burn_power -= 1;
@@ -92,7 +92,8 @@ void CAliveMob::InitGUI()
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << ((fabric->get_hash_last() == NetMaster->hash) ? "SYNC:" : "UNSYNC:") << fabric->get_hash_last();
+//        ss << ((fabric->get_hash_last() == NetMaster->hash) ? "SYNC:" : "UNSYNC:") << fabric->get_hash_last();
+        ss << "TODO: do it!";
         ss >> *str;
     }).SetSize(15).SetPlace(0, 30, 200, 50);
 }
@@ -117,11 +118,11 @@ void CAliveMob::processGUI()
         //    SDL_FreeSurface(sDMG);
         //sDMG = TTF_RenderText_Blended( map->aSpr.font, ssloc.str().c_str(), color);
 
-        if (fabric->get_hash_last() == NetMaster->hash)
+        if (false)//fabric->get_hash_last() == NetMaster->hash)
             mobMaster->texts["Sync"].SetColor(0, 255, 100);
         else
             mobMaster->texts["Sync"].SetColor(255, 160, 0);
-        ssloc2 << ((fabric->get_hash_last() == NetMaster->hash) ? "SYNC" : "UNSYNC") << fabric->get_hash_last();
+        //ssloc2 << ((fabric->get_hash_last() == NetMaster->hash) ? "SYNC" : "UNSYNC") << fabric->get_hash_last();
         if (MAIN_TICK % HASH_OFTEN == 55)
         {
           //  if(sync != nullptr)

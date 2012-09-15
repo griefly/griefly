@@ -2,13 +2,13 @@
 
 #include "MapClass.h"
 
-#include "NetClass.h"
+#include "MagicStrings.h"
 
-void Teleportator::processGUImsg(std::string& msg)
+void Teleportator::processGUImsg(const Message& msg)
 {   
     SYSTEM_STREAM << "void Teleportator::processGUImsg(std::string& msg)\n";
-    if (msg == "NEWMOB")
-        CreateItem(hash("ork"));
+    if (msg.text == Net::MAKE_NEW)
+        CreateItem(msg.from, hash("ork"));
 }
 
 Teleportator::Teleportator()   
@@ -16,16 +16,17 @@ Teleportator::Teleportator()
     SetSprite("icons/teleportator.png");
 }
 
-void Teleportator::CreateItem(size_t hash)
+void Teleportator::CreateItem(unsigned int from_id, size_t hash)
 {
     auto newmob = IMainItem::fabric->newItemOnMap<IMob>(hash, posx, posy);
     SYSTEM_STREAM << "NEW MOB CREATE HIS ID " << newmob.ret_id() << "\n";
     newmob->onMobControl = true;
-    if (IMainItem::mobMaster->GetMode() == SERVER)
-        wait_queue_.Put(newmob.ret_id());
-}
 
-size_t Teleportator::WaitCreateItem()
-{
-    return wait_queue_.Get();
+    Message msg;
+    msg.from = from_id;
+    msg.to = newmob.ret_id();
+    msg.type = Net::SYSTEM_TYPE;
+    msg.text = Net::NEW_MAKED;
+
+    IMainItem::mobMaster->net_client->Send(msg);
 }

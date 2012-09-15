@@ -3,7 +3,6 @@
 
 #include <SDL.h>
 #include <list>
-#include <Poco/Mutex.h>
 
 #include "OnMapInt.h"
 #include "Testmob.h"
@@ -15,6 +14,7 @@
 #include "Screen.h"
 #include "Text.h"
 
+class NetClient;
 class MapMaster;
 
 struct point;
@@ -22,7 +22,6 @@ struct point;
 class Manager
 {
 public:
-    CSprite* image;
     void move(int direct);
     void touchEach(Dir direct);//Say items that they must move
     void moveEach(Dir direct);
@@ -43,7 +42,10 @@ public:
     int threadPathfind(void* data);
 
     void changeMob(id_ptr_on<IMob>& i);
-    Manager(Mode mode, std::string adrs = DEFAULT_ADRS);
+    Manager(Mode mode, std::string adrs);
+
+    size_t GetCreator() const;
+    void SetCreator(size_t new_creator);
 
     bool isMove;
     int numOfDeer;
@@ -63,12 +65,13 @@ public:
     SDL_Surface* sFPS;
     ///////////
     int tick_recv;
-    Poco::Mutex tick_recvm;
     void process_in_msg();
     //
     id_ptr_on<IMob> thisMob;
     MapMaster* map;
-    Poco::Mutex map_access;
+
+    INetClient* net_client;
+
     Mode GetMode(){return mode_;}
 
     TextPainter texts;
@@ -77,7 +80,8 @@ public:
 private:
     Mode mode_;
     std::string adrs_;
-//    std::list<char*>* msg;
+
+    size_t creator_;
 };
 
 #endif

@@ -11,7 +11,7 @@ public:
     DECLARE_SAVED(COrk, CAliveMob)
     COrk();
     virtual void aaMind();
-    virtual void processGUImsg(std::string& msg) override;
+    virtual void processGUImsg(const Message& msg) override;
     virtual void attack_by(id_ptr_on<SmallItem> atk, int force = -1) override;
     virtual void live() override;
     id_ptr_on<SmallItem> KV_SAVEBLE(in_hand);
