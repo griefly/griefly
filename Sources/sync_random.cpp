@@ -2,6 +2,8 @@
 
 #include "sync_random.h"
 
+#include <memory>
+
 typedef std::ranlux24 RandomGenerator;
 
 RandomGenerator& GetGenerator(unsigned int seed = 0)

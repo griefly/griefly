@@ -340,12 +340,12 @@ void Manager::initWorld()
     id_ptr_on<IMob> newmob;
 
     newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), sizeHmap / 2, sizeWmap / 2);
-    //GLSprite testspr("icons/kivsjak.png");
     changeMob(newmob);
     newmob->x = beginMobPosX * TITLE_SIZE;
     newmob->y = beginMobPosY * TITLE_SIZE;
 
     auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), sizeHmap / 2, sizeWmap / 2);
+    SetCreator(tptr.ret_id());
 
     map->makeMap();
     thisMob->passable = 1;
@@ -381,28 +381,36 @@ void Manager::loadIniFile()
 void Manager::process_in_msg()
 {
     Message msg;
-    while(true)
+    while (true)
     {
         net_client->Recv(&msg);
-        if(msg.text == NET_NEXTTICK)
+        if (msg.text == Net::NEXTTICK)
             return;
         
-        if(msg.text == "rand")
-        {
-            SYSTEM_STREAM << "ALERT! RAND MUST NOT RECEIVED!" << std::endl;
-            continue;
-        }
         id_ptr_on<IMessageReceiver> i;
         i = msg.to;
-        if(i)
-            i->processGUImsg(msg.text);
+
+        if (i.valid())
+            i->processGUImsg(msg);
+        else
+            SYSTEM_STREAM << "Wrong id accepted - " << msg.to << std::endl;
     }
+}
+
+size_t Manager::GetCreator() const 
+{
+    return creator_;
+}
+
+void Manager::SetCreator(size_t new_creator) 
+{
+    creator_ = new_creator;
 }
 
 bool Manager::isMobVisible(int posx, int posy)
 {
     // TODO: matrix for fast check
-    if(visiblePoint == nullptr)
+    if (visiblePoint == nullptr)
         return false;
     for (auto it = visiblePoint->begin(); it != visiblePoint->end(); ++it)
         if(it->posx == posx && it->posy == posy)

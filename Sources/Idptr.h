@@ -97,7 +97,7 @@ public:
         //item = castTo<T>(value.ret_item());
         id = value.ret_id();
     }
-    operator bool()
+    bool valid()
     {
         return operator->() != nullptr; 
     }

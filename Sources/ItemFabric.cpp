@@ -34,21 +34,30 @@ void ItemFabric::saveMapHeader(std::stringstream& savefile)
     // Random save
     savefile << random_helpers::get_seed() << std::endl;
     savefile << random_helpers::get_calls_counter() << std::endl;
+
+    savefile << IMainItem::mobMaster->GetCreator() << std::endl;
 }
 
-void ItemFabric::loadMapHeader(std::stringstream& savefile)
+void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob)
 {
     savefile >> MAIN_TICK;
     savefile >> id_;
     size_t loc;
     savefile >> loc;
-    IMainItem::map->mobi->thisMob = loc;
+    if (real_this_mob == 0)
+        IMainItem::map->mobi->thisMob = loc;
+    else
+        IMainItem::map->mobi->thisMob = real_this_mob;
     
     unsigned int new_seed;
     unsigned int new_calls_counter;
     savefile >> new_seed;
     savefile >> new_calls_counter;
     random_helpers::set_rand(new_seed, new_calls_counter);
+
+    size_t new_creator;
+    savefile >> new_creator;
+    IMainItem::mobMaster->SetCreator(new_creator);
 
     idTable_.resize(id_ + 1);
 }
@@ -104,9 +113,10 @@ void ItemFabric::loadMap(const char* path)
     //savefile.close();
 }
 
-void ItemFabric::loadMap(std::stringstream& savefile)
+void ItemFabric::loadMap(std::stringstream& savefile, size_t real_this_mob)
 {
-    loadMapHeader(savefile);
+    clearMap();
+    loadMapHeader(savefile, real_this_mob);
     int j = 0;
     while(!savefile.eof())
     {

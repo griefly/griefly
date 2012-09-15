@@ -204,6 +204,7 @@ bool MapMaster::isVisible(int posx, int posy, bool level)
 
 void MapMaster::addItemOnMap(id_ptr_on<IOnMapItem> pushval)
 {
+    // TODO: сортировка в правильном порядке, и вообще потом
     int posx = pushval->posx, posy = pushval->posy;
     auto itr = squares[posx][posy].begin();
     while(itr != squares[posx][posy].end())

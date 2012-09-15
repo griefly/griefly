@@ -16,8 +16,6 @@ std::hash_map<unsigned int, item_creator>* itemListSaved()
 
 MapMaster* IMainItem::map = nullptr;
 
-//std::stringstream IMainItem::rawData;
-
 IMob* IMainItem::mob = nullptr;
 
 Manager* IMainItem::mobMaster = nullptr;
@@ -40,6 +38,6 @@ bool IMainItem::saveSelf(std::stringstream& file)
 
 bool IMainItem::loadSelf(std::stringstream& file)
 {
-    //It empty.
+    // It empty becouse all data load main outer function
     return true;
 };

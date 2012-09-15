@@ -57,6 +57,19 @@ bool SendSocketMessage(TCPsocket& socket, const Message& message)
     return true;
 }
 
+bool RecvAllMessage(TCPsocket& socket, char* ptr, int length)
+{
+    int retval;
+    while ((retval = SDLNet_TCP_Recv(socket, ptr, length)) != length)
+    {
+        if (retval <= 0)
+            return false;
+        ptr += retval;
+        length -= retval;
+    }
+    return true;
+}
+
 bool RecvSocketMessage(TCPsocket& socket, Message* message)
 {
     message->text.clear();
@@ -64,12 +77,10 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
     std::stringstream convertor;
     std::string number;
 
-   // SYSTEM_STREAM << "Begin receive message length" << std::endl;
-
     char local_char = '`'; // Just symbol
     while (local_char != ' ')
     {
-        if (SDLNet_TCP_Recv(socket, &local_char, 1) <= 0)
+        if (!RecvAllMessage(socket, &local_char, 1))
         {
             SYSTEM_STREAM << "Fail read message length" << std::endl;
             SYSTEM_STREAM << SDLNet_GetError() << std::endl;
@@ -77,6 +88,8 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
         };
         number.append(&local_char, 1);
     }
+
+    SYSTEM_STREAM << "Raw size message: " << number << std::endl;
 
     size_t length;
 
@@ -94,7 +107,7 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
 
     char* raw_message = new char[length];
 
-    if (SDLNet_TCP_Recv(socket, raw_message, length) != length)
+    if (!RecvAllMessage(socket, raw_message, length))
     {
         SYSTEM_STREAM << "Error receive byted: " << std::endl; 
         SYSTEM_STREAM << SDLNet_GetError() << std::endl;
@@ -104,6 +117,8 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
 
     std::string string_message(raw_message, length);
     delete[] raw_message;
+
+    SYSTEM_STREAM << "Raw message received: " << string_message << std::endl;
 
     size_t itr = 0;
     int counter = 0;
@@ -124,7 +139,8 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
     convertor >> message->from;
     convertor >> message->to;
     convertor >> message->type;
-    
+   
+
     if (convertor.fail())
     {
         SYSTEM_STREAM << "Bad message receive" << std::endl;

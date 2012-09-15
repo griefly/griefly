@@ -6,10 +6,8 @@
 struct Message
 {
     Message();
-    Message(const std::string& text);
+    explicit Message(const std::string& text);
     std::string text;
-
-    // TODO: type
 
     int from;
     int to;

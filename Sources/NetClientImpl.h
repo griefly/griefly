@@ -31,6 +31,7 @@ private:
     TCPsocket* main_socket_;
 
     std::queue<Message> messages_;
+    unsigned int number_last_message_;
 
     unsigned int amount_ticks_;
 

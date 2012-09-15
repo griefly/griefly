@@ -1,6 +1,7 @@
 #include "NetClientImpl.h"
 #include "MagicStrings.h"
 #include "Mob.h"
+#include "ItemFabric.h"
 
 #include <assert.h>
 
@@ -16,6 +17,7 @@ NetClient* NetClient::Init(Manager* man)
     retval->fail_ = false;
     retval->amount_ticks_ = 0;
     retval->hash_ = 0;
+    retval->number_last_message_ = 0;
     return retval;
 }
 
@@ -63,11 +65,11 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
         return !(fail_ = true);
     }
 
-    data_.who = message.from;
-    data_.word_for_who = message.to;
+    data_.who = message.to;
+    data_.word_for_who = message.from;
     data_.jid = data.jid;
 
-    if (message.text == NET_NOMAP)
+    if (message.text == Net::NOMAP)
     {
         connected_ = true;
         return true;
@@ -85,7 +87,7 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
 
     // TODO: change owner
 
-    IMainItem::fabric->loadMap(convertor);
+    IMainItem::fabric->loadMap(convertor, data_.who);
     convertor.str("");
 
     connected_ = true;
@@ -141,6 +143,7 @@ bool NetClient::Recv(Message* msg)
     assert(msg && "Try fill nullptr");
     *msg = messages_.front();
     messages_.pop();
+    number_last_message_ = msg->message_number;
     return true;
 }
 
@@ -157,17 +160,37 @@ bool NetClient::Process()
             SYSTEM_STREAM << "Fail message receive" << std::endl;
             return false;
         } // Fail
-       // SYSTEM_STREAM << "Some message received: " << message.text << std::endl;
 
-        if (message.text == NET_NEXTTICK)
+        if (message.text == Net::NEXTTICK)
         {
             ++amount_ticks_;
         }
-        else if (message.text == NET_HASH)
+        else if (message.text == Net::HASH)
         {
             hash_ = message.from;
             continue;
         }
+        else if (message.text == Net::MAP_REQUEST)
+        {
+            std::stringstream raw_map;
+            IMainItem::fabric->saveMap(raw_map);
+
+            Message map_message;
+            map_message.from = number_last_message_;
+            map_message.to = message.to;
+            map_message.type = Net::MAP_TYPE;
+
+            map_message.text = raw_map.str();
+
+            SendSocketMessage(*main_socket_, map_message);
+            continue;
+        }
+        else if (message.text == Net::MAKE_NEW)
+        {
+            SYSTEM_STREAM << "New mob must created!" << std::endl;
+            message.to = man_->GetCreator();
+        }
+        
 
         messages_.push(message);
         ++counter;

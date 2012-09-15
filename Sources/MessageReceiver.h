@@ -7,7 +7,7 @@ class IMessageReceiver : public IOnMapItem
 public:
     DECLARE_GET_TYPE_ITEM(IMessageReceiver);
     DECLARE_SAVED(IMessageReceiver, IOnMapItem);
-    virtual void processGUImsg(std::string& msg){};
+    virtual void processGUImsg(const Message& msg){};
     IMessageReceiver(){}
 };
 

@@ -37,10 +37,10 @@ void COrk::live()
     }
 }
 
-void COrk::processGUImsg(std::string& msg)
+void COrk::processGUImsg(const Message& msg)
 {
     CAliveMob::processGUImsg(msg);
-    if(msg == "SDLK_p")
+    if(msg.text == "SDLK_p")
     {
         if(in_hand.ret_id() != 0)
         {
@@ -61,19 +61,19 @@ void COrk::processGUImsg(std::string& msg)
             }
         }
     }
-    else if(msg == "SDLK_q")
+    else if(msg.text == "SDLK_q")
     {
         IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("spear"), posx, posy);
     }
-    else if(msg == "SDLK_e")
+    else if(msg.text == "SDLK_e")
     {
         IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("forcespear"), posx, posy);
     }
-    else if(msg == "SDLK_c")
+    else if(msg.text == "SDLK_c")
     {
         IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("cupitem"), posx, posy);
     }
-    else if(msg == "SDLK_a")
+    else if(msg.text == "SDLK_a")
     {
         if(in_hand.ret_id())
         {
@@ -81,7 +81,7 @@ void COrk::processGUImsg(std::string& msg)
             (*--(map->squares[posx - 1][posy].end()))->attack_by(in_hand);
         }
     }
-    else if(msg == "SDLK_w")
+    else if(msg.text == "SDLK_w")
     {
         if(in_hand.ret_id())
         {
@@ -89,7 +89,7 @@ void COrk::processGUImsg(std::string& msg)
             (*--(map->squares[posx][posy - 1].end()))->attack_by(in_hand);
         }
     }
-    else if(msg == "SDLK_d")
+    else if(msg.text == "SDLK_d")
     {
         if(in_hand.ret_id())
         {
@@ -97,7 +97,7 @@ void COrk::processGUImsg(std::string& msg)
             (*--(map->squares[posx + 1][posy].end()))->attack_by(in_hand);
         }
     }
-    else if(msg == "SDLK_s")
+    else if(msg.text == "SDLK_s")
     {
         if(in_hand.ret_id())
         {

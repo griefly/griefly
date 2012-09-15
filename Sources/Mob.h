@@ -44,6 +44,9 @@ public:
     void changeMob(id_ptr_on<IMob>& i);
     Manager(Mode mode, std::string adrs);
 
+    size_t GetCreator() const;
+    void SetCreator(size_t new_creator);
+
     bool isMove;
     int numOfDeer;
     //main
@@ -77,6 +80,8 @@ public:
 private:
     Mode mode_;
     std::string adrs_;
+
+    size_t creator_;
 };
 
 #endif
