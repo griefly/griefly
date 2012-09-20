@@ -19,7 +19,7 @@ void Manager::checkMove(Dir direct)
 
 void Manager::touchEach(Dir direct)
 {
-    IMainItem::mob->dMove = direct;
+    thisMob->dMove = direct;
 }
 
 void Manager::moveEach(Dir direct)
@@ -94,23 +94,15 @@ void Manager::undoCenterMove(Dir direct)
 
 void Manager::changeMob(id_ptr_on<IMob>& i)
 {
-    int oldposx = beginMobPosX, oldposy = beginMobPosY;
-    if(IMainItem::mob)
-    {
-        oldposx = IMainItem::mob->posx;
-        oldposy = IMainItem::mob->posy;
-        delete IMainItem::mob;
-    }
-    IMainItem::mob = castTo<IMob>(ItemFabric::newVoidItemSaved(i->T_ITEM()));//TODO: repair //REPAIR WHAT?!
-
     thisMob = i.ret_id();
-    thisMob->onMobControl = true;
-    thisMob->thisMobControl = true;
-    *IMainItem::mob = **thisMob;
-    std::stringstream thisstr;
-    IMainItem::map->centerFromTo(oldposx, oldposy, thisMob->posx, thisMob->posy);
 
-    i->InitGUI();
+    if (thisMob.valid())
+    {
+        thisMob->onMobControl = true;
+        thisMob->thisMobControl = true;
+        IMainItem::map->centerFromTo(thisMob->posx, thisMob->posy);
+        thisMob->InitGUI();
+    }
 
     SYSTEM_STREAM << "\nTHIS MOB CHANGE: " << thisMob.ret_id() << " ";
 };
@@ -140,7 +132,6 @@ void Manager::process()
     bool process_in = false;
     while(done == 0)
     { 
-        *IMainItem::mob = **thisMob;
         if (!NODRAW)
         processInput();
         IMainItem::fabric->Sync();
@@ -150,22 +141,19 @@ void Manager::process()
             process_in_msg();
             MAIN_TICK++;
         }
-        if (thisMob.ret_id())
-        *IMainItem::mob = **thisMob;
 
         if(process_in)
         {
             numOfDeer = 0;
             IMainItem::fabric->foreachProcess();
         }
-        *IMainItem::mob = **thisMob;
          
         if (!NODRAW)
         {
             map->Draw();
             FabricProcesser::Get()->process();
         }
-        *IMainItem::mob = **thisMob;
+
       
         //checkMoveMob();
         if (!NODRAW)
@@ -269,9 +257,9 @@ void Manager::processInput()
         if(keys[SDLK_h])
         {
             int locatime = SDL_GetTicks();
-            auto itr = map->squares[IMainItem::mob->posx][IMainItem::mob->posy].begin();
+            auto itr = map->squares[thisMob->posx][thisMob->posy].begin();
             int i = 0;
-            while(itr != map->squares[IMainItem::mob->posx][IMainItem::mob->posy].end())
+            while(itr != map->squares[thisMob->posx][thisMob->posy].end())
             {
                 SYSTEM_STREAM << i <<": Level " << (*itr)->level;
                 itr++;

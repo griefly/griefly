@@ -1,5 +1,6 @@
 var recv = require('./receiver');
 var msg  = require('./message');
+var hold = require('./holder');
 
 /*
 In this file defines class of client 
@@ -73,6 +74,13 @@ function client(socket) {
     // Message accepter (first read size)
     this.reader = recv.read_message_size;
     
+    // This callbacks calls many times
+    this.callbacks_on_message = new hold.holder();
+    
+    // This callback calls once, when client
+    // will remove it from self
+    this.callbacks_on_message_once = new hold.holder();
+    
     // Jist send message throw socket
     this.send = function (message) {
         var raw_message =
@@ -83,20 +91,12 @@ function client(socket) {
             + message.text;
         raw_message = raw_message.length + " " + raw_message;
         this.socket.write(raw_message);
-    }
-    
-    // This callbacks calls many times
-    this.callbacks_on_message = [];
-    
-    // This callback calls once, when client
-    // will remove it from self
-    this.callbacks_on_message_once = [];
-    
+    };  
     // Add once-callback
     // Args: 1st - callback, 2nd and 3rd - regular expressions
     // for type and content of messagr
     this.add_callback_once = function (callback, type, content) {
-         this.callbacks_on_message_once.push(
+         this.callbacks_on_message_once.add(
             { callback : callback,
               type     : type,
               content  : content });   
@@ -106,7 +106,7 @@ function client(socket) {
     // Args: 1st - callback, 2nd and 3rd - regular expressions
     // for type and content of messagr
     this.add_callback = function (callback, type, content) {
-        this.callbacks_on_message.push(
+        this.callbacks_on_message.add(
             { callback : callback,
               type     : type,
               content  : content });
@@ -116,50 +116,49 @@ function client(socket) {
     // Args: 1st - callback, 2nd and 3rd - regular expressions
     // for type and content of messagr
     this.del_callback = function (callback, type, content) {
-        this.callbacks_on_message.splice(
-            this.callbacks_on_message.indexOf(
+        this.callbacks_on_message.del(
                 { callback : callback,
                   type     : type,
-                  content  : content }), 1);
+                  content  : content });
     }
     
     // Check all callback for incoming messages
     this.check_message = function (message) {
+        var master_this = this;
         // Check usuall callbacks (no delete callbacks inside allowed)
         // If you add new callback inside other callback, message will
         // test for new callback
-        for (var i = 0; i < this.callbacks_on_message.length; ++i) {
-            var callback = this.callbacks_on_message[i];
+        this.callbacks_on_message.for_each(function (callback) {
             if (msg.test(message, callback.type, callback.content)) {
-                callback.callback(this, message);
-            }
-        }
+                callback.callback(master_this, message);
+            }       
+        })
         // Check once-callbacks (find first accepted and check
         // what callback return true. When delete callback, and return)
         // Add new callbacks allowed
-        for (var i = 0; i < this.callbacks_on_message_once.length; ++i) {
-            var callback = this.callbacks_on_message_once[i];
-            if (msg.test(message, callback.type, callback.content)) {
-                if (callback.callback(this, message)) {
-                    this.callbacks_on_message_once.splice(i, 1);
-                    break;
+        this.callbacks_on_message_once.for_each(function (callback) {
+             if (msg.test(message, callback.type, callback.content)) {
+                console.error("Client begin" +master_this + "Client end");
+                if (callback.callback(master_this, message)) {
+                    master_this.callbacks_on_message_once.del(callback);
                 }
-            }
-        }
+            }           
+        });
     }
     
     // Pass to all callback null message. That means, what
     // we never receive message
     this.close = function () {
+        var master_this = this;
         if (this.socket_closed === false) {
             this.socket_closed = true;
             console.log("Close client: " + this.id + " " + this.jid);
-            for (var i = 0; i < this.callbacks_on_message.length; ++i) {
-                this.callbacks_on_message[i].callback(this, null);
-            }
-            for (var i = 0; i < this.callbacks_on_message_once.length; ++i) {
-                this.callbacks_on_message_once[i].callback(this, null);
-            }
+            this.callbacks_on_message.for_each(function (callback) {
+                callback.callback(master_this, null)
+            });
+            this.callbacks_on_message_once.for_each(function (callback) {
+                callback.callback(master_this, null)
+            });
             this.socket.destroy();
         }
     }

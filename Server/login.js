@@ -44,6 +44,7 @@ var make_new_mob = "make_new_mob";
 
 // Receive first message from client
 function on_login_data(client, message) {
+    console.error("Client begin" + client + "Client end");
     // If socket suddenly closed, we do nothing
     if (message === null)
         return true;
@@ -96,7 +97,7 @@ function on_login_data(client, message) {
         return true;
     }, msg.system_type, create_text);
     console.log("Wait for creation answer");
-
+    return true;
 }
 
 function get_new_id(client, message, trusted_client) {

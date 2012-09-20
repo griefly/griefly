@@ -25,7 +25,7 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
 {
     if (connected_ == true)
         return !(fail_ = true);
-
+    
     ip_ = ip;
     port_ = port;
 

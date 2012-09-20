@@ -109,8 +109,6 @@ void ItemFabric::loadMap(const char* path)
     delete[] buff;
     //
     loadMap(savefile);
-    IMainItem::map->mobi->changeMob(IMainItem::map->mobi->thisMob);
-    //savefile.close();
 }
 
 void ItemFabric::loadMap(std::stringstream& savefile, size_t real_this_mob)
@@ -142,6 +140,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, size_t real_this_mob)
         i->loadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
+    IMainItem::map->mobi->changeMob(IMainItem::map->mobi->thisMob);
 }
 
 IMainItem* ItemFabric::newVoidItem(unsigned int type)

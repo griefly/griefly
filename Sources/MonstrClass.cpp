@@ -61,20 +61,6 @@ CMonstr::CMonstr()
 
 void CMonstr::live()
 {
-    if(dmg <= 0)
-    {
-        /*initItem init;
-        init.dMove = D_UP;
-        init.imageStateH = 0;
-        init.imageStateW = 0;
-        init.posx = posx;
-        init.posy = posy;
-        init.x = (posx - IMainItem::mob->posx + beginMobPosX) * TITLE_SIZE;
-        init.y = (posy - IMainItem::mob->posy + beginMobPosY) * TITLE_SIZE;
-        //init.type = hash("meat");
-        //map->newItem(init);
-        delThis();*/
-    }
 };
 
 void CMonstr::findTarget()

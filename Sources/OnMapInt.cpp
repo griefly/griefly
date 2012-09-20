@@ -60,7 +60,10 @@ void IOnMapItem::move(Dir direct)
 
 bool IOnMapItem::isVisible(int x, int y)
 {
-    if ( x >= max(0, (mob->posx) - sizeHsq) && x <= min((mob->posx) + sizeHsq, sizeHmap - 1) && y >= max(0, (mob->posy) - sizeWsq) && y <= min((mob->posy) + sizeWsq, sizeWmap - 1))
+    if ( x >= max(0, (mobMaster->thisMob->posx) - sizeHsq) &&
+         x <= min((mobMaster->thisMob->posx) + sizeHsq, sizeHmap - 1) &&
+         y >= max(0, (mobMaster->thisMob->posy) - sizeWsq) &&
+         y <= min((mobMaster->thisMob->posy) + sizeWsq, sizeWmap - 1))
         return 1;
     return 0;
 };
@@ -166,18 +169,14 @@ void IOnMapItem::LoadInMap()
     id_ptr_on<IOnMapItem> pushval;
     pushval = id;
     map->addItemOnMap(pushval);
-    x = (posx - IMainItem::mob->posx + beginMobPosX) * TITLE_SIZE;
-    y = (posy - IMainItem::mob->posy + beginMobPosY) * TITLE_SIZE;
 }
 
 IOnMapItem::IOnMapItem()
 {
-//    isMove = false;
     lastMove = 0;
     tickSpeed = 1;
     pixSpeed = 1;
     dMove = D_UP;
-//    way = 0;
     passable = true;
     transparent = true;
     posx = 0;//local coord, 1..n, N ý n

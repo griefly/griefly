@@ -67,19 +67,22 @@ void MapMaster::makeMap()
     SYSTEM_STREAM << "End create map\n";
 };
 
-void MapMaster::centerFromTo(int beginPosx, int beginPosy, int nowPosx, int nowPosy)
+void MapMaster::centerFromTo(int nowPosx, int nowPosy)
 {
-    int xshift = (beginPosx - nowPosx) * TITLE_SIZE;
-    int yshift = (beginPosy - nowPosy) * TITLE_SIZE;
+    SYSTEM_STREAM << "centerFromTo called" << std::endl;
+    SDL_Delay(5000);
     for(int x = 0; x < sizeWmap; x++)
     {
         for(int y = 0; y < sizeHmap; y++) 
         {
+            int newx = (x - nowPosx + beginMobPosX) * TITLE_SIZE;
+            int newy = (y - nowPosy + beginMobPosY) * TITLE_SIZE;
             auto itr = squares[x][y].begin();
             while(itr != squares[x][y].end())
             {
-                (*itr)->x += xshift;
-                (*itr++)->y += yshift;
+                (*itr)->x = newx;
+                (*itr)->y = newy;
+                ++itr;
             }
         }
     }

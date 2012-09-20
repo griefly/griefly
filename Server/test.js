@@ -1,16 +1,17 @@
 var msg    = require('./message');
 var recv   = require('./receiver');
 var client = require('./client');
+var holder = require('./holder');
 
-console.log("\nBegin message.js test:\n")
+console.log("Begin message.js test:")
 
-console.log("\nBegin check_message_size test:\n");
+console.log("Begin check_message_size test:");
 
 console.log( msg.check_message_size(30));
 console.log( msg.check_message_size(3000));
 console.log(!msg.check_message_size(30000000000));
 
-console.log("\nBegin parseMessage test:\n");
+console.log("Begin parseMessage test:");
 
 console.log(msg.parseMessage("20 -1 -1 ordinary yu"));
 console.log(msg.parseMessage("20 -1 -1 ordinary yu gfdgfd fdf fdgsgfdsgfds gssgsfsgs s"));
@@ -20,7 +21,7 @@ console.log(msg.parseMessage("ddd 1 -1 ordinary") === null);
 console.log(msg.parseMessage("43243 3 prere ordinary 333333") === null);
 console.log(msg.parseMessage("432433213-1ordinary") === null);
 
-console.log("\nBegin test test:\n");
+console.log("Begin test test:");
 
 console.log( msg.test(msg.parseMessage("23 -1 -1 ordinary fdsfs"), msg.ordinary_type));
 console.log(!msg.test(msg.parseMessage("23 -1 -1 ord1nary fdsfs"), msg.ordinary_type));
@@ -32,6 +33,52 @@ console.log( msg.test(msg.parseMessage("23 -1 -1 system fdsfs"), msg.system_type
 console.log( msg.test(msg.parseMessage("23 -1 -1 system fdsfs"), msg.system_type, /fdsfs/));
 console.log(!msg.test(msg.parseMessage("23 -1 -1 system fdsfs"), msg.any_type, /f1sfs/));
 
-console.log("\nBegin test client.js\n");
+console.log("Begin test holder.js");
+
+var massive = new holder.holder();
+
+massive.add(1);
+massive.add(2);
+massive.add(3);
+massive.add(4);
+massive.add(5);
+massive.add(6);
+massive.add(7);
+
+massive.for_each(function (number) {
+    if (number > 7)
+        console.log(false);
+    massive.add(8);
+});
+
+var str = "";
+massive.for_each(function (number) {
+    str = str + " " + number.toString();
+});
+
+//console.log(str);
+console.log(str === " 1 2 3 4 5 6 7 8 8 8 8 8 8 8");
+
+massive.del(8);
+str = "";
+massive.for_each(function (number) {
+    str = str + " " + number.toString();
+});
+console.log(str === " 1 2 3 4 5 6 7 8 8 8 8 8 8");
+
+str = "";
+massive.for_each(function (number) {
+    str = str + " " + number.toString();
+    massive.del(8);
+});
+console.log(str === " 1 2 3 4 5 6 7 8 8 8 8 8 8");
+
+str = "";
+massive.for_each(function (number) {
+    str = str + " " + number.toString();
+});
+//console.log(str);
+console.log(str === " 1 2 3 4 5 6 7");
+
 
 

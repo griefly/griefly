@@ -68,12 +68,10 @@ public:
         }
         item->id = id_new;
         idTable_[id_new] = item;
-        if(IMainItem::mob)
+        if(IMainItem::mobMaster->thisMob.valid())
         {
-            item->x = (posx - IMainItem::mob->posx + beginMobPosX) * TITLE_SIZE;
-            item->y = (posy - IMainItem::mob->posy + beginMobPosY) * TITLE_SIZE;
-            //if(IOnMapItem::isVisible(posx, posy) && IMainItem::mob->isMove)
-            //    switchDir(item->x, item->y, IMainItem::mob->dMove, IMainItem::mob->way); 
+            item->x = (posx - IMainItem::mobMaster->thisMob->posx + beginMobPosX) * TITLE_SIZE;
+            item->y = (posy - IMainItem::mobMaster->thisMob->posy + beginMobPosY) * TITLE_SIZE;
         }
         else
         {

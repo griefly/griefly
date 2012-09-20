@@ -16,8 +16,6 @@ std::hash_map<unsigned int, item_creator>* itemListSaved()
 
 MapMaster* IMainItem::map = nullptr;
 
-IMob* IMainItem::mob = nullptr;
-
 Manager* IMainItem::mobMaster = nullptr;
 
 ItemFabric* IMainItem::fabric = nullptr;

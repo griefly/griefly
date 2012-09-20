@@ -36,7 +36,6 @@ public:
     IMainItem(NotLoadItem){};
     static Manager* mobMaster;
     static MapMaster* map;
-    static IMob* mob;
     static ItemFabric* fabric;
     virtual unsigned int T_ITEM()            
     {                                        

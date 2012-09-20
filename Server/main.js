@@ -1,7 +1,7 @@
-var net  = require('net');
-var client = require('./client');
-var msg = require('./message');
-var login = require('./login');
+var net      = require('net');
+var client   = require('./client');
+var msg      = require('./message');
+var login    = require('./login');
 var msg_acpt = require('./message_accepter');
 
 /*

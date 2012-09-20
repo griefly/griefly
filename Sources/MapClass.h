@@ -114,7 +114,7 @@ public:
 
     void makeMap();
     void addItemOnMap(id_ptr_on<IOnMapItem> pushval);
-    void centerFromTo(int beginPosx, int beginPosy, int nowPosx, int nowPosy);
+    void centerFromTo(int nowPosx, int nowPosy);
     bool isPassable(int posx, int posy, bool level);
     bool fastisPassable(int posx, int posy);
     static void switchDir(int& posx, int& posy, Dir direct, int num = 1, bool back = false);
