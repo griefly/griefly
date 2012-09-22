@@ -1,6 +1,7 @@
 #include <random>
 
 #include "sync_random.h"
+#include "constheader.h"
 
 #include <memory>
 
@@ -14,8 +15,8 @@ RandomGenerator& GetGenerator(unsigned int seed = 0)
     return *generator;
 }
 
-unsigned int calls_counter;
-unsigned int seed;
+unsigned int calls_counter = 0;
+unsigned int seed = 42;
 
 unsigned int get_rand()
 {
@@ -28,6 +29,8 @@ namespace random_helpers
 {
     void set_rand(unsigned int new_seed, unsigned int new_calls_counter)
     {
+        SYSTEM_STREAM << "set_seed: " << new_seed;
+        SYSTEM_STREAM << "set_calls_counter: " << new_calls_counter;
         calls_counter = new_calls_counter;
         seed = new_seed;
 
@@ -36,11 +39,13 @@ namespace random_helpers
 
     unsigned int get_seed()
     {
+        SYSTEM_STREAM << "get_seed: " << seed << std::endl;
         return seed;
     }
 
     unsigned int get_calls_counter()
     {
+        SYSTEM_STREAM << "get_calls_counter: " << calls_counter << std::endl;
         return calls_counter;
     }
 }

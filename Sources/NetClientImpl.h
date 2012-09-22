@@ -22,6 +22,8 @@ public:
     virtual bool Recv(Message* msg) override;
     virtual bool Send(const Message& msg) override;
     virtual bool IsFail() override;
+
+    virtual unsigned int Hash() const override;
 private:
     NetClient() {}
     std::string ip_;

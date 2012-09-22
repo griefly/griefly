@@ -89,6 +89,7 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
         number.append(&local_char, 1);
     }
 
+    // 
     SYSTEM_STREAM << "Raw size message: " << number << std::endl;
 
     size_t length;
@@ -118,7 +119,7 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
     std::string string_message(raw_message, length);
     delete[] raw_message;
 
-    SYSTEM_STREAM << "Raw message received: " << string_message << std::endl;
+    // SYSTEM_STREAM << "Raw message received: " << string_message << std::endl;
 
     size_t itr = 0;
     int counter = 0;

@@ -69,8 +69,6 @@ void MapMaster::makeMap()
 
 void MapMaster::centerFromTo(int nowPosx, int nowPosy)
 {
-    SYSTEM_STREAM << "centerFromTo called" << std::endl;
-    SDL_Delay(5000);
     for(int x = 0; x < sizeWmap; x++)
     {
         for(int y = 0; y < sizeHmap; y++) 
@@ -212,7 +210,8 @@ void MapMaster::addItemOnMap(id_ptr_on<IOnMapItem> pushval)
     auto itr = squares[posx][posy].begin();
     while(itr != squares[posx][posy].end())
     {
-        if((*itr)->v_level > pushval->v_level)
+        if (((*itr)->v_level == pushval->v_level && itr->ret_id() > pushval.ret_id())
+           || (*itr)->v_level > pushval->v_level)
             break;
         ++itr;
     }

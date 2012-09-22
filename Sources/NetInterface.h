@@ -31,6 +31,8 @@ public:
     virtual bool Recv(Message* msg) = 0;
     virtual bool Send(const Message& msg) = 0;
     virtual bool IsFail() = 0;
+
+    virtual unsigned int Hash() const = 0;
 protected:
     INetClient() {}
 };

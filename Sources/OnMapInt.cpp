@@ -70,8 +70,9 @@ bool IOnMapItem::isVisible(int x, int y)
 
 bool IOnMapItem::checkMoveTime()
 {
-    if(MAIN_TICK - lastMove <= tickSpeed) return false;
-    lastMove = (int)MAIN_TICK;
+    if(MAIN_TICK - lastMove <= tickSpeed) 
+        return false;
+    lastMove = static_cast<int>(MAIN_TICK);
     return true;
 };
 
@@ -84,7 +85,8 @@ bool IOnMapItem::checkPassable()
     MapMaster::switchDir(locx, locy, direct);//trurly
 
     //SYSTEM_STREAM << "Begin use is passable\n";
-    if(map->isPassable(locx, locy, level)) return true;
+    if(map->isPassable(locx, locy, level))
+        return true;
     //SYSTEM_STREAM << "Bad end\n";
     return false;
 };

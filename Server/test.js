@@ -2,6 +2,7 @@ var msg    = require('./message');
 var recv   = require('./receiver');
 var client = require('./client');
 var holder = require('./holder');
+var last   = require('./last_messages');
 
 console.log("Begin message.js test:")
 
@@ -79,6 +80,45 @@ massive.for_each(function (number) {
 });
 //console.log(str);
 console.log(str === " 1 2 3 4 5 6 7");
+
+var lmess = new last.last_messages(10);
+
+lmess.push(0);
+lmess.push(1);
+lmess.push(2);
+lmess.push(3);
+lmess.push(4);
+lmess.push(5);
+lmess.push(6);
+lmess.push(7);
+lmess.push(8);
+lmess.push(9);
+
+lmess.for_each(function (number) {
+    console.log(number)
+});
+console.log("");
+
+lmess.push(9);
+lmess.push(8);
+lmess.push(7);
+lmess.push(6);
+lmess.push(5);
+lmess.push(4);
+lmess.push(3);
+lmess.push(2);
+lmess.push(1);
+lmess.push(0);
+
+lmess.for_each(function (number) {
+    console.log(number)
+});
+console.log("");
+
+lmess.push(0);
+lmess.for_each(function (number) {
+    console.log(number)
+});
 
 
 

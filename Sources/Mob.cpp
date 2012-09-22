@@ -114,7 +114,7 @@ Manager::Manager(Mode mode, std::string adrs)
     visiblePoint = new std::list<point>;
     isMove = false;
     done = 0;
-    pause = 0;
+    pause = false;
     last_fps = FPS_MAX;
     net_client = NetClient::Init(this);
 };
@@ -133,16 +133,16 @@ void Manager::process()
     while(done == 0)
     { 
         if (!NODRAW)
-        processInput();
+            processInput();
         IMainItem::fabric->Sync();
-        if(net_client->Ready())
+        if(net_client->Ready() && !pause)
         {
             process_in = true;
             process_in_msg();
             MAIN_TICK++;
         }
 
-        if(process_in)
+        if(process_in && !pause)
         {
             numOfDeer = 0;
             IMainItem::fabric->foreachProcess();
@@ -161,7 +161,7 @@ void Manager::process()
 
         texts.Process();
 
-        if((SDL_GetTicks() - lastTimeFps) >= 1000)
+        if((SDL_GetTicks() - lastTimeFps) >= 1000 && !pause)
         {
             visiblePoint->clear();
             visiblePoint = map->losf.calculateVisisble(visiblePoint, thisMob->posx, thisMob->posy, thisMob->level); 
@@ -226,7 +226,7 @@ void Manager::processInput()
         if(event.type == SDL_QUIT) done = 1; 
         if(event.type == SDL_KEYUP)
         {
-            if(event.key.keysym.sym == SDLK_o) pause = !pause;  
+            if (event.key.keysym.sym == SDLK_o) pause = !pause;  
         }
         if(event.type == SDL_MOUSEBUTTONDOWN)
         {
@@ -234,7 +234,7 @@ void Manager::processInput()
             if (item.ret_id())
                 last_touch = item->name;
         }
-           
+        
         keys = SDL_GetKeyState(NULL);
         SEND_KEY_MACRO(SDLK_UP);
         SEND_KEY_MACRO(SDLK_DOWN);

@@ -136,7 +136,8 @@ function get_new_id(client, message, trusted_client) {
 // and add broadcaster
 function final_login(client) {
     clnt.add(client);
-    client.add_callback(msg_acpt.process_ordinary_message, msg.ordinary_type);  
+    client.add_callback(msg_acpt.process_ordinary_message, msg.ordinary_type);
+    client.add_callback(msg_acpt.process_system_message,   msg.system_type);  
 }
 exports.on_login_data = on_login_data;
 

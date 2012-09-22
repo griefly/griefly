@@ -85,8 +85,6 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
     std::stringstream convertor;
     convertor << message.text;
 
-    // TODO: change owner
-
     IMainItem::fabric->loadMap(convertor, data_.who);
     convertor.str("");
 
@@ -196,4 +194,9 @@ bool NetClient::Process()
         ++counter;
     }
     return true;
+}
+
+unsigned int NetClient::Hash() const
+{
+    return hash_;
 }

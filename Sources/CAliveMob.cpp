@@ -92,8 +92,7 @@ void CAliveMob::InitGUI()
     ([&](std::string* str)
     {
         std::stringstream ss;
-//        ss << ((fabric->get_hash_last() == NetMaster->hash) ? "SYNC:" : "UNSYNC:") << fabric->get_hash_last();
-        ss << "TODO: do it!";
+        ss << ((fabric->get_hash_last() == mobMaster->net_client->Hash()) ? "SYNC:" : "UNSYNC:") << fabric->get_hash_last();
         ss >> *str;
     }).SetSize(15).SetPlace(0, 30, 200, 50);
 }
@@ -118,26 +117,9 @@ void CAliveMob::processGUI()
         //    SDL_FreeSurface(sDMG);
         //sDMG = TTF_RenderText_Blended( map->aSpr.font, ssloc.str().c_str(), color);
 
-        if (false)//fabric->get_hash_last() == NetMaster->hash)
+        if (fabric->get_hash_last() == mobMaster->net_client->Hash())
             mobMaster->texts["Sync"].SetColor(0, 255, 100);
         else
             mobMaster->texts["Sync"].SetColor(255, 160, 0);
-        //ssloc2 << ((fabric->get_hash_last() == NetMaster->hash) ? "SYNC" : "UNSYNC") << fabric->get_hash_last();
-        if (MAIN_TICK % HASH_OFTEN == 55)
-        {
-          //  if(sync != nullptr)
-          //      SDL_FreeSurface(sync);
-          //  sync = TTF_RenderText_Blended( map->aSpr.font, ssloc2.str().c_str(), color2);
-        }
     }
-    SDL_Rect rect;
-    rect.x = 150;
-    rect.y = 25;
-    // TODO
-    // if(sDMG != nullptr)
-    //    SDL_BlitSurface(sDMG, NULL, mobMaster->screen, &rect);
-    rect.x = 15;
-    rect.y = 35;
-    // if(sDMG != nullptr)
-    //    SDL_BlitSurface(sync, NULL, mobMaster->screen, &rect);
 }

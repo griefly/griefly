@@ -5,6 +5,8 @@
 #include "MapClass.h"
 #include "sync_random.h"
 
+#include "MagicStrings.h"
+
 ItemFabric::ItemFabric()
 {
     idTable_.resize(100);
@@ -14,7 +16,17 @@ ItemFabric::ItemFabric()
 void ItemFabric::Sync()
 {
     if (MAIN_TICK % HASH_OFTEN == 0)
+    {
         hash_last_ = hash_all();
+
+        Message msg;
+
+        msg.type = Net::SYSTEM_TYPE;
+        msg.text = Net::HASH;
+        msg.from = hash_last_;
+
+        IMainItem::mobMaster->net_client->Send(msg);
+    }
 }
 
 void ItemFabric::foreachProcess()

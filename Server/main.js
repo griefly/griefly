@@ -47,5 +47,6 @@ setInterval(function () {
    var message = new msg.message();
    message.number = msg_acpt.get_new_message_id();
    message.text = "nexttick";
+   msg_acpt.push_message(message);
    client.broadcast(message);
-}, 500);
+}, 90);
