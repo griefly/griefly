@@ -33,6 +33,7 @@ net.createServer(function (socket) {
     });
 
     socket.on('close', function (error) {
+        console.log(error);
         client.del(new_client);
         new_client.close();
         console.log(new_client.id + " exit")

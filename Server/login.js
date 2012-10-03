@@ -11,13 +11,13 @@ This file describes process of login client
 function check_trusted(client) {
     if (clnt.get_trusted() != null)
         return;
-    if (client) {
-        client.trusted = true;
+    if (clnt.clients.length == 0) {
+        if (client) {
+            client.trusted = true;
+        }
         return;
     }
-    if (client.clients.length == 0)
-        return;
-    client.clients[0].trusted = true;
+    clnt.clients[0].trusted = true;
 }
 
 // Every jid has special token

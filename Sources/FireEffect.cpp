@@ -24,7 +24,7 @@ void Fire::process()
         Release();
         return;
     }
-    const int DELAY = 20;
+    const int DELAY = 60;
     if(SDL_GetTicks() - lastTicks > DELAY)
     {
         lastTicks = DELAY;

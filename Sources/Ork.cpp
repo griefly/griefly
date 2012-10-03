@@ -46,9 +46,7 @@ void COrk::processGUImsg(const Message& msg)
         {
             in_hand->posx = posx;
             in_hand->posy = posy;
-            in_hand->x = x;
-            in_hand->y = y;
-            map->addItemOnMap(in_hand);
+            map->addItemOnMap(in_hand, true);
             in_hand = 0;
         }
         else
@@ -68,10 +66,6 @@ void COrk::processGUImsg(const Message& msg)
     else if(msg.text == "SDLK_e")
     {
         IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("forcespear"), posx, posy);
-    }
-    else if(msg.text == "SDLK_c")
-    {
-        IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("cupitem"), posx, posy);
     }
     else if(msg.text == "SDLK_a")
     {

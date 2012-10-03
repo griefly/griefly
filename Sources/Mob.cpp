@@ -111,6 +111,7 @@ Manager::Manager(Mode mode, std::string adrs)
 {
     mode_ = mode;
     adrs_ = adrs;
+    auto_player_ = true;
     visiblePoint = new std::list<point>;
     isMove = false;
     done = 0;
@@ -127,13 +128,13 @@ void Manager::process()
 
     int delay = 0;
     int lastTimeFps = SDL_GetTicks();
-    int lastTimeC = SDL_GetTicks();
+    int lastTimeC   = SDL_GetTicks();
     fps = 0;
     bool process_in = false;
     while(done == 0)
     { 
-        if (!NODRAW)
-            processInput();
+
+        processInput();
         IMainItem::fabric->Sync();
         if(net_client->Ready() && !pause)
         {
@@ -165,12 +166,7 @@ void Manager::process()
         {
             visiblePoint->clear();
             visiblePoint = map->losf.calculateVisisble(visiblePoint, thisMob->posx, thisMob->posy, thisMob->level); 
-            //SYSTEM_STREAM << loc << std::endl;
-            if (!NODRAW)
-            {
-                //SDL_FreeSurface(sFPS);
-                //sFPS = TTF_RenderText_Blended(map->aSpr.font, loc, color);
-            }
+
             if(!(fps > FPS_MAX - 10 && fps < FPS_MAX - 10))
             delay = (int)(1000.0 / FPS_MAX + delay - 1000.0 / fps);
             lastTimeFps = SDL_GetTicks();
@@ -205,7 +201,7 @@ void Manager::checkMoveMob()
 };
 
 #define SEND_KEY_MACRO(key) \
-      if(keys[key]) \
+      if((auto_player_ && (rand() % 100 == 1)) || (!NODRAW && keys[key])) \
       { \
           if(MAIN_TICK - lastShoot > 4) \
           { \
@@ -220,40 +216,30 @@ void Manager::processInput()
 {
     static Uint8* keys;
     static int lastShoot = 0;
-    SDL_Event event;    
-    while (SDL_PollEvent(&event))
-    { 
-        if(event.type == SDL_QUIT) done = 1; 
-        if(event.type == SDL_KEYUP)
-        {
-            if (event.key.keysym.sym == SDLK_o) pause = !pause;  
+    if (!NODRAW)
+    {
+        SDL_Event event;    
+        while (SDL_PollEvent(&event))
+        { 
+            if(event.type == SDL_QUIT) 
+                done = 1; 
+            if(event.type == SDL_KEYUP)
+            {
+                if (event.key.keysym.sym == SDLK_o) 
+                    pause = !pause;
+                if (event.key.keysym.sym == SDLK_F12)
+                    auto_player_ = !auto_player_;
+            }
+            if(event.type == SDL_MOUSEBUTTONDOWN)
+            {
+                auto item = map->click(event.button.x, event.button.y);
+                if (item.ret_id())
+                    last_touch = item->name;
+            }
         }
-        if(event.type == SDL_MOUSEBUTTONDOWN)
-        {
-            auto item = map->click(event.button.x, event.button.y);
-            if (item.ret_id())
-                last_touch = item->name;
-        }
-        
-        keys = SDL_GetKeyState(NULL);
-        SEND_KEY_MACRO(SDLK_UP);
-        SEND_KEY_MACRO(SDLK_DOWN);
-        SEND_KEY_MACRO(SDLK_LEFT);
-        SEND_KEY_MACRO(SDLK_RIGHT);
-        SEND_KEY_MACRO(SDLK_j);
-        SEND_KEY_MACRO(SDLK_p);
-        SEND_KEY_MACRO(SDLK_q);
-        SEND_KEY_MACRO(SDLK_f);
-        SEND_KEY_MACRO(SDLK_a);
-        SEND_KEY_MACRO(SDLK_s);
-        SEND_KEY_MACRO(SDLK_1);
-        SEND_KEY_MACRO(SDLK_2);
-        SEND_KEY_MACRO(SDLK_3);
-        SEND_KEY_MACRO(SDLK_4);
-        SEND_KEY_MACRO(SDLK_d);
-        SEND_KEY_MACRO(SDLK_e);
-        SEND_KEY_MACRO(SDLK_c);
 
+        SDL_PumpEvents();
+        keys = SDL_GetKeyState(NULL);
         if(keys[SDLK_h])
         {
             int locatime = SDL_GetTicks();
@@ -285,6 +271,26 @@ void Manager::processInput()
             SYSTEM_STREAM << "World's hash: " << IMainItem::fabric->hash_all() << std::endl; 
         }
     }
+
+    SEND_KEY_MACRO(SDLK_UP);
+    SEND_KEY_MACRO(SDLK_DOWN);
+    SEND_KEY_MACRO(SDLK_LEFT);
+    SEND_KEY_MACRO(SDLK_RIGHT);
+    SEND_KEY_MACRO(SDLK_j);
+    SEND_KEY_MACRO(SDLK_p);
+    SEND_KEY_MACRO(SDLK_q);
+    SEND_KEY_MACRO(SDLK_f);
+    SEND_KEY_MACRO(SDLK_a);
+    SEND_KEY_MACRO(SDLK_s);
+    SEND_KEY_MACRO(SDLK_d);
+    SEND_KEY_MACRO(SDLK_w);
+    SEND_KEY_MACRO(SDLK_1);
+    SEND_KEY_MACRO(SDLK_2);
+    SEND_KEY_MACRO(SDLK_3);
+    SEND_KEY_MACRO(SDLK_4);
+    SEND_KEY_MACRO(SDLK_d);
+    SEND_KEY_MACRO(SDLK_e);
+    SEND_KEY_MACRO(SDLK_c);
 };
 
 void Manager::initWorld()
@@ -311,7 +317,7 @@ void Manager::initWorld()
     atexit(SDLNet_Quit);
     IMainItem::fabric = new ItemFabric;
     map = new MapMaster;
-    SDL_WM_SetCaption("GOS", "GOS");
+    SDL_WM_SetCaption("K&V", "K&V");
     if (!NODRAW)
         gl_screen = new Screen(sizeW, sizeH);
 

@@ -64,6 +64,7 @@ void MapMaster::makeMap()
                 IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("weed"), x, y);//*/
         }
     }
+    centerFromTo(mobi->thisMob->posx, mobi->thisMob->posy);
     SYSTEM_STREAM << "End create map\n";
 };
 
@@ -203,13 +204,18 @@ bool MapMaster::isVisible(int posx, int posy, bool level)
     return true;
 };
 
-void MapMaster::addItemOnMap(id_ptr_on<IOnMapItem> pushval)
+void MapMaster::addItemOnMap(id_ptr_on<IOnMapItem> pushval, bool correct_x_y)
 {
-    // TODO: сортировка в правильном порядке, и вообще потом
     int posx = pushval->posx, posy = pushval->posy;
     auto itr = squares[posx][posy].begin();
     while(itr != squares[posx][posy].end())
     {
+        if (itr->ret_id() == pushval.ret_id())
+        {
+            SYSTEM_STREAM << "ALERT! " << pushval.ret_id() << " double added!\n";
+            SDL_Delay(5000);
+            assert(false);
+        }
         if (((*itr)->v_level == pushval->v_level && itr->ret_id() > pushval.ret_id())
            || (*itr)->v_level > pushval->v_level)
             break;
@@ -217,7 +223,14 @@ void MapMaster::addItemOnMap(id_ptr_on<IOnMapItem> pushval)
     }
     SqType::const_iterator locit = itr;
     squares[posx][posy].insert(locit, pushval);
-    //pushval->x = 
+    
+    if (mobi->thisMob.valid() && correct_x_y)
+    {
+        int newx = (pushval->posx - mobi->thisMob->posx + beginMobPosX) * TITLE_SIZE;
+        int newy = (pushval->posy - mobi->thisMob->posy + beginMobPosY) * TITLE_SIZE;
+        pushval->x = newx;
+        pushval->y = newy;
+    }
 }
 
 void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy)
@@ -229,9 +242,7 @@ void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy)
     do
     {
         --it;
-        SYSTEM_STREAM << "Begin insert liquid\n";
         std::list<HashAmount> ha = (*it)->insertLiquid(*loc);
-        SYSTEM_STREAM << "End insert liquid\n";
     }
     while(ha.size() && it != squares[posx][posy].begin());
 }

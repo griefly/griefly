@@ -82,6 +82,8 @@ private:
     std::string adrs_;
 
     size_t creator_;
+
+    bool auto_player_;
 };
 
 #endif

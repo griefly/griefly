@@ -112,7 +112,7 @@ bool IOnMapItem::mainMove()
         checkForEachLevel(oldposx, oldposy);
     checkSelfLevel();
     MapMaster::switchDir(x, y, direct, TITLE_SIZE, false);
-    map->addItemOnMap(thisid);
+    map->addItemOnMap(thisid, false);
     if(isVisible(posx, posy))
     {
         Move* eff = getEffectOf<Move>();
@@ -170,7 +170,7 @@ void IOnMapItem::LoadInMap()
 {
     id_ptr_on<IOnMapItem> pushval;
     pushval = id;
-    map->addItemOnMap(pushval);
+    map->addItemOnMap(pushval, true);
 }
 
 IOnMapItem::IOnMapItem()

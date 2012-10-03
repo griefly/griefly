@@ -180,6 +180,9 @@
     <ClInclude Include="Sources\TypelistOfItems.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Debug.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -213,9 +216,6 @@
       <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="Sources\ItemFabric.cpp">
-      <Filter>Source Files\Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Kivsjak.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Liquid.cpp">
@@ -279,6 +279,12 @@
       <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TypelistOfItems.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Kivsjak.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Debug.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
   </ItemGroup>

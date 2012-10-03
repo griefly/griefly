@@ -40,9 +40,6 @@ void IMob::delThis()
 
 void IMob::processGUImsg(const Message& msg)
 {
-    int i;
-    int& j = i;
-    int& u = j;
     HashAmount h;
     std::list<HashAmount> hloc;
     if (msg.text == "SDLK_UP")

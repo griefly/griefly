@@ -89,9 +89,6 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
         number.append(&local_char, 1);
     }
 
-    // 
-    SYSTEM_STREAM << "Raw size message: " << number << std::endl;
-
     size_t length;
 
     convertor << number;

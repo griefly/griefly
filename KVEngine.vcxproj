@@ -16,6 +16,7 @@
     <ClInclude Include="Sources\CAliveMob.h" />
     <ClInclude Include="Sources\constheader.h" />
     <ClInclude Include="Sources\CSmallItem.h" />
+    <ClInclude Include="Sources\Debug.h" />
     <ClInclude Include="Sources\DrawInt.h" />
     <ClInclude Include="Sources\EffectSystem.h" />
     <ClInclude Include="Sources\FastIsType.h" />
@@ -59,6 +60,7 @@
     <ClCompile Include="Sources\CAliveMob.cpp" />
     <ClCompile Include="Sources\constcpp.cpp" />
     <ClCompile Include="Sources\CSmallItem.cpp" />
+    <ClCompile Include="Sources\Debug.cpp" />
     <ClCompile Include="Sources\DrawInt.cpp" />
     <ClCompile Include="Sources\Firebullet.cpp" />
     <ClCompile Include="Sources\FireEffect.cpp" />

@@ -8,12 +8,12 @@
 
 unsigned int GLSprite::FrameW() const
 {
-    return gl_sprites_.size();
+    return gl_sprites_[0].size();
 }
 
 unsigned int GLSprite::FrameH() const
 {
-    return gl_sprites_[0].size();
+    return gl_sprites_.size();
 }
 
 int GLSprite::W() const

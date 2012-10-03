@@ -113,7 +113,7 @@ public:
     void splashLiquid(std::list<HashAmount> ha, int posx, int posy);
 
     void makeMap();
-    void addItemOnMap(id_ptr_on<IOnMapItem> pushval);
+    void addItemOnMap(id_ptr_on<IOnMapItem> pushval, bool correct_x_y);
     void centerFromTo(int nowPosx, int nowPosy);
     bool isPassable(int posx, int posy, bool level);
     bool fastisPassable(int posx, int posy);

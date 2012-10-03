@@ -68,27 +68,15 @@ public:
         }
         item->id = id_new;
         idTable_[id_new] = item;
-        if(IMainItem::mobMaster->thisMob.valid())
-        {
-            item->x = (posx - IMainItem::mobMaster->thisMob->posx + beginMobPosX) * TITLE_SIZE;
-            item->y = (posy - IMainItem::mobMaster->thisMob->posy + beginMobPosY) * TITLE_SIZE;
-        }
-        else
-        {
-            item->x = beginMobPosX * TITLE_SIZE;
-            item->y = beginMobPosY * TITLE_SIZE;
-        }
+
         item->posx = posx;
         item->posy = posy;
-//        item->isMove = 0;
-        item->lastMove = 0;
-//        item->way = TITLE_SIZE;
 
         id_ptr_on<T> retval;
         id_ptr_on<IOnMapItem> pushval;
         pushval = item->id;
         retval = item->id;
-        IMainItem::map->addItemOnMap(pushval);
+        IMainItem::map->addItemOnMap(pushval, true);
         return retval;
     }
     
