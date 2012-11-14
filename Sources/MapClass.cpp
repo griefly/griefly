@@ -1,10 +1,28 @@
 #include "MapClass.h"
 #include "MainInt.h"
+#include "TileInt.h"
 
 #include <math.h>
 #include <sstream>
 #include <iostream>
 #include <assert.h>
+#include <hash_map>
+
+bool MapMaster::CheckDublicate()
+{
+    assert(false && "Not used");
+    return true;
+    /*std::hash_map<unsigned int, int> holder;
+    for(int posx = 0; posx < sizeWmap; posx++)
+    {
+        for(int posy = 0; posy < sizeHmap; posy++) 
+        {
+            auto itr = squares[posx][posy].begin();
+            while(itr != squares[posx][posy].end())
+                ++holder[itr->ret_id()];
+        }
+    }*/
+}
 
 void MapMaster::Draw()
 {
@@ -16,59 +34,69 @@ void MapMaster::Draw()
     auto it2 = mobi->visiblePoint->begin();  
     for(int i = 0; i < MAX_LEVEL; ++i)
     {
-        auto it2 = mobi->visiblePoint->begin();  
         while(it2 != mobi->visiblePoint->end())
         {
-            auto itr = squares[it2->posx][it2->posy].begin();
-            while(itr != squares[it2->posx][it2->posy].end())
+            squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
             {
-                if((*itr)->v_level == i)
-                    (*itr)->processImage(nullptr/*screen*/);   
-                ++itr;
-            }
+                if (item->v_level == i)
+                    item->processImage(nullptr);//screen
+            });
             ++it2;
         }
     }
     it2 = mobi->visiblePoint->begin();  
     while(it2 != mobi->visiblePoint->end())
     {
-        auto itr = squares[it2->posx][it2->posy].begin();
-        while(itr != squares[it2->posx][it2->posy].end())
+        squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
         {
-            if((*itr)->v_level >= MAX_LEVEL)
-                (*itr)->processImage(nullptr/*screen*/);   
-            ++itr;
-        }
+            if (item->v_level >= MAX_LEVEL)
+                item->processImage(nullptr);//screen
+        });
         ++it2;
     }
 };
 
+void MapMaster::makeTiles()
+{
+    // Gen tiles
+    for(int x = 0; x < sizeWmap; x++)
+    {
+        for(int y = 0; y < sizeHmap; y++) 
+        {
+            auto loc = IMainItem::fabric->newItem<CubeTile>(0, CubeTile::T_ITEM_S());
+            loc->SetPos(x, y);
+            squares[x][y][0] = loc;
+        }
+    }
+}
+
 void MapMaster::makeMap()
 {
+    // End gen
     for(int x = 0; x < sizeWmap; x++)
     {
         for(int y = 0; y < sizeHmap; y++) 
         {     
-
-            //*
-            id_ptr_on<IOnMapItem> loc = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash((rand() % 10 != 1) ? "ground" : "ground"), x, y);
-            loc->imageStateH = 0;
-            loc->imageStateW = rand() % 4;
-            loc->level = 0;//*/
+            // Ge
+            //
+            //id_ptr_on<IOnMapItem> loc = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash((rand() % 10 != 1) ? "ground" : "ground"), squares[x][y][0]);
+            //loc->imageStateH = 0;
+            //loc->imageStateW = rand() % 4;
             
             if(rand() % 29 == 1 || x == 0 || y == 0 || x == sizeWmap - 1 || y == sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("testmob"), x, y)->level = 1;
+                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][0]);
             if(rand() % 60 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("kivsjak"), x, y);
+                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][0]);
             if(rand() % 3 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("weed"), x, y);//*/
+                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][0]);//*/
         }
     }
-    centerFromTo(mobi->thisMob->posx, mobi->thisMob->posy);
+    centerFromTo(castTo<CubeTile>(mobi->thisMob->GetOwner().ret_item())->posx(), 
+                 castTo<CubeTile>(mobi->thisMob->GetOwner().ret_item())->posy());
     SYSTEM_STREAM << "End create map\n";
 };
 
-void MapMaster::centerFromTo(int nowPosx, int nowPosy)
+void MapMaster::centerFromTo(int nowPosx, int nowPosy, int nowPosz)
 {
     for(int x = 0; x < sizeWmap; x++)
     {
@@ -76,13 +104,11 @@ void MapMaster::centerFromTo(int nowPosx, int nowPosy)
         {
             int newx = (x - nowPosx + beginMobPosX) * TITLE_SIZE;
             int newy = (y - nowPosy + beginMobPosY) * TITLE_SIZE;
-            auto itr = squares[x][y].begin();
-            while(itr != squares[x][y].end())
+            squares[x][y][nowPosz]->ForEach([&](id_ptr_on<IOnMapBase> item)
             {
-                (*itr)->x = newx;
-                (*itr)->y = newy;
-                ++itr;
-            }
+                item->x = newx;
+                item->y = newy;
+            });
         }
     }
 };
@@ -96,7 +122,7 @@ MapMaster::MapMaster()
 
 bool MapMaster::canDraw()
 {
-    if (SDL_GetTicks() - ms_last_draw > (1000 / DRAW_MAX + 1))
+    if (SDL_GetTicks() - ms_last_draw > static_cast<size_t>(1000 / DRAW_MAX + 1))
     {
         ms_last_draw = SDL_GetTicks();
         return true;
@@ -122,22 +148,9 @@ void CPathFinder::clearPathfinding()
 };
 
 
-bool MapMaster::isPassable(int posx, int posy, bool level)
+bool MapMaster::isPassable(int posx, int posy, int posz)
 {
-    auto itr = squares[posx][posy].begin();
-    while(itr != squares[posx][posy].end())
-    {
-        if((!(*itr)->passable && ((*itr)->level == level))) return false;
-        ++itr;
-    }
-    return true;
-};
-
-//Unused Delete it
-bool MapMaster::fastisPassable(int posx, int posy)
-{
-    if(posy <= 0 || posy >= (sizeHmap - 1) || posx <= 0 || posx >= sizeWmap - 1) return false;
-    return true;
+    return squares[posx][posy][posz]->IsPassable();
 };
 
 void MapMaster::switchDir(int& posx, int& posy, Dir direct, int num, bool back)//TODO: Remove back
@@ -192,51 +205,18 @@ bool MapMaster::checkOutBorder(int posx, int posy, Dir direct)
     return true;
 };
 
-bool MapMaster::isVisible(int posx, int posy, bool level)
+bool MapMaster::isVisible(int posx, int posy, int posz)
 {
-    if(!checkOutBorder(posx, posy)) return false;
-    auto itr = squares[posx][posy].begin();
-    while(itr != squares[posx][posy].end())
-    {
-        if((!(*itr)->transparent && ((*itr)->level == level))) return false;
-        ++itr;
-    }
-    return true;
+    if(!checkOutBorder(posx, posy/*TODO: posz*/))
+        return false;
+    return squares[posx][posy][posz]->IsPassable();
 };
 
-void MapMaster::addItemOnMap(id_ptr_on<IOnMapItem> pushval, bool correct_x_y)
+void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz)
 {
-    int posx = pushval->posx, posy = pushval->posy;
-    auto itr = squares[posx][posy].begin();
-    while(itr != squares[posx][posy].end())
-    {
-        if (itr->ret_id() == pushval.ret_id())
-        {
-            SYSTEM_STREAM << "ALERT! " << pushval.ret_id() << " double added!\n";
-            SDL_Delay(5000);
-            assert(false);
-        }
-        if (((*itr)->v_level == pushval->v_level && itr->ret_id() > pushval.ret_id())
-           || (*itr)->v_level > pushval->v_level)
-            break;
-        ++itr;
-    }
-    SqType::const_iterator locit = itr;
-    squares[posx][posy].insert(locit, pushval);
-    
-    if (mobi->thisMob.valid() && correct_x_y)
-    {
-        int newx = (pushval->posx - mobi->thisMob->posx + beginMobPosX) * TITLE_SIZE;
-        int newy = (pushval->posy - mobi->thisMob->posy + beginMobPosY) * TITLE_SIZE;
-        pushval->x = newx;
-        pushval->y = newy;
-    }
-}
-
-void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy)
-{
-    std::list<HashAmount>* loc = &ha;
-    auto it = squares[posx][posy].end();
+    // TODO:
+    /*std::list<HashAmount>* loc = &ha;
+    auto it = squares[posx][posy][].end();
     if(it == squares[posx][posy].begin())
         return;
     do
@@ -244,24 +224,28 @@ void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy)
         --it;
         std::list<HashAmount> ha = (*it)->insertLiquid(*loc);
     }
-    while(ha.size() && it != squares[posx][posy].begin());
+    while(ha.size() && it != squares[posx][posy].begin());*/
 }
 
 id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
 {
     if(!mobi->visiblePoint) 
         return 0;
+
+    id_ptr_on<IOnMapItem> retval = 0;
+
     auto it2 = mobi->visiblePoint->begin();  
     while(it2 != mobi->visiblePoint->end())
     {
-        auto itr = squares[it2->posx][it2->posy].begin();
-        while(itr != squares[it2->posx][it2->posy].end())
+        squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
         {
-            if((*itr)->v_level >= MAX_LEVEL)
-                if(!(*itr)->IsTransp(x - (*itr)->x, y - (*itr)->y))
-                    return *itr;
-            ++itr;
-        }
+            if (retval.ret_id() == 0)
+                if(item->v_level >= MAX_LEVEL)
+                    if(item->IsTransp(x - item->x, y - item->y))
+                        retval = item;
+        });
+        if (retval.ret_id())
+            return retval;
         ++it2;
     }
     it2 = mobi->visiblePoint->begin();  
@@ -270,24 +254,24 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
         auto it2 = mobi->visiblePoint->begin();  
         while(it2 != mobi->visiblePoint->end())
         {
-            auto itr = squares[it2->posx][it2->posy].begin();
-            while(itr != squares[it2->posx][it2->posy].end())
+            squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
             {
-                if((*itr)->v_level == i)
-                    if(!(*itr)->IsTransp(x - (*itr)->x, y - (*itr)->y))
-                        return *itr;
-                ++itr;
-            }
+                if (retval.ret_id() == 0)
+                    if(item->v_level == i)
+                        if(item->IsTransp(x - item->x, y - item->y))
+                            retval = item;
+            });
+            if (retval.ret_id())
+                return retval;
             ++it2;
         }
     }
     return 0;
 }
 
-std::list<Dir> CPathFinder::calculatePath(int fromPosx, int fromPosy, int toPosx, int toPosy, bool inputlevel)
+std::list<Dir> CPathFinder::calculatePath(int fromPosx, int fromPosy, int toPosx, int toPosy, int toPosz)
 {
     int begTime = SDL_GetTicks();
-    level = inputlevel;
     ++numOfPathfind;
     clearPathfinding();
     std::list<Dir> path;
@@ -308,10 +292,7 @@ std::list<Dir> CPathFinder::calculatePath(int fromPosx, int fromPosy, int toPosx
         openList.pop_front();
         
         if(openList.begin() == openList.end()) 
-        {
-            //SYSTEM_STREAM << SDL_GetTicks() - begTime << " Pathspeed\n";
             return path;
-        }
         locposx = (*openList.begin())->posx;
         locposy = (*openList.begin())->posy;
     }
@@ -334,7 +315,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
 {
     //printf("%d %d huj\n", posx, posy);
 
-    if(!(squares[posx + 1][posy].inCloseList) && map->isPassable(posx + 1, posy, level))
+    if(!(squares[posx + 1][posy].inCloseList) && map->isPassable(posx + 1, posy))
     {
         if(squares[posx + 1][posy].inOpenList)
         {
@@ -357,7 +338,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
         }
     }
     //printf("Wtf!\n");
-    if(!squares[posx - 1][posy].inCloseList && map->isPassable(posx - 1, posy, level))
+    if(!squares[posx - 1][posy].inCloseList && map->isPassable(posx - 1, posy))
     {
         if(squares[posx - 1][posy].inOpenList)
         {
@@ -379,7 +360,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
             addToOpen(posx - 1, posy);
         }
     }
-    if(!squares[posx][posy + 1].inCloseList && map->isPassable(posx, posy + 1, level))
+    if(!squares[posx][posy + 1].inCloseList && map->isPassable(posx, posy + 1))
     {
         if(squares[posx][posy + 1].inOpenList)
         {
@@ -401,7 +382,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
             addToOpen(posx, posy + 1);
         }
     }
-    if(!squares[posx][posy - 1].inCloseList && map->isPassable(posx, posy - 1, level))
+    if(!squares[posx][posy - 1].inCloseList && map->isPassable(posx, posy - 1))
     {
         if(squares[posx][posy - 1].inOpenList)
         {
@@ -458,7 +439,7 @@ void CPathFinder::addToOpen(int posx, int posy)
     openList.push_back(&squares[posx][posy]);
 };
 
-std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int posx, int posy, bool level)
+std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
 {
     //auto retlist = new std::list<point>;
     clearLOS();
@@ -532,7 +513,7 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     auto itr = worklist.begin();
     while(itr != worklist.end())
     {
-        if(map->isVisible(itr->posx + posx - sizeHsq, itr->posy + posy - sizeWsq, level) && itr->posx != 0 && itr->posx != sizeHsq * 2 && itr->posy != sizeWsq * 2 && itr->posy != 0
+        if(map->isVisible(itr->posx + posx - sizeHsq, itr->posy + posy - sizeWsq, posz) && itr->posx != 0 && itr->posx != sizeHsq * 2 && itr->posy != sizeWsq * 2 && itr->posy != 0
             && !(itr->posy + posy - sizeWsq <= 0 || itr->posy + posy - sizeWsq >= (sizeHmap - 1) || itr->posx + posx - sizeHsq <= 0 || itr->posx + posx - sizeHsq >= sizeWmap - 1))
             if(abs(itr->posx - sizeHsq) > abs(itr->posy - sizeWsq)) 
             if(itr->posx > sizeHsq)

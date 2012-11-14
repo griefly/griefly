@@ -50,37 +50,37 @@ void IMob::processGUImsg(const Message& msg)
         checkMove(D_LEFT);
     else if (msg.text == "SDLK_RIGHT")
         checkMove(D_RIGHT);
-    else if (msg.text == "SDLK_j")
-        level = 1;
+    // else if (msg.text == "SDLK_j")
+    //    level = 1;
     else if (msg.text == "SDLK_1")
     {
         h.hash = hash("petrol");
         h.amount = 1;
         hloc.push_back(h);
-        map->splashLiquid(hloc, posx, posy);
+        // map->splashLiquid(hloc, posx, posy);
     }
     else if(msg.text == "SDLK_2")
     {
         h.hash = hash("honey");
         h.amount = 1;
         hloc.push_back(h);
-        map->splashLiquid(hloc, posx, posy);
+        // map->splashLiquid(hloc, posx, posy);
     }
     else if(msg.text == "SDLK_3")
     {
         h.hash = hash("water");
         h.amount = 3;
         hloc.push_back(h);
-        map->splashLiquid(hloc, posx, posy);
+        // map->splashLiquid(hloc, posx, posy);
     }
     else if(msg.text == "SDLK_f")
     {
-        auto whoa = map->getItemOnly<CGround>(posx, posy);
+        /*auto whoa = owner->getItemOnly<CGround>();
         if(whoa != map->squares[posx][posy].end())
         {
             (*whoa)->delThis();
             fabric->newItemOnMap<Pit>(hash("pit"), posx, posy);
-        }
+        }*/
     }
 }
 
@@ -93,8 +93,9 @@ bool IMob::checkMove(Dir direct)
         {            
             //SYSTEM_STREAM << "Function IMob::checkMove called: onMobControl == true\n";
             mobMaster->checkMove(direct);
-            mobMaster->visiblePoint->clear();
-            mobMaster->visiblePoint = map->losf.calculateVisisble(mobMaster->visiblePoint, posx, posy, level);
+            // TODO UpdateVisible()
+            //mobMaster->visiblePoint->clear();
+            //mobMaster->visiblePoint = map->losf.calculateVisisble(mobMaster->visiblePoint, posx, posy, level);
         }
         return true;
     }

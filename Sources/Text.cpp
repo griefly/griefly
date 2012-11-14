@@ -89,7 +89,6 @@ bool TextPainter::Text::CanUpdate()
     }
     return false;
 }
-
 TTF_Font* TextPainter::GetFont(const std::string& name, unsigned int size)
 {
     NameSize loc = {name, size};

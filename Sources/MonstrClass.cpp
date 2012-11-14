@@ -5,51 +5,20 @@
 
 //itemAdder<CMonstr> adder; 
 
+// TODO: delThis().
+
 void CMonstr::aaMind()
 {
 
-    auto itr = map->squares[posx][posy].begin();
+   auto ptr = owner->GetItem<CWeed>();
+   if (ptr.valid())
+       ptr.valid(); // Do smth
 
-    while(itr != map->squares[posx][posy].end())
-    {
-
-        if(castTo<CWeed>(**itr))
-        {
-            dmg -= 5;
-
-            //(*itr++)->delThis(itr);
-
-        }
-        itr++;
-    }
-
-   /*if(inWay)
-   {
-       if(!isMove && (MAIN_TICK - lastMove > tickSpeed))
-       {
-           if(path.begin() == path.end())
-           {
-               inWay = false;
-               return;
-           }
-           checkMove(*path.begin());
-           path.pop_front();
-       }
-       return;
-   }*/
-   //static int FindTargetTime = SDL_GetTicks();
    checkMove((Dir)(get_rand() % 4));
-   /*if(SDL_GetTicks() - FindTargetTime > 50)
-   {
-       FindTargetTime = SDL_GetTicks();
-       findTarget();
-       inWay = true;
-   }*/
 };
 
 CMonstr::CMonstr()
 {
-    level = 1;
     FindTargetTime = SDL_GetTicks() + get_rand() % 100;
     passable = false;
     tickSpeed = 8;
@@ -66,7 +35,7 @@ void CMonstr::live()
 void CMonstr::findTarget()
 {
 
-    for(int lx = max(0, posx - sizeHsq); lx <= min(posx + sizeHsq, sizeHmap - 1); lx++)
+    /*for(int lx = max(0, posx - sizeHsq); lx <= min(posx + sizeHsq, sizeHmap - 1); lx++)
         {
             for(int ly = max(0, posy - sizeWsq); ly <= min(posy + sizeWsq, sizeWmap - 1); ly++)
             {
@@ -84,7 +53,7 @@ void CMonstr::findTarget()
                     ++itr;
                 }
             }
-        }
+        }*/
 
     /*findRequest.id = 0;
     idpoint p;

@@ -9,6 +9,7 @@
 #include "sync_random.h"
 #include "ItemFabric.h"
 #include "MagicStrings.h"
+#include "TileInt.h"
 
 void Manager::checkMove(Dir direct)
 {
@@ -28,47 +29,35 @@ void Manager::moveEach(Dir direct)
     {
     case D_UP:
         for(int x = 0; x < sizeHmap; x++)
-        {
             for(int y = 0; y < sizeWmap; y++)
-            {
-                auto itr = map->squares[x][y].begin();
-                while(itr != map->squares[x][y].end())
-                    (*itr++)->y += TITLE_SIZE;
-            }
-        }
+                map->squares[x][y][0]->ForEach([](id_ptr_on<IOnMapBase> item)
+                {
+                    item->y += TITLE_SIZE;
+                });
         break;
     case D_DOWN:
         for(int x = 0; x < sizeHmap; x++)
-        {
             for(int y = 0; y < sizeWmap; y++)
-            {
-                auto itr = map->squares[x][y].begin();
-                while(itr != map->squares[x][y].end())
-                    (*itr++)->y -= TITLE_SIZE;
-            }
-        }
+                map->squares[x][y][0]->ForEach([](id_ptr_on<IOnMapBase> item)
+                {
+                    item->y -= TITLE_SIZE;
+                });
         break;
     case D_LEFT:
         for(int x = 0; x < sizeHmap; x++)
-        {
             for(int y = 0; y < sizeWmap; y++)
-            {
-                auto itr = map->squares[x][y].begin();
-                while(itr != map->squares[x][y].end())
-                    (*itr++)->x += TITLE_SIZE;
-            }
-        }
+                map->squares[x][y][0]->ForEach([](id_ptr_on<IOnMapBase> item)
+                {
+                    item->x += TITLE_SIZE;
+                });
         break;
     case D_RIGHT:
         for(int x = 0; x < sizeHmap; x++)
-        {
             for(int y = 0; y < sizeWmap; y++)
-            {
-                auto itr = map->squares[x][y].begin();
-                while(itr != map->squares[x][y].end())
-                    (*itr++)->x -= TITLE_SIZE;
-            }
-        }
+                map->squares[x][y][0]->ForEach([](id_ptr_on<IOnMapBase> item)
+                {
+                    item->x -= TITLE_SIZE;
+                });
         break;
     }
     undoCenterMove(direct);
@@ -76,18 +65,18 @@ void Manager::moveEach(Dir direct)
 
 void Manager::undoCenterMove(Dir direct)
 {
-    for(int x = max(0, thisMob->posx - sizeHsq); x <= min(thisMob->posx + sizeHsq, sizeHmap - 1); x++)
+    for(int x = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() - sizeHsq); 
+        x <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() + sizeHsq, sizeHmap - 1); x++)
     {
-        for(int y = max(0, thisMob->posy - sizeWsq); y <= min(thisMob->posy + sizeWsq, sizeWmap - 1); y++)
+        for(int y = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() - sizeWsq); 
+            y <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() + sizeWsq, sizeWmap - 1); y++)
         {
-            auto itr = map->squares[x][y].begin();
-            while(itr != map->squares[x][y].end())
+            map->squares[x][y][0]->ForEach([&](id_ptr_on<IOnMapBase> item)
             {
                 Move* eff = getEffectOf<Move>();
-                eff->Init(TITLE_SIZE, direct, thisMob->pixSpeed, *itr);
+                eff->Init(TITLE_SIZE, direct, thisMob->pixSpeed, item);
                 eff->Start();
-                ++itr;
-            }
+            });
         }
     }
 };
@@ -100,16 +89,16 @@ void Manager::changeMob(id_ptr_on<IMob>& i)
     {
         thisMob->onMobControl = true;
         thisMob->thisMobControl = true;
-        IMainItem::map->centerFromTo(thisMob->posx, thisMob->posy);
+        IMainItem::map->centerFromTo(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
+            castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy());
         thisMob->InitGUI();
     }
 
     SYSTEM_STREAM << "\nTHIS MOB CHANGE: " << thisMob.ret_id() << " ";
 };
 
-Manager::Manager(Mode mode, std::string adrs)
+Manager::Manager(std::string adrs)
 {
-    mode_ = mode;
     adrs_ = adrs;
     auto_player_ = true;
     visiblePoint = new std::list<point>;
@@ -165,7 +154,10 @@ void Manager::process()
         if((SDL_GetTicks() - lastTimeFps) >= 1000 && !pause)
         {
             visiblePoint->clear();
-            visiblePoint = map->losf.calculateVisisble(visiblePoint, thisMob->posx, thisMob->posy, thisMob->level); 
+            visiblePoint = map->losf.calculateVisisble(visiblePoint, 
+                castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
+                castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy(),
+                castTo<CubeTile>(thisMob->GetOwner().ret_item())->posz()); 
 
             if(!(fps > FPS_MAX - 10 && fps < FPS_MAX - 10))
             delay = (int)(1000.0 / FPS_MAX + delay - 1000.0 / fps);
@@ -240,7 +232,7 @@ void Manager::processInput()
 
         SDL_PumpEvents();
         keys = SDL_GetKeyState(NULL);
-        if(keys[SDLK_h])
+        /*if(keys[SDLK_h])
         {
             int locatime = SDL_GetTicks();
             auto itr = map->squares[thisMob->posx][thisMob->posy].begin();
@@ -252,18 +244,18 @@ void Manager::processInput()
                 i++;
             };
             SYSTEM_STREAM << "Num item: " << i << " in " << (SDL_GetTicks() - locatime) * 1.0 / 1000 << " sec" << std::endl;
-        }
+        }*/
         if(keys[SDLK_F5])
         {
             int locatime = SDL_GetTicks();
-            IMainItem::fabric->saveMap(GetMode() == SERVER ? "servermap.map" : "clientmap.map");
+            IMainItem::fabric->saveMap("clientmap.map");
             SYSTEM_STREAM << "Map saved in "<< (SDL_GetTicks() - locatime) * 1.0 / 1000 << " second" << std::endl;
         }
         if(keys[SDLK_F6])
         {
             int locatime = SDL_GetTicks();
             IMainItem::fabric->clearMap();
-            IMainItem::fabric->loadMap(GetMode() == SERVER ? "servermap.map" : "clientmap.map");
+            IMainItem::fabric->loadMap("clientmap.map");
             SYSTEM_STREAM << "Map load in " << (SDL_GetTicks() - locatime) * 1.0 / 1000 << " second" << std::endl;
         }
         if(keys[SDLK_h])
@@ -333,12 +325,14 @@ void Manager::initWorld()
     srand(SDL_GetTicks());
     id_ptr_on<IMob> newmob;
 
-    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), sizeHmap / 2, sizeWmap / 2);
+    map->makeTiles();
+
+    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);
     changeMob(newmob);
     newmob->x = beginMobPosX * TITLE_SIZE;
     newmob->y = beginMobPosY * TITLE_SIZE;
 
-    auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), sizeHmap / 2, sizeWmap / 2);
+    auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);
     SetCreator(tptr.ret_id());
 
     map->makeMap();

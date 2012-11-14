@@ -30,7 +30,8 @@ void Fire::process()
         lastTicks = DELAY;
         imageStateW = (imageStateW + 1) % sprite->FrameW();
     }
-    if(master->master.ret_id() == 0 && IMainItem::mobMaster->isMobVisible(master->posx, master->posy))
+    // TODO
+    if(true/*master->master.ret_id() == 0 && IMainItem::mobMaster->isMobVisible(master->posx, master->posy)*/)
     {
         IMainItem::mobMaster->gl_screen->Draw(sprite, master->x, master->y, imageStateW, imageStateH);
     }

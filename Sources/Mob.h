@@ -42,7 +42,7 @@ public:
     int threadPathfind(void* data);
 
     void changeMob(id_ptr_on<IMob>& i);
-    Manager(Mode mode, std::string adrs);
+    Manager(std::string adrs);
 
     size_t GetCreator() const;
     void SetCreator(size_t new_creator);
@@ -72,13 +72,10 @@ public:
 
     INetClient* net_client;
 
-    Mode GetMode(){return mode_;}
-
     TextPainter texts;
 
     Screen* gl_screen;
 private:
-    Mode mode_;
     std::string adrs_;
 
     size_t creator_;

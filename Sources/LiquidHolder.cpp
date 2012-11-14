@@ -79,7 +79,7 @@ unsigned int LiquidHolder::addLiquid(unsigned int hash, unsigned int amount)
     if(!liquids[hash].ret_id())
         liquids[hash] = IMainItem::fabric->newItem<Liquid>(master, hash);
     //SYSTEM_STREAM << liquids[hash].ret_id() << "\n";
-    amount = min(static_cast<int>(amount), size - sum_amount);
+    amount = std::min(static_cast<int>(amount), size - sum_amount);
     liquids[hash]->amount += amount;
     //SYSTEM_STREAM << liquids[hash].ret_id() << "\n";
     checkReaction(hash);
@@ -112,14 +112,24 @@ void LiquidHolder::checkReaction(unsigned int hash)
     two = amountOf(it->two);
     three = amountOf(it->three);
 
-    if(it->oneamount) one /= it->oneamount;
-    else one = 99999;
-    if(it->twoamount) two /= it->twoamount;
-    else two = 99999;
-    if(it->threeamount) three /= it->threeamount;
-    else three = 99999;
+    const int MAX_AMOUNT = 99999;
 
-    unsigned int react_size = min(min(one, two), three);
+    if(it->oneamount) 
+        one /= it->oneamount;
+    else 
+        one = MAX_AMOUNT;
+
+    if(it->twoamount) 
+        two /= it->twoamount;
+    else 
+        two = MAX_AMOUNT;
+
+    if(it->threeamount) 
+        three /= it->threeamount;
+    else 
+        three = MAX_AMOUNT;
+
+    unsigned int react_size = std::min(std::min(one, two), three);
 
     removeLiquid(it->one, react_size * it->oneamount);
     removeLiquid(it->two, react_size * it->twoamount);

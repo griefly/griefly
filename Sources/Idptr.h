@@ -58,6 +58,11 @@ public:
         id = 0;
         item = nullptr;
     }
+    template<class T2>
+    bool operator==(const id_ptr_on<T2>& rval)
+    {
+        return ret_id() == rval.ret_id();
+    }
     T* operator*()
     {
         if(0 == IMainItem::fabric->idTable()[id])
@@ -66,6 +71,14 @@ public:
         //    item = castTo<T>(IMainItem::map->idTable[id]);
         return item = castTo<T>(IMainItem::fabric->idTable()[id]);
     }
+    const T* operator*() const
+    {
+        if(0 == IMainItem::fabric->idTable()[id])
+            return 0;
+        //if(!item)
+        //    item = castTo<T>(IMainItem::map->idTable[id]);
+        return castTo<T>(IMainItem::fabric->idTable()[id]);
+    }
     T* operator->()
     {
         if(0 == IMainItem::fabric->idTable()[id])
@@ -73,6 +86,14 @@ public:
         //if(!item)
         //    item = castTo<T>(IMainItem::map->idTable[id]);
         return item = castTo<T>(IMainItem::fabric->idTable()[id]);
+    }
+    const T* operator->() const
+    {
+        if(0 == IMainItem::fabric->idTable()[id])
+            return 0;
+        //if(!item)
+        //    item = castTo<T>(IMainItem::map->idTable[id]);
+        return castTo<T>(IMainItem::fabric->idTable()[id]);
     }
     id_ptr_on& operator=(size_t id_new)
     {
@@ -105,7 +126,7 @@ public:
     {
         id = id_new;
     }
-    size_t ret_id()
+    size_t ret_id() const
     {
         return id;
     }

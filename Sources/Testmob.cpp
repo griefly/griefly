@@ -18,7 +18,6 @@ void CTestmob::process()
 
 CTestmob::CTestmob()
 {
-    level = 1;
     passable = false;
     transparent = false;
     v_level = 5;

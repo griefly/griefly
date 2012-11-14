@@ -131,8 +131,6 @@ public:
     IniterNum2Hash()
     {
         InitNum2HashData<ItemsTypelist>::Init(ItemsTLLength);
-       /* for(int j = 0; j < ItemsTLLength; j++)
-            SYSTEM_STREAM << Num2HashData[j] << " ";*/
     }
 };
 
@@ -142,16 +140,4 @@ unsigned int Num2Hash(int num)
     assert(num >= 0);
     assert(num < ItemsTLLength);
     return Num2HashData[num]; 
-};
-
-/*Slow, dont use it without reason*/
-int Hash2Num(unsigned int hash)
-{
-    static IniterNum2Hash init;
-    int i = 0;
-    for(; i < ItemsTLLength; ++i)
-        if(Num2HashData[i] == hash)
-            return i;
-    assert(false);
-    return -1;
 };

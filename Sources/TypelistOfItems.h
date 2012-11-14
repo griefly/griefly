@@ -18,12 +18,13 @@ namespace KV_Private_NS_NullType
 
 #ifndef BR_CLOSE_IF_OPEN 
 #define BR_CLOSE_IF_OPEN }
-#endif //BR_CLOSE_IF_OPEN 
+#endif // BR_CLOSE_IF_OPEN 
 
 #ifndef BR_CLOSE_IF_NO_OPEN 
 #define BR_CLOSE_IF_NO_OPEN
-#endif //BR_CLOSE_IF_NO_OPEN
+#endif // BR_CLOSE_IF_NO_OPEN
 
+#include "OnMapBaseInt.h"
 #include "DrawInt.h"
 #include "MainInt.h"
 #include "MobInt.h"
@@ -40,6 +41,7 @@ namespace KV_Private_NS_NullType
 #include "Kivsjak.h"
 #include "MessageReceiver.h"
 #include "Teleportator.h"
+#include "TileInt.h"
 
 const int local_num = __COUNTER__; 
 typedef Private::TypelistMaker<local_num - 1>::typelist ItemsTypelist;

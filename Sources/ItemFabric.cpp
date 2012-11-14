@@ -7,6 +7,8 @@
 
 #include "MagicStrings.h"
 
+#include "Debug.h"
+
 ItemFabric::ItemFabric()
 {
     idTable_.resize(100);
@@ -18,6 +20,8 @@ void ItemFabric::Sync()
     if (MAIN_TICK % HASH_OFTEN == 0)
     {
         hash_last_ = hash_all();
+
+        // Debug::UnsyncDebug().Save();
 
         Message msg;
 

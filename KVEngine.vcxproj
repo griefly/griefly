@@ -24,6 +24,7 @@
     <ClInclude Include="Sources\FireEffect.h" />
     <ClInclude Include="Sources\GLSprite.h" />
     <ClInclude Include="Sources\hashes.h" />
+    <ClInclude Include="Sources\helpers.h" />
     <ClInclude Include="Sources\Idptr.h" />
     <ClInclude Include="Sources\ItemFabric.h" />
     <ClInclude Include="Sources\Kivsjak.h" />
@@ -43,6 +44,7 @@
     <ClInclude Include="Sources\MoveEffect.h" />
     <ClInclude Include="Sources\NetClientImpl.h" />
     <ClInclude Include="Sources\NetInterface.h" />
+    <ClInclude Include="Sources\OnMapBaseInt.h" />
     <ClInclude Include="Sources\OnMapInt.h" />
     <ClInclude Include="Sources\Ork.h" />
     <ClInclude Include="Sources\Screen.h" />
@@ -51,6 +53,7 @@
     <ClInclude Include="Sources\Teleportator.h" />
     <ClInclude Include="Sources\Testmob.h" />
     <ClInclude Include="Sources\Text.h" />
+    <ClInclude Include="Sources\TileInt.h" />
     <ClInclude Include="Sources\Turf.h" />
     <ClInclude Include="Sources\TypelistOfItems.h" />
   </ItemGroup>
@@ -87,6 +90,7 @@
     <ClCompile Include="Sources\Teleportator.cpp" />
     <ClCompile Include="Sources\Testmob.cpp" />
     <ClCompile Include="Sources\Text.cpp" />
+    <ClCompile Include="Sources\TileInt.cpp" />
     <ClCompile Include="Sources\Turf.cpp" />
     <ClCompile Include="Sources\TypelistOfItems.cpp" />
   </ItemGroup>

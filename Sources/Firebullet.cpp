@@ -6,7 +6,7 @@
 
 void CFirebullet::process()
 {
-    imageStateW = dMove;
+    /*imageStateW = dMove;
     int count = 0;
 
     auto itr = map->squares[posx][posy].begin();
@@ -28,7 +28,7 @@ void CFirebullet::process()
     }
     if(count) delThis();
     else if(!checkPassable()){delThis();}
-    else checkMove(dMove);
+    else checkMove(dMove);*/
 };
 
 CFirebullet::CFirebullet()

@@ -9,6 +9,7 @@ struct point
 {
     int posx;
     int posy;
+    int posz;
 };
 
 struct square
@@ -33,7 +34,7 @@ struct pathMessage
 class CPathFinder
 {
 public:
-    std::list<Dir> calculatePath(int fromPosx, int fromPosy, int toPosx, int toPosy, bool inputlevel);
+    std::list<Dir> calculatePath(int fromPosx, int fromPosy, int toPosx, int toPosy, int toPosz = 0);
     MapMaster* map;
 private:
     std::list<square*> openList;
@@ -45,7 +46,6 @@ private:
     bool removeFromOpen(int posx, int posy);
     void addToOpen(int posx, int posy);
     int numOfPathfind;
-    bool level;
 };
 
 
@@ -53,7 +53,7 @@ private:
 class LOSfinder
 {
 public:
-    std::list<point>* calculateVisisble(std::list<point>* retval, int posx, int posy, bool level);
+    std::list<point>* calculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0);
     MapMaster* map;
 private:
     //bool LOSSquare[sizeHsq * 2 + 1][sizeWsq * 2 + 1];
@@ -73,49 +73,35 @@ struct idpoint
 class MapMaster
 {
 public:
+    // DEBUG
+    bool CheckDublicate();
+    // END DEBUG
     MapMaster();
     int loManager;
     ASprClass aSpr;
     Manager* mobi;
-    typedef std::list<id_ptr_on<IOnMapItem>> SqType;
-    SqType squares[sizeHmap][sizeWmap];
+    // typedef std::list<id_ptr_on<IOnMapItem>> SqType;
+    typedef id_ptr_on<IOnMapBase> SqType;
+    SqType squares[sizeHmap][sizeWmap][sizeDmap];
     Screen* screen;
     // Sync stuff
 
     void Draw();
-    bool isVisible(int posx, int posy, bool level);
+    bool isVisible(int posx, int posy, int posz = 0);
    
 
     template<typename T>
-    SqType::iterator getItem(int posx, int posy)
+    id_ptr_on<T> getItem(int posx, int posy, int posz = 0)
     {
-        SqType::iterator retval;
-        for(retval = squares[posx][posy].begin(); retval != squares[posx][posy].end(); ++retval)
-        {
-            if(castTo<T>(**retval) != nullptr)
-                break;
-        }
-        return retval;
-    }
-
-    template<typename T>
-    SqType::iterator getItemOnly(int posx, int posy)
-    {
-        SqType::iterator retval;
-        for(retval = squares[posx][posy].begin(); retval != squares[posx][posy].end(); ++retval)
-        {
-            if((*retval)->RT_ITEM() == T::RT_ITEM_S())
-                break;
-        }
-        return retval;
+        return squares[posx][posy][posz]->GetItem<T>();
     }
     
-    void splashLiquid(std::list<HashAmount> ha, int posx, int posy);
+    void splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz = 0);
 
+    void makeTiles();
     void makeMap();
-    void addItemOnMap(id_ptr_on<IOnMapItem> pushval, bool correct_x_y);
-    void centerFromTo(int nowPosx, int nowPosy);
-    bool isPassable(int posx, int posy, bool level);
+    void centerFromTo(int nowPosx, int nowPosy, int nowPosz = 0);
+    bool isPassable(int posx, int posy, int posz = 0);
     bool fastisPassable(int posx, int posy);
     static void switchDir(int& posx, int& posy, Dir direct, int num = 1, bool back = false);
     static bool checkOutBorder(int posx, int posy);

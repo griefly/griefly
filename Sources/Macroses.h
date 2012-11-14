@@ -93,6 +93,8 @@ template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash){ret
 
 #define KV_ON_LOAD(name, value) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; template<> __forceinline void KV_SAVE_FUNC<Z_Impl##name :: name##counter>(std::stringstream& file){KV_SAVE_FUNC<Z_Impl##name ::name##counter + 1>(file);} template<> __forceinline void KV_LOAD_FUNC<Z_Impl##name ::name##counter>(std::stringstream& file){name = value; KV_LOAD_FUNC<Z_Impl##name :: name##counter + 1>(file);} template<> __forceinline unsigned int KV_HASH_FUNC<Z_Impl##name :: name##counter>(unsigned int h){return KV_HASH_FUNC<Z_Impl##name :: name##counter + 1>(h);};
 
+#define KV_ON_LOAD_CALL(function) struct Z_Impl##function { static const int function##counter = __COUNTER__;}; template<> __forceinline void KV_SAVE_FUNC<Z_Impl##function :: function##counter>(std::stringstream& file){KV_SAVE_FUNC<Z_Impl##function :: function##counter + 1>(file);} template<> __forceinline void KV_LOAD_FUNC<Z_Impl##function ::function##counter>(std::stringstream& file){ function(); KV_LOAD_FUNC<Z_Impl##function :: function##counter + 1>(file);} template<> __forceinline unsigned int KV_HASH_FUNC<Z_Impl##function :: function##counter>(unsigned int h){return KV_HASH_FUNC<Z_Impl##function :: function##counter + 1>(h);};
+
 #define DECLARE_REAL_TYPE_ITEM \
     static int RealType;       \
     virtual int RT_ITEM()      \

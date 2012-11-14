@@ -1,8 +1,16 @@
+#include <stdio.h>
+
 #include "Debug.h"
 #include "MainInt.h"
 
-const char* const DEFAULT_FOLDER = "LastSaves/";
+#include "Mob.h"
+
+const char* const DEFAULT_FOLDER = "Saves/";
 const char* const SAVE_WITHOUT_NUMBER = "save";
+
+const int AMOUNT = 15;
+
+std::string unique_name = "Default";
 
 Debug::Impl::UnsyncDebug& Debug::UnsyncDebug()
 {
@@ -12,19 +20,37 @@ Debug::Impl::UnsyncDebug& Debug::UnsyncDebug()
 
 Debug::Impl::UnsyncDebug::UnsyncDebug()
 {
-    counter_ = 1;
-    last_name_ = GetNextNameToSave(DEFAULT_FOLDER);
+    counter_ = 0;
 }
 
 std::string Debug::Impl::UnsyncDebug::GetNextNameToSave(const std::string& folder)
 {
     std::stringstream converter;
-    converter << counter_++;
-    return folder + SAVE_WITHOUT_NUMBER + converter.str();
+    converter << MAIN_TICK;
+    return folder + unique_name + SAVE_WITHOUT_NUMBER + converter.str();
 }
 
 bool Debug::Impl::UnsyncDebug::Save()
 {
-    IMainItem::fabric->saveMap("");
-    // TODO: do it
+    if (IMainItem::mobMaster->net_client->Hash() != IMainItem::fabric->get_hash_last())
+        ++counter_;
+    else
+        --counter_;
+
+    const unsigned int MAX_FAIL = 6;
+    if (counter_ >= MAX_FAIL)
+    {
+        system("TestKill.bat");
+    }
+
+    std::stringstream converter;
+    converter << MAIN_TICK - HASH_OFTEN * AMOUNT;
+    remove((DEFAULT_FOLDER + unique_name + SAVE_WITHOUT_NUMBER + converter.str()).c_str());
+    IMainItem::fabric->saveMap(GetNextNameToSave(DEFAULT_FOLDER).c_str());
+    return true;
+}
+
+void Debug::SetUniqueName(const std::string& name)
+{
+    unique_name = name;
 }

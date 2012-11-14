@@ -8,6 +8,7 @@
 class IDraw: public IMainItem
 {
 public:
+    // TODO: это - интерфейс. Сместить кое-какую реализацию вниз
     DECLARE_GET_TYPE_ITEM(IDraw)
     DECLARE_SAVED(IDraw, IMainItem);
     IDraw();
@@ -15,7 +16,7 @@ public:
     void SetSprite(const char* name);
     const GLSprite* GetSprite();
     virtual void processImage(SDL_Surface* surface);//draw this item
-    bool IsTransp(int x, int y);
+    virtual bool IsTransp(int x, int y);
     int KV_ON_LOAD(x, 0);
     int KV_ON_LOAD(y, 0);
     int KV_SAVEBLE(v_level);

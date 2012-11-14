@@ -3,26 +3,11 @@
 #include "MobInt.h"
 
 #include "MoveEffect.h"
+#include "TileInt.h"
 
 void IOnMapItem::attack_by(id_ptr_on<SmallItem> it, int force) {};
 
 std::list<HashAmount> IOnMapItem::insertLiquid(std::list<HashAmount> r) {return r;};
-
-/*void IOnMapItem::processMove()
-{
-    if(isMove)
-    {
-        //SYSTEM_STREAM << "\nMove " << id << " " << this << " " << isMove << "\n";
-        way -= pixSpeed;
-        move(dMove);
-        if(way <= 0)
-        {
-            SYSTEM_STREAM << "\nSet ISMOVE false " << id << "\n";
-            isMove = false;
-            way = 0;
-        }
-    }
-};*/
 
 bool IOnMapItem::checkMove(Dir direct)
 {
@@ -60,10 +45,10 @@ void IOnMapItem::move(Dir direct)
 
 bool IOnMapItem::isVisible(int x, int y)
 {
-    if ( x >= max(0, (mobMaster->thisMob->posx) - sizeHsq) &&
-         x <= min((mobMaster->thisMob->posx) + sizeHsq, sizeHmap - 1) &&
-         y >= max(0, (mobMaster->thisMob->posy) - sizeWsq) &&
-         y <= min((mobMaster->thisMob->posy) + sizeWsq, sizeWmap - 1))
+    if ( x >= std::max(0, (castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posx()) - sizeHsq) &&
+         x <= std::min((castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posx()) + sizeHsq, sizeHmap - 1) &&
+         y >= std::max(0, (castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posy()) - sizeWsq) &&
+         y <= std::min((castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posx()) + sizeWsq, sizeWmap - 1))
         return 1;
     return 0;
 };
@@ -76,101 +61,32 @@ bool IOnMapItem::checkMoveTime()
     return true;
 };
 
+// TODO: ÒÎÐÍÀÄÎ
 bool IOnMapItem::checkPassable()
 {
-    Dir direct = dMove;
-    if(!MapMaster::checkOutBorder(posx, posy, direct)) return false;
-    int locx = posx;
-    int locy = posy;
-    MapMaster::switchDir(locx, locy, direct);//trurly
-
-    //SYSTEM_STREAM << "Begin use is passable\n";
-    if(map->isPassable(locx, locy, level))
-        return true;
-    //SYSTEM_STREAM << "Bad end\n";
-    return false;
+    return owner->GetNeighbour(dMove)->IsPassable();
 };
 
 bool IOnMapItem::mainMove()
 {
-    //SYSTEM_STREAM << "Main move " << id << "\n";
-    Dir direct = dMove;
-    auto itr = map->squares[posx][posy].begin();
-    while((itr != map->squares[posx][posy].end()) && !((**itr) == this)) ++itr;
-    if(itr == map->squares[posx][posy].end())
-    {
-        SYSTEM_STREAM << "Del irreal object " << posx << " " << posy << std::endl;
+    auto new_owner = owner->GetNeighbour(dMove);
+    if (new_owner == owner)
         return false;
-    }
-    map->squares[posx][posy].erase(itr);
-    int oldposy = posy;
-    int oldposx = posx;
-    MapMaster::switchDir(posx, posy, direct);//trurly
-    id_ptr_on<IOnMapItem> thisid;
-    thisid = id;
-    if(!passable && !level) 
-        checkForEachLevel(oldposx, oldposy);
-    checkSelfLevel();
-    MapMaster::switchDir(x, y, direct, TITLE_SIZE, false);
-    map->addItemOnMap(thisid, false);
-    if(isVisible(posx, posy))
+
+    owner->RemoveItem(id);
+    new_owner->AddItem(id);
+
+    if(new_owner->IsVisibleByPlayer())
     {
         Move* eff = getEffectOf<Move>();
-        eff->Init(TITLE_SIZE, direct, pixSpeed, id, true);
+        eff->Init(TITLE_SIZE, dMove, pixSpeed, id, true);
         eff->Start();
     }
     return true;
 };
 
-void IOnMapItem::checkSelfLevel()
-{
-    if(!level) return;
-    if(checkLevel(posx, posy)) return;
-    level = 0;
-    return;
-}
-
-void IOnMapItem::checkForEachLevel(int posx, int posy)
-{
-    if(checkLevel(posx, posy)) return;
-    setEachLevel(posx, posy, 0);
-}
-
-void IOnMapItem::setEachLevel(int posx, int posy, bool level)
-{
-    auto itr = map->squares[posx][posy].begin();
-    while(itr != map->squares[posx][posy].end())
-        (*itr++)->level = level;
-    return;
-}
-
-bool IOnMapItem::checkLevel(int posx, int posy)
-{
-    auto itr = map->squares[posx][posy].begin();
-    while(itr != map->squares[posx][posy].end())
-        if(!(*itr)->level && !(*itr)->passable) return 1;
-        else ++itr;
-    return 0;
-}
-
 void IOnMapItem::delThis()
 {
-    auto itr = map->squares[posx][posy].begin();
-    while((itr != map->squares[posx][posy].end()) && !((**itr) == this)) itr++;
-    if(itr == map->squares[posx][posy].end())
-    {
-        SYSTEM_STREAM << "Del irreal object " << posx << " " << posy << std::endl;
-        return;
-    }
-    map->squares[posx][posy].erase(itr);
-    IMainItem::delThis();
-}
-
-void IOnMapItem::LoadInMap()
-{
-    id_ptr_on<IOnMapItem> pushval;
-    pushval = id;
-    map->addItemOnMap(pushval, true);
 }
 
 IOnMapItem::IOnMapItem()
@@ -181,9 +97,6 @@ IOnMapItem::IOnMapItem()
     dMove = D_UP;
     passable = true;
     transparent = true;
-    posx = 0;//local coord, 1..n, N ý n
-    posy = 0;
-    level = 1;//0 - 1
     burn_power = 0;
     name = "NONAMESHIT";
 }

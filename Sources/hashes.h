@@ -42,6 +42,16 @@ unsigned int hash(id_ptr_on<T>& h)
     return h.ret_id();
 }
 
+template<class T>
+unsigned int hash(std::vector<id_ptr_on<T>>& content)
+{
+    unsigned int retval = 0;
+    int i = 1;
+    for (auto it = content.begin(); it != content.end(); ++it, ++i)
+        retval += it->ret_id() * i;
+    return retval;
+}
+
 inline unsigned int hash(unsigned int h)
 {
     return h;

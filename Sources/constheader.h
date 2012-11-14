@@ -24,6 +24,7 @@ const int sizeH = 480;
 
 const int sizeHmap = 50; // map size
 const int sizeWmap = 50;
+const int sizeDmap = 1;
 
 const int beginMobPosX = 9; // posx and posx mob on screen
 const int beginMobPosY = 7; // maybe no const?
@@ -42,17 +43,24 @@ const Dir D_RIGHT = 1;
 const Dir D_UP = 2;
 const Dir D_DOWN = 3;
 
-const int MAX_LEVEL = 20;
+struct VDir
+{
+    int x;
+    int y;
+    int z;
+};
 
-typedef int Mode;
-const Mode SERVER = 0;
-const Mode CLIENT = 1;
+const VDir VD_LEFT = {0, -1, 0};
+const VDir VD_RIGHT = {0, 1, 0};
+const VDir VD_UP = {-1, 0, 0};
+const VDir VD_DOWN = {1, 0, 0};
+
+const VDir DirToVDir[4] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN};
+
+const int MAX_LEVEL = 20;
 
 extern unsigned long long MAIN_TICK;
 
 const std::string RAW_DIR = "raw/";
-
-using std::max;
-using std::min;
 
 #endif

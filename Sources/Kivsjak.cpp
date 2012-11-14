@@ -21,10 +21,10 @@ void Kivsjak::aaMind()
 {
     if(get_rand() % 13 == 0)
         checkMove(get_rand() % 4);
-    auto i = map->getItem<CWeed>(posx, posy);
-    if(i != map->squares[posx][posy].end())
+    auto it = owner->GetItem<CWeed>();
+    if(it.valid())
     {
-        (*i)->delThis();
+        (*it)->delThis();
         food += 10;
     }
     if(food > 250)
@@ -39,16 +39,15 @@ void Kivsjak::live()
     CAliveMob::live();
     if(inside->amountOf(hash("liquidblood") < 130))
         bloodless++;
-    auto i = map->getItem<Pit>(posx, posy);
-    if(i != map->squares[posx][posy].end())
+    auto i = owner->GetItem<Pit>();
+    if(i.valid())
     {
-        auto li = castTo<Pit>(**i);
-        if(li->lhold->amountOfAll() >= li->lhold->size - 10)
+        if(i->lhold->amountOfAll() >= i->lhold->size - 10)
             oxyless++;
     }
     if(dmg + bloodless + burn + interior + oxyless > max_dmg)
     {
-        fabric->newItemOnMap<IOnMapItem>(hash("meat"), posx, posy);
+        fabric->newItemOnMap<IOnMapItem>(hash("meat"), owner);
         delThis();
     }
 }

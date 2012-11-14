@@ -4,6 +4,7 @@
 
 class IMainItem;
 class IOnMapItem;
+class IOnMapBase;
 
 class ItemFabric
 {
@@ -43,7 +44,7 @@ public:
     void clearMap();
 
     template<typename T>
-    id_ptr_on<T> newItemOnMap(unsigned int hash, int posx, int posy, size_t id_new = 0)
+    id_ptr_on<T> newItemOnMap(unsigned int hash, id_ptr_on<IOnMapBase> owner, size_t id_new = 0)
     {
         
         static_assert(std::tr1::is_same<IOnMapItem, T>::value || std::tr1::is_base_of<IOnMapItem, T>::value, "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapItem");
@@ -54,10 +55,10 @@ public:
             SYSTEM_STREAM << "\nERROR! ERROR!\n";
             SDL_Delay(1000);
         }
-        if(max(id_new, id_) >= idTable_.size())
+        if(std::max(id_new, id_) >= idTable_.size())
         {
             SYSTEM_STREAM << "RESIZE MAIN TABLE\n";
-            idTable_.resize(max(id_new, id_) * 2);
+            idTable_.resize(std::max(id_new, id_) * 2);
         }
         if(id_new == 0)
             id_new = id_++;
@@ -69,15 +70,9 @@ public:
         item->id = id_new;
         idTable_[id_new] = item;
 
-        item->posx = posx;
-        item->posy = posy;
+        owner->AddItem(item->id);
 
-        id_ptr_on<T> retval;
-        id_ptr_on<IOnMapItem> pushval;
-        pushval = item->id;
-        retval = item->id;
-        IMainItem::map->addItemOnMap(pushval, true);
-        return retval;
+        return item->id;
     }
     
     template<typename T, typename TMaster>
@@ -85,8 +80,8 @@ public:
     {
         T* item;
         item = castTo<T>(newVoidItemSaved(hash));
-        if(max(id_new, id_) >= idTable_.size()) 
-            idTable_.resize(max(id_new, id_) * 2);
+        if(std::max(id_new, id_) >= idTable_.size()) 
+            idTable_.resize(std::max(id_new, id_) * 2);
         if(id_new == 0)
             id_new = id_++;
         else if(id_new >= id_)
@@ -104,8 +99,8 @@ public:
     {
         T* item;
         item = castTo<T>(newVoidItem(hash));
-        if(max(id_new, id_) >= idTable_.size()) 
-            idTable_.resize(max(id_new, id_) * 2);
+        if(std::max(id_new, id_) >= idTable_.size()) 
+            idTable_.resize(std::max(id_new, id_) * 2);
         if(id_new == 0)
             id_new = id_++;
         else if(id_new >= id_)

@@ -48,8 +48,8 @@ void CAliveMob::aaMind() {};
 void CAliveMob::live()
 { 
     unsigned int now_blood = inside->amountOfAll();
-    if(injuries > 1 && now_blood > 0 && get_rand() % max(1, max_dmg * 7 - injuries * 7) == 0)
-        (*map->squares[posx][posy].begin())->insertLiquid(inside->removeLiquid(injuries));
+    if(injuries > 1 && now_blood > 0 && get_rand() % std::max(1, max_dmg * 7 - injuries * 7) == 0)
+        owner->GetItem<IOnMapItem>()->insertLiquid(inside->removeLiquid(injuries));
     if (burn_power > 0)
         burn_power -= 1;
 };
