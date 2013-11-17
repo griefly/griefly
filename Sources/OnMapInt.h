@@ -20,6 +20,16 @@ public:
         return passable;
     }
 
+    virtual int GetDrawX() const override
+    {
+        return step_x + owner->GetDrawX();
+    }
+
+    virtual int GetDrawY() const override
+    {
+        return step_y + owner->GetDrawY();
+    }
+
     void processMove();//for move
     void move(Dir direct);//pix move
     virtual bool checkMove(Dir direct);
@@ -34,18 +44,27 @@ public:
     bool mainMove();
     virtual void delThis();
     virtual std::list<HashAmount> insertLiquid(std::list<HashAmount>);
+    virtual void processImage(SDL_Surface* surface) override;//draw this item
+    virtual bool IsTransp(int x, int y) override;
+    void SetSprite(const std::string& T_SPR);
+    const GLSprite* GetSprite();
 public:
+    int KV_ON_LOAD(step_x, 0);
+    int KV_ON_LOAD(step_y, 0);
+    int KV_SAVEBLE(v_level);
+    int KV_SAVEBLE(imageStateH);
+    int KV_SAVEBLE(imageStateW);
     int KV_SAVEBLE(lastMove);
     int KV_SAVEBLE(tickSpeed);
     int KV_SAVEBLE(pixSpeed);
     Dir KV_SAVEBLE(dMove);
     bool KV_SAVEBLE(passable);
     bool KV_SAVEBLE(transparent);
-    // int KV_SAVEBLE(posx);//local coord, 1..n, N ý n
-    // int KV_SAVEBLE(posy);
-    // bool KV_SAVEBLE(level);//0 - 1
     int KV_SAVEBLE(burn_power);//0 - 1 - MUCH MUCH
     std::string KV_SAVEBLE(name);
+private:
+    std::string KV_SAVEBLE(T_SPR);
+    GLSprite* KV_ON_LOAD(sprite_, nullptr);
 };
 
 ADD_TO_TYPELIST(IOnMapItem);

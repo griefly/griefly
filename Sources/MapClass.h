@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "SDL_thread.h"
 
+class Tile;
+
 struct point
 {
     int posx;
@@ -81,10 +83,14 @@ public:
     ASprClass aSpr;
     Manager* mobi;
     // typedef std::list<id_ptr_on<IOnMapItem>> SqType;
-    typedef id_ptr_on<IOnMapBase> SqType;
+    typedef id_ptr_on<Tile> SqType;
     SqType squares[sizeHmap][sizeWmap][sizeDmap];
     Screen* screen;
     // Sync stuff
+   
+    //void ForEachInArea(id_ptr_on<Tile> center, int h_size, int w_size, int d_size,
+    //                   std::function<void(id_ptr_on<Tile>)> callback)
+
 
     void Draw();
     bool isVisible(int posx, int posy, int posz = 0);

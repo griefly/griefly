@@ -25,41 +25,6 @@ void Manager::touchEach(Dir direct)
 
 void Manager::moveEach(Dir direct)
 {
-    switch(direct)
-    {
-    case D_UP:
-        for(int x = 0; x < sizeHmap; x++)
-            for(int y = 0; y < sizeWmap; y++)
-                map->squares[x][y][0]->ForEach([](id_ptr_on<IOnMapBase> item)
-                {
-                    item->y += TITLE_SIZE;
-                });
-        break;
-    case D_DOWN:
-        for(int x = 0; x < sizeHmap; x++)
-            for(int y = 0; y < sizeWmap; y++)
-                map->squares[x][y][0]->ForEach([](id_ptr_on<IOnMapBase> item)
-                {
-                    item->y -= TITLE_SIZE;
-                });
-        break;
-    case D_LEFT:
-        for(int x = 0; x < sizeHmap; x++)
-            for(int y = 0; y < sizeWmap; y++)
-                map->squares[x][y][0]->ForEach([](id_ptr_on<IOnMapBase> item)
-                {
-                    item->x += TITLE_SIZE;
-                });
-        break;
-    case D_RIGHT:
-        for(int x = 0; x < sizeHmap; x++)
-            for(int y = 0; y < sizeWmap; y++)
-                map->squares[x][y][0]->ForEach([](id_ptr_on<IOnMapBase> item)
-                {
-                    item->x -= TITLE_SIZE;
-                });
-        break;
-    }
     undoCenterMove(direct);
 };
 
@@ -329,8 +294,6 @@ void Manager::initWorld()
 
     newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);
     changeMob(newmob);
-    newmob->x = beginMobPosX * TITLE_SIZE;
-    newmob->y = beginMobPosY * TITLE_SIZE;
 
     auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);
     SetCreator(tptr.ret_id());

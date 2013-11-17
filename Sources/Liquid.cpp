@@ -1,11 +1,5 @@
 #include "Liquid.h"
-
-//itemAdder<Liquid> adder;
-//itemAdder<LWater> adder1;
-//itemAdder<LPetrol> adder2;
-//itemAdder<LHoney> adder3;
-//itemAdder<LFirehoney> adder4;
-//itemAdder<LBlood> adder5;
+#include "MapClass.h"
 
 Liquid::Liquid()    
 {
@@ -15,6 +9,14 @@ Liquid::Liquid()
     imageStateW = 0;
     flammable = false;
 }
+
+void Liquid::SetSprite(const std::string& name)
+{
+    if(!map)
+        return;
+    sprite_ = map->aSpr.returnSpr(name);
+    T_SPR = name;
+};
 
 void Liquid::processImage(SDL_Surface* s)
 {

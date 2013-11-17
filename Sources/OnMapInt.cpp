@@ -1,3 +1,5 @@
+#include <assert.h>
+
 #include "OnMapInt.h"
 #include "MapClass.h"
 #include "MobInt.h"
@@ -11,38 +13,61 @@ std::list<HashAmount> IOnMapItem::insertLiquid(std::list<HashAmount> r) {return 
 
 bool IOnMapItem::checkMove(Dir direct)
 {
-    //SYSTEM_STREAM << "\nCheck move " << id <<"\n";
-    if(!checkMoveTime()) return false;
+    if (!checkMoveTime()) 
+        return false;
     dMove = direct;
-    if(!checkPassable()) return false;
+    if (!checkPassable()) 
+        return false;
     return mainMove();    
 };
 
 void IOnMapItem::move(Dir direct)
 {
-    switch(direct)
-    {
-    case D_LEFT:
-        x -= pixSpeed;
-        break;
-    case D_RIGHT:
-        x += pixSpeed;
-        break;
-    case D_UP:
-        y -= pixSpeed;
-        break;
-    case D_DOWN:
-        y += pixSpeed;
-        break;
-    }   
+    assert(false);
+    // TODO: remove
 };
 
-/*void IOnMapItem::mobMove()
+void IOnMapItem::SetSprite(const std::string& name)
 {
+    if (!map) 
+        return;
+    sprite_ = map->aSpr.returnSpr(name);
+    T_SPR = name;
+};
 
-    MapMaster::switchDir(x, y, mob->dMove, mob->pixSpeed, true);//Trurlu ok
-};*/
 
+const GLSprite* IOnMapItem::GetSprite()
+{
+    if (sprite_ == nullptr)
+        SetSprite(T_SPR);
+    return sprite_;
+}
+
+void IOnMapItem::processImage(SDL_Surface* surface)
+{ 
+    if (NODRAW)
+        return;
+    mobMaster->gl_screen->Draw(GetSprite(), GetDrawX(), GetDrawY(), imageStateW, imageStateH);
+};
+
+bool IOnMapItem::IsTransp(int x, int y)
+{
+    if (NODRAW)
+        return false;
+    const CSprite* loc = GetSprite()->GetSDLSprite();
+    if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
+        return true;
+
+    SDL_Surface* surf = loc->frames[imageStateW * loc->numFrameH + imageStateH];
+
+    auto bpp = surf->format->BytesPerPixel;
+
+    Uint8 un1, un2, un3, alpha;
+
+    SDL_GetRGBA(static_cast<Uint32*>(surf->pixels)[y * surf->pitch / bpp + x], surf->format, &un1, &un2, &un3, &alpha);
+
+    return alpha < 170;
+}
 bool IOnMapItem::isVisible(int x, int y)
 {
     if ( x >= std::max(0, (castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posx()) - sizeHsq) &&
@@ -91,6 +116,12 @@ void IOnMapItem::delThis()
 
 IOnMapItem::IOnMapItem()
 {
+    sprite_ = nullptr;
+    v_level = 0;
+    imageStateH = 0;
+    imageStateW = 0;
+    step_x = 0;
+    step_y = 0;
     lastMove = 0;
     tickSpeed = 1;
     pixSpeed = 1;

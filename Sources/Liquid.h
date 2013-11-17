@@ -14,7 +14,13 @@ public:
     bool KV_SAVEBLE(flammable);
     virtual void processImage(SDL_Surface* screen);
     virtual void process();
-    //virtual ~Liquid(void);
+    void SetSprite(const std::string& T_SPR);
+    const GLSprite* GetSprite() { return sprite_;};
+    int KV_SAVEBLE(imageStateH);
+    int KV_SAVEBLE(imageStateW);
+private:
+    std::string KV_SAVEBLE(T_SPR);
+    GLSprite* KV_ON_LOAD(sprite_, nullptr);
 };
 ADD_TO_TYPELIST(Liquid);
 

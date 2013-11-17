@@ -300,10 +300,14 @@ std::list<Dir> CPathFinder::calculatePath(int fromPosx, int fromPosy, int toPosx
     square* sq = &squares[toPosx][toPosy];
     while(sq != &squares[fromPosx][fromPosy])
     {
-        if(sq->posx < sq->before->posx) path.push_front(D_LEFT);
-        else if(sq->posx > sq->before->posx) path.push_front(D_RIGHT);
-        else if(sq->posy < sq->before->posy) path.push_front(D_UP);
-        else path.push_front(D_DOWN);
+        if(sq->posx < sq->before->posx) 
+            path.push_front(D_LEFT);
+        else if(sq->posx > sq->before->posx) 
+            path.push_front(D_RIGHT);
+        else if(sq->posy < sq->before->posy) 
+            path.push_front(D_UP);
+        else 
+            path.push_front(D_DOWN);
         sq = sq->before;
     }
     //SYSTEM_STREAM << SDL_GetTicks() - begTime << " Pathspeed\n";

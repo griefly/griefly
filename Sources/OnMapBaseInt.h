@@ -33,7 +33,6 @@ public:
     // True - added
     // False - failed
     // This must not remove item from old place
-    // TODO: recursive if (owner.valid()) owner->AddItem 
     virtual bool AddItem(id_ptr_on<IOnMapBase> item)
     {
         if (owner.valid()) 

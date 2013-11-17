@@ -64,6 +64,15 @@ public:
     {
         return posz_;
     }
+    virtual int GetDrawX() const override
+    {
+        return step_x + owner->GetDrawX();
+    }
+
+    virtual int GetDrawY() const override
+    {
+        return step_y + owner->GetDrawY();
+    }
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
