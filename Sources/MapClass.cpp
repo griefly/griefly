@@ -1,27 +1,17 @@
-#include "MapClass.h"
-#include "MainInt.h"
-#include "TileInt.h"
-
 #include <math.h>
 #include <sstream>
 #include <iostream>
 #include <assert.h>
 #include <hash_map>
 
+#include "MapClass.h"
+#include "MainInt.h"
+#include "TileInt.h"
+
 bool MapMaster::CheckDublicate()
 {
     assert(false && "Not used");
     return true;
-    /*std::hash_map<unsigned int, int> holder;
-    for(int posx = 0; posx < sizeWmap; posx++)
-    {
-        for(int posy = 0; posy < sizeHmap; posy++) 
-        {
-            auto itr = squares[posx][posy].begin();
-            while(itr != squares[posx][posy].end())
-                ++holder[itr->ret_id()];
-        }
-    }*/
 }
 
 void MapMaster::Draw()
@@ -38,8 +28,9 @@ void MapMaster::Draw()
         {
             squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
             {
-                if (item->v_level == i)
-                    item->processImage(nullptr);//screen
+                auto item_n = castTo<IOnMapItem>(item.ret_item());
+                if (item_n->v_level == i)
+                    item_n->processImage(nullptr);//screen
             });
             ++it2;
         }
@@ -49,8 +40,9 @@ void MapMaster::Draw()
     {
         squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
         {
-            if (item->v_level >= MAX_LEVEL)
-                item->processImage(nullptr);//screen
+            auto item_n = castTo<IOnMapItem>(item.ret_item());
+            if (item_n->v_level >= MAX_LEVEL)
+                item_n->processImage(nullptr);//screen
         });
         ++it2;
     }
@@ -106,8 +98,9 @@ void MapMaster::centerFromTo(int nowPosx, int nowPosy, int nowPosz)
             int newy = (y - nowPosy + beginMobPosY) * TITLE_SIZE;
             squares[x][y][nowPosz]->ForEach([&](id_ptr_on<IOnMapBase> item)
             {
-                item->x = newx;
-                item->y = newy;
+               /* auto item_n = castTo<IDraw>(item.ret_item());
+                item_n->x = newx;
+                item_n->y = newy;*/
             });
         }
     }
@@ -237,12 +230,13 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
     auto it2 = mobi->visiblePoint->begin();  
     while(it2 != mobi->visiblePoint->end())
     {
-        squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
+        squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
         {
+            auto item = castTo<IOnMapItem>(item_h.ret_item());
             if (retval.ret_id() == 0)
                 if(item->v_level >= MAX_LEVEL)
-                    if(item->IsTransp(x - item->x, y - item->y))
-                        retval = item;
+                    if(item->IsTransp(x - item->GetDrawX(), y - item->GetDrawY()))
+                        retval = item_h;
         });
         if (retval.ret_id())
             return retval;
@@ -254,12 +248,13 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
         auto it2 = mobi->visiblePoint->begin();  
         while(it2 != mobi->visiblePoint->end())
         {
-            squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
+            squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
             {
+                auto item = castTo<IOnMapItem>(item_h.ret_item());
                 if (retval.ret_id() == 0)
                     if(item->v_level == i)
-                        if(item->IsTransp(x - item->x, y - item->y))
-                            retval = item;
+                        if(item->IsTransp(x - item->GetDrawX(), y - item->GetDrawY()))
+                            retval = item_h;
             });
             if (retval.ret_id())
                 return retval;

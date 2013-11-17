@@ -66,12 +66,13 @@ public:
     }
     virtual int GetDrawX() const override
     {
-        return step_x + owner->GetDrawX();
+        // TODO:
+        return /*step_x + owner->GetDrawX()*/posx_ * 32;
     }
 
     virtual int GetDrawY() const override
     {
-        return step_y + owner->GetDrawY();
+        return /*step_y + */posy_ * 32;
     }
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
@@ -82,6 +83,6 @@ private:
     typedef std::vector<id_ptr_on<IOnMapItem>> InsideType;
     InsideType KV_SAVEBLE(inside_list_);
     KV_ON_LOAD_CALL(LoadInMap);
-    void LoadInMap(); // TODO
+    void LoadInMap() {}; // TODO
 };
 ADD_TO_TYPELIST(CubeTile);

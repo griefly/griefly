@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "SDL_thread.h"
 
-class Tile;
+class CubeTile;
 
 struct point
 {
@@ -83,7 +83,7 @@ public:
     ASprClass aSpr;
     Manager* mobi;
     // typedef std::list<id_ptr_on<IOnMapItem>> SqType;
-    typedef id_ptr_on<Tile> SqType;
+    typedef id_ptr_on<CubeTile> SqType;
     SqType squares[sizeHmap][sizeWmap][sizeDmap];
     Screen* screen;
     // Sync stuff

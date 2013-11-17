@@ -160,7 +160,8 @@ void LiquidHolder::processImage(SDL_Surface* s)
         
         const CSprite* locspr = l->GetSprite();
         SDL_BlitSurface(locspr->frames[l->imageStateW * locspr->numFrameH + l->imageStateH], NULL, s, &place);*/
-        mobMaster->gl_screen->Draw(locspr, master->x, master->y, l->imageStateW, l->imageStateH);
+        //TODO:
+        //mobMaster->gl_screen->Draw(locspr, master->x, master->y, l->imageStateW, l->imageStateH);
         ++it;
     }
 }

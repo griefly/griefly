@@ -33,7 +33,7 @@ void Fire::process()
     // TODO
     if(true/*master->master.ret_id() == 0 && IMainItem::mobMaster->isMobVisible(master->posx, master->posy)*/)
     {
-        IMainItem::mobMaster->gl_screen->Draw(sprite, master->x, master->y, imageStateW, imageStateH);
+     //   IMainItem::mobMaster->gl_screen->Draw(sprite, master->x, master->y, imageStateW, imageStateH);
     }
 }
 
