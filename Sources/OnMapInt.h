@@ -22,12 +22,14 @@ public:
 
     virtual int GetDrawX() const override
     {
-        return step_x + owner->GetDrawX();
+        int temp = owner->GetDrawX();
+        return step_x + temp;
     }
 
     virtual int GetDrawY() const override
     {
-        return step_y + owner->GetDrawY();
+        int temp = owner->GetDrawY();
+        return step_y + temp;
     }
 
     void processMove();//for move

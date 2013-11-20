@@ -65,7 +65,7 @@ void Manager::changeMob(id_ptr_on<IMob>& i)
 Manager::Manager(std::string adrs)
 {
     adrs_ = adrs;
-    auto_player_ = true;
+    auto_player_ = false;
     visiblePoint = new std::list<point>;
     isMove = false;
     done = 0;
@@ -292,7 +292,7 @@ void Manager::initWorld()
 
     map->makeTiles();
 
-    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);
+    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[1][1][0]);
     changeMob(newmob);
 
     auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);

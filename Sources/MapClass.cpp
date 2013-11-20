@@ -22,20 +22,21 @@ void MapMaster::Draw()
         return;
     glClear(GL_COLOR_BUFFER_BIT);
     auto it2 = mobi->visiblePoint->begin();  
-    for(int i = 0; i < MAX_LEVEL; ++i)
+    for(int i = 0; i < 1/*MAX_LEVEL*/; ++i)
     {
         while(it2 != mobi->visiblePoint->end())
         {
             squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
             {
+                int dbg = it2->posx;
                 auto item_n = castTo<IOnMapItem>(item.ret_item());
-                if (item_n->v_level == i)
+                if (/*item_n->v_level == i*/true)
                     item_n->processImage(nullptr);//screen
             });
             ++it2;
         }
     }
-    it2 = mobi->visiblePoint->begin();  
+    /*it2 = mobi->visiblePoint->begin();  
     while(it2 != mobi->visiblePoint->end())
     {
         squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
@@ -45,7 +46,7 @@ void MapMaster::Draw()
                 item_n->processImage(nullptr);//screen
         });
         ++it2;
-    }
+    }*/
 };
 
 void MapMaster::makeTiles()
@@ -71,9 +72,9 @@ void MapMaster::makeMap()
         {     
             // Ge
             //
-            //id_ptr_on<IOnMapItem> loc = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash((rand() % 10 != 1) ? "ground" : "ground"), squares[x][y][0]);
-            //loc->imageStateH = 0;
-            //loc->imageStateW = rand() % 4;
+            id_ptr_on<IOnMapItem> loc = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash((rand() % 10 != 1) ? "ground" : "ground"), squares[x][y][0]);
+            loc->imageStateH = 0;
+            loc->imageStateW = rand() % 4;
             
             if(rand() % 29 == 1 || x == 0 || y == 0 || x == sizeWmap - 1 || y == sizeHmap - 1)
                 IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][0]);
@@ -143,6 +144,7 @@ void CPathFinder::clearPathfinding()
 
 bool MapMaster::isPassable(int posx, int posy, int posz)
 {
+    return true;
     return squares[posx][posy][posz]->IsPassable();
 };
 
@@ -200,9 +202,10 @@ bool MapMaster::checkOutBorder(int posx, int posy, Dir direct)
 
 bool MapMaster::isVisible(int posx, int posy, int posz)
 {
-    if(!checkOutBorder(posx, posy/*TODO: posz*/))
-        return false;
-    return squares[posx][posy][posz]->IsPassable();
+    return true;
+    //if(!checkOutBorder(posx, posy/*TODO: posz*/))
+    //    return false;
+    //return squares[posx][posy][posz]->IsPassable();
 };
 
 void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz)

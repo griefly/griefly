@@ -50,10 +50,10 @@ struct VDir
     int z;
 };
 
-const VDir VD_LEFT = {0, -1, 0};
-const VDir VD_RIGHT = {0, 1, 0};
-const VDir VD_UP = {-1, 0, 0};
-const VDir VD_DOWN = {1, 0, 0};
+const VDir VD_LEFT = {-1, 0, 0};
+const VDir VD_RIGHT = {1, 0, 0};
+const VDir VD_UP = {0, -1, 0};
+const VDir VD_DOWN = {0, 1, 0};
 
 const VDir DirToVDir[4] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN};
 
