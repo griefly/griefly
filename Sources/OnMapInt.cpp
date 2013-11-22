@@ -7,6 +7,8 @@
 #include "MoveEffect.h"
 #include "TileInt.h"
 
+#include "mob_position.h"
+
 void IOnMapItem::attack_by(id_ptr_on<SmallItem> it, int force) {};
 
 std::list<HashAmount> IOnMapItem::insertLiquid(std::list<HashAmount> r) {return r;};
@@ -47,7 +49,10 @@ void IOnMapItem::processImage(SDL_Surface* surface)
 { 
     if (NODRAW)
         return;
-    mobMaster->gl_screen->Draw(GetSprite(), GetDrawX(), GetDrawY(), imageStateW, imageStateH);
+    mobMaster->gl_screen->Draw(GetSprite(), 
+                               GetDrawX() + mob_position::get_shift_x(), 
+                               GetDrawY() + mob_position::get_shift_y(), 
+                               imageStateW, imageStateH);
 };
 
 bool IOnMapItem::IsTransp(int x, int y)

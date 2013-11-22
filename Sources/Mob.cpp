@@ -3,6 +3,8 @@
 #include "LiquidHolder.h"
 #include "Turf.h"
 
+#include "mob_position.h"
+
 #include "NetClientImpl.h"
 #include "EffectSystem.h"
 #include "MoveEffect.h"
@@ -252,6 +254,8 @@ void Manager::processInput()
 
 void Manager::initWorld()
 {
+    mob_position::set_mng(this);
+
     tick_recv = 0;
     isMove = 0;
     Uint32 rmask, gmask, bmask, amask;
@@ -292,7 +296,7 @@ void Manager::initWorld()
 
     map->makeTiles();
 
-    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[1][1][0]);
+    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);
     changeMob(newmob);
 
     auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);

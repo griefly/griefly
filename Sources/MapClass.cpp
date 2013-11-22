@@ -21,24 +21,23 @@ void MapMaster::Draw()
     if(!mobi->visiblePoint) 
         return;
     glClear(GL_COLOR_BUFFER_BIT);
-    auto it2 = mobi->visiblePoint->begin();  
-    for(int i = 0; i < 1/*MAX_LEVEL*/; ++i)
+    for(int i = 0; i < MAX_LEVEL; ++i)
     {
+        auto it2 = mobi->visiblePoint->begin();
         while(it2 != mobi->visiblePoint->end())
-        {
-            squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
+        {            
+            squares[it2->posx][it2->posy][it2->posz]->ForEach([&i](id_ptr_on<IOnMapBase> item)
             {
-                int dbg = it2->posx;
                 auto item_n = castTo<IOnMapItem>(item.ret_item());
-                if (/*item_n->v_level == i*/true)
+                if (item_n->v_level == i)
                     item_n->processImage(nullptr);//screen
             });
             ++it2;
         }
-    }
-    /*it2 = mobi->visiblePoint->begin();  
+    } 
+    auto it2 = mobi->visiblePoint->begin();
     while(it2 != mobi->visiblePoint->end())
-    {
+    {        
         squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
         {
             auto item_n = castTo<IOnMapItem>(item.ret_item());
@@ -46,7 +45,7 @@ void MapMaster::Draw()
                 item_n->processImage(nullptr);//screen
         });
         ++it2;
-    }*/
+    }
 };
 
 void MapMaster::makeTiles()

@@ -40,6 +40,7 @@
     <ClInclude Include="Sources\MessageReceiver.h" />
     <ClInclude Include="Sources\Mob.h" />
     <ClInclude Include="Sources\MobInt.h" />
+    <ClInclude Include="Sources\mob_position.h" />
     <ClInclude Include="Sources\MonstrClass.h" />
     <ClInclude Include="Sources\MoveEffect.h" />
     <ClInclude Include="Sources\NetClientImpl.h" />
@@ -79,6 +80,7 @@
     <ClCompile Include="Sources\Message.cpp" />
     <ClCompile Include="Sources\Mob.cpp" />
     <ClCompile Include="Sources\MobInt.cpp" />
+    <ClCompile Include="Sources\mob_position.cpp" />
     <ClCompile Include="Sources\MonstrClass.cpp" />
     <ClCompile Include="Sources\MoveEffect.cpp" />
     <ClCompile Include="Sources\NetClientImpl.cpp" />
