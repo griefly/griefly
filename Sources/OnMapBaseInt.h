@@ -25,7 +25,8 @@ public:
     }
     virtual void delThis() override
     {
-        owner->RemoveItem(id);
+        if (owner.valid())
+            owner->RemoveItem(id);
         IDraw::delThis();
     }
 

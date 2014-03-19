@@ -83,6 +83,6 @@ private:
     typedef std::vector<id_ptr_on<IOnMapItem>> InsideType;
     InsideType KV_SAVEBLE(inside_list_);
     KV_ON_LOAD_CALL(LoadInMap);
-    void LoadInMap() {}; // TODO
+    void LoadInMap(); // TODO
 };
 ADD_TO_TYPELIST(CubeTile);

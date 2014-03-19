@@ -11,7 +11,7 @@
 COrk::COrk()
 {
     tickSpeed = 1;
-    pixSpeed = 1;
+    pixSpeed = 2;
     SetSprite("icons/man.png");
     passable = true;
     v_level = 10;
@@ -27,11 +27,11 @@ void COrk::aaMind()
 void COrk::live()
 {
     CAliveMob::live();
-    auto li = owner->GetItem<Pit>();
+    /*auto li = owner->GetItem<Pit>();
     if (!li.valid())
         return;
     if (li->lhold->amountOfAll() >= li->lhold->size - 10)
-        oxyless++;
+        oxyless++;*/
 }
 
 void COrk::processGUImsg(const Message& msg)
@@ -39,21 +39,15 @@ void COrk::processGUImsg(const Message& msg)
     CAliveMob::processGUImsg(msg);
     if(msg.text == "SDLK_p")
     {
-        if(in_hand.ret_id() != 0)
+        if(in_hand.valid())
         {
-            /*in_hand->posx = posx;
-            in_hand->posy = posy;
-            map->addItemOnMap(in_hand, true);
-            in_hand = 0;*/
+            owner->AddItem(in_hand);
+            in_hand = 0;
         }
         else
         {
-            /*auto loc = map->getItem<SmallItem>(posx, posy);
-            if(loc != map->squares[posx][posy].end())
-            {
-                in_hand = *loc;
-                map->squares[posx][posy].erase(loc);
-            }*/
+            in_hand = owner->GetItem<SmallItem>();
+            owner->RemoveItem(in_hand);
         }
     }
     else if(msg.text == "SDLK_q")

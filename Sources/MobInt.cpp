@@ -93,9 +93,7 @@ bool IMob::checkMove(Dir direct)
         {            
             //SYSTEM_STREAM << "Function IMob::checkMove called: onMobControl == true\n";
             mobMaster->checkMove(direct);
-            // TODO UpdateVisible()
-            //mobMaster->visiblePoint->clear();
-            //mobMaster->visiblePoint = map->losf.calculateVisisble(mobMaster->visiblePoint, posx, posy, level);
+            mobMaster->UpdateVisible();
         }
         return true;
     }

@@ -24,7 +24,7 @@ const int sizeH = 480;
 
 const int sizeHmap = 50; // map size
 const int sizeWmap = 50;
-const int sizeDmap = 1;
+const int sizeDmap = 2;
 
 const int beginMobPosX = 9; // posx and posx mob on screen
 const int beginMobPosY = 7; // maybe no const?

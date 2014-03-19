@@ -54,6 +54,7 @@ public:
     bool pause;
     //SDL_Surface* screen;
     //SDL_Surface* back;
+    void UpdateVisible();
     std::list<point>* visiblePoint;
     ///////////
     int fps;
@@ -75,6 +76,8 @@ public:
     TextPainter texts;
 
     Screen* gl_screen;
+
+    void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:
     std::string adrs_;
 

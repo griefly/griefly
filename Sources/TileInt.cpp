@@ -67,7 +67,7 @@ id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct)
 bool CubeTile::IsPassable() const
 {
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if ((*it)->IsPassable())
+        if (!(*it)->IsPassable())
             return false;
     return true;
 }
@@ -75,7 +75,7 @@ bool CubeTile::IsPassable() const
 size_t CubeTile::GetItemImpl(unsigned int hash)
 {
     for (auto it = inside_list_.rbegin(); it != inside_list_.rend(); ++it)
-        if (FastIsType(hash, CubeTile::RT_ITEM_S()))
+        if (FastIsType(hash, (*it)->RT_ITEM()))
             return it->ret_id();
     return 0;
 }
@@ -84,4 +84,9 @@ void CubeTile::ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
 {
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
         callback(*it);
+}
+
+void CubeTile::LoadInMap()
+{
+    map->squares[posx_][posy_][posz_] = id;
 }

@@ -85,7 +85,7 @@ bool IOnMapItem::isVisible(int x, int y)
 
 bool IOnMapItem::checkMoveTime()
 {
-    if(MAIN_TICK - lastMove <= tickSpeed) 
+    if(MAIN_TICK - lastMove < tickSpeed) 
         return false;
     lastMove = static_cast<int>(MAIN_TICK);
     return true;

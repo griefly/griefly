@@ -20,7 +20,7 @@ void CMonstr::aaMind()
 CMonstr::CMonstr()
 {
     FindTargetTime = SDL_GetTicks() + get_rand() % 100;
-    passable = false;
+    passable = true;
     tickSpeed = 8;
     pixSpeed = 4;
     SetSprite("icons/deer.png");

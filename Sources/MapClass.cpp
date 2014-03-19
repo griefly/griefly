@@ -8,6 +8,8 @@
 #include "MainInt.h"
 #include "TileInt.h"
 
+#include "mob_position.h"
+
 bool MapMaster::CheckDublicate()
 {
     assert(false && "Not used");
@@ -21,30 +23,36 @@ void MapMaster::Draw()
     if(!mobi->visiblePoint) 
         return;
     glClear(GL_COLOR_BUFFER_BIT);
-    for(int i = 0; i < MAX_LEVEL; ++i)
+    int z_level_m = castTo<CubeTile>(mobi->thisMob->GetOwner().ret_item())->posz();
+    for (int z_level = 0; z_level < sizeDmap; z_level++) 
     {
+        for(int i = 0; i < MAX_LEVEL; ++i)
+        {
+            auto it2 = mobi->visiblePoint->begin();
+            while(it2 != mobi->visiblePoint->end())
+            {   
+                if (it2->posz == z_level)
+                    squares[it2->posx][it2->posy][it2->posz]->ForEach([&i](id_ptr_on<IOnMapBase> item)
+                    {
+                        auto item_n = castTo<IOnMapItem>(item.ret_item());
+                        if (item_n->v_level == i)
+                            item_n->processImage(nullptr);//screen
+                    });
+                ++it2;
+            }
+        } 
         auto it2 = mobi->visiblePoint->begin();
         while(it2 != mobi->visiblePoint->end())
-        {            
-            squares[it2->posx][it2->posy][it2->posz]->ForEach([&i](id_ptr_on<IOnMapBase> item)
-            {
-                auto item_n = castTo<IOnMapItem>(item.ret_item());
-                if (item_n->v_level == i)
-                    item_n->processImage(nullptr);//screen
-            });
+        {   
+            if (it2->posz == z_level)
+                squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
+                {
+                    auto item_n = castTo<IOnMapItem>(item.ret_item());
+                    if (item_n->v_level >= MAX_LEVEL)
+                        item_n->processImage(nullptr);//screen
+                });
             ++it2;
         }
-    } 
-    auto it2 = mobi->visiblePoint->begin();
-    while(it2 != mobi->visiblePoint->end())
-    {        
-        squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
-        {
-            auto item_n = castTo<IOnMapItem>(item.ret_item());
-            if (item_n->v_level >= MAX_LEVEL)
-                item_n->processImage(nullptr);//screen
-        });
-        ++it2;
     }
 };
 
@@ -55,9 +63,12 @@ void MapMaster::makeTiles()
     {
         for(int y = 0; y < sizeHmap; y++) 
         {
-            auto loc = IMainItem::fabric->newItem<CubeTile>(0, CubeTile::T_ITEM_S());
-            loc->SetPos(x, y);
-            squares[x][y][0] = loc;
+            for (int z = 0; z < sizeDmap; z++)
+            {
+                auto loc = IMainItem::fabric->newItem<CubeTile>(0, CubeTile::T_ITEM_S());
+                loc->SetPos(x, y, z);
+                squares[x][y][z] = loc;
+            }
         }
     }
 }
@@ -76,34 +87,19 @@ void MapMaster::makeMap()
             loc->imageStateW = rand() % 4;
             
             if(rand() % 29 == 1 || x == 0 || y == 0 || x == sizeWmap - 1 || y == sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][0]);
+                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][1]);
             if(rand() % 60 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][0]);
+                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][1]);
             if(rand() % 3 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][0]);//*/
+                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][1]);//*/
         }
     }
-    centerFromTo(castTo<CubeTile>(mobi->thisMob->GetOwner().ret_item())->posx(), 
-                 castTo<CubeTile>(mobi->thisMob->GetOwner().ret_item())->posy());
     SYSTEM_STREAM << "End create map\n";
 };
 
 void MapMaster::centerFromTo(int nowPosx, int nowPosy, int nowPosz)
 {
-    for(int x = 0; x < sizeWmap; x++)
-    {
-        for(int y = 0; y < sizeHmap; y++) 
-        {
-            int newx = (x - nowPosx + beginMobPosX) * TITLE_SIZE;
-            int newy = (y - nowPosy + beginMobPosY) * TITLE_SIZE;
-            squares[x][y][nowPosz]->ForEach([&](id_ptr_on<IOnMapBase> item)
-            {
-               /* auto item_n = castTo<IDraw>(item.ret_item());
-                item_n->x = newx;
-                item_n->y = newy;*/
-            });
-        }
-    }
+    // ?
 };
 
 MapMaster::MapMaster()
@@ -143,7 +139,6 @@ void CPathFinder::clearPathfinding()
 
 bool MapMaster::isPassable(int posx, int posy, int posz)
 {
-    return true;
     return squares[posx][posy][posz]->IsPassable();
 };
 
@@ -229,38 +224,48 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
 
     id_ptr_on<IOnMapItem> retval = 0;
 
-    auto it2 = mobi->visiblePoint->begin();  
-    while(it2 != mobi->visiblePoint->end())
-    {
-        squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
-        {
-            auto item = castTo<IOnMapItem>(item_h.ret_item());
-            if (retval.ret_id() == 0)
-                if(item->v_level >= MAX_LEVEL)
-                    if(item->IsTransp(x - item->GetDrawX(), y - item->GetDrawY()))
-                        retval = item_h;
-        });
-        if (retval.ret_id())
-            return retval;
-        ++it2;
-    }
-    it2 = mobi->visiblePoint->begin();  
-    for(int i = MAX_LEVEL - 1; i >= 0; --i)
+    int z_level_m = castTo<CubeTile>(mobi->thisMob->GetOwner().ret_item())->posz();
+    for (int z = z_level_m; z >= 0; --z)
     {
         auto it2 = mobi->visiblePoint->begin();  
         while(it2 != mobi->visiblePoint->end())
         {
-            squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
-            {
-                auto item = castTo<IOnMapItem>(item_h.ret_item());
-                if (retval.ret_id() == 0)
-                    if(item->v_level == i)
-                        if(item->IsTransp(x - item->GetDrawX(), y - item->GetDrawY()))
-                            retval = item_h;
-            });
-            if (retval.ret_id())
+            if (it2->posz == z)
+                squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
+                {
+                    auto item = castTo<IOnMapItem>(item_h.ret_item());
+                    if (retval.ret_id() == 0)
+                        if(item->v_level >= MAX_LEVEL)
+                            if(!item->IsTransp(
+                                x - (item->GetDrawX() + mob_position::get_shift_x()),
+                                y - (item->GetDrawY() + mob_position::get_shift_y())))
+                                retval = item_h;
+                });
+            if (retval.valid())
                 return retval;
             ++it2;
+        }
+        it2 = mobi->visiblePoint->begin();  
+        for(int i = MAX_LEVEL - 1; i >= 0; --i)
+        {
+            auto it2 = mobi->visiblePoint->begin();  
+            while(it2 != mobi->visiblePoint->end())
+            {
+                if (it2->posz == z)
+                    squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
+                    {
+                        auto item = castTo<IOnMapItem>(item_h.ret_item());
+                        if (retval.ret_id() == 0)
+                            if(item->v_level == i)
+                                if(!item->IsTransp(
+                                    x - (item->GetDrawX() + mob_position::get_shift_x()),
+                                    y - (item->GetDrawY() + mob_position::get_shift_y())))
+                                    retval = item_h;
+                    });
+                if (retval.ret_id())
+                    return retval;
+                ++it2;
+            }
         }
     }
     return 0;
@@ -445,85 +450,88 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     //auto retlist = new std::list<point>;
     clearLOS();
     //for(int level = 0; level < 
-    point p = {sizeHsq + posx - sizeHsq, sizeWsq + posy - sizeWsq};
+    point p = {posx, posy, posz};
     retlist->push_back(p);
 
-    p.posx = sizeHsq + 1;
-    p.posy = sizeWsq;
+    p.posx = posx + 1;
+    p.posy = posy;
     worklist.push_back(p);
 
-    p.posx = sizeHsq + 1 + posx - sizeHsq;
-    p.posy = sizeWsq + posy - sizeWsq;
+    p.posx = posx + 1;
+    p.posy = posy;
     retlist->push_back(p);
 
-    p.posx = sizeHsq + 1;
-    p.posy = sizeWsq + 1;
+    p.posx = posx + 1;
+    p.posy = posy + 1;
     worklist.push_back(p);
 
-    p.posx = sizeHsq + 1 + posx - sizeHsq;
-    p.posy = sizeWsq + 1 + posy - sizeWsq;
+    p.posx = posx + 1;
+    p.posy = posy + 1;
     retlist->push_back(p);
 
-    p.posx = sizeHsq;
-    p.posy = sizeWsq + 1;
+    p.posx = posx;
+    p.posy = posy + 1;
     worklist.push_back(p);
 
-    p.posx = sizeHsq + posx - sizeHsq;
-    p.posy = sizeWsq + 1 + posy - sizeWsq;
+    p.posx = posx;
+    p.posy = posy + 1;
     retlist->push_back(p);
 
-    p.posx = sizeHsq - 1;
-    p.posy = sizeWsq + 1;
+    p.posx = posx - 1;
+    p.posy = posy + 1;
     worklist.push_back(p);
 
-    p.posx = sizeHsq - 1 + posx - sizeHsq;
-    p.posy = sizeWsq + 1 + posy - sizeWsq;
+    p.posx = posx - 1;
+    p.posy = posy + 1;
     retlist->push_back(p);
 
-    p.posx = sizeHsq - 1;
-    p.posy = sizeWsq;
+    p.posx = posx - 1;
+    p.posy = posy;
     worklist.push_back(p);
 
-    p.posx = sizeHsq - 1 + posx - sizeHsq;
-    p.posy = sizeWsq + posy - sizeWsq;
+    p.posx = posx - 1;
+    p.posy = posy;
     retlist->push_back(p);
     
-    p.posx = sizeHsq - 1;
-    p.posy = sizeWsq - 1;
+    p.posx = posx - 1;
+    p.posy = posy - 1;
     worklist.push_back(p);
 
-    p.posx = sizeHsq - 1 + posx - sizeHsq;
-    p.posy = sizeWsq - 1 + posy - sizeWsq;    
+    p.posx = posx - 1;
+    p.posy = posy - 1;    
     retlist->push_back(p);
 
-    p.posx = sizeHsq;
-    p.posy = sizeWsq - 1;
+    p.posx = posx;
+    p.posy = posy - 1;
     worklist.push_back(p);
 
-    p.posx = sizeHsq + posx - sizeHsq;
-    p.posy = sizeWsq - 1 + posy - sizeWsq;  
+    p.posx = posx;
+    p.posy = posy - 1;  
     retlist->push_back(p);
 
-    p.posx = sizeHsq + 1;
-    p.posy = sizeWsq - 1;
+    p.posx = posx + 1;
+    p.posy = posy - 1;
     worklist.push_back(p);
 
-    p.posx = sizeHsq + 1 + posx - sizeHsq;
-    p.posy = sizeWsq - 1 + posy - sizeWsq; 
+    p.posx = posx + 1;
+    p.posy = posy - 1; 
     retlist->push_back(p);
+
     auto itr = worklist.begin();
     while(itr != worklist.end())
     {
-        if(map->isVisible(itr->posx + posx - sizeHsq, itr->posy + posy - sizeWsq, posz) && itr->posx != 0 && itr->posx != sizeHsq * 2 && itr->posy != sizeWsq * 2 && itr->posy != 0
-            && !(itr->posy + posy - sizeWsq <= 0 || itr->posy + posy - sizeWsq >= (sizeHmap - 1) || itr->posx + posx - sizeHsq <= 0 || itr->posx + posx - sizeHsq >= sizeWmap - 1))
-            if(abs(itr->posx - sizeHsq) > abs(itr->posy - sizeWsq)) 
-            if(itr->posx > sizeHsq)
+        if(map->isVisible(itr->posx, itr->posy, itr->posz) 
+            && itr->posx != posx - sizeHsq && itr->posx != posx + sizeHsq
+            && itr->posy != posy - sizeWsq && itr->posy != posy + sizeWsq
+            && !(itr->posy <= 0 || itr->posy >= (sizeHmap - 1) || itr->posx <= 0 || itr->posx >= sizeWmap - 1))
+            if(abs(itr->posx - posx) > abs(itr->posy - posy)) 
+            if(itr->posx > posx)
             {
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
                 worklist.push_back(p);
-                p.posx = itr->posx + 1 + posx - sizeHsq;
-                p.posy = itr->posy + posy - sizeWsq;
+                p.posx = itr->posx + 1;
+                p.posy = itr->posy;
                 retlist->push_back(p);
             }
             else 
@@ -531,18 +539,18 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
                 worklist.push_back(p);
-                p.posx = itr->posx - 1 + posx - sizeHsq;
-                p.posy = itr->posy + posy - sizeWsq;
+                p.posx = itr->posx - 1;
+                p.posy = itr->posy;
                 retlist->push_back(p);
             }
-            else if(abs(itr->posx - sizeHsq) < abs(itr->posy - sizeWsq)) 
-            if(itr->posy > sizeWsq) 
+            else if(abs(itr->posx - posx) < abs(itr->posy - posy)) 
+            if(itr->posy > posy) 
             {
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
                 worklist.push_back(p);
-                p.posx = itr->posx + posx - sizeHsq;
-                p.posy = itr->posy + 1 + posy - sizeWsq;
+                p.posx = itr->posx;
+                p.posy = itr->posy + 1;
                 retlist->push_back(p);
             }
             else 
@@ -550,32 +558,32 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
                 worklist.push_back(p);
-                p.posx = itr->posx + posx - sizeHsq;
-                p.posy = itr->posy - 1 + posy - sizeWsq;
+                p.posx = itr->posx;
+                p.posy = itr->posy - 1;
                 retlist->push_back(p);
             }
             else
-            if(itr->posx > sizeHsq)
+            if(itr->posx > posx)
             {
-                if(itr->posy > sizeWsq)
+                if(itr->posy > posy)
                 {
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy + 1;
                 worklist.push_back(p);
-                p.posx = itr->posx + 1 + posx - sizeHsq;
-                p.posy = itr->posy + 1 + posy - sizeWsq;
+                p.posx = itr->posx + 1;
+                p.posy = itr->posy + 1;
                 retlist->push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
                 worklist.push_back(p);
-                p.posx = itr->posx + 1 + posx - sizeHsq;
-                p.posy = itr->posy + posy - sizeWsq;
+                p.posx = itr->posx + 1;
+                p.posy = itr->posy;
                 retlist->push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
                 worklist.push_back(p);
-                p.posx = itr->posx + posx - sizeHsq;
-                p.posy = itr->posy + 1 + posy - sizeWsq;
+                p.posx = itr->posx;
+                p.posy = itr->posy + 1;
                 retlist->push_back(p);
                 }
                 else
@@ -583,45 +591,45 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy - 1;
                 worklist.push_back(p);
-                p.posx = itr->posx + 1 + posx - sizeHsq;
-                p.posy = itr->posy - 1 + posy - sizeWsq;
+                p.posx = itr->posx + 1;
+                p.posy = itr->posy - 1;
                 retlist->push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
                 worklist.push_back(p);
-                p.posx = itr->posx + 1 + posx - sizeHsq;
-                p.posy = itr->posy + posy - sizeWsq;
+                p.posx = itr->posx + 1;
+                p.posy = itr->posy;
                 retlist->push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
                 worklist.push_back(p);
-                p.posx = itr->posx + posx - sizeHsq;
-                p.posy = itr->posy - 1 + posy - sizeWsq;
+                p.posx = itr->posx;
+                p.posy = itr->posy - 1;
                 retlist->push_back(p);
                 }
 
             }
             else
             {
-                if(itr->posy > sizeWsq)
+                if(itr->posy > posy)
                 {
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy + 1;
                 worklist.push_back(p);
-                p.posx = itr->posx - 1 + posx - sizeHsq;
-                p.posy = itr->posy + 1 + posy - sizeWsq;
+                p.posx = itr->posx - 1;
+                p.posy = itr->posy + 1;
                 retlist->push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
                 worklist.push_back(p);
-                p.posx = itr->posx + posx - sizeHsq;
-                p.posy = itr->posy + 1 + posy - sizeWsq;
+                p.posx = itr->posx;
+                p.posy = itr->posy + 1;
                 retlist->push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
                 worklist.push_back(p);
-                p.posx = itr->posx - 1 + posx - sizeHsq;
-                p.posy = itr->posy + posy - sizeWsq;
+                p.posx = itr->posx - 1;
+                p.posy = itr->posy;
                 retlist->push_back(p);
                 }
                 else
@@ -629,26 +637,37 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy - 1;
                 worklist.push_back(p);
-                p.posx = itr->posx - 1 + posx - sizeHsq;
-                p.posy = itr->posy - 1 + posy - sizeWsq;
+                p.posx = itr->posx - 1;
+                p.posy = itr->posy - 1;
                 retlist->push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
                 worklist.push_back(p);
-                p.posx = itr->posx - 1 + posx - sizeHsq;
-                p.posy = itr->posy + posy - sizeWsq;
+                p.posx = itr->posx - 1;
+                p.posy = itr->posy;
                 retlist->push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
                 worklist.push_back(p);
-                p.posx = itr->posx + posx - sizeHsq;
-                p.posy = itr->posy - 1 + posy - sizeWsq;
+                p.posx = itr->posx;
+                p.posy = itr->posy - 1;
                 retlist->push_back(p);
                 }
             }
 
         worklist.erase(itr++);
     };
+    if (retlist->begin()->posz == 0)
+        return retlist;
+    
+    std::list<point> z_list;
+    for (auto it = retlist->begin(); it != retlist->end(); ++it)
+    {
+        point p = *it;
+        p.posz -= 1;
+        z_list.push_back(p);
+    }
+    retlist->splice(retlist->begin(), z_list);
     return retlist;
 };
 

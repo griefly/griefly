@@ -18,7 +18,7 @@ namespace mob_position
     }
     int get_shift_x() 
     {
-        return mng_->thisMob->GetDrawX() * (-1) + (sizeW / 2) - 16;
+        return mng_->thisMob->GetDrawX() * (-1) + (sizeW / 2); // TODO
     }
     int get_shift_y()
     {

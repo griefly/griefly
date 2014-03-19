@@ -1,1 +1,1 @@
-FOR /L %%i IN (1,1,5) DO START KVEngine.exe -no %%i
+FOR /L %%i IN (1,1,5) DO START KVEngine.exe -auto %%i

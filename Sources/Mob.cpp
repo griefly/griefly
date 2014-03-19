@@ -32,20 +32,22 @@ void Manager::moveEach(Dir direct)
 
 void Manager::undoCenterMove(Dir direct)
 {
-    for(int x = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() - sizeHsq); 
-        x <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() + sizeHsq, sizeHmap - 1); x++)
-    {
-        for(int y = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() - sizeWsq); 
-            y <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() + sizeWsq, sizeWmap - 1); y++)
+    //TODO
+    for (int z = 0; z < sizeDmap; ++z)
+        for(int x = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() - sizeHsq); 
+            x <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() + sizeHsq, sizeHmap - 1); x++)
         {
-            map->squares[x][y][0]->ForEach([&](id_ptr_on<IOnMapBase> item)
+            for(int y = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() - sizeWsq); 
+                y <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() + sizeWsq, sizeWmap - 1); y++)
             {
-                Move* eff = getEffectOf<Move>();
-                eff->Init(TITLE_SIZE, direct, thisMob->pixSpeed, item);
-                eff->Start();
-            });
+                map->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
+                {
+                    Move* eff = getEffectOf<Move>();
+                    eff->Init(TITLE_SIZE, direct, thisMob->pixSpeed, item);
+                    eff->Start();
+                });
+            }
         }
-    }
 };
 
 void Manager::changeMob(id_ptr_on<IMob>& i)
@@ -75,7 +77,17 @@ Manager::Manager(std::string adrs)
     last_fps = FPS_MAX;
     net_client = NetClient::Init(this);
 };
- 
+
+void Manager::UpdateVisible() 
+{
+    visiblePoint->clear();
+    visiblePoint = 
+        map->losf.calculateVisisble(visiblePoint, 
+            castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
+            castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy(),
+            castTo<CubeTile>(thisMob->GetOwner().ret_item())->posz());
+}
+
 void Manager::process()
 {
 
@@ -120,11 +132,7 @@ void Manager::process()
 
         if((SDL_GetTicks() - lastTimeFps) >= 1000 && !pause)
         {
-            visiblePoint->clear();
-            visiblePoint = map->losf.calculateVisisble(visiblePoint, 
-                castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
-                castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy(),
-                castTo<CubeTile>(thisMob->GetOwner().ret_item())->posz()); 
+            UpdateVisible();
 
             if(!(fps > FPS_MAX - 10 && fps < FPS_MAX - 10))
             delay = (int)(1000.0 / FPS_MAX + delay - 1000.0 / fps);
@@ -162,7 +170,7 @@ void Manager::checkMoveMob()
 #define SEND_KEY_MACRO(key) \
       if((auto_player_ && (rand() % 100 == 1)) || (!NODRAW && keys[key])) \
       { \
-          if(MAIN_TICK - lastShoot > 4) \
+          if(MAIN_TICK - lastShoot >= 2) \
           { \
               Message msg; \
               msg.text = #key; \
@@ -187,7 +195,7 @@ void Manager::processInput()
                 if (event.key.keysym.sym == SDLK_o) 
                     pause = !pause;
                 if (event.key.keysym.sym == SDLK_F12)
-                    auto_player_ = !auto_player_;
+                    ToogleAutoplay();
             }
             if(event.type == SDL_MOUSEBUTTONDOWN)
             {
@@ -296,10 +304,10 @@ void Manager::initWorld()
 
     map->makeTiles();
 
-    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);
+    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[sizeHmap / 2][sizeWmap / 2][1]);
     changeMob(newmob);
 
-    auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), map->squares[sizeHmap / 2][sizeWmap / 2][0]);
+    auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), map->squares[sizeHmap / 2][sizeWmap / 2][1]);
     SetCreator(tptr.ret_id());
 
     map->makeMap();
