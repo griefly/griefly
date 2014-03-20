@@ -19,7 +19,10 @@ public:
     {
         return passable;
     }
-
+    virtual bool IsTransparent() const override
+    {
+        return transparent;
+    }
     virtual int GetDrawX() const override
     {
         int temp = owner->GetDrawX();
@@ -31,7 +34,7 @@ public:
         int temp = owner->GetDrawY();
         return step_y + temp;
     }
-
+    virtual void processPhysics();
     void processMove();//for move
     void move(Dir direct);//pix move
     virtual bool checkMove(Dir direct);

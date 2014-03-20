@@ -40,15 +40,6 @@ public:
     };
 };
 
-class id_ptr
-{
-public:
-    size_t id;
-    IMainItem* operator*();
-    IMainItem* operator->();
-    id_ptr operator=(size_t id_new);
-};
-
 template<typename T>
 class id_ptr_on
 {
@@ -98,11 +89,6 @@ public:
     id_ptr_on& operator=(size_t id_new)
     {
         id = id_new;
-        return *this;
-    }
-    id_ptr_on& operator=(id_ptr id_new)
-    {
-        id = id_new.id;
         return *this;
     }
     template<typename T2>

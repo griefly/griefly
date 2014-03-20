@@ -72,6 +72,14 @@ bool CubeTile::IsPassable() const
     return true;
 }
 
+bool CubeTile::IsTransparent() const
+{
+    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        if (!(*it)->IsTransparent())
+            return false;
+    return true;
+}
+
 size_t CubeTile::GetItemImpl(unsigned int hash)
 {
     for (auto it = inside_list_.rbegin(); it != inside_list_.rend(); ++it)

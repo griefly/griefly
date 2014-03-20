@@ -10,8 +10,8 @@
 
 COrk::COrk()
 {
-    tickSpeed = 1;
-    pixSpeed = 2;
+    tickSpeed = 2;
+    pixSpeed = 1;
     SetSprite("icons/man.png");
     passable = true;
     v_level = 10;

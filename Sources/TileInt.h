@@ -45,7 +45,8 @@ public:
         // TODO
         return true;       
     };
-    virtual bool IsPassable() const;
+    virtual bool IsPassable() const override;
+    virtual bool IsTransparent() const override;
     void SetPos(int posx, int posy, int posz = 0)
     {
         posx_ = posx;
@@ -66,13 +67,12 @@ public:
     }
     virtual int GetDrawX() const override
     {
-        // TODO:
-        return /*step_x + owner->GetDrawX()*/posx_ * 32;
+        return posx_ * 32;
     }
 
     virtual int GetDrawY() const override
     {
-        return /*step_y + */posy_ * 32;
+        return posy_ * 32;
     }
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;

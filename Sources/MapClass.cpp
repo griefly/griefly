@@ -196,10 +196,9 @@ bool MapMaster::checkOutBorder(int posx, int posy, Dir direct)
 
 bool MapMaster::isVisible(int posx, int posy, int posz)
 {
-    return true;
-    //if(!checkOutBorder(posx, posy/*TODO: posz*/))
-    //    return false;
-    //return squares[posx][posy][posz]->IsPassable();
+    if(!checkOutBorder(posx, posy/*TODO: posz*/))
+        return false;
+    return squares[posx][posy][posz]->IsPassable();
 };
 
 void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz)

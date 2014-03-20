@@ -25,14 +25,6 @@ struct square
     square* before;
 };
 
-struct pathMessage
-{
-    int begposx;
-    int begposy;
-    int toposx;
-    int toposy;
-    id_ptr id;
-};
 class CPathFinder
 {
 public:
@@ -41,7 +33,6 @@ public:
 private:
     std::list<square*> openList;
     square squares[sizeHmap][sizeWmap];
-    std::list<pathMessage> pathListMessage;
     void clearPathfinding();
     void addNear(int posx, int posy, int toPosx, int toPosy);
     int calcCost(int posx, int posy, int toPosx, int toPosy);
@@ -66,7 +57,6 @@ private:
 
 struct idpoint
 {
-    id_ptr id;
     int posx;
     int posy;
     int find_hash;

@@ -16,8 +16,8 @@ extern int FPS_MAX;//max fps
 
 extern int DRAW_MAX; // max real fps
 
-const int sizeHsq = 12; // visible size const
-const int sizeWsq = 9;
+const int sizeHsq = 13; // visible size const
+const int sizeWsq = 10;
 
 const int sizeW = 640; // visible in pixel const
 const int sizeH = 480;
@@ -42,6 +42,8 @@ const Dir D_LEFT = 0;
 const Dir D_RIGHT = 1;
 const Dir D_UP = 2;
 const Dir D_DOWN = 3;
+const Dir D_ZUP = 4;
+const Dir D_ZDOWN = 5;
 
 struct VDir
 {
@@ -54,8 +56,10 @@ const VDir VD_LEFT = {-1, 0, 0};
 const VDir VD_RIGHT = {1, 0, 0};
 const VDir VD_UP = {0, -1, 0};
 const VDir VD_DOWN = {0, 1, 0};
+const VDir VD_ZUP = {0, 0, 1};
+const VDir VD_ZDOWN = {0, 0, -1};
 
-const VDir DirToVDir[4] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN};
+const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
 
 const int MAX_LEVEL = 20;
 

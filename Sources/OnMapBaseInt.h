@@ -23,6 +23,11 @@ public:
     {
         return true;
     }
+    virtual bool IsTransparent() const
+    {
+        return true;
+    }
+    
     virtual void delThis() override
     {
         if (owner.valid())

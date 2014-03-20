@@ -55,6 +55,16 @@ void IOnMapItem::processImage(SDL_Surface* surface)
                                imageStateW, imageStateH);
 };
 
+void IOnMapItem::processPhysics()
+{
+    auto down = owner->GetNeighbour(D_ZDOWN);
+    if (down.valid() && down->IsPassable())
+    {
+        owner->RemoveItem(id);
+        down->AddItem(id);
+    }
+}
+
 bool IOnMapItem::IsTransp(int x, int y)
 {
     if (NODRAW)
