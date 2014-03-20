@@ -69,7 +69,6 @@
     <ClCompile Include="Sources\Firebullet.cpp" />
     <ClCompile Include="Sources\FireEffect.cpp" />
     <ClCompile Include="Sources\GLSprite.cpp" />
-    <ClCompile Include="Sources\Idptr.cpp" />
     <ClCompile Include="Sources\ItemFabric.cpp" />
     <ClCompile Include="Sources\Kivsjak.cpp" />
     <ClCompile Include="Sources\Liquid.cpp" />

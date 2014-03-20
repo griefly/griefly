@@ -224,9 +224,6 @@
     <ClCompile Include="Sources\GLSprite.cpp">
       <Filter>Source Files\Sprites</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Idptr.cpp">
-      <Filter>Source Files\Main</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\ItemFabric.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
