@@ -3,6 +3,8 @@
 #pragma comment (lib, "Libs/SDL_image.lib")
 #pragma comment (lib, "Libs/SDL_ttf.lib")
 #pragma comment (lib, "Libs/SDL_net.lib")
+#pragma comment (lib, "Libs/sfml-main.lib")
+#pragma comment (lib, "Libs/sfml-audio.lib")
 
 #include <stdio.h>
 #include <stdlib.h>

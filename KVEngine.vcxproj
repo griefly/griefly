@@ -49,6 +49,7 @@
     <ClInclude Include="Sources\OnMapInt.h" />
     <ClInclude Include="Sources\Ork.h" />
     <ClInclude Include="Sources\Screen.h" />
+    <ClInclude Include="Sources\sound.h" />
     <ClInclude Include="Sources\sprite.h" />
     <ClInclude Include="Sources\sync_random.h" />
     <ClInclude Include="Sources\Teleportator.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="Sources\OnMapInt.cpp" />
     <ClCompile Include="Sources\Ork.cpp" />
     <ClCompile Include="Sources\Screen.cpp" />
+    <ClCompile Include="Sources\sound.cpp" />
     <ClCompile Include="Sources\sprite.cpp" />
     <ClCompile Include="Sources\sync_random.cpp" />
     <ClCompile Include="Sources\Teleportator.cpp" />
@@ -131,7 +133,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\loki-0.1.7\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7\VisualC;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\SFML-2.1-windows-vc10-32bits\SFML-2.1\include;D:\loki-0.1.7\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7\VisualC;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

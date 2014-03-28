@@ -13,6 +13,8 @@
 #include "MagicStrings.h"
 #include "TileInt.h"
 
+#include "sound.h"
+
 void Manager::checkMove(Dir direct)
 {
     //cautLastItem(direct);
@@ -88,9 +90,11 @@ void Manager::UpdateVisible()
             castTo<CubeTile>(thisMob->GetOwner().ret_item())->posz());
 }
 
+sf::Sound* sound;
 void Manager::process()
 {
-
+    sound = new sf::Sound;
+    InitSound(sound, "click.ogx");
     map->numOfPathfind = 0;
     SDL_Color color = {255, 255, 255, 0};
 
@@ -202,6 +206,7 @@ void Manager::processInput()
                 auto item = map->click(event.button.x, event.button.y);
                 if (item.ret_id())
                     last_touch = item->name;
+                sound->play();
             }
         }
 

@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Main">
       <UniqueIdentifier>{20df47e1-c6ce-4dc6-bdbb-e309049af97c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Sound">
+      <UniqueIdentifier>{abc36b9c-8c15-422e-8593-a860f5a99e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sound">
+      <UniqueIdentifier>{b2bd8ec3-b389-4677-8cae-77b20d0c6f5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\ApproxGLImage.h">
@@ -195,6 +201,9 @@
     <ClInclude Include="Sources\mob_position.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\sound.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -301,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="Sources\mob_position.cpp">
       <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\sound.cpp">
+      <Filter>Source Files\Sound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
