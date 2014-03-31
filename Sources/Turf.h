@@ -30,7 +30,5 @@ public:
     DECLARE_GET_TYPE_ITEM(pit)
     virtual void process();
     virtual void processImage(SDL_Surface* s);
-    virtual std::list<HashAmount> insertLiquid(std::list<HashAmount>);
-    id_ptr_on<LiquidHolder> KV_SAVEBLE(lhold);
 };
 ADD_TO_TYPELIST(Pit);

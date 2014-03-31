@@ -21,7 +21,7 @@ void ItemFabric::Sync()
     {
         hash_last_ = hash_all();
 
-        // Debug::UnsyncDebug().Save();
+        //Debug::UnsyncDebug().Save();
 
         Message msg;
 
@@ -37,7 +37,7 @@ void ItemFabric::foreachProcess()
 {
     size_t table_size = idTable_.size();
     for (size_t i = 1; i < table_size; ++i)
-        if (idTable_[i] != nullptr)
+        if (idTable_[i] != nullptr && idTable_[i]->how_often && ((MAIN_TICK % idTable_[i]->how_often) == 0))
             idTable_[i]->process();
 }
 

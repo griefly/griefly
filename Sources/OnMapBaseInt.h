@@ -10,7 +10,7 @@ class IOnMapBase: public IDraw
 public:
     DECLARE_SAVED(IOnMapBase, IDraw);
     DECLARE_GET_TYPE_ITEM(IOnMapBase);
-    IOnMapBase() {owner = 0;};
+    IOnMapBase() {owner = 0; is_strong_owner = false;};
     virtual bool IsVisibleByPlayer() const
     {
         return true;
@@ -74,7 +74,12 @@ public:
     {
         return owner;
     }
+    bool IsStrongOwner() const
+    {
+        return is_strong_owner;
+    }
 protected:
+    bool KV_SAVEBLE(is_strong_owner);
     id_ptr_on<IOnMapBase> KV_SAVEBLE(owner);
     virtual size_t GetItemImpl(unsigned int hash) { return 0; }
 };

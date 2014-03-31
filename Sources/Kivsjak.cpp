@@ -13,6 +13,7 @@ Kivsjak::Kivsjak()
     max_dmg = 300;
     inside->size = 200;
     inside->addLiquid(hash("liquidblood"), 200);
+    passable = false;
     food = 0;
     name = "Kivsjak";
 }
@@ -37,14 +38,6 @@ void Kivsjak::aaMind()
 void Kivsjak::live()
 {
     CAliveMob::live();
-    if(inside->amountOf(hash("liquidblood") < 130))
-        bloodless++;
-    auto i = owner->GetItem<Pit>();
-    if(i.valid())
-    {
-        if(i->lhold->amountOfAll() >= i->lhold->size - 10)
-            oxyless++;
-    }
     if(dmg + bloodless + burn + interior + oxyless > max_dmg)
     {
         fabric->newItemOnMap<IOnMapItem>(hash("meat"), owner);

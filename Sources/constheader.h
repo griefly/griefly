@@ -19,11 +19,11 @@ extern int DRAW_MAX; // max real fps
 const int sizeHsq = 13; // visible size const
 const int sizeWsq = 10;
 
-const int sizeW = 640; // visible in pixel const
-const int sizeH = 480;
+extern int sizeW; // visible in pixel const
+extern int sizeH;
 
-const int sizeHmap = 50; // map size
-const int sizeWmap = 50;
+const int sizeHmap = 25; // map size
+const int sizeWmap = 25;
 const int sizeDmap = 2;
 
 const int beginMobPosX = 9; // posx and posx mob on screen

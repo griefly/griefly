@@ -11,7 +11,7 @@ CMeat::CMeat()
 
 void CWeed::process()
 {
-
+    SmallItem::process();
 };
 
 CWeed::CWeed()

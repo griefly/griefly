@@ -32,7 +32,7 @@ public:
     }
 
     virtual void delThis();
-    IMainItem(){ id = 0; master = 0;};
+    IMainItem(){ id = 0; master = 0; how_often = 10;};
     IMainItem(NotLoadItem){};
     static Manager* mobMaster;
     static MapMaster* map;
@@ -63,6 +63,7 @@ public:
     virtual void process(){};
 public:
     size_t id;
+    int how_often;
     id_ptr_on<IOnMapItem> master;
 };
 ADD_TO_TYPELIST(IMainItem);

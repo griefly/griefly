@@ -16,6 +16,8 @@ public:
     virtual void processGUI();//draw
     virtual void processGUImsg(const Message& msg) override;
     
+    virtual void processPhysics() override;
+
     virtual bool checkMove(Dir direct) override;
     bool KV_SAVEBLE(onMobControl);
     bool KV_ON_LOAD(thisMobControl, false);

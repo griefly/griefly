@@ -28,6 +28,7 @@ CAliveMob::CAliveMob()
 
 void CAliveMob::process()
 {
+    IMob::process();
     if(!onMobControl) aaMind();
     live();
 };

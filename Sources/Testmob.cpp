@@ -7,7 +7,7 @@
 
 void CTestmob::process()
 {
-    
+    IOnMapItem::process();
     /*if((MAIN_TICK - lastMove > tickSpeed) && (get_rand() % 10 == 1))
     {
           //dMove = (Dir)(get_rand() % 4);

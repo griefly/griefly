@@ -14,5 +14,8 @@ int DRAW_MAX = 128;
 
 bool NODRAW = false;
 
+int sizeW = 640; // visible in pixel const
+int sizeH = 480;
+
 std::fstream loc("errorfile.txt", std::ios::trunc | std::ios::out);
 std::ostream& SYSTEM_STREAM = std::cout;

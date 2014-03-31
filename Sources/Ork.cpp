@@ -16,8 +16,11 @@ COrk::COrk()
     passable = true;
     v_level = 10;
     in_hand = 0;
+    jump_time = 0;
+    is_strong_owner = true;
     inside->addLiquid(hash("liquidblood"), 200);
     name = "Ork";
+    
 };
 
 void COrk::aaMind()
@@ -27,13 +30,17 @@ void COrk::aaMind()
 void COrk::live()
 {
     CAliveMob::live();
-    /*auto li = owner->GetItem<Pit>();
-    if (!li.valid())
-        return;
-    if (li->lhold->amountOfAll() >= li->lhold->size - 10)
-        oxyless++;*/
 }
-
+bool COrk::checkMove(Dir direct)
+{
+    if (CAliveMob::checkMove(direct))
+    {   
+        if (owner->GetItem<CWeed>().valid())
+            PlaySound(&step_sound, "step.wav");
+        return true;
+    }
+    return false;
+}
 void COrk::processGUImsg(const Message& msg)
 {
     CAliveMob::processGUImsg(msg);
@@ -47,7 +54,14 @@ void COrk::processGUImsg(const Message& msg)
         else
         {
             in_hand = owner->GetItem<SmallItem>();
-            owner->RemoveItem(in_hand);
+            if (in_hand.valid())
+            {
+                if (!owner->RemoveItem(in_hand))
+                {
+                    SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
+                }
+                in_hand->SetOwner(id);
+            }
         }
     }
     else if(msg.text == "SDLK_q")
@@ -58,38 +72,22 @@ void COrk::processGUImsg(const Message& msg)
     {
         IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("forcespear"), owner);
     }
-    else if(msg.text == "SDLK_a")
+    else if(msg.text == "SDLK_SPACE")
     {
-        /*if(in_hand.ret_id())
+        if ((MAIN_TICK - jump_time) > 20)
         {
-            (*--(map->squares[posx - 1][posy].end()))->ignite(10);
-            (*--(map->squares[posx - 1][posy].end()))->attack_by(in_hand);
-        }*/
+            jump_time = MAIN_TICK;
+            auto zup = owner->GetNeighbour(D_ZUP);
+            if (zup.valid() && zup->IsPassable())
+            {
+                owner->RemoveItem(id);
+                zup->AddItem(id);
+                checkMove(dMove);
+            }
+            PlaySound(&jump_sound, "jump.ogx");
+        }
     }
-    else if(msg.text == "SDLK_w")
-    {
-        /*if(in_hand.ret_id())
-        {
-            (*--(map->squares[posx][posy - 1].end()))->ignite(10);
-            (*--(map->squares[posx][posy - 1].end()))->attack_by(in_hand);
-        }*/
-    }
-    else if(msg.text == "SDLK_d")
-    {
-        /*if(in_hand.ret_id())
-        {
-            (*--(map->squares[posx + 1][posy].end()))->ignite(10);
-            (*--(map->squares[posx + 1][posy].end()))->attack_by(in_hand);
-        }*/
-    }
-    else if(msg.text == "SDLK_s")
-    {
-        /*if(in_hand.ret_id())
-        {
-            (*--(map->squares[posx][posy + 1].end()))->ignite(10);
-            (*--(map->squares[posx][posy + 1].end()))->attack_by(in_hand);
-        }*/
-    }
+
 };
 
 void COrk::attack_by(id_ptr_on<SmallItem> atk, int force)

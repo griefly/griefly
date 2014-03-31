@@ -31,26 +31,28 @@ void MapMaster::Draw()
             auto it2 = mobi->visiblePoint->begin();
             while(it2 != mobi->visiblePoint->end())
             {   
-                if (it2->posz == z_level)
-                    squares[it2->posx][it2->posy][it2->posz]->ForEach([&i](id_ptr_on<IOnMapBase> item)
-                    {
-                        auto item_n = castTo<IOnMapItem>(item.ret_item());
-                        if (item_n->v_level == i)
-                            item_n->processImage(nullptr);//screen
-                    });
+                if(checkOutBorder(it2->posx, it2->posy))
+                    if (it2->posz == z_level)
+                        squares[it2->posx][it2->posy][it2->posz]->ForEach([&i](id_ptr_on<IOnMapBase> item)
+                        {
+                            auto item_n = castTo<IOnMapItem>(item.ret_item());
+                            if (item_n->v_level == i)
+                                item_n->processImage(nullptr);//screen
+                        });
                 ++it2;
             }
         } 
         auto it2 = mobi->visiblePoint->begin();
         while(it2 != mobi->visiblePoint->end())
         {   
-            if (it2->posz == z_level)
-                squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
-                {
-                    auto item_n = castTo<IOnMapItem>(item.ret_item());
-                    if (item_n->v_level >= MAX_LEVEL)
-                        item_n->processImage(nullptr);//screen
-                });
+            if(checkOutBorder(it2->posx, it2->posy))
+                if (it2->posz == z_level)
+                    squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
+                    {
+                        auto item_n = castTo<IOnMapItem>(item.ret_item());
+                        if (item_n->v_level >= MAX_LEVEL)
+                            item_n->processImage(nullptr);//screen
+                    });
             ++it2;
         }
     }
@@ -82,9 +84,13 @@ void MapMaster::makeMap()
         {     
             // Ge
             //
-            id_ptr_on<IOnMapItem> loc = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash((rand() % 10 != 1) ? "ground" : "ground"), squares[x][y][0]);
+            bool chk = (rand() % 10 != 1);
+            id_ptr_on<IOnMapItem> loc = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash(chk ? "ground" : "pit"), squares[x][y][0]);
             loc->imageStateH = 0;
-            loc->imageStateW = rand() % 4;
+            if (chk)
+                loc->imageStateW = rand() % 4;
+            else
+                loc->imageStateW = 0;
             
             if(rand() % 29 == 1 || x == 0 || y == 0 || x == sizeWmap - 1 || y == sizeHmap - 1)
                 IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][1]);
@@ -198,7 +204,7 @@ bool MapMaster::isVisible(int posx, int posy, int posz)
 {
     if(!checkOutBorder(posx, posy/*TODO: posz*/))
         return false;
-    return squares[posx][posy][posz]->IsPassable();
+    return squares[posx][posy][posz]->IsTransparent();
 };
 
 void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz)
@@ -220,6 +226,15 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
 {
     if(!mobi->visiblePoint) 
         return 0;
+
+    // Due to resize emulate some shit
+    SYSTEM_STREAM << "NOW CLICK X: " << x << ", ";
+    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW) / static_cast<float>(screen->w())));
+    SYSTEM_STREAM << x << std::endl;
+    SYSTEM_STREAM << "NOW CLICK Y: " << y << ", ";
+    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(screen->h())));
+    SYSTEM_STREAM << y << std::endl;
+    //
 
     id_ptr_on<IOnMapItem> retval = 0;
 

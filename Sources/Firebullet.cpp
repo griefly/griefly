@@ -6,6 +6,7 @@
 
 void CFirebullet::process()
 {
+    SmallItem::process();
     /*imageStateW = dMove;
     int count = 0;
 

@@ -23,7 +23,8 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
         {
             SYSTEM_STREAM << "ALERT! " << item.ret_id() << " double added!\n";
             SDL_Delay(5000);
-            assert(false);
+            int* poc = 0;
+            *poc = 1;
         }
         if (((*itr)->v_level == item->v_level && itr->ret_id() > item.ret_id())
            || (*itr)->v_level > item->v_level)

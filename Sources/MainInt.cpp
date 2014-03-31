@@ -31,11 +31,13 @@ bool IMainItem::saveSelf(std::stringstream& file)
     file << " " << T_ITEM() << " ";
     file << " " << id << " ";
     file << " " << master.ret_id() << " ";
+    file << " " << how_often << " ";
     return true;
 };
 
 bool IMainItem::loadSelf(std::stringstream& file)
 {
+    file >> how_often;
     // It empty becouse all data load main outer function
     return true;
 };

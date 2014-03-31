@@ -57,6 +57,8 @@ void IOnMapItem::processImage(SDL_Surface* surface)
 
 void IOnMapItem::processPhysics()
 {
+    if (owner->IsStrongOwner())
+        return;
     auto down = owner->GetNeighbour(D_ZDOWN);
     if (down.valid() && down->IsPassable())
     {

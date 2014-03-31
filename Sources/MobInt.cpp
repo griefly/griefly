@@ -7,6 +7,7 @@ IMob::IMob()
 {
     thisMobControl = false;
     onMobControl = false;
+    how_often = 1;
     SetSprite("icons/ork.png");        
 }
 
@@ -14,16 +15,6 @@ void IMob::cautOverMind()
 {
     if(onMobControl)
     {
-        /*initItem init;
-        init.dMove = D_UP;
-        init.imageStateH = 0;
-        init.imageStateW = 0;
-        init.posx = posx;
-        init.posy = posy;
-        init.x = x;
-        init.y = y;
-        init.type = hash("meat");*/ 
-        //mobMaster->changeMob(map->newItem(init));
     }
 };
 
@@ -82,6 +73,12 @@ void IMob::processGUImsg(const Message& msg)
             fabric->newItemOnMap<Pit>(hash("pit"), posx, posy);
         }*/
     }
+}
+
+void IMob::processPhysics()
+{
+    IMessageReceiver::processPhysics();
+    if(thisMobControl) mobMaster->UpdateVisible();
 }
 
 bool IMob::checkMove(Dir direct)

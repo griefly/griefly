@@ -14,11 +14,12 @@ Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
     auto flag = SDL_FULLSCREEN;
     if(!fullscreen)
         flag = 0;
-    screen_ = SDL_SetVideoMode(x, y, 32, SDL_OPENGL | flag);
-
+    ResetScreen(x, y, 32, SDL_OPENGL | SDL_RESIZABLE | flag);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, x, y, 0, -1, 1); // TODO: check
+    
+    glOrtho(0, x, y, 0, 0, 1); // TODO: check
+    
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -37,8 +38,13 @@ Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
     if (wglSwapInterval) 
         wglSwapInterval(1);
 #endif
-
     fail_ = false;
+}
+
+void Screen::ResetScreen(int x, int y, int bpp, Uint32 flags)
+{
+    screen_ = SDL_SetVideoMode(x, y, 32, flags);
+    glViewport(0, 0, x, y);
 }
 
 void Screen::Swap()
@@ -86,9 +92,7 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
         glTexCoord2f(1.0, 1.0);     glVertex2f(static_cast<float>(x + sprite.W()), static_cast<float>(y + sprite.H()));
         glTexCoord2f(1.0, 0.0);     glVertex2f(static_cast<float>(x + sprite.W()), static_cast<float>(y));
     glEnd();
-    //glDisable(GL_TEXTURE_2D);
-    //glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    //glEnable(GL_BLEND);
+
     if (glGetError())
         SYSTEM_STREAM << glGetError() << std::endl; 
 

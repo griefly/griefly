@@ -34,6 +34,10 @@ public:
         int temp = owner->GetDrawY();
         return step_y + temp;
     }
+    virtual void process() override
+    {
+        processPhysics();
+    }
     virtual void processPhysics();
     void processMove();//for move
     void move(Dir direct);//pix move

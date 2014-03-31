@@ -17,6 +17,7 @@ private:
     {
         if (!holder_[name])
         {
+            SYSTEM_STREAM << "Load sound " << name << std::endl;
             holder_[name] = new sf::SoundBuffer;
             if (!holder_[name]->loadFromFile("sounds/" + name))
                 SYSTEM_STREAM << "Error during load sound " << name << std::endl;      
@@ -28,3 +29,4 @@ private:
 
 SoundManager& GetSoundManager();
 void InitSound(sf::Sound* sound, std::string name);
+void PlaySound(sf::Sound* sound, std::string name);

@@ -149,7 +149,7 @@ void Manager::process()
         }
         ++fps;
         if(delay > 0) 
-            SDL_Delay(delay);
+            ;//SDL_Delay(delay);
         else 
             delay = 0;
 
@@ -208,6 +208,14 @@ void Manager::processInput()
                     last_touch = item->name;
                 sound->play();
             }
+            if (event.type == SDL_VIDEORESIZE)
+            {
+                int max_scale = std::max((event.resize.w / 4), (event.resize.h / 3));
+
+                int new_w = max_scale * 4;
+                int new_h = max_scale * 3;
+                gl_screen->ResetScreen(new_w, new_h, 32, SDL_OPENGL | SDL_RESIZABLE);
+            }
         }
 
         SDL_PumpEvents();
@@ -244,6 +252,7 @@ void Manager::processInput()
         }
     }
 
+    SEND_KEY_MACRO(SDLK_SPACE);
     SEND_KEY_MACRO(SDLK_UP);
     SEND_KEY_MACRO(SDLK_DOWN);
     SEND_KEY_MACRO(SDLK_LEFT);
