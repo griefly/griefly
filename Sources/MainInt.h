@@ -32,7 +32,7 @@ public:
     }
 
     virtual void delThis();
-    IMainItem(){ id = 0; master = 0; how_often = 10;};
+    IMainItem(){ id = 0; master = 0; how_often = 0;};
     IMainItem(NotLoadItem){};
     static Manager* mobMaster;
     static MapMaster* map;

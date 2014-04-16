@@ -69,8 +69,12 @@ TextPainter::Text::Text(TextPainter* master)
 
 void TextPainter::Text::Update()
 {
-    content_.clear();
-    updater_(&content_);
+    //content_.clear();
+    std::string new_content;
+    updater_(&new_content);
+    if (content_ == new_content)
+        return;
+    content_ = new_content;
     auto local = TTF_RenderText_Blended(master_->GetFont(font_name_, size_), content_.c_str(), color_);
               
     if (local)

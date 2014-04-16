@@ -15,6 +15,8 @@
 
 #include "sound.h"
 
+int ping_send;
+
 void Manager::checkMove(Dir direct)
 {
     //cautLastItem(direct);
@@ -90,13 +92,12 @@ void Manager::UpdateVisible()
             castTo<CubeTile>(thisMob->GetOwner().ret_item())->posz());
 }
 
-sf::Sound* sound;
 void Manager::process()
 {
-    sound = new sf::Sound;
-    InitSound(sound, "click.ogx");
     map->numOfPathfind = 0;
     SDL_Color color = {255, 255, 255, 0};
+
+    int begin_of_process;
 
     int delay = 0;
     int lastTimeFps = SDL_GetTicks();
@@ -118,7 +119,9 @@ void Manager::process()
         if(process_in && !pause)
         {
             numOfDeer = 0;
+            begin_of_process = SDL_GetTicks();
             IMainItem::fabric->foreachProcess();
+            //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
         }
          
         if (!NODRAW)
@@ -200,13 +203,20 @@ void Manager::processInput()
                     pause = !pause;
                 if (event.key.keysym.sym == SDLK_F12)
                     ToogleAutoplay();
+                if(event.key.keysym.sym == SDLK_F2)
+                {
+                    ping_send = SDL_GetTicks();
+                    Message msg;
+                    msg.text = "SDLK_F2";
+                    net_client->Send(msg);
+                }
             }
             if(event.type == SDL_MOUSEBUTTONDOWN)
             {
                 auto item = map->click(event.button.x, event.button.y);
                 if (item.ret_id())
                     last_touch = item->name;
-                sound->play();
+                PlaySound("click.ogx");
             }
             if (event.type == SDL_VIDEORESIZE)
             {
@@ -251,6 +261,7 @@ void Manager::processInput()
             SYSTEM_STREAM << "World's hash: " << IMainItem::fabric->hash_all() << std::endl; 
         }
     }
+
 
     SEND_KEY_MACRO(SDLK_SPACE);
     SEND_KEY_MACRO(SDLK_UP);
@@ -361,6 +372,11 @@ void Manager::process_in_msg()
     while (true)
     {
         net_client->Recv(&msg);
+        if (msg.text == "SDLK_F2")
+        {
+            SYSTEM_STREAM << "Ping is: " << (SDL_GetTicks() - ping_send) / 1000.0 << "s" << std::endl;
+            continue;
+        }
         if (msg.text == Net::NEXTTICK)
             return;
         

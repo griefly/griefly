@@ -36,7 +36,7 @@ bool COrk::checkMove(Dir direct)
     if (CAliveMob::checkMove(direct))
     {   
         if (owner->GetItem<CWeed>().valid())
-            PlaySound(&step_sound, "step.wav");
+            PlaySound("step.wav");
         return true;
     }
     return false;
@@ -84,7 +84,7 @@ void COrk::processGUImsg(const Message& msg)
                 zup->AddItem(id);
                 checkMove(dMove);
             }
-            PlaySound(&jump_sound, "jump.ogx");
+            PlaySound("jump.ogx");
         }
     }
 
@@ -96,12 +96,3 @@ void COrk::attack_by(id_ptr_on<SmallItem> atk, int force)
     //dmg++;
     CAliveMob::attack_by(atk, force);
 }
-
-/*
-SAVED( int something )
-cout << something;
-
-
-
-
-*/

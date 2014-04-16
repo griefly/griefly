@@ -1,5 +1,6 @@
 #include <string>
-#include <map>
+#include <hash_map>
+#include <vector>
 
 #include <SFML/Audio.hpp>
 
@@ -24,9 +25,36 @@ private:
         }
         return holder_[name];
     }
-    std::map<std::string, sf::SoundBuffer*> holder_;
+    std::hash_map<std::string, sf::SoundBuffer*> holder_;
 };
 
 SoundManager& GetSoundManager();
 void InitSound(sf::Sound* sound, std::string name);
 void PlaySound(sf::Sound* sound, std::string name);
+
+sf::Sound* PlaySound(std::string name, int x = 0, int y = 0);
+
+class SoundPlayer
+{
+public:
+    SoundPlayer()
+    {
+        sounds_.resize(100);
+    }
+    sf::Sound* PlaySound(std::string name)
+    {
+        int i;
+        for (i = 0; i < sounds_.size(); ++i)
+            if (sounds_[i].getStatus() == sf::SoundSource::Stopped)
+                break;
+        if (i == sounds_.size())
+            sounds_.resize(sounds_.size() * 2);
+        GetSoundManager().InitSound(&sounds_[i], name);
+        sounds_[i].play();
+        return &sounds_[i];
+    }
+private:
+    std::vector<sf::Sound> sounds_;
+};
+
+SoundPlayer& GetSoundPlayer();
