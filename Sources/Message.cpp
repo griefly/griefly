@@ -40,6 +40,8 @@ bool SendSocketMessage(TCPsocket& socket, const Message& message)
     
     std::string tail = convertor.str();
 
+    SYSTEM_STREAM << "Message send " << message.type << " size: " << tail.length() << std::endl;
+
     convertor.str("");
     convertor << tail.length() << " ";
 
@@ -49,6 +51,7 @@ bool SendSocketMessage(TCPsocket& socket, const Message& message)
     size_t pos = 0;
     const char* begin_pos = sendval.c_str();
     size_t length = sendval.length();
+    SYSTEM_STREAM << "Sendval.length " << sendval.length() << std::endl;
     if (SDLNet_TCP_Send(socket, begin_pos, length) != length)
     {
         SYSTEM_STREAM << SDLNet_GetError() << std::endl;

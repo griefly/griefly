@@ -12,7 +12,7 @@ public:
     //id_ptr owner;
     unsigned int KV_SAVEBLE(amount);
     bool KV_SAVEBLE(flammable);
-    virtual void processImage(SDL_Surface* screen);
+    virtual void processImage(DrawType type);
     virtual void process();
     void SetSprite(const std::string& T_SPR);
     const GLSprite* GetSprite() { return sprite_;};

@@ -2,7 +2,7 @@ var msg = require('./message.js');
 
 // Just append new piece of data to message buffer
 function append_data(client, data) {
-    console.log("Recieve: " + data.toString() + "\n");
+    //console.log("Recieve: " + data.toString() + "\n");
     client.buffer = client.buffer.concat(data.toString());
 }
 
@@ -43,10 +43,14 @@ function accept_message(client, data) {
 
 // Accept all message
 function accept_message_impl(client) {
-    if (client.size > client.buffer.length)
+    if (client.size > client.buffer.length) {
+        console.log("client.size" + client.size + "; client.buffer.length + " + client.buffer.length);
         return;
+    }
     var index = client.buffer.indexOf(' ');
+    console.log("Begin parse message");
     var message = msg.parseMessage(client.buffer.slice(index + 1, client.size));
+    console.log("End parse messge");
     if (message === null) {
         console.log("Error parse message from " + client.id + " " + client.jid);
         client.close();
@@ -56,7 +60,7 @@ function accept_message_impl(client) {
     client.buffer = client.buffer.slice(client.size);
     client.size = 0;
     
-    console.log(message);
+    //console.log(message);
     
     // Okey, we receive message, now check all callback on this client
     client.check_message(message);

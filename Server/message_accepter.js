@@ -24,7 +24,7 @@ function process_ordinary_message(client, message) {
     // Save and resend message
     push_message(message);
     clnt.broadcast(message);
-    console.log(message);
+    //console.log(message);
 }
 
 function process_system_message(client, message) {
@@ -33,7 +33,7 @@ function process_system_message(client, message) {
         return;
     }
     clnt.broadcast(message);
-    console.log(message);
+    //console.log(message);
 }
 
 function change_message(message) {

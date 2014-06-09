@@ -53,10 +53,13 @@ public:
     bool mainMove();
     virtual void delThis();
     virtual std::list<HashAmount> insertLiquid(std::list<HashAmount>);
-    virtual void processImage(SDL_Surface* surface) override;//draw this item
+    virtual void processImage(DrawType type) override;//draw this item
     virtual bool IsTransp(int x, int y) override;
     void SetSprite(const std::string& T_SPR);
     const GLSprite* GetSprite();
+
+    void SetSpriteTop(const std::string& T_SPR);
+    const GLSprite* GetSpriteTop();
 public:
     int KV_ON_LOAD(step_x, 0);
     int KV_ON_LOAD(step_y, 0);
@@ -74,6 +77,9 @@ public:
 private:
     std::string KV_SAVEBLE(T_SPR);
     GLSprite* KV_ON_LOAD(sprite_, nullptr);
+
+    std::string KV_SAVEBLE(T_SPR_TOP);
+    GLSprite* KV_ON_LOAD(sprite_top_, nullptr);
 };
 
 ADD_TO_TYPELIST(IOnMapItem);

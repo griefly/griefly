@@ -7,7 +7,8 @@
 
 CGround::CGround()
 { 
-    SetSprite("icons/turf.png");
+    SetSpriteTop("icons/turf.png");
+    SetSprite("icons/ground_down.png");
     passable = false;
     transparent = false;
     v_level = 1;
@@ -20,11 +21,6 @@ Pit::Pit()
     passable = true;
     transparent = true;
     name = "Pit";
-}
-
-void Pit::processImage(SDL_Surface* s)
-{
-    IOnMapItem::processImage(s);
 }
 
 void Pit::process()

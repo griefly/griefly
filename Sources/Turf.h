@@ -29,6 +29,5 @@ public:
     DECLARE_SAVED(Pit, CTurf);
     DECLARE_GET_TYPE_ITEM(pit)
     virtual void process();
-    virtual void processImage(SDL_Surface* s);
 };
 ADD_TO_TYPELIST(Pit);

@@ -28,7 +28,7 @@ function check_message_length(length)
 // Return error value - null
 // On success - new message
 function parseMessage(data) {
-    console.log("Begin parse string: " + data);    
+    //console.log("Begin parse string: " + data);    
     
     if (!check_message_length(data.length))
         return null;

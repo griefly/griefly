@@ -33,11 +33,11 @@ void MapMaster::Draw()
             {   
                 if(checkOutBorder(it2->posx, it2->posy))
                     if (it2->posz == z_level)
-                        squares[it2->posx][it2->posy][it2->posz]->ForEach([&i](id_ptr_on<IOnMapBase> item)
+                        squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
                         {
                             auto item_n = castTo<IOnMapItem>(item.ret_item());
                             if (item_n->v_level == i)
-                                item_n->processImage(nullptr);//screen
+                                item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
                         });
                 ++it2;
             }
@@ -51,7 +51,7 @@ void MapMaster::Draw()
                     {
                         auto item_n = castTo<IOnMapItem>(item.ret_item());
                         if (item_n->v_level >= MAX_LEVEL)
-                            item_n->processImage(nullptr);//screen
+                            item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
                     });
             ++it2;
         }

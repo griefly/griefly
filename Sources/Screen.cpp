@@ -29,7 +29,7 @@ Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
-
+    
 #ifdef WIN32
     typedef BOOL (WINAPI *PFNWGLSWAPINTERVALEXTPROC)(int);
     PFNWGLSWAPINTERVALEXTPROC wglSwapInterval = nullptr;
@@ -38,6 +38,7 @@ Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
     if (wglSwapInterval) 
         wglSwapInterval(1);
 #endif
+   
     fail_ = false;
 }
 

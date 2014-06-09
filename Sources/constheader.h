@@ -22,8 +22,8 @@ const int sizeWsq = 10;
 extern int sizeW; // visible in pixel const
 extern int sizeH;
 
-const int sizeHmap = 50; // map size
-const int sizeWmap = 50;
+const int sizeHmap = 250; // map size
+const int sizeWmap = 250;
 const int sizeDmap = 2;
 
 const int beginMobPosX = 9; // posx and posx mob on screen

@@ -18,7 +18,7 @@ void Liquid::SetSprite(const std::string& name)
     T_SPR = name;
 };
 
-void Liquid::processImage(SDL_Surface* s)
+void Liquid::processImage(DrawType type)
 {
     SYSTEM_STREAM << "Very strange: someone try draw me\n";
 }

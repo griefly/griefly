@@ -118,7 +118,10 @@ function get_new_id(client, message, trusted_client) {
             return false;
         }
         // Resend message (map) to client
+        
+        console.log("Send map to new client");
         client.send(message);
+        console.log("End send map to new client");
         
         // And send all messages that was received after map creation
         // to new client

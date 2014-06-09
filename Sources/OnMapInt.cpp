@@ -45,14 +45,52 @@ const GLSprite* IOnMapItem::GetSprite()
     return sprite_;
 }
 
-void IOnMapItem::processImage(SDL_Surface* surface)
+void IOnMapItem::SetSpriteTop(const std::string& name)
+{
+    if (!map) 
+        return;
+    sprite_top_ = map->aSpr.returnSpr(name);
+    T_SPR_TOP = name;
+};
+
+
+const GLSprite* IOnMapItem::GetSpriteTop()
+{
+    if (sprite_top_ == nullptr)
+        SetSpriteTop(T_SPR_TOP);
+    return sprite_top_;
+}
+
+const GLSprite* top_overlay = nullptr;
+void IOnMapItem::processImage(DrawType type)
 { 
     if (NODRAW)
         return;
-    mobMaster->gl_screen->Draw(GetSprite(), 
+
+    const GLSprite* spr = GetSprite();
+    bool is_need_overlay = false;
+    if (type == TOP)
+    {
+        spr = GetSpriteTop();
+        if (spr->Fail())
+        {
+            is_need_overlay = true;
+            spr = GetSprite();
+        }
+    } 
+    mobMaster->gl_screen->Draw(spr, 
                                GetDrawX() + mob_position::get_shift_x(), 
                                GetDrawY() + mob_position::get_shift_y(), 
                                imageStateW, imageStateH);
+    if (is_need_overlay)
+    {
+        if (!top_overlay)
+                top_overlay = map->aSpr.returnSpr("icons/top_overlay.png");
+        mobMaster->gl_screen->Draw(top_overlay, 
+                                    GetDrawX() + mob_position::get_shift_x(), 
+                                    GetDrawY() + mob_position::get_shift_y(), 
+                                    0, 0);
+    }
 };
 
 void IOnMapItem::processPhysics()
@@ -134,6 +172,7 @@ void IOnMapItem::delThis()
 IOnMapItem::IOnMapItem()
 {
     sprite_ = nullptr;
+    sprite_top_ = nullptr;
     v_level = 0;
     imageStateH = 0;
     imageStateW = 0;
@@ -147,4 +186,6 @@ IOnMapItem::IOnMapItem()
     transparent = true;
     burn_power = 0;
     name = "NONAMESHIT";
+    T_SPR = "";
+    T_SPR_TOP = "";
 }

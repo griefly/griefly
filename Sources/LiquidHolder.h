@@ -46,7 +46,7 @@ public:
     virtual void delThis();
    // ~LiquidHolder(void);
     typedef std::map<unsigned int, id_ptr_on<Liquid>> LiquidMap;
-    virtual void processImage(SDL_Surface* s);
+    virtual void processImage(DrawType type);
 private: 
     LiquidMap KV_SAVEBLE(liquids);
     void checkReaction(unsigned int hash);

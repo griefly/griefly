@@ -92,7 +92,13 @@ GLSprite::GLSprite(const std::string& name)
     data.imgFile = name;
     data.numFrameH = 0;
     data.numFrameW = 0;
-    sprite->init(data);
+    fail_ = false;
+    if (!sprite->init(data))
+    {
+        fail_ = true;
+        SYSTEM_STREAM << "Fail to load sprite " << name << std::endl;
+        return;
+    }
 
     Init(sprite);
 }

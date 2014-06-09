@@ -14,10 +14,8 @@
 #pragma comment (lib, "Libs/sfml-audio-d.lib")
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <SDL.h>
-#include <SDL_thread.h>
+#pragma comment (lib, "Libs/zdll.lib")
+#pragma comment (lib, "Libs/zlibwapi.lib")
 
 #include <iostream>
 
@@ -38,9 +36,6 @@ int main(int argc, char *argv[])
 
     if (argc >= 3)
         Debug::SetUniqueName(std::string(argv[2]));
-
-    // SYSTEM_STREAM << "Input ip\n";
-    // std::cin >> adrs;
 
     Manager man(adrs);
     SYSTEM_STREAM << "Begin init world\n";

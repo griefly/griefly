@@ -143,7 +143,7 @@ void LiquidHolder::delThis()
     IMainItem::delThis();
 }
 
-void LiquidHolder::processImage(SDL_Surface* s)
+void LiquidHolder::processImage(DrawType type)
 {
     auto it = liquids.begin();
     while(it != liquids.end())

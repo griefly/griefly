@@ -21,7 +21,8 @@ void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask)
 bool CSprite::init(InitSprite data)
 {
     SDL_Surface* temp = IMG_Load(data.imgFile.c_str());
-    if(temp == NULL) return 0;
+    if(temp == NULL)
+        return false;
     numFrameH = data.numFrameH;
     numFrameW = data.numFrameW;
     if((numFrameH == 0) || (numFrameW == 0))
@@ -61,7 +62,7 @@ bool CSprite::init(InitSprite data)
         }
     }
     SDL_FreeSurface(temp);
-    return 1;
+    return true;
 }
 
 CSprite::CSprite()
