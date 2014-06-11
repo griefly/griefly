@@ -39,6 +39,7 @@ void ItemFabric::foreachProcess()
 {
     size_t table_size = idTable_.size();
     for (size_t i = 1; i < table_size; ++i)
+        // TODO: Отдельный массив для процессируемых
         if (idTable_[i] != nullptr && idTable_[i]->how_often && ((MAIN_TICK % idTable_[i]->how_often) == 0))
             idTable_[i]->process();
 }
@@ -59,9 +60,15 @@ void ItemFabric::saveMapHeader(std::stringstream& savefile)
 void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob)
 {
     savefile >> MAIN_TICK;
+    SYSTEM_STREAM << "MAIN_TICK: " << MAIN_TICK << std::endl;
+
     savefile >> id_;
+    SYSTEM_STREAM << "id_: " << id_ << std::endl;
+    
     size_t loc;
     savefile >> loc;
+    SYSTEM_STREAM << "thisMob: " << loc << std::endl;
+
     if (real_this_mob == 0)
         IMainItem::map->mobi->thisMob = loc;
     else
@@ -71,10 +78,13 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     unsigned int new_calls_counter;
     savefile >> new_seed;
     savefile >> new_calls_counter;
+
     random_helpers::set_rand(new_seed, new_calls_counter);
 
     size_t new_creator;
     savefile >> new_creator;
+    SYSTEM_STREAM << "new_creator: " << new_creator << std::endl;
+
     IMainItem::mobMaster->SetCreator(new_creator);
 
     idTable_.resize(id_ + 1);
@@ -90,11 +100,11 @@ void ItemFabric::saveMap(const char* path)
         return;
     }
     std::stringstream savefile;
-    saveMap(savefile);
+    saveMap(savefile, false);
     rfile << savefile.str();
     rfile.close();
 }
-void ItemFabric::saveMap(std::stringstream& savefile)
+void ItemFabric::saveMap(std::stringstream& savefile, bool zip)
 {
     saveMapHeader(savefile);
     auto it = ++idTable_.begin();
@@ -108,36 +118,39 @@ void ItemFabric::saveMap(std::stringstream& savefile)
             ++it;
     savefile << "0 ~";
 
-    SYSTEM_STREAM << "Begin zip save" << std::endl;
-
-    std::string str = savefile.str();
-    const unsigned char* raw_uncompressed = reinterpret_cast<const unsigned char*>(str.c_str());
-
-    unsigned long len_compressed = static_cast<unsigned long>(str.length() * 1.1 + 20);
-    unsigned char* raw_compressed = new unsigned char[len_compressed];
-
-    int result = compress(raw_compressed, &len_compressed, raw_uncompressed, str.length());
-    switch(result)
+    if (zip)
     {
-    case Z_OK:
-        SYSTEM_STREAM << "Zip is going ok" << std::endl;
-        break;
-    case Z_MEM_ERROR:
-        SYSTEM_STREAM << "ERROR: Out of memory" << std::endl;
-        break;
-    case Z_BUF_ERROR:
-        SYSTEM_STREAM << "ERROR: Buffer too small for data" << std::endl;
-        break;
-    }
+        SYSTEM_STREAM << "Begin zip save" << std::endl;
 
-    savefile.str("");
+        std::string str = savefile.str();
+        const unsigned char* raw_uncompressed = reinterpret_cast<const unsigned char*>(str.c_str());
+
+        unsigned long len_compressed = static_cast<unsigned long>(str.length() * 1.1 + 20);
+        unsigned char* raw_compressed = new unsigned char[len_compressed];
+
+        int result = compress(raw_compressed, &len_compressed, raw_uncompressed, str.length());
+        switch(result)
+        {
+        case Z_OK:
+            SYSTEM_STREAM << "Zip is going ok" << std::endl;
+            break;
+        case Z_MEM_ERROR:
+            SYSTEM_STREAM << "ERROR: Out of memory" << std::endl;
+            break;
+        case Z_BUF_ERROR:
+            SYSTEM_STREAM << "ERROR: Buffer too small for data" << std::endl;
+            break;
+        }
+
+        savefile.str("");
     
-    SYSTEM_STREAM << "Begin load zipped to stream" << std::endl;
+        SYSTEM_STREAM << "Begin load zipped to stream" << std::endl;
 
-    for (int i = 0; i < len_compressed; ++i)
-        savefile << raw_compressed[i];
+        for (int i = 0; i < len_compressed; ++i)
+            savefile << raw_compressed[i];
 
-    delete[] raw_compressed;
+        delete[] raw_compressed;
+    }
 }
 
 void ItemFabric::loadMap(const char* path)
@@ -157,57 +170,66 @@ void ItemFabric::loadMap(const char* path)
     savefile << buff;
     delete[] buff;
     //
-    loadMap(savefile);
+    loadMap(savefile, false);
 }
 
 const int AVERAGE_BYTE_PER_TILE = 129 * 2;
 const long int UNCOMPRESS_LEN_DEFAULT = sizeHmap * sizeWmap * sizeDmap * AVERAGE_BYTE_PER_TILE;
-void ItemFabric::loadMap(std::stringstream& savefile, size_t real_this_mob)
+void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this_mob)
 {
+
     clearMap();
 
-    std::string str = savefile.str();
-    const unsigned char* raw_compressed = reinterpret_cast<const unsigned char*>(str.c_str());
-    unsigned long len_compressed = static_cast<unsigned long>(str.length());
-
-    unsigned long len_uncompressed = UNCOMPRESS_LEN_DEFAULT;
-    unsigned long len_uncompressed_to_use;
-    
-    unsigned char* raw_uncompressed;
-    SYSTEM_STREAM << "Begin cycle unzip map" << std::endl;
-    while (true)
+    if (zip)
     {
-        len_uncompressed_to_use = len_uncompressed;
-        raw_uncompressed = new unsigned char[len_uncompressed_to_use];
-        int result = uncompress(raw_uncompressed, &len_uncompressed_to_use, raw_compressed, len_compressed);
+        std::string str = savefile.str();
+        const unsigned char* raw_compressed = reinterpret_cast<const unsigned char*>(str.c_str());
+        unsigned long len_compressed = static_cast<unsigned long>(str.length());
 
-        if (result == Z_BUF_ERROR)
+        unsigned long len_uncompressed = UNCOMPRESS_LEN_DEFAULT;
+        unsigned long len_uncompressed_to_use;
+    
+        unsigned char* raw_uncompressed;
+        SYSTEM_STREAM << "Begin cycle unzip map" << std::endl;
+        while (true)
         {
-            delete[] raw_uncompressed;
-            len_uncompressed *= 2;
-            continue;
-        } 
-        else if (result == Z_MEM_ERROR)
-        {
-            SYSTEM_STREAM << "Insufficient memory" << std::endl;
-        } 
-        else if (result == Z_DATA_ERROR)
-        {
-            SYSTEM_STREAM << "The compressed data (referenced by source) was corrupted" << std::endl;
+            len_uncompressed_to_use = len_uncompressed;
+            raw_uncompressed = new unsigned char[len_uncompressed_to_use];
+            int result = uncompress(raw_uncompressed, &len_uncompressed_to_use, raw_compressed, len_compressed);
+
+            if (result == Z_BUF_ERROR)
+            {
+                delete[] raw_uncompressed;
+                len_uncompressed *= 2;
+                continue;
+            } 
+            else if (result == Z_MEM_ERROR)
+            {
+                SYSTEM_STREAM << "Insufficient memory" << std::endl;
+            } 
+            else if (result == Z_DATA_ERROR)
+            {
+                SYSTEM_STREAM << "The compressed data (referenced by source) was corrupted" << std::endl;
+            }
+            else if (result == Z_OK)
+            {
+                SYSTEM_STREAM << "Unzip ok" << std::endl;
+                break;
+            }
         }
-        else if (result == Z_OK)
-        {
-            SYSTEM_STREAM << "Unzip ok" << std::endl;
-            break;
-        }
+
+        savefile.str("");
+
+        for (int i = 0; i < len_uncompressed_to_use; ++i)
+            savefile << static_cast<char>(raw_uncompressed[i]);
+
+        delete[] raw_uncompressed;
     }
 
-    savefile.str("");
+    auto str_t = savefile.str();
+    
 
-    for (int i = 0; i < len_uncompressed_to_use; ++i)
-        savefile << static_cast<char>(raw_uncompressed[i]);
-
-    delete[] raw_uncompressed;
+    std::cout << std::endl << str_t.substr(str_t.size() - 500) << std::endl;
 
     loadMapHeader(savefile, real_this_mob);
     int j = 0;
@@ -221,8 +243,13 @@ void ItemFabric::loadMap(std::stringstream& savefile, size_t real_this_mob)
         }
         unsigned int type;
         savefile >> type;
-        if(type == 0) 
+        if(type == 0)
+        {
+            SYSTEM_STREAM << "Zero id reached" << std::endl;
             break;
+        }
+
+        //SYSTEM_STREAM << "Line number: " << j << std::endl;
 
         size_t id_loc;
         savefile >> id_loc;
@@ -256,6 +283,8 @@ void ItemFabric::clearMap()
     for (size_t i = 1; i < table_size; ++i)
         if (idTable_[i] != nullptr)
             idTable_[i]->delThis();
+    if (table_size != idTable_.size())
+        SYSTEM_STREAM << "WARNING: table_size != idTable_.size()!" << std::endl;
 };
 
 unsigned int ItemFabric::hash_all()

@@ -85,7 +85,7 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
     std::stringstream convertor;
     convertor << message.text;
 
-    IMainItem::fabric->loadMap(convertor, data_.who);
+    IMainItem::fabric->loadMap(convertor, true, data_.who);
     convertor.str("");
 
     connected_ = true;
@@ -141,6 +141,7 @@ bool NetClient::Recv(Message* msg)
     assert(msg && "Try fill nullptr");
     *msg = messages_.front();
     messages_.pop();
+    // FIXME: ÈÑÏÐÀÂÈÒÜ
     number_last_message_ = msg->message_number;
     return true;
 }
@@ -158,7 +159,7 @@ bool NetClient::Process()
             SYSTEM_STREAM << "Fail message receive" << std::endl;
             return false;
         } // Fail
-
+        
         if (message.text == Net::NEXTTICK)
         {
             ++amount_ticks_;
@@ -171,7 +172,7 @@ bool NetClient::Process()
         else if (message.text == Net::MAP_REQUEST)
         {
             std::stringstream raw_map;
-            IMainItem::fabric->saveMap(raw_map);
+            IMainItem::fabric->saveMap(raw_map, true);
 
             Message map_message;
             map_message.from = number_last_message_;
@@ -182,13 +183,22 @@ bool NetClient::Process()
 
             SendSocketMessage(*main_socket_, map_message);
             continue;
-        }
+        } 
         else if (message.text == Net::MAKE_NEW)
         {
             SYSTEM_STREAM << "New mob must created!" << std::endl;
             message.to = man_->GetCreator();
         }
-        
+        else if (message.type != Net::ORDINARY_TYPE)
+        {
+            SYSTEM_STREAM << "Some system message taken with no need?" << std::endl;
+            SYSTEM_STREAM << "message.message_number: " << message.message_number << std::endl
+                            << "message.from: " << message.from << std::endl
+                            << "message.to: " << message.to << std::endl
+                            << "message.type: " << message.type << std::endl
+                            << "message.text: " << message.text << std::endl; 
+            continue;
+        }
 
         messages_.push(message);
         ++counter;

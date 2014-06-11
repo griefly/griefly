@@ -40,7 +40,7 @@ bool SendSocketMessage(TCPsocket& socket, const Message& message)
     
     std::string tail = convertor.str();
 
-    SYSTEM_STREAM << "Message send " << message.type << " size: " << tail.length() << std::endl;
+    //SYSTEM_STREAM << "Message send " << message.type << " size: " << tail.length() << std::endl;
 
     convertor.str("");
     convertor << tail.length() << " ";
@@ -51,7 +51,7 @@ bool SendSocketMessage(TCPsocket& socket, const Message& message)
     size_t pos = 0;
     const char* begin_pos = sendval.c_str();
     size_t length = sendval.length();
-    SYSTEM_STREAM << "Sendval.length " << sendval.length() << std::endl;
+    //SYSTEM_STREAM << "Sendval.length " << sendval.length() << std::endl;
     if (SDLNet_TCP_Send(socket, begin_pos, length) != length)
     {
         SYSTEM_STREAM << SDLNet_GetError() << std::endl;
@@ -97,10 +97,10 @@ bool RecvSocketMessage(TCPsocket& socket, Message* message)
     convertor << number;
     convertor >> length;
 
-    const size_t MAX_SIZE_MESSAGE = 1024 * 1024 * 8;
+    const size_t MAX_SIZE_MESSAGE = 100 * 1024 * 1024 * 8;
     if (convertor.fail() || length > MAX_SIZE_MESSAGE)
     {
-        SYSTEM_STREAM << "Fail read number: not a number or too big" << std::endl;
+        SYSTEM_STREAM << "Fail read number: not a number or too big: " << length << std::endl;
         return false;
     }
 

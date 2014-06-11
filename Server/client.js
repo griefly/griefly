@@ -66,7 +66,7 @@ function client(socket) {
     this.trusted = false;
     
     // Buffer for incoming message
-    this.buffer = new Buffer;
+    this.buffer = "";
     
     // Size of message
     this.size   = 0;

@@ -108,7 +108,6 @@ void Manager::process()
     { 
 
         processInput();
-        IMainItem::fabric->Sync();
         if(net_client->Ready() && !pause)
         {
             process_in = true;
@@ -121,6 +120,7 @@ void Manager::process()
             numOfDeer = 0;
             begin_of_process = SDL_GetTicks();
             IMainItem::fabric->foreachProcess();
+            IMainItem::fabric->Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
         }
          

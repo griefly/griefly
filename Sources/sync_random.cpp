@@ -29,8 +29,8 @@ namespace random_helpers
 {
     void set_rand(unsigned int new_seed, unsigned int new_calls_counter)
     {
-        SYSTEM_STREAM << "set_seed: " << new_seed;
-        SYSTEM_STREAM << "set_calls_counter: " << new_calls_counter;
+        SYSTEM_STREAM << "set_seed: " << new_seed << std::endl;
+        SYSTEM_STREAM << "set_calls_counter: " << new_calls_counter << std::endl;
         calls_counter = new_calls_counter;
         seed = new_seed;
 

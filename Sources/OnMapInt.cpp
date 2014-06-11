@@ -167,6 +167,7 @@ bool IOnMapItem::mainMove()
 
 void IOnMapItem::delThis()
 {
+    IOnMapBase::delThis();
 }
 
 IOnMapItem::IOnMapItem()
@@ -186,6 +187,6 @@ IOnMapItem::IOnMapItem()
     transparent = true;
     burn_power = 0;
     name = "NONAMESHIT";
-    T_SPR = "";
-    T_SPR_TOP = "";
+    T_SPR = "NULL";
+    T_SPR_TOP = "NULL";
 }
