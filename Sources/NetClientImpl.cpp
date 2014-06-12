@@ -141,7 +141,23 @@ bool NetClient::Recv(Message* msg)
     assert(msg && "Try fill nullptr");
     *msg = messages_.front();
     messages_.pop();
-    // FIXME: ÈÑÏÐÀÂÈÒÜ
+
+    if (msg->text == Net::MAP_REQUEST)
+    {
+        std::stringstream raw_map;
+        IMainItem::fabric->saveMap(raw_map, true);
+
+        Message map_message;
+        map_message.from = number_last_message_;
+        map_message.to = msg->to;
+        map_message.type = Net::MAP_TYPE;
+
+        map_message.text = raw_map.str();
+
+        SendSocketMessage(*main_socket_, map_message);
+        return Recv(msg);
+    } 
+
     number_last_message_ = msg->message_number;
     return true;
 }
@@ -171,7 +187,7 @@ bool NetClient::Process()
         }
         else if (message.text == Net::MAP_REQUEST)
         {
-            std::stringstream raw_map;
+            /*std::stringstream raw_map;
             IMainItem::fabric->saveMap(raw_map, true);
 
             Message map_message;
@@ -182,7 +198,7 @@ bool NetClient::Process()
             map_message.text = raw_map.str();
 
             SendSocketMessage(*main_socket_, map_message);
-            continue;
+            continue;*/
         } 
         else if (message.text == Net::MAKE_NEW)
         {
