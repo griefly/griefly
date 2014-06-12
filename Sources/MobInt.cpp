@@ -7,7 +7,7 @@ IMob::IMob()
 {
     thisMobControl = false;
     onMobControl = false;
-    how_often = 1;
+    SetFreq(1);
     SetSprite("icons/ork.png");        
 }
 

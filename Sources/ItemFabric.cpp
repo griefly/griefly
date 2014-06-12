@@ -35,13 +35,58 @@ void ItemFabric::Sync()
     }
 }
 
+void ItemFabric::UpdateProcessingItems()
+{   
+    if (remove_from_process_.size())
+    {
+        for (auto it = remove_from_process_.begin(); it != remove_from_process_.end(); ++it)
+        {   
+            auto to_del = std::find(process_table_.begin(), process_table_.end(), *it);
+            if (to_del != process_table_.end())
+                process_table_.erase(to_del);
+        }       
+    }
+
+    if (add_to_process_.size())
+    {
+        for (auto it = add_to_process_.begin(); it != add_to_process_.end(); ++it)
+        {
+            auto to_add = std::find(process_table_.begin(), process_table_.end(), *it);
+            if (to_add == process_table_.end())
+                process_table_.push_back(*it);
+        }
+    }
+    if (remove_from_process_.size() || add_to_process_.size())
+    {
+        std::sort(process_table_.begin(), process_table_.end(),
+        [](id_ptr_on<IMainItem> item1, id_ptr_on<IMainItem> item2)
+        {
+            return item1.ret_id() < item2.ret_id();
+        });
+        remove_from_process_.clear();
+        add_to_process_.clear();
+
+        SYSTEM_STREAM << "Size of processed: " << process_table_.size() << std::endl;
+        //for (auto it = process_table_.begin(); it != process_table_.end(); ++it)
+        //    SYSTEM_STREAM << "Id: " << it->ret_id() << std::endl;
+    }
+}
+
 void ItemFabric::foreachProcess()
 {
-    size_t table_size = idTable_.size();
+    UpdateProcessingItems();
+
+    size_t table_size = process_table_.size();
+    for (size_t i = 0; i < table_size; ++i)
+        if (process_table_[i].valid() && process_table_[i]->GetFreq() && ((MAIN_TICK % process_table_[i]->GetFreq()) == 0))
+            process_table_[i]->process();
+
+   /* size_t table_size = idTable_.size();
     for (size_t i = 1; i < table_size; ++i)
-        // TODO: Отдельный массив для процессируемых
-        if (idTable_[i] != nullptr && idTable_[i]->how_often && ((MAIN_TICK % idTable_[i]->how_often) == 0))
-            idTable_[i]->process();
+        if (idTable_[i] != nullptr && idTable_[i]->GetFreq() && ((MAIN_TICK % idTable_[i]->GetFreq()) == 0))
+            idTable_[i]->process();*/
+
+    UpdateProcessingItems();
 }
 
 void ItemFabric::saveMapHeader(std::stringstream& savefile)
@@ -285,6 +330,10 @@ void ItemFabric::clearMap()
             idTable_[i]->delThis();
     if (table_size != idTable_.size())
         SYSTEM_STREAM << "WARNING: table_size != idTable_.size()!" << std::endl;
+
+    process_table_.clear();
+    add_to_process_.clear();
+    remove_from_process_.clear();
 };
 
 unsigned int ItemFabric::hash_all()
@@ -295,4 +344,16 @@ unsigned int ItemFabric::hash_all()
         if (idTable_[i] != nullptr)
             h += idTable_[i]->hashSelf();
     return h;
+}
+
+
+
+void ItemFabric::AddProcessingItem(id_ptr_on<IMainItem> item)
+{
+    add_to_process_.push_back(item);
+}
+
+void ItemFabric::RemoveProcessingItem(id_ptr_on<IMainItem> item)
+{
+    remove_from_process_.push_back(item);  
 }

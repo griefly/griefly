@@ -60,7 +60,7 @@ void COrk::processGUImsg(const Message& msg)
                 {
                     SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
                 }
-                in_hand->SetOwner(id);
+                in_hand->SetOwner(GetId());
             }
         }
     }
@@ -80,8 +80,8 @@ void COrk::processGUImsg(const Message& msg)
             auto zup = owner->GetNeighbour(D_ZUP);
             if (zup.valid() && zup->IsPassable())
             {
-                owner->RemoveItem(id);
-                zup->AddItem(id);
+                owner->RemoveItem(GetId());
+                zup->AddItem(GetId());
                 checkMove(dMove);
             }
             PlaySound("jump.ogx");

@@ -31,7 +31,7 @@ public:
     virtual void delThis() override
     {
         if (owner.valid())
-            owner->RemoveItem(id);
+            owner->RemoveItem(GetId());
         IDraw::delThis();
     }
 
@@ -59,7 +59,7 @@ public:
     {
         if (owner.valid())
             return owner->GetNeighbour(direct);
-        return id;
+        return GetId();
     }
     template<class T>
     id_ptr_on<T> GetItem()

@@ -28,12 +28,12 @@ public:
 
     virtual unsigned int hashSelf()
     {
-        return id + master.ret_id();
+        return GetId() + master.ret_id();
     }
 
     virtual void delThis();
-    IMainItem(){ id = 0; master = 0; how_often = 0;};
-    IMainItem(NotLoadItem){};
+    IMainItem(){ id_ = 0; master = 0; how_often_ = 0;};
+    IMainItem(NotLoadItem) {id_ = 0; master = 0; how_often_ = 0;};
     static Manager* mobMaster;
     static MapMaster* map;
     static ItemFabric* fabric;
@@ -61,9 +61,16 @@ public:
         return REAL_TYPE_ITEM;                
     }       
     virtual void process(){};
+
+    void SetId(size_t id);
+    size_t GetId() const { return id_; }
+
+    void SetFreq(int freq);
+    int GetFreq() const { return how_often_; }
 public:
-    size_t id;
-    int how_often;
     id_ptr_on<IOnMapItem> master;
+private:
+    size_t id_;
+    int how_often_;
 };
 ADD_TO_TYPELIST(IMainItem);

@@ -100,8 +100,8 @@ void IOnMapItem::processPhysics()
     auto down = owner->GetNeighbour(D_ZDOWN);
     if (down.valid() && down->IsPassable())
     {
-        owner->RemoveItem(id);
-        down->AddItem(id);
+        owner->RemoveItem(GetId());
+        down->AddItem(GetId());
     }
 }
 
@@ -153,13 +153,13 @@ bool IOnMapItem::mainMove()
     if (new_owner == owner)
         return false;
 
-    owner->RemoveItem(id);
-    new_owner->AddItem(id);
+    owner->RemoveItem(GetId());
+    new_owner->AddItem(GetId());
 
     if(new_owner->IsVisibleByPlayer())
     {
         Move* eff = getEffectOf<Move>();
-        eff->Init(TITLE_SIZE, dMove, pixSpeed, id, true);
+        eff->Init(TITLE_SIZE, dMove, pixSpeed, GetId(), true);
         eff->Start();
     }
     return true;

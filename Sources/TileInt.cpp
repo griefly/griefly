@@ -33,7 +33,7 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
     }
     InsideType::const_iterator locit = itr;
     inside_list_.insert(locit, item);
-    item->SetOwner(id);
+    item->SetOwner(GetId());
     return true;
 }
 bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
@@ -44,7 +44,7 @@ bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
     auto itr = inside_list_.begin();
     while(itr != inside_list_.end())
     {
-        if (itr->ret_id() == item->id)
+        if (itr->ret_id() == item->GetId())
         {
             inside_list_.erase(itr);
             return true;
@@ -97,5 +97,5 @@ void CubeTile::ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
 
 void CubeTile::LoadInMap()
 {
-    map->squares[posx_][posy_][posz_] = id;
+    map->squares[posx_][posy_][posz_] = GetId();
 }

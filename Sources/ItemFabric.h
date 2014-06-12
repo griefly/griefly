@@ -67,12 +67,12 @@ public:
             SYSTEM_STREAM << id_new << " " << id_ << "id_ptr_on<T> newItemOn\n";
             id_ = id_new + 1;
         }
-        item->id = id_new;
+        item->SetId(id_new);
         idTable_[id_new] = item;
 
-        owner->AddItem(item->id);
+        owner->AddItem(item->GetId());
 
-        return item->id;
+        return item->GetId();
     }
     
     template<typename T, typename TMaster>
@@ -87,10 +87,10 @@ public:
         else if(id_new >= id_)
             id_ = id_new + 1;
         idTable_[id_new] = item;
-        item->id = id_new;
+        item->SetId(id_new);
         item->master = master;
         id_ptr_on<T> ret_val;
-        ret_val = item->id;
+        ret_val = item->GetId();
         return ret_val;
     }
     
@@ -106,14 +106,25 @@ public:
         else if(id_new >= id_)
             id_ = id_new + 1;
         idTable_[id_new] = item;
-        item->id = id_new;
+        item->SetId(id_new);
         item->master = master;
         id_ptr_on<T> ret_val;
-        ret_val = item->id;
+        ret_val = item->GetId();
         return ret_val;
     }
+
+    void AddProcessingItem(id_ptr_on<IMainItem> item);
+    void RemoveProcessingItem(id_ptr_on<IMainItem> item);
+
 private:
+    void UpdateProcessingItems();
+
     std::vector<IMainItem*> idTable_;
+    std::vector<id_ptr_on<IMainItem>> process_table_;
+
+    std::vector<id_ptr_on<IMainItem>> add_to_process_;
+    std::vector<id_ptr_on<IMainItem>> remove_from_process_;
+
     unsigned int hash_last_;
     size_t id_;  
 };

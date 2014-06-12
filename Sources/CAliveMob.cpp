@@ -22,7 +22,7 @@ CAliveMob::CAliveMob()
     oxyless = 0;
 
     max_dmg = 100;
-    inside = fabric->newItem<LiquidHolder>(id, hash("liquidholder"));
+    inside = fabric->newItem<LiquidHolder>(GetId(), hash("liquidholder"));
     tick_sm = 0;
 };
 
@@ -37,9 +37,9 @@ void CAliveMob::ignite(int force)
 {
     SYSTEM_STREAM << "Ignite\n";
     Fire* eff = getEffectOf<Fire>();
-    SYSTEM_STREAM << id << "ignite\n";
+    SYSTEM_STREAM << GetId() << "ignite\n";
     SYSTEM_STREAM << eff << "\n";
-    eff->master = id;
+    eff->master = GetId();
     eff->Start();
     burn_power += force;
 }
