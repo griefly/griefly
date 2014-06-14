@@ -187,18 +187,7 @@ bool NetClient::Process()
         }
         else if (message.text == Net::MAP_REQUEST)
         {
-            /*std::stringstream raw_map;
-            IMainItem::fabric->saveMap(raw_map, true);
-
-            Message map_message;
-            map_message.from = number_last_message_;
-            map_message.to = message.to;
-            map_message.type = Net::MAP_TYPE;
-
-            map_message.text = raw_map.str();
-
-            SendSocketMessage(*main_socket_, map_message);
-            continue;*/
+            //
         } 
         else if (message.text == Net::MAKE_NEW)
         {
