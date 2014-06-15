@@ -56,15 +56,20 @@ type Registry struct {
 	nextId int
 	clients []chan Message
 
+	masterId int
+	
 	newClients chan LoginEnvelope
 	newPlayers chan PlayerEnvelope
+	
+	oldClients chan int
+	
 	inbox chan Message
 	ticker *time.Ticker
 }
 
 func newRegistry() *Registry {
-	return &Registry{0, nil, make(chan LoginEnvelope),
-		make(chan PlayerEnvelope), make(chan Message), nil}
+	return &Registry{0, nil, -1, make(chan LoginEnvelope),
+		make(chan PlayerEnvelope), make(chan int), make(chan Message), nil}
 }
 
 // async api
@@ -85,10 +90,15 @@ func (r *Registry) CreatePlayer(id int) (messages, maps chan Message, nextInbox 
 }
 
 func (r *Registry) CreateMasterPlayer(id int) chan Message {
+	r.masterId = id
 	pe := PlayerEnvelope{id, make(chan newPlayerAnswer, 1)}
 	r.newPlayers <- pe
 	response := <-pe.response
 	return response.messages
+}
+
+func (r *Registry) RemovePlayer(id int) {
+	r.oldClients <- id
 }
 
 func (r *Registry) RecvMessage(m Message) {
@@ -104,11 +114,12 @@ func (r *Registry) sendAll(m Message) {
 	}
 }
 
+
 func (r *Registry) sendMaster(m Message) {
 	if len(r.clients) == 0 {
 		log.Fatal("registry: cannot send to master when there are no master")
 	}
-	r.clients[0] <-m
+	r.clients[r.masterId] <-m
 }
 
 func (r *Registry) Run() {
@@ -120,9 +131,9 @@ func (r *Registry) Run() {
 		select {
 		// new message from client
 		case m := <-r.inbox:
-			if len(newPlayers) > 0 {
-				// check if this is a mob creation response
-				if m.connId == 0 && m.t == "system" && string(m.content) == "create" {
+			// check if this is a mob creation response
+			if m.connId == r.masterId && m.t == "system" && string(m.content) == "create" {
+				if len(newPlayers) > 0 {
 					reqp, ok := newPlayers[m.from]
 					if !ok {
 						log.Println("registry: created mob for unknown player, strange. Msg:", m)
@@ -149,10 +160,10 @@ func (r *Registry) Run() {
 					}
 					continue
 				}
+				continue
 			}
-
-			if len(mapWaiters) > 0 {
-				if m.connId == 0 && m.t == "map" {
+			if m.connId == r.masterId && m.t == "map" {
+				if len(mapWaiters) > 0 {				
 					to := m.to
 					mapCh, ok := mapWaiters[to]
 					if !ok {
@@ -163,6 +174,7 @@ func (r *Registry) Run() {
 					}
 					continue
 				}
+				continue
 			}
 
 			// just resend message
@@ -176,16 +188,17 @@ func (r *Registry) Run() {
 			// add client
 			r.clients = append(r.clients, nil)
 			// FIXME: master is just first client
-			reqc.response <- clientID{len(r.clients)-1, len(r.clients)==1}
-
+			reqc.response <- clientID{len(r.clients)-1, r.masterId == -1}
+			//r.masterId = len(r.clients)-1
+			
 		case reqp := <-r.newPlayers:
 			// add player
-			if reqp.id == 0 {
+			if reqp.id == r.masterId {
 				// this is a master
 				messages := make(chan Message, 64)
-				r.clients[0] = messages
+				r.clients[r.masterId] = messages
 				log.Println("registry: attached master")
-				reqp.response <- newPlayerAnswer{"", messages, nil, nil, 0}
+				reqp.response <- newPlayerAnswer{"", messages, nil, nil, r.masterId}
 			} else {
 				// this is a slave
 				// create a mob for it
@@ -204,6 +217,31 @@ func (r *Registry) Run() {
 			lastID++
 			nexttick := Message{id: lastID, t: "ordinary", content: []byte("nexttick")}
 			r.sendAll(nexttick)
+		case old_id := <- r.oldClients:
+			s_old_id := strconv.Itoa(old_id)
+			if (old_id != r.masterId) {
+				r.clients[old_id] = nil
+				delete(newPlayers, s_old_id)
+				delete(mapWaiters, s_old_id)
+			} else {
+				r.masterId = -1
+				r.clients[old_id] = nil
+				for id, c := range r.clients {
+					if (c != nil) {
+						r.masterId = id
+						break
+					}
+				}
+				delete(newPlayers, s_old_id)
+				delete(mapWaiters, s_old_id)
+				
+				for _, c := range newPlayers {
+					close(c.response)
+				}
+				for _, c := range mapWaiters {
+					close(c)
+				}				
+			}
 		}
 	}
 }

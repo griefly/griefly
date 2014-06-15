@@ -158,6 +158,7 @@ func (c *ClientConnection) Run() {
 		m.content = []byte("nomap")
 		err = c.writeMessage(m)
 		if err != nil {
+			c.reg.RemovePlayer(c.id)
 			log.Println("client: failed to send hello response:", err)
 			return
 		}
@@ -171,6 +172,7 @@ func (c *ClientConnection) Run() {
 			content: []byte("map")}
 		err = c.writeMessage(waitMapM)
 		if err != nil {
+			c.reg.RemovePlayer(c.id)
 			log.Printf("client[%d]: failed to send waitmap message: %s", c.id, err.Error())
 			return
 		}
@@ -179,6 +181,7 @@ func (c *ClientConnection) Run() {
 		// send map to client
 		err = c.writeMessage(mapM)
 		if err != nil {
+			c.reg.RemovePlayer(c.id)
 			log.Println("client[%d]: failed to send map message: %s", c.id, err.Error())
 			return
 		}
@@ -200,11 +203,13 @@ func (c *ClientConnection) Run() {
 			} else {
 				err := c.writeMessage(m)
 				if err != nil {
+					c.reg.RemovePlayer(c.id)
 					log.Printf("client[%d]: sender failed to send message: %s", c.id, err.Error())
 					return
 				}
 			}
 		case err = <-c.readErrs:
+			c.reg.RemovePlayer(c.id)
 			log.Printf("client[%d]: reciever failed to read message: %s", c.id, err.Error())
 			return
 		case nextInbox = <-nextInboxChan:
