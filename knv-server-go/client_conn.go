@@ -68,9 +68,9 @@ func (c *ClientConnection) readMessage() (Message, error) {
 	// set content
 	m.content = data
 
-	if m.t == "system" && string(m.content) == "hash" && false {
+	if m.t == "system" && string(m.content) == "hash" {
 	} else {
-		log.Printf("client[%d]: recieved message: %s", c.id, m.String())
+		//log.Printf("client[%d]: recieved message: %s", c.id, m.String())
 	}
 	return m, nil
 }
@@ -90,10 +90,10 @@ func (c *ClientConnection) writeMessage(m Message) error {
 		m.content = []byte("-1")
 	}
 
-	if m.t == "system" && string(m.content) == "hash" && false{
+	if m.t == "system" && string(m.content) == "hash" {
 	} else if m.t == "ordinary" && string(m.content) == "nexttick" {
 	} else {
-		log.Printf("client[%d]: sending message: %s", c.id, m.String())
+		//log.Printf("client[%d]: sending message: %s", c.id, m.String())
 	}
 
 	// 4 = len of four spaces inbetween
@@ -148,6 +148,7 @@ func (c *ClientConnection) Run() {
 	log.Println("client: registering client")
 	c.id, c.master = c.reg.AddClient(m)
 	log.Println("client: registered as", c.id, "master?", c.master)
+	var nextInboxChan chan chan Message
 	if c.master {
 		// just respond with almost same message
 		// that client have reference map
@@ -164,7 +165,7 @@ func (c *ClientConnection) Run() {
 		// create new player
 		var mapChan chan Message
 		var lastID int
-		c.inbox, mapChan, c.gameId, lastID = c.reg.CreatePlayer(c.id)
+		c.inbox, mapChan, nextInboxChan, c.gameId, lastID = c.reg.CreatePlayer(c.id)
 		// send 'map' message to client
 		waitMapM := Message{from: strconv.Itoa(lastID), to: c.gameId, t: "system",
 			content: []byte("map")}
@@ -185,20 +186,28 @@ func (c *ClientConnection) Run() {
 
 	// login complete
 
+	var nextInbox chan Message
 	// run game loop
 	log.Printf("client[%d]: starting main loop", c.id)
 	go c.reciever()
 	for {
 		select {
-		case m = <-c.inbox:
-			err := c.writeMessage(m)
-			if err != nil {
-				log.Printf("client[%d]: sender failed to send message: %s", c.id, err.Error())
-				return
+		case m, ok := <-c.inbox:
+			if ! ok {
+				// channel is empty, switch to next
+				log.Printf("client[%d]: switching channels...", c.id)
+				c.inbox = nextInbox
+			} else {
+				err := c.writeMessage(m)
+				if err != nil {
+					log.Printf("client[%d]: sender failed to send message: %s", c.id, err.Error())
+					return
+				}
 			}
 		case err = <-c.readErrs:
 			log.Printf("client[%d]: reciever failed to read message: %s", c.id, err.Error())
 			return
+		case nextInbox = <-nextInboxChan:
 		}
 	}
 }

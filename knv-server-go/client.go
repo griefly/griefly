@@ -38,6 +38,7 @@ type newPlayerAnswer struct {
 	gameId string
 	messages chan Message
 	mapResp chan Message
+	nextInbox chan chan Message
 	lastID int
 }
 
@@ -74,11 +75,13 @@ func (r *Registry) AddClient(m Message) (id int, master bool) {
 	return cid.id, cid.master
 }
 
-func (r *Registry) CreatePlayer(id int) (messages, maps chan Message, gameId string, lastID int) {
+func (r *Registry) CreatePlayer(id int) (messages, maps chan Message, nextInbox chan chan Message,
+	gameId string, lastID int) {
+
 	pe := PlayerEnvelope{id, make(chan newPlayerAnswer, 1)}
 	r.newPlayers <- pe
 	response := <-pe.response
-	return response.messages, response.mapResp, response.gameId, response.lastID
+	return response.messages, response.mapResp, response.nextInbox, response.gameId, response.lastID
 }
 
 func (r *Registry) CreateMasterPlayer(id int) chan Message {
@@ -130,11 +133,14 @@ func (r *Registry) Run() {
 						r.sendMaster(mapReq)
 
 						// player now can recieve messages
-						// FIXME: make infinity buffer
 						r.clients[reqp.id] = make(chan Message, 64)
+						tmpMessages := make(chan Message)
+						nextInbox := make(chan chan Message)
+						// run bufferizator
+						go bufferMessages(r.clients[reqp.id], tmpMessages, nextInbox)
 						log.Println("registry: created channel for player", reqp.id)
-						resp := newPlayerAnswer{gameId: m.to, messages: r.clients[reqp.id],
-							mapResp: make(chan Message, 1), lastID: lastID}
+						resp := newPlayerAnswer{gameId: m.to, messages: tmpMessages,
+							mapResp: make(chan Message, 1), nextInbox: nextInbox, lastID: lastID}
 						// send client a response with his id and map response chan
 						reqp.response <- resp
 						// move player from newPlayers to mapWaiters
@@ -179,7 +185,7 @@ func (r *Registry) Run() {
 				messages := make(chan Message, 64)
 				r.clients[0] = messages
 				log.Println("registry: attached master")
-				reqp.response <- newPlayerAnswer{"", messages, nil, 0}
+				reqp.response <- newPlayerAnswer{"", messages, nil, nil, 0}
 			} else {
 				// this is a slave
 				// create a mob for it
