@@ -21,21 +21,25 @@
 
 #include "MapClass.h"
 #include "Debug.h"
+#include "Params.h"
 
 int main(int argc, char *argv[])
 {   
-    std::string adrs = "127.0.0.1";
+    GetParamsHolder().ParseParams(argc, argv);
 
-    bool is_auto_p = false;
-    if (argc >= 2 && std::string(argv[1]) == "-nodraw")
+    if (GetParamsHolder().GetParam<bool>("-nodraw"))
         NODRAW = true; 
-    else if (argc >= 2 && std::string(argv[1]) == "-auto")
+    
+    bool is_auto_p = false;
+    if (GetParamsHolder().GetParam<bool>("-auto"))
         is_auto_p = true;
-    else if (argc >= 2)
-        adrs = std::string(argv[1]);
 
-    if (argc >= 3)
-        Debug::SetUniqueName(std::string(argv[2]));
+    std::string adrs = "127.0.0.1";
+    if (GetParamsHolder().GetParam<bool>("ip"))
+        adrs = GetParamsHolder().GetParam<std::string>("ip");
+
+    if (GetParamsHolder().GetParam<bool>("name"))
+        Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
 
     Manager man(adrs);
     SYSTEM_STREAM << "Begin init world\n";

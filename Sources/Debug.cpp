@@ -54,3 +54,8 @@ void Debug::SetUniqueName(const std::string& name)
 {
     unique_name = name;
 }
+
+std::string Debug::GetUniqueName()
+{
+    return unique_name;
+}

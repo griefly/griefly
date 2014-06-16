@@ -19,7 +19,7 @@ ItemFabric::ItemFabric()
 
 void ItemFabric::Sync()
 {
-    if (MAIN_TICK % HASH_OFTEN == 0)
+    if (MAIN_TICK % HASH_OFTEN == 1)
     {
         hash_last_ = hash_all();
 

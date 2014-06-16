@@ -12,6 +12,7 @@
 #include "ItemFabric.h"
 #include "MagicStrings.h"
 #include "TileInt.h"
+#include "Debug.h"
 
 #include "sound.h"
 
@@ -311,7 +312,7 @@ void Manager::initWorld()
     atexit(SDLNet_Quit);
     IMainItem::fabric = new ItemFabric;
     map = new MapMaster;
-    SDL_WM_SetCaption("K&V", "K&V");
+    SDL_WM_SetCaption(Debug::GetUniqueName().c_str(), Debug::GetUniqueName().c_str());
     if (!NODRAW)
         gl_screen = new Screen(sizeW, sizeH);
 
