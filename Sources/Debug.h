@@ -19,5 +19,7 @@ namespace Debug
 
     void SetUniqueName(const std::string& name);
 
+    std::string GetUniqueName();
+
     Impl::UnsyncDebug& UnsyncDebug();
 }

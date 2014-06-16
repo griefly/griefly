@@ -204,6 +204,9 @@
     <ClInclude Include="Sources\sound.h">
       <Filter>Header Files\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Params.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -313,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="Sources\sound.cpp">
       <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Params.cpp">
+      <Filter>Source Files\Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

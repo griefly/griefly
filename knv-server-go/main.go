@@ -5,7 +5,6 @@ import (
 	"log"
 )
 
-
 var listen = flag.String("listen", ":1111", "address to listen on")
 
 func main() {
