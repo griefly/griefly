@@ -94,7 +94,7 @@ void MapMaster::makeMap()
             
             if(rand() % 29 == 1 || x == 0 || y == 0 || x == sizeWmap - 1 || y == sizeHmap - 1)
                 IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][1]);
-            if(rand() % 600 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
+            if(rand() % 60 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
                 IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][1]);
             if(rand() % 3 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
                 IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][1]);//*/
