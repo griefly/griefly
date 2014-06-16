@@ -8,14 +8,13 @@ import (
 	"strconv"
 )
 
-
 type ClientConnection struct {
-	conn net.Conn
-	reg *Registry
-	inbox chan Message
+	conn     net.Conn
+	reg      *Registry
+	inbox    chan Message
 	readErrs chan error
 
-	id int
+	id     int
 	master bool
 	gameId string
 }
@@ -196,7 +195,7 @@ func (c *ClientConnection) Run() {
 	for {
 		select {
 		case m, ok := <-c.inbox:
-			if ! ok {
+			if !ok {
 				// channel is empty, switch to next
 				log.Printf("client[%d]: switching channels...", c.id)
 				c.inbox = nextInbox

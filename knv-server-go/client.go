@@ -13,8 +13,8 @@ const (
 
 type Message struct {
 	from, to, t string
-	content []byte
-	id int
+	content     []byte
+	id          int
 
 	connId int
 }
@@ -30,40 +30,40 @@ func (m Message) String() string {
 }
 
 type clientID struct {
-	id int
+	id     int
 	master bool
 }
 
 type newPlayerAnswer struct {
-	gameId string
-	messages chan Message
-	mapResp chan Message
+	gameId    string
+	messages  chan Message
+	mapResp   chan Message
 	nextInbox chan chan Message
-	lastID int
+	lastID    int
 }
 
 type LoginEnvelope struct {
-	m Message
+	m        Message
 	response chan clientID
 }
 
 type PlayerEnvelope struct {
-	id int
+	id       int
 	response chan newPlayerAnswer
 }
 
 type Registry struct {
-	nextId int
+	nextId  int
 	clients []chan Message
 
 	masterId int
-	
+
 	newClients chan LoginEnvelope
 	newPlayers chan PlayerEnvelope
-	
+
 	oldClients chan int
-	
-	inbox chan Message
+
+	inbox  chan Message
 	ticker *time.Ticker
 }
 
@@ -90,7 +90,6 @@ func (r *Registry) CreatePlayer(id int) (messages, maps chan Message, nextInbox 
 }
 
 func (r *Registry) CreateMasterPlayer(id int) chan Message {
-	r.masterId = id
 	pe := PlayerEnvelope{id, make(chan newPlayerAnswer, 1)}
 	r.newPlayers <- pe
 	response := <-pe.response
@@ -114,12 +113,11 @@ func (r *Registry) sendAll(m Message) {
 	}
 }
 
-
 func (r *Registry) sendMaster(m Message) {
 	if len(r.clients) == 0 {
 		log.Fatal("registry: cannot send to master when there are no master")
 	}
-	r.clients[r.masterId] <-m
+	r.clients[r.masterId] <- m
 }
 
 func (r *Registry) Run() {
@@ -140,7 +138,7 @@ func (r *Registry) Run() {
 					} else {
 						// mob for player created on master
 						// request map from master
-						mapReq := Message{to: m.to, t:"system", content: []byte("need_map")}
+						mapReq := Message{to: m.to, t: "system", content: []byte("need_map")}
 						r.sendMaster(mapReq)
 
 						// player now can recieve messages
@@ -163,7 +161,7 @@ func (r *Registry) Run() {
 				continue
 			}
 			if m.connId == r.masterId && m.t == "map" {
-				if len(mapWaiters) > 0 {				
+				if len(mapWaiters) > 0 {
 					to := m.to
 					mapCh, ok := mapWaiters[to]
 					if !ok {
@@ -188,17 +186,22 @@ func (r *Registry) Run() {
 			// add client
 			r.clients = append(r.clients, nil)
 			// FIXME: master is just first client
-			reqc.response <- clientID{len(r.clients)-1, r.masterId == -1}
-			//r.masterId = len(r.clients)-1
-			
+			cID := len(r.clients) - 1
+			isMaster := r.masterId == -1
+			if isMaster {
+				r.masterId = cID
+			}
+			reqc.response <- clientID{cID, isMaster}
+
 		case reqp := <-r.newPlayers:
 			// add player
 			if reqp.id == r.masterId {
 				// this is a master
+				r.masterId = reqp.id
 				messages := make(chan Message, 64)
 				r.clients[r.masterId] = messages
 				log.Println("registry: attached master")
-				reqp.response <- newPlayerAnswer{"", messages, nil, nil, r.masterId}
+				reqp.response <- newPlayerAnswer{"", messages, nil, nil, lastID}
 			} else {
 				// this is a slave
 				// create a mob for it
@@ -217,32 +220,38 @@ func (r *Registry) Run() {
 			lastID++
 			nexttick := Message{id: lastID, t: "ordinary", content: []byte("nexttick")}
 			r.sendAll(nexttick)
-		case old_id := <- r.oldClients:
+		case old_id := <-r.oldClients:
 			s_old_id := strconv.Itoa(old_id)
-			if (old_id != r.masterId) {
+			if old_id != r.masterId {
+				log.Println("registry: detached slave client", old_id)
 				r.clients[old_id] = nil
 				delete(newPlayers, s_old_id)
 				delete(mapWaiters, s_old_id)
 			} else {
+				log.Println("registry: detached master client", old_id)
 				r.masterId = -1
 				r.clients[old_id] = nil
 				for id, c := range r.clients {
-					if (c != nil) {
+					if c != nil {
 						r.masterId = id
 						break
 					}
 				}
+				if r.masterId == -1 {
+					log.Println("registry: we have no master, we have no world now")
+				} else {
+					log.Printf("registry: praise the new master %d!", r.masterId)
+				}
 				delete(newPlayers, s_old_id)
 				delete(mapWaiters, s_old_id)
-				
+
 				for _, c := range newPlayers {
 					close(c.response)
 				}
 				for _, c := range mapWaiters {
 					close(c)
-				}				
+				}
 			}
 		}
 	}
 }
-

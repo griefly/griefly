@@ -4,7 +4,6 @@ import (
 	"io"
 )
 
-
 func readUntil(src io.Reader, needle byte) ([]byte, error) {
 	var buf = make([]byte, 0, 64)
 	var one = make([]byte, 1)

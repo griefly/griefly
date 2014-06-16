@@ -4,7 +4,6 @@ import (
 	"log"
 )
 
-
 func bufferMessages(src, dst chan Message, delegator chan chan Message) {
 	var buffer []Message
 	lastm := <-src
