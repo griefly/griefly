@@ -35,7 +35,7 @@ extern int TITLE_SIZE;//no comment
 
 extern std::ostream& SYSTEM_STREAM;//some system information here
 
-const int HASH_OFTEN = 100;
+const int HASH_OFTEN = 20;
 
 typedef int Dir;
 const Dir D_LEFT = 0;

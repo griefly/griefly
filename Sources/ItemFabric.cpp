@@ -81,11 +81,6 @@ void ItemFabric::foreachProcess()
         if (process_table_[i].valid() && process_table_[i]->GetFreq() && ((MAIN_TICK % process_table_[i]->GetFreq()) == 0))
             process_table_[i]->process();
 
-   /* size_t table_size = idTable_.size();
-    for (size_t i = 1; i < table_size; ++i)
-        if (idTable_[i] != nullptr && idTable_[i]->GetFreq() && ((MAIN_TICK % idTable_[i]->GetFreq()) == 0))
-            idTable_[i]->process();*/
-
     UpdateProcessingItems();
 }
 
@@ -100,6 +95,15 @@ void ItemFabric::saveMapHeader(std::stringstream& savefile)
     savefile << random_helpers::get_calls_counter() << std::endl;
 
     savefile << IMainItem::mobMaster->GetCreator() << std::endl;
+
+    // Save player table
+    savefile << players_table_.size() << " ";
+    for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
+    {
+        savefile << it->first << " ";
+        savefile << it->second << " ";
+    }
+    savefile << std::endl;
 }
 
 void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob)
@@ -133,6 +137,18 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     IMainItem::mobMaster->SetCreator(new_creator);
 
     idTable_.resize(id_ + 1);
+
+    // Load player table
+    size_t s;
+    savefile >> s;
+    for (int i = 0; i < s; ++i)
+    {
+        size_t first;
+        savefile >> first;
+        size_t second;
+        savefile >> second;
+        SetPlayerId(first, second);
+    }
 }
 
 void ItemFabric::saveMap(const char* path)
@@ -334,6 +350,7 @@ void ItemFabric::clearMap()
     process_table_.clear();
     add_to_process_.clear();
     remove_from_process_.clear();
+    players_table_.clear();
 };
 
 unsigned int ItemFabric::hash_all()
@@ -346,7 +363,14 @@ unsigned int ItemFabric::hash_all()
     return h;
 }
 
-
+void ItemFabric::SetPlayerId(size_t net_id, size_t real_id)
+{
+    players_table_[net_id] = real_id;
+}
+size_t ItemFabric::GetPlayerId(size_t net_id)
+{
+    return players_table_[net_id];
+}
 
 void ItemFabric::AddProcessingItem(id_ptr_on<IMainItem> item)
 {

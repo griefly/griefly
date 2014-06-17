@@ -332,6 +332,7 @@ void Manager::initWorld()
 
     newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[sizeHmap / 2][sizeWmap / 2][1]);
     changeMob(newmob);
+    IMainItem::fabric->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
     auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), map->squares[sizeHmap / 2][sizeWmap / 2][1]);
     SetCreator(tptr.ret_id());

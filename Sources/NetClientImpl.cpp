@@ -159,6 +159,14 @@ bool NetClient::Recv(Message* msg)
     } 
 
     number_last_message_ = msg->message_number;
+    if (msg->text == Net::MAKE_NEW)
+    {
+        msg->to = man_->GetCreator();
+    }
+    else
+    {
+        msg->to = IMainItem::fabric->GetPlayerId(msg->to);
+    }
     return true;
 }
 
@@ -192,7 +200,7 @@ bool NetClient::Process()
         else if (message.text == Net::MAKE_NEW)
         {
             SYSTEM_STREAM << "New mob must created!" << std::endl;
-            message.to = man_->GetCreator();
+            //message.to = man_->GetCreator();
         }
         else if (message.type != Net::ORDINARY_TYPE)
         {
