@@ -36,6 +36,7 @@
     <ClInclude Include="Sources\MagicStrings.h" />
     <ClInclude Include="Sources\MainInt.h" />
     <ClInclude Include="Sources\MapClass.h" />
+    <ClInclude Include="Sources\MapEditor.h" />
     <ClInclude Include="Sources\Message.h" />
     <ClInclude Include="Sources\MessageReceiver.h" />
     <ClInclude Include="Sources\Mob.h" />
