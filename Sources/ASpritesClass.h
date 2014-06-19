@@ -1,5 +1,4 @@
-#ifndef ASPRITESCLASS_H
-#define ASPRITESCLASS_H
+#pragma once
 
 #include "sprite.h"
 #include <map>
@@ -18,4 +17,5 @@ private:
     std::map<std::string, GLSprite*> sprites;
 };
 
-#endif
+ASprClass* GetSpriter();
+void SetSpriter(ASprClass* aspr);

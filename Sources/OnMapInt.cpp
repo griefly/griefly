@@ -33,7 +33,7 @@ void IOnMapItem::SetSprite(const std::string& name)
 {
     if (!GetMapMaster()) 
         return;
-    sprite_ = GetMapMaster()->aSpr.returnSpr(name);
+    sprite_ = GetSpriter()->returnSpr(name);
     T_SPR = name;
 };
 
@@ -49,7 +49,7 @@ void IOnMapItem::SetSpriteTop(const std::string& name)
 {
     if (!GetMapMaster()) 
         return;
-    sprite_top_ = GetMapMaster()->aSpr.returnSpr(name);
+    sprite_top_ = GetSpriter()->returnSpr(name);
     T_SPR_TOP = name;
 };
 
@@ -85,7 +85,7 @@ void IOnMapItem::processImage(DrawType type)
     if (is_need_overlay)
     {
         if (!top_overlay)
-                top_overlay = GetMapMaster()->aSpr.returnSpr("icons/top_overlay.png");
+                top_overlay = GetSpriter()->returnSpr("icons/top_overlay.png");
         GetScreen()->Draw(top_overlay, 
                           GetDrawX() + mob_position::get_shift_x(), 
                           GetDrawY() + mob_position::get_shift_y(), 

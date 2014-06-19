@@ -82,7 +82,6 @@ Manager::Manager(std::string adrs)
     done = 0;
     pause = false;
     last_fps = FPS_MAX;
-    net_client = NetClient::Init(this);
 };
 
 void Manager::UpdateVisible() 
@@ -111,7 +110,7 @@ void Manager::process()
     { 
 
         processInput();
-        if(net_client->Ready() && !pause)
+        if(NetClient::GetNetClient()->Ready() && !pause)
         {
             process_in = true;
             process_in_msg();
@@ -138,7 +137,7 @@ void Manager::process()
         if (!NODRAW)
             thisMob->processGUI();
 
-        texts.Process();
+        GetTexts().Process();
 
         if((SDL_GetTicks() - lastTimeFps) >= 1000 && !pause)
         {
@@ -162,7 +161,7 @@ void Manager::process()
         GetScreen()->Swap();
         //++MAIN_TICK;
         process_in = false;
-        if (net_client->Process() == false)
+        if (NetClient::GetNetClient()->Process() == false)
         {
             SYSTEM_STREAM << "Fail receive messages" << std::endl;
             SDL_Delay(10000);
@@ -184,7 +183,7 @@ void Manager::checkMoveMob()
           { \
               Message msg; \
               msg.text = #key; \
-              net_client->Send(msg); \
+              NetClient::GetNetClient()->Send(msg); \
               lastShoot = (int)MAIN_TICK; \
           } \
       }
@@ -211,7 +210,7 @@ void Manager::processInput()
                     ping_send = SDL_GetTicks();
                     Message msg;
                     msg.text = "SDLK_F2";
-                    net_client->Send(msg);
+                    NetClient::GetNetClient()->Send(msg);
                 }
             }
             if(event.type == SDL_MOUSEBUTTONDOWN)
@@ -299,12 +298,16 @@ void Manager::initWorld()
     }
     SDL_WM_SetCaption(Debug::GetUniqueName().c_str(), Debug::GetUniqueName().c_str());
 
+    SetManager(this);
+
     SetItemFabric(new ItemFabric);
     SetMapMaster(new MapMaster);
     if (!NODRAW)
         SetScreen(new Screen(sizeW, sizeH));
-    SetManager(this);  
-    mob_position::set_mng(this);
+    SetTexts(new TextPainter);
+    SetSpriter(new ASprClass);
+
+    NetClient::Init();
 
     GetMapMaster()->makeTiles();
 
@@ -327,9 +330,9 @@ void Manager::initWorld()
     LoginData data;
     data.who = newmob.ret_id();
     data.word_for_who = 1;
-    net_client->Connect(adrs_, DEFAULT_PORT, data);
+    NetClient::GetNetClient()->Connect(adrs_, DEFAULT_PORT, data);
 
-    texts["FPS"].SetUpdater
+    GetTexts()["FPS"].SetUpdater
     ([this](std::string* str)
     {
         std::stringstream ss; 
@@ -337,7 +340,7 @@ void Manager::initWorld()
         ss >> *str;
     }).SetFreq(1000).SetSize(20);
 
-    texts["LastTouch"].SetUpdater
+    GetTexts()["LastTouch"].SetUpdater
     ([this](std::string* str)
     {
         *str = last_touch;
@@ -356,7 +359,7 @@ void Manager::process_in_msg()
     Message msg;
     while (true)
     {
-        net_client->Recv(&msg);
+        NetClient::GetNetClient()->Recv(&msg);
         if (msg.text == "SDLK_F2")
         {
             SYSTEM_STREAM << "Ping is: " << (SDL_GetTicks() - ping_send) / 1000.0 << "s" << std::endl;
@@ -396,7 +399,7 @@ bool Manager::isMobVisible(int posx, int posy)
     return false;
 }
 
-Manager* manager_;
+Manager* manager_ = nullptr;
 Manager* GetManager()
 {
     return manager_;

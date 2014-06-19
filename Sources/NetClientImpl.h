@@ -10,7 +10,8 @@
 class NetClient: public INetClient
 {
 public:
-    static NetClient* Init(Manager* man);
+    static void Init();
+    static INetClient* GetNetClient();
 
     virtual bool Connect(const std::string& ip, unsigned int port, LoginData data) override;
     virtual bool Disconnect() override;
@@ -42,6 +43,4 @@ private:
     bool ready_;
 
     unsigned int hash_;
-
-    Manager* man_;
 };

@@ -16,8 +16,6 @@ struct LoginData
     std::string jid;
 };
 
-class Manager;
-
 class INetClient
 {
 public:

@@ -149,3 +149,13 @@ TextPainter::Text& TextPainter::operator[](const std::string& name)
         texts_[name] = new Text(this);
     return *texts_[name];
 }
+
+TextPainter* text_painter_ = nullptr;
+TextPainter& GetTexts()
+{
+    return *text_painter_;
+}
+void SetTexts(TextPainter* text_painter)
+{
+    text_painter_ = text_painter;
+}

@@ -30,5 +30,5 @@ void Teleportator::CreateItem(unsigned int from_id, size_t hash)
     msg.type = Net::SYSTEM_TYPE;
     msg.text = Net::NEW_MAKED;
 
-    GetManager()->net_client->Send(msg);
+    NetClient::GetNetClient()->Send(msg);
 }

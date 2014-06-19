@@ -14,7 +14,7 @@ void Liquid::SetSprite(const std::string& name)
 {
     if(!GetMapMaster())
         return;
-    sprite_ = GetMapMaster()->aSpr.returnSpr(name);
+    sprite_ = GetSpriter()->returnSpr(name);
     T_SPR = name;
 };
 

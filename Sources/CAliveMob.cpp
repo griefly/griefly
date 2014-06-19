@@ -89,11 +89,11 @@ void CAliveMob::attack_by(id_ptr_on<SmallItem> atk, int force)
 
 void CAliveMob::InitGUI()
 {
-    GetManager()->texts["Sync"].SetUpdater
+    GetTexts()["Sync"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << ((GetItemFabric()->get_hash_last() == GetManager()->net_client->Hash()) ? "SYNC:" : "UNSYNC:") 
+        ss << ((GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash()) ? "SYNC:" : "UNSYNC:") 
            << GetItemFabric()->get_hash_last();
         ss >> *str;
     }).SetSize(15).SetPlace(0, 30, 200, 50);
@@ -101,7 +101,7 @@ void CAliveMob::InitGUI()
 
 void CAliveMob::DeinitGUI()
 {
-    GetManager()->texts.Delete("Sync");
+    GetTexts().Delete("Sync");
 }
 
 void CAliveMob::processGUI()
@@ -119,9 +119,9 @@ void CAliveMob::processGUI()
         //    SDL_FreeSurface(sDMG);
         //sDMG = TTF_RenderText_Blended( map->aSpr.font, ssloc.str().c_str(), color);
 
-        if (GetItemFabric()->get_hash_last() == GetManager()->net_client->Hash())
-            GetManager()->texts["Sync"].SetColor(0, 255, 100);
+        if (GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash())
+            GetTexts()["Sync"].SetColor(0, 255, 100);
         else
-            GetManager()->texts["Sync"].SetColor(255, 160, 0);
+            GetTexts()["Sync"].SetColor(255, 160, 0);
     }
 }

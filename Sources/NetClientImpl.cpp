@@ -7,18 +7,22 @@
 
 #include <SDL_net.h>
 
-NetClient* NetClient::Init(Manager* man)
+INetClient* net_client = nullptr;
+
+void NetClient::Init()
 {
-    if (man == nullptr)
-        return nullptr;
-    auto retval = new NetClient;
-    retval->man_ = man;
-    retval->connected_ = false;
-    retval->fail_ = false;
-    retval->amount_ticks_ = 0;
-    retval->hash_ = 0;
-    retval->number_last_message_ = 0;
-    return retval;
+    auto val = new NetClient;
+    val->connected_ = false;
+    val->fail_ = false;
+    val->amount_ticks_ = 0;
+    val->hash_ = 0;
+    val->number_last_message_ = 0;
+    net_client = val;
+}
+
+INetClient* NetClient::GetNetClient()
+{
+    return net_client;
 }
 
 bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data)
@@ -161,7 +165,7 @@ bool NetClient::Recv(Message* msg)
     number_last_message_ = msg->message_number;
     if (msg->text == Net::MAKE_NEW)
     {
-        msg->to = man_->GetCreator();
+        msg->to = GetManager()->GetCreator();
     }
     else
     {

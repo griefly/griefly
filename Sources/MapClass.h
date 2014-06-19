@@ -65,14 +65,8 @@ class MapMaster
 {
 public:
     MapMaster();
-    ASprClass aSpr;
     typedef id_ptr_on<CubeTile> SqType;
     SqType squares[sizeHmap][sizeWmap][sizeDmap];
-    // Sync stuff
-   
-    //void ForEachInArea(id_ptr_on<Tile> center, int h_size, int w_size, int d_size,
-    //                   std::function<void(id_ptr_on<Tile>)> callback)
-
 
     void Draw();
     bool isVisible(int posx, int posy, int posz = 0);

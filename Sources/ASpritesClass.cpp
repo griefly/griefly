@@ -12,3 +12,13 @@ GLSprite* ASprClass::returnSpr(std::string type)
 ASprClass::ASprClass()
 {
 };
+
+ASprClass* aspr_ = nullptr;
+ASprClass* GetSpriter()
+{
+    return aspr_;
+}
+void SetSpriter(ASprClass* aspr)
+{
+    aspr_ = aspr;
+}

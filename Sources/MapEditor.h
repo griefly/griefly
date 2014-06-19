@@ -18,3 +18,6 @@ private:
     int pointer_x_;
     int pointer_y_;
 };
+
+MapEditor* GetMapEditor();
+void SetMapEditor(MapEditor* map_editor);

@@ -31,7 +31,7 @@ void ItemFabric::Sync()
         msg.text = Net::HASH;
         msg.from = hash_last_;
 
-        GetManager()->net_client->Send(msg);
+        NetClient::GetNetClient()->Send(msg);
     }
 }
 
@@ -141,7 +141,7 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     // Load player table
     size_t s;
     savefile >> s;
-    for (int i = 0; i < s; ++i)
+    for (size_t i = 0; i < s; ++i)
     {
         size_t first;
         savefile >> first;
@@ -207,7 +207,7 @@ void ItemFabric::saveMap(std::stringstream& savefile, bool zip)
     
         SYSTEM_STREAM << "Begin load zipped to stream" << std::endl;
 
-        for (int i = 0; i < len_compressed; ++i)
+        for (size_t i = 0; i < len_compressed; ++i)
             savefile << raw_compressed[i];
 
         delete[] raw_compressed;
@@ -281,7 +281,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
 
         savefile.str("");
 
-        for (int i = 0; i < len_uncompressed_to_use; ++i)
+        for (size_t i = 0; i < len_uncompressed_to_use; ++i)
             savefile << static_cast<char>(raw_uncompressed[i]);
 
         delete[] raw_uncompressed;

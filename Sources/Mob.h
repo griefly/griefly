@@ -67,10 +67,6 @@ public:
     //
     id_ptr_on<IMob> thisMob;
 
-    INetClient* net_client;
-
-    TextPainter texts;
-
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:
     std::string adrs_;

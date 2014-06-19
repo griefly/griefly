@@ -18,7 +18,6 @@ MapEditor::MapEditor()
 
 void MapEditor::InitWorld()
 {
-    mob_position::set_map_editor(this);
     if (!InitSDL())
     {
         SYSTEM_STREAM << "Fail to load SDL" << std::endl;
@@ -28,6 +27,10 @@ void MapEditor::InitWorld()
     SetItemFabric(new ItemFabric);
     SetMapMaster(new MapMaster);
     SetScreen(new Screen(sizeW, sizeH));
+    SetTexts(new TextPainter);
+    SetSpriter(new ASprClass);
+
+    SetMapEditor(this);
 }
 
 void MapEditor::Run()
@@ -42,4 +45,15 @@ int MapEditor::GetViewerX()
 int MapEditor::GetViewerY()
 {
     return viewer_y_;
+}
+
+MapEditor* map_editor_ = nullptr;
+MapEditor* GetMapEditor()
+{
+    return map_editor_;
+}
+
+void SetMapEditor(MapEditor* map_editor)
+{
+    map_editor_ = map_editor;
 }

@@ -4,7 +4,7 @@
 
 Fire::Fire()
 {
-    sprite = GetMapMaster()->aSpr.returnSpr("icons/fire_anim.png");
+    sprite = GetSpriter()->returnSpr("icons/fire_anim.png");
     master = 0;
 }
 

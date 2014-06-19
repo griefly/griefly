@@ -67,3 +67,6 @@ private:
     std::map<std::string, Text*> texts_;
     std::map<NameSize, TTF_Font*, LessNameSize> fonts_;
 };
+
+TextPainter& GetTexts();
+void SetTexts(TextPainter* text_painter);

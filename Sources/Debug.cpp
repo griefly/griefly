@@ -32,7 +32,7 @@ std::string Debug::Impl::UnsyncDebug::GetNextNameToSave(const std::string& folde
 
 bool Debug::Impl::UnsyncDebug::Save()
 {
-    if (GetManager()->net_client->Hash() != GetItemFabric()->get_hash_last())
+    if (NetClient::GetNetClient()->Hash() != GetItemFabric()->get_hash_last())
         ++counter_;
     else
         --counter_;
