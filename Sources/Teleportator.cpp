@@ -18,11 +18,11 @@ Teleportator::Teleportator()
 
 void Teleportator::CreateItem(unsigned int from_id, size_t hash)
 {
-    auto newmob = IMainItem::fabric->newItemOnMap<IMob>(hash, owner);
+    auto newmob = GetItemFabric()->newItemOnMap<IMob>(hash, owner);
     SYSTEM_STREAM << "NEW MOB CREATE HIS ID " << newmob.ret_id() << "\n";
     newmob->onMobControl = true;
     
-    IMainItem::fabric->SetPlayerId(newmob.ret_id(), newmob.ret_id());
+    GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
     Message msg;
     msg.from = from_id;
@@ -30,5 +30,5 @@ void Teleportator::CreateItem(unsigned int from_id, size_t hash)
     msg.type = Net::SYSTEM_TYPE;
     msg.text = Net::NEW_MAKED;
 
-    IMainItem::mobMaster->net_client->Send(msg);
+    GetManager()->net_client->Send(msg);
 }

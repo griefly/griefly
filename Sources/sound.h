@@ -43,7 +43,7 @@ public:
     }
     sf::Sound* PlaySound(std::string name)
     {
-        int i;
+        size_t i;
         for (i = 0; i < sounds_.size(); ++i)
             if (sounds_[i].getStatus() == sf::SoundSource::Stopped)
                 break;

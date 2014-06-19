@@ -10,26 +10,20 @@
 
 #include "mob_position.h"
 
-bool MapMaster::CheckDublicate()
-{
-    assert(false && "Not used");
-    return true;
-}
-
 void MapMaster::Draw()
 {
     if(!canDraw())
         return;
-    if(!mobi->visiblePoint) 
+    if(!GetManager()->visiblePoint) 
         return;
     glClear(GL_COLOR_BUFFER_BIT);
-    int z_level_m = castTo<CubeTile>(mobi->thisMob->GetOwner().ret_item())->posz();
+    int z_level_m = castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posz();
     for (int z_level = 0; z_level < sizeDmap; z_level++) 
     {
         for(int i = 0; i < MAX_LEVEL; ++i)
         {
-            auto it2 = mobi->visiblePoint->begin();
-            while(it2 != mobi->visiblePoint->end())
+            auto it2 = GetManager()->visiblePoint->begin();
+            while(it2 != GetManager()->visiblePoint->end())
             {   
                 if(checkOutBorder(it2->posx, it2->posy))
                     if (it2->posz == z_level)
@@ -42,8 +36,8 @@ void MapMaster::Draw()
                 ++it2;
             }
         } 
-        auto it2 = mobi->visiblePoint->begin();
-        while(it2 != mobi->visiblePoint->end())
+        auto it2 = GetManager()->visiblePoint->begin();
+        while(it2 != GetManager()->visiblePoint->end())
         {   
             if(checkOutBorder(it2->posx, it2->posy))
                 if (it2->posz == z_level)
@@ -67,7 +61,7 @@ void MapMaster::makeTiles()
         {
             for (int z = 0; z < sizeDmap; z++)
             {
-                auto loc = IMainItem::fabric->newItem<CubeTile>(0, CubeTile::T_ITEM_S());
+                auto loc = GetItemFabric()->newItem<CubeTile>(0, CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 squares[x][y][z] = loc;
             }
@@ -85,7 +79,7 @@ void MapMaster::makeMap()
             // Ge
             //
             bool chk = (rand() % 10 != 1);
-            id_ptr_on<IOnMapItem> loc = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash(chk ? "ground" : "pit"), squares[x][y][0]);
+            id_ptr_on<IOnMapItem> loc = GetItemFabric()->newItemOnMap<IOnMapItem>(hash(chk ? "ground" : "pit"), squares[x][y][0]);
             loc->imageStateH = 0;
             if (chk)
                 loc->imageStateW = rand() % 4;
@@ -93,11 +87,11 @@ void MapMaster::makeMap()
                 loc->imageStateW = 0;
             
             if(rand() % 29 == 1 || x == 0 || y == 0 || x == sizeWmap - 1 || y == sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][1]);
+                GetItemFabric()->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][1]);
             if(rand() % 60 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][1]);
+                GetItemFabric()->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][1]);
             if(rand() % 3 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
-                IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][1]);//*/
+                GetItemFabric()->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][1]);//*/
         }
     }
     SYSTEM_STREAM << "End create map\n";
@@ -224,7 +218,7 @@ void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy, int p
 
 id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
 {
-    if(!mobi->visiblePoint) 
+    if(!GetManager()->visiblePoint) 
         return 0;
 
     // Due to resize emulate some shit
@@ -238,11 +232,11 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
 
     id_ptr_on<IOnMapItem> retval = 0;
 
-    int z_level_m = castTo<CubeTile>(mobi->thisMob->GetOwner().ret_item())->posz();
+    int z_level_m = castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posz();
     for (int z = z_level_m; z >= 0; --z)
     {
-        auto it2 = mobi->visiblePoint->begin();  
-        while(it2 != mobi->visiblePoint->end())
+        auto it2 = GetManager()->visiblePoint->begin();  
+        while(it2 != GetManager()->visiblePoint->end())
         {
             if (it2->posz == z)
                 squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
@@ -259,11 +253,11 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
                 return retval;
             ++it2;
         }
-        it2 = mobi->visiblePoint->begin();  
+        it2 = GetManager()->visiblePoint->begin();  
         for(int i = MAX_LEVEL - 1; i >= 0; --i)
         {
-            auto it2 = mobi->visiblePoint->begin();  
-            while(it2 != mobi->visiblePoint->end())
+            auto it2 = GetManager()->visiblePoint->begin();  
+            while(it2 != GetManager()->visiblePoint->end())
             {
                 if (it2->posz == z)
                     squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
@@ -283,6 +277,17 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
         }
     }
     return 0;
+}
+
+MapMaster* map_master_ = 0;
+MapMaster* GetMapMaster()
+{
+    return map_master_;
+}
+
+void SetMapMaster(MapMaster* map_master)
+{
+    map_master_ = map_master;
 }
 
 std::list<Dir> CPathFinder::calculatePath(int fromPosx, int fromPosy, int toPosx, int toPosy, int toPosz)

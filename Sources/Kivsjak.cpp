@@ -40,7 +40,7 @@ void Kivsjak::live()
     CAliveMob::live();
     if(dmg + bloodless + burn + interior + oxyless > max_dmg)
     {
-        fabric->newItemOnMap<IOnMapItem>(hash("meat"), owner);
+        GetItemFabric()->newItemOnMap<IOnMapItem>(hash("meat"), owner);
         delThis();
     }
 }

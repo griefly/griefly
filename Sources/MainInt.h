@@ -7,14 +7,6 @@
 #include "hashes.h"
 #include "ItemFabric.h"
 
-class IMob;
-class MapMaster;
-class CMonstr;
-class CFirebullet;
-class Manager;
-class SmallItem;
-class Liquid;
-class IMainItem;
 class IOnMapItem;
 
 #define DECLARE_RAW_TYPE(thisclass, supclass) DECLARE_RAW_LOADED DECLARE_GET_TYPE_ITEM(thisclass, supclass)//load from raw, type
@@ -34,9 +26,6 @@ public:
     virtual void delThis();
     IMainItem(){ id_ = 0; master = 0; how_often_ = 0;};
     IMainItem(NotLoadItem) {id_ = 0; master = 0; how_often_ = 0;};
-    static Manager* mobMaster;
-    static MapMaster* map;
-    static ItemFabric* fabric;
     virtual unsigned int T_ITEM()            
     {                                        
         static unsigned int result = 0;

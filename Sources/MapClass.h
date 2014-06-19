@@ -1,9 +1,8 @@
-#ifndef MAPCLASS_H
-#define MAPCLASS_H
+#pragma once
+
+#include <stdlib.h>
 
 #include "Mob.h"
-#include <stdlib.h>
-#include "SDL_thread.h"
 
 class CubeTile;
 
@@ -65,14 +64,8 @@ struct idpoint
 class MapMaster
 {
 public:
-    // DEBUG
-    bool CheckDublicate();
-    // END DEBUG
     MapMaster();
-    int loManager;
     ASprClass aSpr;
-    Manager* mobi;
-    // typedef std::list<id_ptr_on<IOnMapItem>> SqType;
     typedef id_ptr_on<CubeTile> SqType;
     SqType squares[sizeHmap][sizeWmap][sizeDmap];
     // Sync stuff
@@ -115,4 +108,5 @@ public:
     void checkZeroId();
 };
 
-#endif
+MapMaster* GetMapMaster();
+void SetMapMaster(MapMaster* map_master);

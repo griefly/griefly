@@ -133,3 +133,6 @@ private:
     std::map<size_t, size_t> players_table_;
 
 };
+
+ItemFabric* GetItemFabric();
+void SetItemFabric(ItemFabric* item_fabric);

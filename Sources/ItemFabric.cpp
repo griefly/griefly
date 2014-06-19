@@ -31,7 +31,7 @@ void ItemFabric::Sync()
         msg.text = Net::HASH;
         msg.from = hash_last_;
 
-        IMainItem::mobMaster->net_client->Send(msg);
+        GetManager()->net_client->Send(msg);
     }
 }
 
@@ -88,13 +88,13 @@ void ItemFabric::saveMapHeader(std::stringstream& savefile)
 {
     savefile << MAIN_TICK << std::endl;
     savefile << id_ << std::endl;
-    savefile << IMainItem::map->mobi->thisMob.ret_id() << std::endl;
+    savefile << GetManager()->thisMob.ret_id() << std::endl;
 
     // Random save
     savefile << random_helpers::get_seed() << std::endl;
     savefile << random_helpers::get_calls_counter() << std::endl;
 
-    savefile << IMainItem::mobMaster->GetCreator() << std::endl;
+    savefile << GetManager()->GetCreator() << std::endl;
 
     // Save player table
     savefile << players_table_.size() << " ";
@@ -119,9 +119,9 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     SYSTEM_STREAM << "thisMob: " << loc << std::endl;
 
     if (real_this_mob == 0)
-        IMainItem::map->mobi->thisMob = loc;
+        GetManager()->thisMob = loc;
     else
-        IMainItem::map->mobi->thisMob = real_this_mob;
+        GetManager()->thisMob = real_this_mob;
     
     unsigned int new_seed;
     unsigned int new_calls_counter;
@@ -134,7 +134,7 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     savefile >> new_creator;
     SYSTEM_STREAM << "new_creator: " << new_creator << std::endl;
 
-    IMainItem::mobMaster->SetCreator(new_creator);
+    GetManager()->SetCreator(new_creator);
 
     idTable_.resize(id_ + 1);
 
@@ -323,7 +323,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
         i->loadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
-    IMainItem::map->mobi->changeMob(IMainItem::map->mobi->thisMob);
+    GetManager()->changeMob(GetManager()->thisMob);
 }
 
 IMainItem* ItemFabric::newVoidItem(unsigned int type)
@@ -380,4 +380,14 @@ void ItemFabric::AddProcessingItem(id_ptr_on<IMainItem> item)
 void ItemFabric::RemoveProcessingItem(id_ptr_on<IMainItem> item)
 {
     remove_from_process_.push_back(item);  
+}
+
+ItemFabric* item_fabric_ = 0;
+ItemFabric* GetItemFabric()
+{
+    return item_fabric_;
+}
+void SetItemFabric(ItemFabric* item_fabric)
+{
+    item_fabric_ = item_fabric;
 }

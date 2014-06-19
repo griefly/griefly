@@ -85,7 +85,7 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
     std::stringstream convertor;
     convertor << message.text;
 
-    IMainItem::fabric->loadMap(convertor, true, data_.who);
+    GetItemFabric()->loadMap(convertor, true, data_.who);
     convertor.str("");
 
     connected_ = true;
@@ -145,7 +145,7 @@ bool NetClient::Recv(Message* msg)
     if (msg->text == Net::MAP_REQUEST)
     {
         std::stringstream raw_map;
-        IMainItem::fabric->saveMap(raw_map, true);
+        GetItemFabric()->saveMap(raw_map, true);
 
         Message map_message;
         map_message.from = number_last_message_;
@@ -165,7 +165,7 @@ bool NetClient::Recv(Message* msg)
     }
     else
     {
-        msg->to = IMainItem::fabric->GetPlayerId(msg->to);
+        msg->to = GetItemFabric()->GetPlayerId(msg->to);
     }
     return true;
 }

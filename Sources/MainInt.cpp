@@ -13,18 +13,11 @@ std::hash_map<unsigned int, item_creator>* itemListSaved()
     return result; 
 };
 
-
-MapMaster* IMainItem::map = nullptr;
-
-Manager* IMainItem::mobMaster = nullptr;
-
-ItemFabric* IMainItem::fabric = nullptr;
-
 void IMainItem::delThis()
 {
-    fabric->idTable()[id_] = 0;
+    GetItemFabric()->idTable()[id_] = 0;
     if (GetFreq())
-        IMainItem::fabric->RemoveProcessingItem(GetId());
+        GetItemFabric()->RemoveProcessingItem(GetId());
     delete this;
 }
 
@@ -55,11 +48,11 @@ void IMainItem::SetFreq(int freq)
 
     if (how_often_ != 0)
     {
-        IMainItem::fabric->AddProcessingItem(GetId());
+        GetItemFabric()->AddProcessingItem(GetId());
     }
     else
     {
-        IMainItem::fabric->RemoveProcessingItem(GetId());
+        GetItemFabric()->RemoveProcessingItem(GetId());
     }
 }
 

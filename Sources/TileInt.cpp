@@ -62,7 +62,7 @@ id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct)
     int new_y = posy_;
     int new_z = posz_;
     helpers::move_to_dir(direct, &new_x, &new_y, &new_z);
-    return IMainItem::map->squares[new_x][new_y][new_z];
+    return GetMapMaster()->squares[new_x][new_y][new_z];
 }
 
 bool CubeTile::IsPassable() const
@@ -97,5 +97,5 @@ void CubeTile::ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
 
 void CubeTile::LoadInMap()
 {
-    map->squares[posx_][posy_][posz_] = GetId();
+    GetMapMaster()->squares[posx_][posy_][posz_] = GetId();
 }

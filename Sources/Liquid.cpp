@@ -12,9 +12,9 @@ Liquid::Liquid()
 
 void Liquid::SetSprite(const std::string& name)
 {
-    if(!map)
+    if(!GetMapMaster())
         return;
-    sprite_ = map->aSpr.returnSpr(name);
+    sprite_ = GetMapMaster()->aSpr.returnSpr(name);
     T_SPR = name;
 };
 

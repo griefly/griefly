@@ -210,6 +210,9 @@
     <ClInclude Include="Sources\MapEditor.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\SdlInit.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -324,6 +327,9 @@
       <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="Sources\MapEditor.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SdlInit.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
   </ItemGroup>

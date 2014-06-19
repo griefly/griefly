@@ -5,6 +5,7 @@
 class MapEditor
 {
 public:
+    MapEditor();
     void InitWorld();
     void Run();
 
@@ -13,4 +14,7 @@ public:
 private:
     int viewer_x_;
     int viewer_y_;
+
+    int pointer_x_;
+    int pointer_y_;
 };

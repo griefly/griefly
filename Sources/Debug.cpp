@@ -32,7 +32,7 @@ std::string Debug::Impl::UnsyncDebug::GetNextNameToSave(const std::string& folde
 
 bool Debug::Impl::UnsyncDebug::Save()
 {
-    if (IMainItem::mobMaster->net_client->Hash() != IMainItem::fabric->get_hash_last())
+    if (GetManager()->net_client->Hash() != GetItemFabric()->get_hash_last())
         ++counter_;
     else
         --counter_;
@@ -46,7 +46,7 @@ bool Debug::Impl::UnsyncDebug::Save()
     std::stringstream converter;
     converter << MAIN_TICK - HASH_OFTEN * AMOUNT;
     remove((DEFAULT_FOLDER + unique_name + SAVE_WITHOUT_NUMBER + converter.str()).c_str());
-    IMainItem::fabric->saveMap(GetNextNameToSave(DEFAULT_FOLDER).c_str());
+    GetItemFabric()->saveMap(GetNextNameToSave(DEFAULT_FOLDER).c_str());
     return true;
 }
 

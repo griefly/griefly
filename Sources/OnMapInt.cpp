@@ -31,9 +31,9 @@ void IOnMapItem::move(Dir direct)
 
 void IOnMapItem::SetSprite(const std::string& name)
 {
-    if (!map) 
+    if (!GetMapMaster()) 
         return;
-    sprite_ = map->aSpr.returnSpr(name);
+    sprite_ = GetMapMaster()->aSpr.returnSpr(name);
     T_SPR = name;
 };
 
@@ -47,9 +47,9 @@ const GLSprite* IOnMapItem::GetSprite()
 
 void IOnMapItem::SetSpriteTop(const std::string& name)
 {
-    if (!map) 
+    if (!GetMapMaster()) 
         return;
-    sprite_top_ = map->aSpr.returnSpr(name);
+    sprite_top_ = GetMapMaster()->aSpr.returnSpr(name);
     T_SPR_TOP = name;
 };
 
@@ -85,7 +85,7 @@ void IOnMapItem::processImage(DrawType type)
     if (is_need_overlay)
     {
         if (!top_overlay)
-                top_overlay = map->aSpr.returnSpr("icons/top_overlay.png");
+                top_overlay = GetMapMaster()->aSpr.returnSpr("icons/top_overlay.png");
         GetScreen()->Draw(top_overlay, 
                           GetDrawX() + mob_position::get_shift_x(), 
                           GetDrawY() + mob_position::get_shift_y(), 
@@ -125,10 +125,10 @@ bool IOnMapItem::IsTransp(int x, int y)
 }
 bool IOnMapItem::isVisible(int x, int y)
 {
-    if ( x >= std::max(0, (castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posx()) - sizeHsq) &&
-         x <= std::min((castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posx()) + sizeHsq, sizeHmap - 1) &&
-         y >= std::max(0, (castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posy()) - sizeWsq) &&
-         y <= std::min((castTo<CubeTile>(mobMaster->thisMob->GetOwner().ret_item())->posx()) + sizeWsq, sizeWmap - 1))
+    if ( x >= std::max(0, (castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posx()) - sizeHsq) &&
+         x <= std::min((castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posx()) + sizeHsq, sizeHmap - 1) &&
+         y >= std::max(0, (castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posy()) - sizeWsq) &&
+         y <= std::min((castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posx()) + sizeWsq, sizeWmap - 1))
         return 1;
     return 0;
 };

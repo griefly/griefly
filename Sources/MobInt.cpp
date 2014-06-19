@@ -78,7 +78,8 @@ void IMob::processGUImsg(const Message& msg)
 void IMob::processPhysics()
 {
     IMessageReceiver::processPhysics();
-    if(thisMobControl) mobMaster->UpdateVisible();
+    if(thisMobControl) 
+        GetManager()->UpdateVisible();
 }
 
 bool IMob::checkMove(Dir direct)
@@ -89,8 +90,8 @@ bool IMob::checkMove(Dir direct)
         if(thisMobControl)
         {            
             //SYSTEM_STREAM << "Function IMob::checkMove called: onMobControl == true\n";
-            mobMaster->checkMove(direct);
-            mobMaster->UpdateVisible();
+            GetManager()->checkMove(direct);
+            GetManager()->UpdateVisible();
         }
         return true;
     }

@@ -66,17 +66,17 @@ void COrk::processGUImsg(const Message& msg)
     }
     else if(msg.text == "SDLK_q")
     {
-        IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("spear"), owner);
+        GetItemFabric()->newItemOnMap<IOnMapItem>(hash("spear"), owner);
     }
     else if(msg.text == "SDLK_e")
     {
-        IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("forcespear"), owner);
+        GetItemFabric()->newItemOnMap<IOnMapItem>(hash("forcespear"), owner);
     }
     else if(msg.text == "SDLK_SPACE")
     {
         if ((MAIN_TICK - jump_time) > 20)
         {
-            jump_time = MAIN_TICK;
+            jump_time = static_cast<int>(MAIN_TICK);
             auto zup = owner->GetNeighbour(D_ZUP);
             if (zup.valid() && zup->IsPassable())
             {

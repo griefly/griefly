@@ -1,7 +1,5 @@
-#ifndef MOB_H
-#define MOB_H
+#pragma once
 
-#include <SDL.h>
 #include <list>
 
 #include "OnMapInt.h"
@@ -11,7 +9,6 @@
 #include "CAliveMob.h"
 #include "CSmallItem.h"
 
-#include "Screen.h"
 #include "Text.h"
 
 class NetClient;
@@ -69,7 +66,6 @@ public:
     void process_in_msg();
     //
     id_ptr_on<IMob> thisMob;
-    MapMaster* map;
 
     INetClient* net_client;
 
@@ -84,4 +80,5 @@ private:
     bool auto_player_;
 };
 
-#endif
+Manager* GetManager();
+void SetManager(Manager* manager);

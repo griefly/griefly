@@ -51,6 +51,7 @@
     <ClInclude Include="Sources\Ork.h" />
     <ClInclude Include="Sources\Params.h" />
     <ClInclude Include="Sources\Screen.h" />
+    <ClInclude Include="Sources\SdlInit.h" />
     <ClInclude Include="Sources\sound.h" />
     <ClInclude Include="Sources\sprite.h" />
     <ClInclude Include="Sources\sync_random.h" />
@@ -91,6 +92,7 @@
     <ClCompile Include="Sources\Ork.cpp" />
     <ClCompile Include="Sources\Params.cpp" />
     <ClCompile Include="Sources\Screen.cpp" />
+    <ClCompile Include="Sources\SdlInit.cpp" />
     <ClCompile Include="Sources\sound.cpp" />
     <ClCompile Include="Sources\sprite.cpp" />
     <ClCompile Include="Sources\sync_random.cpp" />

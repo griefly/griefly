@@ -56,35 +56,27 @@ public:
     }
     T* operator*()
     {
-        if(0 == IMainItem::fabric->idTable()[id])
+        if(0 == GetItemFabric()->idTable()[id])
             return item = 0;
-        //if(!item)
-        //    item = castTo<T>(IMainItem::map->idTable[id]);
-        return item = castTo<T>(IMainItem::fabric->idTable()[id]);
+        return item = castTo<T>(GetItemFabric()->idTable()[id]);
     }
     const T* operator*() const
     {
-        if(0 == IMainItem::fabric->idTable()[id])
+        if(0 == GetItemFabric()->idTable()[id])
             return 0;
-        //if(!item)
-        //    item = castTo<T>(IMainItem::map->idTable[id]);
-        return castTo<T>(IMainItem::fabric->idTable()[id]);
+        return castTo<T>(GetItemFabric()->idTable()[id]);
     }
     T* operator->()
     {
-        if(0 == IMainItem::fabric->idTable()[id])
+        if(0 == GetItemFabric()->idTable()[id])
             return item = 0;
-        //if(!item)
-        //    item = castTo<T>(IMainItem::map->idTable[id]);
-        return item = castTo<T>(IMainItem::fabric->idTable()[id]);
+        return item = castTo<T>(GetItemFabric()->idTable()[id]);
     }
     const T* operator->() const
     {
-        if(0 == IMainItem::fabric->idTable()[id])
+        if(0 == GetItemFabric()->idTable()[id])
             return 0;
-        //if(!item)
-        //    item = castTo<T>(IMainItem::map->idTable[id]);
-        return castTo<T>(IMainItem::fabric->idTable()[id]);
+        return castTo<T>(GetItemFabric()->idTable()[id]);
     }
     id_ptr_on& operator=(size_t id_new)
     {
@@ -101,7 +93,6 @@ public:
     template<typename T2>
     id_ptr_on(id_ptr_on<T2>& value)
     {
-        //item = castTo<T>(value.ret_item());
         id = value.ret_id();
     }
     bool valid()
@@ -118,7 +109,7 @@ public:
     }
     T* ret_item()
     {
-        item = castTo<T>(IMainItem::fabric->idTable()[id]); 
+        item = castTo<T>(GetItemFabric()->idTable()[id]); 
         return item;
     }
 private:

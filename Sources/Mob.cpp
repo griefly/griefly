@@ -16,6 +16,8 @@
 
 #include "sound.h"
 
+#include "SdlInit.h"
+
 int ping_send;
 
 void Manager::checkMove(Dir direct)
@@ -45,7 +47,7 @@ void Manager::undoCenterMove(Dir direct)
             for(int y = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() - sizeWsq); 
                 y <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() + sizeWsq, sizeWmap - 1); y++)
             {
-                map->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
+                GetMapMaster()->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
                 {
                     Move* eff = getEffectOf<Move>();
                     eff->Init(TITLE_SIZE, direct, thisMob->pixSpeed, item);
@@ -63,7 +65,7 @@ void Manager::changeMob(id_ptr_on<IMob>& i)
     {
         thisMob->onMobControl = true;
         thisMob->thisMobControl = true;
-        IMainItem::map->centerFromTo(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
+        GetMapMaster()->centerFromTo(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
             castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy());
         thisMob->InitGUI();
     }
@@ -87,7 +89,7 @@ void Manager::UpdateVisible()
 {
     visiblePoint->clear();
     visiblePoint = 
-        map->losf.calculateVisisble(visiblePoint, 
+        GetMapMaster()->losf.calculateVisisble(visiblePoint, 
             castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
             castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy(),
             castTo<CubeTile>(thisMob->GetOwner().ret_item())->posz());
@@ -95,7 +97,7 @@ void Manager::UpdateVisible()
 
 void Manager::process()
 {
-    map->numOfPathfind = 0;
+    GetMapMaster()->numOfPathfind = 0;
     SDL_Color color = {255, 255, 255, 0};
 
     int begin_of_process;
@@ -120,14 +122,14 @@ void Manager::process()
         {
             numOfDeer = 0;
             begin_of_process = SDL_GetTicks();
-            IMainItem::fabric->foreachProcess();
-            IMainItem::fabric->Sync();
+            GetItemFabric()->foreachProcess();
+            GetItemFabric()->Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
         }
          
         if (!NODRAW)
         {
-            map->Draw();
+            GetMapMaster()->Draw();
             FabricProcesser::Get()->process();
         }
 
@@ -149,7 +151,7 @@ void Manager::process()
             fps = 0;
           
 
-            map->numOfPathfind = 0;
+            GetMapMaster()->numOfPathfind = 0;
         }
         ++fps;
         if(delay > 0) 
@@ -214,7 +216,7 @@ void Manager::processInput()
             }
             if(event.type == SDL_MOUSEBUTTONDOWN)
             {
-                auto item = map->click(event.button.x, event.button.y);
+                auto item = GetMapMaster()->click(event.button.x, event.button.y);
                 if (item.ret_id())
                     last_touch = item->name;
                 PlaySound("click.ogx");
@@ -247,19 +249,19 @@ void Manager::processInput()
         if(keys[SDLK_F5])
         {
             int locatime = SDL_GetTicks();
-            IMainItem::fabric->saveMap("clientmap.map");
+            GetItemFabric()->saveMap("clientmap.map");
             SYSTEM_STREAM << "Map saved in "<< (SDL_GetTicks() - locatime) * 1.0 / 1000 << " second" << std::endl;
         }
         if(keys[SDLK_F6])
         {
             int locatime = SDL_GetTicks();
-            IMainItem::fabric->clearMap();
-            IMainItem::fabric->loadMap("clientmap.map");
+            GetItemFabric()->clearMap();
+            GetItemFabric()->loadMap("clientmap.map");
             SYSTEM_STREAM << "Map load in " << (SDL_GetTicks() - locatime) * 1.0 / 1000 << " second" << std::endl;
         }
         if(keys[SDLK_h])
         {
-            SYSTEM_STREAM << "World's hash: " << IMainItem::fabric->hash_all() << std::endl; 
+            SYSTEM_STREAM << "World's hash: " << GetItemFabric()->hash_all() << std::endl; 
         }
     }
 
@@ -288,54 +290,38 @@ void Manager::processInput()
 
 void Manager::initWorld()
 {
-    mob_position::set_mng(this);
-
     tick_recv = 0;
     isMove = 0;
-    Uint32 rmask, gmask, bmask, amask;
-    SetMasks(&rmask, &gmask, &bmask, &amask);
-
-    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0)
-    { 
-        SYSTEM_STREAM << "Unable to init SDL: " << SDL_GetError() << std::endl; 
-        SDL_Delay(10000);
-        return;
+    
+    if (!InitSDL())
+    {
+        SYSTEM_STREAM << "Fail SDL load" << std::endl;
     }
-    atexit(SDL_Quit);
-    SYSTEM_STREAM << "Begin TTF init\n";
-    SYSTEM_STREAM << TTF_Init() << " - return\n";
-    SYSTEM_STREAM << " End TTF init\n";
-    atexit(TTF_Quit);
-    SYSTEM_STREAM << "Begin NET init\n";
-    SYSTEM_STREAM << SDLNet_Init() << " - return\n";
-    SYSTEM_STREAM << " End NET init\n";
-    atexit(SDLNet_Quit);
-    IMainItem::fabric = new ItemFabric;
-    map = new MapMaster;
     SDL_WM_SetCaption(Debug::GetUniqueName().c_str(), Debug::GetUniqueName().c_str());
+
+    SetItemFabric(new ItemFabric);
+    SetMapMaster(new MapMaster);
     if (!NODRAW)
         SetScreen(new Screen(sizeW, sizeH));
+    SetManager(this);  
+    mob_position::set_mng(this);
 
-    map->loManager = 0;
-    IMainItem::map = map;
-    IMainItem::mobMaster = this;
-    
-    map->mobi = this;
+    GetMapMaster()->makeTiles();
 
-    srand(SDL_GetTicks());
-    id_ptr_on<IMob> newmob;
-
-    map->makeTiles();
-
-    newmob = IMainItem::fabric->newItemOnMap<IMob>(hash("ork"), map->squares[sizeHmap / 2][sizeWmap / 2][1]);
+    auto newmob = GetItemFabric()->newItemOnMap<IMob>(
+            hash("ork"), 
+            GetMapMaster()->squares[sizeHmap / 2][sizeWmap / 2][1]);
     changeMob(newmob);
-    IMainItem::fabric->SetPlayerId(newmob.ret_id(), newmob.ret_id());
+    GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
-    auto tptr = IMainItem::fabric->newItemOnMap<IOnMapItem>(hash("Teleportator"), map->squares[sizeHmap / 2][sizeWmap / 2][1]);
+    auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
+            hash("Teleportator"), 
+            GetMapMaster()->squares[sizeHmap / 2][sizeWmap / 2][1]);
     SetCreator(tptr.ret_id());
 
-    map->makeMap();
-    thisMob->passable = 1;
+    srand(SDL_GetTicks());
+    GetMapMaster()->makeMap();
+
     LiquidHolder::LoadReaction();
 
     LoginData data;
@@ -408,6 +394,17 @@ bool Manager::isMobVisible(int posx, int posy)
         if(it->posx == posx && it->posy == posy)
             return true;
     return false;
+}
+
+Manager* manager_;
+Manager* GetManager()
+{
+    return manager_;
+}
+
+void SetManager(Manager* manager)
+{
+    manager_ = manager;
 }
 
 

@@ -1,8 +1,5 @@
 #include "sprite.h"
 
-//#include <SDL_opengl.h>
-//#include <gl\
-
 void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask)
 {
     #if SDL_BYTEORDER == SDL_BIG_ENDIAN

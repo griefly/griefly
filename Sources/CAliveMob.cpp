@@ -22,7 +22,7 @@ CAliveMob::CAliveMob()
     oxyless = 0;
 
     max_dmg = 100;
-    inside = fabric->newItem<LiquidHolder>(GetId(), hash("liquidholder"));
+    inside = GetItemFabric()->newItem<LiquidHolder>(GetId(), hash("liquidholder"));
     tick_sm = 0;
 };
 
@@ -89,18 +89,19 @@ void CAliveMob::attack_by(id_ptr_on<SmallItem> atk, int force)
 
 void CAliveMob::InitGUI()
 {
-    mobMaster->texts["Sync"].SetUpdater
+    GetManager()->texts["Sync"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << ((fabric->get_hash_last() == mobMaster->net_client->Hash()) ? "SYNC:" : "UNSYNC:") << fabric->get_hash_last();
+        ss << ((GetItemFabric()->get_hash_last() == GetManager()->net_client->Hash()) ? "SYNC:" : "UNSYNC:") 
+           << GetItemFabric()->get_hash_last();
         ss >> *str;
     }).SetSize(15).SetPlace(0, 30, 200, 50);
 }
 
 void CAliveMob::DeinitGUI()
 {
-    mobMaster->texts.Delete("Sync");
+    GetManager()->texts.Delete("Sync");
 }
 
 void CAliveMob::processGUI()
@@ -118,9 +119,9 @@ void CAliveMob::processGUI()
         //    SDL_FreeSurface(sDMG);
         //sDMG = TTF_RenderText_Blended( map->aSpr.font, ssloc.str().c_str(), color);
 
-        if (fabric->get_hash_last() == mobMaster->net_client->Hash())
-            mobMaster->texts["Sync"].SetColor(0, 255, 100);
+        if (GetItemFabric()->get_hash_last() == GetManager()->net_client->Hash())
+            GetManager()->texts["Sync"].SetColor(0, 255, 100);
         else
-            mobMaster->texts["Sync"].SetColor(255, 160, 0);
+            GetManager()->texts["Sync"].SetColor(255, 160, 0);
     }
 }
