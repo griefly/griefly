@@ -1,7 +1,9 @@
-#include "MapClass.h"
 #include "Mob.h"
+
+#include "MapClass.h"
 #include "LiquidHolder.h"
 #include "Turf.h"
+#include "Text.h"
 
 #include "mob_position.h"
 
@@ -17,6 +19,7 @@
 #include "sound.h"
 
 #include "SdlInit.h"
+#include "MobInt.h"
 
 int ping_send;
 

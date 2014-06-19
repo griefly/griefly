@@ -1,5 +1,6 @@
 #include "MainInt.h"
 #include "MapClass.h"
+#include "ItemFabric.h"
 
 std::hash_map<unsigned int, item_creator>* itemList()
 {

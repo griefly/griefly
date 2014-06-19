@@ -1,4 +1,5 @@
 #pragma once
+
 #include <hash_map>
 #include <strstream>
 #include <fstream>
@@ -40,6 +41,8 @@ public:
     };
 };
 
+IMainItem* GetFromIdTable(size_t id);
+
 template<typename T>
 class id_ptr_on
 {
@@ -56,27 +59,27 @@ public:
     }
     T* operator*()
     {
-        if(0 == GetItemFabric()->idTable()[id])
+        if(0 == GetFromIdTable(id))
             return item = 0;
-        return item = castTo<T>(GetItemFabric()->idTable()[id]);
+        return item = castTo<T>(GetFromIdTable(id));
     }
     const T* operator*() const
     {
-        if(0 == GetItemFabric()->idTable()[id])
+        if(0 == GetFromIdTable(id))
             return 0;
-        return castTo<T>(GetItemFabric()->idTable()[id]);
+        return castTo<T>(GetFromIdTable(id));
     }
     T* operator->()
     {
-        if(0 == GetItemFabric()->idTable()[id])
+        if(0 == GetFromIdTable(id))
             return item = 0;
-        return item = castTo<T>(GetItemFabric()->idTable()[id]);
+        return item = castTo<T>(GetFromIdTable(id));
     }
     const T* operator->() const
     {
-        if(0 == GetItemFabric()->idTable()[id])
+        if(0 == GetFromIdTable(id))
             return 0;
-        return castTo<T>(GetItemFabric()->idTable()[id]);
+        return castTo<T>(GetFromIdTable(id));
     }
     id_ptr_on& operator=(size_t id_new)
     {
@@ -109,7 +112,7 @@ public:
     }
     T* ret_item()
     {
-        item = castTo<T>(GetItemFabric()->idTable()[id]); 
+        item = castTo<T>(GetFromIdTable(id)); 
         return item;
     }
 private:

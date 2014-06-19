@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DrawInt.h"
+#include "GLSprite.h"
 
 class Liquid: public IDraw
 {

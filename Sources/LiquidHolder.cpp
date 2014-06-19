@@ -1,9 +1,9 @@
-#include "LiquidHolder.h"
 #include <fstream>
 #include <map>
-#include "MapClass.h"
 
-//itemAdder<LiquidHolder> adder;
+#include "LiquidHolder.h"
+#include "MapClass.h"
+#include "ItemFabric.h"
 
 std::vector<Reaction> LiquidHolder::reactList;
 

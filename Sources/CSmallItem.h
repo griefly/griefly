@@ -1,8 +1,7 @@
-#ifndef SmallItem_H
-#define SmallItem_H
+#pragma once
 
 #include "OnMapInt.h"
-
+#include "ItemFabric.h"
 #include "LiquidHolder.h"
 
 class SmallItem : public IOnMapItem
@@ -81,5 +80,3 @@ public:
     CWeed();
 };
 ADD_TO_TYPELIST(CWeed);
-
-#endif

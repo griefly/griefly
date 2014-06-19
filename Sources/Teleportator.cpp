@@ -1,7 +1,8 @@
 #include "Teleportator.h"
 
+#include "MobInt.h"
 #include "MapClass.h"
-
+#include "ItemFabric.h"
 #include "MagicStrings.h"
 
 void Teleportator::processGUImsg(const Message& msg)

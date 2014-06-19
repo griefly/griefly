@@ -3,6 +3,7 @@
 #include "MapClass.h"
 #include "Turf.h"
 #include "sync_random.h"
+#include "CSmallItem.h"
 
 Kivsjak::Kivsjak()
 {

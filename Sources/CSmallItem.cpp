@@ -2,6 +2,7 @@
 #include "CSmallItem.h"
 #include "MapClass.h"
 #include "sync_random.h"
+#include "ItemFabric.h"
 
 CMeat::CMeat()
 {

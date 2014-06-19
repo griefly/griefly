@@ -1,7 +1,6 @@
 #include "DrawInt.h"
 #include "MapClass.h"
-
-#include <SDL.h>
+#include "ItemFabric.h"
 
 IDraw::IDraw()
 {

@@ -1,6 +1,8 @@
 #include "FireEffect.h"
-#include "MapClass.h"
+
 #include <assert.h>
+
+#include "MapClass.h"
 
 Fire::Fire()
 {

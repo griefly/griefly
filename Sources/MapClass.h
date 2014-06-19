@@ -1,34 +1,15 @@
 #pragma once
 
-#include <stdlib.h>
+#include <list>
 
-#include "Mob.h"
-
-class CubeTile;
-
-struct point
-{
-    int posx;
-    int posy;
-    int posz;
-};
-
-struct square
-{
-    bool inOpenList;
-    bool inCloseList;
-    int cost;
-    int realcost;
-    int posx;
-    int posy;
-    square* before;
-};
+#include "HelperStructers.h"
+#include "constheader.h"
+#include "TileInt.h"
 
 class CPathFinder
 {
 public:
     std::list<Dir> calculatePath(int fromPosx, int fromPosy, int toPosx, int toPosy, int toPosz = 0);
-    MapMaster* map;
 private:
     std::list<square*> openList;
     square squares[sizeHmap][sizeWmap];
@@ -46,19 +27,11 @@ class LOSfinder
 {
 public:
     std::list<point>* calculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0);
-    MapMaster* map;
 private:
     //bool LOSSquare[sizeHsq * 2 + 1][sizeWsq * 2 + 1];
     void clearLOS();
     std::list<point> worklist;
 
-};
-
-struct idpoint
-{
-    int posx;
-    int posy;
-    int find_hash;
 };
 
 class MapMaster

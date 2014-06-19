@@ -2,19 +2,9 @@
 
 #include <list>
 
-#include "OnMapInt.h"
-#include "Testmob.h"
-#include "Firebullet.h"
-#include "MonstrClass.h"
-#include "CAliveMob.h"
-#include "CSmallItem.h"
+#include "MobInt.h"
 
-#include "Text.h"
-
-class NetClient;
-class MapMaster;
-
-struct point;
+#include "HelperStructers.h"
 
 class Manager
 {

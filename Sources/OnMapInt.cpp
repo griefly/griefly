@@ -3,7 +3,7 @@
 #include "OnMapInt.h"
 #include "MapClass.h"
 #include "MobInt.h"
-
+#include "Mob.h"
 #include "MoveEffect.h"
 #include "TileInt.h"
 

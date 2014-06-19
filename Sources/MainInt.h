@@ -3,9 +3,7 @@
 #include "FastIsType.h"
 #include "constheader.h"
 #include "Idptr.h"
-#include "ASpritesClass.h"
 #include "hashes.h"
-#include "ItemFabric.h"
 
 class IOnMapItem;
 

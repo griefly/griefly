@@ -4,11 +4,14 @@
 
 #include "CAliveMob.h"
 #include "MapClass.h"
+#include "Text.h"
 
+
+#include "CSmallItem.h"
 #include "LiquidHolder.h"
 #include "ASpritesClass.h"
 #include "sprite.h"
-
+#include "ItemFabric.h"
 #include "FireEffect.h"
 #include "sync_random.h"
 

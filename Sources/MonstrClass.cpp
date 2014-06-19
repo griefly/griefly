@@ -1,11 +1,8 @@
-//#include "MonstrClass.h"
+#include "MonstrClass.h"
 #include "MapClass.h"
 #include "Ork.h"
 #include "sync_random.h"
-
-//itemAdder<CMonstr> adder; 
-
-// TODO: delThis().
+#include "CSmallItem.h"
 
 void CMonstr::aaMind()
 {

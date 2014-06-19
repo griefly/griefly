@@ -1,12 +1,9 @@
 #include "Ork.h"
-//#include "MonstrClass.h"
 #include "MapClass.h"
 
 #include "LiquidHolder.h"
-
+#include "CSmallItem.h"
 #include "Turf.h"
-
-//itemAdder<COrk> adder; 
 
 COrk::COrk()
 {

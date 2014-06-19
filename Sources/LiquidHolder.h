@@ -1,27 +1,7 @@
 #pragma once
 #include "MainInt.h"
 #include "Liquid.h"
-
-struct Reaction
-{
-    unsigned int one;
-    unsigned int oneamount;
-
-    unsigned int two;
-    unsigned int twoamount;
-
-    unsigned int three;
-    unsigned int threeamount;
-
-    unsigned int result;
-    unsigned int resultamount;
-};
-
-struct HashAmount
-{
-    unsigned int hash;
-    unsigned int amount;
-};
+#include "HelperStructers.h"
 
 std::iostream& operator<<(std::iostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids);
 std::iostream& operator>>(std::iostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids);

@@ -4,6 +4,9 @@
 #include "MainInt.h"
 
 #include "Mob.h"
+#include "NetClientImpl.h"
+
+#include "ItemFabric.h"
 
 const char* const DEFAULT_FOLDER = "Saves/";
 const char* const SAVE_WITHOUT_NUMBER = "save";

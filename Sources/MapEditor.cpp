@@ -6,6 +6,7 @@
 #include "SdlInit.h"
 #include "ItemFabric.h"
 #include "MapClass.h"
+#include "Text.h"
 
 MapEditor::MapEditor()
 {

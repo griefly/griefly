@@ -1,5 +1,4 @@
-#ifndef MONSTRCLASS_H
-#define MONSTRCLASS_H
+#pragma once
 
 #include "CAliveMob.h"
 
@@ -16,5 +15,3 @@ public:
     CMonstr();
 };
 ADD_TO_TYPELIST(CMonstr);
-
-#endif

@@ -23,6 +23,7 @@
 #include "Debug.h"
 #include "Params.h"
 #include "MapEditor.h"
+#include "Mob.h"
 
 int main(int argc, char *argv[])
 {   

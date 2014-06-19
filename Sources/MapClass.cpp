@@ -7,8 +7,9 @@
 #include "MapClass.h"
 #include "MainInt.h"
 #include "TileInt.h"
-
+#include "Mob.h"
 #include "mob_position.h"
+#include "ItemFabric.h"
 
 void MapMaster::Draw()
 {
@@ -105,8 +106,6 @@ void MapMaster::centerFromTo(int nowPosx, int nowPosy, int nowPosz)
 MapMaster::MapMaster()
 {
     ms_last_draw = 0;
-    pathf.map = this;
-    losf.map = this;  
 };
 
 bool MapMaster::canDraw()
@@ -340,7 +339,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
 {
     //printf("%d %d huj\n", posx, posy);
 
-    if(!(squares[posx + 1][posy].inCloseList) && map->isPassable(posx + 1, posy))
+    if(!(squares[posx + 1][posy].inCloseList) && GetMapMaster()->isPassable(posx + 1, posy))
     {
         if(squares[posx + 1][posy].inOpenList)
         {
@@ -363,7 +362,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
         }
     }
     //printf("Wtf!\n");
-    if(!squares[posx - 1][posy].inCloseList && map->isPassable(posx - 1, posy))
+    if(!squares[posx - 1][posy].inCloseList && GetMapMaster()->isPassable(posx - 1, posy))
     {
         if(squares[posx - 1][posy].inOpenList)
         {
@@ -385,7 +384,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
             addToOpen(posx - 1, posy);
         }
     }
-    if(!squares[posx][posy + 1].inCloseList && map->isPassable(posx, posy + 1))
+    if(!squares[posx][posy + 1].inCloseList && GetMapMaster()->isPassable(posx, posy + 1))
     {
         if(squares[posx][posy + 1].inOpenList)
         {
@@ -407,7 +406,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
             addToOpen(posx, posy + 1);
         }
     }
-    if(!squares[posx][posy - 1].inCloseList && map->isPassable(posx, posy - 1))
+    if(!squares[posx][posy - 1].inCloseList && GetMapMaster()->isPassable(posx, posy - 1))
     {
         if(squares[posx][posy - 1].inOpenList)
         {
@@ -539,7 +538,7 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     auto itr = worklist.begin();
     while(itr != worklist.end())
     {
-        if(map->isVisible(itr->posx, itr->posy, itr->posz) 
+        if(GetMapMaster()->isVisible(itr->posx, itr->posy, itr->posz) 
             && itr->posx != posx - sizeHsq && itr->posx != posx + sizeHsq
             && itr->posy != posy - sizeWsq && itr->posy != posy + sizeWsq
             && !(itr->posy <= 0 || itr->posy >= (sizeHmap - 1) || itr->posx <= 0 || itr->posx >= sizeWmap - 1))

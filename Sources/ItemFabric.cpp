@@ -1,6 +1,6 @@
 #include "MainInt.h"
 #include "OnMapInt.h"
-
+#include "Mob.h"
 #include "ItemFabric.h"
 #include "MapClass.h"
 #include "sync_random.h"

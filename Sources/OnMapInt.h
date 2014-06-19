@@ -1,7 +1,11 @@
 #pragma once
+
 #include "OnMapBaseInt.h"
+#include "GLSprite.h"
+#include "ASpritesClass.h"
+#include "HelperStructers.h"
+
 class SmallItem;
-struct HashAmount;
 
 // TODO: make IMovable
 class IOnMapItem: public IOnMapBase
