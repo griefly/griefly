@@ -98,3 +98,13 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
         SYSTEM_STREAM << glGetError() << std::endl; 
 
 }
+
+Screen* screen = nullptr;
+void SetScreen(Screen* scr)
+{
+    screen = scr;
+}
+Screen* GetScreen()
+{
+    return screen;
+}

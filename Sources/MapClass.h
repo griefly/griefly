@@ -75,7 +75,6 @@ public:
     // typedef std::list<id_ptr_on<IOnMapItem>> SqType;
     typedef id_ptr_on<CubeTile> SqType;
     SqType squares[sizeHmap][sizeWmap][sizeDmap];
-    Screen* screen;
     // Sync stuff
    
     //void ForEachInArea(id_ptr_on<Tile> center, int h_size, int w_size, int d_size,

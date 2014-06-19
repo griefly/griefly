@@ -75,8 +75,6 @@ public:
 
     TextPainter texts;
 
-    Screen* gl_screen;
-
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:
     std::string adrs_;

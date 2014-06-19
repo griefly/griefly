@@ -127,9 +127,9 @@ void TextPainter::Process()
         if (y_dr == -1)
             y_dr = y_ul + image->GetYSize();
 
-        IMainItem::map->screen->Draw(image, 
-                                     x_ul, y_ul,
-                                     x_dr, y_dr);
+        GetScreen()->Draw(image, 
+                          x_ul, y_ul,
+                          x_dr, y_dr);
     }
 }
 

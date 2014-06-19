@@ -25,3 +25,6 @@ private:
     bool fail_;
     SDL_Surface* screen_;
 };
+
+Screen* GetScreen();
+void SetScreen(Screen* scr);

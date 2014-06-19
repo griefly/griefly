@@ -79,6 +79,7 @@
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainInt.cpp" />
     <ClCompile Include="Sources\MapClass.cpp" />
+    <ClCompile Include="Sources\MapEditor.cpp" />
     <ClCompile Include="Sources\Message.cpp" />
     <ClCompile Include="Sources\Mob.cpp" />
     <ClCompile Include="Sources\MobInt.cpp" />

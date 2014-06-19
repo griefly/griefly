@@ -157,7 +157,7 @@ void Manager::process()
         else 
             delay = 0;
 
-        gl_screen->Swap();
+        GetScreen()->Swap();
         //++MAIN_TICK;
         process_in = false;
         if (net_client->Process() == false)
@@ -225,7 +225,7 @@ void Manager::processInput()
 
                 int new_w = max_scale * 4;
                 int new_h = max_scale * 3;
-                gl_screen->ResetScreen(new_w, new_h, 32, SDL_OPENGL | SDL_RESIZABLE);
+                GetScreen()->ResetScreen(new_w, new_h, 32, SDL_OPENGL | SDL_RESIZABLE);
             }
         }
 
@@ -314,11 +314,8 @@ void Manager::initWorld()
     map = new MapMaster;
     SDL_WM_SetCaption(Debug::GetUniqueName().c_str(), Debug::GetUniqueName().c_str());
     if (!NODRAW)
-        gl_screen = new Screen(sizeW, sizeH);
+        SetScreen(new Screen(sizeW, sizeH));
 
-
-
-    map->screen = gl_screen;
     map->loManager = 0;
     IMainItem::map = map;
     IMainItem::mobMaster = this;

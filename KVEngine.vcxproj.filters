@@ -323,5 +323,8 @@
     <ClCompile Include="Sources\Params.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\MapEditor.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

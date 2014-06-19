@@ -78,18 +78,18 @@ void IOnMapItem::processImage(DrawType type)
             spr = GetSprite();
         }
     } 
-    mobMaster->gl_screen->Draw(spr, 
-                               GetDrawX() + mob_position::get_shift_x(), 
-                               GetDrawY() + mob_position::get_shift_y(), 
-                               imageStateW, imageStateH);
+    GetScreen()->Draw(spr, 
+                      GetDrawX() + mob_position::get_shift_x(), 
+                      GetDrawY() + mob_position::get_shift_y(), 
+                      imageStateW, imageStateH);
     if (is_need_overlay)
     {
         if (!top_overlay)
                 top_overlay = map->aSpr.returnSpr("icons/top_overlay.png");
-        mobMaster->gl_screen->Draw(top_overlay, 
-                                    GetDrawX() + mob_position::get_shift_x(), 
-                                    GetDrawY() + mob_position::get_shift_y(), 
-                                    0, 0);
+        GetScreen()->Draw(top_overlay, 
+                          GetDrawX() + mob_position::get_shift_x(), 
+                          GetDrawY() + mob_position::get_shift_y(), 
+                          0, 0);
     }
 };
 
