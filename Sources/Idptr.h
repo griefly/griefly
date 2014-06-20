@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "Macroses.h"
+#include "Idptr.h"
 
 class IMainItem;
 class MapMaster;

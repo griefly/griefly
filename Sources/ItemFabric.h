@@ -3,15 +3,7 @@
 #include <vector>
 
 #include "Idptr.h"
-
-class IMainItem;
-class IOnMapItem;
-class IOnMapBase;
-
-class ItemFabric;
-
-ItemFabric* GetItemFabric();
-void SetItemFabric(ItemFabric* item_fabric);
+#include "OnMapBaseInt.h"
 
 class ItemFabric
 {
@@ -140,3 +132,6 @@ private:
     std::map<size_t, size_t> players_table_;
 
 };
+
+ItemFabric* GetItemFabric();
+void SetItemFabric(ItemFabric* item_fabric);
