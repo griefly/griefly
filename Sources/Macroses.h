@@ -64,36 +64,39 @@ namespace Private                                                               
 
 class NotLoadItem {} const nouse;
 
+template<int>
+struct FakeParamClass {};
+
 #define DECLARE_SAVED(thisclass, masterclass)  \
         static const int THIS_COUNTER = __COUNTER__;           \
-template<int num> __forceinline void KV_SAVE_FUNC(std::stringstream& file){};     \
-template<int num> __forceinline void KV_LOAD_FUNC(std::stringstream& file){};     \
-template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash){return hash;};     \
+template<int num> __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<num>){};     \
+template<int num> __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<num>){};     \
+template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash, FakeParamClass<num>){return hash;};     \
         virtual bool saveSelf(std::stringstream& file)                 \
         {                                                           \
         static_assert(std::is_same<decltype(this), thisclass*>::value && std::is_base_of<masterclass, thisclass>::value, #thisclass " error DECLARE_SAVED");\
             masterclass ::saveSelf(file);                           \
-            KV_SAVE_FUNC<THIS_COUNTER + 1>(file);                                  \
+            KV_SAVE_FUNC(file, FakeParamClass<THIS_COUNTER + 1>());    \
             return true;                                            \
         };                                                          \
         virtual bool loadSelf(std::stringstream& file)                 \
         {                                                           \
             masterclass ::loadSelf(file);                           \
-            KV_LOAD_FUNC<THIS_COUNTER + 1>(file);                                  \
+            KV_LOAD_FUNC(file, FakeParamClass<THIS_COUNTER + 1>()); \
             return true;                                            \
         };                                                          \
         virtual unsigned int hashSelf()                 \
         {                                                           \
             return                                                  \
-            KV_HASH_FUNC<THIS_COUNTER + 1>(masterclass ::hashSelf());                                            \
+            KV_HASH_FUNC(masterclass ::hashSelf(), FakeParamClass<THIS_COUNTER + 1>());\
         }; \
         thisclass (NotLoadItem) : masterclass(nouse) {}
 
-#define KV_SAVEBLE(name) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; template<> __forceinline void KV_SAVE_FUNC<Z_Impl##name :: name##counter>(std::stringstream& file){file << " "; file << name; file << " "; KV_SAVE_FUNC<Z_Impl##name :: name##counter + 1>(file);} template<> __forceinline void KV_LOAD_FUNC<Z_Impl##name :: name##counter>(std::stringstream& file){file >> name; KV_LOAD_FUNC<Z_Impl##name :: name##counter + 1>(file);} template<> __forceinline unsigned int KV_HASH_FUNC<Z_Impl##name :: name##counter>(unsigned int h){return hash(name) + KV_HASH_FUNC<Z_Impl##name :: name##counter + 1>(h);};
+#define KV_SAVEBLE(name) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; template<> __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){file << " "; file << name; file << " "; KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} template<> __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){file >> name; KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} template<> __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##name :: name##counter>){return hash(name) + KV_HASH_FUNC(h, FakeParamClass<Z_Impl##name :: name##counter + 1>());};
 
-#define KV_ON_LOAD(name, value) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; template<> __forceinline void KV_SAVE_FUNC<Z_Impl##name :: name##counter>(std::stringstream& file){KV_SAVE_FUNC<Z_Impl##name ::name##counter + 1>(file);} template<> __forceinline void KV_LOAD_FUNC<Z_Impl##name ::name##counter>(std::stringstream& file){name = value; KV_LOAD_FUNC<Z_Impl##name :: name##counter + 1>(file);} template<> __forceinline unsigned int KV_HASH_FUNC<Z_Impl##name :: name##counter>(unsigned int h){return KV_HASH_FUNC<Z_Impl##name :: name##counter + 1>(h);};
+#define KV_ON_LOAD(name, value) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; template<> __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##name ::name##counter + 1>());} template<> __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name ::name##counter>){name = value; KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} template<> __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##name :: name##counter>){return KV_HASH_FUNC(h, FakeParamClass<Z_Impl##name :: name##counter + 1>());};
 
-#define KV_ON_LOAD_CALL(function) struct Z_Impl##function { static const int function##counter = __COUNTER__;}; template<> __forceinline void KV_SAVE_FUNC<Z_Impl##function :: function##counter>(std::stringstream& file){KV_SAVE_FUNC<Z_Impl##function :: function##counter + 1>(file);} template<> __forceinline void KV_LOAD_FUNC<Z_Impl##function ::function##counter>(std::stringstream& file){ function(); KV_LOAD_FUNC<Z_Impl##function :: function##counter + 1>(file);} template<> __forceinline unsigned int KV_HASH_FUNC<Z_Impl##function :: function##counter>(unsigned int h){return KV_HASH_FUNC<Z_Impl##function :: function##counter + 1>(h);};
+#define KV_ON_LOAD_CALL(function) struct Z_Impl##function { static const int function##counter = __COUNTER__;}; template<> __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##function :: function##counter>){KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##function :: function##counter + 1>());} template<> __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##function ::function##counter>){ function(); KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##function :: function##counter + 1>());} template<> __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##function :: function##counter>){return KV_HASH_FUNC(h, FakeParamClass<Z_Impl##function :: function##counter + 1>());};
 
 #define DECLARE_REAL_TYPE_ITEM \
     static int RealType;       \
