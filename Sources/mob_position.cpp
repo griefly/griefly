@@ -3,6 +3,7 @@
 #include "MapEditor.h"
 #include "Mob.h"
 #include "constheader.h"
+#include "TileInt.h"
 
 namespace mob_position 
 {
@@ -18,4 +19,11 @@ namespace mob_position
             return GetManager()->thisMob->GetDrawY() * (-1) + (sizeH / 2) - 16;
         return GetMapEditor()->GetViewerY() * 32 * (-1) + (sizeH / 2) - 16;
     }
+    int get_mob_z()
+    {
+        if (GetManager())
+            return castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posz();
+        return GetMapEditor()->GetViewerZ();
+    }
+
 }

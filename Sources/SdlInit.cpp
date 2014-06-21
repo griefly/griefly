@@ -37,6 +37,5 @@ bool InitSDL()
         return false;
     }
     atexit(SDLNet_Quit);
-
     return true;
 }

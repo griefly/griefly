@@ -62,6 +62,7 @@
     <ClInclude Include="Sources\TileInt.h" />
     <ClInclude Include="Sources\Turf.h" />
     <ClInclude Include="Sources\TypelistOfItems.h" />
+    <ClInclude Include="Sources\visible_points.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="Sources\TileInt.cpp" />
     <ClCompile Include="Sources\Turf.cpp" />
     <ClCompile Include="Sources\TypelistOfItems.cpp" />
+    <ClCompile Include="Sources\visible_points.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{25E37124-9F37-4206-9D55-DE37D2C349DE}</ProjectGuid>

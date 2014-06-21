@@ -8,6 +8,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerWorkingDirectory>.\Release</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>ip=127.0.0.1 -auto name=debug</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>ip=127.0.0.1 -auto name=debug -editor</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

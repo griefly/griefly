@@ -10,21 +10,22 @@
 #include "Mob.h"
 #include "mob_position.h"
 #include "ItemFabric.h"
+#include "visible_points.h"
 
 void MapMaster::Draw()
 {
     if(!canDraw())
         return;
-    if(!GetManager()->visiblePoint) 
+    if(!GetVisible()) 
         return;
     glClear(GL_COLOR_BUFFER_BIT);
-    int z_level_m = castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posz();
+    int z_level_m = mob_position::get_mob_z();
     for (int z_level = 0; z_level < sizeDmap; z_level++) 
     {
         for(int i = 0; i < MAX_LEVEL; ++i)
         {
-            auto it2 = GetManager()->visiblePoint->begin();
-            while(it2 != GetManager()->visiblePoint->end())
+            auto it2 = GetVisible()->begin();
+            while(it2 != GetVisible()->end())
             {   
                 if(checkOutBorder(it2->posx, it2->posy))
                     if (it2->posz == z_level)
@@ -37,8 +38,8 @@ void MapMaster::Draw()
                 ++it2;
             }
         } 
-        auto it2 = GetManager()->visiblePoint->begin();
-        while(it2 != GetManager()->visiblePoint->end())
+        auto it2 = GetVisible()->begin();
+        while(it2 != GetVisible()->end())
         {   
             if(checkOutBorder(it2->posx, it2->posy))
                 if (it2->posz == z_level)
@@ -217,7 +218,7 @@ void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy, int p
 
 id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
 {
-    if(!GetManager()->visiblePoint) 
+    if(!GetVisible()) 
         return 0;
 
     // Due to resize emulate some shit

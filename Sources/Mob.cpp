@@ -25,7 +25,6 @@ int ping_send;
 
 void Manager::checkMove(Dir direct)
 {
-    //cautLastItem(direct);
     moveEach(direct);
 };
 
@@ -156,13 +155,8 @@ void Manager::process()
             GetMapMaster()->numOfPathfind = 0;
         }
         ++fps;
-        if(delay > 0) 
-            ;//SDL_Delay(delay);
-        else 
-            delay = 0;
 
         GetScreen()->Swap();
-        //++MAIN_TICK;
         process_in = false;
         if (NetClient::GetNetClient()->Process() == false)
         {
@@ -171,8 +165,6 @@ void Manager::process()
             break;
         }
     }
-    TTF_Quit();
-    SDL_Quit();
 };
 
 void Manager::checkMoveMob()
