@@ -2,13 +2,6 @@
 
 #include <vector>
 
-template<typename TEffect>
-TEffect* getEffectOf()
-{
-    static EffectFabricOf<TEffect> fabric;
-    return fabric.Get();
-}
-
 class IFabric
 {
 public:
@@ -46,7 +39,11 @@ public:
             if (effects_[i]->getState() == TEffect::PROCESS)
                 effects_[i]->process();
     }
-    friend TEffect* getEffectOf<TEffect>();
+    static TEffect* getEffectOf()
+    {
+        static EffectFabricOf<TEffect> fabric;
+        return fabric.Get();
+    }
 private:
     EffectFabricOf()
     {

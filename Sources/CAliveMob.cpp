@@ -38,7 +38,7 @@ void CAliveMob::process()
 void CAliveMob::ignite(int force)
 {
     SYSTEM_STREAM << "Ignite\n";
-    Fire* eff = getEffectOf<Fire>();
+    Fire* eff = EffectFabricOf<Fire>::getEffectOf();
     SYSTEM_STREAM << GetId() << "ignite\n";
     SYSTEM_STREAM << eff << "\n";
     eff->master = GetId();

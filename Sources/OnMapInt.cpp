@@ -158,7 +158,7 @@ bool IOnMapItem::mainMove()
 
     if(new_owner->IsVisibleByPlayer())
     {
-        Move* eff = getEffectOf<Move>();
+        Move* eff = EffectFabricOf<Move>::getEffectOf();
         eff->Init(TITLE_SIZE, dMove, pixSpeed, GetId(), true);
         eff->Start();
     }

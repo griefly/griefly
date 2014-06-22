@@ -21,6 +21,8 @@
 #include "SdlInit.h"
 #include "MobInt.h"
 
+#include <memory>
+
 int ping_send;
 
 void Manager::checkMove(Dir direct)
@@ -51,7 +53,7 @@ void Manager::undoCenterMove(Dir direct)
             {
                 GetMapMaster()->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
                 {
-                    Move* eff = getEffectOf<Move>();
+                    Move* eff = EffectFabricOf<Move>::getEffectOf();
                     eff->Init(TITLE_SIZE, direct, thisMob->pixSpeed, item);
                     eff->Start();
                 });
