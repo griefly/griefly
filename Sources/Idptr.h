@@ -4,7 +4,13 @@
 #include <strstream>
 #include <fstream>
 
+#if defined(__linux__)
+#include <ext/hash_map>
+namespace std { using namespace __gnu_cxx; }
+#endif // linux
+
 #include "Macroses.h"
+#include "FastIsType.h"
 #include "Idptr.h"
 
 class IMainItem;

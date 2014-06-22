@@ -1,4 +1,7 @@
 #pragma once
+
+#include <list>
+
 #include "MainInt.h"
 #include "Liquid.h"
 #include "HelperStructers.h"

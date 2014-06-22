@@ -1,6 +1,12 @@
 #include <string>
-#include <hash_map>
+//#include <hash_map>
+#include <unordered_map>
 #include <vector>
+
+#if defined(__linux__)
+//#include <ext/unordered_map>
+namespace std { using namespace __gnu_cxx; }
+#endif // linux
 
 #include <SFML/Audio.hpp>
 
@@ -25,7 +31,7 @@ private:
         }
         return holder_[name];
     }
-    std::hash_map<std::string, sf::SoundBuffer*> holder_;
+    std::unordered_map<std::string, sf::SoundBuffer*> holder_;
 };
 
 SoundManager& GetSoundManager();

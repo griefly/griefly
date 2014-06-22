@@ -1,6 +1,6 @@
 #pragma once
 
-#include "calivemob.h"
+#include "CAliveMob.h"
 
 #include "sound.h"
 

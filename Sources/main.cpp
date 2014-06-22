@@ -29,20 +29,20 @@ int main(int argc, char *argv[])
 {   
     GetParamsHolder().ParseParams(argc, argv);
 
-    if (!GetParamsHolder().GetParam<bool>("-editor"))
+    if (!GetParamsHolder().GetParamBool("-editor"))
     {
-        if (GetParamsHolder().GetParam<bool>("-nodraw"))
+        if (GetParamsHolder().GetParamBool("-nodraw"))
             NODRAW = true; 
     
         bool is_auto_p = false;
-        if (GetParamsHolder().GetParam<bool>("-auto"))
+        if (GetParamsHolder().GetParamBool("-auto"))
             is_auto_p = true;
 
         std::string adrs = "127.0.0.1";
-        if (GetParamsHolder().GetParam<bool>("ip"))
+        if (GetParamsHolder().GetParamBool("ip"))
             adrs = GetParamsHolder().GetParam<std::string>("ip");
 
-        if (GetParamsHolder().GetParam<bool>("name"))
+        if (GetParamsHolder().GetParamBool("name"))
             Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
 
         Manager man(adrs);

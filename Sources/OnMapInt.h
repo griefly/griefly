@@ -1,5 +1,7 @@
 #pragma once
 
+#include <list>
+
 #include "OnMapBaseInt.h"
 #include "GLSprite.h"
 #include "ASpritesClass.h"

@@ -3,3 +3,7 @@ Unsorted
 ipch
 /KVEngine.sdf
 /KVEngine.suo
+*.o
+*.log
+/knv
+/Release/knv

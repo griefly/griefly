@@ -15,6 +15,10 @@
 
 #define CONTAC(a, b) a##b
 
+#if defined(__linux__)
+#define __forceinline __attribute__((always_inline))
+#endif
+
 #include <Typelist.h>
 
 namespace Private

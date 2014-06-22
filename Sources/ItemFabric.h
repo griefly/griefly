@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 #include "Idptr.h"
 #include "OnMapBaseInt.h"
@@ -46,7 +47,7 @@ public:
     id_ptr_on<T> newItemOnMap(unsigned int hash, id_ptr_on<IOnMapBase> owner, size_t id_new = 0)
     {
         
-        static_assert(std::tr1::is_same<IOnMapItem, T>::value || std::tr1::is_base_of<IOnMapItem, T>::value, "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapItem");
+        static_assert(std::is_same<IOnMapItem, T>::value || std::is_base_of<IOnMapItem, T>::value, "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapItem");
         T* item;
         item = castTo<T>(newVoidItem(hash));//TODO: FIX IT!(LOOK DOWN)
         if(item == 0)

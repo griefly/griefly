@@ -22,7 +22,7 @@ public:
     static void InitEach()
     {
         FastDC[Loki::TL::IndexOf<ItemsTypelist, Loc>::value][Loki::TL::IndexOf<ItemsTypelist, T>::value] = 
-            std::tr1::is_base_of<Loc, T>::value || std::tr1::is_same<Loc, T>::value;
+            std::is_base_of<Loc, T>::value || std::is_same<Loc, T>::value;
         ForEachInit<Loc, U>::InitEach();
     };
 };

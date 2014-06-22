@@ -25,8 +25,8 @@ public:
         SYSTEM_STREAM << "By key: " << name << " get param: " << retval << std::endl;
         return retval;
     }
-    template<>
-    bool GetParam<bool>(std::string name)
+
+    bool GetParamBool(std::string name)
     {
         SYSTEM_STREAM << "By key: " << name;
         if (params_.find(name) == params_.end())
