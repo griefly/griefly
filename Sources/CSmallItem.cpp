@@ -26,7 +26,6 @@ CWeed::CWeed()
 
 CupItem::CupItem()
 {
-    inside = GetItemFabric()->newItem<LiquidHolder>(GetId(), hash("liquidholder"));
     SetSprite("icons/cup.png");
     name = "Cup";
 }

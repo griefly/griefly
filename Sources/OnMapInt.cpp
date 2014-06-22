@@ -31,10 +31,10 @@ void IOnMapItem::move(Dir direct)
 
 void IOnMapItem::SetSprite(const std::string& name)
 {
-    if (!GetMapMaster()) 
+    T_SPR = name;
+    if (!GetSpriter())
         return;
     sprite_ = GetSpriter()->returnSpr(name);
-    T_SPR = name;
 };
 
 
@@ -47,10 +47,10 @@ const GLSprite* IOnMapItem::GetSprite()
 
 void IOnMapItem::SetSpriteTop(const std::string& name)
 {
-    if (!GetMapMaster()) 
+    T_SPR_TOP = name;
+    if (!GetSpriter()) 
         return;
     sprite_top_ = GetSpriter()->returnSpr(name);
-    T_SPR_TOP = name;
 };
 
 

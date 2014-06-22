@@ -1,8 +1,10 @@
 #pragma once
 
 #include <list>
+#include <hash_map>
 
 #include "HelperStructers.h"
+#include "OnMapInt.h"
 
 class MapEditor
 {
@@ -23,6 +25,11 @@ private:
     void ProcessInput();
     void UpdateVisible();
     void DrawPointer();
+    void NormalizePointer();
+    void DrawChoosenItem();
+
+    std::vector<IOnMapItem*> for_creation_;
+    int to_create_;
 
     std::list<point>* visible_points_;
 

@@ -154,7 +154,6 @@ void LiquidHolder::processImage(DrawType type)
             continue;
         }
         id_ptr_on<Liquid> l = it->second;
-        auto locspr = l->GetSprite();
         /*place.x = master->x;
         place.y = master->y;
         

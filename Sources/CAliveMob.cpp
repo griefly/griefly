@@ -25,7 +25,6 @@ CAliveMob::CAliveMob()
     oxyless = 0;
 
     max_dmg = 100;
-    inside = GetItemFabric()->newItem<LiquidHolder>(GetId(), hash("liquidholder"));
     tick_sm = 0;
 };
 
@@ -51,9 +50,6 @@ void CAliveMob::aaMind() {};
 
 void CAliveMob::live()
 { 
-    unsigned int now_blood = inside->amountOfAll();
-    if(injuries > 1 && now_blood > 0 && get_rand() % std::max(1, max_dmg * 7 - injuries * 7) == 0)
-        owner->GetItem<IOnMapItem>()->insertLiquid(inside->removeLiquid(injuries));
     if (burn_power > 0)
         burn_power -= 1;
 };
@@ -116,7 +112,7 @@ void CAliveMob::processGUI()
     std::stringstream ssloc, ssloc2;
     if(SDL_GetTicks() - locTime > 100)
     {
-        ssloc << inside->amountOf(hash("liquidblood")) << "bl " << dmg << "d " << injuries << "i " << burn << "b " << interior << "in\n " << bloodless << "b " << oxyless << "o";
+        //ssloc << inside->amountOf(hash("liquidblood")) << "bl " << dmg << "d " << injuries << "i " << burn << "b " << interior << "in\n " << bloodless << "b " << oxyless << "o";
         SDL_Color color = {255, 0, 0, 0};
         //if(sDMG != nullptr)
         //    SDL_FreeSurface(sDMG);

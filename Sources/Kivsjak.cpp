@@ -12,8 +12,6 @@ Kivsjak::Kivsjak()
     v_level = 9;
     tickSpeed = 1;
     max_dmg = 300;
-    inside->size = 200;
-    inside->addLiquid(hash("liquidblood"), 200);
     passable = false;
     food = 0;
     name = "Kivsjak";

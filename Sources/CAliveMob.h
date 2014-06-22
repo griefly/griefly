@@ -32,7 +32,6 @@ public:
     int KV_SAVEBLE(oxyless);
 
     int KV_SAVEBLE(max_dmg);
-    id_ptr_on<LiquidHolder> KV_SAVEBLE(inside);
     int KV_SAVEBLE(tick_sm);
     CAliveMob();
 };

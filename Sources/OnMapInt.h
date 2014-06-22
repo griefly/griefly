@@ -78,7 +78,7 @@ public:
     bool KV_SAVEBLE(transparent);
     int KV_SAVEBLE(burn_power);//0 - 1 - MUCH MUCH
     std::string KV_SAVEBLE(name);
-private:
+public:
     std::string KV_SAVEBLE(T_SPR);
     GLSprite* KV_ON_LOAD(sprite_, nullptr);
 

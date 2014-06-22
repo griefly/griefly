@@ -15,7 +15,6 @@ COrk::COrk()
     in_hand = 0;
     jump_time = 0;
     is_strong_owner = true;
-    inside->addLiquid(hash("liquidblood"), 200);
     name = "Ork";
     
 };

@@ -3,20 +3,11 @@
 
 Liquid::Liquid()    
 {
-    SetSprite("icons/water.png");
     amount = 0;
     imageStateH = 0;
     imageStateW = 0;
     flammable = false;
 }
-
-void Liquid::SetSprite(const std::string& name)
-{
-    if(!GetMapMaster())
-        return;
-    sprite_ = GetSpriter()->returnSpr(name);
-    T_SPR = name;
-};
 
 void Liquid::processImage(DrawType type)
 {

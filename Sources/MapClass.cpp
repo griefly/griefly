@@ -232,11 +232,11 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
 
     id_ptr_on<IOnMapItem> retval = 0;
 
-    int z_level_m = castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posz();
+    int z_level_m = mob_position::get_mob_z();
     for (int z = z_level_m; z >= 0; --z)
     {
-        auto it2 = GetManager()->visiblePoint->begin();  
-        while(it2 != GetManager()->visiblePoint->end())
+        auto it2 = GetVisible()->begin();  
+        while(it2 != GetVisible()->end())
         {
             if (it2->posz == z)
                 squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
@@ -253,11 +253,11 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
                 return retval;
             ++it2;
         }
-        it2 = GetManager()->visiblePoint->begin();  
+        it2 = GetVisible()->begin();  
         for(int i = MAX_LEVEL - 1; i >= 0; --i)
         {
-            auto it2 = GetManager()->visiblePoint->begin();  
-            while(it2 != GetManager()->visiblePoint->end())
+            auto it2 = GetVisible()->begin();  
+            while(it2 != GetVisible()->end())
             {
                 if (it2->posz == z)
                     squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
