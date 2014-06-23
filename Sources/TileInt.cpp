@@ -31,7 +31,7 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
             break;
         ++itr;
     }
-    InsideType::const_iterator locit = itr;
+    InsideType::iterator locit = itr;
     inside_list_.insert(locit, item);
     item->SetOwner(GetId());
     return true;
