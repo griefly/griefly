@@ -12,7 +12,7 @@ all: Release/knv
 
 .PHONY: clean
 clean:
-	rm -f Sources/*.o knv
+	rm -f Sources/*.o Release/knv
 
 Release/knv: $(OBJS)
 	$(CXX) $(LIBS) $(OBJS) -o Release/knv
