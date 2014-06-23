@@ -219,6 +219,9 @@
     <ClInclude Include="Sources\visible_points.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\platform\gl.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">

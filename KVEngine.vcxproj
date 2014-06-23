@@ -51,6 +51,7 @@
     <ClInclude Include="Sources\OnMapInt.h" />
     <ClInclude Include="Sources\Ork.h" />
     <ClInclude Include="Sources\Params.h" />
+    <ClInclude Include="Sources\platform\gl.h" />
     <ClInclude Include="Sources\Screen.h" />
     <ClInclude Include="Sources\SdlInit.h" />
     <ClInclude Include="Sources\sound.h" />
