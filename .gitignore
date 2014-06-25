@@ -7,3 +7,4 @@ ipch
 *.log
 /knv
 /Release/knv
+/Release/errorfile.txt
