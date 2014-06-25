@@ -15,6 +15,7 @@
 #include "MagicStrings.h"
 #include "TileInt.h"
 #include "Debug.h"
+#include "Params.h"
 
 #include "sound.h"
 
@@ -44,12 +45,12 @@ void Manager::moveEach(Dir direct)
 void Manager::undoCenterMove(Dir direct)
 {
     //TODO
-    for (int z = 0; z < sizeDmap; ++z)
+    for (int z = 0; z < GetMapMaster()->GetMapD(); ++z)
         for(int x = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() - sizeHsq); 
-            x <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() + sizeHsq, sizeHmap - 1); x++)
+            x <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() + sizeHsq, GetMapMaster()->GetMapH() - 1); x++)
         {
             for(int y = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() - sizeWsq); 
-                y <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() + sizeWsq, sizeWmap - 1); y++)
+                y <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() + sizeWsq, GetMapMaster()->GetMapW() - 1); y++)
             {
                 GetMapMaster()->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
                 {
@@ -306,17 +307,20 @@ void Manager::initWorld()
 
     NetClient::Init();
 
-    GetMapMaster()->makeTiles();
+    int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
+    int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
+    int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 2;
+    GetMapMaster()->makeTiles(x, y, z);
 
     auto newmob = GetItemFabric()->newItemOnMap<IMob>(
             hash("ork"), 
-            GetMapMaster()->squares[sizeHmap / 2][sizeWmap / 2][1]);
+            GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
     changeMob(newmob);
     GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
     auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
             hash("Teleportator"), 
-            GetMapMaster()->squares[sizeHmap / 2][sizeWmap / 2][1]);
+            GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
     SetCreator(tptr.ret_id());
 
     srand(SDL_GetTicks());

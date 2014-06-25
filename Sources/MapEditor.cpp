@@ -9,16 +9,10 @@
 #include "Text.h"
 #include "LiquidHolder.h"
 #include "helpers.h"
+#include "Params.h"
 
 MapEditor::MapEditor()
 {
-    viewer_x_ = sizeHmap / 2;
-    viewer_y_ = sizeWmap / 2;
-    viewer_z_ = sizeDmap / 2;
-
-    pointer_x_ = viewer_x_;
-    pointer_y_ = viewer_y_;
-
     to_create_ = 0;
 
     visible_points_ = new std::list<point>;
@@ -52,7 +46,12 @@ void MapEditor::InitWorld()
     SetTexts(new TextPainter);
     SetSpriter(new ASprClass);
 
-    GetMapMaster()->makeTiles();
+    int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
+    int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
+    int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 2;
+    GetMapMaster()->makeTiles(x, y, z);
+    UpdateCoords();
+
     srand(SDL_GetTicks());
     //GetMapMaster()->makeMap();
 
@@ -65,6 +64,16 @@ void MapEditor::InitWorld()
         ss << for_creation_[to_create_]->name; 
         ss >> *str;
     }).SetFreq(10).SetSize(15).SetPlace(16, 16, 16 + 32 * 3);
+}
+
+void MapEditor::UpdateCoords()
+{
+    viewer_x_ = GetMapMaster()->GetMapW() / 2;
+    viewer_y_ = GetMapMaster()->GetMapH() / 2;
+    viewer_z_ = GetMapMaster()->GetMapD() / 2;
+
+    pointer_x_ = viewer_x_;
+    pointer_y_ = viewer_y_;
 }
 
 void MapEditor::Run()
@@ -209,9 +218,9 @@ void MapEditor::UpdateVisible()
     point p;
     p.posz = viewer_z_;
     int x_low_border = std::max(0, viewer_x_ - sizeHsq + 1);
-    int x_high_border = std::min(sizeWmap, viewer_x_ + sizeHsq);
+    int x_high_border = std::min(GetMapMaster()->GetMapW(), viewer_x_ + sizeHsq);
     int y_low_border = std::max(0, viewer_y_ - sizeWsq + 1);
-    int y_high_border = std::max(sizeHmap, viewer_y_ + sizeWsq);
+    int y_high_border = std::max(GetMapMaster()->GetMapH(), viewer_y_ + sizeWsq);
     for (int i = x_low_border; i < x_high_border; ++i)
         for (int j = y_low_border; j < y_high_border; ++j)
         {

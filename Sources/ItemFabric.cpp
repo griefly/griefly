@@ -96,6 +96,12 @@ void ItemFabric::saveMapHeader(std::stringstream& savefile)
 
     savefile << GetManager()->GetCreator() << std::endl;
 
+    // Save Map Size
+
+    savefile << GetMapMaster()->GetMapW() << std::endl;
+    savefile << GetMapMaster()->GetMapH() << std::endl;
+    savefile << GetMapMaster()->GetMapD() << std::endl;
+
     // Save player table
     savefile << players_table_.size() << " ";
     for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
@@ -137,6 +143,17 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     GetManager()->SetCreator(new_creator);
 
     idTable_.resize(id_ + 1);
+
+    // Load map size
+    int x;
+    int y;
+    int z;
+
+    savefile >> x;
+    savefile >> y;
+    savefile >> z;
+
+    GetMapMaster()->ResizeMap(x, y, z);
 
     // Load player table
     size_t s;
@@ -235,7 +252,7 @@ void ItemFabric::loadMap(const char* path)
 }
 
 const int AVERAGE_BYTE_PER_TILE = 129 * 2;
-const long int UNCOMPRESS_LEN_DEFAULT = sizeHmap * sizeWmap * sizeDmap * AVERAGE_BYTE_PER_TILE;
+const long int UNCOMPRESS_LEN_DEFAULT = 50 * 50 * 5 * AVERAGE_BYTE_PER_TILE;
 void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this_mob)
 {
 

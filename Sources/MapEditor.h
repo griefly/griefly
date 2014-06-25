@@ -27,6 +27,7 @@ private:
     void DrawPointer();
     void NormalizePointer();
     void DrawChoosenItem();
+    void UpdateCoords();
 
     std::vector<IOnMapItem*> for_creation_;
     int to_create_;

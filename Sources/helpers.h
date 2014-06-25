@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "constheader.h"
+#include "MapClass.h"
 
 namespace helpers
 {
@@ -11,21 +12,21 @@ namespace helpers
         if (x)
         {
             *x += DirToVDir[dir].x;
-            if (*x >= sizeWmap ||
+            if (*x >= GetMapMaster()->GetMapW() ||
                 *x <= -1)
                 *x -= DirToVDir[dir].x;
         }
         if (y)
         {
             *y += DirToVDir[dir].y;
-            if (*y >= sizeHmap ||
+            if (*y >= GetMapMaster()->GetMapH() ||
                 *y <= -1)
                 *y -= DirToVDir[dir].y;
         }
         if (z)
         {
             *z += DirToVDir[dir].z;
-            if (*z >= sizeDmap ||
+            if (*z >= GetMapMaster()->GetMapD() ||
                 *z <= -1)
                 *z -= DirToVDir[dir].z;
         }

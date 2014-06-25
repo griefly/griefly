@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <vector>
 
 #include "HelperStructers.h"
 #include "constheader.h"
@@ -12,7 +13,7 @@ public:
     std::list<Dir> calculatePath(int fromPosx, int fromPosy, int toPosx, int toPosy, int toPosz = 0);
 private:
     std::list<square*> openList;
-    square squares[sizeHmap][sizeWmap];
+    std::vector<std::vector<square> > squares;
     void clearPathfinding();
     void addNear(int posx, int posy, int toPosx, int toPosy);
     int calcCost(int posx, int posy, int toPosx, int toPosy);
@@ -39,7 +40,22 @@ class MapMaster
 public:
     MapMaster();
     typedef id_ptr_on<CubeTile> SqType;
-    SqType squares[sizeHmap][sizeWmap][sizeDmap];
+    std::vector<std::vector<std::vector<SqType> > > squares;
+
+    int GetMapW() const
+    {
+        return squares.size();
+    }
+    int GetMapH() const
+    {
+        return squares[0].size();
+    }
+    int GetMapD() const
+    {
+        return squares[0][0].size();
+    }
+
+    void ResizeMap(int x, int y, int z);
 
     void Draw();
     bool isVisible(int posx, int posy, int posz = 0);
@@ -53,7 +69,7 @@ public:
     
     void splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz = 0);
 
-    void makeTiles();
+    void makeTiles(int x, int y, int z);
     void makeMap();
     void centerFromTo(int nowPosx, int nowPosy, int nowPosz = 0);
     bool isPassable(int posx, int posy, int posz = 0);

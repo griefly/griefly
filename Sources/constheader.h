@@ -22,10 +22,6 @@ const int sizeWsq = 10;
 extern int sizeW; // visible in pixel const
 extern int sizeH;
 
-const int sizeHmap = 40; // map size
-const int sizeWmap = 40;
-const int sizeDmap = 2;
-
 const int beginMobPosX = 9; // posx and posx mob on screen
 const int beginMobPosY = 7; // maybe no const?
 

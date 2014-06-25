@@ -20,7 +20,7 @@ void MapMaster::Draw()
         return;
     glClear(GL_COLOR_BUFFER_BIT);
     int z_level_m = mob_position::get_mob_z();
-    for (int z_level = 0; z_level < sizeDmap; z_level++) 
+    for (int z_level = 0; z_level < GetMapD(); z_level++) 
     {
         for(int i = 0; i < MAX_LEVEL; ++i)
         {
@@ -54,14 +54,14 @@ void MapMaster::Draw()
     }
 };
 
-void MapMaster::makeTiles()
+void MapMaster::makeTiles(int new_map_x, int new_map_y, int new_map_z)
 {
-    // Gen tiles
-    for(int x = 0; x < sizeWmap; x++)
+    ResizeMap(new_map_x, new_map_y, new_map_z);
+    for(int x = 0; x < GetMapW(); x++)
     {
-        for(int y = 0; y < sizeHmap; y++) 
+        for(int y = 0; y < GetMapH(); y++) 
         {
-            for (int z = 0; z < sizeDmap; z++)
+            for (int z = 0; z < GetMapD(); z++)
             {
                 auto loc = GetItemFabric()->newItem<CubeTile>(0, CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
@@ -71,12 +71,25 @@ void MapMaster::makeTiles()
     }
 }
 
+void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
+{
+    squares.resize(new_map_x);
+    for (int x = 0; x < new_map_x; ++x)
+    {
+        squares[x].resize(new_map_y);
+        for (int y = 0; y < new_map_y; ++y)
+        {
+            squares[x][y].resize(new_map_z);
+        }
+    }
+}
+
 void MapMaster::makeMap()
 {
     // End gen
-    for(int x = 0; x < sizeWmap; x++)
+    for(int x = 0; x < GetMapW(); x++)
     {
-        for(int y = 0; y < sizeHmap; y++) 
+        for(int y = 0; y < GetMapH(); y++) 
         {     
             // Ge
             //
@@ -88,11 +101,11 @@ void MapMaster::makeMap()
             else
                 loc->imageStateW = 0;
             
-            if(rand() % 29 == 1 || x == 0 || y == 0 || x == sizeWmap - 1 || y == sizeHmap - 1)
+            if(rand() % 29 == 1 || x == 0 || y == 0 || x == GetMapW() - 1 || y == GetMapH() - 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][1]);
-            if(rand() % 60 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
+            if(rand() % 60 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][1]);
-            if(rand() % 3 == 1 && x != 0 && y != 0 && x != sizeWmap - 1 && y != sizeHmap - 1)
+            if(rand() % 3 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][1]);//*/
         }
     }
@@ -121,9 +134,12 @@ bool MapMaster::canDraw()
 
 void CPathFinder::clearPathfinding()
 {
-    for(int i = 0; i < sizeHmap; ++i)
+
+    squares.resize(GetMapMaster()->GetMapW());
+    for(int i = 0; i < GetMapMaster()->GetMapW(); ++i)
     {
-        for(int j = 0; j < sizeWmap; ++j)
+        squares[i].resize(GetMapMaster()->GetMapH());
+        for(int j = 0; j < GetMapMaster()->GetMapH(); ++j)
         {
             squares[i][j].before = 0;
             squares[i][j].inCloseList = false;
@@ -184,13 +200,19 @@ void MapMaster::switchDir(int& posx, int& posy, Dir direct, int num, bool back)/
 
 bool MapMaster::checkOutBorder(int posx, int posy)
 {
-    if(posy < 0 || posy > (sizeHmap - 1) || posx < 0 || posx > sizeWmap - 1) return false;
+    if(    posy < 0 || posy > (GetMapMaster()->GetMapH() - 1) 
+        || posx < 0 || posx > (GetMapMaster()->GetMapW() - 1)) 
+        return false;
     return true;
 };
 
 bool MapMaster::checkOutBorder(int posx, int posy, Dir direct)
 {
-    if((direct == D_UP && posy <= 0) || (direct == D_DOWN && posy >= (sizeHmap - 1)) || (direct == D_LEFT && posx <= 0) || (direct == D_RIGHT && posx >= (sizeWmap - 1))) return false;
+    if(    (direct == D_UP    && posy <= 0) 
+        || (direct == D_DOWN  && posy >= (GetMapMaster()->GetMapH() - 1)) 
+        || (direct == D_LEFT  && posx <= 0) 
+        || (direct == D_RIGHT && posx >= (GetMapMaster()->GetMapW() - 1))) 
+        return false;
     return true;
 };
 
@@ -542,7 +564,11 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
         if(GetMapMaster()->isVisible(itr->posx, itr->posy, itr->posz) 
             && itr->posx != posx - sizeHsq && itr->posx != posx + sizeHsq
             && itr->posy != posy - sizeWsq && itr->posy != posy + sizeWsq
-            && !(itr->posy <= 0 || itr->posy >= (sizeHmap - 1) || itr->posx <= 0 || itr->posx >= sizeWmap - 1))
+            && 
+            !( itr->posy <= 0 
+            || itr->posy >= (GetMapMaster()->GetMapH() - 1) 
+            || itr->posx <= 0 
+            || itr->posx >= (GetMapMaster()->GetMapW() - 1)))
             if(abs(itr->posx - posx) > abs(itr->posy - posy)) 
             if(itr->posx > posx)
             {
