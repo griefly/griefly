@@ -15,6 +15,7 @@
     <ClInclude Include="Sources\ASpritesClass.h" />
     <ClInclude Include="Sources\CAliveMob.h" />
     <ClInclude Include="Sources\constheader.h" />
+    <ClInclude Include="Sources\Creator.h" />
     <ClInclude Include="Sources\CSmallItem.h" />
     <ClInclude Include="Sources\Debug.h" />
     <ClInclude Include="Sources\DrawInt.h" />
@@ -63,6 +64,7 @@
     <ClInclude Include="Sources\TileInt.h" />
     <ClInclude Include="Sources\Turf.h" />
     <ClInclude Include="Sources\TypelistOfItems.h" />
+    <ClInclude Include="Sources\utils.h" />
     <ClInclude Include="Sources\visible_points.h" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +72,7 @@
     <ClCompile Include="Sources\ASpritesClass.cpp" />
     <ClCompile Include="Sources\CAliveMob.cpp" />
     <ClCompile Include="Sources\constcpp.cpp" />
+    <ClCompile Include="Sources\Creator.cpp" />
     <ClCompile Include="Sources\CSmallItem.cpp" />
     <ClCompile Include="Sources\Debug.cpp" />
     <ClCompile Include="Sources\DrawInt.cpp" />
@@ -106,6 +109,7 @@
     <ClCompile Include="Sources\TileInt.cpp" />
     <ClCompile Include="Sources\Turf.cpp" />
     <ClCompile Include="Sources\TypelistOfItems.cpp" />
+    <ClCompile Include="Sources\utils.cpp" />
     <ClCompile Include="Sources\visible_points.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

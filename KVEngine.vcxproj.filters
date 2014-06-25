@@ -222,6 +222,12 @@
     <ClInclude Include="Sources\platform\gl.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Creator.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\utils.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -345,6 +351,12 @@
       <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="Sources\visible_points.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Creator.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\utils.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
   </ItemGroup>

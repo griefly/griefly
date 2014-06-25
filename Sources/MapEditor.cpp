@@ -10,6 +10,10 @@
 #include "LiquidHolder.h"
 #include "helpers.h"
 #include "Params.h"
+#include "MobInt.h"
+#include "Creator.h"
+
+#include "utils.h"
 
 MapEditor::MapEditor()
 {
@@ -46,15 +50,37 @@ void MapEditor::InitWorld()
     SetTexts(new TextPainter);
     SetSpriter(new ASprClass);
 
+    srand(SDL_GetTicks());
+    
     int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
     int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
     int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 2;
+
     GetMapMaster()->makeTiles(x, y, z);
+
+    if (   !GetParamsHolder().GetParamBool("map_name") 
+        || !utils::IsFileExist(GetParamsHolder().GetParam<std::string>("map_name")))
+    {
+
+        auto newmob = GetItemFabric()->newItemOnMap<IMob>(
+                hash("ork"), 
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
+        SetMob(newmob.ret_id());
+        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
+
+        auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
+                hash("Teleportator"), 
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
+        SetCreator(tptr.ret_id());
+
+        //GetMapMaster()->makeMap();
+    }
+    else
+    {
+       std::string str = GetParamsHolder().GetParam<std::string>("map_name");
+       GetItemFabric()->loadMap(str.c_str());
+    }
     UpdateCoords();
-
-    srand(SDL_GetTicks());
-    //GetMapMaster()->makeMap();
-
     LiquidHolder::LoadReaction();
 
     GetTexts()["ToCreate"].SetUpdater
@@ -113,6 +139,10 @@ void MapEditor::DrawChoosenItem()
     }
 }
 
+void MapEditor::SaveMap(std::stringstream& savefile)
+{
+}
+
 void MapEditor::NormalizePointer()
 {
     // TODO
@@ -161,6 +191,14 @@ void MapEditor::ProcessInput()
                 helpers::move_to_dir(D_LEFT, &viewer_x_, &viewer_y_);
                 helpers::move_to_dir(D_LEFT, &pointer_x_, &pointer_y_);
             }
+            else if (event.key.keysym.sym == SDLK_COMMA)
+            {
+                helpers::move_to_dir(D_ZDOWN, &viewer_x_, &viewer_y_, &viewer_z_);
+            }
+            else if (event.key.keysym.sym == SDLK_PERIOD)
+            {
+                helpers::move_to_dir(D_ZUP, &viewer_x_, &viewer_y_, &viewer_z_);
+            }
             else if (event.key.keysym.sym == SDLK_e)
             {
                 SYSTEM_STREAM << "SDLK_e: " << std::endl;
@@ -186,6 +224,20 @@ void MapEditor::ProcessInput()
                 GetItemFabric()->newItemOnMap<IOnMapItem>(
                     for_creation_[to_create_]->T_ITEM(), 
                     GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]);
+            }
+            else if (event.key.keysym.sym == SDLK_F5)
+            {
+                GetItemFabric()->saveMap(
+                    GetParamsHolder().GetParamBool("map_name") ?
+                    GetParamsHolder().GetParam<std::string>("map_name").c_str() :
+                    "default.map");
+                SYSTEM_STREAM << "Map saved" << std::endl;
+            }
+            else if (event.key.keysym.sym == SDLK_DELETE)
+            {
+                auto ptr = GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]->GetItem<IOnMapItem>();
+                if (ptr.valid())
+                    ptr->delThis();
             }
         }
         if(event.type == SDL_MOUSEBUTTONDOWN)

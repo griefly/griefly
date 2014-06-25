@@ -33,10 +33,6 @@ int main(int argc, char *argv[])
     {
         if (GetParamsHolder().GetParamBool("-nodraw"))
             NODRAW = true; 
-    
-        bool is_auto_p = false;
-        if (GetParamsHolder().GetParamBool("-auto"))
-            is_auto_p = true;
 
         std::string adrs = "127.0.0.1";
         if (GetParamsHolder().GetParamBool("ip"))
@@ -46,11 +42,9 @@ int main(int argc, char *argv[])
             Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
 
         Manager man(adrs);
-        SYSTEM_STREAM << "Begin init world\n";
         man.initWorld();
-        if (is_auto_p)
+        if (GetParamsHolder().GetParamBool("-auto"))
             man.ToogleAutoplay();
-        SYSTEM_STREAM << "End init world\n";
         man.process();
         return 0;
     }

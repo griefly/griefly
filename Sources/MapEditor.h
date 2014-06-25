@@ -29,6 +29,8 @@ private:
     void DrawChoosenItem();
     void UpdateCoords();
 
+    void SaveMap(std::stringstream& savefile);
+
     std::vector<IOnMapItem*> for_creation_;
     int to_create_;
 

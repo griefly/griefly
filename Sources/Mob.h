@@ -28,11 +28,7 @@ public:
 
     int threadPathfind(void* data);
 
-    void changeMob(id_ptr_on<IMob>& i);
     Manager(std::string adrs);
-
-    size_t GetCreator() const;
-    void SetCreator(size_t new_creator);
 
     bool isMove;
     int numOfDeer;
@@ -54,8 +50,6 @@ public:
     ///////////
     int tick_recv;
     void process_in_msg();
-    //
-    id_ptr_on<IMob> thisMob;
 
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:

@@ -1,5 +1,7 @@
 #include "Mob.h"
 
+#include <memory>
+
 #include "MapClass.h"
 #include "LiquidHolder.h"
 #include "Turf.h"
@@ -18,11 +20,10 @@
 #include "Params.h"
 
 #include "sound.h"
-
+#include "Creator.h"
 #include "SdlInit.h"
 #include "MobInt.h"
-
-#include <memory>
+#include "utils.h"
 
 int ping_send;
 
@@ -34,7 +35,7 @@ void Manager::checkMove(Dir direct)
 
 void Manager::touchEach(Dir direct)
 {
-    thisMob->dMove = direct;
+    GetMob()->dMove = direct;
 }
 
 void Manager::moveEach(Dir direct)
@@ -46,36 +47,20 @@ void Manager::undoCenterMove(Dir direct)
 {
     //TODO
     for (int z = 0; z < GetMapMaster()->GetMapD(); ++z)
-        for(int x = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() - sizeHsq); 
-            x <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx() + sizeHsq, GetMapMaster()->GetMapH() - 1); x++)
+        for(int x = std::max(0, castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx() - sizeHsq); 
+            x <= std::min(castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx() + sizeHsq, GetMapMaster()->GetMapH() - 1); x++)
         {
-            for(int y = std::max(0, castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() - sizeWsq); 
-                y <= std::min(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy() + sizeWsq, GetMapMaster()->GetMapW() - 1); y++)
+            for(int y = std::max(0, castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posy() - sizeWsq); 
+                y <= std::min(castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posy() + sizeWsq, GetMapMaster()->GetMapW() - 1); y++)
             {
                 GetMapMaster()->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
                 {
                     Move* eff = EffectFabricOf<Move>::getEffectOf();
-                    eff->Init(TITLE_SIZE, direct, thisMob->pixSpeed, item);
+                    eff->Init(TITLE_SIZE, direct, GetMob()->pixSpeed, item);
                     eff->Start();
                 });
             }
         }
-};
-
-void Manager::changeMob(id_ptr_on<IMob>& i)
-{
-    thisMob = i.ret_id();
-
-    if (thisMob.valid())
-    {
-        thisMob->onMobControl = true;
-        thisMob->thisMobControl = true;
-        GetMapMaster()->centerFromTo(castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
-            castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy());
-        thisMob->InitGUI();
-    }
-
-    SYSTEM_STREAM << "\nTHIS MOB CHANGE: " << thisMob.ret_id() << " ";
 };
 
 Manager::Manager(std::string adrs)
@@ -94,9 +79,9 @@ void Manager::UpdateVisible()
     visiblePoint->clear();
     visiblePoint = 
         GetMapMaster()->losf.calculateVisisble(visiblePoint, 
-            castTo<CubeTile>(thisMob->GetOwner().ret_item())->posx(), 
-            castTo<CubeTile>(thisMob->GetOwner().ret_item())->posy(),
-            castTo<CubeTile>(thisMob->GetOwner().ret_item())->posz());
+            castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx(), 
+            castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posy(),
+            castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posz());
 }
 
 void Manager::process()
@@ -140,7 +125,7 @@ void Manager::process()
       
         //checkMoveMob();
         if (!NODRAW)
-            thisMob->processGUI();
+            GetMob()->processGUI();
 
         GetTexts().Process();
 
@@ -312,24 +297,32 @@ void Manager::initWorld()
     int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 2;
     GetMapMaster()->makeTiles(x, y, z);
 
-    auto newmob = GetItemFabric()->newItemOnMap<IMob>(
-            hash("ork"), 
-            GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
-    changeMob(newmob);
-    GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
+    if (   !GetParamsHolder().GetParamBool("map_name") 
+        || !utils::IsFileExist(GetParamsHolder().GetParam<std::string>("map_name")))
+    {
+        auto newmob = GetItemFabric()->newItemOnMap<IMob>(
+                hash("ork"), 
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
+        ChangeMob(newmob);
+        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
-    auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
-            hash("Teleportator"), 
-            GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
-    SetCreator(tptr.ret_id());
+        auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
+                hash("Teleportator"), 
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
+        SetCreator(tptr.ret_id());
 
-    srand(SDL_GetTicks());
-    GetMapMaster()->makeMap();
-
+        srand(SDL_GetTicks());
+        GetMapMaster()->makeMap();
+    }
+    else
+    {
+       std::string str = GetParamsHolder().GetParam<std::string>("map_name");
+       GetItemFabric()->loadMap(str.c_str());
+    }
     LiquidHolder::LoadReaction();
 
     LoginData data;
-    data.who = newmob.ret_id();
+    data.who = GetMob().ret_id();
     data.word_for_who = 1;
     NetClient::GetNetClient()->Connect(adrs_, DEFAULT_PORT, data);
 
@@ -377,16 +370,6 @@ void Manager::process_in_msg()
         else
             SYSTEM_STREAM << "Wrong id accepted - " << msg.to << std::endl;
     }
-}
-
-size_t Manager::GetCreator() const 
-{
-    return creator_;
-}
-
-void Manager::SetCreator(size_t new_creator) 
-{
-    creator_ = new_creator;
 }
 
 bool Manager::isMobVisible(int posx, int posy)

@@ -1,15 +1,17 @@
+#include "ItemFabric.h"
+
+#include <zlib.h>
+
 #include "MainInt.h"
 #include "OnMapInt.h"
 #include "Mob.h"
-#include "ItemFabric.h"
 #include "MapClass.h"
 #include "sync_random.h"
-
+#include "Creator.h"
 #include "MagicStrings.h"
 
 #include "Debug.h"
 
-#include <zlib.h>
 
 ItemFabric::ItemFabric()
 {
@@ -88,13 +90,13 @@ void ItemFabric::saveMapHeader(std::stringstream& savefile)
 {
     savefile << MAIN_TICK << std::endl;
     savefile << id_ << std::endl;
-    savefile << GetManager()->thisMob.ret_id() << std::endl;
+    savefile << GetMob().ret_id() << std::endl;
 
     // Random save
     savefile << random_helpers::get_seed() << std::endl;
     savefile << random_helpers::get_calls_counter() << std::endl;
 
-    savefile << GetManager()->GetCreator() << std::endl;
+    savefile << GetCreator() << std::endl;
 
     // Save Map Size
 
@@ -125,9 +127,9 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     SYSTEM_STREAM << "thisMob: " << loc << std::endl;
 
     if (real_this_mob == 0)
-        GetManager()->thisMob = loc;
+        SetMob(loc);
     else
-        GetManager()->thisMob = real_this_mob;
+        SetMob(real_this_mob);
     
     unsigned int new_seed;
     unsigned int new_calls_counter;
@@ -140,7 +142,7 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     savefile >> new_creator;
     SYSTEM_STREAM << "new_creator: " << new_creator << std::endl;
 
-    GetManager()->SetCreator(new_creator);
+    SetCreator(new_creator);
 
     idTable_.resize(id_ + 1);
 
@@ -233,21 +235,23 @@ void ItemFabric::saveMap(std::stringstream& savefile, bool zip)
 
 void ItemFabric::loadMap(const char* path)
 {
+    SYSTEM_STREAM << path << std::endl;
     std::stringstream savefile;
     std::fstream rfile;
     rfile.open(path, std::ios_base::in);
 
+    SYSTEM_STREAM << "Point 1" << std::endl;
+
     rfile.seekg (0, std::ios::end);
     std::streamoff length = rfile.tellg();
     rfile.seekg (0, std::ios::beg);
-    char* buff = new char[(unsigned int)(length + 1)];
-    buff[length + 1] = '\0';
+    char* buff = new char[static_cast<size_t>(length)];
 
     rfile.read(buff, length);
     rfile.close();
     savefile << buff;
     delete[] buff;
-    //
+    SYSTEM_STREAM << "End map load" << std::endl;
     loadMap(savefile, false);
 }
 
@@ -340,7 +344,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
         i->loadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
-    GetManager()->changeMob(GetManager()->thisMob);
+    ChangeMob(GetMob());
 }
 
 IMainItem* ItemFabric::newVoidItem(unsigned int type)

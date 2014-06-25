@@ -7,6 +7,7 @@
 #include "MoveEffect.h"
 #include "TileInt.h"
 
+#include "Creator.h"
 #include "mob_position.h"
 
 void IOnMapItem::attack_by(id_ptr_on<SmallItem> it, int force) {};
@@ -125,10 +126,10 @@ bool IOnMapItem::IsTransp(int x, int y)
 }
 bool IOnMapItem::isVisible(int x, int y)
 {
-    if ( x >= std::max(0, (castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posx()) - sizeHsq) &&
-         x <= std::min((castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posx()) + sizeHsq, GetMapMaster()->GetMapH() - 1) &&
-         y >= std::max(0, (castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posy()) - sizeWsq) &&
-         y <= std::min((castTo<CubeTile>(GetManager()->thisMob->GetOwner().ret_item())->posx()) + sizeWsq, GetMapMaster()->GetMapW() - 1))
+    if ( x >= std::max(0, (castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx()) - sizeHsq) &&
+         x <= std::min((castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx()) + sizeHsq, GetMapMaster()->GetMapH() - 1) &&
+         y >= std::max(0, (castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posy()) - sizeWsq) &&
+         y <= std::min((castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx()) + sizeWsq, GetMapMaster()->GetMapW() - 1))
         return 1;
     return 0;
 };

@@ -112,11 +112,6 @@ void MapMaster::makeMap()
     SYSTEM_STREAM << "End create map\n";
 };
 
-void MapMaster::centerFromTo(int nowPosx, int nowPosy, int nowPosz)
-{
-    // ?
-};
-
 MapMaster::MapMaster()
 {
     ms_last_draw = 0;
