@@ -335,12 +335,9 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
 
         size_t id_loc;
         savefile >> id_loc;
- 
-        size_t id_master;
-        savefile >> id_master;
         
         id_ptr_on<IMainItem> i;
-        i = newItemSaved<IMainItem>(id_master, type, id_loc);
+        i = newItemSaved<IMainItem>(type, id_loc);
         i->loadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";

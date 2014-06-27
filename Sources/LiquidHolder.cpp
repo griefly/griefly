@@ -76,8 +76,8 @@ unsigned int LiquidHolder::addLiquid(unsigned int hash, unsigned int amount)
     int sum_amount = amountOfAll();
     if(sum_amount >= size)
         return 0;
-    if(!liquids[hash].ret_id())
-        liquids[hash] = GetItemFabric()->newItem<Liquid>(master, hash);
+//    if(!liquids[hash].ret_id())
+//        liquids[hash] = GetItemFabric()->newItem<Liquid>(owner, hash);
     //SYSTEM_STREAM << liquids[hash].ret_id() << "\n";
     amount = std::min(static_cast<int>(amount), size - sum_amount);
     liquids[hash]->amount += amount;

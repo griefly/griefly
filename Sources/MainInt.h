@@ -18,12 +18,12 @@ public:
 
     virtual unsigned int hashSelf()
     {
-        return GetId() + master.ret_id();
+        return GetId();// + master.ret_id();
     }
 
     virtual void delThis();
-    IMainItem(){ id_ = 0; master = 0; how_often_ = 0;};
-    IMainItem(NotLoadItem) {id_ = 0; master = 0; how_often_ = 0;};
+    IMainItem(){ id_ = 0; /*master = 0;*/ how_often_ = 0;};
+    IMainItem(NotLoadItem) {id_ = 0; /*master = 0;*/ how_often_ = 0;};
     virtual unsigned int T_ITEM()            
     {                                        
         static unsigned int result = 0;
@@ -55,7 +55,7 @@ public:
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
 public:
-    id_ptr_on<IOnMapItem> master;
+    //id_ptr_on<IOnMapItem> master;
 private:
     size_t id_;
     int how_often_;

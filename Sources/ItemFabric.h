@@ -75,8 +75,8 @@ public:
         return item->GetId();
     }
     
-    template<typename T, typename TMaster>
-    id_ptr_on<T> newItemSaved(TMaster master, unsigned int hash, size_t id_new = 0)
+    template<typename T>
+    id_ptr_on<T> newItemSaved(unsigned int hash, size_t id_new = 0)
     {
         T* item;
         item = castTo<T>(newVoidItemSaved(hash));
@@ -88,14 +88,14 @@ public:
             id_ = id_new + 1;
         idTable_[id_new] = item;
         item->SetId(id_new);
-        item->master = master;
+//        item->master = master;
         id_ptr_on<T> ret_val;
         ret_val = item->GetId();
         return ret_val;
     }
     
-    template<typename T, typename TMaster>
-    id_ptr_on<T> newItem(TMaster master, unsigned int hash, size_t id_new = 0)
+    template<typename T>
+    id_ptr_on<T> newItem(unsigned int hash, size_t id_new = 0)
     {
         T* item;
         item = castTo<T>(newVoidItem(hash));
@@ -107,7 +107,7 @@ public:
             id_ = id_new + 1;
         idTable_[id_new] = item;
         item->SetId(id_new);
-        item->master = master;
+//        item->master = master;
         id_ptr_on<T> ret_val;
         ret_val = item->GetId();
         return ret_val;

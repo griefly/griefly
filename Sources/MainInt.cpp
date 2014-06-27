@@ -26,7 +26,7 @@ bool IMainItem::saveSelf(std::stringstream& file)
 {
     file << " " << T_ITEM() << " ";
     file << " " << id_ << " ";
-    file << " " << master.ret_id() << " ";
+//    file << " " << master.ret_id() << " ";
     file << " " << how_often_ << " ";
     return true;
 };

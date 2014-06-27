@@ -63,7 +63,7 @@ void MapMaster::makeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMapD(); z++)
             {
-                auto loc = GetItemFabric()->newItem<CubeTile>(0, CubeTile::T_ITEM_S());
+                auto loc = GetItemFabric()->newItem<CubeTile>(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 squares[x][y][z] = loc;
             }
