@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "ITurf.h"
 #include "OnMapBaseInt.h"
 #include "OnMapInt.h"
 
@@ -74,9 +75,16 @@ public:
     {
         return posy_ * 32;
     }
+
+    virtual id_ptr_on<ITurf> GetTurf() 
+    {
+        return turf_;
+    }
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
+    id_ptr_on<ITurf> KV_SAVEBLE(turf_);
+
     int KV_SAVEBLE(posx_);
     int KV_SAVEBLE(posy_);
     int KV_SAVEBLE(posz_);

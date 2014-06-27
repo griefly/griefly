@@ -18,12 +18,12 @@ public:
 
     virtual unsigned int hashSelf()
     {
-        return GetId();// + master.ret_id();
+        return GetId();
     }
 
     virtual void delThis();
-    IMainItem(){ id_ = 0; /*master = 0;*/ how_often_ = 0;};
-    IMainItem(NotLoadItem) {id_ = 0; /*master = 0;*/ how_often_ = 0;};
+    IMainItem(){ id_ = 0; how_often_ = 0;};
+    IMainItem(NotLoadItem) {id_ = 0; how_often_ = 0;};
     virtual unsigned int T_ITEM()            
     {                                        
         static unsigned int result = 0;

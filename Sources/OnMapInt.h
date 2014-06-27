@@ -6,6 +6,7 @@
 #include "GLSprite.h"
 #include "ASpritesClass.h"
 #include "HelperStructers.h"
+#include "TileInt.h"
 
 class SmallItem;
 

@@ -42,6 +42,9 @@ void Kivsjak::live()
         GetItemFabric()->newItemOnMap<IOnMapItem>(hash("meat"), owner);
         delThis();
     }
+
+    if (!GetOwner()->GetTurf().valid())
+        SYSTEM_STREAM << "Its ok" << std::endl;
 }
 
 bool Kivsjak::checkMove(Dir direct)

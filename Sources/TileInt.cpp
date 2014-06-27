@@ -7,6 +7,8 @@
 
 CubeTile::CubeTile()
 {
+    turf_ = 0;
+
     posx_ = -1;
     posy_ = -1;
     posz_ = -1;
