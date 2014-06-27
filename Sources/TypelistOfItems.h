@@ -42,6 +42,7 @@ namespace KV_Private_NS_NullType
 #include "MessageReceiver.h"
 #include "Teleportator.h"
 #include "TileInt.h"
+#include "ITurf.h"
 
 const int local_num = __COUNTER__; 
 typedef Private::TypelistMaker<local_num - 1>::typelist ItemsTypelist;

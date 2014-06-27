@@ -105,7 +105,7 @@ public:
     {
         id = value.ret_id();
     }
-    bool valid()
+    bool valid() const
     {
         return operator->() != nullptr; 
     }

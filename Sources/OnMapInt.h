@@ -21,6 +21,11 @@ public:
     static void setEachLevel(int posx, int posy, bool level);
     static bool checkLevel(int posx, int posy);
 
+    virtual bool IsVisibleByPlayer() const override
+    {
+        return owner.valid() && owner->IsVisibleByPlayer();
+    }
+
     virtual bool IsPassable() const override
     {
         return passable;
