@@ -110,7 +110,6 @@
     <ClCompile Include="Sources\sync_random.cpp" />
     <ClCompile Include="Sources\Teleportator.cpp" />
     <ClCompile Include="Sources\Testmob.cpp" />
-    <ClCompile Include="Sources\Aaaa.cpp" />
     <ClCompile Include="Sources\Text.cpp" />
     <ClCompile Include="Sources\TileInt.cpp" />
     <ClCompile Include="Sources\Turf.cpp" />
