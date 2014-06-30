@@ -5,6 +5,7 @@
 
 #include "Idptr.h"
 #include "OnMapBaseInt.h"
+#include "OnMapInt.h"
 
 class ItemFabric
 {
