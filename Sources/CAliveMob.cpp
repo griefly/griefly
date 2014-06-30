@@ -1,11 +1,10 @@
+#include "CAliveMob.h"
+
 #include <algorithm>
 
 #include "NetClientImpl.h"
-
-#include "CAliveMob.h"
 #include "MapClass.h"
 #include "Text.h"
-
 
 #include "CSmallItem.h"
 #include "LiquidHolder.h"
@@ -34,17 +33,6 @@ void CAliveMob::process()
     if(!onMobControl) aaMind();
     live();
 };
-
-void CAliveMob::ignite(int force)
-{
-    SYSTEM_STREAM << "Ignite\n";
-    Fire* eff = EffectFabricOf<Fire>::getEffectOf();
-    SYSTEM_STREAM << GetId() << "ignite\n";
-    SYSTEM_STREAM << eff << "\n";
-    eff->master = GetId();
-    eff->Start();
-    burn_power += force;
-}
 
 void CAliveMob::aaMind() {};
 

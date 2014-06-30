@@ -1,13 +1,11 @@
 #pragma once
 
-#include "OnMapInt.h"
-#include "ItemFabric.h"
-#include "LiquidHolder.h"
+#include "IMovable.h"
 
-class SmallItem : public IOnMapItem
+class SmallItem : public IMovable
 {
 public:
-    DECLARE_SAVED(SmallItem, IOnMapItem);
+    DECLARE_SAVED(SmallItem, IMovable);
     DECLARE_GET_TYPE_ITEM(SmallItem);
     int KV_SAVEBLE(force);
     int KV_SAVEBLE(penet_force);

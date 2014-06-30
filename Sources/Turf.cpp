@@ -22,8 +22,3 @@ Pit::Pit()
     transparent = true;
     name = "Pit";
 }
-
-void Pit::process()
-{
-    CTurf::process();
-}

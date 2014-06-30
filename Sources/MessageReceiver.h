@@ -1,12 +1,12 @@
 #pragma once
 
-#include "OnMapInt.h"
+#include "IMovable.h"
 
-class IMessageReceiver : public IOnMapItem
+class IMessageReceiver : public IMovable
 {
 public:
     DECLARE_GET_TYPE_ITEM(IMessageReceiver);
-    DECLARE_SAVED(IMessageReceiver, IOnMapItem);
+    DECLARE_SAVED(IMessageReceiver, IMovable);
     virtual void processGUImsg(const Message& msg){};
     IMessageReceiver(){}
 };

@@ -28,6 +28,7 @@
     <ClInclude Include="Sources\helpers.h" />
     <ClInclude Include="Sources\HelperStructers.h" />
     <ClInclude Include="Sources\Idptr.h" />
+    <ClInclude Include="Sources\IMovable.h" />
     <ClInclude Include="Sources\ItemFabric.h" />
     <ClInclude Include="Sources\ITurf.h" />
     <ClInclude Include="Sources\Kivsjak.h" />
@@ -81,7 +82,9 @@
     <ClCompile Include="Sources\FireEffect.cpp" />
     <ClCompile Include="Sources\GLSprite.cpp" />
     <ClCompile Include="Sources\Idptr.cpp" />
+    <ClCompile Include="Sources\IMovable.cpp" />
     <ClCompile Include="Sources\ItemFabric.cpp" />
+    <ClCompile Include="Sources\ITurf.cpp" />
     <ClCompile Include="Sources\Kivsjak.cpp" />
     <ClCompile Include="Sources\Liquid.cpp" />
     <ClCompile Include="Sources\LiquidHolder.cpp" />
@@ -96,6 +99,7 @@
     <ClCompile Include="Sources\MonstrClass.cpp" />
     <ClCompile Include="Sources\MoveEffect.cpp" />
     <ClCompile Include="Sources\NetClientImpl.cpp" />
+    <ClCompile Include="Sources\OnMapBaseInt.cpp" />
     <ClCompile Include="Sources\OnMapInt.cpp" />
     <ClCompile Include="Sources\Ork.cpp" />
     <ClCompile Include="Sources\Params.cpp" />
@@ -106,6 +110,7 @@
     <ClCompile Include="Sources\sync_random.cpp" />
     <ClCompile Include="Sources\Teleportator.cpp" />
     <ClCompile Include="Sources\Testmob.cpp" />
+    <ClCompile Include="Sources\Aaaa.cpp" />
     <ClCompile Include="Sources\Text.cpp" />
     <ClCompile Include="Sources\TileInt.cpp" />
     <ClCompile Include="Sources\Turf.cpp" />

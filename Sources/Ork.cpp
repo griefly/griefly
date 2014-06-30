@@ -4,6 +4,7 @@
 #include "LiquidHolder.h"
 #include "CSmallItem.h"
 #include "Turf.h"
+#include "ItemFabric.h"
 
 COrk::COrk()
 {

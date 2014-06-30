@@ -5,8 +5,6 @@
 #include "Idptr.h"
 #include "hashes.h"
 
-class IOnMapItem;
-
 #define DECLARE_RAW_TYPE(thisclass, supclass) DECLARE_RAW_LOADED DECLARE_GET_TYPE_ITEM(thisclass, supclass)//load from raw, type
 
 class IMainItem
@@ -54,8 +52,6 @@ public:
 
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
-public:
-    //id_ptr_on<IOnMapItem> master;
 private:
     size_t id_;
     int how_often_;

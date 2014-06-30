@@ -1,15 +1,13 @@
 #pragma once
 
-#include "OnMapBaseInt.h"
+#include "OnMapInt.h"
 
-class ITurf: public IOnMapBase
+class ITurf : public IOnMapItem
 {
 public:
-    DECLARE_SAVED(ITurf, IOnMapBase);
-    DECLARE_GET_TYPE_ITEM(IOnMapBase);
+    DECLARE_SAVED(ITurf, IOnMapItem);
+    DECLARE_GET_TYPE_ITEM(ITurf);
     ITurf() {};
-    virtual bool IsPassable() const { return true; }
-    virtual bool IsTransparent() const { return true; }
-    virtual void delThis() override { IOnMapBase::delThis(); }
+    virtual void delThis() override; 
 };
 ADD_TO_TYPELIST(ITurf);

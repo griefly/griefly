@@ -31,6 +31,8 @@ std::iostream& operator>>(std::iostream& file, std::vector<id_ptr_on<T>>& conten
     return file;
 }
 
+class IMovable;
+
 class CubeTile: public IOnMapBase
 {
 public:
@@ -76,7 +78,7 @@ public:
         return posy_ * 32;
     }
 
-    virtual id_ptr_on<ITurf> GetTurf() 
+    virtual id_ptr_on<ITurf> GetTurf()  override
     {
         return turf_;
     }
@@ -88,7 +90,7 @@ private:
     int KV_SAVEBLE(posx_);
     int KV_SAVEBLE(posy_);
     int KV_SAVEBLE(posz_);
-    typedef std::vector<id_ptr_on<IOnMapItem>> InsideType;
+    typedef std::vector<id_ptr_on<IOnMapBase>> InsideType;
     InsideType KV_SAVEBLE(inside_list_);
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap(); // TODO

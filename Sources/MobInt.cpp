@@ -84,7 +84,7 @@ void IMob::processPhysics()
 
 bool IMob::checkMove(Dir direct)
 {
-    if(IOnMapItem::checkMove(direct))
+    if(IMovable::checkMove(direct))
     {        
         
         if(thisMobControl)

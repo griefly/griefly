@@ -80,13 +80,7 @@ public:
         return is_strong_owner;
     }
 
-    virtual id_ptr_on<ITurf> GetTurf() 
-    {
-        if (owner.valid())
-            return owner->GetTurf();
-        return 0;
-    }
-
+    virtual id_ptr_on<ITurf> GetTurf();
 protected:
     bool KV_SAVEBLE(is_strong_owner);
     id_ptr_on<IOnMapBase> KV_SAVEBLE(owner);

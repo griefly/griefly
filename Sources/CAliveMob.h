@@ -1,10 +1,6 @@
-#ifndef CALIVEMOB_H
-#define CALIVEMOB_H
+#pragma once
 
 #include "MobInt.h"
-
-#define __KV_CLASS__ CAliveMob
-
 #include "LiquidHolder.h"
 
 class CAliveMob : public IMob
@@ -22,7 +18,6 @@ public:
     virtual void InitGUI() override;
     virtual void processGUI() override;
     
-    virtual void ignite(int force) override;
     //virtual bool checkMove(Dir direct);
     int KV_SAVEBLE(dmg);//brute damage
     int KV_SAVEBLE(injuries);//anti-penetrete
@@ -36,5 +31,3 @@ public:
     CAliveMob();
 };
 ADD_TO_TYPELIST(CAliveMob);
-
-#endif

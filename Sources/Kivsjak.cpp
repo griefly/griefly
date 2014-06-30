@@ -4,6 +4,7 @@
 #include "Turf.h"
 #include "sync_random.h"
 #include "CSmallItem.h"
+#include "ItemFabric.h"
 
 Kivsjak::Kivsjak()
 {
@@ -44,7 +45,7 @@ void Kivsjak::live()
     }
 
     if (!GetOwner()->GetTurf().valid())
-        SYSTEM_STREAM << "Its ok" << std::endl;
+        ;//SYSTEM_STREAM << "Its ok" << std::endl;
 }
 
 bool Kivsjak::checkMove(Dir direct)

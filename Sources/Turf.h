@@ -2,12 +2,13 @@
 
 #include "OnMapInt.h"
 #include "LiquidHolder.h"
+#include "ITurf.h"
 
-class CTurf: public IOnMapItem
+class CTurf: public ITurf
 {
 public:
     DECLARE_GET_TYPE_ITEM(cturf)
-    DECLARE_SAVED(CTurf, IOnMapItem);
+    DECLARE_SAVED(CTurf, ITurf);
     CTurf(){};
     
 };
@@ -28,6 +29,5 @@ public:
     Pit();
     DECLARE_SAVED(Pit, CTurf);
     DECLARE_GET_TYPE_ITEM(pit)
-    virtual void process();
 };
 ADD_TO_TYPELIST(Pit);

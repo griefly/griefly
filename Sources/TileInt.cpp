@@ -4,6 +4,7 @@
 #include "MapClass.h"
 #include "OnMapInt.h"
 #include "TileInt.h"
+#include "IMovable.h"
 
 CubeTile::CubeTile()
 {
@@ -15,6 +16,7 @@ CubeTile::CubeTile()
 }
 bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
 {
+    // TODO: IOnMapBase => IMovable
     id_ptr_on<IOnMapItem> item = item_raw;
     if (!item.valid())
         return false;
@@ -28,8 +30,7 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
             int* poc = 0;
             *poc = 1;
         }
-        if (((*itr)->v_level == item->v_level && itr->ret_id() > item.ret_id())
-           || (*itr)->v_level > item->v_level)
+        if (itr->ret_id() > item.ret_id())
             break;
         ++itr;
     }
