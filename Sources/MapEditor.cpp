@@ -21,6 +21,14 @@ MapEditor::MapEditor()
 
     visible_points_ = new std::list<point>;
     
+    point1_.posx = -1;
+    point1_.posy = -1;
+    point1_.posz = -1;
+
+    point2_.posx = -1;
+    point2_.posy = -1;
+    point2_.posz = -1;
+
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
         IMainItem* loc = it->second();
@@ -151,6 +159,45 @@ void MapEditor::NormalizePointer()
     // TODO
 }
 
+void MapEditor::SetAreaVars(int* xb, int* yb, int* zb,
+                            int* xe, int* ye, int* ze)
+{
+    int x_begin = point1_.posx;
+    int y_begin = point1_.posy;
+    int z_begin = point1_.posz;
+
+    int x_end = point2_.posx;
+    int y_end = point2_.posy;
+    int z_end = point2_.posz;
+
+    if (x_begin == -1 || x_end == -1)
+    {
+        x_begin = pointer_x_;
+        y_begin = pointer_y_;
+        z_begin = viewer_z_;
+
+        x_end = pointer_x_;
+        y_end = pointer_y_;
+        z_end = viewer_z_;
+    }
+
+    if (x_end < x_begin)
+        std::swap(x_end, x_begin);
+    if (y_end < y_begin)
+        std::swap(y_end, y_begin);
+    if (z_end < z_begin)
+        std::swap(z_end, z_begin);
+
+    *xb = x_begin;
+    *xe = x_end;
+
+    *yb = y_begin;
+    *ye = y_end;
+
+    *zb = z_begin;
+    *ze = z_end;
+}
+
 void MapEditor::ProcessInput()
 {
     SDL_Event event;    
@@ -224,23 +271,41 @@ void MapEditor::ProcessInput()
             }
             else if (event.key.keysym.sym == SDLK_SPACE)
             {
-                if (!castTo<ITurf>(for_creation_[to_create_]))
-                    GetItemFabric()->newItemOnMap<IOnMapItem>(
-                        for_creation_[to_create_]->T_ITEM(), 
-                        GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]);
+                int x_begin, y_begin, z_begin;
+                int x_end, y_end, z_end;
+                SetAreaVars(&x_begin, &y_begin, &z_begin,
+                            &x_end,   &y_end,   &z_end);
+
+                for (int counter_x = x_begin; counter_x <= x_end; ++counter_x)
+                    for (int counter_y = y_begin; counter_y <= y_end; ++counter_y)
+                        for (int counter_z = z_begin; counter_z <= z_end; ++counter_z)
+                            if (!castTo<ITurf>(for_creation_[to_create_]))
+                                GetItemFabric()->newItemOnMap<IOnMapItem>(
+                                    for_creation_[to_create_]->T_ITEM(), 
+                                    GetMapMaster()->squares[counter_x][counter_y][counter_z]);
             }
             else if (event.key.keysym.sym == SDLK_t)
             {
-                auto current_tile = GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_];
-                if (current_tile->GetTurf().valid())
-                {
-                    current_tile->GetTurf()->delThis();
-                }
-                else if (castTo<ITurf>(for_creation_[to_create_]))
-                {
-                    auto trf = GetItemFabric()->newItem<ITurf>(for_creation_[to_create_]->T_ITEM());
-                    current_tile->SetTurf(trf);
-                }
+                int x_begin, y_begin, z_begin;
+                int x_end, y_end, z_end;
+                SetAreaVars(&x_begin, &y_begin, &z_begin,
+                            &x_end,   &y_end,   &z_end);
+
+                for (int counter_x = x_begin; counter_x <= x_end; ++counter_x)
+                    for (int counter_y = y_begin; counter_y <= y_end; ++counter_y)
+                        for (int counter_z = z_begin; counter_z <= z_end; ++counter_z)
+                        {
+                            auto current_tile = GetMapMaster()->squares[counter_x][counter_y][counter_z];
+                            if (current_tile->GetTurf().valid())
+                            {
+                                current_tile->GetTurf()->delThis();
+                            }
+                            else if (castTo<ITurf>(for_creation_[to_create_]))
+                            {
+                                auto trf = GetItemFabric()->newItem<ITurf>(for_creation_[to_create_]->T_ITEM());
+                                current_tile->SetTurf(trf);
+                            }
+                        }
             }
             else if (event.key.keysym.sym == SDLK_F5)
             {
@@ -252,11 +317,51 @@ void MapEditor::ProcessInput()
             }
             else if (event.key.keysym.sym == SDLK_DELETE)
             {
-                auto ptr = GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]->GetItem<IOnMapItem>();
-                if (ptr.valid())
-                    ptr->delThis();
-                else if (GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]->GetTurf().valid())
-                    GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]->GetTurf()->delThis();
+                int x_begin, y_begin, z_begin;
+                int x_end, y_end, z_end;
+                SetAreaVars(&x_begin, &y_begin, &z_begin,
+                            &x_end,   &y_end,   &z_end);
+
+                for (int counter_x = x_begin; counter_x <= x_end; ++counter_x)
+                    for (int counter_y = y_begin; counter_y <= y_end; ++counter_y)
+                        for (int counter_z = z_begin; counter_z <= z_end; ++counter_z)
+                        {
+                            auto ptr = GetMapMaster()->squares[counter_x][counter_y][counter_z]->GetItem<IOnMapItem>();
+                            if (ptr.valid())
+                                ptr->delThis();
+                            else if (GetMapMaster()->squares[counter_x][counter_y][counter_z]->GetTurf().valid())
+                                GetMapMaster()->squares[counter_x][counter_y][counter_z]->GetTurf()->delThis();
+                        }
+            }
+            else if (event.key.keysym.sym == SDLK_RSHIFT)
+            {
+                if (point1_.posx == -1)
+                {
+                    point1_.posx = pointer_x_;
+                    point1_.posy = pointer_y_;
+                    point1_.posz = viewer_z_;
+                }
+                else
+                {
+                    point1_.posx = -1;
+                    point1_.posy = -1;
+                    point1_.posz = -1;
+                }
+            }
+            else if (event.key.keysym.sym == SDLK_LSHIFT)
+            {
+                if (point2_.posx == -1)
+                {
+                    point2_.posx = pointer_x_;
+                    point2_.posy = pointer_y_;
+                    point2_.posz = viewer_z_;
+                }
+                else
+                {
+                    point2_.posx = -1;
+                    point2_.posy = -1;
+                    point2_.posz = -1;
+                }
             }
         }
         if(event.type == SDL_MOUSEBUTTONDOWN)
@@ -281,6 +386,20 @@ void MapEditor::DrawPointer()
                       pointer_x_ * 32 + mob_position::get_shift_x(),
                       pointer_y_ * 32 + mob_position::get_shift_y(),
                       0, 0);
+
+    spr = GetSpriter()->returnSpr("icons/up_left_point.png");
+    if (viewer_z_ == point1_.posz)
+        GetScreen()->Draw(spr, 
+                          point1_.posx * 32 + mob_position::get_shift_x(),
+                          point1_.posy * 32 + mob_position::get_shift_y(),
+                          0, 0);
+
+    spr = GetSpriter()->returnSpr("icons/down_right_point.png");
+    if (viewer_z_ == point2_.posz)
+        GetScreen()->Draw(spr, 
+                          point2_.posx * 32 + mob_position::get_shift_x(),
+                          point2_.posy * 32 + mob_position::get_shift_y(),
+                          0, 0);
 }
 
 void MapEditor::UpdateVisible()

@@ -22,6 +22,9 @@ public:
         return visible_points_;
     }
 private:
+    void SetAreaVars(int* xb, int* yb, int* zb,
+                     int* xe, int* ye, int* ze);
+
     void ProcessInput();
     void UpdateVisible();
     void DrawPointer();
@@ -42,6 +45,9 @@ private:
 
     int pointer_x_;
     int pointer_y_;
+
+    point point1_;
+    point point2_;
 };
 
 MapEditor* GetMapEditor();
