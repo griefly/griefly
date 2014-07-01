@@ -44,8 +44,7 @@ void Kivsjak::live()
         delThis();
     }
 
-    if (!GetOwner()->GetTurf().valid())
-        ;//SYSTEM_STREAM << "Its ok" << std::endl;
+    if (!GetOwner()->GetTurf().valid()) {};//SYSTEM_STREAM << "Its ok" << std::endl;
 }
 
 bool Kivsjak::checkMove(Dir direct)

@@ -59,6 +59,13 @@ void Manager::undoCenterMove(Dir direct)
                     eff->Init(TITLE_SIZE, direct, GetMob()->pixSpeed, item);
                     eff->Start();
                 });
+                auto trf = GetMapMaster()->squares[x][y][z]->GetTurf();
+                if (trf.valid())
+                {
+                    Move* eff = EffectFabricOf<Move>::getEffectOf();
+                    eff->Init(TITLE_SIZE, direct, GetMob()->pixSpeed, trf);
+                    eff->Start();
+                }
             }
         }
 };

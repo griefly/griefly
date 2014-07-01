@@ -70,6 +70,8 @@ id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct)
 
 bool CubeTile::IsPassable() const
 {
+    if (turf_.valid() && !turf_->IsPassable())
+        return false;
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
         if (!(*it)->IsPassable())
             return false;
@@ -78,6 +80,8 @@ bool CubeTile::IsPassable() const
 
 bool CubeTile::IsTransparent() const
 {
+    if (turf_.valid() && !turf_->IsTransparent())
+        return false;
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
         if (!(*it)->IsTransparent())
             return false;

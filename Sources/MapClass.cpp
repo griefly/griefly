@@ -28,13 +28,20 @@ void MapMaster::Draw()
             while(it2 != GetVisible()->end())
             {   
                 if(checkOutBorder(it2->posx, it2->posy))
+                {
                     if (it2->posz == z_level)
+                    {
                         squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
                         {
                             auto item_n = castTo<IOnMapItem>(item.ret_item());
                             if (item_n->v_level == i)
                                 item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
                         });
+                        auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+                        if (trf.valid() && trf->v_level == i)
+                            trf->processImage(z_level < z_level_m ? TOP : SAME);
+                    }
+                }
                 ++it2;
             }
         } 
@@ -42,13 +49,20 @@ void MapMaster::Draw()
         while(it2 != GetVisible()->end())
         {   
             if(checkOutBorder(it2->posx, it2->posy))
+            {
                 if (it2->posz == z_level)
+                {
                     squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
                     {
                         auto item_n = castTo<IOnMapItem>(item.ret_item());
                         if (item_n->v_level >= MAX_LEVEL)
                             item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
                     });
+                    auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+                    if (trf.valid() && trf->v_level >= MAX_LEVEL)
+                        trf->processImage(z_level < z_level_m ? TOP : SAME);
+                }
+            }
             ++it2;
         }
     }
@@ -94,13 +108,14 @@ void MapMaster::makeMap()
             // Ge
             //
             bool chk = (rand() % 10 != 1);
-            id_ptr_on<IOnMapItem> loc = GetItemFabric()->newItemOnMap<IOnMapItem>(hash(chk ? "ground" : "pit"), squares[x][y][0]);
+            id_ptr_on<IOnMapItem> loc = GetItemFabric()->newItem<IOnMapItem>(hash(chk ? "ground" : "pit"));
             loc->imageStateH = 0;
             if (chk)
                 loc->imageStateW = rand() % 4;
             else
                 loc->imageStateW = 0;
-            
+            squares[x][y][0]->SetTurf(loc);
+
             if(rand() % 29 == 1 || x == 0 || y == 0 || x == GetMapW() - 1 || y == GetMapH() - 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][1]);
             if(rand() % 60 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
@@ -256,6 +271,7 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
         while(it2 != GetVisible()->end())
         {
             if (it2->posz == z)
+            {
                 squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
                 {
                     auto item = castTo<IOnMapItem>(item_h.ret_item());
@@ -266,6 +282,15 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
                                 y - (item->GetDrawY() + mob_position::get_shift_y())))
                                 retval = item_h;
                 });
+                auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+                if (trf.valid())
+                    if (retval.ret_id() == 0)
+                        if(trf->v_level >= MAX_LEVEL)
+                            if(!trf->IsTransp(
+                                x - (trf->GetDrawX() + mob_position::get_shift_x()),
+                                y - (trf->GetDrawY() + mob_position::get_shift_y())))
+                                retval = trf;
+            }
             if (retval.valid())
                 return retval;
             ++it2;
@@ -277,6 +302,7 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
             while(it2 != GetVisible()->end())
             {
                 if (it2->posz == z)
+                {
                     squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
                     {
                         auto item = castTo<IOnMapItem>(item_h.ret_item());
@@ -287,6 +313,15 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
                                     y - (item->GetDrawY() + mob_position::get_shift_y())))
                                     retval = item_h;
                     });
+                    auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+                    if (trf.valid())
+                        if (retval.ret_id() == 0)
+                            if(trf->v_level == i)
+                                if(!trf->IsTransp(
+                                    x - (trf->GetDrawX() + mob_position::get_shift_x()),
+                                    y - (trf->GetDrawY() + mob_position::get_shift_y())))
+                                    retval = trf;
+                }
                 if (retval.ret_id())
                     return retval;
                 ++it2;

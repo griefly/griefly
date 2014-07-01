@@ -81,6 +81,7 @@ public:
     }
 
     virtual id_ptr_on<ITurf> GetTurf();
+    virtual void SetTurf(id_ptr_on<ITurf> turf);
 protected:
     bool KV_SAVEBLE(is_strong_owner);
     id_ptr_on<IOnMapBase> KV_SAVEBLE(owner);
