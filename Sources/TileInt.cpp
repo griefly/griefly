@@ -44,6 +44,13 @@ bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
     id_ptr_on<IOnMapItem> item = item_raw;
     if (!item.valid())
         return false;
+
+    if (item == GetTurf())
+    {
+        SetTurf(0);
+        return true;
+    }
+
     auto itr = inside_list_.begin();
     while(itr != inside_list_.end())
     {

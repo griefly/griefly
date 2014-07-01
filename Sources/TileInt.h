@@ -85,7 +85,8 @@ public:
     virtual void SetTurf(id_ptr_on<ITurf> turf) override
     {
         turf_ = turf;
-        turf_->SetOwner(GetId());
+        if (turf_.valid())
+            turf_->SetOwner(GetId());
     }
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;

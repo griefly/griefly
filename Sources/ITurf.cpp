@@ -1,3 +1,6 @@
 #include "ITurf.h"
 
-void ITurf::delThis() { IOnMapItem::delThis(); }
+void ITurf::delThis() 
+{
+    IOnMapItem::delThis();
+}

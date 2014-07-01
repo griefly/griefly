@@ -52,9 +52,12 @@ void MapEditor::InitWorld()
 
     srand(SDL_GetTicks());
     
-    int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
-    int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
-    int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 2;
+    int x = GetParamsHolder().GetParamBool("map_x") ? 
+            GetParamsHolder().GetParam<int>("map_x") : 40;
+    int y = GetParamsHolder().GetParamBool("map_y") ? 
+            GetParamsHolder().GetParam<int>("map_y") : 40;
+    int z = GetParamsHolder().GetParamBool("map_z") ? 
+            GetParamsHolder().GetParam<int>("map_z") : 2;
 
     GetMapMaster()->makeTiles(x, y, z);
 
@@ -221,9 +224,23 @@ void MapEditor::ProcessInput()
             }
             else if (event.key.keysym.sym == SDLK_SPACE)
             {
-                GetItemFabric()->newItemOnMap<IOnMapItem>(
-                    for_creation_[to_create_]->T_ITEM(), 
-                    GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]);
+                if (!castTo<ITurf>(for_creation_[to_create_]))
+                    GetItemFabric()->newItemOnMap<IOnMapItem>(
+                        for_creation_[to_create_]->T_ITEM(), 
+                        GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]);
+            }
+            else if (event.key.keysym.sym == SDLK_t)
+            {
+                auto current_tile = GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_];
+                if (current_tile->GetTurf().valid())
+                {
+                    current_tile->GetTurf()->delThis();
+                }
+                else if (castTo<ITurf>(for_creation_[to_create_]))
+                {
+                    auto trf = GetItemFabric()->newItem<ITurf>(for_creation_[to_create_]->T_ITEM());
+                    current_tile->SetTurf(trf);
+                }
             }
             else if (event.key.keysym.sym == SDLK_F5)
             {
@@ -238,6 +255,8 @@ void MapEditor::ProcessInput()
                 auto ptr = GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]->GetItem<IOnMapItem>();
                 if (ptr.valid())
                     ptr->delThis();
+                else if (GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]->GetTurf().valid())
+                    GetMapMaster()->squares[pointer_x_][pointer_y_][viewer_z_]->GetTurf()->delThis();
             }
         }
         if(event.type == SDL_MOUSEBUTTONDOWN)
