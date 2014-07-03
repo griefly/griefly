@@ -26,8 +26,14 @@
 #include "MapEditor.h"
 #include "Mob.h"
 
+#include "Metadata.h"
+
 int main(int argc, char *argv[])
 {   
+
+    ImageMetadata im;
+    im.Init("icons/human.png");
+
     GetParamsHolder().ParseParams(argc, argv);
 
     if (!GetParamsHolder().GetParamBool("-editor"))
