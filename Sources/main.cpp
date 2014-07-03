@@ -3,6 +3,7 @@
 #pragma comment (lib, "Libs/SDL_image.lib")
 #pragma comment (lib, "Libs/SDL_ttf.lib")
 #pragma comment (lib, "Libs/SDL_net.lib")
+#pragma comment (lib, "Libs/libpng16.lib")
 
 #ifndef _DEBUG
 #pragma comment (lib, "Libs/sfml-main.lib")

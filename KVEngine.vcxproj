@@ -43,6 +43,7 @@
     <ClInclude Include="Sources\MapEditor.h" />
     <ClInclude Include="Sources\Message.h" />
     <ClInclude Include="Sources\MessageReceiver.h" />
+    <ClInclude Include="Sources\Metadata.h" />
     <ClInclude Include="Sources\Mob.h" />
     <ClInclude Include="Sources\MobInt.h" />
     <ClInclude Include="Sources\mob_position.h" />
@@ -93,6 +94,7 @@
     <ClCompile Include="Sources\MapClass.cpp" />
     <ClCompile Include="Sources\MapEditor.cpp" />
     <ClCompile Include="Sources\Message.cpp" />
+    <ClCompile Include="Sources\Metadata.cpp" />
     <ClCompile Include="Sources\Mob.cpp" />
     <ClCompile Include="Sources\MobInt.cpp" />
     <ClCompile Include="Sources\mob_position.cpp" />
@@ -153,7 +155,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\zlib128-dll\include;D:\SFML-2.1-windows-vc10-32bits\SFML-2.1\include;C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\third_party\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7\VisualC;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\lpng1612\lpng1612;D:\zlib128-dll\include;D:\SFML-2.1-windows-vc10-32bits\SFML-2.1\include;C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\third_party\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7\VisualC;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

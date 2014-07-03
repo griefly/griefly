@@ -234,6 +234,9 @@
     <ClInclude Include="Sources\IMovable.h">
       <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Metadata.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -373,6 +376,9 @@
     </ClCompile>
     <ClCompile Include="Sources\OnMapBaseInt.cpp">
       <Filter>Source Files\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Metadata.cpp">
+      <Filter>Source Files\Sprites</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
