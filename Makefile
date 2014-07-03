@@ -2,7 +2,7 @@ CXX := g++
 CXXFLAGS := -O2 -std=c++11 -Wno-deprecated
 
 INCLUDES := -I. -I/usr/include/SDL -I./third_party/loki-0.1.7/include/loki
-LIBS := -L/usr/lib/x86_64-linux-gnu -lSDLmain -lSDL -lGL -lGLU -lSDL_ttf -lSDL_image -lSDL_mixer -lSDL_net -lz -lsfml-audio -llibpng
+LIBS := -L/usr/lib/x86_64-linux-gnu -lSDLmain -lSDL -lGL -lGLU -lSDL_ttf -lSDL_image -lSDL_mixer -lSDL_net -lz -lsfml-audio -llibpng12
 
 SOURCES := $(wildcard Sources/*.cpp)
 OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
