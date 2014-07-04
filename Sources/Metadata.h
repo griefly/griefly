@@ -27,5 +27,10 @@ public:
     void Init(const std::string& file_name);
     const SpriteMetadata& GetSpriteMetadata(const std::string& name);
 private:
+    std::string dmi_version_;
+	int width_;
+	int height_;
+
+    bool ParseDescription(std::stringstream& desc);
     std::map<std::string, SpriteMetadata> metadata_;
 };

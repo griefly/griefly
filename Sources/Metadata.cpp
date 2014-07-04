@@ -83,9 +83,253 @@ void ImageMetadata::Init(const std::string& name)
             SYSTEM_STREAM << "BEGIN TEXT " << i << std::endl;
             SYSTEM_STREAM << text_ptr[i].text << std::endl;
             SYSTEM_STREAM << "END TEXT " << i << std::endl;
+
+            std::string string_key = std::string(text_ptr[i].key);
+            if (string_key == "Description")
+            {
+                std::stringstream string_text;
+                string_text << std::string(text_ptr[i].text);
+                ParseDescription(string_text);
+                break;
+            }
         }
     }
-
+    SDL_Delay(100000);
     png_destroy_read_struct(&pngPtr, &infoPtr, static_cast<png_infopp>(0));
     source.close();
+}
+
+bool ImageMetadata::ParseDescription(std::stringstream& desc)
+{
+    std::string loc;
+    desc >> loc;
+    if (loc != "#")
+    {
+        SYSTEM_STREAM << "Fail to read '#' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    desc >> loc;
+    if (loc != "BEGIN")
+    {
+        SYSTEM_STREAM << "Fail to read 'BEGIN' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    desc >> loc;
+    if (loc != "DMI")
+    {
+        SYSTEM_STREAM << "Fail to read 'DMI' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    desc >> loc;
+    if (loc != "version")
+    {
+        SYSTEM_STREAM << "Fail to read 'version' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    desc >> loc;
+    if (loc != "=")
+    {
+        SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    ////////////
+    desc >> dmi_version_;
+    SYSTEM_STREAM << "Read version: " << dmi_version_ << std::endl;
+    ////////////
+    desc >> loc;
+    if (loc != "width")
+    {
+        SYSTEM_STREAM << "Fail to read 'width' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    desc >> loc;
+    if (loc != "=")
+    {
+        SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    
+    //////////////
+    desc >> width_;
+    SYSTEM_STREAM << "Read width: " << width_ << std::endl;
+    /////////////
+
+    desc >> loc;
+    if (loc != "height")
+    {
+        SYSTEM_STREAM << "Fail to read 'height' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    desc >> loc;
+    if (loc != "=")
+    {
+        SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    
+    /////////////
+    desc >> height_;
+    SYSTEM_STREAM << "Read height: " << height_ << std::endl;
+    ////////////
+    
+    desc >> loc;
+    std::string current_state = "###";
+    size_t first_frame_pos = 0;
+    while (loc != "#")
+    {
+        if (loc == "state")
+        {
+            loc.clear();
+            desc >> loc;
+            if (loc != "=")
+            {
+                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                return false;
+            }
+            loc.clear();
+            desc >> loc;
+            SYSTEM_STREAM << "New state: " << loc << std::endl;
+            current_state = loc.substr(1, loc.length() - 2);
+            metadata_[current_state].first_frame_pos = first_frame_pos;
+            SYSTEM_STREAM << "First frame position: " << first_frame_pos << std::endl;
+        }
+        else if (loc == "dirs")
+        {
+            loc.clear();
+            desc >> loc;
+            if (loc != "=")
+            {
+                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                return false;
+            }
+            loc.clear();
+
+            size_t dirs;
+            desc >> dirs;
+            SYSTEM_STREAM << "Dirs: " << dirs << std::endl;
+
+            if (current_state == "###")
+            {
+                SYSTEM_STREAM << "Dirs without state" << std::endl;
+                return false;
+            }
+            metadata_[current_state].dirs = dirs;
+        }
+        else if (loc == "frames")
+        {
+            loc.clear();
+            desc >> loc;
+            if (loc != "=")
+            {
+                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                return false;
+            }
+            loc.clear();
+
+            size_t frames;
+            desc >> frames;
+            SYSTEM_STREAM << "Frames: " << frames << std::endl;
+
+            if (current_state == "###")
+            {
+                SYSTEM_STREAM << "Frames without state" << std::endl;
+                return false;
+            }
+            metadata_[current_state].frames_delay.resize(frames);
+            first_frame_pos += frames * metadata_[current_state].dirs;
+        }
+        else if (loc == "delay")
+        {
+            loc.clear();
+            desc >> loc;
+            if (loc != "=")
+            {
+                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                return false;
+            }
+            loc.clear();
+
+            if (current_state == "###")
+            {
+                SYSTEM_STREAM << "Delay without state" << std::endl;
+                return false;
+            }
+
+            for (size_t i = 0; i < metadata_[current_state].frames_delay.size() - 1; ++i)
+            {
+                size_t value;
+                desc >> value;
+                SYSTEM_STREAM << "Delay " << i << " is: " << value << std::endl;
+                metadata_[current_state].frames_delay[i] = value;
+
+                char comma;
+                desc >> comma;
+                if (comma != ',')
+                {
+                    SYSTEM_STREAM << "Fail to read ',' from .dmi file" << std::endl;
+                    return false;
+                }
+            }
+            size_t value;
+            desc >> value;
+            SYSTEM_STREAM << "Last delay is: " << value << std::endl;
+            metadata_[current_state].frames_delay
+                [metadata_[current_state].frames_delay.size() - 1]
+                    = value;
+        }
+        else if (loc == "rewind")
+        {
+            loc.clear();
+            desc >> loc;
+            if (loc != "=")
+            {
+                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                return false;
+            }
+            loc.clear();
+
+            if (current_state == "###")
+            {
+                SYSTEM_STREAM << "Delay without state" << std::endl;
+                return false;
+            }
+
+            size_t rewind;
+            desc >> rewind;
+            SYSTEM_STREAM << "Rewind is: " << rewind << std::endl;
+            metadata_[current_state].rewind = rewind ? true : false;
+        }
+        else
+        {
+            SYSTEM_STREAM << "Unknown param: " << loc << std::endl;
+            SDL_Delay(100000);
+            return false;
+        }
+        loc.clear();
+        desc >> loc;
+    }
+    loc.clear();
+    desc >> loc;
+    if (loc != "END")
+    {
+        SYSTEM_STREAM << "Fail to read 'END' from .dmi file" << std::endl;
+        return false;
+    }
+    loc.clear();
+    desc >> loc;
+    if (loc != "DMI")
+    {
+        SYSTEM_STREAM << "Fail to read 'DMI' from .dmi file" << std::endl;
+        return false;
+    }
+    return true;
 }
