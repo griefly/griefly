@@ -12,6 +12,13 @@ const ImageMetadata::SpriteMetadata&
     return metadata_[name];
 }
 
+bool ImageMetadata::IsValidState(const std::string& name)
+{
+    if (!Valid())
+        return false;
+    return metadata_.find(name) != metadata_.end();
+}
+
 const int PNGSIGSIZE = 8;
 
 void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
@@ -29,7 +36,6 @@ void ImageMetadata::Init(const std::string& name)
     if (source.fail()) 
     {
         SYSTEM_STREAM << "ERROR: Fail to open smth" << std::endl;
-        SDL_Delay(10000);
         return;
     }
 
@@ -94,7 +100,7 @@ void ImageMetadata::Init(const std::string& name)
             }
         }
     }
-    SDL_Delay(100000);
+    //SDL_Delay(100000);
     png_destroy_read_struct(&pngPtr, &infoPtr, static_cast<png_infopp>(0));
     source.close();
 }
@@ -331,5 +337,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         SYSTEM_STREAM << "Fail to read 'DMI' from .dmi file" << std::endl;
         return false;
     }
+    valid_ = true;
     return true;
 }

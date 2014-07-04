@@ -7,8 +7,7 @@
 
 CGround::CGround()
 { 
-    SetSpriteTop("icons/turf.png");
-    SetSprite("icons/ground_down.png");
+    SetSprite("icons/turf.png");
     passable = false;
     transparent = false;
     v_level = 1;

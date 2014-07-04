@@ -7,6 +7,7 @@
 class ImageMetadata
 {
 public:
+    ImageMetadata() { valid_ = false; }
     struct SpriteMetadata
     {
         SpriteMetadata()
@@ -24,9 +25,24 @@ public:
 
         size_t first_frame_pos;
     };
+    bool Valid() const
+    {
+        return valid_;
+    }
+    int GetW() const
+    {
+        return width_;
+    }
+    int GetH() const
+    {
+        return height_;
+    }
     void Init(const std::string& file_name);
     const SpriteMetadata& GetSpriteMetadata(const std::string& name);
+    bool IsValidState(const std::string& name);
 private:
+    bool valid_;
+
     std::string dmi_version_;
 	int width_;
 	int height_;

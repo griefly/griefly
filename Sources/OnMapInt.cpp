@@ -20,6 +20,8 @@ void IOnMapItem::SetSprite(const std::string& name)
     if (!GetSpriter())
         return;
     sprite_ = GetSpriter()->returnSpr(name);
+    if (IsMetadata())
+        SetState(state_);
 };
 
 
@@ -30,20 +32,30 @@ const GLSprite* IOnMapItem::GetSprite()
     return sprite_;
 }
 
-void IOnMapItem::SetSpriteTop(const std::string& name)
+void IOnMapItem::SetState(const std::string& name)
 {
-    T_SPR_TOP = name;
-    if (!GetSpriter()) 
+    state_ = name;
+    if (!GetSprite()->GetSDLSprite()->metadata.IsValidState(state_))
+    {
+        SYSTEM_STREAM << "State: " << name << " isn't valid for " << T_SPR << std::endl;
+        with_metadata_ = false;
         return;
-    sprite_top_ = GetSpriter()->returnSpr(name);
-};
+    }
+    metadata_ = &GetSprite()->GetSDLSprite()->metadata.GetSpriteMetadata(state_);
+    with_metadata_ = true;
 
+    imageStateH = metadata_->first_frame_pos / GetSprite()->FrameW();
+    imageStateW = metadata_->first_frame_pos % GetSprite()->FrameW();
+}
 
-const GLSprite* IOnMapItem::GetSpriteTop()
+const ImageMetadata::SpriteMetadata* IOnMapItem::GetMetadata()
 {
-    if (sprite_top_ == nullptr)
-        SetSpriteTop(T_SPR_TOP);
-    return sprite_top_;
+    if (!IsMetadata())
+        return nullptr;
+    
+    if (!metadata_)
+        SetState(state_);
+    return metadata_;
 }
 
 const GLSprite* top_overlay = nullptr;
@@ -52,30 +64,10 @@ void IOnMapItem::processImage(DrawType type)
     if (NODRAW)
         return;
 
-    const GLSprite* spr = GetSprite();
-    bool is_need_overlay = false;
-    if (type == TOP)
-    {
-        spr = GetSpriteTop();
-        if (spr->Fail())
-        {
-            is_need_overlay = true;
-            spr = GetSprite();
-        }
-    } 
-    GetScreen()->Draw(spr, 
+    GetScreen()->Draw(GetSprite(), 
                       GetDrawX() + mob_position::get_shift_x(), 
                       GetDrawY() + mob_position::get_shift_y(), 
                       imageStateW, imageStateH);
-    if (is_need_overlay)
-    {
-        if (!top_overlay)
-                top_overlay = GetSpriter()->returnSpr("icons/top_overlay.png");
-        GetScreen()->Draw(top_overlay, 
-                          GetDrawX() + mob_position::get_shift_x(), 
-                          GetDrawY() + mob_position::get_shift_y(), 
-                          0, 0);
-    }
 };
 
 void IOnMapItem::processPhysics()
@@ -126,7 +118,6 @@ void IOnMapItem::delThis()
 IOnMapItem::IOnMapItem()
 {
     sprite_ = nullptr;
-    sprite_top_ = nullptr;
     v_level = 0;
     imageStateH = 0;
     imageStateW = 0;
@@ -137,5 +128,6 @@ IOnMapItem::IOnMapItem()
     burn_power = 0;
     name = "NONAMESHIT";
     T_SPR = "NULL";
-    T_SPR_TOP = "NULL";
+    state_ = "null";
+    with_metadata_ = false;
 }

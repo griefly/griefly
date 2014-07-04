@@ -132,21 +132,14 @@ void MapEditor::DrawChoosenItem()
     const GLSprite* spr = GetSpriter()->returnSpr("icons/background.png");
     GetScreen()->Draw(spr, 16 + 32 * 0, 16, 0, 0);
     GetScreen()->Draw(spr, 16 + 32 * 1, 16, 0, 0);
-    GetScreen()->Draw(spr, 16 + 32 * 2, 16, 0, 0);
 
     GetScreen()->Draw(spr, 16 + 32 * 0, 48, 0, 0);
     GetScreen()->Draw(spr, 16 + 32 * 1, 48, 0, 0);
-    GetScreen()->Draw(spr, 16 + 32 * 2, 48, 0, 0);
 
     spr = for_creation_[to_create_]->GetSprite();
     if (!spr->Fail())
     {
         GetScreen()->Draw(spr, 30, 32, 0, 0);
-    }
-    spr = for_creation_[to_create_]->GetSpriteTop();
-    if (!spr->Fail())
-    {
-        GetScreen()->Draw(spr, 66, 32, 0, 0);
     }
 }
 
@@ -255,7 +248,6 @@ void MapEditor::ProcessInput()
                 to_create_ = std::min(static_cast<int>(for_creation_.size() - 1), to_create_ + 1);
                 SYSTEM_STREAM << "to_create_: " << to_create_ << std::endl;
                 SYSTEM_STREAM << for_creation_[to_create_]->T_SPR << std::endl;
-                SYSTEM_STREAM << for_creation_[to_create_]->T_SPR_TOP << std::endl;
                 SYSTEM_STREAM << for_creation_[to_create_]->name << std::endl;
                 SYSTEM_STREAM << "=========" << std::endl;
             }
@@ -265,7 +257,6 @@ void MapEditor::ProcessInput()
                 to_create_ = std::max(0, to_create_ - 1);
                 SYSTEM_STREAM << "to_create_: " << to_create_ << std::endl;
                 SYSTEM_STREAM << for_creation_[to_create_]->T_SPR << std::endl;
-                SYSTEM_STREAM << for_creation_[to_create_]->T_SPR_TOP << std::endl;
                 SYSTEM_STREAM << for_creation_[to_create_]->name << std::endl;
                 SYSTEM_STREAM << "=========" << std::endl;
             }

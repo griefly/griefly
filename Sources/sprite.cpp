@@ -17,24 +17,34 @@ void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask)
 
 bool CSprite::init(InitSprite data)
 {
+    metadata.Init(data.imgFile);
     SDL_Surface* temp = IMG_Load(data.imgFile.c_str());
     if(temp == NULL)
         return false;
-    numFrameH = data.numFrameH;
-    numFrameW = data.numFrameW;
+    if (metadata.Valid())
+    {
+        numFrameW = temp->w / metadata.GetW();
+        numFrameH = temp->h / metadata.GetH();
+    }
+    else
+    {
+        numFrameH = data.numFrameH;
+        numFrameW = data.numFrameW;
+    }
     if((numFrameH == 0) || (numFrameW == 0))
     {
         w = TITLE_SIZE;
         h = TITLE_SIZE;
         numFrameW = temp->w / TITLE_SIZE;
         numFrameH = temp->h / TITLE_SIZE;
-        SYSTEM_STREAM << numFrameW << " x " << numFrameH << " - loaded " << data.imgFile.c_str() << std::endl;
     }
     else
     {
         w = temp->w / numFrameW;
         h = temp->h / numFrameH;
     }
+    SYSTEM_STREAM << numFrameW << "x" << numFrameH << " - loaded " << data.imgFile << std::endl;
+
     Uint32 rmask, gmask, bmask, amask;
     SetMasks(&rmask, &gmask, &bmask, &amask);
 

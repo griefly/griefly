@@ -1,8 +1,10 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#pragma once
 
 #include <SDL.h>
 #include <SDL_image.h>
+
+#include "Metadata.h"
+
 #include "constheader.h"
 
 void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask);
@@ -18,6 +20,7 @@ class CSprite
 {
 public:
     CSprite();
+    ImageMetadata metadata;
     int h;
     int w;
     int numFrameH;
@@ -26,5 +29,3 @@ public:
     bool init(InitSprite data);
     ~CSprite();
 };
-
-#endif

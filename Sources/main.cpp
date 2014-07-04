@@ -31,8 +31,8 @@
 int main(int argc, char *argv[])
 {   
 
-    ImageMetadata im;
-    im.Init("icons/human.png");
+   // ImageMetadata im;
+   // im.Init("icons/human.png");
 
     GetParamsHolder().ParseParams(argc, argv);
 

@@ -6,6 +6,7 @@
 #include "GLSprite.h"
 #include "ASpritesClass.h"
 #include "HelperStructers.h"
+#include "Metadata.h"
 
 class SmallItem;
 
@@ -57,8 +58,12 @@ public:
     void SetSprite(const std::string& T_SPR);
     const GLSprite* GetSprite();
 
-    void SetSpriteTop(const std::string& T_SPR);
-    const GLSprite* GetSpriteTop();
+    void SetState(const std::string& name);
+    const ImageMetadata::SpriteMetadata* GetMetadata(); 
+    bool IsMetadata()
+    {
+        return with_metadata_;
+    }
 public:
     int KV_ON_LOAD(step_x, 0);
     int KV_ON_LOAD(step_y, 0);
@@ -73,8 +78,10 @@ public:
     std::string KV_SAVEBLE(T_SPR);
     GLSprite* KV_ON_LOAD(sprite_, nullptr);
 
-    std::string KV_SAVEBLE(T_SPR_TOP);
-    GLSprite* KV_ON_LOAD(sprite_top_, nullptr);
+    std::string KV_SAVEBLE(state_);
+    const ImageMetadata::SpriteMetadata* KV_ON_LOAD(metadata_, nullptr);
+
+    bool KV_SAVEBLE(with_metadata_);
 };
 
 ADD_TO_TYPELIST(IOnMapItem);
