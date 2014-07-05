@@ -21,6 +21,7 @@ CTestmob::CTestmob()
     passable = false;
     transparent = false;
     v_level = 5;
-    SetSprite("icons/rock.png");
+    SetSprite("icons/walls.dmi");
+    SetState("metal0");
     name = "Rock";
 };

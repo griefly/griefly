@@ -19,8 +19,8 @@ CWeed::CWeed()
 {
     v_level = 2;
     SetSprite("icons/kivtek.png");
-    imageStateH = get_rand() % 2;
-    imageStateW = get_rand() % 2;
+//    imageStateH = get_rand() % 2;
+//    imageStateW = get_rand() % 2;
     name = "Weed";
 };
 

@@ -11,7 +11,7 @@ COrk::COrk()
     tickSpeed = 2;
     pixSpeed = 1;
     SetSprite("icons/human.png");
-    imageStateW = 1;
+    SetState("african1_m_s");
     passable = true;
     v_level = 10;
     in_hand = 0;
@@ -31,14 +31,6 @@ void COrk::live()
 }
 bool COrk::checkMove(Dir direct)
 {
-    if (direct == D_UP)
-        imageStateW = 2;
-    if (direct == D_DOWN)
-        imageStateW = 1;
-    if (direct == D_LEFT)
-        imageStateW = 4;
-    if (direct == D_RIGHT)
-        imageStateW = 3;
     if (CAliveMob::checkMove(direct))
     {   
         if (owner->GetItem<CWeed>().valid())

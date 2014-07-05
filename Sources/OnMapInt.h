@@ -59,29 +59,29 @@ public:
     const GLSprite* GetSprite();
 
     void SetState(const std::string& name);
-    const ImageMetadata::SpriteMetadata* GetMetadata(); 
-    bool IsMetadata()
-    {
-        return with_metadata_;
-    }
+    const ImageMetadata::SpriteMetadata* GetMetadata();
+
+    int GetStateH();
+    int GetStateW();
+
 public:
     int KV_ON_LOAD(step_x, 0);
     int KV_ON_LOAD(step_y, 0);
     int KV_SAVEBLE(v_level);
-    int KV_SAVEBLE(imageStateH);
-    int KV_SAVEBLE(imageStateW);
     bool KV_SAVEBLE(passable);
     bool KV_SAVEBLE(transparent);
     int KV_SAVEBLE(burn_power);//0 - 1 - MUCH MUCH
     std::string KV_SAVEBLE(name);
 public:
     std::string KV_SAVEBLE(T_SPR);
-    GLSprite* KV_ON_LOAD(sprite_, nullptr);
+    const GLSprite* KV_ON_LOAD(sprite_, nullptr);
 
     std::string KV_SAVEBLE(state_);
     const ImageMetadata::SpriteMetadata* KV_ON_LOAD(metadata_, nullptr);
-
-    bool KV_SAVEBLE(with_metadata_);
+private:
+    int KV_ON_LOAD(image_state_h_, -1);
+    int KV_ON_LOAD(image_state_w_, -1);
+    bool KV_ON_LOAD(rewind_, false);
 };
 
 ADD_TO_TYPELIST(IOnMapItem);

@@ -108,12 +108,12 @@ void MapMaster::makeMap()
             // Ge
             //
             bool chk = (rand() % 10 != 1);
-            id_ptr_on<IOnMapItem> loc = GetItemFabric()->newItem<IOnMapItem>(hash(chk ? "ground" : "pit"));
-            loc->imageStateH = 0;
+            id_ptr_on<IOnMapItem> loc = GetItemFabric()->newItem<IOnMapItem>(hash(chk ? "ground" : "ground"));
+//            loc->imageStateH = 0;
             if (chk)
-                loc->imageStateW = rand() % 4;
+                ;//loc->imageStateW = rand() % 4;
             else
-                loc->imageStateW = 0;
+                ;//loc->imageStateW = 0;
             squares[x][y][0]->SetTurf(loc);
 
             if(rand() % 29 == 1 || x == 0 || y == 0 || x == GetMapW() - 1 || y == GetMapH() - 1)

@@ -9,7 +9,7 @@
 Kivsjak::Kivsjak()
 {
     SetSprite("icons/kivsjak.png");
-    imageStateW = dMove;
+//    imageStateW = dMove;
     v_level = 9;
     tickSpeed = 1;
     max_dmg = 300;
@@ -50,6 +50,6 @@ void Kivsjak::live()
 bool Kivsjak::checkMove(Dir direct)
 {
     bool retval = CAliveMob::checkMove(direct);
-    imageStateW = dMove;
+//    imageStateW = dMove;
     return retval;
 }

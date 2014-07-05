@@ -20,8 +20,7 @@ void IOnMapItem::SetSprite(const std::string& name)
     if (!GetSpriter())
         return;
     sprite_ = GetSpriter()->returnSpr(name);
-    if (IsMetadata())
-        SetState(state_);
+    SetState(state_);
 };
 
 
@@ -37,37 +36,49 @@ void IOnMapItem::SetState(const std::string& name)
     state_ = name;
     if (!GetSprite()->GetSDLSprite()->metadata.IsValidState(state_))
     {
-        SYSTEM_STREAM << "State: " << name << " isn't valid for " << T_SPR << std::endl;
-        with_metadata_ = false;
+       // SYSTEM_STREAM << "State: " << name << " isn't valid for " << T_SPR << std::endl;
         return;
     }
     metadata_ = &GetSprite()->GetSDLSprite()->metadata.GetSpriteMetadata(state_);
-    with_metadata_ = true;
 
-    imageStateH = metadata_->first_frame_pos / GetSprite()->FrameW();
-    imageStateW = metadata_->first_frame_pos % GetSprite()->FrameW();
+    image_state_h_ = metadata_->first_frame_pos / GetSprite()->FrameW();
+    image_state_w_ = metadata_->first_frame_pos % GetSprite()->FrameW();
 }
 
 const ImageMetadata::SpriteMetadata* IOnMapItem::GetMetadata()
-{
-    if (!IsMetadata())
-        return nullptr;
-    
+{  
     if (!metadata_)
         SetState(state_);
     return metadata_;
 }
 
-const GLSprite* top_overlay = nullptr;
+int IOnMapItem::GetStateH()
+{
+    if (image_state_h_ == -1)
+        SetState(state_);
+    return image_state_h_;
+}
+
+int IOnMapItem::GetStateW()
+{
+    if (image_state_w_ == -1)
+        SetState(state_);
+    return image_state_w_;
+}
+
+
 void IOnMapItem::processImage(DrawType type)
 { 
     if (NODRAW)
         return;
 
+    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
+        return;
+
     GetScreen()->Draw(GetSprite(), 
                       GetDrawX() + mob_position::get_shift_x(), 
                       GetDrawY() + mob_position::get_shift_y(), 
-                      imageStateW, imageStateH);
+                      GetStateW(), GetStateH());
 };
 
 void IOnMapItem::processPhysics()
@@ -85,12 +96,14 @@ void IOnMapItem::processPhysics()
 bool IOnMapItem::IsTransp(int x, int y)
 {
     if (NODRAW)
-        return false;
+        return true;
+    if (!GetMetadata())
+        return true;
     const CSprite* loc = GetSprite()->GetSDLSprite();
     if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
         return true;
 
-    SDL_Surface* surf = loc->frames[imageStateW * loc->numFrameH + imageStateH];
+    SDL_Surface* surf = loc->frames[GetStateW() * loc->numFrameH + GetStateH()];
 
     auto bpp = surf->format->BytesPerPixel;
 
@@ -119,8 +132,6 @@ IOnMapItem::IOnMapItem()
 {
     sprite_ = nullptr;
     v_level = 0;
-    imageStateH = 0;
-    imageStateW = 0;
     step_x = 0;
     step_y = 0;
     passable = true;
@@ -129,5 +140,7 @@ IOnMapItem::IOnMapItem()
     name = "NONAMESHIT";
     T_SPR = "NULL";
     state_ = "null";
-    with_metadata_ = false;
+    image_state_h_ = -1;
+    image_state_w_ = -1;
+    metadata_ = nullptr;
 }

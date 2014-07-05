@@ -42,7 +42,7 @@ public:
     {
         SetSprite("icons/spear.png");
         name = "Forcespear";
-        imageStateW = 2;
+//        imageStateW = 2;
         force = 1;
         SYSTEM_STREAM << "WARAFUCK I AM FORCESPEAR" << std::endl;
     }
