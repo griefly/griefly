@@ -331,10 +331,10 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 return false;
             }
 
-            size_t loop;
+            int loop;
             desc >> loop;
             SYSTEM_STREAM << "Loop is: " << loop << std::endl;
-            metadata_[current_state].loop = loop ? true : false;
+            metadata_[current_state].loop = loop;
         }
         else
         {

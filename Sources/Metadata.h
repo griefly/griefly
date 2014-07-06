@@ -17,13 +17,13 @@ public:
             frames_delay.resize(1);
             frames_delay[0] = 0;
             first_frame_pos = 0;
-            loop = false;
+            loop = -1;
         }
 
         size_t dirs;
         std::vector<size_t> frames_delay;
         bool rewind;
-        bool loop;
+        int loop;
 
         size_t first_frame_pos;
     };
