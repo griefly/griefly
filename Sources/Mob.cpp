@@ -169,12 +169,12 @@ void Manager::checkMoveMob()
 #define SEND_KEY_MACRO(key) \
       if((auto_player_ && (rand() % 100 == 1)) || (!NODRAW && keys[key])) \
       { \
-          if(MAIN_TICK - lastShoot >= 2) \
+          if(SDL_GetTicks() - lastShoot >= 10) \
           { \
               Message msg; \
               msg.text = #key; \
               NetClient::GetNetClient()->Send(msg); \
-              lastShoot = (int)MAIN_TICK; \
+              lastShoot = SDL_GetTicks(); \
           } \
       }
 

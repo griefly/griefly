@@ -8,8 +8,8 @@
 
 COrk::COrk()
 {
-    tickSpeed = 2;
-    pixSpeed = 1;
+    tickSpeed = 1;
+    pixSpeed = 2;
     SetSprite("icons/human.png");
     SetState("african1_m_s");
     passable = true;
@@ -17,7 +17,7 @@ COrk::COrk()
     in_hand = 0;
     jump_time = 0;
     is_strong_owner = true;
-    name = "Ork";
+    name = "Morgan";
     
 };
 
@@ -34,7 +34,7 @@ bool COrk::checkMove(Dir direct)
     if (CAliveMob::checkMove(direct))
     {   
         if (owner->GetItem<CWeed>().valid())
-            PlaySound("step.wav");
+            PlaySound("glass_step.ogg");
         return true;
     }
     return false;
@@ -82,7 +82,7 @@ void COrk::processGUImsg(const Message& msg)
                 zup->AddItem(GetId());
                 checkMove(dMove);
             }
-            PlaySound("jump.ogx");
+          //  PlaySound("jump.ogx");
         }
     }
 

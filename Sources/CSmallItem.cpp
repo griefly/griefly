@@ -18,9 +18,17 @@ void CWeed::process()
 CWeed::CWeed()
 {
     v_level = 2;
-    SetSprite("icons/kivtek.png");
-//    imageStateH = get_rand() % 2;
-//    imageStateW = get_rand() % 2;
+    SetSprite("icons/shards.dmi");
+
+    unsigned int val = get_rand() % 3;
+    std::string st;
+    if (val == 0)
+        st = "large";
+    if (val == 1)
+        st = "medium";
+    if (val == 2)
+        st = "small";
+    SetState(st);
     name = "Weed";
 };
 
