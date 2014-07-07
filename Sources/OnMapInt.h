@@ -61,9 +61,6 @@ public:
     void SetState(const std::string& name);
     const ImageMetadata::SpriteMetadata* GetMetadata();
 
-    int GetStateH();
-    int GetStateW();
-
 public:
     int KV_ON_LOAD(step_x, 0);
     int KV_ON_LOAD(step_y, 0);
@@ -79,9 +76,8 @@ public:
     std::string KV_SAVEBLE(state_);
     const ImageMetadata::SpriteMetadata* KV_ON_LOAD(metadata_, nullptr);
 private:
-    int KV_ON_LOAD(image_state_h_, -1);
-    int KV_ON_LOAD(image_state_w_, -1);
-    bool KV_ON_LOAD(rewind_, false);
+    int KV_ON_LOAD(image_state_, -1);
+    int KV_ON_LOAD(last_frame_tick_, SDL_GetTicks());
 };
 
 ADD_TO_TYPELIST(IOnMapItem);

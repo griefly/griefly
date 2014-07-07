@@ -40,9 +40,9 @@ void IOnMapItem::SetState(const std::string& name)
         return;
     }
     metadata_ = &GetSprite()->GetSDLSprite()->metadata.GetSpriteMetadata(state_);
-
-    image_state_h_ = metadata_->first_frame_pos / GetSprite()->FrameW();
-    image_state_w_ = metadata_->first_frame_pos % GetSprite()->FrameW();
+    
+    image_state_ = 0;
+    last_frame_tick_ = SDL_GetTicks();
 }
 
 const ImageMetadata::SpriteMetadata* IOnMapItem::GetMetadata()
@@ -52,20 +52,7 @@ const ImageMetadata::SpriteMetadata* IOnMapItem::GetMetadata()
     return metadata_;
 }
 
-int IOnMapItem::GetStateH()
-{
-    if (image_state_h_ == -1)
-        SetState(state_);
-    return image_state_h_;
-}
-
-int IOnMapItem::GetStateW()
-{
-    if (image_state_w_ == -1)
-        SetState(state_);
-    return image_state_w_;
-}
-
+const int ANIMATION_MUL = 100;
 
 void IOnMapItem::processImage(DrawType type)
 { 
@@ -75,10 +62,43 @@ void IOnMapItem::processImage(DrawType type)
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
         return;
 
+    int current_frame = GetMetadata()->frames_sequence[image_state_];
+    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs;
+
+    int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
+    int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
+
     GetScreen()->Draw(GetSprite(), 
                       GetDrawX() + mob_position::get_shift_x(), 
                       GetDrawY() + mob_position::get_shift_y(), 
-                      GetStateW(), GetStateH());
+                      image_state_w_, image_state_h_);
+
+    if (GetMetadata()->frames_sequence.size() == 1)
+        return;
+    if (GetMetadata()->frames_sequence
+            [(image_state_ + 1) % GetMetadata()->frames_sequence.size()]
+                == -1)
+                    return;
+
+    int time_diff = SDL_GetTicks() - last_frame_tick_;
+    
+    int next_state = image_state_;
+    while (true)
+    {
+        // TODO: lags when time_diff very big
+        int frame = GetMetadata()->frames_sequence[next_state];
+        time_diff -= GetMetadata()->frames_data[frame].delay * ANIMATION_MUL;
+        if (time_diff < 0)
+        {
+            if (image_state_ == next_state)
+                break;
+            image_state_ = next_state;
+            last_frame_tick_ = SDL_GetTicks();
+            break;
+        }
+        next_state = (next_state + 1) % GetMetadata()->frames_sequence.size();
+    }
+
 };
 
 void IOnMapItem::processPhysics()
@@ -103,7 +123,13 @@ bool IOnMapItem::IsTransp(int x, int y)
     if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
         return true;
 
-    SDL_Surface* surf = loc->frames[GetStateW() * loc->numFrameH + GetStateH()];
+    int current_frame = GetMetadata()->frames_sequence[image_state_];
+    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs;
+
+    int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
+    int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
+
+    SDL_Surface* surf = loc->frames[image_state_w_ * loc->numFrameH + image_state_h_];
 
     auto bpp = surf->format->BytesPerPixel;
 
@@ -140,7 +166,8 @@ IOnMapItem::IOnMapItem()
     name = "NONAMESHIT";
     T_SPR = "NULL";
     state_ = "null";
-    image_state_h_ = -1;
-    image_state_w_ = -1;
+    
+    image_state_ = -1;
+    last_frame_tick_ = 0;
     metadata_ = nullptr;
 }

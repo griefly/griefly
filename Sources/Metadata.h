@@ -14,14 +14,29 @@ public:
         {
             dirs = 1;
             rewind = false;
-            frames_delay.resize(1);
-            frames_delay[0] = 0;
+            frames_data.resize(1);
             first_frame_pos = 0;
             loop = -1;
         }
 
+        struct FrameMetadata
+        {
+            FrameMetadata()
+            {
+                delay = 0;
+           /*     state_w = 0;
+                state_h = 0; TODO */
+            }
+
+            size_t delay;
+         /*   size_t state_w;
+            size_t state_h;*/
+        };
+        std::vector<FrameMetadata> frames_data;
+
+        std::vector<int> frames_sequence;
+        
         size_t dirs;
-        std::vector<size_t> frames_delay;
         bool rewind;
         int loop;
 
@@ -46,9 +61,15 @@ private:
     bool valid_;
 
     std::string dmi_version_;
-	int width_;
-	int height_;
+
+    size_t total_width_;
+    size_t total_height_;
+
+	size_t width_;
+	size_t height_;
 
     bool ParseDescription(std::stringstream& desc);
+    void MakeSequence();
+
     std::map<std::string, SpriteMetadata> metadata_;
 };

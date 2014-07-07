@@ -76,6 +76,9 @@ void ImageMetadata::Init(const std::string& name)
     png_set_sig_bytes(pngPtr, PNGSIGSIZE);
     png_read_info(pngPtr, infoPtr);
 
+    png_get_IHDR(pngPtr, infoPtr, &total_width_, &total_height_, 0, 0, 0, 0, 0);
+
+
     png_textp text_ptr;
     int num_text;
 
@@ -203,10 +206,10 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             }
             loc.clear();
             desc >> loc;
-            SYSTEM_STREAM << "New state: " << loc << std::endl;
+      //      SYSTEM_STREAM << "New state: " << loc << std::endl;
             current_state = loc.substr(1, loc.length() - 2);
             metadata_[current_state].first_frame_pos = first_frame_pos;
-            SYSTEM_STREAM << "First frame position: " << first_frame_pos << std::endl;
+       //     SYSTEM_STREAM << "First frame position: " << first_frame_pos << std::endl;
         }
         else if (loc == "dirs")
         {
@@ -221,7 +224,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             size_t dirs;
             desc >> dirs;
-            SYSTEM_STREAM << "Dirs: " << dirs << std::endl;
+      //      SYSTEM_STREAM << "Dirs: " << dirs << std::endl;
 
             if (current_state == "###")
             {
@@ -243,14 +246,14 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             size_t frames;
             desc >> frames;
-            SYSTEM_STREAM << "Frames: " << frames << std::endl;
+      //      SYSTEM_STREAM << "Frames: " << frames << std::endl;
 
             if (current_state == "###")
             {
                 SYSTEM_STREAM << "Frames without state" << std::endl;
                 return false;
             }
-            metadata_[current_state].frames_delay.resize(frames);
+            metadata_[current_state].frames_data.resize(frames);
             first_frame_pos += frames * metadata_[current_state].dirs;
         }
         else if (loc == "delay")
@@ -270,12 +273,12 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 return false;
             }
 
-            for (size_t i = 0; i < metadata_[current_state].frames_delay.size() - 1; ++i)
+            for (size_t i = 0; i < metadata_[current_state].frames_data.size() - 1; ++i)
             {
                 size_t value;
                 desc >> value;
-                SYSTEM_STREAM << "Delay " << i << " is: " << value << std::endl;
-                metadata_[current_state].frames_delay[i] = value;
+         //       SYSTEM_STREAM << "Delay " << i << " is: " << value << std::endl;
+                metadata_[current_state].frames_data[i].delay = value;
 
                 char comma;
                 desc >> comma;
@@ -287,10 +290,10 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             }
             size_t value;
             desc >> value;
-            SYSTEM_STREAM << "Last delay is: " << value << std::endl;
-            metadata_[current_state].frames_delay
-                [metadata_[current_state].frames_delay.size() - 1]
-                    = value;
+     //       SYSTEM_STREAM << "Last delay is: " << value << std::endl;
+            metadata_[current_state].frames_data
+                [metadata_[current_state].frames_data.size() - 1]
+                    .delay = value;
         }
         else if (loc == "rewind")
         {
@@ -311,7 +314,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             size_t rewind;
             desc >> rewind;
-            SYSTEM_STREAM << "Rewind is: " << rewind << std::endl;
+     //       SYSTEM_STREAM << "Rewind is: " << rewind << std::endl;
             metadata_[current_state].rewind = rewind ? true : false;
         }
         else if (loc == "loop")
@@ -333,7 +336,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             int loop;
             desc >> loop;
-            SYSTEM_STREAM << "Loop is: " << loop << std::endl;
+       //     SYSTEM_STREAM << "Loop is: " << loop << std::endl;
             metadata_[current_state].loop = loop;
         }
         else
@@ -359,6 +362,38 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         SYSTEM_STREAM << "Fail to read 'DMI' from .dmi file" << std::endl;
         return false;
     }
+
+    MakeSequence();
+
     valid_ = true;
     return true;
+}
+
+void ImageMetadata::MakeSequence()
+{
+    for (auto it = metadata_.begin(); it != metadata_.end(); ++it)
+    {
+        auto& metadata = it->second.frames_data;
+        auto& sequence = it->second.frames_sequence;
+        int local_loop = it->second.loop;
+        if (it->second.loop == -1 || it->second.loop == 0)
+            local_loop = 1;
+
+        for (int loop_i = 0; loop_i < local_loop; ++loop_i)
+        {
+            for (size_t i = 0; i < metadata.size(); ++i)
+            {
+                sequence.push_back(i);
+            }
+            if (it->second.rewind)
+            {
+                for (size_t i = metadata.size() - 2; i > 0; --i)
+                {
+                    sequence.push_back(i);
+                }
+            }
+        }
+        if (!(it->second.loop == -1 || it->second.loop == 0))
+            sequence.push_back(-1);
+    }
 }
