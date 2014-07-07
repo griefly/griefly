@@ -54,8 +54,8 @@ const ImageMetadata::SpriteMetadata* IOnMapItem::GetMetadata()
 
 const int ANIMATION_MUL = 100;
 
-void IOnMapItem::processImage(DrawType type)
-{ 
+void IOnMapItem::DrawMain(int shift)
+{
     if (NODRAW)
         return;
 
@@ -63,7 +63,7 @@ void IOnMapItem::processImage(DrawType type)
         return;
 
     int current_frame = GetMetadata()->frames_sequence[image_state_];
-    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs;
+    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
 
     int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
     int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
@@ -98,7 +98,11 @@ void IOnMapItem::processImage(DrawType type)
         }
         next_state = (next_state + 1) % GetMetadata()->frames_sequence.size();
     }
+}
 
+void IOnMapItem::processImage(DrawType type)
+{ 
+    DrawMain(0);
 };
 
 void IOnMapItem::processPhysics()

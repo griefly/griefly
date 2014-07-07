@@ -16,14 +16,14 @@ extern int FPS_MAX;//max fps
 
 extern int DRAW_MAX; // max real fps
 
-const int sizeHsq = 13; // visible size const
+const int sizeHsq = 10; // visible size const
 const int sizeWsq = 10;
 
 extern int sizeW; // visible in pixel const
 extern int sizeH;
 
-const int beginMobPosX = 9; // posx and posx mob on screen
-const int beginMobPosY = 7; // maybe no const?
+const int beginMobPosX = 8; // posx and posx mob on screen
+const int beginMobPosY = 8; // maybe no const?
 
 extern bool NODRAW; // probably nodraw mode
 
@@ -56,6 +56,8 @@ const VDir VD_ZUP = {0, 0, 1};
 const VDir VD_ZDOWN = {0, 0, -1};
 
 const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
+
+const int DIR_TO_BYOND[6] = {3, 2, 1, 0, 3, 3};
 
 const int MAX_LEVEL = 20;
 

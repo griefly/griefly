@@ -212,9 +212,9 @@ void Manager::processInput()
             }
             if (event.type == SDL_VIDEORESIZE)
             {
-                int max_scale = std::max((event.resize.w / 4), (event.resize.h / 3));
+                int max_scale = std::max((event.resize.w / 3), (event.resize.h / 3));
 
-                int new_w = max_scale * 4;
+                int new_w = max_scale * 3;
                 int new_h = max_scale * 3;
                 GetScreen()->ResetScreen(new_w, new_h, 32, SDL_OPENGL | SDL_RESIZABLE);
             }

@@ -16,6 +16,8 @@ public:
     bool mainMove();
 
     virtual void delThis() override { IOnMapItem::delThis(); }
+
+    virtual void processImage(DrawType type);
 public:
     int KV_SAVEBLE(lastMove);
     int KV_SAVEBLE(tickSpeed);

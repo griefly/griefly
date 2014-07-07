@@ -78,6 +78,8 @@ public:
 private:
     int KV_ON_LOAD(image_state_, -1);
     int KV_ON_LOAD(last_frame_tick_, SDL_GetTicks());
+protected:
+    void DrawMain(int frame_shift);
 };
 
 ADD_TO_TYPELIST(IOnMapItem);

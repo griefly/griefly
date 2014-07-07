@@ -2,6 +2,7 @@
 
 #include "EffectSystem.h"
 #include "MoveEffect.h"
+#include "helpers.h"
 
 #include <assert.h>
 
@@ -60,3 +61,16 @@ bool IMovable::mainMove()
     }
     return true;
 };
+
+void IMovable::processImage(DrawType type)
+{
+    if (NODRAW)
+        return;
+    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
+        return;
+
+    if (GetMetadata()->dirs == 4)
+        DrawMain(helpers::dir_to_byond(dMove));
+    else
+        DrawMain(0);
+}

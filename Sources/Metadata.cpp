@@ -86,13 +86,13 @@ void ImageMetadata::Init(const std::string& name)
     {
         for (int i = 0; i < num_text; ++i)
         {
-            SYSTEM_STREAM << "BEGIN KEY " << i << std::endl;
+           /* SYSTEM_STREAM << "BEGIN KEY " << i << std::endl;
             SYSTEM_STREAM << text_ptr[i].key << std::endl;
             SYSTEM_STREAM << "END KEY " << i << std::endl;
             SYSTEM_STREAM << "BEGIN TEXT " << i << std::endl;
             SYSTEM_STREAM << text_ptr[i].text << std::endl;
             SYSTEM_STREAM << "END TEXT " << i << std::endl;
-
+            */
             std::string string_key = std::string(text_ptr[i].key);
             if (string_key == "Description")
             {

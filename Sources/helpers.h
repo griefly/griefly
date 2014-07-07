@@ -31,4 +31,8 @@ namespace helpers
                 *z -= DirToVDir[dir].z;
         }
     }
+    inline int dir_to_byond(Dir dir)
+    {
+        return DIR_TO_BYOND[dir];
+    }
 }
