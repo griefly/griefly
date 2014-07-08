@@ -169,7 +169,7 @@ void Manager::checkMoveMob()
 #define SEND_KEY_MACRO(key) \
       if((auto_player_ && (rand() % 100 == 1)) || (!NODRAW && keys[key])) \
       { \
-          if(SDL_GetTicks() - lastShoot >= 10) \
+          if(SDL_GetTicks() - lastShoot >= 80) \
           { \
               Message msg; \
               msg.text = #key; \
@@ -309,13 +309,17 @@ void Manager::initWorld()
     {
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
                 hash("ork"), 
-                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                       [GetMapMaster()->GetMapH() / 2]
+                                       [GetMapMaster()->GetMapD() / 2]);
         ChangeMob(newmob);
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
         auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
                 hash("Teleportator"), 
-                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                       [GetMapMaster()->GetMapH() / 2]
+                                       [GetMapMaster()->GetMapD() / 2]);
         SetCreator(tptr.ret_id());
 
         srand(SDL_GetTicks());

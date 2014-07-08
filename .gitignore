@@ -371,3 +371,5 @@ ipch
 /Release/zlib1.dll
 /Server.zip
 /Sources.zip
+/Release/*.obj
+/Release/*.obj

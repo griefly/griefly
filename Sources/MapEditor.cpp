@@ -65,7 +65,7 @@ void MapEditor::InitWorld()
     int y = GetParamsHolder().GetParamBool("map_y") ? 
             GetParamsHolder().GetParam<int>("map_y") : 40;
     int z = GetParamsHolder().GetParamBool("map_z") ? 
-            GetParamsHolder().GetParam<int>("map_z") : 2;
+            GetParamsHolder().GetParam<int>("map_z") : 1;
 
     GetMapMaster()->makeTiles(x, y, z);
 

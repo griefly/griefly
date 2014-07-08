@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Sound">
       <UniqueIdentifier>{b2bd8ec3-b389-4677-8cae-77b20d0c6f5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Space">
+      <UniqueIdentifier>{6c27a82b-0fcf-4c0e-bcd6-61ff6768ffd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Space">
+      <UniqueIdentifier>{8c9f8486-2eb1-4f71-81b7-3c988a0cdaa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\ApproxGLImage.h">
@@ -237,6 +243,12 @@
     <ClInclude Include="Sources\Metadata.h">
       <Filter>Header Files\Sprites</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\SpaceTurf.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MetalWall.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -379,6 +391,12 @@
     </ClCompile>
     <ClCompile Include="Sources\Metadata.cpp">
       <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SpaceTurf.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MetalWall.cpp">
+      <Filter>Source Files\Space</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -11,6 +11,8 @@
 #include "mob_position.h"
 #include "ItemFabric.h"
 #include "visible_points.h"
+#include "SpaceTurf.h"
+#include "MetalWall.h"
 
 void MapMaster::Draw()
 {
@@ -108,20 +110,16 @@ void MapMaster::makeMap()
             // Ge
             //
             bool chk = (rand() % 10 != 1);
-            id_ptr_on<IOnMapItem> loc = GetItemFabric()->newItem<IOnMapItem>(hash(chk ? "ground" : "ground"));
-//            loc->imageStateH = 0;
-            if (chk)
-                ;//loc->imageStateW = rand() % 4;
-            else
-                ;//loc->imageStateW = 0;
+            id_ptr_on<IOnMapItem> loc = 
+                GetItemFabric()->newItem<IOnMapItem>(chk ?     Space::T_ITEM_S() 
+                                                         : MetalWall::T_ITEM_S());
+
             squares[x][y][0]->SetTurf(loc);
 
-            if(rand() % 29 == 1 || x == 0 || y == 0 || x == GetMapW() - 1 || y == GetMapH() - 1)
-                GetItemFabric()->newItemOnMap<IOnMapItem>(hash("testmob"), squares[x][y][1]);
             if(rand() % 60 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
                 ;//GetItemFabric()->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][1]);
             if(rand() % 3 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
-                GetItemFabric()->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][1]);//*/
+                GetItemFabric()->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][0]);//*/
         }
     }
     SYSTEM_STREAM << "End create map\n";
