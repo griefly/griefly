@@ -203,7 +203,7 @@ std::list<HashAmount> LiquidHolder::addLiquid(std::list<HashAmount> what)
     return retval;
 }
 
-std::iostream& operator<<(std::iostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids)
+std::ostream& operator<<(std::ostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids)
 {
     file << liquids.size() << " ";
     auto it = liquids.begin();
@@ -216,7 +216,7 @@ std::iostream& operator<<(std::iostream& file, std::map<unsigned int, id_ptr_on<
     return file;
 }
 
-std::iostream& operator>>(std::iostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids)
+std::istream& operator>>(std::istream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids)
 {
     int size;
     file >> size;

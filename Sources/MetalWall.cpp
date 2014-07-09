@@ -8,5 +8,5 @@ MetalWall::MetalWall()
     SetSprite("icons/walls.dmi");
     SetState("metal0");
 
-    name = "MetalWall";
+    name = "Metal wall";
 }

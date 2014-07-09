@@ -17,7 +17,7 @@ COrk::COrk()
     in_hand = 0;
     jump_time = 0;
     is_strong_owner = true;
-    name = "Morgan";
+    name = "Morgan James";
     
 };
 

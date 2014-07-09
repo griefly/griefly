@@ -62,6 +62,7 @@
     <ClInclude Include="Sources\sound.h" />
     <ClInclude Include="Sources\SpaceTurf.h" />
     <ClInclude Include="Sources\sprite.h" />
+    <ClInclude Include="Sources\StreamWrapper.h" />
     <ClInclude Include="Sources\sync_random.h" />
     <ClInclude Include="Sources\Teleportator.h" />
     <ClInclude Include="Sources\Testmob.h" />

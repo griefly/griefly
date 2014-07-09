@@ -6,8 +6,8 @@
 #include "Liquid.h"
 #include "HelperStructers.h"
 
-std::iostream& operator<<(std::iostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids);
-std::iostream& operator>>(std::iostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids);
+std::ostream& operator<<(std::ostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids);
+std::istream& operator>>(std::istream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids);
 
 class LiquidHolder: public IMainItem
 {

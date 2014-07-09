@@ -1,5 +1,4 @@
-#ifndef MACROSES_H
-#define MACROSES_H
+#pragma once
 
 #ifndef OPEN_STATIC_VARS
 #define OPEN_STATIC_VARS false
@@ -20,6 +19,8 @@
 #endif
 
 #include <Typelist.h>
+
+#include "StreamWrapper.h"
 
 namespace Private
 {
@@ -96,7 +97,7 @@ template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash, Fak
         }; \
         thisclass (NotLoadItem) : masterclass(nouse) {}
 
-#define KV_SAVEBLE(name) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){file << " "; file << name; file << " "; KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){file >> name; KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##name :: name##counter>){return hash(name) + KV_HASH_FUNC(h, FakeParamClass<Z_Impl##name :: name##counter + 1>());};
+#define KV_SAVEBLE(name) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){file << " "; WrapWriteMessage(file, name); file << " "; KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){WrapReadMessage(file, name); KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##name :: name##counter>){return hash(name) + KV_HASH_FUNC(h, FakeParamClass<Z_Impl##name :: name##counter + 1>());};
 
 #define KV_ON_LOAD(name, value) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##name ::name##counter + 1>());} __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name ::name##counter>){name = value; KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##name :: name##counter>){return KV_HASH_FUNC(h, FakeParamClass<Z_Impl##name :: name##counter + 1>());};
 
@@ -140,4 +141,3 @@ template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash, Fak
     {                                         \
         return REAL_TYPE_ITEM;                \
     }                                         
-#endif //MACROSES_H

@@ -128,14 +128,14 @@ private:
 };
 
 template<typename T>
-std::iostream& operator<<(std::iostream& stream, id_ptr_on<T> ptr)
+std::ostream& operator<<(std::ostream& stream, const id_ptr_on<T>& ptr)
 {
     stream << ptr.ret_id();
     return stream;
 }
 
 template<typename T>
-std::iostream& operator>>(std::iostream& stream, id_ptr_on<T>& ptr)
+std::istream& operator>>(std::istream& stream, id_ptr_on<T>& ptr)
 {
     size_t l;
     stream >> l;
