@@ -94,6 +94,19 @@ void COrk::processGUImsg(const Message& msg)
             if (CanTouch(item, 1))
             {
                 SYSTEM_STREAM << "And we can touch it!" << std::endl;
+                if(!in_hand.valid())
+                {
+                    in_hand = item;
+                    if (in_hand.valid())
+                    {
+                        if (!item->GetOwner()->RemoveItem(item))
+                        {
+                            SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
+                        }
+                        item->SetOwner(GetId());
+                    }
+                    
+                }
             }
         }
     }
