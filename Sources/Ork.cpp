@@ -91,6 +91,10 @@ void COrk::processGUImsg(const Message& msg)
         if (item.valid())
         {
             SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
+            if (CanTouch(item, 1))
+            {
+                SYSTEM_STREAM << "And we can touch it!" << std::endl;
+            }
         }
     }
 

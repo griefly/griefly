@@ -14,6 +14,46 @@ CubeTile::CubeTile()
     posy_ = -1;
     posz_ = -1;
 }
+
+bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
+{
+    int x_begin = posx_ - range;
+    if (x_begin < 0)
+        x_begin = 0;
+    int y_begin = posy_ - range;
+    if (y_begin)
+        y_begin = 0;
+    
+    int x_end = posx_ + range;
+    if (x_end >= GetMapMaster()->GetMapW())
+        x_end = GetMapMaster()->GetMapW() - 1;
+    int y_end = posy_ + range;
+    if (y_end >= GetMapMaster()->GetMapH())
+        y_end = GetMapMaster()->GetMapH() - 1;
+
+    // TODO: check visible
+
+    for (int i = x_begin; i <= x_end; ++i)
+        for (int j = y_begin; j <= y_end; ++j)
+        {
+            auto tile = GetMapMaster()->squares[i][j][posz_];
+            if (tile->IsContain(item))
+                return true;
+            if (tile->GetTurf() == item)
+                return true;
+        }
+
+    return false;
+}
+
+bool CubeTile::IsContain(id_ptr_on<IOnMapBase> item) const
+{
+    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        if (it->ret_id() == item.ret_id())
+            return true;
+    return false;
+}
+
 bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
 {
     // TODO: IOnMapBase => IMovable

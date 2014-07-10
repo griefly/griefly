@@ -50,6 +50,10 @@ public:
     };
     virtual bool IsPassable() const override;
     virtual bool IsTransparent() const override;
+
+    virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const override;
+    virtual bool IsContain(id_ptr_on<IOnMapBase> item) const override;
+
     void SetPos(int posx, int posy, int posz = 0)
     {
         posx_ = posx;

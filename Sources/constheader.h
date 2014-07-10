@@ -1,5 +1,4 @@
-#ifndef CONSTHEADER_H
-#define CONSTHEADER_H
+#pragma once
 
 #include <map>
 #include <stdio.h>
@@ -64,5 +63,3 @@ const int MAX_LEVEL = 20;
 extern unsigned long long MAIN_TICK;
 
 const std::string RAW_DIR = "raw/";
-
-#endif

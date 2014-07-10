@@ -36,6 +36,15 @@ public:
         IDraw::delThis();
     }
 
+
+
+    virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const
+    {
+        if (owner.valid())
+            return owner->CanTouch(item, range);
+        return false;
+    }
+
     // Add some item
     // True - added
     // False - failed
@@ -62,6 +71,14 @@ public:
             return owner->GetNeighbour(direct);
         return GetId();
     }
+
+    virtual bool IsContain(id_ptr_on<IOnMapBase> item) const
+    {
+        if (owner.valid())
+            return owner->IsContain(item);
+        return false;
+    }
+
     template<class T>
     id_ptr_on<T> GetItem()
     {
