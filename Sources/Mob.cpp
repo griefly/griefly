@@ -206,8 +206,14 @@ void Manager::processInput()
             if(event.type == SDL_MOUSEBUTTONDOWN)
             {
                 auto item = GetMapMaster()->click(event.button.x, event.button.y);
-                if (item.ret_id())
+                if (item.valid())
+                {
+                    Message msg;
+                    msg.from = item.ret_id();
+                    msg.text = "SDL_MOUSEBUTTONDOWN";
+                    NetClient::GetNetClient()->Send(msg);
                     last_touch = item->name;
+                }
                 PlaySound("click.ogx");
             }
             if (event.type == SDL_VIDEORESIZE)

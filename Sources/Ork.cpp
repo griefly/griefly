@@ -85,6 +85,14 @@ void COrk::processGUImsg(const Message& msg)
           //  PlaySound("jump.ogx");
         }
     }
+    else if (msg.text == "SDL_MOUSEBUTTONDOWN")
+    {
+        id_ptr_on<IOnMapItem> item = msg.from;
+        if (item.valid())
+        {
+            SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
+        }
+    }
 
 };
 

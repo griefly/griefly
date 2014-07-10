@@ -5,6 +5,8 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 
+#include "Params.h"
+
 Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
 {
     fail_ = true;
@@ -30,15 +32,17 @@ Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     
+    if (!GetParamsHolder().GetParamBool("-novsync"))
+    {
 #ifdef WIN32
-    typedef BOOL (WINAPI *PFNWGLSWAPINTERVALEXTPROC)(int);
-    PFNWGLSWAPINTERVALEXTPROC wglSwapInterval = nullptr;
+        typedef BOOL (WINAPI *PFNWGLSWAPINTERVALEXTPROC)(int);
+        PFNWGLSWAPINTERVALEXTPROC wglSwapInterval = nullptr;
 
-    wglSwapInterval = reinterpret_cast<PFNWGLSWAPINTERVALEXTPROC>(wglGetProcAddress("wglSwapIntervalEXT"));
-    if (wglSwapInterval) 
-        wglSwapInterval(1);
+        wglSwapInterval = reinterpret_cast<PFNWGLSWAPINTERVALEXTPROC>(wglGetProcAddress("wglSwapIntervalEXT"));
+        if (wglSwapInterval) 
+            wglSwapInterval(1);
 #endif
-   
+    }
     fail_ = false;
 }
 
