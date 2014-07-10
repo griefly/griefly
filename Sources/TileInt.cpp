@@ -37,7 +37,7 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
         for (int j = y_begin; j <= y_end; ++j)
         {
             auto tile = GetMapMaster()->squares[i][j][posz_];
-            if (tile->IsContain(item))
+            if (tile->Contains(item))
                 return true;
             if (tile->GetTurf() == item)
                 return true;
@@ -46,7 +46,7 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
     return false;
 }
 
-bool CubeTile::IsContain(id_ptr_on<IOnMapBase> item) const
+bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
 {
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
         if (it->ret_id() == item.ret_id())

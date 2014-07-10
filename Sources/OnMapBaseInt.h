@@ -72,10 +72,10 @@ public:
         return GetId();
     }
 
-    virtual bool IsContain(id_ptr_on<IOnMapBase> item) const
+    virtual bool Contains(id_ptr_on<IOnMapBase> item) const
     {
         if (owner.valid())
-            return owner->IsContain(item);
+            return owner->Contains(item);
         return false;
     }
 
