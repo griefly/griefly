@@ -13,6 +13,7 @@
 #include "visible_points.h"
 #include "SpaceTurf.h"
 #include "MetalWall.h"
+#include "helpers.h"
 
 void MapMaster::Draw()
 {
@@ -524,67 +525,83 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
 
     p.posx = posx + 1;
     p.posy = posy;
-    worklist.push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        worklist.push_back(p);
 
     p.posx = posx + 1;
     p.posy = posy;
-    retlist->push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        retlist->push_back(p);
 
     p.posx = posx + 1;
     p.posy = posy + 1;
-    worklist.push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        worklist.push_back(p);
 
     p.posx = posx + 1;
     p.posy = posy + 1;
-    retlist->push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        retlist->push_back(p);
 
     p.posx = posx;
     p.posy = posy + 1;
-    worklist.push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        worklist.push_back(p);
 
     p.posx = posx;
     p.posy = posy + 1;
-    retlist->push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        retlist->push_back(p);
 
     p.posx = posx - 1;
     p.posy = posy + 1;
-    worklist.push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        worklist.push_back(p);
 
     p.posx = posx - 1;
     p.posy = posy + 1;
-    retlist->push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        retlist->push_back(p);
 
     p.posx = posx - 1;
     p.posy = posy;
-    worklist.push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        worklist.push_back(p);
 
     p.posx = posx - 1;
     p.posy = posy;
-    retlist->push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        retlist->push_back(p);
     
     p.posx = posx - 1;
     p.posy = posy - 1;
-    worklist.push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        worklist.push_back(p);
 
     p.posx = posx - 1;
-    p.posy = posy - 1;    
-    retlist->push_back(p);
+    p.posy = posy - 1;
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        retlist->push_back(p);
 
     p.posx = posx;
     p.posy = posy - 1;
-    worklist.push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        worklist.push_back(p);
 
     p.posx = posx;
-    p.posy = posy - 1;  
-    retlist->push_back(p);
+    p.posy = posy - 1;
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        retlist->push_back(p);
 
     p.posx = posx + 1;
     p.posy = posy - 1;
-    worklist.push_back(p);
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        worklist.push_back(p);
 
     p.posx = posx + 1;
-    p.posy = posy - 1; 
-    retlist->push_back(p);
+    p.posy = posy - 1;
+    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+        retlist->push_back(p);
 
     auto itr = worklist.begin();
     while(itr != worklist.end())
@@ -593,47 +610,52 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
             && itr->posx != posx - sizeHsq && itr->posx != posx + sizeHsq
             && itr->posy != posy - sizeWsq && itr->posy != posy + sizeWsq
             && 
-            !( itr->posy <= 0 
-            || itr->posy >= (GetMapMaster()->GetMapH() - 1) 
-            || itr->posx <= 0 
-            || itr->posx >= (GetMapMaster()->GetMapW() - 1)))
+            helpers::check_borders(&itr->posx, &itr->posy, &itr->posz))
             if(abs(itr->posx - posx) > abs(itr->posy - posy)) 
             if(itr->posx > posx)
             {
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
             }
             else 
             {
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
             }
             else if(abs(itr->posx - posx) < abs(itr->posy - posy)) 
             if(itr->posy > posy) 
             {
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
             }
             else 
             {
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
             }
             else
             if(itr->posx > posx)
@@ -642,43 +664,55 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
                 {
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy + 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy + 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 }
                 else
                 {
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy - 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy - 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx + 1;
                 p.posy = itr->posy;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 }
 
             }
@@ -688,43 +722,55 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
                 {
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy + 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy + 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy + 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 }
                 else
                 {
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy - 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy - 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx - 1;
                 p.posy = itr->posy;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
-                worklist.push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    worklist.push_back(p);
                 p.posx = itr->posx;
                 p.posy = itr->posy - 1;
-                retlist->push_back(p);
+                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
+                    retlist->push_back(p);
                 }
             }
 
@@ -742,7 +788,6 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     }
     retlist->splice(retlist->begin(), z_list);
 
-    // TODO: filter for borders
     return retlist;
 };
 

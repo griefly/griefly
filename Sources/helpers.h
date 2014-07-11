@@ -35,4 +35,53 @@ namespace helpers
     {
         return DIR_TO_BYOND[dir];
     }
+    inline void fix_borders(int* x, int* y, int* z)
+    {
+        if (x)
+        {
+            if (*x >= GetMapMaster()->GetMapW())
+                *x = GetMapMaster()->GetMapW() - 1;
+            if (*x < 0)
+                *x = 0;
+        }
+        if (y)
+        {
+            if (*y >= GetMapMaster()->GetMapH())
+                *y = GetMapMaster()->GetMapH() - 1;
+            if (*y < 0)
+                *y = 0;
+        }
+        if (z)
+        {
+            if (*z >= GetMapMaster()->GetMapD())
+                *z = GetMapMaster()->GetMapD() - 1;
+            if (*z < 0)
+                *z = 0;
+        }
+    }
+    inline bool check_borders(int* x, int* y, int* z)
+    {
+        if (x)
+        {
+            if (*x >= GetMapMaster()->GetMapW())
+                return false;
+            if (*x < 0)
+                return false;
+        }
+        if (y)
+        {
+            if (*y >= GetMapMaster()->GetMapH())
+                return false;
+            if (*y < 0)
+                return false;
+        }
+        if (z)
+        {
+            if (*z >= GetMapMaster()->GetMapD())
+                return false;
+            if (*z < 0)
+                return false;
+        }
+        return true;
+    }
 }
