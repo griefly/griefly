@@ -5,6 +5,7 @@
 #include "CSmallItem.h"
 #include "Turf.h"
 #include "ItemFabric.h"
+#include "visible_points.h"
 
 COrk::COrk()
 {
@@ -34,7 +35,7 @@ bool COrk::checkMove(Dir direct)
     if (CAliveMob::checkMove(direct))
     {   
         if (owner->GetItem<CWeed>().valid())
-            PlaySound("glass_step.ogg");
+            PlaySoundIfVisible("glass_step.ogg", GetOwner());
         return true;
     }
     return false;
@@ -88,10 +89,11 @@ void COrk::processGUImsg(const Message& msg)
     else if (msg.text == "SDL_MOUSEBUTTONDOWN")
     {
         id_ptr_on<IOnMapItem> item = msg.from;
-        if (item.valid())
+        if (item.valid() && item->GetOwner().valid())
         {
             SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
-            if (CanTouch(item, 1))
+            // It isn't fine
+            if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
             {
                 SYSTEM_STREAM << "And we can touch it!" << std::endl;
                 if(!in_hand.valid())

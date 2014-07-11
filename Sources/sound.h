@@ -15,12 +15,12 @@ namespace std { using namespace __gnu_cxx; }
 class SoundManager
 {
 public:
-    void InitSound(sf::Sound* sound, std::string name)
+    void InitSound(sf::Sound* sound, const std::string& name)
     {
         sound->setBuffer(*GetBuffer(name));
     }
 private:
-    const sf::SoundBuffer* GetBuffer(std::string name)
+    const sf::SoundBuffer* GetBuffer(const std::string& name)
     {
         if (!holder_[name])
         {
@@ -35,10 +35,12 @@ private:
 };
 
 SoundManager& GetSoundManager();
-void InitSound(sf::Sound* sound, std::string name);
-void PlaySound(sf::Sound* sound, std::string name);
+void InitSound(sf::Sound* sound, const std::string& name);
+void PlaySound(sf::Sound* sound, const std::string& name);
 
-sf::Sound* PlaySound(std::string name, int x = 0, int y = 0);
+sf::Sound* PlaySound(const std::string& name, int x = 0, int y = 0);
+
+void PlaySoundIfVisible(const std::string& name, size_t tile_id);
 
 class SoundPlayer
 {
@@ -47,7 +49,7 @@ public:
     {
         sounds_.resize(100);
     }
-    sf::Sound* PlaySound(std::string name)
+    sf::Sound* PlaySound(const std::string& name)
     {
         size_t i;
         for (i = 0; i < sounds_.size(); ++i)

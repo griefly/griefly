@@ -17,6 +17,8 @@ CubeTile::CubeTile()
 
 bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
 {
+    if (!item.valid())
+        return false;
     int x_begin = posx_ - range;
     if (x_begin < 0)
         x_begin = 0;
@@ -31,7 +33,11 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
     if (y_end >= GetMapMaster()->GetMapH())
         y_end = GetMapMaster()->GetMapH() - 1;
 
-    // TODO: check visible
+    // TODO
+    // check something like 
+    //       xxx     o will be touchable (and its wrond)
+    //       xox     maybe whatever?
+    //       xxx  
 
     for (int i = x_begin; i <= x_end; ++i)
         for (int j = y_begin; j <= y_end; ++j)

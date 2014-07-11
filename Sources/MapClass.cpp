@@ -741,6 +741,8 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
         z_list.push_back(p);
     }
     retlist->splice(retlist->begin(), z_list);
+
+    // TODO: filter for borders
     return retlist;
 };
 

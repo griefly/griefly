@@ -1,6 +1,7 @@
 #include "sound.h"
 
 #include "mob_position.h"
+#include "visible_points.h"
 
 SoundManager& GetSoundManager()
 {
@@ -8,11 +9,11 @@ SoundManager& GetSoundManager()
     return snd_mngr;
 }
 
-void InitSound(sf::Sound* sound, std::string name)
+void InitSound(sf::Sound* sound, const std::string& name)
 {
     GetSoundManager().InitSound(sound, name);
 }
-void PlaySound(sf::Sound* sound, std::string name)
+void PlaySound(sf::Sound* sound, const std::string& name)
 {
     if (!sound->getBuffer())
         InitSound(sound, name);
@@ -26,9 +27,15 @@ SoundPlayer& GetSoundPlayer()
     return snd_player;
 }
 
-sf::Sound* PlaySound(std::string name, int x, int y)
+sf::Sound* PlaySound(const std::string& name, int x, int y)
 {
     sf::Sound* s = GetSoundPlayer().PlaySound(name);
     //s->setPosition(mob_position::x, y, 0);
     return s;
+}
+
+void PlaySoundIfVisible(const std::string& name, size_t tile_id)
+{
+    if (IsTileVisible(tile_id))
+        PlaySound(name);
 }

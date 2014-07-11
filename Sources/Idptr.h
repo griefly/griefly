@@ -105,6 +105,9 @@ public:
     {
         id = value.ret_id();
     }
+
+    operator size_t() { return id; }
+
     bool valid() const
     {
         return operator->() != nullptr; 
