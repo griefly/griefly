@@ -75,13 +75,17 @@ void MapEditor::InitWorld()
 
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
                 hash("ork"), 
-                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                       [GetMapMaster()->GetMapH() / 2]
+                                       [GetMapMaster()->GetMapD() / 2]);
         SetMob(newmob.ret_id());
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
         auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
                 hash("Teleportator"), 
-                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2][GetMapMaster()->GetMapH() / 2][1]);
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                       [GetMapMaster()->GetMapH() / 2]
+                                       [GetMapMaster()->GetMapD() / 2]);
         SetCreator(tptr.ret_id());
 
         //GetMapMaster()->makeMap();

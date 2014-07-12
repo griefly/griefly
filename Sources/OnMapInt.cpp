@@ -34,11 +34,13 @@ const GLSprite* IOnMapItem::GetSprite()
 void IOnMapItem::SetState(const std::string& name)
 {
     state_ = name;
-    if (!GetSprite()->GetSDLSprite()->metadata.IsValidState(state_))
-    {
-       // SYSTEM_STREAM << "State: " << name << " isn't valid for " << T_SPR << std::endl;
+    if (!GetSprite())
         return;
-    }
+    if (GetSprite()->Fail())
+        return;
+    if (!GetSprite()->GetSDLSprite()->metadata.IsValidState(state_))
+        return;
+
     metadata_ = &GetSprite()->GetSDLSprite()->metadata.GetSpriteMetadata(state_);
     
     image_state_ = 0;
