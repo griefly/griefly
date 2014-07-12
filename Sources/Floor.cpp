@@ -6,7 +6,7 @@ Floor::Floor()
     passable = true;
 
     SetSprite("icons/floors.dmi");
-    SetState("light_on_flicker1");
+    SetState("floor");
 
     name = "Floor";
 }

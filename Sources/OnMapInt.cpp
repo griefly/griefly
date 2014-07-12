@@ -90,7 +90,7 @@ void IOnMapItem::DrawMain(int shift)
         // TODO: lags when time_diff very big
         int frame = GetMetadata()->frames_sequence[next_state];
         time_diff -= GetMetadata()->frames_data[frame].delay * ANIMATION_MUL;
-        if (time_diff < 0)
+        if (time_diff <= 0)
         {
             if (image_state_ == next_state)
                 break;

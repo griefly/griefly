@@ -60,7 +60,7 @@ public:
 
     void SetState(const std::string& name);
     const ImageMetadata::SpriteMetadata* GetMetadata();
-
+    int GetImageState() const { return image_state_; }
 public:
     int KV_ON_LOAD(step_x, 0);
     int KV_ON_LOAD(step_y, 0);

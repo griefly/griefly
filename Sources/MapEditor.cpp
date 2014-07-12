@@ -140,10 +140,21 @@ void MapEditor::DrawChoosenItem()
     GetScreen()->Draw(spr, 16 + 32 * 0, 48, 0, 0);
     GetScreen()->Draw(spr, 16 + 32 * 1, 48, 0, 0);
 
+    auto ptr = for_creation_[to_create_];
+
+    if (!ptr->GetSprite() || ptr->GetSprite()->Fail() || !ptr->GetMetadata())
+        return;
+
+    int current_frame = ptr->GetMetadata()->frames_sequence[ptr->GetImageState()];
+    int current_frame_pos = ptr->GetMetadata()->first_frame_pos + current_frame * ptr->GetMetadata()->dirs;
+
+    int image_state_h_ = current_frame_pos / ptr->GetSprite()->FrameW();
+    int image_state_w_ = current_frame_pos % ptr->GetSprite()->FrameW();
+
     spr = for_creation_[to_create_]->GetSprite();
     if (!spr->Fail())
     {
-        GetScreen()->Draw(spr, 30, 32, 0, 0);
+        GetScreen()->Draw(spr, 30, 32, image_state_w_, image_state_h_);
     }
 }
 
