@@ -10,3 +10,12 @@ public:
     MetalWall();
 };
 ADD_TO_TYPELIST(MetalWall);
+
+class ReinforcedWall: public ITurf
+{
+public:
+    DECLARE_SAVED(ReinforcedWall, ITurf);
+    DECLARE_GET_TYPE_ITEM(ReinforcedWall);
+    ReinforcedWall();
+};
+ADD_TO_TYPELIST(ReinforcedWall);

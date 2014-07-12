@@ -14,6 +14,7 @@
 #include "SpaceTurf.h"
 #include "MetalWall.h"
 #include "helpers.h"
+#include "Floor.h"
 
 void MapMaster::Draw()
 {
@@ -111,9 +112,13 @@ void MapMaster::makeMap()
             // Ge
             //
             bool chk = (rand() % 10 != 1);
+            bool bin = (rand() % 2) == 0;
+            bool bin2 = (rand() % 2) == 0;
             id_ptr_on<IOnMapItem> loc = 
-                GetItemFabric()->newItem<IOnMapItem>(chk ?     Space::T_ITEM_S() 
-                                                         : MetalWall::T_ITEM_S());
+                GetItemFabric()->newItem<IOnMapItem>(  chk  ?          Space::T_ITEM_S() 
+                                                     : bin  ?      MetalWall::T_ITEM_S()
+                                                     : bin2 ? ReinforcedWall::T_ITEM_S()
+                                                     :                 Floor::T_ITEM_S());
 
             squares[x][y][0]->SetTurf(loc);
 

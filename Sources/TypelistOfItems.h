@@ -46,6 +46,7 @@ namespace KV_Private_NS_NullType
 #include "IMovable.h"
 #include "SpaceTurf.h"
 #include "MetalWall.h"
+#include "Floor.h"
 
 const int local_num = __COUNTER__; 
 typedef Private::TypelistMaker<local_num - 1>::typelist ItemsTypelist;

@@ -10,3 +10,14 @@ MetalWall::MetalWall()
 
     name = "Metal wall";
 }
+
+ReinforcedWall::ReinforcedWall()
+{
+    transparent = false;
+    passable = false;
+
+    SetSprite("icons/walls.dmi");
+    SetState("r_wall");
+
+    name = "Reinforced wall";
+}

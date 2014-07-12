@@ -23,7 +23,7 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
     if (x_begin < 0)
         x_begin = 0;
     int y_begin = posy_ - range;
-    if (y_begin)
+    if (y_begin < 0)
         y_begin = 0;
     
     int x_end = posx_ + range;

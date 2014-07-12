@@ -23,6 +23,7 @@
     <ClInclude Include="Sources\FastIsType.h" />
     <ClInclude Include="Sources\Firebullet.h" />
     <ClInclude Include="Sources\FireEffect.h" />
+    <ClInclude Include="Sources\Floor.h" />
     <ClInclude Include="Sources\GLSprite.h" />
     <ClInclude Include="Sources\hashes.h" />
     <ClInclude Include="Sources\helpers.h" />
@@ -84,6 +85,7 @@
     <ClCompile Include="Sources\DrawInt.cpp" />
     <ClCompile Include="Sources\Firebullet.cpp" />
     <ClCompile Include="Sources\FireEffect.cpp" />
+    <ClCompile Include="Sources\Floor.cpp" />
     <ClCompile Include="Sources\GLSprite.cpp" />
     <ClCompile Include="Sources\Idptr.cpp" />
     <ClCompile Include="Sources\IMovable.cpp" />

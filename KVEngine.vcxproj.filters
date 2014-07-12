@@ -252,6 +252,9 @@
     <ClInclude Include="Sources\StreamWrapper.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Floor.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -399,6 +402,9 @@
       <Filter>Source Files\Space</Filter>
     </ClCompile>
     <ClCompile Include="Sources\MetalWall.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Floor.cpp">
       <Filter>Source Files\Space</Filter>
     </ClCompile>
   </ItemGroup>
