@@ -15,6 +15,8 @@
 #include "MetalWall.h"
 #include "helpers.h"
 #include "Floor.h"
+#include "Door.h"
+#include "CSmallItem.h"
 
 void MapMaster::Draw()
 {
@@ -122,10 +124,10 @@ void MapMaster::makeMap()
 
             squares[x][y][0]->SetTurf(loc);
 
-            if(rand() % 60 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
-                {};//GetItemFabric()->newItemOnMap<IOnMapItem>(hash("kivsjak"), squares[x][y][1]);
+            if(rand() % 10 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
+                GetItemFabric()->newItemOnMap<IOnMapItem>(Door::T_ITEM_S(), squares[x][y][0]);
             if(rand() % 3 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
-                GetItemFabric()->newItemOnMap<IOnMapItem>(hash("weed"), squares[x][y][0]);//*/
+                GetItemFabric()->newItemOnMap<IOnMapItem>(CWeed::T_ITEM_S(), squares[x][y][0]);//*/
         }
     }
     SYSTEM_STREAM << "End create map\n";

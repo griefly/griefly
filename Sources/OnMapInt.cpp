@@ -143,7 +143,7 @@ bool IOnMapItem::IsTransp(int x, int y)
 
     SDL_GetRGBA(static_cast<Uint32*>(surf->pixels)[y * surf->pitch / bpp + x], surf->format, &un1, &un2, &un3, &alpha);
 
-    return alpha < 170;
+    return alpha < 1;
 }
 bool IOnMapItem::isVisible(int x, int y)
 {

@@ -6,6 +6,8 @@
 #include "Turf.h"
 #include "ItemFabric.h"
 #include "visible_points.h"
+#include "Door.h"
+#include "sync_random.h"
 
 COrk::COrk()
 {
@@ -109,8 +111,17 @@ void COrk::processGUImsg(const Message& msg)
                     }
                     
                 }
+
+                id_ptr_on<Door> door = msg.from;
+                if (door.valid())
+                {
+                    if (door->IsOpen())
+                        door->Close();
+                    else
+                        door->Open();
+                }
             }
-        }
+        } 
     }
 
 };

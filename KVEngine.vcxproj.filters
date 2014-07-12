@@ -255,6 +255,9 @@
     <ClInclude Include="Sources\Floor.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Door.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -405,6 +408,9 @@
       <Filter>Source Files\Space</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Floor.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Door.cpp">
       <Filter>Source Files\Space</Filter>
     </ClCompile>
   </ItemGroup>
