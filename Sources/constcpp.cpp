@@ -2,7 +2,7 @@
 #include <Typelist.h>
 #include <fstream>
 
-unsigned long long MAIN_TICK = 0;
+size_t MAIN_TICK = 0;
 
 int DELAY_MAIN = 32;
 

@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	NEXTTICK = 90 * time.Millisecond
+	NEXTTICK = 100 * time.Millisecond
 )
 
 type Message struct {

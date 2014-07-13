@@ -60,6 +60,6 @@ const int DIR_TO_BYOND[6] = {3, 2, 1, 0, 3, 3};
 
 const int MAX_LEVEL = 20;
 
-extern unsigned long long MAIN_TICK;
+extern size_t MAIN_TICK;
 
 const std::string RAW_DIR = "raw/";

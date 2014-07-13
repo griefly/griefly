@@ -11,8 +11,14 @@ public:
     
     virtual void Open();
     virtual void Close();
-    bool IsOpen() const { return open_; }
+    virtual void process() override;
+    bool IsOpen() const { return door_state_ == OPEN; }
 private:
-    bool KV_SAVEBLE(open_);
+    enum STATE
+    {
+        OPEN, CLOSED, OPENING, CLOSING   
+    };
+    int KV_SAVEBLE(door_state_);
+    size_t KV_SAVEBLE(last_tick_);
 };
 ADD_TO_TYPELIST(Door);
