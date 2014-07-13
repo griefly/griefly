@@ -54,6 +54,8 @@ public:
     virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const override;
     virtual bool Contains(id_ptr_on<IOnMapBase> item) const override;
 
+    virtual void Bump(id_ptr_on<IMovable> item) override;
+
     void SetPos(int posx, int posy, int posz = 0)
     {
         posx_ = posx;
@@ -100,7 +102,7 @@ private:
     int KV_SAVEBLE(posx_);
     int KV_SAVEBLE(posy_);
     int KV_SAVEBLE(posz_);
-    typedef std::vector<id_ptr_on<IOnMapBase>> InsideType;
+    typedef std::vector<id_ptr_on<IOnMapItem>> InsideType;
     InsideType KV_SAVEBLE(inside_list_);
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap(); // TODO

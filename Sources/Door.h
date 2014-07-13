@@ -12,6 +12,7 @@ public:
     virtual void Open();
     virtual void Close();
     virtual void process() override;
+    virtual void Bump(id_ptr_on<IMovable> item) override;
     bool IsOpen() const { return door_state_ == OPEN; }
 private:
     enum STATE

@@ -1,6 +1,7 @@
 #include "Door.h"
 
 #include "sound.h"
+#include "IMovable.h"
 
 Door::Door()
 {
@@ -64,6 +65,12 @@ void Door::process()
         return;
     }
     if (door_state_ == OPEN)
-        if (MAIN_TICK - last_tick_ > 100)
+        if (MAIN_TICK - last_tick_ > 50)
             Close();
+}
+
+void Door::Bump(id_ptr_on<IMovable> item)
+{
+    if (door_state_ == CLOSED)
+        Open();
 }

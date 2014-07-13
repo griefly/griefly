@@ -19,6 +19,14 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
 {
     if (!item.valid())
         return false;
+
+    if (!item->GetOwner())
+        return false;
+
+    id_ptr_on<CubeTile> cube_tile = item->GetOwner();
+    if (!cube_tile)
+        return false;
+
     int x_begin = posx_ - range;
     if (x_begin < 0)
         x_begin = 0;
@@ -39,17 +47,16 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
     //       xox     maybe whatever?
     //       xxx  
 
-    for (int i = x_begin; i <= x_end; ++i)
-        for (int j = y_begin; j <= y_end; ++j)
-        {
-            auto tile = GetMapMaster()->squares[i][j][posz_];
-            if (tile->Contains(item))
-                return true;
-            if (tile->GetTurf() == item)
-                return true;
-        }
+    if (cube_tile->posx() < x_begin)
+        return false;
+    if (cube_tile->posx() > x_end)
+        return false;
+    if (cube_tile->posy() < y_begin)
+        return false;
+    if (cube_tile->posy() > y_end)
+        return false;
 
-    return false;
+    return true;
 }
 
 bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
@@ -58,6 +65,20 @@ bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
         if (it->ret_id() == item.ret_id())
             return true;
     return false;
+}
+
+void CubeTile::Bump(id_ptr_on<IMovable> item)
+{
+    if (!GetTurf())
+        return;
+    GetTurf()->Bump(item);
+
+    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        if ((*it)->passable == false)
+        {
+            (*it)->Bump(item);
+            return;
+        }
 }
 
 bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)

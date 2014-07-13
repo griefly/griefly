@@ -5,6 +5,7 @@
 #include "DrawInt.h"
 
 class ITurf;
+class IMovable;
 
 class IOnMapBase: public IDraw
 {
@@ -78,6 +79,8 @@ public:
             return owner->Contains(item);
         return false;
     }
+
+    virtual void Bump(id_ptr_on<IMovable> item);
 
     template<class T>
     id_ptr_on<T> GetItem()

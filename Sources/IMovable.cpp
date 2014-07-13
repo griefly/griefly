@@ -19,8 +19,11 @@ bool IMovable::checkMove(Dir direct)
     if (!checkMoveTime()) 
         return false;
     dMove = direct;
-    if (!checkPassable()) 
+    if (!checkPassable())
+    {
+        owner->GetNeighbour(dMove)->Bump(GetId());
         return false;
+    }
     return mainMove();    
 };
 
