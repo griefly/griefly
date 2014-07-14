@@ -37,7 +37,7 @@ bool COrk::checkMove(Dir direct)
     if (CAliveMob::checkMove(direct))
     {   
         if (owner->GetItem<CWeed>().valid())
-            PlaySoundIfVisible("glass_step.ogg", GetOwner());
+            PlaySoundIfVisible("glass_step.ogg", GetOwner().ret_id());
         return true;
     }
     return false;

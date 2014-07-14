@@ -17,6 +17,9 @@ public:
             frames_data.resize(1);
             first_frame_pos = 0;
             loop = -1;
+            hotspot[0] = -1;
+            hotspot[1] = -1;
+            hotspot[2] = -1;
         }
 
         struct FrameMetadata
@@ -39,6 +42,7 @@ public:
         size_t dirs;
         bool rewind;
         int loop;
+        int hotspot[3];
 
         size_t first_frame_pos;
     };

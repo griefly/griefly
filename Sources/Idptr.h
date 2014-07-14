@@ -106,11 +106,15 @@ public:
         id = value.ret_id();
     }
 
-    operator size_t() { return id; }
+    ///operator size_t() { return id; }
 
     bool valid() const
     {
         return operator->() != nullptr; 
+    }
+    operator bool()
+    {
+        return valid();
     }
     id_ptr_on(size_t id_new)
     {

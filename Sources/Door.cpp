@@ -2,6 +2,7 @@
 
 #include "sound.h"
 #include "IMovable.h"
+#include "MobInt.h"
 
 Door::Door()
 {
@@ -23,7 +24,7 @@ void Door::Open()
     if (door_state_ != CLOSED)
         return;
     SetState("door_opening");
-    PlaySoundIfVisible("airlock.ogg", owner);
+    PlaySoundIfVisible("airlock.ogg", owner.ret_id());
     door_state_ = OPENING;
     last_tick_ = MAIN_TICK;
     SetFreq(1);
@@ -34,7 +35,7 @@ void Door::Close()
     if (door_state_ != OPEN)
         return;
     SetState("door_closing");
-    PlaySoundIfVisible("airlock.ogg", owner);
+    PlaySoundIfVisible("airlock.ogg", owner.ret_id());
     passable = false;
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;
@@ -71,6 +72,10 @@ void Door::process()
 
 void Door::Bump(id_ptr_on<IMovable> item)
 {
+    id_ptr_on<IMob> m;
+    m = item;
+    if (!m)
+        return;
     if (door_state_ == CLOSED)
         Open();
 }

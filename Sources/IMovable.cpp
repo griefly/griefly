@@ -35,7 +35,7 @@ void IMovable::move(Dir direct)
 
 bool IMovable::checkMoveTime()
 {
-    if(MAIN_TICK - lastMove < tickSpeed) 
+    if((static_cast<int>(MAIN_TICK) - lastMove) < tickSpeed) 
         return false;
     lastMove = static_cast<int>(MAIN_TICK);
     return true;

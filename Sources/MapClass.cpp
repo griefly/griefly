@@ -17,6 +17,7 @@
 #include "Floor.h"
 #include "Door.h"
 #include "CSmallItem.h"
+#include "Grille.h"
 
 void MapMaster::Draw()
 {
@@ -124,9 +125,11 @@ void MapMaster::makeMap()
 
             squares[x][y][0]->SetTurf(loc);
 
-            if(rand() % 10 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
+            if (rand() % 9 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapItem>(Grille::T_ITEM_S(), squares[x][y][0]);
+            if (rand() % 10 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(Door::T_ITEM_S(), squares[x][y][0]);
-            if(rand() % 3 == 1 && x != 0 && y != 0 && x != GetMapW() - 1 && y != GetMapH() - 1)
+            if (rand() % 3 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(CWeed::T_ITEM_S(), squares[x][y][0]);//*/
         }
     }

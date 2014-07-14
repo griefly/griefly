@@ -330,7 +330,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             if (current_state == "###")
             {
-                SYSTEM_STREAM << "Delay without state" << std::endl;
+                SYSTEM_STREAM << "Loop without state" << std::endl;
                 return false;
             }
 
@@ -338,6 +338,49 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> loop;
        //     SYSTEM_STREAM << "Loop is: " << loop << std::endl;
             metadata_[current_state].loop = loop;
+        }
+        else if (loc == "hotspot")
+        {
+            loc.clear();
+            desc >> loc;
+            if (loc != "=")
+            {
+                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                return false;
+            }
+            loc.clear();
+
+            if (current_state == "###")
+            {
+                SYSTEM_STREAM << "Hotspot without state" << std::endl;
+                return false;
+            }
+            
+            int num;
+            desc >> num;
+            metadata_[current_state].hotspot[0] = num;
+
+            char comma;
+            desc >> comma;
+            if (comma != ',')
+            {
+                SYSTEM_STREAM << "Fail to read ',' from .dmi file" << std::endl;
+                return false;
+            }
+
+            desc >> num;
+            metadata_[current_state].hotspot[1] = num;
+
+            desc >> comma;
+            if (comma != ',')
+            {
+                SYSTEM_STREAM << "Fail to read ',' from .dmi file" << std::endl;
+                return false;
+            }
+
+            desc >> num;
+            metadata_[current_state].hotspot[2] = num;
+
         }
         else
         {
