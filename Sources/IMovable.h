@@ -18,6 +18,7 @@ public:
     virtual void delThis() override { IOnMapItem::delThis(); }
 
     virtual void processImage(DrawType type);
+    virtual void Bump(id_ptr_on<IMovable> item) override;
 public:
     int KV_SAVEBLE(lastMove);
     int KV_SAVEBLE(tickSpeed);

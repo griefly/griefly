@@ -18,7 +18,7 @@ void CTestmob::process()
 
 CTestmob::CTestmob()
 {
-    passable = false;
+    SetPassable(D_ALL, false);
     transparent = false;
     v_level = 5;
     SetSprite("icons/walls.dmi");

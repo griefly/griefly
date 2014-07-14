@@ -9,6 +9,7 @@
 
 #include "Creator.h"
 #include "mob_position.h"
+#include "helpers.h"
 
 void IOnMapItem::attack_by(id_ptr_on<SmallItem> it, int force) {};
 
@@ -112,7 +113,7 @@ void IOnMapItem::processPhysics()
     if (owner->IsStrongOwner())
         return;
     auto down = owner->GetNeighbour(D_ZDOWN);
-    if (down.valid() && down->IsPassable())
+    if (down.valid() && down->IsPassable(D_ZUP) && down->IsPassable(D_ALL))
     {
         owner->RemoveItem(GetId());
         down->AddItem(GetId());
@@ -166,7 +167,11 @@ IOnMapItem::IOnMapItem()
     v_level = 0;
     step_x = 0;
     step_y = 0;
-    passable = true;
+    passable_all = true;
+    passable_up = true;
+    passable_down = true;
+    passable_left = true;
+    passable_right = true;
     transparent = true;
     burn_power = 0;
     name = "NONAMESHIT";

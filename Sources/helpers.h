@@ -84,4 +84,8 @@ namespace helpers
         }
         return true;
     }
+    inline Dir revert_dir(Dir direct)
+    {
+        return DirToRDir[direct];
+    }
 }

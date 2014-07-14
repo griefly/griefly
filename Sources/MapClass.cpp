@@ -18,6 +18,7 @@
 #include "Door.h"
 #include "CSmallItem.h"
 #include "Grille.h"
+#include "Glass.h"
 
 void MapMaster::Draw()
 {
@@ -126,6 +127,8 @@ void MapMaster::makeMap()
             squares[x][y][0]->SetTurf(loc);
 
             if (rand() % 9 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapItem>(FlatGlass::T_ITEM_S(), squares[x][y][0]);
+            if (rand() % 9 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(Grille::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 10 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(Door::T_ITEM_S(), squares[x][y][0]);
@@ -172,9 +175,9 @@ void CPathFinder::clearPathfinding()
 };
 
 
-bool MapMaster::isPassable(int posx, int posy, int posz)
+bool MapMaster::isPassable(int posx, int posy, int posz, Dir direct)
 {
-    return squares[posx][posy][posz]->IsPassable();
+    return squares[posx][posy][posz]->IsPassable(direct);
 };
 
 void MapMaster::switchDir(int& posx, int& posy, Dir direct, int num, bool back)//TODO: Remove back

@@ -3,6 +3,7 @@
 #include "EffectSystem.h"
 #include "MoveEffect.h"
 #include "helpers.h"
+#include "MobInt.h"
 
 #include <assert.h>
 
@@ -21,7 +22,6 @@ bool IMovable::checkMove(Dir direct)
     dMove = direct;
     if (!checkPassable())
     {
-        owner->GetNeighbour(dMove)->Bump(GetId());
         return false;
     }
     return mainMove();    
@@ -44,7 +44,19 @@ bool IMovable::checkMoveTime()
 // TODO: ÒÎÐÍÀÄÎ
 bool IMovable::checkPassable()
 {
-    return owner->GetNeighbour(dMove)->IsPassable();
+    if (!owner->IsPassable(dMove))
+    {
+        owner->Bump(GetId());
+        return false;
+    }
+    if (   !owner->GetNeighbour(dMove)->IsPassable(D_ALL)
+        || !owner->GetNeighbour(dMove)->IsPassable(helpers::revert_dir(dMove)))
+    {
+        owner->GetNeighbour(dMove)->Bump(GetId());
+        return false;
+    }
+    
+    return true;
 };
 
 bool IMovable::mainMove()
@@ -72,8 +84,16 @@ void IMovable::processImage(DrawType type)
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
         return;
 
-    if (GetMetadata()->dirs == 4)
+    if (GetMetadata()->dirs >= 4)
         DrawMain(helpers::dir_to_byond(dMove));
     else
         DrawMain(0);
+}
+
+void IMovable::Bump(id_ptr_on<IMovable> item)
+{
+    id_ptr_on<IMob> m;
+    m = item;
+    if (m)
+        checkMove(m->dMove);
 }

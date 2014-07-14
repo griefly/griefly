@@ -25,6 +25,7 @@
     <ClInclude Include="Sources\Firebullet.h" />
     <ClInclude Include="Sources\FireEffect.h" />
     <ClInclude Include="Sources\Floor.h" />
+    <ClInclude Include="Sources\Glass.h" />
     <ClInclude Include="Sources\GLSprite.h" />
     <ClInclude Include="Sources\Grille.h" />
     <ClInclude Include="Sources\hashes.h" />
@@ -89,6 +90,7 @@
     <ClCompile Include="Sources\Firebullet.cpp" />
     <ClCompile Include="Sources\FireEffect.cpp" />
     <ClCompile Include="Sources\Floor.cpp" />
+    <ClCompile Include="Sources\Glass.cpp" />
     <ClCompile Include="Sources\GLSprite.cpp" />
     <ClCompile Include="Sources\Grille.cpp" />
     <ClCompile Include="Sources\Idptr.cpp" />

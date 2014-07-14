@@ -13,7 +13,7 @@ Kivsjak::Kivsjak()
     v_level = 9;
     tickSpeed = 1;
     max_dmg = 300;
-    passable = false;
+    SetPassable(D_ALL, false);
     food = 0;
     name = "Kivsjak";
 }

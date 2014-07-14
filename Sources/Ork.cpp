@@ -15,8 +15,8 @@ COrk::COrk()
     pixSpeed = 2;
     SetSprite("icons/human.png");
     SetState("african1_m_s");
-    passable = true;
-    v_level = 10;
+    SetPassable(D_ALL, true);
+    v_level = 9;
     in_hand = 0;
     jump_time = 0;
     is_strong_owner = true;
@@ -79,7 +79,7 @@ void COrk::processGUImsg(const Message& msg)
         {
             jump_time = static_cast<int>(MAIN_TICK);
             auto zup = owner->GetNeighbour(D_ZUP);
-            if (zup.valid() && zup->IsPassable())
+            if (zup.valid() && zup->IsPassable(D_ZDOWN) && zup->IsPassable(D_ALL))
             {
                 owner->RemoveItem(GetId());
                 zup->AddItem(GetId());

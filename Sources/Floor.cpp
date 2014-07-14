@@ -3,7 +3,7 @@
 Floor::Floor()
 {
     transparent = true;
-    passable = true;
+    SetPassable(D_ALL, true);
 
     SetSprite("icons/floors.dmi");
     SetState("floor");

@@ -21,7 +21,7 @@ public:
     {
         return;
     }
-    virtual bool IsPassable() const
+    virtual bool IsPassable(Dir direct) const
     {
         return true;
     }

@@ -33,6 +33,7 @@ extern std::ostream& SYSTEM_STREAM;//some system information here
 const int HASH_OFTEN = 20;
 
 typedef int Dir;
+const Dir D_ALL = -1;
 const Dir D_LEFT = 0;
 const Dir D_RIGHT = 1;
 const Dir D_UP = 2;
@@ -55,6 +56,8 @@ const VDir VD_ZUP = {0, 0, 1};
 const VDir VD_ZDOWN = {0, 0, -1};
 
 const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
+
+const Dir DirToRDir[6] = {1, 0, 3, 2, 5, 4};
 
 const int DIR_TO_BYOND[6] = {3, 2, 1, 0, 3, 3};
 

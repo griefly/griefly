@@ -7,7 +7,7 @@
 Door::Door()
 {
     transparent = true;
-    passable = false;
+    SetPassable(D_ALL, false);
 
     v_level = 10;
 
@@ -36,7 +36,7 @@ void Door::Close()
         return;
     SetState("door_closing");
     PlaySoundIfVisible("airlock.ogg", owner.ret_id());
-    passable = false;
+    SetPassable(D_ALL, false);
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;
 }
@@ -48,7 +48,7 @@ void Door::process()
         if (MAIN_TICK - last_tick_ > 11)
         {
             door_state_ = OPEN;
-            passable = true;
+            SetPassable(D_ALL, true);
             last_tick_ = MAIN_TICK;
             SetState("door_open");
         }

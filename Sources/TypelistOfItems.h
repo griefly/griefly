@@ -49,6 +49,7 @@ namespace KV_Private_NS_NullType
 #include "Floor.h"
 #include "Door.h"
 #include "Grille.h"
+#include "Glass.h"
 
 const int local_num = __COUNTER__; 
 typedef Private::TypelistMaker<local_num - 1>::typelist ItemsTypelist;

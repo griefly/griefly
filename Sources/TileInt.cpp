@@ -70,12 +70,28 @@ bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
 
 void CubeTile::Bump(id_ptr_on<IMovable> item)
 {
-    if (!GetTurf())
+    if (GetTurf())
+        GetTurf()->Bump(item);
+
+    if (item->GetOwner().ret_id() == GetId())
+    {
+        for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+            if (!(*it)->IsPassable(item->dMove))
+            {
+                (*it)->Bump(item);
+                return;
+            }
         return;
-    GetTurf()->Bump(item);
+    }
 
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if ((*it)->passable == false)
+        if (!(*it)->IsPassable(helpers::revert_dir(item->dMove)))
+        {
+            (*it)->Bump(item);
+            return;
+        }
+    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        if (!(*it)->IsPassable(D_ALL))
         {
             (*it)->Bump(item);
             return;
@@ -84,7 +100,6 @@ void CubeTile::Bump(id_ptr_on<IMovable> item)
 
 bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
 {
-    // TODO: IOnMapBase => IMovable
     id_ptr_on<IOnMapItem> item = item_raw;
     if (!item.valid())
         return false;
@@ -95,8 +110,6 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
         {
             SYSTEM_STREAM << "ALERT! " << item.ret_id() << " double added!\n";
             SDL_Delay(5000);
-            int* poc = 0;
-            *poc = 1;
         }
         if (itr->ret_id() > item.ret_id())
             break;
@@ -143,12 +156,12 @@ id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct)
     return GetMapMaster()->squares[new_x][new_y][new_z];
 }
 
-bool CubeTile::IsPassable() const
+bool CubeTile::IsPassable(Dir direct) const
 {
-    if (turf_.valid() && !turf_->IsPassable())
+    if (turf_.valid() && !turf_->IsPassable(direct))
         return false;
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!(*it)->IsPassable())
+        if (!(*it)->IsPassable(direct))
             return false;
     return true;
 }

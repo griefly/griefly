@@ -3,7 +3,7 @@
 MetalWall::MetalWall()
 {
     transparent = false;
-    passable = false;
+    SetPassable(D_ALL, false);
 
     SetSprite("icons/walls.dmi");
     SetState("metal0");
@@ -14,7 +14,7 @@ MetalWall::MetalWall()
 ReinforcedWall::ReinforcedWall()
 {
     transparent = false;
-    passable = false;
+    SetPassable(D_ALL, false);
 
     SetSprite("icons/walls.dmi");
     SetState("r_wall");

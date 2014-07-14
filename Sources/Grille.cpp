@@ -4,23 +4,15 @@
 Grille::Grille()
 {
     transparent = true;
-    passable = false;
+    SetPassable(D_ALL, false);
 
     tickSpeed = 5;
     pixSpeed = 1;
 
-    v_level = 10;
+    v_level = 5;
 
     SetSprite("icons/structures.dmi");
     SetState("grille");
 
     name = "Grille";
 };
-
-void Grille::Bump(id_ptr_on<IMovable> item)
-{
-    id_ptr_on<IMob> m;
-    m = item;
-    if (m)
-        checkMove(m->dMove);
-}

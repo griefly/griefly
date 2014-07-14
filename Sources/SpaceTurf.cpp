@@ -4,7 +4,7 @@
 
 Space::Space()
 {
-    passable = true;
+    SetPassable(D_ALL, true);
     transparent = true;
     
     SetSprite("icons/space.png"); 

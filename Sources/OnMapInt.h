@@ -23,10 +23,31 @@ public:
         return owner.valid() && owner->IsVisibleByPlayer();
     }
 
-    virtual bool IsPassable() const override
+    virtual bool IsPassable(Dir direct) const override
     {
-        return passable;
+        switch (direct)
+        {
+        case D_UP:    return passable_up;
+        case D_DOWN:  return passable_down;
+        case D_LEFT:  return passable_left;
+        case D_RIGHT: return passable_right;
+        case D_ALL:   return passable_all;
+        }
+        return false;
     }
+
+    void SetPassable(Dir direct, bool p)
+    {
+        switch (direct)
+        {
+        case D_UP:    passable_up = p;    break;
+        case D_DOWN:  passable_down = p;  break;
+        case D_LEFT:  passable_left = p;  break;
+        case D_RIGHT: passable_right = p; break;
+        case D_ALL:   passable_all = p;   break;
+        }
+    }
+
     virtual bool IsTransparent() const override
     {
         return transparent;
@@ -65,7 +86,11 @@ public:
     int KV_ON_LOAD(step_x, 0);
     int KV_ON_LOAD(step_y, 0);
     int KV_SAVEBLE(v_level);
-    bool KV_SAVEBLE(passable);
+    bool KV_SAVEBLE(passable_down);
+    bool KV_SAVEBLE(passable_up);
+    bool KV_SAVEBLE(passable_left);
+    bool KV_SAVEBLE(passable_right);
+    bool KV_SAVEBLE(passable_all);
     bool KV_SAVEBLE(transparent);
     int KV_SAVEBLE(burn_power);//0 - 1 - MUCH MUCH
     std::string KV_SAVEBLE(name);
