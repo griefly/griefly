@@ -13,14 +13,14 @@ namespace std { using namespace __gnu_cxx; }
 #include "FastIsType.h"
 #include "Idptr.h"
 
-class IMainItem;
+class IMainObject;
 class MapMaster;
 class Manager;
 
 
 
 
-typedef IMainItem* (*item_creator)();
+typedef IMainObject* (*item_creator)();
 typedef unsigned int (*type_item)();
 
 std::hash_map<unsigned int, item_creator>* itemList();
@@ -31,11 +31,11 @@ template<class T>
 class itemAdder 
 {
 public:
-    static IMainItem* creator()
+    static IMainObject* creator()
     {
         return new T;
     };
-    static IMainItem* creatorSaved()
+    static IMainObject* creatorSaved()
     {
         return new T(nouse);
     };
@@ -48,7 +48,7 @@ public:
     };
 };
 
-IMainItem* GetFromIdTable(size_t id);
+IMainObject* GetFromIdTable(size_t id);
 
 template<typename T>
 class id_ptr_on

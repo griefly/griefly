@@ -13,7 +13,7 @@ void CFirebullet::process()
     auto itr = map->squares[posx][posy].begin();
     while(itr != map->squares[posx][posy].end())
     {
-        if(castTo<IMainItem>(**itr)) {itr++;continue;}
+        if(castTo<IMainObject>(**itr)) {itr++;continue;}
         (*itr++)->delThis();
         ++count;
     }

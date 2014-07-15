@@ -14,7 +14,7 @@ std::hash_map<unsigned int, item_creator>* itemListSaved()
     return result; 
 };
 
-void IMainItem::delThis()
+void IMainObject::delThis()
 {
     GetItemFabric()->idTable()[id_] = 0;
     if (GetFreq())
@@ -22,7 +22,7 @@ void IMainItem::delThis()
     delete this;
 }
 
-bool IMainItem::saveSelf(std::stringstream& file)
+bool IMainObject::saveSelf(std::stringstream& file)
 {
     file << " " << T_ITEM() << " ";
     file << " " << id_ << " ";
@@ -31,7 +31,7 @@ bool IMainItem::saveSelf(std::stringstream& file)
     return true;
 };
 
-bool IMainItem::loadSelf(std::stringstream& file)
+bool IMainObject::loadSelf(std::stringstream& file)
 {
     file >> how_often_;
 
@@ -41,7 +41,7 @@ bool IMainItem::loadSelf(std::stringstream& file)
     return true;
 };
 
-void IMainItem::SetFreq(int freq)
+void IMainObject::SetFreq(int freq)
 {
     how_often_ = freq;
     if (!GetId())
@@ -57,7 +57,7 @@ void IMainItem::SetFreq(int freq)
     }
 }
 
-void IMainItem::SetId(size_t id)
+void IMainObject::SetId(size_t id)
 {
     id_ = id;
     SetFreq(GetFreq());

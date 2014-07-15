@@ -2,11 +2,11 @@
 
 #include "OnMapInt.h"
 
-class CTestmob: public IOnMapItem
+class CTestmob: public IOnMapObject
 {
 public:
     DECLARE_GET_TYPE_ITEM(testmob);
-    DECLARE_SAVED(CTestmob, IOnMapItem);
+    DECLARE_SAVED(CTestmob, IOnMapObject);
     virtual void process();
 
     CTestmob();

@@ -2,5 +2,5 @@
 
 void ITurf::delThis() 
 {
-    IOnMapItem::delThis();
+    IOnMapObject::delThis();
 }

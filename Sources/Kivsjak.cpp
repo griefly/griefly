@@ -31,7 +31,7 @@ void Kivsjak::aaMind()
     if(food > 250)
     {
         food = 0;
-        //map->newItemOnMap<IOnMapItem>(hash("kivsjak"), posx, posy);
+        //map->newItemOnMap<IOnMapObject>(hash("kivsjak"), posx, posy);
     }
 }
 
@@ -40,7 +40,7 @@ void Kivsjak::live()
     CAliveMob::live();
     if(dmg + bloodless + burn + interior + oxyless > max_dmg)
     {
-        GetItemFabric()->newItemOnMap<IOnMapItem>(hash("meat"), owner);
+        GetItemFabric()->newItemOnMap<IOnMapObject>(hash("meat"), owner);
         delThis();
     }
 

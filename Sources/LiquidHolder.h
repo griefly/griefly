@@ -9,13 +9,13 @@
 std::ostream& operator<<(std::ostream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids);
 std::istream& operator>>(std::istream& file, std::map<unsigned int, id_ptr_on<Liquid>>& liquids);
 
-class LiquidHolder: public IMainItem
+class LiquidHolder: public IMainObject
 {
 public:
     static std::vector<Reaction> reactList;
     static bool LoadReaction();
     DECLARE_GET_TYPE_ITEM(liquidholder);
-    DECLARE_SAVED(LiquidHolder, IMainItem);
+    DECLARE_SAVED(LiquidHolder, IMainObject);
     LiquidHolder();
     unsigned int addLiquid(unsigned int hash, unsigned int amount);
     unsigned int amountOf(unsigned int hash);

@@ -100,7 +100,7 @@ void CubeTile::Bump(id_ptr_on<IMovable> item)
 
 bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
 {
-    id_ptr_on<IOnMapItem> item = item_raw;
+    id_ptr_on<IOnMapObject> item = item_raw;
     if (!item.valid())
         return false;
     auto itr = inside_list_.begin();
@@ -122,7 +122,7 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
 }
 bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
 {
-    id_ptr_on<IOnMapItem> item = item_raw;
+    id_ptr_on<IOnMapObject> item = item_raw;
     if (!item.valid())
         return false;
 

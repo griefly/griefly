@@ -102,7 +102,7 @@ private:
     int KV_SAVEBLE(posx_);
     int KV_SAVEBLE(posy_);
     int KV_SAVEBLE(posz_);
-    typedef std::vector<id_ptr_on<IOnMapItem>> InsideType;
+    typedef std::vector<id_ptr_on<IOnMapObject>> InsideType;
     InsideType KV_SAVEBLE(inside_list_);
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap(); // TODO

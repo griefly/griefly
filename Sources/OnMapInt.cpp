@@ -11,11 +11,11 @@
 #include "mob_position.h"
 #include "helpers.h"
 
-void IOnMapItem::attack_by(id_ptr_on<SmallItem> it, int force) {};
+void IOnMapObject::attack_by(id_ptr_on<SmallItem> it, int force) {};
 
-std::list<HashAmount> IOnMapItem::insertLiquid(std::list<HashAmount> r) {return r;};
+std::list<HashAmount> IOnMapObject::insertLiquid(std::list<HashAmount> r) {return r;};
 
-void IOnMapItem::SetSprite(const std::string& name)
+void IOnMapObject::SetSprite(const std::string& name)
 {
     T_SPR = name;
     if (!GetSpriter())
@@ -25,14 +25,14 @@ void IOnMapItem::SetSprite(const std::string& name)
 };
 
 
-const GLSprite* IOnMapItem::GetSprite()
+const GLSprite* IOnMapObject::GetSprite()
 {
     if (sprite_ == nullptr)
         SetSprite(T_SPR);
     return sprite_;
 }
 
-void IOnMapItem::SetState(const std::string& name)
+void IOnMapObject::SetState(const std::string& name)
 {
     state_ = name;
     if (!GetSprite())
@@ -48,7 +48,7 @@ void IOnMapItem::SetState(const std::string& name)
     last_frame_tick_ = SDL_GetTicks();
 }
 
-const ImageMetadata::SpriteMetadata* IOnMapItem::GetMetadata()
+const ImageMetadata::SpriteMetadata* IOnMapObject::GetMetadata()
 {  
     if (!metadata_)
         SetState(state_);
@@ -57,7 +57,7 @@ const ImageMetadata::SpriteMetadata* IOnMapItem::GetMetadata()
 
 const int ANIMATION_MUL = 100;
 
-void IOnMapItem::DrawMain(int shift)
+void IOnMapObject::DrawMain(int shift)
 {
     if (NODRAW)
         return;
@@ -103,12 +103,12 @@ void IOnMapItem::DrawMain(int shift)
     }
 }
 
-void IOnMapItem::processImage(DrawType type)
+void IOnMapObject::processImage(DrawType type)
 { 
     DrawMain(0);
 };
 
-void IOnMapItem::processPhysics()
+void IOnMapObject::processPhysics()
 {
     if (owner->IsStrongOwner())
         return;
@@ -120,7 +120,7 @@ void IOnMapItem::processPhysics()
     }
 }
 
-bool IOnMapItem::IsTransp(int x, int y)
+bool IOnMapObject::IsTransp(int x, int y)
 {
     if (NODRAW)
         return true;
@@ -146,7 +146,7 @@ bool IOnMapItem::IsTransp(int x, int y)
 
     return alpha < 1;
 }
-bool IOnMapItem::isVisible(int x, int y)
+bool IOnMapObject::isVisible(int x, int y)
 {
     if ( x >= std::max(0, (castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx()) - sizeHsq) &&
          x <= std::min((castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx()) + sizeHsq, GetMapMaster()->GetMapH() - 1) &&
@@ -156,12 +156,12 @@ bool IOnMapItem::isVisible(int x, int y)
     return 0;
 };
 
-void IOnMapItem::delThis()
+void IOnMapObject::delThis()
 {
     IOnMapBase::delThis();
 }
 
-IOnMapItem::IOnMapItem()
+IOnMapObject::IOnMapObject()
 {
     sprite_ = nullptr;
     v_level = 0;

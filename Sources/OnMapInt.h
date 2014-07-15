@@ -10,12 +10,12 @@
 
 class SmallItem;
 
-class IOnMapItem: public IOnMapBase
+class IOnMapObject: public IOnMapBase
 {
 public:
-    IOnMapItem();
+    IOnMapObject();
     DECLARE_GET_TYPE_ITEM(ionmapitem);
-    DECLARE_SAVED(IOnMapItem, IOnMapBase);
+    DECLARE_SAVED(IOnMapObject, IOnMapBase);
     void checkSelfLevel();
 
     virtual bool IsVisibleByPlayer() const override
@@ -107,4 +107,4 @@ protected:
     void DrawMain(int frame_shift);
 };
 
-ADD_TO_TYPELIST(IOnMapItem);
+ADD_TO_TYPELIST(IOnMapObject);

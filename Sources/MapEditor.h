@@ -34,7 +34,7 @@ private:
 
     void SaveMap(std::stringstream& savefile);
 
-    std::vector<IOnMapItem*> for_creation_;
+    std::vector<IOnMapObject*> for_creation_;
     int to_create_;
 
     std::list<point>* visible_points_;

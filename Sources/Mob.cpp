@@ -321,7 +321,7 @@ void Manager::initWorld()
         ChangeMob(newmob);
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
-        auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
+        auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
                 hash("Teleportator"), 
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]

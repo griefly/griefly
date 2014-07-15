@@ -10,7 +10,7 @@ Move::Move()
     pixel_speed = 1;
 }
 
-void Move::Init(int way_n, Dir direct_n, int pixel_speed_n, id_ptr_on<IOnMapItem> master_n, bool back_n)
+void Move::Init(int way_n, Dir direct_n, int pixel_speed_n, id_ptr_on<IOnMapObject> master_n, bool back_n)
 {
     way = way_n;
     direct = direct_n;

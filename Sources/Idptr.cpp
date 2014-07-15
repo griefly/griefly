@@ -4,7 +4,7 @@
 #include "ItemFabric.h"
 #include "OnMapBaseInt.h"
 
-IMainItem* GetFromIdTable(size_t id)
+IMainObject* GetFromIdTable(size_t id)
 {
     return GetItemFabric()->idTable()[id];
 }

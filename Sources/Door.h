@@ -2,10 +2,10 @@
 
 #include "OnMapInt.h"
 
-class Door: public IOnMapItem
+class Door: public IOnMapObject
 {
 public:
-    DECLARE_SAVED(Door, IOnMapItem);
+    DECLARE_SAVED(Door, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(Door);
     Door();
     

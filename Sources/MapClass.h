@@ -83,7 +83,7 @@ public:
     size_t ms_last_draw;
     bool canDraw();
     
-    id_ptr_on<IOnMapItem> click(int x, int y);
+    id_ptr_on<IOnMapObject> click(int x, int y);
     
     int numOfPathfind;
     CPathFinder pathf;

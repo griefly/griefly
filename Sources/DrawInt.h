@@ -7,12 +7,12 @@
 
 enum DrawType {SAME, TOP};
 
-class IDraw: public IMainItem
+class IDraw: public IMainObject
 {
 public:
     // TODO: это - интерфейс. Сместить кое-какую реализацию вниз
     DECLARE_GET_TYPE_ITEM(IDraw)
-    DECLARE_SAVED(IDraw, IMainItem);
+    DECLARE_SAVED(IDraw, IMainObject);
     IDraw();
     virtual void processImage(DrawType type) {};//draw this item
     virtual bool IsTransp(int x, int y) { return true;};

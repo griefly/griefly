@@ -6,7 +6,7 @@
 class Fire: public BaseEffect
 {
 public:
-    id_ptr_on<IOnMapItem> master;
+    id_ptr_on<IOnMapObject> master;
     GLSprite* sprite;
     int imageStateH;
     int imageStateW;

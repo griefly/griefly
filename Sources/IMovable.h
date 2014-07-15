@@ -2,11 +2,11 @@
 
 #include "OnMapInt.h"
 
-class IMovable : public IOnMapItem
+class IMovable : public IOnMapObject
 {
 public:
     DECLARE_GET_TYPE_ITEM(IMovable);
-    DECLARE_SAVED(IMovable, IOnMapItem);
+    DECLARE_SAVED(IMovable, IOnMapObject);
     IMovable();
     void processMove();//for move
     void move(Dir direct);//pix move
@@ -15,7 +15,7 @@ public:
     bool checkPassable();
     bool mainMove();
 
-    virtual void delThis() override { IOnMapItem::delThis(); }
+    virtual void delThis() override { IOnMapObject::delThis(); }
 
     virtual void processImage(DrawType type);
     virtual void Bump(id_ptr_on<IMovable> item) override;

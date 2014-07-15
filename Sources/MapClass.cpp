@@ -41,7 +41,7 @@ void MapMaster::Draw()
                     {
                         squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
                         {
-                            auto item_n = castTo<IOnMapItem>(item.ret_item());
+                            auto item_n = castTo<IOnMapObject>(item.ret_item());
                             if (item_n->v_level == i)
                                 item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
                         });
@@ -62,7 +62,7 @@ void MapMaster::Draw()
                 {
                     squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
                     {
-                        auto item_n = castTo<IOnMapItem>(item.ret_item());
+                        auto item_n = castTo<IOnMapObject>(item.ret_item());
                         if (item_n->v_level >= MAX_LEVEL)
                             item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
                     });
@@ -118,8 +118,8 @@ void MapMaster::makeMap()
             bool chk = (rand() % 10 != 1);
             bool bin = (rand() % 2) == 0;
             bool bin2 = (rand() % 2) == 0;
-            id_ptr_on<IOnMapItem> loc = 
-                GetItemFabric()->newItem<IOnMapItem>(  chk  ?          Space::T_ITEM_S() 
+            id_ptr_on<IOnMapObject> loc = 
+                GetItemFabric()->newItem<IOnMapObject>(  chk  ?          Space::T_ITEM_S() 
                                                      : bin  ?      MetalWall::T_ITEM_S()
                                                      : bin2 ? ReinforcedWall::T_ITEM_S()
                                                      :                 Floor::T_ITEM_S());
@@ -127,15 +127,15 @@ void MapMaster::makeMap()
             squares[x][y][0]->SetTurf(loc);
 
             if (rand() % 20 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapItem>(ReinforcedFlatGlass::T_ITEM_S(), squares[x][y][0]);
+                GetItemFabric()->newItemOnMap<IOnMapObject>(ReinforcedFlatGlass::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 9 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapItem>(FlatGlass::T_ITEM_S(), squares[x][y][0]);
+                GetItemFabric()->newItemOnMap<IOnMapObject>(FlatGlass::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 9 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapItem>(Grille::T_ITEM_S(), squares[x][y][0]);
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Grille::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 10 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapItem>(Door::T_ITEM_S(), squares[x][y][0]);
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Door::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 3 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapItem>(CWeed::T_ITEM_S(), squares[x][y][0]);//*/
+                GetItemFabric()->newItemOnMap<IOnMapObject>(CWeed::T_ITEM_S(), squares[x][y][0]);//*/
         }
     }
     SYSTEM_STREAM << "End create map\n";
@@ -262,7 +262,7 @@ void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy, int p
     while(ha.size() && it != squares[posx][posy].begin());*/
 }
 
-id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
+id_ptr_on<IOnMapObject> MapMaster::click(int x, int y)
 {
     if(!GetVisible()) 
         return 0;
@@ -276,7 +276,7 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
     SYSTEM_STREAM << y << std::endl;
     //
 
-    id_ptr_on<IOnMapItem> retval = 0;
+    id_ptr_on<IOnMapObject> retval = 0;
 
     int z_level_m = mob_position::get_mob_z();
     for (int z = z_level_m; z >= 0; --z)
@@ -288,7 +288,7 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
             {
                 squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
                 {
-                    auto item = castTo<IOnMapItem>(item_h.ret_item());
+                    auto item = castTo<IOnMapObject>(item_h.ret_item());
                     if (retval.ret_id() == 0)
                         if(item->v_level >= MAX_LEVEL)
                             if(!item->IsTransp(
@@ -319,7 +319,7 @@ id_ptr_on<IOnMapItem> MapMaster::click(int x, int y)
                 {
                     squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
                     {
-                        auto item = castTo<IOnMapItem>(item_h.ret_item());
+                        auto item = castTo<IOnMapObject>(item_h.ret_item());
                         if (retval.ret_id() == 0)
                             if(item->v_level == i)
                                 if(!item->IsTransp(

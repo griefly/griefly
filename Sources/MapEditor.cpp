@@ -31,8 +31,8 @@ MapEditor::MapEditor()
 
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
-        IMainItem* loc = it->second();
-        IOnMapItem* bloc = castTo<IOnMapItem>(loc);
+        IMainObject* loc = it->second();
+        IOnMapObject* bloc = castTo<IOnMapObject>(loc);
         if (!bloc)
         {
             delete loc;
@@ -81,7 +81,7 @@ void MapEditor::InitWorld()
         SetMob(newmob.ret_id());
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
-        auto tptr = GetItemFabric()->newItemOnMap<IOnMapItem>(
+        auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
                 hash("Teleportator"), 
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
@@ -286,7 +286,7 @@ void MapEditor::ProcessInput()
                     for (int counter_y = y_begin; counter_y <= y_end; ++counter_y)
                         for (int counter_z = z_begin; counter_z <= z_end; ++counter_z)
                             if (!castTo<ITurf>(for_creation_[to_create_]))
-                                GetItemFabric()->newItemOnMap<IOnMapItem>(
+                                GetItemFabric()->newItemOnMap<IOnMapObject>(
                                     for_creation_[to_create_]->T_ITEM(), 
                                     GetMapMaster()->squares[counter_x][counter_y][counter_z]);
             }
@@ -332,7 +332,7 @@ void MapEditor::ProcessInput()
                     for (int counter_y = y_begin; counter_y <= y_end; ++counter_y)
                         for (int counter_z = z_begin; counter_z <= z_end; ++counter_z)
                         {
-                            auto ptr = GetMapMaster()->squares[counter_x][counter_y][counter_z]->GetItem<IOnMapItem>();
+                            auto ptr = GetMapMaster()->squares[counter_x][counter_y][counter_z]->GetItem<IOnMapObject>();
                             if (ptr.valid())
                                 ptr->delThis();
                             else if (GetMapMaster()->squares[counter_x][counter_y][counter_z]->GetTurf().valid())

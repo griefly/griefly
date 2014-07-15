@@ -21,7 +21,7 @@ public:
         return hash_last_;
     }
 
-    std::vector<IMainItem*>& idTable()
+    std::vector<IMainObject*>& idTable()
     {
         return idTable_;
     }
@@ -29,8 +29,8 @@ public:
     void Sync();
     void foreachProcess();
 
-    static IMainItem* newVoidItem(unsigned int type);
-    static IMainItem* newVoidItemSaved(unsigned int type);
+    static IMainObject* newVoidItem(unsigned int type);
+    static IMainObject* newVoidItemSaved(unsigned int type);
 
     unsigned int hash_all();
 
@@ -48,7 +48,7 @@ public:
     id_ptr_on<T> newItemOnMap(unsigned int hash, id_ptr_on<IOnMapBase> owner, size_t id_new = 0)
     {
         
-        static_assert(std::is_same<IOnMapItem, T>::value || std::is_base_of<IOnMapItem, T>::value, "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapItem");
+        static_assert(std::is_same<IOnMapObject, T>::value || std::is_base_of<IOnMapObject, T>::value, "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapObject");
         T* item;
         item = castTo<T>(newVoidItem(hash));//TODO: FIX IT!(LOOK DOWN)
         if(item == 0)
@@ -114,19 +114,19 @@ public:
         return ret_val;
     }
 
-    void AddProcessingItem(id_ptr_on<IMainItem> item);
-    void RemoveProcessingItem(id_ptr_on<IMainItem> item);
+    void AddProcessingItem(id_ptr_on<IMainObject> item);
+    void RemoveProcessingItem(id_ptr_on<IMainObject> item);
 
     void SetPlayerId(size_t net_id, size_t real_id);
     size_t GetPlayerId(size_t net_id);
 private:
     void UpdateProcessingItems();
 
-    std::vector<IMainItem*> idTable_;
-    std::vector<id_ptr_on<IMainItem>> process_table_;
+    std::vector<IMainObject*> idTable_;
+    std::vector<id_ptr_on<IMainObject>> process_table_;
 
-    std::vector<id_ptr_on<IMainItem>> add_to_process_;
-    std::vector<id_ptr_on<IMainItem>> remove_from_process_;
+    std::vector<id_ptr_on<IMainObject>> add_to_process_;
+    std::vector<id_ptr_on<IMainObject>> remove_from_process_;
 
     unsigned int hash_last_;
     size_t id_;

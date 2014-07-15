@@ -26,7 +26,7 @@ void IMob::delThis()
 {
     DeinitGUI();
     cautOverMind();
-    IOnMapItem::delThis();
+    IOnMapObject::delThis();
 }
 
 void IMob::processGUImsg(const Message& msg)

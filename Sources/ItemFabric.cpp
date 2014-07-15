@@ -61,7 +61,7 @@ void ItemFabric::UpdateProcessingItems()
     if (remove_from_process_.size() || add_to_process_.size())
     {
         std::sort(process_table_.begin(), process_table_.end(),
-        [](id_ptr_on<IMainItem> item1, id_ptr_on<IMainItem> item2)
+        [](id_ptr_on<IMainObject> item1, id_ptr_on<IMainObject> item2)
         {
             return item1.ret_id() < item2.ret_id();
         });
@@ -336,21 +336,21 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
         size_t id_loc;
         savefile >> id_loc;
         
-        id_ptr_on<IMainItem> i;
-        i = newItemSaved<IMainItem>(type, id_loc);
+        id_ptr_on<IMainObject> i;
+        i = newItemSaved<IMainObject>(type, id_loc);
         i->loadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
     ChangeMob(GetMob());
 }
 
-IMainItem* ItemFabric::newVoidItem(unsigned int type)
+IMainObject* ItemFabric::newVoidItem(unsigned int type)
 {
     static Initer init;
     return (*itemList())[type]();
 };
 
-IMainItem* ItemFabric::newVoidItemSaved(unsigned int type)
+IMainObject* ItemFabric::newVoidItemSaved(unsigned int type)
 {
     static Initer init;
     return (*itemListSaved())[type]();
@@ -390,12 +390,12 @@ size_t ItemFabric::GetPlayerId(size_t net_id)
     return players_table_[net_id];
 }
 
-void ItemFabric::AddProcessingItem(id_ptr_on<IMainItem> item)
+void ItemFabric::AddProcessingItem(id_ptr_on<IMainObject> item)
 {
     add_to_process_.push_back(item);
 }
 
-void ItemFabric::RemoveProcessingItem(id_ptr_on<IMainItem> item)
+void ItemFabric::RemoveProcessingItem(id_ptr_on<IMainObject> item)
 {
     remove_from_process_.push_back(item);  
 }

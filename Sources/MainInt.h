@@ -7,7 +7,7 @@
 
 #define DECLARE_RAW_TYPE(thisclass, supclass) DECLARE_RAW_LOADED DECLARE_GET_TYPE_ITEM(thisclass, supclass)//load from raw, type
 
-class IMainItem
+class IMainObject
 {
 public:
     static const int THIS_COUNTER = __COUNTER__; 
@@ -20,8 +20,8 @@ public:
     }
 
     virtual void delThis();
-    IMainItem(){ id_ = 0; how_often_ = 0;};
-    IMainItem(NotLoadItem) {id_ = 0; how_often_ = 0;};
+    IMainObject(){ id_ = 0; how_often_ = 0;};
+    IMainObject(NotLoadItem) {id_ = 0; how_often_ = 0;};
     virtual unsigned int T_ITEM()            
     {                                        
         static unsigned int result = 0;
@@ -56,4 +56,4 @@ private:
     size_t id_;
     int how_often_;
 };
-ADD_TO_TYPELIST(IMainItem);
+ADD_TO_TYPELIST(IMainObject);

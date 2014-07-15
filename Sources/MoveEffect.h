@@ -7,7 +7,7 @@ class Move: public BaseEffect
 {
 public:
     void Init(int way_n, Dir direct_n, int pixel_speed_n, 
-              id_ptr_on<IOnMapItem> master_n, bool back_n = false);
+              id_ptr_on<IOnMapObject> master_n, bool back_n = false);
     virtual void process() override;
     virtual void start() override;
     virtual void end() override;
@@ -18,5 +18,5 @@ private:
     int way;
     Dir direct;
     bool back;
-    id_ptr_on<IOnMapItem> master;
+    id_ptr_on<IOnMapObject> master;
 };

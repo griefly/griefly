@@ -2,10 +2,10 @@
 
 #include "OnMapInt.h"
 
-class ITurf : public IOnMapItem
+class ITurf : public IOnMapObject
 {
 public:
-    DECLARE_SAVED(ITurf, IOnMapItem);
+    DECLARE_SAVED(ITurf, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(ITurf);
     ITurf() {};
     virtual void delThis() override; 

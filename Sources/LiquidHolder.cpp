@@ -140,7 +140,7 @@ void LiquidHolder::checkReaction(unsigned int hash)
 
 void LiquidHolder::delThis()
 {
-    IMainItem::delThis();
+    IMainObject::delThis();
 }
 
 void LiquidHolder::processImage(DrawType type)

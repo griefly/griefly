@@ -33,9 +33,9 @@ void Fire::process()
         imageStateW = (imageStateW + 1) % sprite->FrameW();
     }
     // TODO
-    if(true/*master->master.ret_id() == 0 && IMainItem::mobMaster->isMobVisible(master->posx, master->posy)*/)
+    if(true/*master->master.ret_id() == 0 && IMainObject::mobMaster->isMobVisible(master->posx, master->posy)*/)
     {
-     //   IMainItem::mobMaster->gl_screen->Draw(sprite, master->x, master->y, imageStateW, imageStateH);
+     //   IMainObject::mobMaster->gl_screen->Draw(sprite, master->x, master->y, imageStateW, imageStateH);
     }
 }
 

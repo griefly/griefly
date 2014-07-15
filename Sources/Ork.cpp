@@ -67,11 +67,11 @@ void COrk::processGUImsg(const Message& msg)
     }
     else if(msg.text == "SDLK_q")
     {
-        GetItemFabric()->newItemOnMap<IOnMapItem>(hash("spear"), owner);
+        GetItemFabric()->newItemOnMap<IOnMapObject>(hash("spear"), owner);
     }
     else if(msg.text == "SDLK_e")
     {
-        GetItemFabric()->newItemOnMap<IOnMapItem>(hash("forcespear"), owner);
+        GetItemFabric()->newItemOnMap<IOnMapObject>(hash("forcespear"), owner);
     }
     else if(msg.text == "SDLK_SPACE")
     {
@@ -90,7 +90,7 @@ void COrk::processGUImsg(const Message& msg)
     }
     else if (msg.text == "SDL_MOUSEBUTTONDOWN")
     {
-        id_ptr_on<IOnMapItem> item = msg.from;
+        id_ptr_on<IOnMapObject> item = msg.from;
         if (item.valid() && item->GetOwner().valid())
         {
             SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
