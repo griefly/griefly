@@ -126,6 +126,8 @@ void MapMaster::makeMap()
 
             squares[x][y][0]->SetTurf(loc);
 
+            if (rand() % 20 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapItem>(ReinforcedFlatGlass::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 9 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapItem>(FlatGlass::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 9 == 1)

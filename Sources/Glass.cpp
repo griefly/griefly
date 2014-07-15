@@ -48,3 +48,10 @@ void FlatGlass::Bump(id_ptr_on<IMovable> item)
     }
     IMovable::Bump(item);
 }
+
+
+ReinforcedFlatGlass::ReinforcedFlatGlass()
+{
+    SetState("rwindow");
+    name = "Reinforced window";
+}
