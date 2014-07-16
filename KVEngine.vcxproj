@@ -33,6 +33,7 @@
     <ClInclude Include="Sources\HelperStructers.h" />
     <ClInclude Include="Sources\Idptr.h" />
     <ClInclude Include="Sources\IMovable.h" />
+    <ClInclude Include="Sources\Item.h" />
     <ClInclude Include="Sources\ItemFabric.h" />
     <ClInclude Include="Sources\ITurf.h" />
     <ClInclude Include="Sources\Kivsjak.h" />
