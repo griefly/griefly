@@ -1,11 +1,11 @@
 #pragma once
 
-#include "IMovable.h"
+#include "Structure.h"
 
-class FlatGlass: public IMovable
+class FlatGlass: public Structure
 {
 public:
-    DECLARE_SAVED(FlatGlass, IMovable);
+    DECLARE_SAVED(FlatGlass, Structure);
     DECLARE_GET_TYPE_ITEM(FlatGlass);
     FlatGlass();
 
