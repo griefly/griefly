@@ -267,6 +267,9 @@
     <ClInclude Include="Sources\Item.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Shard.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -426,6 +429,12 @@
       <Filter>Source Files\Space</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Glass.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Item.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Shard.cpp">
       <Filter>Source Files\Space</Filter>
     </ClCompile>
   </ItemGroup>

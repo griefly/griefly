@@ -10,3 +10,12 @@ public:
     Item() {};
 };
 ADD_TO_TYPELIST(Item);
+
+class Screwdriver: public Item
+{
+public:
+    DECLARE_SAVED(Screwdriver, Item);
+    DECLARE_GET_TYPE_ITEM(Screwdriver);
+    Screwdriver();
+};
+ADD_TO_TYPELIST(Screwdriver);

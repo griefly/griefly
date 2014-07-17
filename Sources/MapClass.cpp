@@ -19,6 +19,8 @@
 #include "CSmallItem.h"
 #include "Grille.h"
 #include "Glass.h"
+#include "Item.h"
+#include "Shard.h"
 
 void MapMaster::Draw()
 {
@@ -119,13 +121,15 @@ void MapMaster::makeMap()
             bool bin = (rand() % 2) == 0;
             bool bin2 = (rand() % 2) == 0;
             id_ptr_on<IOnMapObject> loc = 
-                GetItemFabric()->newItem<IOnMapObject>(  chk  ?          Space::T_ITEM_S() 
+                GetItemFabric()->newItem<IOnMapObject>(  chk  ?        Space::T_ITEM_S() 
                                                      : bin  ?      MetalWall::T_ITEM_S()
                                                      : bin2 ? ReinforcedWall::T_ITEM_S()
                                                      :                 Floor::T_ITEM_S());
 
             squares[x][y][0]->SetTurf(loc);
 
+            if (rand() % 7 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Screwdriver::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 20 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(ReinforcedFlatGlass::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 9 == 1)
@@ -135,7 +139,7 @@ void MapMaster::makeMap()
             if (rand() % 10 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(Door::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 3 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(CWeed::T_ITEM_S(), squares[x][y][0]);//*/
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Shard::T_ITEM_S(), squares[x][y][0]);//*/
         }
     }
     SYSTEM_STREAM << "End create map\n";

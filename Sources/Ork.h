@@ -4,7 +4,7 @@
 
 #include "sound.h"
 
-class SmallItem;
+class Item;
 
 class COrk : public CAliveMob
 {
@@ -14,10 +14,9 @@ public:
     COrk();
     virtual void aaMind();
     virtual void processGUImsg(const Message& msg) override;
-    virtual void attack_by(id_ptr_on<SmallItem> atk, int force = -1) override;
     virtual void live() override;
     virtual bool checkMove(Dir direct) override;
-    id_ptr_on<SmallItem> KV_SAVEBLE(in_hand);
+    id_ptr_on<Item> KV_SAVEBLE(in_hand);
     int KV_SAVEBLE(jump_time);
     sf::Sound jump_sound;
     sf::Sound step_sound;

@@ -2,7 +2,8 @@
 #include "MapClass.h"
 
 #include "LiquidHolder.h"
-#include "CSmallItem.h"
+#include "Item.h"
+#include "Shard.h"
 #include "Turf.h"
 #include "ItemFabric.h"
 #include "visible_points.h"
@@ -36,7 +37,7 @@ bool COrk::checkMove(Dir direct)
 {
     if (CAliveMob::checkMove(direct))
     {   
-        if (owner->GetItem<CWeed>().valid())
+        if (owner->GetItem<Shard>().valid())
             PlaySoundIfVisible("glass_step.ogg", GetOwner().ret_id());
         return true;
     }
@@ -54,7 +55,7 @@ void COrk::processGUImsg(const Message& msg)
         }
         else
         {
-            in_hand = owner->GetItem<SmallItem>();
+            in_hand = owner->GetItem<Item>();
             if (in_hand.valid())
             {
                 if (!owner->RemoveItem(in_hand))
@@ -63,29 +64,6 @@ void COrk::processGUImsg(const Message& msg)
                 }
                 in_hand->SetOwner(GetId());
             }
-        }
-    }
-    else if(msg.text == "SDLK_q")
-    {
-        GetItemFabric()->newItemOnMap<IOnMapObject>(hash("spear"), owner);
-    }
-    else if(msg.text == "SDLK_e")
-    {
-        GetItemFabric()->newItemOnMap<IOnMapObject>(hash("forcespear"), owner);
-    }
-    else if(msg.text == "SDLK_SPACE")
-    {
-        if ((MAIN_TICK - jump_time) > 20)
-        {
-            jump_time = static_cast<int>(MAIN_TICK);
-            auto zup = owner->GetNeighbour(D_ZUP);
-            if (zup.valid() && zup->IsPassable(D_ZDOWN) && zup->IsPassable(D_ALL))
-            {
-                owner->RemoveItem(GetId());
-                zup->AddItem(GetId());
-                checkMove(dMove);
-            }
-          //  PlaySound("jump.ogx");
         }
     }
     else if (msg.text == "SDL_MOUSEBUTTONDOWN")
@@ -125,10 +103,3 @@ void COrk::processGUImsg(const Message& msg)
     }
 
 };
-
-void COrk::attack_by(id_ptr_on<SmallItem> atk, int force)
-{
-    SYSTEM_STREAM << "void COrk::attack_by(id_ptr_on<SmallItem> atk, int force)\n";
-    //dmg++;
-    CAliveMob::attack_by(atk, force);
-}

@@ -64,6 +64,7 @@
     <ClInclude Include="Sources\platform\gl.h" />
     <ClInclude Include="Sources\Screen.h" />
     <ClInclude Include="Sources\SdlInit.h" />
+    <ClInclude Include="Sources\Shard.h" />
     <ClInclude Include="Sources\sound.h" />
     <ClInclude Include="Sources\SpaceTurf.h" />
     <ClInclude Include="Sources\sprite.h" />
@@ -96,6 +97,7 @@
     <ClCompile Include="Sources\Grille.cpp" />
     <ClCompile Include="Sources\Idptr.cpp" />
     <ClCompile Include="Sources\IMovable.cpp" />
+    <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\ItemFabric.cpp" />
     <ClCompile Include="Sources\ITurf.cpp" />
     <ClCompile Include="Sources\Kivsjak.cpp" />
@@ -120,6 +122,7 @@
     <ClCompile Include="Sources\Params.cpp" />
     <ClCompile Include="Sources\Screen.cpp" />
     <ClCompile Include="Sources\SdlInit.cpp" />
+    <ClCompile Include="Sources\Shard.cpp" />
     <ClCompile Include="Sources\sound.cpp" />
     <ClCompile Include="Sources\SpaceTurf.cpp" />
     <ClCompile Include="Sources\sprite.cpp" />
