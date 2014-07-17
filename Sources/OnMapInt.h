@@ -100,7 +100,7 @@ public:
 
     std::string KV_SAVEBLE(state_);
     const ImageMetadata::SpriteMetadata* KV_ON_LOAD(metadata_, nullptr);
-private:
+protected:
     int KV_ON_LOAD(image_state_, -1);
     int KV_ON_LOAD(last_frame_tick_, SDL_GetTicks());
 };

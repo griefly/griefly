@@ -15,6 +15,8 @@ public:
     bool checkPassable();
     bool mainMove();
 
+    virtual bool IsTransp(int x, int y) override;
+
     virtual void delThis() override { IOnMapObject::delThis(); }
 
     virtual void processImage(DrawType type);
