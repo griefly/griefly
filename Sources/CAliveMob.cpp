@@ -42,12 +42,6 @@ void CAliveMob::live()
         burn_power -= 1;
 };
 
-void CAliveMob::attack_by(id_ptr_on<SmallItem> atk, int force)
-{
-    dmg += atk->force;
-    injuries += atk->penet_force;
-};
-
 void CAliveMob::InitGUI()
 {
     GetTexts()["Sync"].SetUpdater

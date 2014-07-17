@@ -94,35 +94,30 @@ void COrk::processGUImsg(const Message& msg)
     else if (msg.text == "SDL_MOUSEBUTTONDOWN")
     {
         id_ptr_on<IOnMapObject> item = msg.from;
-        if (item.valid() && item->GetOwner().valid())
+        if (item && item->GetOwner())
         {
             SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
             // It isn't fine
             if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
             {
                 SYSTEM_STREAM << "And we can touch it!" << std::endl;
-                if(!in_hand.valid())
+                if(!in_hand)
                 {
                     in_hand = item;
-                    if (in_hand.valid())
+                    if (in_hand)
                     {
                         if (!item->GetOwner()->RemoveItem(item))
-                        {
                             SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
-                        }
                         item->SetOwner(GetId());
                     }
-                    
-                }
-
-                id_ptr_on<Door> door = msg.from;
-                if (door.valid())
-                {
-                    if (door->IsOpen())
-                        door->Close();
                     else
-                        door->Open();
+                        in_hand = 0;
                 }
+                else
+                {
+                    item->AttackBy(in_hand);
+                }
+                
             }
         } 
     }

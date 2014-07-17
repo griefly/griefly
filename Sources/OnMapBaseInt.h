@@ -6,6 +6,7 @@
 
 class ITurf;
 class IMovable;
+class Item;
 
 class IOnMapBase: public IDraw
 {
@@ -37,6 +38,7 @@ public:
         IDraw::delThis();
     }
 
+    virtual void AttackBy(id_ptr_on<Item> item);
 
 
     virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const

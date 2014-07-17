@@ -70,7 +70,6 @@ public:
 
     //void mobMove();
     static bool isVisible(int x, int y);
-    virtual void attack_by(id_ptr_on<SmallItem> item, int force = -1);
     
     virtual void delThis() override;
     virtual std::list<HashAmount> insertLiquid(std::list<HashAmount>);

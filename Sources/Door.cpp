@@ -3,6 +3,7 @@
 #include "sound.h"
 #include "IMovable.h"
 #include "MobInt.h"
+#include "Item.h"
 
 Door::Door()
 {
@@ -77,5 +78,13 @@ void Door::Bump(id_ptr_on<IMovable> item)
     if (!m)
         return;
     if (door_state_ == CLOSED)
+        Open();
+}
+
+void Door::AttackBy(id_ptr_on<Item> item)
+{
+    if (IsOpen())
+        Close();
+    else
         Open();
 }

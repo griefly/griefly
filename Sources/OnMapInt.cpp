@@ -11,8 +11,6 @@
 #include "mob_position.h"
 #include "helpers.h"
 
-void IOnMapObject::attack_by(id_ptr_on<SmallItem> it, int force) {};
-
 std::list<HashAmount> IOnMapObject::insertLiquid(std::list<HashAmount> r) {return r;};
 
 void IOnMapObject::SetSprite(const std::string& name)

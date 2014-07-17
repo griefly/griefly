@@ -12,8 +12,6 @@ public:
     virtual void live();
     virtual void aaMind();
 
-    virtual void attack_by(id_ptr_on<SmallItem> atk, int force = -1) override;
-
     virtual void DeinitGUI() override;
     virtual void InitGUI() override;
     virtual void processGUI() override;
