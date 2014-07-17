@@ -75,6 +75,7 @@ public:
     virtual void delThis() override;
     virtual std::list<HashAmount> insertLiquid(std::list<HashAmount>);
     virtual void processImage(DrawType type) override;//draw this item
+    void DrawMain(int frame_shift, int x, int y);
     virtual bool IsTransp(int x, int y) override;
     void SetSprite(const std::string& T_SPR);
     const GLSprite* GetSprite();
@@ -103,8 +104,6 @@ public:
 private:
     int KV_ON_LOAD(image_state_, -1);
     int KV_ON_LOAD(last_frame_tick_, SDL_GetTicks());
-protected:
-    void DrawMain(int frame_shift);
 };
 
 ADD_TO_TYPELIST(IOnMapObject);

@@ -42,32 +42,6 @@ void CAliveMob::live()
         burn_power -= 1;
 };
 
-/*bool CAliveMob::checkMove(Dir direct)
-{
-    if(!checkMoveTime()) return false;
-    int locx = posx;
-    int locy = posy;
-    if(direct == D_UP) locy -= 1;
-    if(direct == D_DOWN) locy += 1;
-    if(direct == D_LEFT) locx -= 1;
-    if(direct == D_RIGHT) locx += 1;
-    auto itr = map->squares[locx][locy].begin();
-    /*while(itr != map->mobs[locx][locy].end())
-    {
-        CAliveMob* loc;
-        loc = isType<CAliveMob>(**itr);
-        if(loc)
-        {
-            loc->attack_by(id);
-            return false;
-        }
-        itr++;
-    }
-    dMove = direct;
-    if(!checkPassable()) return false;
-    return mainMove(); 
-};*/
-
 void CAliveMob::attack_by(id_ptr_on<SmallItem> atk, int force)
 {
     dmg += atk->force;
@@ -94,18 +68,10 @@ void CAliveMob::DeinitGUI()
 void CAliveMob::processGUI()
 {
     IMob::processGUI();
-    static SDL_Surface* sDMG = nullptr;
-    static SDL_Surface* sync = nullptr;
     static int locTime = 0;
-    std::stringstream ssloc, ssloc2;
     if(SDL_GetTicks() - locTime > 100)
     {
-        //ssloc << inside->amountOf(hash("liquidblood")) << "bl " << dmg << "d " << injuries << "i " << burn << "b " << interior << "in\n " << bloodless << "b " << oxyless << "o";
         SDL_Color color = {255, 0, 0, 0};
-        //if(sDMG != nullptr)
-        //    SDL_FreeSurface(sDMG);
-        //sDMG = TTF_RenderText_Blended( map->aSpr.font, ssloc.str().c_str(), color);
-
         if (GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash())
             GetTexts()["Sync"].SetColor(0, 255, 100);
         else

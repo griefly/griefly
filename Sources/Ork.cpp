@@ -9,6 +9,7 @@
 #include "visible_points.h"
 #include "Door.h"
 #include "sync_random.h"
+#include "ASpritesClass.h"
 
 COrk::COrk()
 {
@@ -22,7 +23,7 @@ COrk::COrk()
     jump_time = 0;
     is_strong_owner = true;
     name = "Morgan James";
-    
+    gui_sprite_ = nullptr;
 };
 
 void COrk::aaMind()
@@ -43,27 +44,51 @@ bool COrk::checkMove(Dir direct)
     }
     return false;
 }
+
+void COrk::processGUI()
+{
+    CAliveMob::processGUI();
+
+    if (!gui_sprite_)
+        gui_sprite_ = GetSpriter()->returnSpr("icons/screen_retro.dmi");
+    // TODO:
+
+    // Lhand
+    GetScreen()->Draw(gui_sprite_, 
+                      0  * 32, 
+                      14 * 32, 
+                      1, 3);
+
+    // Rhand
+    GetScreen()->Draw(gui_sprite_, 
+                      2  * 32, 
+                      14 * 32, 
+                      2, 3);
+
+    // Body
+    GetScreen()->Draw(gui_sprite_, 
+                      1  * 32, 
+                      14 * 32, 
+                      1, 0);
+
+    // Helmet
+    GetScreen()->Draw(gui_sprite_, 
+                      1  * 32, 
+                      13 * 32, 
+                      0, 2);
+    if (in_hand)
+        in_hand->DrawMain(0, 0 * 32, 14 * 32);
+}
+
 void COrk::processGUImsg(const Message& msg)
 {
     CAliveMob::processGUImsg(msg);
     if(msg.text == "SDLK_p")
     {
-        if(in_hand.valid())
+        if(in_hand)
         {
             owner->AddItem(in_hand);
             in_hand = 0;
-        }
-        else
-        {
-            in_hand = owner->GetItem<Item>();
-            if (in_hand.valid())
-            {
-                if (!owner->RemoveItem(in_hand))
-                {
-                    SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
-                }
-                in_hand->SetOwner(GetId());
-            }
         }
     }
     else if (msg.text == "SDL_MOUSEBUTTONDOWN")

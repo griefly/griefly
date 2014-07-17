@@ -4,6 +4,7 @@
 #include "MoveEffect.h"
 #include "helpers.h"
 #include "MobInt.h"
+#include "mob_position.h"
 
 #include <assert.h>
 
@@ -85,9 +86,17 @@ void IMovable::processImage(DrawType type)
         return;
 
     if (GetMetadata()->dirs >= 4)
-        DrawMain(helpers::dir_to_byond(dMove));
+    {
+        DrawMain(helpers::dir_to_byond(dMove),            
+            GetDrawX() + mob_position::get_shift_x(),
+            GetDrawY() + mob_position::get_shift_y());
+    }
     else
-        DrawMain(0);
+    {
+        DrawMain(0,            
+            GetDrawX() + mob_position::get_shift_x(),
+            GetDrawY() + mob_position::get_shift_y());
+    }
 }
 
 void IMovable::Bump(id_ptr_on<IMovable> item)

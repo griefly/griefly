@@ -57,7 +57,7 @@ const ImageMetadata::SpriteMetadata* IOnMapObject::GetMetadata()
 
 const int ANIMATION_MUL = 100;
 
-void IOnMapObject::DrawMain(int shift)
+void IOnMapObject::DrawMain(int shift, int x, int y)
 {
     if (NODRAW)
         return;
@@ -72,8 +72,7 @@ void IOnMapObject::DrawMain(int shift)
     int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
 
     GetScreen()->Draw(GetSprite(), 
-                      GetDrawX() + mob_position::get_shift_x(), 
-                      GetDrawY() + mob_position::get_shift_y(), 
+                      x, y, 
                       image_state_w_, image_state_h_);
 
     if (GetMetadata()->frames_sequence.size() == 1)
@@ -105,7 +104,9 @@ void IOnMapObject::DrawMain(int shift)
 
 void IOnMapObject::processImage(DrawType type)
 { 
-    DrawMain(0);
+    DrawMain(0, 
+            GetDrawX() + mob_position::get_shift_x(),
+            GetDrawY() + mob_position::get_shift_y());
 };
 
 void IOnMapObject::processPhysics()

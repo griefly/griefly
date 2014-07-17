@@ -355,7 +355,7 @@ void Manager::initWorld()
     ([this](std::string* str)
     {
         *str = last_touch;
-    }).SetFreq(20).SetPlace(0, 400).SetSize(35);
+    }).SetFreq(20).SetPlace(0, 485).SetSize(22);
 
     
 };
