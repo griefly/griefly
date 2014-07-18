@@ -7,7 +7,7 @@ class Item: public IMovable
 public:
     DECLARE_SAVED(Item, IMovable);
     DECLARE_GET_TYPE_ITEM(Item);
-    Item() {};
+    Item();
 };
 ADD_TO_TYPELIST(Item);
 
@@ -19,3 +19,12 @@ public:
     Screwdriver();
 };
 ADD_TO_TYPELIST(Screwdriver);
+
+class Wirecutters: public Item
+{
+public:
+    DECLARE_SAVED(Wirecutters, Item);
+    DECLARE_GET_TYPE_ITEM(Wirecutters);
+    Wirecutters();
+};
+ADD_TO_TYPELIST(Wirecutters);

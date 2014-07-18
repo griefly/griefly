@@ -214,7 +214,7 @@ void Manager::processInput()
                     NetClient::GetNetClient()->Send(msg);
                     last_touch = item->name;
                 }
-                PlaySound("click.ogx");
+  //              PlaySound("click.ogx");
             }
             if (event.type == SDL_VIDEORESIZE)
             {

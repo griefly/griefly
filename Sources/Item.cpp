@@ -4,12 +4,14 @@
 
 #include "sync_random.h"
 
-Screwdriver::Screwdriver()
+Item::Item()
 {
     v_level = 5;
-
     SetSprite("icons/items.dmi");
+}
 
+Screwdriver::Screwdriver()
+{
     unsigned int value = get_rand() % 8;
 
     std::stringstream converter;
@@ -19,4 +21,11 @@ Screwdriver::Screwdriver()
     SetState(converter.str());
     
     name = "Screwdriver";
+}
+
+Wirecutters::Wirecutters()
+{
+    SetState("cutters");
+
+    name = "Wirecutters";
 }

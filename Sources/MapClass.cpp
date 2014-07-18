@@ -128,6 +128,8 @@ void MapMaster::makeMap()
 
             squares[x][y][0]->SetTurf(loc);
 
+            if (rand() % 14 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Wirecutters::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 7 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(Screwdriver::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 20 == 1)

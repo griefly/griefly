@@ -5,9 +5,7 @@
 
 void Structure::AttackBy(id_ptr_on<Item> item)
 {
-    id_ptr_on<Screwdriver> scr;
-    scr = item;
-    if (scr)
+    if (id_ptr_on<Screwdriver> scr = item)
     {
         anchored = !anchored;
         PlaySoundIfVisible("Screwdriver.ogg", owner.ret_id());
