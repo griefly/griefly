@@ -127,6 +127,7 @@
     <ClCompile Include="Sources\sound.cpp" />
     <ClCompile Include="Sources\SpaceTurf.cpp" />
     <ClCompile Include="Sources\sprite.cpp" />
+    <ClCompile Include="Sources\Structure.cpp" />
     <ClCompile Include="Sources\sync_random.cpp" />
     <ClCompile Include="Sources\Teleportator.cpp" />
     <ClCompile Include="Sources\Testmob.cpp" />

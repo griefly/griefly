@@ -41,6 +41,8 @@ void FlatGlass::Bump(id_ptr_on<IMovable> item)
     {
         if (!owner->IsPassable(D_ALL))
             return;
+        if (anchored)
+            return;
         SetPassable(dMove, true);
         dMove = item->dMove;
         SetPassable(dMove, false);

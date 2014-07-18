@@ -14,11 +14,14 @@ IMovable::IMovable()
     tickSpeed = 1;
     pixSpeed = 1;
     dMove = D_UP;
+    anchored = false;
 }
 
 bool IMovable::checkMove(Dir direct)
 {
     if (!checkMoveTime()) 
+        return false;
+    if (anchored)
         return false;
     dMove = direct;
     if (!checkPassable())

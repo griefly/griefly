@@ -8,5 +8,6 @@ public:
     DECLARE_SAVED(Structure, IMovable);
     DECLARE_GET_TYPE_ITEM(Structure);
     Structure() {};
+    virtual void AttackBy(id_ptr_on<Item> item) override;
 };
 ADD_TO_TYPELIST(Structure);

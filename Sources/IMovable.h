@@ -22,6 +22,7 @@ public:
     virtual void processImage(DrawType type);
     virtual void Bump(id_ptr_on<IMovable> item) override;
 public:
+    bool KV_SAVEBLE(anchored);
     int KV_SAVEBLE(lastMove);
     int KV_SAVEBLE(tickSpeed);
     int KV_SAVEBLE(pixSpeed);

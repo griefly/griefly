@@ -440,5 +440,8 @@
     <ClCompile Include="Sources\Shard.cpp">
       <Filter>Source Files\Space</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Structure.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
