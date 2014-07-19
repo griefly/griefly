@@ -126,12 +126,17 @@ void Manager::process()
         }
          
         if (!NODRAW)
-        {
+        {         
             GetMapMaster()->Draw();
+            
             FabricProcesser::Get()->process();
-            ClearGUIZone();
+            
+            ClearGUIZone(); 
+
             GetMob()->processGUI();
+            
             GetTexts().Process();
+                       
             GetScreen()->Swap();
         }
 
@@ -161,13 +166,15 @@ void Manager::process()
 
 void Manager::ClearGUIZone()
 {
+    glColor3f(0.8f, 0.8f, 0.8f);
+    glDisable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
-        glColor3f(0.5, 0.5, 0.5);
         glVertex2i(sizeW,                0);
         glVertex2i(sizeW,            sizeH);
         glVertex2i(sizeW + guiShift, sizeH);
         glVertex2i(sizeW + guiShift,     0);
     glEnd();
+    glEnable(GL_TEXTURE_2D);
 }
 
 void Manager::checkMoveMob()
