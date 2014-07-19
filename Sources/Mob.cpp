@@ -24,6 +24,8 @@
 #include "SdlInit.h"
 #include "MobInt.h"
 #include "utils.h"
+#include "ImageLoader.h"
+#include "SoundLoader.h"
 
 int ping_send;
 
@@ -127,14 +129,9 @@ void Manager::process()
         {
             GetMapMaster()->Draw();
             FabricProcesser::Get()->process();
-        }
-
-      
-        //checkMoveMob();
-        if (!NODRAW)
             GetMob()->processGUI();
-
-        GetTexts().Process();
+            GetTexts().Process();
+        }
 
         if((SDL_GetTicks() - lastTimeFps) >= 1000 && !pause)
         {
@@ -181,7 +178,8 @@ void Manager::checkMoveMob()
 void Manager::processInput()
 {
     static Uint8* keys;
-    static int lastShoot = 0;
+    int lastShoot = 0;
+    int click_timer = 0;
     if (!NODRAW)
     {
         SDL_Event event;    
@@ -205,14 +203,18 @@ void Manager::processInput()
             }
             if(event.type == SDL_MOUSEBUTTONDOWN)
             {
-                auto item = GetMapMaster()->click(event.button.x, event.button.y);
-                if (item.valid())
+                if ((SDL_GetTicks() - click_timer) > 333)
                 {
-                    Message msg;
-                    msg.from = item.ret_id();
-                    msg.text = "SDL_MOUSEBUTTONDOWN";
-                    NetClient::GetNetClient()->Send(msg);
-                    last_touch = item->name;
+                    click_timer = SDL_GetTicks();
+                    auto item = GetMapMaster()->click(event.button.x, event.button.y);
+                    if (item.valid())
+                    {
+                        Message msg;
+                        msg.from = item.ret_id();
+                        msg.text = "SDL_MOUSEBUTTONDOWN";
+                        NetClient::GetNetClient()->Send(msg);
+                        last_touch = item->name;
+                    }
                 }
   //              PlaySound("click.ogx");
             }
@@ -302,6 +304,9 @@ void Manager::initWorld()
         SetScreen(new Screen(sizeW, sizeH));
     SetTexts(new TextPainter);
     SetSpriter(new ASprClass);
+
+    LoadImages();
+    LoadSounds();
 
     NetClient::Init();
 

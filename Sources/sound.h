@@ -19,16 +19,18 @@ public:
     {
         sound->setBuffer(*GetBuffer(name));
     }
+    void LoadSound(const std::string& name)
+    {
+        SYSTEM_STREAM << "Load sound " << name << std::endl;
+        holder_[name] = new sf::SoundBuffer;
+        if (!holder_[name]->loadFromFile("sounds/" + name))
+            SYSTEM_STREAM << "Error during load sound " << name << std::endl;    
+    }
 private:
     const sf::SoundBuffer* GetBuffer(const std::string& name)
     {
         if (!holder_[name])
-        {
-            SYSTEM_STREAM << "Load sound " << name << std::endl;
-            holder_[name] = new sf::SoundBuffer;
-            if (!holder_[name]->loadFromFile("sounds/" + name))
-                SYSTEM_STREAM << "Error during load sound " << name << std::endl;      
-        }
+            LoadSound(name);    
         return holder_[name];
     }
     std::unordered_map<std::string, sf::SoundBuffer*> holder_;

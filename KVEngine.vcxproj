@@ -32,6 +32,7 @@
     <ClInclude Include="Sources\helpers.h" />
     <ClInclude Include="Sources\HelperStructers.h" />
     <ClInclude Include="Sources\Idptr.h" />
+    <ClInclude Include="Sources\ImageLoader.h" />
     <ClInclude Include="Sources\IMovable.h" />
     <ClInclude Include="Sources\Item.h" />
     <ClInclude Include="Sources\ItemFabric.h" />
@@ -66,6 +67,7 @@
     <ClInclude Include="Sources\SdlInit.h" />
     <ClInclude Include="Sources\Shard.h" />
     <ClInclude Include="Sources\sound.h" />
+    <ClInclude Include="Sources\SoundLoader.h" />
     <ClInclude Include="Sources\SpaceTurf.h" />
     <ClInclude Include="Sources\sprite.h" />
     <ClInclude Include="Sources\StreamWrapper.h" />
@@ -97,6 +99,7 @@
     <ClCompile Include="Sources\GLSprite.cpp" />
     <ClCompile Include="Sources\Grille.cpp" />
     <ClCompile Include="Sources\Idptr.cpp" />
+    <ClCompile Include="Sources\ImageLoader.cpp" />
     <ClCompile Include="Sources\IMovable.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\ItemFabric.cpp" />
@@ -125,6 +128,7 @@
     <ClCompile Include="Sources\SdlInit.cpp" />
     <ClCompile Include="Sources\Shard.cpp" />
     <ClCompile Include="Sources\sound.cpp" />
+    <ClCompile Include="Sources\SoundLoader.cpp" />
     <ClCompile Include="Sources\SpaceTurf.cpp" />
     <ClCompile Include="Sources\sprite.cpp" />
     <ClCompile Include="Sources\Structure.cpp" />

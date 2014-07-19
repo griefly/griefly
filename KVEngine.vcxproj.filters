@@ -273,6 +273,12 @@
     <ClInclude Include="Sources\Structure.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\ImageLoader.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SoundLoader.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -442,6 +448,12 @@
     </ClCompile>
     <ClCompile Include="Sources\Structure.cpp">
       <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImageLoader.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SoundLoader.cpp">
+      <Filter>Source Files\Sound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
