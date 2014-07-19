@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include <png.h>
+
 class ImageMetadata
 {
 public:
@@ -66,8 +68,8 @@ private:
 
     std::string dmi_version_;
 
-    size_t total_width_;
-    size_t total_height_;
+    png_uint_32 total_width_;
+    png_uint_32 total_height_;
 
 	size_t width_;
 	size_t height_;
