@@ -274,12 +274,12 @@ id_ptr_on<IOnMapObject> MapMaster::click(int x, int y)
         return 0;
 
     // Due to resize emulate some shit
-    SYSTEM_STREAM << "NOW CLICK X: " << x << ", ";
+//    SYSTEM_STREAM << "NOW CLICK X: " << x << ", ";
     x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW) / static_cast<float>(GetScreen()->w())));
-    SYSTEM_STREAM << x << std::endl;
-    SYSTEM_STREAM << "NOW CLICK Y: " << y << ", ";
+ //   SYSTEM_STREAM << x << std::endl;
+ //   SYSTEM_STREAM << "NOW CLICK Y: " << y << ", ";
     y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
-    SYSTEM_STREAM << y << std::endl;
+//    SYSTEM_STREAM << y << std::endl;
     //
 
     id_ptr_on<IOnMapObject> retval = 0;

@@ -18,8 +18,10 @@ extern int DRAW_MAX; // max real fps
 const int sizeHsq = 10; // visible size const
 const int sizeWsq = 10;
 
-extern int sizeW; // visible in pixel const
+extern int sizeW; // visible play in pixel const
 extern int sizeH;
+
+extern int guiShift;
 
 const int beginMobPosX = 8; // posx and posx mob on screen
 const int beginMobPosY = 8; // maybe no const?

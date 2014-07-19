@@ -50,6 +50,8 @@ void Screen::ResetScreen(int x, int y, int bpp, Uint32 flags)
 {
     screen_ = SDL_SetVideoMode(x, y, 32, flags);
     glViewport(0, 0, x, y);
+    SYSTEM_STREAM << "X: " << x << " Y: " << y << std::endl;
+    SYSTEM_STREAM << "X: " << w() << " Y: " << h() << std::endl;
 }
 
 void Screen::Swap()

@@ -24,6 +24,8 @@ public:
     //void processGUI();
     void processInput();
 
+    void ClearGUIZone();
+
     bool isMobVisible(int posx, int posy);
 
     int threadPathfind(void* data);

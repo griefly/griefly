@@ -129,8 +129,10 @@ void Manager::process()
         {
             GetMapMaster()->Draw();
             FabricProcesser::Get()->process();
+            ClearGUIZone();
             GetMob()->processGUI();
             GetTexts().Process();
+            GetScreen()->Swap();
         }
 
         if((SDL_GetTicks() - lastTimeFps) >= 1000 && !pause)
@@ -147,8 +149,6 @@ void Manager::process()
             GetMapMaster()->numOfPathfind = 0;
         }
         ++fps;
-
-        GetScreen()->Swap();
         process_in = false;
         if (NetClient::GetNetClient()->Process() == false)
         {
@@ -158,6 +158,17 @@ void Manager::process()
         }
     }
 };
+
+void Manager::ClearGUIZone()
+{
+    glBegin(GL_QUADS);
+        glColor3f(0.5, 0.5, 0.5);
+        glVertex2i(sizeW,                0);
+        glVertex2i(sizeW,            sizeH);
+        glVertex2i(sizeW + guiShift, sizeH);
+        glVertex2i(sizeW + guiShift,     0);
+    glEnd();
+}
 
 void Manager::checkMoveMob()
 {
@@ -220,10 +231,10 @@ void Manager::processInput()
             }
             if (event.type == SDL_VIDEORESIZE)
             {
-                int max_scale = std::max((event.resize.w / 3), (event.resize.h / 3));
+                int max_scale = std::max((event.resize.w / 3), (event.resize.h / 2));
 
                 int new_w = max_scale * 3;
-                int new_h = max_scale * 3;
+                int new_h = max_scale * 2;
                 GetScreen()->ResetScreen(new_w, new_h, 32, SDL_OPENGL | SDL_RESIZABLE);
             }
         }
@@ -301,7 +312,7 @@ void Manager::initWorld()
     SetItemFabric(new ItemFabric);
     SetMapMaster(new MapMaster);
     if (!NODRAW)
-        SetScreen(new Screen(sizeW, sizeH));
+        SetScreen(new Screen(sizeW + guiShift, sizeH));
     SetTexts(new TextPainter);
     SetSpriter(new ASprClass);
 

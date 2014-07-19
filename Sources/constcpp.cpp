@@ -17,5 +17,7 @@ bool NODRAW = false;
 int sizeW = 512; // visible in pixel const
 int sizeH = 512;
 
+int guiShift = 256;
+
 std::fstream loc("errorfile.txt", std::ios::trunc | std::ios::out);
 std::ostream& SYSTEM_STREAM = std::cout;
