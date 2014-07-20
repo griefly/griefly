@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <string>
+
 #include <SDL_ttf.h>
 
 class Chat

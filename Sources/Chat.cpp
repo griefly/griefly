@@ -101,7 +101,7 @@ void Chat::AddLines(const std::string& str)
         ++current_pos_;
 
         pos += length;
-        if (pos >= str.size() || length == 0)
+        if (pos == str.size() || length == 0)
             break;
     }
 }
