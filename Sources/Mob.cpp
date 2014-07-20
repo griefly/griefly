@@ -26,6 +26,7 @@
 #include "utils.h"
 #include "ImageLoader.h"
 #include "SoundLoader.h"
+#include "Chat.h"
 
 int ping_send;
 
@@ -132,6 +133,8 @@ void Manager::process()
             FabricProcesser::Get()->process();
             
             ClearGUIZone(); 
+
+            Chat::GetChat()->Process();
 
             GetMob()->processGUI();
             
@@ -365,6 +368,8 @@ void Manager::initWorld()
     data.who = GetMob().ret_id();
     data.word_for_who = 1;
     NetClient::GetNetClient()->Connect(adrs_, DEFAULT_PORT, data);
+
+    Chat::InitChat(sizeW, 0, sizeW + guiShift, sizeH, 32);
 
     GetTexts()["FPS"].SetUpdater
     ([this](std::string* str)

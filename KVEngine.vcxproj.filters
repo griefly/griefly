@@ -279,6 +279,9 @@
     <ClInclude Include="Sources\SoundLoader.h">
       <Filter>Header Files\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Chat.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -454,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="Sources\SoundLoader.cpp">
       <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Chat.cpp">
+      <Filter>Source Files\Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

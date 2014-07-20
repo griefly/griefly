@@ -14,6 +14,7 @@
     <ClInclude Include="Sources\ApproxGLImage.h" />
     <ClInclude Include="Sources\ASpritesClass.h" />
     <ClInclude Include="Sources\CAliveMob.h" />
+    <ClInclude Include="Sources\Chat.h" />
     <ClInclude Include="Sources\constheader.h" />
     <ClInclude Include="Sources\Creator.h" />
     <ClInclude Include="Sources\CSmallItem.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="Sources\ApproxGLImage.cpp" />
     <ClCompile Include="Sources\ASpritesClass.cpp" />
     <ClCompile Include="Sources\CAliveMob.cpp" />
+    <ClCompile Include="Sources\Chat.cpp" />
     <ClCompile Include="Sources\constcpp.cpp" />
     <ClCompile Include="Sources\Creator.cpp" />
     <ClCompile Include="Sources\CSmallItem.cpp" />
@@ -211,6 +213,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
