@@ -67,6 +67,12 @@ TextPainter::Text::Text(TextPainter* master)
     content_image_(nullptr),
     time_(0) {}
 
+TextPainter::Text::~Text()
+{
+    delete content_image_;
+}
+
+
 void TextPainter::Text::Update()
 {
     //content_.clear();
@@ -74,14 +80,15 @@ void TextPainter::Text::Update()
     updater_(&new_content);
     if (content_ == new_content)
         return;
+    content_.clear();
     content_ = new_content;
     auto local = TTF_RenderText_Blended(master_->GetFont(font_name_, size_), content_.c_str(), color_);
               
+    delete content_image_;
+    content_image_ = nullptr;
+
     if (local)
-    {
-        delete content_image_;
         content_image_ = new ApproxGLImage(local);
-    }
 }
 
 bool TextPainter::Text::CanUpdate()
@@ -128,8 +135,8 @@ void TextPainter::Process()
             y_dr = y_ul + image->GetYSize();
 
         GetScreen()->Draw(image, 
-                          x_ul, y_ul,
-                          x_dr, y_dr);
+                            x_ul, y_ul,
+                            x_dr, y_dr);
     }
 }
 
@@ -138,7 +145,10 @@ bool TextPainter::Delete(const std::string& name)
     auto itr = texts_.find(name);
     if (itr == texts_.end())
         return false;
+    
+    delete itr->second;
     texts_.erase(itr);
+
     return true;
 }
 

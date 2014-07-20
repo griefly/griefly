@@ -39,6 +39,7 @@ public:
         Text& SetFont(const std::string& name);
     private:
         Text(TextPainter* master);
+        ~Text();
         void Update();
         bool CanUpdate();
 

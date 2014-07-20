@@ -70,21 +70,26 @@ void Chat::Process()
     if (str == "")
         return;
     
-    int pos = str.find_first_of('\n');
+    int pos = 0;
     int oldpos = 0;
     while (pos != std::string::npos)
     {
-        std::string without = str.substr(oldpos, pos - oldpos);
+        pos = str.find_first_of("\n", oldpos);
+        std::string without = str.substr(oldpos,  pos == std::string::npos 
+                                                ? pos : pos - oldpos);
         AddLines(without);
         oldpos = pos + 1;
-        pos = str.find_first_of('\n', oldpos);
     }
-    AddLines(str.substr(oldpos));
 }
 
 void Chat::AddLines(const std::string& str)
 {
-    int pos = 0;
+    Line newline;
+    newline.text = str.substr(0, std::min(symbols_per_line_, (int)str.size()));
+    lines_.push_back(newline);
+   // std::cout << "LINE ADDED: \n " << newline.text <<  " \nEND LINE SIZE " << newline.text.size() << std::endl;
+    ++current_pos_;
+    /*int pos = 0;
     while (true)
     {
         int length = CalculateAmount(str, pos);
@@ -97,12 +102,10 @@ void Chat::AddLines(const std::string& str)
         pos += length;
         if (pos >= str.size() || length == 0)
             break;
-    }
+    }*/
 }
 
 int Chat::CalculateAmount(const std::string& str, int pos)
 {
-    if (str.size() < pos + symbols_per_line_)
-        return str.size() - pos;
-    return symbols_per_line_;
+    return std::min(symbols_per_line_, (int)str.size() - pos);
 }
