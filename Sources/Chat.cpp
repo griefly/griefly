@@ -42,11 +42,14 @@ void Chat::InitChat(int from_x, int from_y,
 
     chat->scroll_speed_ = 3;
 
-    int per_line = (to_y - from_y) / visible_lines;
+    int per_line = (to_y - from_y) / (visible_lines + 1);
     int font_size = (per_line * 3) / 4;
     chat->font_size_ = font_size;
+    chat->per_line_ = per_line;
 
     chat->deja = GetTexts().GetFont("DejaVuSans.ttf", chat->font_size_);
+
+    chat->text_input_ = new TextInput(from_x, to_y - per_line, to_x, to_y, font_size);
 
     for (int i = 0; i < chat->visible_lines_; ++i)
     {
@@ -58,7 +61,7 @@ void Chat::InitChat(int from_x, int from_y,
         GetTexts()[converter.str()].SetUpdater([&, i](std::string* str)
         {
             *str = chat->lines_[chat->current_pos_ - i - 1].text;
-        }).SetSize(font_size).SetPlace(from_x, to_y - (i + 1) * per_line)
+        }).SetSize(font_size).SetPlace(from_x + 1, to_y - (i + 2) * per_line)
             .SetFreq(50).SetColor(0, 0, 0).SetFont("DejaVuSans.ttf");
     }
     chat->current_pos_ = chat->visible_lines_;
@@ -68,6 +71,8 @@ void Chat::Process()
 {   
     ClearZone();
     DrawScroll();
+
+    text_input_->Process();
 
     std::string str = ss.str();
     ss.str("");
@@ -81,7 +86,7 @@ void Chat::Process()
 
     str = lines_.back().text + str;
 
-    if (current_pos_ < lines_.size())
+    if (current_pos_ < static_cast<int>(lines_.size()))
         block_down_ = true;
 
     lines_.pop_back();
@@ -178,8 +183,8 @@ void Chat::DrawScroll()
     glDisable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
         glVertex2i(to_x_ - SCROLL_SIZE, from_y_);
-        glVertex2i(to_x_ - SCROLL_SIZE, to_y_);
-        glVertex2i(to_x_,               to_y_);
+        glVertex2i(to_x_ - SCROLL_SIZE, to_y_ - per_line_);
+        glVertex2i(to_x_,               to_y_ - per_line_);
         glVertex2i(to_x_,               from_y_);
     glEnd();
     glEnable(GL_TEXTURE_2D);
@@ -189,9 +194,9 @@ void Chat::DrawScroll()
 
     int pos;
     if ((static_cast<int>(lines_.size()) - (visible_lines_ * 2) + 1) <= 0)
-        pos = ((to_y_ - POINTER_SIZE) - (from_y_ + POINTER_SIZE));
+        pos = ((to_y_ - per_line_ - POINTER_SIZE) - (from_y_ + POINTER_SIZE));
     else
-        pos = (((to_y_ - POINTER_SIZE) - (from_y_ + POINTER_SIZE)) * (current_pos_ - (visible_lines_ * 2) + 1))
+        pos = (((to_y_ - per_line_ - POINTER_SIZE) - (from_y_ + POINTER_SIZE)) * (current_pos_ - (visible_lines_ * 2) + 1))
               / (lines_.size() - (visible_lines_ * 2) + 1);
     pos += POINTER_SIZE + from_y_;
 

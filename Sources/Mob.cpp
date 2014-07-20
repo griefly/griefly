@@ -379,7 +379,7 @@ void Manager::initWorld()
     data.word_for_who = 1;
     NetClient::GetNetClient()->Connect(adrs_, DEFAULT_PORT, data);
 
-    Chat::InitChat(sizeW, sizeH / 2, sizeW + guiShift, sizeH, 16);
+    Chat::InitChat(sizeW, sizeH / 2, sizeW + guiShift, sizeH, 15);
 
     GetTexts()["FPS"].SetUpdater
     ([this](std::string* str)

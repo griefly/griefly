@@ -5,6 +5,8 @@
 
 #include <SDL_ttf.h>
 
+#include "TextInput.h"
+
 class Chat
 {
 public:
@@ -43,8 +45,11 @@ private:
     int to_y_;
 
     int font_size_;
+    int per_line_;
 
     std::vector<Line> lines_;
+
+    TextInput* text_input_;
 
     char* text_;
 

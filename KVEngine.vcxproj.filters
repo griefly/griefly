@@ -470,5 +470,8 @@
     <ClCompile Include="Sources\Chat.cpp">
       <Filter>Source Files\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\TextInput.cpp">
+      <Filter>Source Files\Text</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

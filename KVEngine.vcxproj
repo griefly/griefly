@@ -139,6 +139,7 @@
     <ClCompile Include="Sources\Teleportator.cpp" />
     <ClCompile Include="Sources\Testmob.cpp" />
     <ClCompile Include="Sources\Text.cpp" />
+    <ClCompile Include="Sources\TextInput.cpp" />
     <ClCompile Include="Sources\TileInt.cpp" />
     <ClCompile Include="Sources\Turf.cpp" />
     <ClCompile Include="Sources\TypelistOfItems.cpp" />
