@@ -34,7 +34,7 @@ private:
 
     std::vector<Line> lines_;
 
-    char* text;
+    char* text_;
 
     TTF_Font* deja;
 

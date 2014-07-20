@@ -19,7 +19,7 @@ Chat* Chat::GetChat()
     return chat;
 }
 
-const int MAX_LINE_SIZE = 1024;
+const size_t MAX_LINE_SIZE = 1024;
 
 void Chat::InitChat(int from_x, int from_y, 
                     int   to_x, int   to_y, 
@@ -34,7 +34,7 @@ void Chat::InitChat(int from_x, int from_y,
 
     chat->visible_lines_ = visible_lines;
 
-    chat->text = new char[MAX_LINE_SIZE + 1];
+    chat->text_ = new char[MAX_LINE_SIZE + 1];
 
     int per_line = (to_y - from_y) / visible_lines;
     int font_size = (per_line * 3) / 4;
@@ -56,7 +56,7 @@ void Chat::InitChat(int from_x, int from_y,
         {
             *str = chat->lines_[chat->current_pos_ - i - 1].text;
         }).SetSize(font_size).SetPlace(from_x, to_y - (i + 1) * per_line)
-            .SetFreq(100).SetColor(0, 0, 0).SetFont("DejaVuSans.ttf");
+            .SetFreq(50).SetColor(0, 0, 0).SetFont("DejaVuSans.ttf");
     }
     chat->current_pos_ = chat->visible_lines_;
 }
@@ -72,6 +72,12 @@ void Chat::Process()
     
     int pos = 0;
     int oldpos = 0;
+
+    str = lines_.back().text + str;
+
+    lines_.pop_back();
+    --current_pos_; 
+
     while (pos != std::string::npos)
     {
         pos = str.find_first_of("\n", oldpos);
@@ -84,12 +90,7 @@ void Chat::Process()
 
 void Chat::AddLines(const std::string& str)
 {
-    Line newline;
-    newline.text = str.substr(0, std::min(symbols_per_line_, (int)str.size()));
-    lines_.push_back(newline);
-   // std::cout << "LINE ADDED: \n " << newline.text <<  " \nEND LINE SIZE " << newline.text.size() << std::endl;
-    ++current_pos_;
-    /*int pos = 0;
+    int pos = 0;
     while (true)
     {
         int length = CalculateAmount(str, pos);
@@ -102,10 +103,25 @@ void Chat::AddLines(const std::string& str)
         pos += length;
         if (pos >= str.size() || length == 0)
             break;
-    }*/
+    }
 }
 
 int Chat::CalculateAmount(const std::string& str, int pos)
 {
-    return std::min(symbols_per_line_, (int)str.size() - pos);
+    int copy_size = std::min(str.size() - pos, MAX_LINE_SIZE);
+    for (int i = 0; i < copy_size; ++i)
+        text_[i] = str[pos + i];
+
+    text_[copy_size] = '\0';
+    int w;
+    if (int err = TTF_SizeText(deja, text_, &w, nullptr))
+        std::cout << "Some ttf error " << err << std::endl;
+    while (w > to_x_ - from_x_)
+    {
+        --copy_size;
+        text_[copy_size] = '\0';
+        if (int err = TTF_SizeText(deja, text_, &w, nullptr))
+            std::cout << "Some ttf error " << err << std::endl;
+    }
+    return copy_size;
 }
