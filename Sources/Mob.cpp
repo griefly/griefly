@@ -224,7 +224,17 @@ void Manager::processInput()
             }
             if(event.type == SDL_MOUSEBUTTONDOWN)
             {
-                if ((SDL_GetTicks() - click_timer) > 333)
+                if (event.button.button == SDL_BUTTON_WHEELUP)
+                {
+                    if (Chat::GetChat()->IsArea(event.button.x, event.button.y))
+                        Chat::GetChat()->ScrollUp();
+                }
+                else if (event.button.button == SDL_BUTTON_WHEELDOWN)
+                {
+                    if (Chat::GetChat()->IsArea(event.button.x, event.button.y))
+                        Chat::GetChat()->ScrollDown();
+                }
+                else if ((SDL_GetTicks() - click_timer) > 333)
                 {
                     click_timer = SDL_GetTicks();
                     auto item = GetMapMaster()->click(event.button.x, event.button.y);
@@ -369,7 +379,7 @@ void Manager::initWorld()
     data.word_for_who = 1;
     NetClient::GetNetClient()->Connect(adrs_, DEFAULT_PORT, data);
 
-    Chat::InitChat(sizeW, 0, sizeW + guiShift, sizeH, 32);
+    Chat::InitChat(sizeW, sizeH / 2, sizeW + guiShift, sizeH, 16);
 
     GetTexts()["FPS"].SetUpdater
     ([this](std::string* str)

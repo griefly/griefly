@@ -67,6 +67,12 @@
     <Filter Include="Source Files\Space">
       <UniqueIdentifier>{8c9f8486-2eb1-4f71-81b7-3c988a0cdaa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Text">
+      <UniqueIdentifier>{605ddb36-6d0e-464c-bc3a-38ae6218f42d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Text">
+      <UniqueIdentifier>{6c36b15d-5df5-4e75-b1f1-9beb7e3034ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\ApproxGLImage.h">
@@ -177,9 +183,6 @@
     <ClInclude Include="Sources\sync_random.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Text.h">
-      <Filter>Header Files\Main</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Teleportator.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
@@ -279,8 +282,14 @@
     <ClInclude Include="Sources\SoundLoader.h">
       <Filter>Header Files\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Text.h">
+      <Filter>Header Files\Text</Filter>
+    </ClInclude>
     <ClInclude Include="Sources\Chat.h">
-      <Filter>Header Files\Main</Filter>
+      <Filter>Header Files\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextInput.h">
+      <Filter>Header Files\Text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -367,9 +376,6 @@
     </ClCompile>
     <ClCompile Include="Sources\Testmob.cpp">
       <Filter>Source Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Text.cpp">
-      <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Turf.cpp">
       <Filter>Source Files\Item</Filter>
@@ -458,8 +464,11 @@
     <ClCompile Include="Sources\SoundLoader.cpp">
       <Filter>Source Files\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Text.cpp">
+      <Filter>Source Files\Text</Filter>
+    </ClCompile>
     <ClCompile Include="Sources\Chat.cpp">
-      <Filter>Source Files\Main</Filter>
+      <Filter>Source Files\Text</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

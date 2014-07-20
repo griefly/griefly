@@ -6,6 +6,7 @@
 
 #include "Text.h"
 #include "constheader.h"
+#include "Screen.h"
 
 Chat* Chat::chat = 0;
 
@@ -20,6 +21,7 @@ Chat* Chat::GetChat()
 }
 
 const size_t MAX_LINE_SIZE = 1024;
+const int SCROLL_SIZE = 10;
 
 void Chat::InitChat(int from_x, int from_y, 
                     int   to_x, int   to_y, 
@@ -36,23 +38,24 @@ void Chat::InitChat(int from_x, int from_y,
 
     chat->text_ = new char[MAX_LINE_SIZE + 1];
 
+    chat->block_down_ = false;
+
+    chat->scroll_speed_ = 3;
+
     int per_line = (to_y - from_y) / visible_lines;
     int font_size = (per_line * 3) / 4;
     chat->font_size_ = font_size;
-    chat->symbols_per_line_ = (to_x - from_x) / font_size;
 
     chat->deja = GetTexts().GetFont("DejaVuSans.ttf", chat->font_size_);
-
-    SYSTEM_STREAM << "SYMBOLS PER LINE: " << chat->symbols_per_line_ << std::endl;
 
     for (int i = 0; i < chat->visible_lines_; ++i)
     {
         std::stringstream converter;
-        converter << " " << i;
+        converter << "text_line" << i;
         Chat::Line l;
-        l.text = converter.str();
+        l.text = "";
         chat->lines_.push_back(l);
-        GetTexts()[l.text].SetUpdater([&, i](std::string* str)
+        GetTexts()[converter.str()].SetUpdater([&, i](std::string* str)
         {
             *str = chat->lines_[chat->current_pos_ - i - 1].text;
         }).SetSize(font_size).SetPlace(from_x, to_y - (i + 1) * per_line)
@@ -62,7 +65,10 @@ void Chat::InitChat(int from_x, int from_y,
 }
 
 void Chat::Process()
-{
+{   
+    ClearZone();
+    DrawScroll();
+
     std::string str = ss.str();
     ss.str("");
     std::cout << str;
@@ -75,9 +81,10 @@ void Chat::Process()
 
     str = lines_.back().text + str;
 
-    lines_.pop_back();
-    --current_pos_; 
+    if (current_pos_ < lines_.size())
+        block_down_ = true;
 
+    lines_.pop_back();
     while (pos != std::string::npos)
     {
         pos = str.find_first_of("\n", oldpos);
@@ -86,6 +93,7 @@ void Chat::Process()
         AddLines(without);
         oldpos = pos + 1;
     }
+    block_down_ = false;
 }
 
 void Chat::AddLines(const std::string& str)
@@ -98,7 +106,7 @@ void Chat::AddLines(const std::string& str)
         Line newline;
         newline.text = str.substr(pos, length);
         lines_.push_back(newline);
-        ++current_pos_;
+        ScrollDown();
 
         pos += length;
         if (pos == str.size() || length == 0)
@@ -116,7 +124,7 @@ int Chat::CalculateAmount(const std::string& str, int pos)
     int w;
     if (int err = TTF_SizeText(deja, text_, &w, nullptr))
         std::cout << "Some ttf error " << err << std::endl;
-    while (w > to_x_ - from_x_)
+    while (w > (to_x_ - from_x_ - SCROLL_SIZE))
     {
         --copy_size;
         text_[copy_size] = '\0';
@@ -124,4 +132,77 @@ int Chat::CalculateAmount(const std::string& str, int pos)
             std::cout << "Some ttf error " << err << std::endl;
     }
     return copy_size;
+}
+
+void Chat::ScrollUp()
+{
+    current_pos_ -= std::min(scroll_speed_, current_pos_ - visible_lines_ * 2 + 1);
+}
+
+void Chat::ScrollDown()
+{
+    if (block_down_)
+    {
+        return;
+    }
+    current_pos_ += std::min(scroll_speed_, static_cast<int>(lines_.size()) - current_pos_);
+}
+
+bool Chat::IsArea(int x, int y)
+{
+    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW + guiShift) / static_cast<float>(GetScreen()->w())));;
+    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
+    if (   x > from_x_ && x < to_x_
+        && y > from_y_ && y < to_y_)
+        return true;
+    return false;
+}
+
+void Chat::ClearZone()
+{
+    glColor3f(0.7f, 0.7f, 0.7f);
+    glDisable(GL_TEXTURE_2D);
+    glBegin(GL_QUADS);
+        glVertex2i(from_x_, from_y_);
+        glVertex2i(from_x_, to_y_);
+        glVertex2i(to_x_,   to_y_);
+        glVertex2i(to_x_,   from_y_);
+    glEnd();
+    glEnable(GL_TEXTURE_2D);
+}
+
+void Chat::DrawScroll()
+{
+    /////
+    glColor3f(0.2f, 0.2f, 0.2f);
+    glDisable(GL_TEXTURE_2D);
+    glBegin(GL_QUADS);
+        glVertex2i(to_x_ - SCROLL_SIZE, from_y_);
+        glVertex2i(to_x_ - SCROLL_SIZE, to_y_);
+        glVertex2i(to_x_,               to_y_);
+        glVertex2i(to_x_,               from_y_);
+    glEnd();
+    glEnable(GL_TEXTURE_2D);
+
+
+    const int POINTER_SIZE = 8;
+
+    int pos;
+    if ((static_cast<int>(lines_.size()) - (visible_lines_ * 2) + 1) <= 0)
+        pos = ((to_y_ - POINTER_SIZE) - (from_y_ + POINTER_SIZE));
+    else
+        pos = (((to_y_ - POINTER_SIZE) - (from_y_ + POINTER_SIZE)) * (current_pos_ - (visible_lines_ * 2) + 1))
+              / (lines_.size() - (visible_lines_ * 2) + 1);
+    pos += POINTER_SIZE + from_y_;
+
+    ////
+    glColor3f(0.5f, 0.5f, 0.5f);
+    glDisable(GL_TEXTURE_2D);
+    glBegin(GL_QUADS);
+        glVertex2i(to_x_ - SCROLL_SIZE, pos - POINTER_SIZE);
+        glVertex2i(to_x_ - SCROLL_SIZE, pos + POINTER_SIZE);
+        glVertex2i(to_x_,               pos + POINTER_SIZE);
+        glVertex2i(to_x_,               pos - POINTER_SIZE);
+    glEnd();
+    glEnable(GL_TEXTURE_2D);
 }
