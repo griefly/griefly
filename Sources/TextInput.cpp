@@ -149,9 +149,10 @@ void TextInput::NormalizePointer()
 
 void TextInput::PointerRight()
 {
-    NormalizePointer();
-
     int global_pos = pointer_pos_ + text_pos_;
+
+    if (global_pos == text_.size())
+        return;
 
     if (pointer_pos_ == visible_text_.size())
     {
@@ -170,7 +171,6 @@ void TextInput::PointerRight()
 
 void TextInput::PointerLeft()
 {
-    NormalizePointer();
     if (pointer_pos_ == 0)
     {
         if (text_pos_ > 0)
