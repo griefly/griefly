@@ -124,7 +124,7 @@ func (c *ClientConnection) reciever() {
 		}
 
 		m.connId = c.id
-		if m.t == "ordinary" {
+		if m.t == "ordinary" || m.t == "chat" {
 			m.to = c.gameId
 		}
 		c.reg.RecvMessage(m)
