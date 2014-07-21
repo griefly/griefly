@@ -272,14 +272,19 @@ void Manager::processInput()
                     {
                         std::string str;
                         text_input_->GetText(&str);
-                        text_input_->Clean();
-                        SYSTEM_STREAM << str << std::endl;
-                        text_input_ = nullptr;
+                        if (str.size())
+                        {
+                            text_input_->Clean();
+                        
 
-                        Message msg;
-                        msg.type = Net::CHAT_TYPE;
-                        msg.text = str;
-                        NetClient::GetNetClient()->Send(msg);
+                            SYSTEM_STREAM << str << std::endl;
+                            text_input_ = nullptr;
+
+                            Message msg;
+                            msg.type = Net::CHAT_TYPE;
+                            msg.text = str;
+                            NetClient::GetNetClient()->Send(msg);
+                        }
                     }
                 }
                 if (text_input_)
