@@ -208,7 +208,8 @@ bool NetClient::Process()
             SYSTEM_STREAM << "New mob must created!" << std::endl;
             //message.to = man_->GetCreator();
         }
-        else if (message.type != Net::ORDINARY_TYPE)
+        else if (   message.type != Net::ORDINARY_TYPE
+                 && message.type != Net::CHAT_TYPE)
         {
             SYSTEM_STREAM << "Some system message taken with no need?" << std::endl;
             SYSTEM_STREAM << "message.message_number: " << message.message_number << std::endl

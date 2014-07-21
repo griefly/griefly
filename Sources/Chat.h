@@ -19,6 +19,8 @@ public:
     void ScrollUp();
     void ScrollDown();
     bool IsArea(int x, int y);
+
+    void PostText(const std::string& str);
     TextInput* GetTextInput()
     {
         return text_input_;

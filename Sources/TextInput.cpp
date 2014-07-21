@@ -15,8 +15,8 @@ TextInput::TextInput(
     to_y_ = to_y;
     letter_size_ = letter_size;
 
-    text_ = "ome text wow much science";
-    visible_text_ = "S";
+    text_ = "";
+    visible_text_ = "";
 
     text_pos_ = 0;
     pointer_pos_ = 0;

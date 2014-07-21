@@ -291,6 +291,9 @@
     <ClInclude Include="Sources\TextInput.h">
       <Filter>Header Files\Text</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Names.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -472,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="Sources\TextInput.cpp">
       <Filter>Source Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Names.cpp">
+      <Filter>Source Files\Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

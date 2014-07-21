@@ -10,6 +10,9 @@
 #include "Door.h"
 #include "sync_random.h"
 #include "ASpritesClass.h"
+#include "MagicStrings.h"
+#include "Chat.h"
+#include "Names.h"
 
 COrk::COrk()
 {
@@ -22,7 +25,7 @@ COrk::COrk()
     in_hand = 0;
     jump_time = 0;
     is_strong_owner = true;
-    name = "Morgan James";
+    name = GetMaleName();
     gui_sprite_ = nullptr;
 };
 
@@ -83,6 +86,12 @@ void COrk::processGUI()
 void COrk::processGUImsg(const Message& msg)
 {
     CAliveMob::processGUImsg(msg);
+
+    if (msg.type == Net::CHAT_TYPE)
+    {
+        Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
+    }
+
     if(msg.text == "SDLK_p")
     {
         if(in_hand)

@@ -5,18 +5,21 @@
 
 #include <memory>
 
+#include <stdlib.h>
+
 typedef std::ranlux24 RandomGenerator;
 
-RandomGenerator& GetGenerator(unsigned int seed = 0)
+unsigned int seed = rand();
+
+RandomGenerator& GetGenerator(unsigned int seed_loc = 0)
 {
-    static RandomGenerator* generator = new RandomGenerator(42);
-    if (seed)
-        generator->seed(seed);
+    static RandomGenerator* generator = new RandomGenerator(seed);
+    if (seed_loc)
+        generator->seed(seed_loc);
     return *generator;
 }
 
 unsigned int calls_counter = 0;
-unsigned int seed = 42;
 
 unsigned int get_rand()
 {

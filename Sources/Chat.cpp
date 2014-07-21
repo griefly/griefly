@@ -67,22 +67,9 @@ void Chat::InitChat(int from_x, int from_y,
     chat->current_pos_ = chat->visible_lines_;
 }
 
-void Chat::Process()
-{   
-    ClearZone();
-    DrawScroll();
-
-    text_input_->Process();
-
-    std::string str = ss.str();
-    ss.str("");
-    std::cout << str;
-
-    if (str == "")
-        return;
-    
- //   text_input_->AddLetter('g');
-
+void Chat::PostText(const std::string& str_)
+{
+    std::string str = str_;
     int pos = 0;
     int oldpos = 0;
 
@@ -101,6 +88,22 @@ void Chat::Process()
         oldpos = pos + 1;
     }
     block_down_ = false;
+}
+
+void Chat::Process()
+{   
+    ClearZone();
+    DrawScroll();
+
+    text_input_->Process();
+
+    std::string str = ss.str();
+    ss.str("");
+
+    if (str == "")
+        return;
+    
+//    PostText(str);
 }
 
 void Chat::AddLines(const std::string& str)

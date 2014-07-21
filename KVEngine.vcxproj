@@ -57,6 +57,7 @@
     <ClInclude Include="Sources\mob_position.h" />
     <ClInclude Include="Sources\MonstrClass.h" />
     <ClInclude Include="Sources\MoveEffect.h" />
+    <ClInclude Include="Sources\Names.h" />
     <ClInclude Include="Sources\NetClientImpl.h" />
     <ClInclude Include="Sources\NetInterface.h" />
     <ClInclude Include="Sources\OnMapBaseInt.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="Sources\mob_position.cpp" />
     <ClCompile Include="Sources\MonstrClass.cpp" />
     <ClCompile Include="Sources\MoveEffect.cpp" />
+    <ClCompile Include="Sources\Names.cpp" />
     <ClCompile Include="Sources\NetClientImpl.cpp" />
     <ClCompile Include="Sources\OnMapBaseInt.cpp" />
     <ClCompile Include="Sources\OnMapInt.cpp" />

@@ -1,24 +1,23 @@
 #include "Message.h"
 
-#include "constheader.h"
-
 #include <sstream>
 
-const char* const ORDINARY_TYPE = "ordinary";
+#include "constheader.h"
+#include "MagicStrings.h"
 
 Message::Message()
     : text(""),
     message_number(-1),
     from(-1),
     to(-1),
-    type(ORDINARY_TYPE) {}
+    type(Net::ORDINARY_TYPE) {}
 
 Message::Message(const std::string& new_text)
     : text(new_text),
     message_number(-1),
     from(-1),
     to(-1),
-    type(ORDINARY_TYPE) {}
+    type(Net::ORDINARY_TYPE) {}
 
 bool SocketReady(TCPsocket& socket)
 {

@@ -16,4 +16,5 @@ namespace Net
     const char* const SYSTEM_TYPE = "system";
     const char* const ORDINARY_TYPE = "ordinary";
     const char* const MAP_TYPE = "map";
+    const char* const CHAT_TYPE = "chat";
 }

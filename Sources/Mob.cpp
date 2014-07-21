@@ -27,6 +27,7 @@
 #include "ImageLoader.h"
 #include "SoundLoader.h"
 #include "Chat.h"
+#include "Names.h"
 
 int ping_send;
 
@@ -274,6 +275,11 @@ void Manager::processInput()
                         text_input_->Clean();
                         SYSTEM_STREAM << str << std::endl;
                         text_input_ = nullptr;
+
+                        Message msg;
+                        msg.type = Net::CHAT_TYPE;
+                        msg.text = str;
+                        NetClient::GetNetClient()->Send(msg);
                     }
                 }
                 if (text_input_)
@@ -304,6 +310,17 @@ void Manager::processInput()
                     LETTER_ADD(b);
                     LETTER_ADD(n);
                     LETTER_ADD(m);
+                    LETTER_ADD(m);
+                    LETTER_ADD(0);
+                    LETTER_ADD(1);
+                    LETTER_ADD(2);
+                    LETTER_ADD(3);
+                    LETTER_ADD(4);
+                    LETTER_ADD(5);
+                    LETTER_ADD(6);
+                    LETTER_ADD(7);
+                    LETTER_ADD(8);
+                    LETTER_ADD(9);
                     if (event.key.keysym.sym == SDLK_SPACE)
                         { text_input_->AddLetter(" "); }
                     if (event.key.keysym.sym == SDLK_BACKSPACE)
@@ -401,6 +418,7 @@ void Manager::initWorld()
 
     LoadImages();
     LoadSounds();
+    LoadNames();
 
     NetClient::Init();
 
