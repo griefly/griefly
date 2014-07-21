@@ -6,6 +6,8 @@
 
 #include "HelperStructers.h"
 
+#include "TextInput.h"
+
 class Manager
 {
 public:
@@ -55,6 +57,8 @@ public:
 
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:
+    TextInput* text_input_;
+
     std::string adrs_;
 
     size_t creator_;

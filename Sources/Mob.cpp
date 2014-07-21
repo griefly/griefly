@@ -196,6 +196,10 @@ void Manager::checkMoveMob()
           } \
       }
 
+#define LETTER_ADD(letter) \
+    if (event.key.keysym.sym == SDLK_##letter) \
+        { text_input_->AddLetter(#letter); }
+
 void Manager::processInput()
 {
     static Uint8* keys;
@@ -208,7 +212,7 @@ void Manager::processInput()
         { 
             if(event.type == SDL_QUIT) 
                 done = 1; 
-            if(event.type == SDL_KEYUP)
+           /* if(event.type == SDL_KEYUP)
             {
                 if (event.key.keysym.sym == SDLK_o) 
                     pause = !pause;
@@ -221,7 +225,7 @@ void Manager::processInput()
                     msg.text = "SDLK_F2";
                     NetClient::GetNetClient()->Send(msg);
                 }
-            }
+            }*/
             if(event.type == SDL_MOUSEBUTTONDOWN)
             {
                 if (event.button.button == SDL_BUTTON_WHEELUP)
@@ -257,42 +261,99 @@ void Manager::processInput()
                 int new_h = max_scale * 2;
                 GetScreen()->ResetScreen(new_w, new_h, 32, SDL_OPENGL | SDL_RESIZABLE);
             }
-        }
-
-        SDL_PumpEvents();
-        keys = SDL_GetKeyState(NULL);
-        /*if(keys[SDLK_h])
-        {
-            int locatime = SDL_GetTicks();
-            auto itr = map->squares[thisMob->posx][thisMob->posy].begin();
-            int i = 0;
-            while(itr != map->squares[thisMob->posx][thisMob->posy].end())
+            if(event.type == SDL_KEYDOWN)
             {
-                SYSTEM_STREAM << i <<": Level " << (*itr)->level;
-                itr++;
-                i++;
-            };
-            SYSTEM_STREAM << "Num item: " << i << " in " << (SDL_GetTicks() - locatime) * 1.0 / 1000 << " sec" << std::endl;
-        }*/
-        if(keys[SDLK_F5])
-        {
-            int locatime = SDL_GetTicks();
-            GetItemFabric()->saveMap("clientmap.map");
-            SYSTEM_STREAM << "Map saved in "<< (SDL_GetTicks() - locatime) * 1.0 / 1000 << " second" << std::endl;
-        }
-        if(keys[SDLK_F6])
-        {
-            int locatime = SDL_GetTicks();
-            GetItemFabric()->clearMap();
-            GetItemFabric()->loadMap("clientmap.map");
-            SYSTEM_STREAM << "Map load in " << (SDL_GetTicks() - locatime) * 1.0 / 1000 << " second" << std::endl;
-        }
-        if(keys[SDLK_h])
-        {
-            SYSTEM_STREAM << "World's hash: " << GetItemFabric()->hash_all() << std::endl; 
+                if (event.key.keysym.sym == SDLK_RETURN)
+                {
+                    if (!text_input_)
+                        text_input_ = Chat::GetChat()->GetTextInput();
+                    else
+                    {
+                        std::string str;
+                        text_input_->GetText(&str);
+                        text_input_->Clean();
+                        SYSTEM_STREAM << str << std::endl;
+                        text_input_ = nullptr;
+                    }
+                }
+                if (text_input_)
+                {
+                    LETTER_ADD(q);
+                    LETTER_ADD(w);
+                    LETTER_ADD(e);
+                    LETTER_ADD(r);
+                    LETTER_ADD(t);
+                    LETTER_ADD(y);
+                    LETTER_ADD(u);
+                    LETTER_ADD(i);
+                    LETTER_ADD(o);
+                    LETTER_ADD(p);
+                    LETTER_ADD(a);
+                    LETTER_ADD(s);
+                    LETTER_ADD(d);
+                    LETTER_ADD(f);
+                    LETTER_ADD(g);
+                    LETTER_ADD(h);
+                    LETTER_ADD(j);
+                    LETTER_ADD(k);
+                    LETTER_ADD(l);
+                    LETTER_ADD(z);
+                    LETTER_ADD(x);
+                    LETTER_ADD(c);
+                    LETTER_ADD(v);
+                    LETTER_ADD(b);
+                    LETTER_ADD(n);
+                    LETTER_ADD(m);
+                    if (event.key.keysym.sym == SDLK_SPACE)
+                        { text_input_->AddLetter(" "); }
+                    if (event.key.keysym.sym == SDLK_BACKSPACE)
+                        { text_input_->AddLetter(nullptr); }
+                    if (event.key.keysym.sym == SDLK_LEFT)
+                        { text_input_->PointerLeft(); }
+                    if (event.key.keysym.sym == SDLK_RIGHT)
+                        { text_input_->PointerRight(); }
+                    if (event.key.keysym.sym == SDLK_DELETE)
+                        { text_input_->Clean(); }
+                }
+            }
         }
     }
 
+    if (text_input_)
+        return;
+
+    SDL_PumpEvents();
+    keys = SDL_GetKeyState(NULL);
+    /*if(keys[SDLK_h])
+    {
+        int locatime = SDL_GetTicks();
+        auto itr = map->squares[thisMob->posx][thisMob->posy].begin();
+        int i = 0;
+        while(itr != map->squares[thisMob->posx][thisMob->posy].end())
+        {
+            SYSTEM_STREAM << i <<": Level " << (*itr)->level;
+            itr++;
+            i++;
+        };
+        SYSTEM_STREAM << "Num item: " << i << " in " << (SDL_GetTicks() - locatime) * 1.0 / 1000 << " sec" << std::endl;
+    }*/
+    if(keys[SDLK_F5])
+    {
+        int locatime = SDL_GetTicks();
+        GetItemFabric()->saveMap("clientmap.map");
+        SYSTEM_STREAM << "Map saved in "<< (SDL_GetTicks() - locatime) * 1.0 / 1000 << " second" << std::endl;
+    }
+    if(keys[SDLK_F6])
+    {
+        int locatime = SDL_GetTicks();
+        GetItemFabric()->clearMap();
+        GetItemFabric()->loadMap("clientmap.map");
+        SYSTEM_STREAM << "Map load in " << (SDL_GetTicks() - locatime) * 1.0 / 1000 << " second" << std::endl;
+    }
+    if(keys[SDLK_h])
+    {
+        SYSTEM_STREAM << "World's hash: " << GetItemFabric()->hash_all() << std::endl; 
+    }
 
     SEND_KEY_MACRO(SDLK_SPACE);
     SEND_KEY_MACRO(SDLK_UP);
@@ -321,6 +382,8 @@ void Manager::initWorld()
     tick_recv = 0;
     isMove = 0;
     
+    text_input_ = nullptr;
+
     if (!InitSDL())
     {
         SYSTEM_STREAM << "Fail SDL load" << std::endl;

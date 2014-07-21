@@ -81,6 +81,8 @@ void Chat::Process()
     if (str == "")
         return;
     
+ //   text_input_->AddLetter('g');
+
     int pos = 0;
     int oldpos = 0;
 

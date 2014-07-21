@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include <SDL_ttf.h>
+
 class TextInput
 {
 public:
@@ -12,14 +14,22 @@ public:
     void Process();
 
     void GetText(std::string* str);
-    void AddLetter(char c);
+    void AddLetter(char* c);
     void PointerLeft();
     void PointerRight();
     void Clean();
 private:
+    int CalculateAmount();
+    int CalculateSizeForPointer();
+    void UpdateVisible();
+    void NormalizePointer();
+
     std::string visible_text_;
     std::string text_;
     
+    char* text_raw_;
+    TTF_Font* deja_;
+
     int from_x_;
     int from_y_;
     int to_x_;
@@ -29,5 +39,9 @@ private:
     int border_size_;
 
     int pointer_pos_;
+    int pointer_pixel_pos_;
+
     int text_pos_;
+
+    int right_space_;
 };

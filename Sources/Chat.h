@@ -19,6 +19,10 @@ public:
     void ScrollUp();
     void ScrollDown();
     bool IsArea(int x, int y);
+    TextInput* GetTextInput()
+    {
+        return text_input_;
+    }
 private:
     void ClearZone();
 

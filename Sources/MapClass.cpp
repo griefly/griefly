@@ -273,6 +273,9 @@ id_ptr_on<IOnMapObject> MapMaster::click(int x, int y)
     if(!GetVisible()) 
         return 0;
 
+    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW + guiShift) / static_cast<float>(GetScreen()->w())));;
+    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
+
     id_ptr_on<IOnMapObject> retval = 0;
 
     int z_level_m = mob_position::get_mob_z();
