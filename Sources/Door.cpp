@@ -4,6 +4,7 @@
 #include "IMovable.h"
 #include "MobInt.h"
 #include "Item.h"
+#include "Weldingtool.h"
 
 Door::Door()
 {
@@ -73,16 +74,41 @@ void Door::process()
 
 void Door::Bump(id_ptr_on<IMovable> item)
 {
-    id_ptr_on<IMob> m;
-    m = item;
-    if (!m)
+    if (id_ptr_on<IMob> m = item)
+    {
+        if (door_state_ == CLOSED)
+            Open();
+    }
+}
+
+void Door::Weld()
+{
+    if (   door_state_ != CLOSED
+        && door_state_ != WELDED)
         return;
-    if (door_state_ == CLOSED)
-        Open();
+
+    if (door_state_ == WELDED)
+    {
+        SetState("door_closed");
+        door_state_ = CLOSED;
+    }
+    else
+    {
+        SetState("welded");
+        door_state_ = WELDED;
+    }
 }
 
 void Door::AttackBy(id_ptr_on<Item> item)
 {
+    if (id_ptr_on<Weldingtool> w = item)
+    {
+        if (w->Working())
+            Weld();
+        return;
+    }
+
+
     if (IsOpen())
         Close();
     else

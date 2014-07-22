@@ -15,10 +15,11 @@ public:
     virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual void AttackBy(id_ptr_on<Item> item) override;
     bool IsOpen() const { return door_state_ == OPEN; }
+    void Weld();
 private:
     enum STATE
     {
-        OPEN, CLOSED, OPENING, CLOSING   
+        OPEN, CLOSED, OPENING, CLOSING, WELDED  
     };
     int KV_SAVEBLE(door_state_);
     size_t KV_SAVEBLE(last_tick_);

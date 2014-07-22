@@ -84,6 +84,7 @@
     <ClInclude Include="Sources\TypelistOfItems.h" />
     <ClInclude Include="Sources\utils.h" />
     <ClInclude Include="Sources\visible_points.h" />
+    <ClInclude Include="Sources\Weldingtool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Sources\TypelistOfItems.cpp" />
     <ClCompile Include="Sources\utils.cpp" />
     <ClCompile Include="Sources\visible_points.cpp" />
+    <ClCompile Include="Sources\Weldingtool.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{25E37124-9F37-4206-9D55-DE37D2C349DE}</ProjectGuid>

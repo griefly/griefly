@@ -21,6 +21,7 @@
 #include "Glass.h"
 #include "Item.h"
 #include "Shard.h"
+#include "Weldingtool.h"
 
 void MapMaster::Draw()
 {
@@ -127,6 +128,8 @@ void MapMaster::makeMap()
                                                      :                 Floor::T_ITEM_S());
 
             squares[x][y][0]->SetTurf(loc);
+            if (rand() % 30 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Weldingtool::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 24 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(Crowbar::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 14 == 1)
