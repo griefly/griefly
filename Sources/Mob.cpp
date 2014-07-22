@@ -315,7 +315,6 @@ void Manager::processInput()
                     LETTER_ADD(b);
                     LETTER_ADD(n);
                     LETTER_ADD(m);
-                    LETTER_ADD(m);
                     LETTER_ADD(0);
                     LETTER_ADD(1);
                     LETTER_ADD(2);
@@ -429,7 +428,7 @@ void Manager::initWorld()
 
     int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
     int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
-    int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 2;
+    int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 1;
     GetMapMaster()->makeTiles(x, y, z);
 
     if (   !GetParamsHolder().GetParamBool("map_name") 

@@ -146,6 +146,8 @@ int Chat::CalculateAmount(const std::string& str, int pos)
 
 void Chat::ScrollUp()
 {
+    if (current_pos_ < visible_lines_ * 2 - 1)
+        return;
     current_pos_ -= std::min(scroll_speed_, current_pos_ - visible_lines_ * 2 + 1);
 }
 
