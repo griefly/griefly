@@ -127,7 +127,8 @@ void MapMaster::makeMap()
                                                      :                 Floor::T_ITEM_S());
 
             squares[x][y][0]->SetTurf(loc);
-
+            if (rand() % 24 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Crowbar::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 14 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(Wirecutters::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 7 == 1)

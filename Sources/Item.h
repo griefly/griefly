@@ -28,3 +28,12 @@ public:
     Wirecutters();
 };
 ADD_TO_TYPELIST(Wirecutters);
+
+class Crowbar: public Item
+{
+public:
+    DECLARE_SAVED(Crowbar, Item);
+    DECLARE_GET_TYPE_ITEM(Crowbar);
+    Crowbar();
+};
+ADD_TO_TYPELIST(Crowbar);

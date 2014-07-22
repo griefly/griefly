@@ -29,3 +29,10 @@ Wirecutters::Wirecutters()
 
     name = "Wirecutters";
 }
+
+Crowbar::Crowbar()
+{
+    SetState("crowbar");
+
+    name = "Crowbar";
+}
