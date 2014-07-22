@@ -1,6 +1,6 @@
 CXX := g++
-CXXFLAGS := -O2 -std=c++11 -Wno-deprecated -m32
-LDFLAGS := -m32
+CXXFLAGS := -O2 -std=c++11 -Wno-deprecated
+LDFLAGS :=
 
 INCLUDES := -I. -I/usr/include/SDL -I./third_party/loki-0.1.7/include/loki
 LIBS := -L/usr/lib/x86_64-linux-gnu -L/usr/lib32 -lSDLmain -lSDL -lGL -lGLU -lSDL_ttf -lSDL_image -lSDL_mixer -lSDL_net -lz -lsfml-audio -lpng
@@ -24,9 +24,13 @@ travis-get-deps:
 clean:
 	rm -f Sources/*.o Release/knv
 
+.PHONY: 32bit
+32bit: M = -m32
+32bit: all
+
 Release/knv: $(OBJS)
-	$(CXX) $(LDFLAGS) $(OBJS) $(LIBS) -o Release/knv
+	$(CXX) $(LDFLAGS) $(M) $(OBJS) $(LIBS) -o Release/knv
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) $(M) $(INCLUDES) -o $@ -c $<
 
