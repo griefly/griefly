@@ -111,7 +111,7 @@ void TextInput::Clean()
     pointer_pixel_pos_ = 0;
 }
 
-void TextInput::AddLetter(char* c_)
+void TextInput::AddLetter(const char* c_)
 {
     if (!c_)
     {

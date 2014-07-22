@@ -14,7 +14,7 @@ public:
     void Process();
 
     void GetText(std::string* str);
-    void AddLetter(char* c);
+    void AddLetter(const char* c);
     void PointerLeft();
     void PointerRight();
     void Clean();
