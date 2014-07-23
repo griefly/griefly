@@ -36,3 +36,10 @@ Crowbar::Crowbar()
 
     name = "Crowbar";
 }
+
+Wrench::Wrench()
+{
+    SetState("wrench");
+
+    name = "Wrench";
+}

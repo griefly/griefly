@@ -129,6 +129,8 @@ void MapMaster::makeMap()
 
             squares[x][y][0]->SetTurf(loc);
             if (rand() % 30 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Wrench::T_ITEM_S(), squares[x][y][0]);
+            if (rand() % 30 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(Weldingtool::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 24 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(Crowbar::T_ITEM_S(), squares[x][y][0]);

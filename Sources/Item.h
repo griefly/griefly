@@ -37,3 +37,12 @@ public:
     Crowbar();
 };
 ADD_TO_TYPELIST(Crowbar);
+
+class Wrench: public Item
+{
+public:
+    DECLARE_SAVED(Wrench, Item);
+    DECLARE_GET_TYPE_ITEM(Wrench);
+    Wrench();
+};
+ADD_TO_TYPELIST(Wrench);
