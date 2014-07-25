@@ -5,7 +5,7 @@
 #include "ASpritesClass.h"
 #include "StreamWrapper.h"
 
-View::View()
+View::Frameset::Frameset()
 {
     step_x_ = 0;
     step_y_ = 0;
@@ -18,7 +18,7 @@ View::View()
     last_frame_tick_ = SDL_GetTicks();
 }
 
-void View::SetSprite(const std::string& name)
+void View::Frameset::SetSprite(const std::string& name)
 {
     sprite_name_ = name;
     if (!GetSpriter())
@@ -27,14 +27,14 @@ void View::SetSprite(const std::string& name)
     SetState(state_);
 }
 
-const GLSprite* View::GetSprite()
+const GLSprite* View::Frameset::GetSprite()
 {
     if (sprite_ == nullptr)
         SetSprite(sprite_name_);
     return sprite_;
 }
 
-void View::SetState(const std::string& name)
+void View::Frameset::SetState(const std::string& name)
 {
     state_ = name;
     if (!GetSprite())
@@ -50,7 +50,7 @@ void View::SetState(const std::string& name)
     last_frame_tick_ = SDL_GetTicks();
 }
 
-const ImageMetadata::SpriteMetadata* View::GetMetadata()
+const ImageMetadata::SpriteMetadata* View::Frameset::GetMetadata()
 {  
     if (!metadata_)
         SetState(state_);
@@ -59,7 +59,7 @@ const ImageMetadata::SpriteMetadata* View::GetMetadata()
 
 const int ANIMATION_MUL = 100;
 
-void View::Draw(int shift, int x, int y)
+void View::Frameset::Draw(int shift, int x, int y)
 {
     if (NODRAW)
         return;
@@ -104,7 +104,7 @@ void View::Draw(int shift, int x, int y)
     }
 }
 
-bool View::IsTransp(int x, int y, int shift)
+bool View::Frameset::IsTransp(int x, int y, int shift)
 {
     if (NODRAW)
         return true;
@@ -131,25 +131,47 @@ bool View::IsTransp(int x, int y, int shift)
     return alpha < 1;
 }
 
+View::View()
+{
+    step_x_ = 0;
+    step_y_ = 0;
+}
+
 std::ostream& operator<<(std::stringstream& file, View& view)
 {
-    WrapWriteMessage(file, view.sprite_name_);
-    file << " ";
-    WrapWriteMessage(file, view.state_);
+    WrapWriteMessage(file, *view.GetBaseFrameset());
     file << " ";
     return file;
 }
 std::istream& operator>>(std::stringstream& file, View& view)
 {
+    WrapReadMessage(file, *view.GetBaseFrameset());
+
     view.step_x_ = 0;
     view.step_y_ = 0;
-    view.sprite_ = nullptr;
 
-    view.metadata_ = nullptr;
-    view.image_state_ = 0;
-    view.last_frame_tick_ = SDL_GetTicks();
+    return file;
+}
 
-    WrapWriteMessage(file, view.sprite_name_);
-    WrapWriteMessage(file, view.state_);
+std::ostream& operator<<(std::stringstream& file, View::Frameset& frameset)
+{
+    WrapWriteMessage(file, frameset.sprite_name_);
+    file << " ";
+    WrapWriteMessage(file, frameset.state_);
+    file << " ";
+    return file;
+}
+std::istream& operator>>(std::stringstream& file, View::Frameset& frameset)
+{
+    frameset.step_x_ = 0;
+    frameset.step_y_ = 0;
+    frameset.sprite_ = nullptr;
+
+    frameset.metadata_ = nullptr;
+    frameset.image_state_ = 0;
+    frameset.last_frame_tick_ = SDL_GetTicks();
+
+    WrapReadMessage(file, frameset.sprite_name_);
+    WrapReadMessage(file, frameset.state_);
     return file;
 }

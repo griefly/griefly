@@ -103,7 +103,7 @@ void Chat::Process()
     if (str == "")
         return;
     
-//    PostText(str);
+    PostText(str);
 }
 
 void Chat::AddLines(const std::string& str)

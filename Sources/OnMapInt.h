@@ -54,12 +54,12 @@ public:
     virtual int GetDrawX() const override
     {
         int temp = owner->GetDrawX();
-        return view_.GetStepX() + temp;
+        return temp;
     }
     virtual int GetDrawY() const override
     {
         int temp = owner->GetDrawY();
-        return view_.GetStepY() + temp;
+        return temp;
     }
     virtual void process() override
     {
