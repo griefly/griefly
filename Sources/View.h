@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <string>
 #include <sstream>
 
@@ -71,16 +72,25 @@ public:
     int GetStepX() const { return step_x_; }
     int GetStepY() const { return step_y_; }
 
+    void AddOverlay(const std::string& sprite, const std::string& state);
+    void AddUnderlay(const std::string& sprite, const std::string& state);
+
+    void RemoveOverlays();
+    void RemoveUnderlays();
+
     void SetSprite(const std::string& sprite) { GetBaseFrameset()->SetSprite(sprite); }
     const GLSprite* GetSprite() { return GetBaseFrameset()->GetSprite(); }
     const ImageMetadata::SpriteMetadata* GetMetadata() { return GetBaseFrameset()->GetMetadata(); }
 
     void SetState(const std::string& sprite) { GetBaseFrameset()->SetState(sprite); }
 
-    bool IsTransp(int x, int y, int shift) { return GetBaseFrameset()->IsTransp(x + GetStepX(), y + GetStepY(), shift); }
-    void Draw(int shift, int x, int y) { GetBaseFrameset()->Draw(shift, x + GetStepX(), y + GetStepY()); }
+    bool IsTransp(int x, int y, int shift);
+    void Draw(int shift, int x, int y);
     Frameset* GetBaseFrameset() { return &base_frameset_; }
 private:
+    std::vector<Frameset> overlays_;
+    std::vector<Frameset> underlays_;
+
     int step_x_;
     int step_y_;
     Frameset base_frameset_;
@@ -93,7 +103,13 @@ inline unsigned int hash(const View::Frameset& frameset);
 
 inline unsigned int hash(const View& view)
 {
-    return hash(view.base_frameset_);
+    unsigned int loc = 0;
+    for (auto it = view.overlays_.begin(); it != view.overlays_.end(); ++it)
+        loc += hash(*it);
+    for (auto it = view.underlays_.begin(); it != view.underlays_.end(); ++it)
+        loc += hash(*it);
+    loc += hash(view.base_frameset_);
+    return loc;
 }
 
 inline unsigned int hash(const View::Frameset& frameset)

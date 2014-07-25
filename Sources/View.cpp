@@ -67,6 +67,9 @@ void View::Frameset::Draw(int shift, int x, int y)
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
         return;
 
+    x += step_x_;
+    y += step_y_;
+
     int current_frame = GetMetadata()->frames_sequence[image_state_];
     int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
 
@@ -110,6 +113,10 @@ bool View::Frameset::IsTransp(int x, int y, int shift)
         return true;
     if (!GetMetadata())
         return true;
+
+    x += step_x_;
+    y += step_y_;
+
     const CSprite* loc = GetSprite()->GetSDLSprite();
     if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
         return true;
@@ -137,15 +144,97 @@ View::View()
     step_y_ = 0;
 }
 
+bool View::IsTransp(int x, int y, int shift) 
+{
+    for (auto it = overlays_.rbegin(); it != overlays_.rend(); ++it)
+        if (!it->IsTransp(x + GetStepX(), y + GetStepY(), shift))
+            return false;
+    if (!GetBaseFrameset()->IsTransp(x + GetStepX(), y + GetStepY(), shift))
+        return false;
+    for (auto it = underlays_.begin(); it != underlays_.end(); ++it)
+        if (!it->IsTransp(x + GetStepX(), y + GetStepY(), shift))
+            return false;
+    return true;
+}
+void View::Draw(int shift, int x, int y) 
+{ 
+    for (auto it = underlays_.rbegin(); it != underlays_.rend(); ++it)
+        it->Draw(shift, x + GetStepX(), y + GetStepY());
+    GetBaseFrameset()->Draw(shift, x + GetStepX(), y + GetStepY());
+    for (auto it = overlays_.begin(); it != overlays_.end(); ++it)
+        it->Draw(shift, x + GetStepX(), y + GetStepY());
+}
+
+void View::AddOverlay(const std::string& sprite, const std::string& state)
+{
+    Frameset f;
+    f.SetSprite(sprite);
+    f.SetState(state);
+    overlays_.push_back(f);
+}
+void View::AddUnderlay(const std::string& sprite, const std::string& state)
+{
+    Frameset f;
+    f.SetSprite(sprite);
+    f.SetState(state);
+    underlays_.push_back(f);
+}
+
+void View::RemoveOverlays()
+{
+    overlays_.clear();
+}
+void View::RemoveUnderlays()
+{
+    underlays_.clear();
+}
+
 std::ostream& operator<<(std::stringstream& file, View& view)
 {
     WrapWriteMessage(file, *view.GetBaseFrameset());
     file << " ";
+
+    file << view.underlays_.size();
+    file << " ";
+    for (auto it = view.underlays_.begin(); it != view.underlays_.end(); ++it)
+    {
+            WrapWriteMessage(file, *it);
+            file << " ";
+    }
+
+    file << view.overlays_.size();
+    file << " ";
+    for (auto it = view.overlays_.begin(); it != view.overlays_.end(); ++it)
+    {
+            WrapWriteMessage(file, *it);
+            file << " ";
+    }
+
     return file;
 }
 std::istream& operator>>(std::stringstream& file, View& view)
 {
     WrapReadMessage(file, *view.GetBaseFrameset());
+
+    size_t u_size;
+    file >> u_size;
+    view.underlays_.resize(u_size);
+    for (size_t i = 0; i < u_size; ++i)
+    {
+        View::Frameset f;
+        WrapReadMessage(file, f);
+        view.underlays_[i] = f;
+    }
+
+    size_t o_size;
+    file >> o_size;
+    view.overlays_.resize(o_size);
+    for (size_t i = 0; i < o_size; ++i)
+    {
+        View::Frameset f;
+        WrapReadMessage(file, f);
+        view.overlays_[i] = f;
+    }
 
     view.step_x_ = 0;
     view.step_y_ = 0;

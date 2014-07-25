@@ -91,12 +91,14 @@ void Door::Weld()
     {
         SetState("door_closed");
         door_state_ = CLOSED;
+        GetView()->RemoveOverlays();
     }
     else
     {
-        SetState("welded");
+        GetView()->AddOverlay("icons/Doorglass.dmi", "welded");
         door_state_ = WELDED;
     }
+    PlaySoundIfVisible("Welder.ogg", owner.ret_id());
 }
 
 void Door::AttackBy(id_ptr_on<Item> item)
