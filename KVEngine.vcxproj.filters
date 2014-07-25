@@ -297,6 +297,9 @@
     <ClInclude Include="Sources\Weldingtool.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\View.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -484,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="Sources\Weldingtool.cpp">
       <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\View.cpp">
+      <Filter>Source Files\Sprites</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

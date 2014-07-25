@@ -15,89 +15,28 @@ std::list<HashAmount> IOnMapObject::insertLiquid(std::list<HashAmount> r) {retur
 
 void IOnMapObject::SetSprite(const std::string& name)
 {
-    T_SPR = name;
-    if (!GetSpriter())
-        return;
-    sprite_ = GetSpriter()->returnSpr(name);
-    SetState(state_);
+    view_.SetSprite(name);
 };
 
 
 const GLSprite* IOnMapObject::GetSprite()
 {
-    if (sprite_ == nullptr)
-        SetSprite(T_SPR);
-    return sprite_;
+    return view_.GetSprite();
 }
 
 void IOnMapObject::SetState(const std::string& name)
 {
-    state_ = name;
-    if (!GetSprite())
-        return;
-    if (GetSprite()->Fail())
-        return;
-    if (!GetSprite()->GetSDLSprite()->metadata.IsValidState(state_))
-        return;
-
-    metadata_ = &GetSprite()->GetSDLSprite()->metadata.GetSpriteMetadata(state_);
-    
-    image_state_ = 0;
-    last_frame_tick_ = SDL_GetTicks();
+    view_.SetState(name);
 }
 
 const ImageMetadata::SpriteMetadata* IOnMapObject::GetMetadata()
 {  
-    if (!metadata_)
-        SetState(state_);
-    return metadata_;
+    return view_.GetMetadata();
 }
-
-const int ANIMATION_MUL = 100;
 
 void IOnMapObject::DrawMain(int shift, int x, int y)
 {
-    if (NODRAW)
-        return;
-
-    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
-        return;
-
-    int current_frame = GetMetadata()->frames_sequence[image_state_];
-    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
-
-    int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
-    int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
-
-    GetScreen()->Draw(GetSprite(), 
-                      x, y, 
-                      image_state_w_, image_state_h_);
-
-    if (GetMetadata()->frames_sequence.size() == 1)
-        return;
-    if (GetMetadata()->frames_sequence
-            [(image_state_ + 1) % GetMetadata()->frames_sequence.size()]
-                == -1)
-                    return;
-
-    int time_diff = SDL_GetTicks() - last_frame_tick_;
-    
-    int next_state = image_state_;
-    while (true)
-    {
-        // TODO: lags when time_diff very big
-        int frame = GetMetadata()->frames_sequence[next_state];
-        time_diff -= GetMetadata()->frames_data[frame].delay * ANIMATION_MUL;
-        if (time_diff <= 0)
-        {
-            if (image_state_ == next_state)
-                break;
-            image_state_ = next_state;
-            last_frame_tick_ = SDL_GetTicks();
-            break;
-        }
-        next_state = (next_state + 1) % GetMetadata()->frames_sequence.size();
-    }
+    view_.Draw(shift, x, y);
 }
 
 void IOnMapObject::processImage(DrawType type)
@@ -121,29 +60,7 @@ void IOnMapObject::processPhysics()
 
 bool IOnMapObject::IsTransp(int x, int y)
 {
-    if (NODRAW)
-        return true;
-    if (!GetMetadata())
-        return true;
-    const CSprite* loc = GetSprite()->GetSDLSprite();
-    if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
-        return true;
-
-    int current_frame = GetMetadata()->frames_sequence[image_state_];
-    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs;
-
-    int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
-    int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
-
-    SDL_Surface* surf = loc->frames[image_state_w_ * loc->numFrameH + image_state_h_];
-
-    auto bpp = surf->format->BytesPerPixel;
-
-    Uint8 un1, un2, un3, alpha;
-
-    SDL_GetRGBA(static_cast<Uint32*>(surf->pixels)[y * surf->pitch / bpp + x], surf->format, &un1, &un2, &un3, &alpha);
-
-    return alpha < 1;
+    return view_.IsTransp(x, y, 0);
 }
 bool IOnMapObject::isVisible(int x, int y)
 {
@@ -162,10 +79,7 @@ void IOnMapObject::delThis()
 
 IOnMapObject::IOnMapObject()
 {
-    sprite_ = nullptr;
     v_level = 0;
-    step_x = 0;
-    step_y = 0;
     passable_all = true;
     passable_up = true;
     passable_down = true;
@@ -174,10 +88,4 @@ IOnMapObject::IOnMapObject()
     transparent = true;
     burn_power = 0;
     name = "NONAMESHIT";
-    T_SPR = "NULL";
-    state_ = "null";
-    
-    image_state_ = -1;
-    last_frame_tick_ = 0;
-    metadata_ = nullptr;
 }

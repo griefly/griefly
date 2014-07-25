@@ -83,6 +83,7 @@
     <ClInclude Include="Sources\Turf.h" />
     <ClInclude Include="Sources\TypelistOfItems.h" />
     <ClInclude Include="Sources\utils.h" />
+    <ClInclude Include="Sources\View.h" />
     <ClInclude Include="Sources\visible_points.h" />
     <ClInclude Include="Sources\Weldingtool.h" />
   </ItemGroup>
@@ -147,6 +148,7 @@
     <ClCompile Include="Sources\Turf.cpp" />
     <ClCompile Include="Sources\TypelistOfItems.cpp" />
     <ClCompile Include="Sources\utils.cpp" />
+    <ClCompile Include="Sources\View.cpp" />
     <ClCompile Include="Sources\visible_points.cpp" />
     <ClCompile Include="Sources\Weldingtool.cpp" />
   </ItemGroup>

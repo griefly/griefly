@@ -21,7 +21,11 @@ void Move::Init(int way_n, Dir direct_n, int pixel_speed_n, id_ptr_on<IOnMapObje
 
 void Move::start()
 {
-    MapMaster::switchDir(master->step_x, master->step_y, direct, way, back);
+    int x = master->GetView()->GetStepX();
+    int y = master->GetView()->GetStepY();
+    MapMaster::switchDir(x, y, direct, way, back);
+    master->GetView()->SetStepX(x);
+    master->GetView()->SetStepY(y);
 }
 
 void Move::process()
@@ -32,7 +36,11 @@ void Move::process()
         return;
     }
     int l = (pixel_speed <= way) ? (pixel_speed) : (pixel_speed - way);
-    MapMaster::switchDir(master->step_x, master->step_y, direct, -l, back);
+    int x = master->GetView()->GetStepX();
+    int y = master->GetView()->GetStepY();
+    MapMaster::switchDir(x, y, direct, -l, back);
+    master->GetView()->SetStepX(x);
+    master->GetView()->SetStepY(y);
     way -= l;
 }
 
@@ -43,7 +51,13 @@ void Move::end()
 void Move::release()
 {
     if (!(master.ret_id() == 0 || master.ret_item() == nullptr || way == 0))
-        MapMaster::switchDir(master->step_x, master->step_y, direct, -way, back);
+    {
+        int x = master->GetView()->GetStepX();
+        int y = master->GetView()->GetStepY();
+        MapMaster::switchDir(x, y, direct, -way, back);
+        master->GetView()->SetStepX(x);
+        master->GetView()->SetStepY(y);
+    }
     way = 0;
     master = 0;
     direct = D_UP;

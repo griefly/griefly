@@ -142,20 +142,7 @@ void MapEditor::DrawChoosenItem()
 
     auto ptr = for_creation_[to_create_];
 
-    if (!ptr->GetSprite() || ptr->GetSprite()->Fail() || !ptr->GetMetadata())
-        return;
-
-    int current_frame = ptr->GetMetadata()->frames_sequence[ptr->GetImageState()];
-    int current_frame_pos = ptr->GetMetadata()->first_frame_pos + current_frame * ptr->GetMetadata()->dirs;
-
-    int image_state_h_ = current_frame_pos / ptr->GetSprite()->FrameW();
-    int image_state_w_ = current_frame_pos % ptr->GetSprite()->FrameW();
-
-    spr = for_creation_[to_create_]->GetSprite();
-    if (!spr->Fail())
-    {
-        GetScreen()->Draw(spr, 30, 32, image_state_w_, image_state_h_);
-    }
+    ptr->DrawMain(0, 30, 32);
 }
 
 void MapEditor::SaveMap(std::stringstream& savefile)
@@ -262,7 +249,7 @@ void MapEditor::ProcessInput()
                 SYSTEM_STREAM << "SDLK_e: " << std::endl;
                 to_create_ = std::min(static_cast<int>(for_creation_.size() - 1), to_create_ + 1);
                 SYSTEM_STREAM << "to_create_: " << to_create_ << std::endl;
-                SYSTEM_STREAM << for_creation_[to_create_]->T_SPR << std::endl;
+               // SYSTEM_STREAM << for_creation_[to_create_]->T_SPR << std::endl;
                 SYSTEM_STREAM << for_creation_[to_create_]->name << std::endl;
                 SYSTEM_STREAM << "=========" << std::endl;
             }
@@ -271,7 +258,7 @@ void MapEditor::ProcessInput()
                 SYSTEM_STREAM << "SDLK_q" << std::endl;
                 to_create_ = std::max(0, to_create_ - 1);
                 SYSTEM_STREAM << "to_create_: " << to_create_ << std::endl;
-                SYSTEM_STREAM << for_creation_[to_create_]->T_SPR << std::endl;
+               // SYSTEM_STREAM << for_creation_[to_create_]->T_SPR << std::endl;
                 SYSTEM_STREAM << for_creation_[to_create_]->name << std::endl;
                 SYSTEM_STREAM << "=========" << std::endl;
             }

@@ -7,8 +7,7 @@
 #include "ASpritesClass.h"
 #include "HelperStructers.h"
 #include "Metadata.h"
-
-class SmallItem;
+#include "View.h"
 
 class IOnMapObject: public IOnMapBase
 {
@@ -55,12 +54,12 @@ public:
     virtual int GetDrawX() const override
     {
         int temp = owner->GetDrawX();
-        return step_x + temp;
+        return view_.GetStepX() + temp;
     }
     virtual int GetDrawY() const override
     {
         int temp = owner->GetDrawY();
-        return step_y + temp;
+        return view_.GetStepY() + temp;
     }
     virtual void process() override
     {
@@ -81,10 +80,8 @@ public:
 
     void SetState(const std::string& name);
     const ImageMetadata::SpriteMetadata* GetMetadata();
-    int GetImageState() const { return image_state_; }
+    View* GetView() { return &view_; }
 public:
-    int KV_ON_LOAD(step_x, 0);
-    int KV_ON_LOAD(step_y, 0);
     int KV_SAVEBLE(v_level);
     bool KV_SAVEBLE(passable_down);
     bool KV_SAVEBLE(passable_up);
@@ -94,15 +91,8 @@ public:
     bool KV_SAVEBLE(transparent);
     int KV_SAVEBLE(burn_power);//0 - 1 - MUCH MUCH
     std::string KV_SAVEBLE(name);
-public:
-    std::string KV_SAVEBLE(T_SPR);
-    const GLSprite* KV_ON_LOAD(sprite_, nullptr);
-
-    std::string KV_SAVEBLE(state_);
-    const ImageMetadata::SpriteMetadata* KV_ON_LOAD(metadata_, nullptr);
 protected:
-    int KV_ON_LOAD(image_state_, -1);
-    int KV_ON_LOAD(last_frame_tick_, SDL_GetTicks());
+    View KV_SAVEBLE(view_);
 };
 
 ADD_TO_TYPELIST(IOnMapObject);

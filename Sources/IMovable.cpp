@@ -114,28 +114,12 @@ bool IMovable::IsTransp(int x, int y)
 {
     if (NODRAW)
         return true;
-    if (!GetMetadata())
-        return true;
-    const CSprite* loc = GetSprite()->GetSDLSprite();
-    if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
+    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
         return true;
 
     int shift = 0;
     if (GetMetadata()->dirs >= 4)
         shift = helpers::dir_to_byond(dMove);
-    int current_frame = GetMetadata()->frames_sequence[image_state_];
-    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
 
-    int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
-    int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
-
-    SDL_Surface* surf = loc->frames[image_state_w_ * loc->numFrameH + image_state_h_];
-
-    auto bpp = surf->format->BytesPerPixel;
-
-    Uint8 un1, un2, un3, alpha;
-
-    SDL_GetRGBA(static_cast<Uint32*>(surf->pixels)[y * surf->pitch / bpp + x], surf->format, &un1, &un2, &un3, &alpha);
-
-    return alpha < 1;
+    return view_.IsTransp(x, y, shift);
 }
