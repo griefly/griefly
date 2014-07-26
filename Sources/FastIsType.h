@@ -11,12 +11,12 @@ inline bool FastIsType(int typefrom)
 template<typename Typeto, typename TypeObjectFrom>
 inline Typeto* castTo(TypeObjectFrom* ptr)
 {
-    /*return dynamic_cast<Typeto*>(ptr);*/
-    if(ptr == nullptr)
+    /*return dynamic_cast<Typeto*>(ptr);/**/
+    /**/if(ptr == nullptr)
         return nullptr;
     if(FastIsType<Typeto>(ptr->RT_ITEM()))
         return reinterpret_cast<Typeto*>(ptr);
-    return nullptr;
+    return nullptr;/**/
 }
 
 unsigned int Num2Hash(int hash);

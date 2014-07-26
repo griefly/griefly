@@ -143,7 +143,7 @@ public:
     }
 private:
     mutable T* item; 
-    mutable size_t id;
+    size_t id;
 };
 
 template<typename T>

@@ -140,7 +140,7 @@ void TextInput::UpdateVisible()
 
 void TextInput::NormalizePointer()
 {
-    if (pointer_pos_ > visible_text_.size())
+    if (pointer_pos_ > static_cast<int>(visible_text_.size()))
         pointer_pos_ = visible_text_.size();
     if (pointer_pos_ < 0)
         pointer_pos_ = 0;
@@ -156,8 +156,8 @@ void TextInput::PointerRight()
 
     if (pointer_pos_ == visible_text_.size())
     {
-        while (    text_pos_ < text_.size() - 1
-               && (visible_text_.size() + text_pos_ < global_pos + 1))
+        while (    text_pos_ < static_cast<int>(text_.size() - 1)
+               && (static_cast<int>(visible_text_.size() + text_pos_) < global_pos + 1))
         {
             ++text_pos_;
             UpdateVisible();
