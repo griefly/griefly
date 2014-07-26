@@ -9,7 +9,7 @@ SOURCES := $(wildcard Sources/*.cpp)
 OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
 
 .PHONY: all
-all: Release/knv
+all: Exec/knv
 
 .PHONY: travis-get-deps
 travis-get-deps:
@@ -22,14 +22,14 @@ travis-get-deps:
 
 .PHONY: clean
 clean:
-	rm -f Sources/*.o Release/knv
+	rm -f Sources/*.o Exec/knv
 
 .PHONY: 32bit
 32bit: M = -m32
 32bit: all
 
 Release/knv: $(OBJS)
-	$(CXX) $(LDFLAGS) $(M) $(OBJS) $(LIBS) -o Release/knv
+	$(CXX) $(LDFLAGS) $(M) $(OBJS) $(LIBS) -o Exec/knv
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(M) $(INCLUDES) -o $@ -c $<
