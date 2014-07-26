@@ -28,7 +28,7 @@ clean:
 32bit: M = -m32
 32bit: all
 
-Release/knv: $(OBJS)
+Exec/knv: $(OBJS)
 	$(CXX) $(LDFLAGS) $(M) $(OBJS) $(LIBS) -o Exec/knv
 
 %.o: %.cpp
