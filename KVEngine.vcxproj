@@ -5,6 +5,10 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release Fast|Win32">
+      <Configuration>Release Fast</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -68,6 +72,7 @@
     <ClInclude Include="Sources\Screen.h" />
     <ClInclude Include="Sources\SdlInit.h" />
     <ClInclude Include="Sources\Shard.h" />
+    <ClInclude Include="Sources\Slot.h" />
     <ClInclude Include="Sources\sound.h" />
     <ClInclude Include="Sources\SoundLoader.h" />
     <ClInclude Include="Sources\SpaceTurf.h" />
@@ -170,6 +175,12 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Fast|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -177,6 +188,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Fast|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -190,6 +204,13 @@
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>D:\lpng1612\lpng1612;D:\zlib128-dll\include;D:\SFML-2.1-windows-vc10-32bits\SFML-2.1\include;C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\third_party\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7\VisualC;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\Libs;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\Exec\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Fast|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\lpng1612\lpng1612;D:\zlib128-dll\include;D:\SFML-2.1-windows-vc10-32bits\SFML-2.1\include;C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\third_party\loki-0.1.7\include\loki;D:\SDL_ttf-2.0.10\SDL_ttf-2.0.10;C:\Users\my\Downloads\SDL_net-1.2.7\SDL_net-1.2.7\VisualC;C:\Users\my\Downloads\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\my\Documents\Visual Studio 2010\Projects\kvengine\Libs;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\Exec\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -212,6 +233,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Fast|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

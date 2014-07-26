@@ -10,4 +10,9 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerCommandArguments>-neditor i1p=178.49.192.28 map_name=m1ainmap map_x=70 map_y=70 map_z=1 -vsync</LocalDebuggerCommandArguments>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Fast|Win32'">
+    <LocalDebuggerWorkingDirectory>.\Release</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>-neditor i1p=178.49.192.28 map_name=m1ainmap map_x=70 map_y=70 map_z=1 -novsync</LocalDebuggerCommandArguments>
+  </PropertyGroup>
 </Project>

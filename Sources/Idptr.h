@@ -66,31 +66,40 @@ public:
     }
     T* operator*()
     {
-        if(0 == GetFromIdTable(id))
-            return item = 0;
-        return item = castTo<T>(GetFromIdTable(id));
+        if(nullptr == GetFromIdTable(id))
+            return nullptr;
+        if (!item)
+            item = castTo<T>(GetFromIdTable(id));
+        return item;
     }
     const T* operator*() const
     {
-        if(0 == GetFromIdTable(id))
-            return 0;
-        return castTo<T>(GetFromIdTable(id));
+        if(nullptr == GetFromIdTable(id))
+            return nullptr;
+        if (!item)
+            item = castTo<T>(GetFromIdTable(id));
+        return item;
     }
     T* operator->()
     {
-        if(0 == GetFromIdTable(id))
-            return item = 0;
-        return item = castTo<T>(GetFromIdTable(id));
+        if(nullptr == GetFromIdTable(id))
+            return nullptr;
+        if (!item)
+            item = castTo<T>(GetFromIdTable(id));
+        return item;
     }
     const T* operator->() const
     {
-        if(0 == GetFromIdTable(id))
-            return 0;
-        return castTo<T>(GetFromIdTable(id));
+        if(nullptr == GetFromIdTable(id))
+            return nullptr;
+        if (!item)
+            item = castTo<T>(GetFromIdTable(id));
+        return item;
     }
     id_ptr_on& operator=(size_t id_new)
     {
         id = id_new;
+        item = nullptr;
         return *this;
     }
     template<typename T2>
@@ -104,6 +113,7 @@ public:
     id_ptr_on(id_ptr_on<T2>& value)
     {
         id = value.ret_id();
+        item = nullptr;
     }
 
     ///operator size_t() { return id; }
@@ -119,6 +129,7 @@ public:
     id_ptr_on(size_t id_new)
     {
         id = id_new;
+        item = nullptr;
     }
     size_t ret_id() const
     {
@@ -126,12 +137,13 @@ public:
     }
     T* ret_item()
     {
-        item = castTo<T>(GetFromIdTable(id)); 
+        if (!item)
+            item = castTo<T>(GetFromIdTable(id)); 
         return item;
     }
 private:
-    T* item; 
-    size_t id;
+    mutable T* item; 
+    mutable size_t id;
 };
 
 template<typename T>

@@ -374,3 +374,4 @@ ipch
 /Release/*.obj
 /Release/*.obj
 /Release/mainmap
+Release Fast
