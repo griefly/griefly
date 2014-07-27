@@ -303,6 +303,9 @@
     <ClInclude Include="Sources\Slot.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Interface.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -493,6 +496,9 @@
     </ClCompile>
     <ClCompile Include="Sources\View.cpp">
       <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Interface.cpp">
+      <Filter>Source Files\Space</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

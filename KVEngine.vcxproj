@@ -39,6 +39,7 @@
     <ClInclude Include="Sources\Idptr.h" />
     <ClInclude Include="Sources\ImageLoader.h" />
     <ClInclude Include="Sources\IMovable.h" />
+    <ClInclude Include="Sources\Interface.h" />
     <ClInclude Include="Sources\Item.h" />
     <ClInclude Include="Sources\ItemFabric.h" />
     <ClInclude Include="Sources\ITurf.h" />
@@ -112,6 +113,7 @@
     <ClCompile Include="Sources\Idptr.cpp" />
     <ClCompile Include="Sources\ImageLoader.cpp" />
     <ClCompile Include="Sources\IMovable.cpp" />
+    <ClCompile Include="Sources\Interface.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\ItemFabric.cpp" />
     <ClCompile Include="Sources\ITurf.cpp" />
