@@ -9,6 +9,10 @@ class InterfaceBase
 public:
     virtual bool Click(int x, int y) = 0;
     virtual void Draw() = 0;
+    virtual std::ostream& operator<<(std::stringstream& file) = 0;
+    virtual std::istream& operator>>(std::stringstream& file) = 0;
+    virtual unsigned int hash() = 0;
+    virtual ~InterfaceBase() {};
 };
 
 class HumanInterface: public InterfaceBase
@@ -17,7 +21,10 @@ public:
     virtual bool Click(int x, int y) override;
     virtual void Draw() override;
     void InitSlots();
-    ~HumanInterface();
+    virtual ~HumanInterface();
+    virtual std::ostream& operator<<(std::stringstream& file) override;
+    virtual std::istream& operator>>(std::stringstream& file) override;
+    virtual unsigned int hash() override;
 private:
     std::vector<BaseSlot*> slots_;
 };

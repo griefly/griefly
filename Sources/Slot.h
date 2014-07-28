@@ -11,6 +11,9 @@ public:
     virtual id_ptr_on<Item>  Get() = 0;
     virtual void Remove() = 0;
     virtual void Draw() = 0;
+    virtual std::ostream& operator<<(std::stringstream& file) = 0;
+    virtual std::istream& operator>>(std::stringstream& file) = 0;
+    virtual unsigned int hash() = 0;
 };
 
 template<class T>
@@ -58,10 +61,39 @@ public:
     {
         return view_.Click(x, y);
     }
+    virtual std::ostream& operator<<(std::stringstream& file) override
+    {
+        file << view_ << " ";
+        file << item_ << " ";
+        file << posx_ << " ";
+        file << posy_ << " ";
+        return file;
+    }
+    virtual std::istream& operator>>(std::stringstream& file) override
+    {
+        file >> view_;
+        file >> item_;
+        file >> posx_;
+        file >> posy_;
+        return file;
+    }
+    virtual unsigned int hash() override
+    {
+        return   hash(view_)
+               + hash(item_)
+               + hash(posx_)
+               + hash(posy_);
+    }
 private:
     View view_;
     id_ptr_on<T> item_;
     int posx_;
     int posy_;
 };
+
+template <class T>
+inline unsigned int hash(const Slot<T>& slot)
+{
+    return slot_.hash();
+}
 

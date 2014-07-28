@@ -26,3 +26,21 @@ void HumanInterface::Draw()
     for (auto it = slots_.begin(); it != slots_.end(); ++it)
         (*it)->Draw();
 }
+
+std::ostream& HumanInterface::operator<<(std::stringstream& file)
+{
+    file << slots_.size() << " ";
+    for (size_t i = 0; i < slots_.size(); ++i)
+        file << slots_[i] << " ";
+    return file;
+}
+std::istream& HumanInterface::operator>>(std::stringstream& file)
+{
+    size_t s;
+    file >> s;
+    slots_.resize(s);
+    for (size_t i = 0; i <slots_.size(); ++i)
+    {
+
+    }
+}
