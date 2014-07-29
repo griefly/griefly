@@ -4,10 +4,8 @@
 
 void HumanInterface::InitSlots()
 {
-    auto r_hand = new Slot<Item>;
-    r_hand->SetPos(3, 3);
-    r_hand->GetView()->SetState("hand_r_inactive");
-    slots_.push_back(r_hand);
+    r_hand_.SetPos(3, 3);
+    r_hand_.GetView()->SetState("hand_r_inactive");
 }
 
 bool HumanInterface::Click(int x, int y)
@@ -17,30 +15,27 @@ bool HumanInterface::Click(int x, int y)
 
 HumanInterface::~HumanInterface()
 {
-    for (auto it = slots_.begin(); it != slots_.end(); ++it)
-        delete *it;
 }
 
 void HumanInterface::Draw()
 {
-    for (auto it = slots_.begin(); it != slots_.end(); ++it)
-        (*it)->Draw();
+    r_hand_.Draw();
+}
+
+unsigned int HumanInterface::hash() const
+{
+    unsigned int hash = 0;
+    hash += r_hand_.hash_member();
+    return hash;
 }
 
 std::ostream& HumanInterface::operator<<(std::stringstream& file)
 {
-    file << slots_.size() << " ";
-    for (size_t i = 0; i < slots_.size(); ++i)
-        file << slots_[i] << " ";
+    r_hand_.operator<<(file) << " ";
     return file;
 }
 std::istream& HumanInterface::operator>>(std::stringstream& file)
 {
-    size_t s;
-    file >> s;
-    slots_.resize(s);
-    for (size_t i = 0; i <slots_.size(); ++i)
-    {
-
-    }
+    r_hand_.operator>>(file);
+    return file;
 }

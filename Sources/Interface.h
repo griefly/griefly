@@ -11,7 +11,7 @@ public:
     virtual void Draw() = 0;
     virtual std::ostream& operator<<(std::stringstream& file) = 0;
     virtual std::istream& operator>>(std::stringstream& file) = 0;
-    virtual unsigned int hash() = 0;
+    virtual unsigned int hash() const = 0;
     virtual ~InterfaceBase() {};
 };
 
@@ -24,7 +24,12 @@ public:
     virtual ~HumanInterface();
     virtual std::ostream& operator<<(std::stringstream& file) override;
     virtual std::istream& operator>>(std::stringstream& file) override;
-    virtual unsigned int hash() override;
+    virtual unsigned int hash() const override;
 private:
-    std::vector<BaseSlot*> slots_;
+    Slot<Item> r_hand_;
 };
+
+inline unsigned int hash(const HumanInterface& i)
+{
+    return i.hash();
+}

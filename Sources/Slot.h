@@ -4,6 +4,8 @@
 
 #include "View.h"
 
+#include "hashes.h"
+
 class BaseSlot
 {
 public:
@@ -13,7 +15,7 @@ public:
     virtual void Draw() = 0;
     virtual std::ostream& operator<<(std::stringstream& file) = 0;
     virtual std::istream& operator>>(std::stringstream& file) = 0;
-    virtual unsigned int hash() = 0;
+    virtual unsigned int hash_member() const = 0;
 };
 
 template<class T>
@@ -77,7 +79,7 @@ public:
         file >> posy_;
         return file;
     }
-    virtual unsigned int hash() override
+    virtual unsigned int hash_member() const override
     {
         return   hash(view_)
                + hash(item_)

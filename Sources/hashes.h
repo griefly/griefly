@@ -37,7 +37,7 @@ unsigned int hash(const std::map<unsigned int, id_ptr_on<T>>& map)
 };
 
 template<class T>
-unsigned int hash(id_ptr_on<T>& h)
+unsigned int hash(const id_ptr_on<T>& h)
 {
     return h.ret_id();
 }
