@@ -3,6 +3,7 @@
 #include "CAliveMob.h"
 
 #include "sound.h"
+#include "Interface.h"
 
 class Item;
 
@@ -20,6 +21,7 @@ public:
     id_ptr_on<Item> KV_SAVEBLE(in_hand);
     int KV_SAVEBLE(jump_time);
 private:
+    HumanInterface KV_SAVEBLE(interface_);
     GLSprite* KV_ON_LOAD(gui_sprite_, nullptr);
 };
 

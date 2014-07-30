@@ -24,7 +24,7 @@ class Slot: public BaseSlot
 public:
     Slot()
     {
-        view_.SetSprite("screen_retro.dmi");
+        view_.SetSprite("icons/screen_retro.dmi");
         item_ = 0;
     }
     virtual bool Set(id_ptr_on<Item> ptr) override

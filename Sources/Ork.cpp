@@ -27,6 +27,7 @@ COrk::COrk()
     is_strong_owner = true;
     name = GetMaleName();
     gui_sprite_ = nullptr;
+    interface_.InitSlots();
 };
 
 void COrk::aaMind()
@@ -52,7 +53,9 @@ void COrk::processGUI()
 {
     CAliveMob::processGUI();
 
-    if (!gui_sprite_)
+
+    interface_.Draw();
+ /*   if (!gui_sprite_)
         gui_sprite_ = GetSpriter()->returnSpr("icons/screen_retro.dmi");
     // TODO:
 
@@ -78,7 +81,7 @@ void COrk::processGUI()
     GetScreen()->Draw(gui_sprite_, 
                       1  * 32, 
                       13 * 32, 
-                      0, 2);
+                      0, 2);*/
     if (in_hand)
         in_hand->DrawMain(0, 0 * 32, 14 * 32);
 }

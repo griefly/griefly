@@ -4,7 +4,7 @@
 
 void HumanInterface::InitSlots()
 {
-    r_hand_.SetPos(3, 3);
+    r_hand_.SetPos(0, 14);
     r_hand_.GetView()->SetState("hand_r_inactive");
 }
 
@@ -29,13 +29,13 @@ unsigned int HumanInterface::hash() const
     return hash;
 }
 
-std::ostream& HumanInterface::operator<<(std::stringstream& file)
+std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
 {
-    r_hand_.operator<<(file) << " ";
+    interf.r_hand_.operator<<(file) << " ";
     return file;
 }
-std::istream& HumanInterface::operator>>(std::stringstream& file)
+std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
 {
-    r_hand_.operator>>(file);
+    interf.r_hand_.operator>>(file);
     return file;
 }
