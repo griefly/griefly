@@ -61,7 +61,7 @@ public:
     }
     bool Click(int x, int y)
     {
-        return view_.Click(x, y);
+        return view_.IsTransp(x, y, 0);
     }
     virtual std::ostream& operator<<(std::stringstream& file) override
     {
@@ -96,6 +96,6 @@ private:
 template <class T>
 inline unsigned int hash(const Slot<T>& slot)
 {
-    return slot_.hash();
+    return slot.hash_member();
 }
 
