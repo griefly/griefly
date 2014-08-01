@@ -64,6 +64,20 @@ public:
     {
         return ret_id() == rval.ret_id();
     }
+    /* template<class R>
+    operator id_ptr_on<R>()
+    {
+        id_ptr_on<R> retval;
+        retval = ret_id();
+        return retval;
+    }
+    template<class R>
+    operator id_ptr_on<R>() const
+    {
+        id_ptr_on<R> retval;
+        retval = ret_id();
+        return retval;
+    }*/
     T* operator*()
     {
         if(nullptr == GetFromIdTable(id))
@@ -110,7 +124,7 @@ public:
         return *this;
     }
     template<typename T2>
-    id_ptr_on(id_ptr_on<T2>& value)
+    id_ptr_on(id_ptr_on<T2> value)
     {
         id = value.ret_id();
         item = nullptr;
