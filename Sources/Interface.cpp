@@ -29,6 +29,23 @@ unsigned int HumanInterface::hash() const
     return hash;
 }
 
+void HumanInterface::Pick(id_ptr_on<Item> item)
+{
+    if (r_hand_.Get())
+        return;
+    r_hand_.Set(item);
+}
+
+void HumanInterface::Drop()
+{
+    r_hand_.Remove();
+}
+
+id_ptr_on<Item> HumanInterface::GetRHand()
+{
+    return r_hand_.Get();
+}
+
 std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
 {
     interf.r_hand_.operator<<(file) << " ";

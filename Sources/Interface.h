@@ -24,6 +24,11 @@ public:
     friend std::ostream& operator<<(std::stringstream& file, HumanInterface& interf);
     friend std::istream& operator>>(std::stringstream& file, HumanInterface& interf);
     virtual unsigned int hash() const override;
+
+    void Pick(id_ptr_on<Item> item);
+    void Drop();
+
+    id_ptr_on<Item> GetRHand();
 private:
     Slot<Item> r_hand_;
 };

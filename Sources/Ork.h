@@ -18,7 +18,6 @@ public:
     virtual void processGUImsg(const Message& msg) override;
     virtual void live() override;
     virtual bool checkMove(Dir direct) override;
-    id_ptr_on<Item> KV_SAVEBLE(in_hand);
     int KV_SAVEBLE(jump_time);
 private:
     HumanInterface KV_SAVEBLE(interface_);

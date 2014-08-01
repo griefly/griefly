@@ -22,7 +22,6 @@ COrk::COrk()
     SetState("african1_m_s");
     SetPassable(D_ALL, true);
     v_level = 9;
-    in_hand = 0;
     jump_time = 0;
     is_strong_owner = true;
     name = GetMaleName();
@@ -82,8 +81,6 @@ void COrk::processGUI()
                       1  * 32, 
                       13 * 32, 
                       0, 2);*/
-    if (in_hand)
-        in_hand->DrawMain(0, 0 * 32, 14 * 32);
 }
 
 void COrk::processGUImsg(const Message& msg)
@@ -97,10 +94,10 @@ void COrk::processGUImsg(const Message& msg)
 
     if(msg.text == "SDLK_p")
     {
-        if(in_hand)
+        if(interface_.GetRHand()) // TODO: active hand
         {
-            owner->AddItem(in_hand);
-            in_hand = 0;
+            owner->AddItem(interface_.GetRHand());
+            interface_.Drop();
         }
     }
     else if (msg.text == "SDL_MOUSEBUTTONDOWN")
@@ -113,21 +110,21 @@ void COrk::processGUImsg(const Message& msg)
             if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
             {
                 SYSTEM_STREAM << "And we can touch it!" << std::endl;
-                if(!in_hand)
+                if(!interface_.GetRHand())
                 {
-                    in_hand = item;
-                    if (in_hand)
+                    interface_.Pick(item);
+                    if (interface_.GetRHand())
                     {
                         if (!item->GetOwner()->RemoveItem(item))
                             SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
                         item->SetOwner(GetId());
                     }
                     else
-                        in_hand = 0;
+                        interface_.Pick(0);
                 }
                 else
                 {
-                    item->AttackBy(in_hand);
+                    item->AttackBy(interface_.GetRHand());
                 }
                 
             }
