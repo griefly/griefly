@@ -95,6 +95,7 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
     convertor.str("");
 
     connected_ = true;
+    amount_ticks_ = 0;
     return true;
 }
 
@@ -126,6 +127,9 @@ bool NetClient::IsFail()
 
 bool NetClient::Send(const Message& msg)
 {
+    if (IsFail())
+        return false;
+
     if (SendSocketMessage(*main_socket_, msg) == false)
     {
         fail_ = true;
@@ -144,6 +148,9 @@ bool NetClient::Ready()
 
 bool NetClient::Recv(Message* msg)
 {
+    if (IsFail())
+        return false;
+
     assert(msg && "Try fill nullptr");
     *msg = messages_.front();
     messages_.pop();
@@ -179,6 +186,9 @@ bool NetClient::Recv(Message* msg)
 
 bool NetClient::Process()
 {
+    if (IsFail())
+        return false;
+
     const unsigned int MAX_MSG = 128;
     unsigned int counter = 0;
     while (SocketReady(*main_socket_) && counter < MAX_MSG)

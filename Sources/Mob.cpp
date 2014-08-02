@@ -161,9 +161,7 @@ void Manager::process()
         process_in = false;
         if (NetClient::GetNetClient()->Process() == false)
         {
-            SYSTEM_STREAM << "Fail receive messages" << std::endl;
-            SDL_Delay(10000);
-            break;
+
         }
     }
 };
@@ -480,7 +478,14 @@ void Manager::initWorld()
         *str = last_touch;
     }).SetFreq(20).SetPlace(0, 485).SetSize(22);
 
-    
+    GetTexts()["Connection"].SetUpdater
+    ([this](std::string* str)
+    {
+        if (NetClient::GetNetClient()->IsFail())
+            *str = "Connection lost";
+        else
+            *str = "";
+    }).SetFreq(100).SetPlace(60, 0).SetSize(20).SetColor(250, 0, 0);   
 };
 
 void Manager::loadIniFile()
