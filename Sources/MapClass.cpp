@@ -22,6 +22,7 @@
 #include "Item.h"
 #include "Shard.h"
 #include "Weldingtool.h"
+#include "Lattice.h"
 
 void MapMaster::Draw()
 {
@@ -128,6 +129,8 @@ void MapMaster::makeMap()
                                                      :                 Floor::T_ITEM_S());
 
             squares[x][y][0]->SetTurf(loc);
+            if (rand() % 15 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapObject>(Lattice::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 30 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(Wrench::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 30 == 1)

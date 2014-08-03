@@ -12,7 +12,7 @@ Grille::Grille()
     tickSpeed = 5;
     pixSpeed = 1;
 
-    v_level = 5;
+    v_level = 8;
 
     SetSprite("icons/structures.dmi");
     SetState("grille");

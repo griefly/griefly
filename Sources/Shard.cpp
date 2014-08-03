@@ -4,7 +4,6 @@
 
 Shard::Shard()
 {
-    v_level = 2;
     SetSprite("icons/shards.dmi");
 
     unsigned int val = get_rand() % 3;

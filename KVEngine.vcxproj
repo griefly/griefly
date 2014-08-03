@@ -70,6 +70,7 @@
     <ClInclude Include="Sources\Ork.h" />
     <ClInclude Include="Sources\Params.h" />
     <ClInclude Include="Sources\platform\gl.h" />
+    <ClInclude Include="Sources\Lattice.h" />
     <ClInclude Include="Sources\Screen.h" />
     <ClInclude Include="Sources\SdlInit.h" />
     <ClInclude Include="Sources\Shard.h" />
@@ -138,6 +139,7 @@
     <ClCompile Include="Sources\OnMapInt.cpp" />
     <ClCompile Include="Sources\Ork.cpp" />
     <ClCompile Include="Sources\Params.cpp" />
+    <ClCompile Include="Sources\Lattice.cpp" />
     <ClCompile Include="Sources\Screen.cpp" />
     <ClCompile Include="Sources\SdlInit.cpp" />
     <ClCompile Include="Sources\Shard.cpp" />
