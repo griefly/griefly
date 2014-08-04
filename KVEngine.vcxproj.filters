@@ -309,6 +309,9 @@
     <ClInclude Include="Sources\Lattice.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\FloorTile.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -504,6 +507,9 @@
       <Filter>Source Files\Space</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Lattice.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\FloorTile.cpp">
       <Filter>Source Files\Space</Filter>
     </ClCompile>
   </ItemGroup>
