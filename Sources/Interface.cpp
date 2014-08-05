@@ -8,8 +8,26 @@ void HumanInterface::InitSlots()
     r_hand_.GetView()->SetState("hand_r_inactive");
 }
 
-bool HumanInterface::Click(int x, int y)
+id_ptr_on<Item> HumanInterface::Click(int x, int y)
 {
+    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW + guiShift) / static_cast<float>(GetScreen()->w())));;
+    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
+
+    if (r_hand_.Click(x, y))
+        return r_hand_.Get();
+    return 0;
+}
+
+bool HumanInterface::HandleClick(id_ptr_on<Item> item)
+{
+    if (!item)
+        return false;
+
+    if (item == r_hand_.Get())
+    {
+        item->AttackBy(0);
+        return true;
+    }
     return false;
 }
 

@@ -18,6 +18,7 @@ public:
     virtual void processGUImsg(const Message& msg) override;
     virtual void live() override;
     virtual bool checkMove(Dir direct) override;
+    virtual InterfaceBase* GetInterface() override { return &interface_; }
     int KV_SAVEBLE(jump_time);
 private:
     HumanInterface KV_SAVEBLE(interface_);

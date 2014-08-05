@@ -2,6 +2,8 @@
 
 #include "MessageReceiver.h"
 
+#include "Interface.h"
+
 class IMob: public IMessageReceiver
 {
 public:
@@ -17,6 +19,8 @@ public:
     virtual void processGUImsg(const Message& msg) override;
     
     virtual void processPhysics() override;
+
+    virtual InterfaceBase* GetInterface() { return nullptr; };
 
     virtual bool checkMove(Dir direct) override;
     bool KV_SAVEBLE(onMobControl);

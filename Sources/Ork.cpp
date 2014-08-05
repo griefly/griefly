@@ -105,9 +105,13 @@ void COrk::processGUImsg(const Message& msg)
         id_ptr_on<IOnMapObject> item = msg.from;
         if (item && item->GetOwner())
         {
+
             SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
             // It isn't fine
-            if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
+            if (interface_.HandleClick(item))
+            {
+            }
+            else if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
             {
                 SYSTEM_STREAM << "And we can touch it!" << std::endl;
                 if(!interface_.GetRHand())

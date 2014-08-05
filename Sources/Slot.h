@@ -61,7 +61,7 @@ public:
     }
     bool Click(int x, int y)
     {
-        return view_.IsTransp(x, y, 0);
+        return !view_.IsTransp(x - 32 * posx_, y - 32 * posy_, 0);
     }
     virtual std::ostream& operator<<(std::stringstream& file) override
     {

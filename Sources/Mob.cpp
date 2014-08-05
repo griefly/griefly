@@ -240,8 +240,16 @@ void Manager::processInput()
                 else if ((SDL_GetTicks() - click_timer) > 333)
                 {
                     click_timer = SDL_GetTicks();
-                    auto item = GetMapMaster()->click(event.button.x, event.button.y);
-                    if (item.valid())
+                    id_ptr_on<IOnMapObject> item;
+                    if (GetMob()->GetInterface())
+                    {
+                        item = GetMob()->GetInterface()->Click(event.button.x, event.button.y);
+                    }
+                    if (!item)
+                    {
+                        item = GetMapMaster()->click(event.button.x, event.button.y);
+                    }
+                    if (item)
                     {
                         Message msg;
                         msg.from = item.ret_id();
@@ -374,26 +382,11 @@ void Manager::processInput()
         SYSTEM_STREAM << "World's hash: " << GetItemFabric()->hash_all() << std::endl; 
     }
 
-    SEND_KEY_MACRO(SDLK_SPACE);
     SEND_KEY_MACRO(SDLK_UP);
     SEND_KEY_MACRO(SDLK_DOWN);
     SEND_KEY_MACRO(SDLK_LEFT);
     SEND_KEY_MACRO(SDLK_RIGHT);
-    SEND_KEY_MACRO(SDLK_j);
     SEND_KEY_MACRO(SDLK_p);
-    SEND_KEY_MACRO(SDLK_q);
-    SEND_KEY_MACRO(SDLK_f);
-    SEND_KEY_MACRO(SDLK_a);
-    SEND_KEY_MACRO(SDLK_s);
-    SEND_KEY_MACRO(SDLK_d);
-    SEND_KEY_MACRO(SDLK_w);
-    SEND_KEY_MACRO(SDLK_1);
-    SEND_KEY_MACRO(SDLK_2);
-    SEND_KEY_MACRO(SDLK_3);
-    SEND_KEY_MACRO(SDLK_4);
-    SEND_KEY_MACRO(SDLK_d);
-    SEND_KEY_MACRO(SDLK_e);
-    SEND_KEY_MACRO(SDLK_c);
 };
 
 void Manager::initWorld()
