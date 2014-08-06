@@ -17,6 +17,7 @@
   <ItemGroup>
     <ClInclude Include="Sources\ApproxGLImage.h" />
     <ClInclude Include="Sources\ASpritesClass.h" />
+    <ClInclude Include="Sources\AtmosHolder.h" />
     <ClInclude Include="Sources\CAliveMob.h" />
     <ClInclude Include="Sources\Chat.h" />
     <ClInclude Include="Sources\constheader.h" />
@@ -54,6 +55,7 @@
     <ClInclude Include="Sources\MainInt.h" />
     <ClInclude Include="Sources\MapClass.h" />
     <ClInclude Include="Sources\MapEditor.h" />
+    <ClInclude Include="Sources\Materials.h" />
     <ClInclude Include="Sources\Message.h" />
     <ClInclude Include="Sources\MessageReceiver.h" />
     <ClInclude Include="Sources\Metadata.h" />
@@ -127,6 +129,7 @@
     <ClCompile Include="Sources\MainInt.cpp" />
     <ClCompile Include="Sources\MapClass.cpp" />
     <ClCompile Include="Sources\MapEditor.cpp" />
+    <ClCompile Include="Sources\Materials.cpp" />
     <ClCompile Include="Sources\Message.cpp" />
     <ClCompile Include="Sources\Metadata.cpp" />
     <ClCompile Include="Sources\MetalWall.cpp" />

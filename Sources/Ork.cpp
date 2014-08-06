@@ -107,10 +107,10 @@ void COrk::processGUImsg(const Message& msg)
         {
 
             SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
-            // It isn't fine
             if (interface_.HandleClick(item))
             {
             }
+            // It isn't fine
             else if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
             {
                 SYSTEM_STREAM << "And we can touch it!" << std::endl;

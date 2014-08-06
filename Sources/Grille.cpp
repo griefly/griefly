@@ -4,6 +4,9 @@
 #include "Item.h"
 #include "sound.h"
 
+#include "ItemFabric.h"
+#include "Materials.h"
+
 Grille::Grille()
 {
     transparent = true;
@@ -32,9 +35,11 @@ void Grille::AttackBy(id_ptr_on<Item> item)
             SetState("brokengrille");
             SetPassable(D_ALL, true);
             cutted_ = true;
+            GetItemFabric()->newItemOnMap<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
         }
         else
         {
+            GetItemFabric()->newItemOnMap<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
             delThis();
         }
     }

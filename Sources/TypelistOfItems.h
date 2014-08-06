@@ -56,6 +56,7 @@ namespace KV_Private_NS_NullType
 #include "Weldingtool.h"
 #include "Lattice.h"
 #include "FloorTile.h"
+#include "Materials.h"
 
 const int local_num = __COUNTER__; 
 typedef Private::TypelistMaker<local_num - 1>::typelist ItemsTypelist;

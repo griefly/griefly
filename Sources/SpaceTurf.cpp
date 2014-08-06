@@ -2,6 +2,11 @@
 
 #include "sync_random.h"
 
+#include "Item.h"
+#include "Materials.h"
+#include "Lattice.h"
+#include "ItemFabric.h"
+
 Space::Space()
 {
     SetPassable(D_ALL, true);
@@ -13,4 +18,13 @@ Space::Space()
     conv << value;
     SetState(conv.str());
     name = "Space";
+}
+
+void Space::AttackBy(id_ptr_on<Item> item)
+{
+    if (id_ptr_on<Rod> rod = item)
+    {
+        rod->delThis();
+        GetItemFabric()->newItemOnMap<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());
+    }
 }

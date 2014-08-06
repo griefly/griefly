@@ -73,6 +73,9 @@
     <Filter Include="Source Files\Text">
       <UniqueIdentifier>{6c36b15d-5df5-4e75-b1f1-9beb7e3034ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Atmos">
+      <UniqueIdentifier>{d93276f4-ab41-4246-adfc-dc06b07e7b18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\ApproxGLImage.h">
@@ -312,6 +315,12 @@
     <ClInclude Include="Sources\FloorTile.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\AtmosHolder.h">
+      <Filter>Header Files\Atmos</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Materials.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -510,6 +519,9 @@
       <Filter>Source Files\Space</Filter>
     </ClCompile>
     <ClCompile Include="Sources\FloorTile.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Materials.cpp">
       <Filter>Source Files\Space</Filter>
     </ClCompile>
   </ItemGroup>
