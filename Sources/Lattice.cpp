@@ -21,8 +21,8 @@ void Lattice::AttackBy(id_ptr_on<Item> item)
     {
         tile->delThis();
 
-        GetOwner()->GetTurf()->delThis();
-        GetOwner()->SetTurf(GetItemFabric()->newItem<ITurf>(Floor::T_ITEM_S()));
+        GetTurf()->delThis();
+        SetTurf(GetItemFabric()->newItem<ITurf>(Floor::T_ITEM_S()));
 
         PlaySoundIfVisible("Deconstruct.ogg", owner.ret_id());
 
