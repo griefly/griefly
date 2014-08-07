@@ -9,6 +9,7 @@ public:
     DECLARE_GET_TYPE_ITEM(Floor);
     Floor();
     virtual void AttackBy(id_ptr_on<Item> item) override;
+    void SetOpen(bool o);
 private:
     bool KV_SAVEBLE(open_);
 };
