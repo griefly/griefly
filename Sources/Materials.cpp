@@ -3,12 +3,22 @@
 #include "Girder.h"
 #include "ItemFabric.h"
 #include "Floor.h"
+#include "Grille.h"
 
 Rod::Rod()
 {
     SetState("rods");
 
     name = "Rods";
+}
+
+void Rod::AttackBy(id_ptr_on<Item> item)
+{
+    if (!item) // Attack self
+    {
+        GetItemFabric()->newItemOnMap<IOnMapObject>(Grille::T_ITEM_S(), GetTurf());
+        delThis();
+    }
 }
 
 Metal::Metal()

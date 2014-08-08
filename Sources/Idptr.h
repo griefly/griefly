@@ -151,6 +151,8 @@ public:
     }
     T* ret_item()
     {
+        if(nullptr == GetFromIdTable(id))
+            return nullptr;
         if (!item)
             item = castTo<T>(GetFromIdTable(id)); 
         return item;
