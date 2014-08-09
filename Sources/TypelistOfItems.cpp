@@ -56,9 +56,21 @@ public:
     };
 };
 
+bool IsInited()
+{
+    static bool is_inited = false;
+    if (is_inited == false)
+    {
+        is_inited = true;
+        return false;
+    }
+    return true;
+}
+
 Initer::Initer()
 {
-    InitializeDCData<ItemsTypelist>::Init();
+    if (!IsInited())
+        InitializeDCData<ItemsTypelist>::Init();
 }
 
 template<typename T>

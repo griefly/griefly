@@ -1,8 +1,12 @@
 #pragma once
 
+#include <stdlib.h>
+
 #include <hash_map>
 #include <strstream>
 #include <fstream>
+
+#include <SDL.h>
 
 #if defined(__linux__)
 #include <ext/hash_map>
@@ -43,6 +47,13 @@ public:
     {
         //T item;
         unsigned int key = T::T_ITEM_S();
+        if (   itemList()->find(key) != itemList()->end()
+            || itemListSaved()->find(key) != itemListSaved()->end())
+        {
+            SYSTEM_STREAM << "FATAL ERROR: " << key << " hash miss!" << std::endl;
+            SDL_Delay(1000);
+            abort();
+        }
         (*itemList())[key] = &creator;
         (*itemListSaved())[key] = &creatorSaved;
     };
