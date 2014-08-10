@@ -2,6 +2,8 @@
 
 #include <array>
 
+#include <sstream>
+
 const unsigned int OXYGEN = 0;
 const unsigned int OXYGEN_FREEDOM = 5;
 const unsigned int OXYGEN_WEIGHT = 16 * 2;
@@ -23,6 +25,8 @@ const int MAX_GAS_LEVEL = 1000;
 
 class AtmosHolder
 {
+    friend std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
+    friend std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder);
 public:
     AtmosHolder()
     {
@@ -32,8 +36,11 @@ public:
         volume_ = 0;
         energy_ = 0;
         pressure_ = 0;
+        volume_ = 1;
     }
-    void Connect(AtmosHolder* near, bool one_side = false, int level = MAX_GAS_LEVEL);
+    void Connect(AtmosHolder* guest, 
+                 int level_owner = MAX_GAS_LEVEL, int level_guest = MAX_GAS_LEVEL,
+                 int div = MAX_GAS_LEVEL / 2 /*100% - owner take all*/);
     void AddEnergy(unsigned int energy);
     void AddGase(unsigned int gase, unsigned int amount);
     void SetVolume(unsigned int volume);
@@ -41,10 +48,20 @@ public:
     unsigned int GetPressure();
     unsigned int GetTemperature();
     unsigned int GetVolume();
+    unsigned int GetGase(unsigned int gase);
+    
+    unsigned int RemoveGase(unsigned int gase, unsigned int amount);
+
+    void UpdateMacroParams();
 private:
     std::array<unsigned int, GASES_NUM> gases_;
-    unsigned int pressure_;
     unsigned int energy_;
-    unsigned int temperature_;
+    
     unsigned int volume_;
+
+    unsigned int pressure_;
+    unsigned int temperature_;
 };
+
+std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
+std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder);
