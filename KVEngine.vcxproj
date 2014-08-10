@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp" />
     <ClCompile Include="Sources\ASpritesClass.cpp" />
+    <ClCompile Include="Sources\AtmosHolder.cpp" />
     <ClCompile Include="Sources\CAliveMob.cpp" />
     <ClCompile Include="Sources\Chat.cpp" />
     <ClCompile Include="Sources\constcpp.cpp" />

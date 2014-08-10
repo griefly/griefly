@@ -76,6 +76,9 @@
     <Filter Include="Header Files\Atmos">
       <UniqueIdentifier>{d93276f4-ab41-4246-adfc-dc06b07e7b18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Atmos">
+      <UniqueIdentifier>{0735bf68-b424-4a5d-8bff-d0d2443ef3a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\ApproxGLImage.h">
@@ -529,6 +532,9 @@
     </ClCompile>
     <ClCompile Include="Sources\Girder.cpp">
       <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\AtmosHolder.cpp">
+      <Filter>Source Files\Atmos</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
