@@ -5,6 +5,7 @@
 #include "ITurf.h"
 #include "OnMapBaseInt.h"
 #include "OnMapInt.h"
+#include "AtmosHolder.h"
 
 template<class T>
 std::iostream& operator<<(std::iostream& file, std::vector<id_ptr_on<T>>& content)
@@ -119,6 +120,8 @@ protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
     id_ptr_on<ITurf> KV_SAVEBLE(turf_);
+
+    AtmosHolder KV_SAVEBLE(atmos_holder_);
 
     int KV_SAVEBLE(posx_);
     int KV_SAVEBLE(posy_);

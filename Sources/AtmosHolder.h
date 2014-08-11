@@ -27,6 +27,7 @@ class AtmosHolder
 {
     friend std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
     friend std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder);
+    friend unsigned int hash(const AtmosHolder& atmos_holder);
 public:
     AtmosHolder()
     {
@@ -65,3 +66,15 @@ private:
 
 std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
 std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder);
+
+inline unsigned int hash(const AtmosHolder& atmos_holder)
+{
+    unsigned int retval = 0;
+    for (size_t i = 0; i < GASES_NUM; ++i)
+        retval += atmos_holder.gases_[i];
+    retval += atmos_holder.energy_;
+    retval += atmos_holder.volume_;
+    retval += atmos_holder.pressure_;
+    retval += atmos_holder.temperature_;
+    return retval;
+}
