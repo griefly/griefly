@@ -23,8 +23,7 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
     if (!item->GetOwner())
         return false;
 
-    id_ptr_on<CubeTile> cube_tile;
-    cube_tile = item->GetOwner();
+    auto cube_tile = item->GetOwner();
     if (!cube_tile)
         return false;
 
@@ -48,13 +47,13 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
     //       xox     maybe whatever?
     //       xxx  
 
-    if (cube_tile->posx() < x_begin)
+    if (cube_tile->GetX() < x_begin)
         return false;
-    if (cube_tile->posx() > x_end)
+    if (cube_tile->GetX() > x_end)
         return false;
-    if (cube_tile->posy() < y_begin)
+    if (cube_tile->GetY() < y_begin)
         return false;
-    if (cube_tile->posy() > y_end)
+    if (cube_tile->GetY() > y_end)
         return false;
 
     return true;

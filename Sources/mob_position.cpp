@@ -23,7 +23,7 @@ namespace mob_position
     int get_mob_z()
     {
         if (GetManager())
-            return castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posz();
+            return GetMob()->GetZ();
         return GetMapEditor()->GetViewerZ();
     }
 

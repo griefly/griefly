@@ -51,11 +51,11 @@ void Manager::undoCenterMove(Dir direct)
 {
     //TODO
     for (int z = 0; z < GetMapMaster()->GetMapD(); ++z)
-        for(int x = std::max(0, castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx() - sizeHsq); 
-            x <= std::min(castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx() + sizeHsq, GetMapMaster()->GetMapH() - 1); x++)
+        for(int x = std::max(0, GetMob()->GetX() - sizeHsq); 
+            x <= std::min(GetMob()->GetX() + sizeHsq, GetMapMaster()->GetMapH() - 1); x++)
         {
-            for(int y = std::max(0, castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posy() - sizeWsq); 
-                y <= std::min(castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posy() + sizeWsq, GetMapMaster()->GetMapW() - 1); y++)
+            for(int y = std::max(0, GetMob()->GetY() - sizeWsq); 
+                y <= std::min(GetMob()->GetY() + sizeWsq, GetMapMaster()->GetMapW() - 1); y++)
             {
                 GetMapMaster()->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
                 {
@@ -90,9 +90,9 @@ void Manager::UpdateVisible()
     visiblePoint->clear();
     visiblePoint = 
         GetMapMaster()->losf.calculateVisisble(visiblePoint, 
-            castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posx(), 
-            castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posy(),
-            castTo<CubeTile>(GetMob()->GetOwner().ret_item())->posz());
+            GetMob()->GetX(), 
+            GetMob()->GetY(),
+            GetMob()->GetZ());
 }
 
 void Manager::process()
