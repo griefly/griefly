@@ -48,13 +48,13 @@ bool IMovable::checkMoveTime()
 // TODO: ÒÎĞÍÀÄÎ
 bool IMovable::checkPassable()
 {
-    if (!owner->IsPassable(dMove))
+    if (!CanPass(owner->GetPassable(dMove), passable_level))
     {
         owner->Bump(GetId());
         return false;
     }
-    if (   !owner->GetNeighbour(dMove)->IsPassable(D_ALL)
-        || !owner->GetNeighbour(dMove)->IsPassable(helpers::revert_dir(dMove)))
+    if (   !CanPass(owner->GetNeighbour(dMove)->GetPassable(D_ALL), passable_level)
+        || !CanPass(owner->GetNeighbour(dMove)->GetPassable(helpers::revert_dir(dMove)), passable_level))
     {
         owner->GetNeighbour(dMove)->Bump(GetId());
         return false;

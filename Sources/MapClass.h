@@ -72,8 +72,8 @@ public:
     void makeTiles(int x, int y, int z);
     void makeMap();
     void centerFromTo(int nowPosx, int nowPosy, int nowPosz = 0);
-    bool isPassable(int posx, int posy, int posz = 0, Dir direct = D_ALL);
-    bool fastisPassable(int posx, int posy);
+    PassableLevel GetPassable(int posx, int posy, int posz = 0, Dir direct = D_ALL);
+//   bool fastisPassable(int posx, int posy);
     static void switchDir(int& posx, int& posy, Dir direct, int num = 1, bool back = false);
     static bool checkOutBorder(int posx, int posy);
     //

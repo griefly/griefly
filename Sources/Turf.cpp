@@ -16,7 +16,7 @@ CGround::CGround()
     conv << value;
     SetState(conv.str());
 
-    SetPassable(D_ALL, false);
+    SetPassable(D_ALL, Passable::EMPTY);
     transparent = false;
     v_level = 1;
     name = "Turf";
@@ -25,7 +25,7 @@ CGround::CGround()
 Pit::Pit()
 {
     SetSprite("icons/pit.png");
-    SetPassable(D_ALL, true);
+    SetPassable(D_ALL, Passable::FULL);
     transparent = true;
     name = "Pit";
 }

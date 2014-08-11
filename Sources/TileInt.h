@@ -48,7 +48,7 @@ public:
         // TODO
         return true;       
     };
-    virtual bool IsPassable(Dir direct) const override;
+    virtual PassableLevel GetPassable(Dir direct) const override;
     virtual bool IsTransparent() const override;
 
     virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const override;

@@ -8,6 +8,23 @@ class ITurf;
 class IMovable;
 class Item;
 
+typedef int PassableLevel;
+namespace Passable
+{
+    const PassableLevel EMPTY = 0;
+    const PassableLevel AIR = 10;
+    const PassableLevel SMALL_ITEM = 20;
+    const PassableLevel BIG_ITEM = 30;
+    const PassableLevel SMALL_CREATURE = 40;
+    const PassableLevel BIG_CREATURE = 50;
+    const PassableLevel FULL = 100;
+}
+
+inline bool CanPass(PassableLevel block, PassableLevel object)
+{
+    return block >= object;
+}
+
 class IOnMapBase: public IDraw
 {
 public:
@@ -22,9 +39,13 @@ public:
     {
         return;
     }
-    virtual bool IsPassable(Dir direct) const
+    // 0 - passable
+    // 10 - air passable
+    //
+    //
+    virtual PassableLevel GetPassable(Dir direct) const
     {
-        return true;
+        return Passable::EMPTY;
     }
     virtual bool IsTransparent() const
     {

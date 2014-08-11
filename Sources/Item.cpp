@@ -6,6 +6,8 @@
 
 Item::Item()
 {
+    passable_level = Passable::SMALL_ITEM;
+
     v_level = 5;
     SetSprite("icons/items.dmi");
 }

@@ -13,7 +13,7 @@ Girder::Girder()
     SetSprite("icons/structures.dmi");
     SetState("girder");
 
-    SetPassable(D_ALL, false);
+    SetPassable(D_ALL, Passable::AIR);
 
     anchored = true;
     name = "Girder";

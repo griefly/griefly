@@ -9,7 +9,7 @@
 
 Space::Space()
 {
-    SetPassable(D_ALL, true);
+    SetPassable(D_ALL, Passable::FULL);
     transparent = true;
     
     SetSprite("icons/space.png"); 

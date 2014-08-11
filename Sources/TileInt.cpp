@@ -75,7 +75,7 @@ void CubeTile::Bump(id_ptr_on<IMovable> item)
     if (item->GetOwner().ret_id() == GetId())
     {
         for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-            if (!(*it)->IsPassable(item->dMove))
+            if (!CanPass((*it)->GetPassable(item->dMove), item->passable_level))
             {
                 (*it)->Bump(item);
                 return;
@@ -84,13 +84,13 @@ void CubeTile::Bump(id_ptr_on<IMovable> item)
     }
 
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!(*it)->IsPassable(helpers::revert_dir(item->dMove)))
+        if (!CanPass((*it)->GetPassable(helpers::revert_dir(item->dMove)), item->passable_level))
         {
             (*it)->Bump(item);
             return;
         }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!(*it)->IsPassable(D_ALL))
+        if (!CanPass((*it)->GetPassable(D_ALL), item->passable_level))
         {
             (*it)->Bump(item);
             return;
@@ -155,14 +155,14 @@ id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct)
     return GetMapMaster()->squares[new_x][new_y][new_z];
 }
 
-bool CubeTile::IsPassable(Dir direct) const
+PassableLevel CubeTile::GetPassable(Dir direct) const
 {
-    if (turf_.valid() && !turf_->IsPassable(direct))
-        return false;
+    PassableLevel min = Passable::FULL;
+    if (turf_.valid())
+        min = std::min(min, turf_->GetPassable(direct));
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!(*it)->IsPassable(direct))
-            return false;
-    return true;
+        min = std::min(min, (*it)->GetPassable(direct));
+    return min;
 }
 
 bool CubeTile::IsTransparent() const

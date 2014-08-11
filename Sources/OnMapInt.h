@@ -22,7 +22,7 @@ public:
         return owner.valid() && owner->IsVisibleByPlayer();
     }
 
-    virtual bool IsPassable(Dir direct) const override
+    virtual PassableLevel GetPassable(Dir direct) const override
     {
         switch (direct)
         {
@@ -35,7 +35,7 @@ public:
         return false;
     }
 
-    void SetPassable(Dir direct, bool p)
+    void SetPassable(Dir direct, PassableLevel p)
     {
         switch (direct)
         {
@@ -83,11 +83,14 @@ public:
     View* GetView() { return &view_; }
 public:
     int KV_SAVEBLE(v_level);
-    bool KV_SAVEBLE(passable_down);
-    bool KV_SAVEBLE(passable_up);
-    bool KV_SAVEBLE(passable_left);
-    bool KV_SAVEBLE(passable_right);
-    bool KV_SAVEBLE(passable_all);
+    PassableLevel KV_SAVEBLE(passable_down);
+    PassableLevel KV_SAVEBLE(passable_up);
+    PassableLevel KV_SAVEBLE(passable_left);
+    PassableLevel KV_SAVEBLE(passable_right);
+    PassableLevel KV_SAVEBLE(passable_all);
+
+    PassableLevel KV_SAVEBLE(passable_level);
+
     bool KV_SAVEBLE(transparent);
     int KV_SAVEBLE(burn_power);//0 - 1 - MUCH MUCH
     std::string KV_SAVEBLE(name);

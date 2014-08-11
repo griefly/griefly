@@ -9,7 +9,7 @@ FlatGlass::FlatGlass()
     transparent = true;
 
     dMove = get_rand() % 4;
-    SetPassable(dMove, false);
+    SetPassable(dMove, Passable::EMPTY);
 
     tickSpeed = 5;
     pixSpeed = 1;
@@ -24,9 +24,9 @@ FlatGlass::FlatGlass()
 
 bool FlatGlass::checkMove(Dir direct)
 {
-    SetPassable(dMove, true);
+    SetPassable(dMove, Passable::FULL);
     bool retval = IMovable::checkMove(direct);
-    SetPassable(dMove, false);
+    SetPassable(dMove, Passable::EMPTY);
     return retval;
 }
 
@@ -39,13 +39,13 @@ void FlatGlass::Bump(id_ptr_on<IMovable> item)
 
     if (item->dMove != dMove)
     {
-        if (!owner->IsPassable(D_ALL))
+        if (!CanPass(owner->GetPassable(D_ALL), passable_level))
             return;
         if (anchored)
             return;
-        SetPassable(dMove, true);
+        SetPassable(dMove, Passable::FULL);
         dMove = item->dMove;
-        SetPassable(dMove, false);
+        SetPassable(dMove, Passable::EMPTY);
         return;
     }
     IMovable::Bump(item);

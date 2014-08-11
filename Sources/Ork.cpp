@@ -20,7 +20,7 @@ COrk::COrk()
     pixSpeed = 2;
     SetSprite("icons/human.png");
     SetState("african1_m_s");
-    SetPassable(D_ALL, true);
+    SetPassable(D_ALL, Passable::BIG_ITEM);
     v_level = 9;
     jump_time = 0;
     is_strong_owner = true;

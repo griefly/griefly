@@ -10,7 +10,7 @@
 Grille::Grille()
 {
     transparent = true;
-    SetPassable(D_ALL, false);
+    SetPassable(D_ALL, Passable::AIR);
 
     tickSpeed = 5;
     pixSpeed = 1;
@@ -33,7 +33,7 @@ void Grille::AttackBy(id_ptr_on<Item> item)
         if (!cutted_)
         {
             SetState("brokengrille");
-            SetPassable(D_ALL, true);
+            SetPassable(D_ALL, Passable::FULL);
             cutted_ = true;
             GetItemFabric()->newItemOnMap<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
         }

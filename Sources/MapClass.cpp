@@ -200,9 +200,9 @@ void CPathFinder::clearPathfinding()
 };
 
 
-bool MapMaster::isPassable(int posx, int posy, int posz, Dir direct)
+PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)
 {
-    return squares[posx][posy][posz]->IsPassable(direct);
+    return squares[posx][posy][posz]->GetPassable(direct);
 };
 
 void MapMaster::switchDir(int& posx, int& posy, Dir direct, int num, bool back)//TODO: Remove back
@@ -423,7 +423,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
 {
     //printf("%d %d huj\n", posx, posy);
 
-    if(!(squares[posx + 1][posy].inCloseList) && GetMapMaster()->isPassable(posx + 1, posy))
+    if(!(squares[posx + 1][posy].inCloseList) && GetMapMaster()->GetPassable(posx + 1, posy))
     {
         if(squares[posx + 1][posy].inOpenList)
         {
@@ -446,7 +446,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
         }
     }
     //printf("Wtf!\n");
-    if(!squares[posx - 1][posy].inCloseList && GetMapMaster()->isPassable(posx - 1, posy))
+    if(!squares[posx - 1][posy].inCloseList && GetMapMaster()->GetPassable(posx - 1, posy))
     {
         if(squares[posx - 1][posy].inOpenList)
         {
@@ -468,7 +468,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
             addToOpen(posx - 1, posy);
         }
     }
-    if(!squares[posx][posy + 1].inCloseList && GetMapMaster()->isPassable(posx, posy + 1))
+    if(!squares[posx][posy + 1].inCloseList && GetMapMaster()->GetPassable(posx, posy + 1))
     {
         if(squares[posx][posy + 1].inOpenList)
         {
@@ -490,7 +490,7 @@ void CPathFinder::addNear(int posx, int posy, int toPosx, int toPosy)
             addToOpen(posx, posy + 1);
         }
     }
-    if(!squares[posx][posy - 1].inCloseList && GetMapMaster()->isPassable(posx, posy - 1))
+    if(!squares[posx][posy - 1].inCloseList && GetMapMaster()->GetPassable(posx, posy - 1))
     {
         if(squares[posx][posy - 1].inOpenList)
         {

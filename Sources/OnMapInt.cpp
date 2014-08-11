@@ -51,7 +51,9 @@ void IOnMapObject::processPhysics()
     if (owner->IsStrongOwner())
         return;
     auto down = owner->GetNeighbour(D_ZDOWN);
-    if (down.valid() && down->IsPassable(D_ZUP) && down->IsPassable(D_ALL))
+    if (    down.valid() 
+        && (CanPass(down->GetPassable(D_ZUP), passable_level)) 
+        && (CanPass(down->GetPassable(D_ALL), passable_level)) )
     {
         owner->RemoveItem(GetId());
         down->AddItem(GetId());
@@ -80,11 +82,14 @@ void IOnMapObject::delThis()
 IOnMapObject::IOnMapObject()
 {
     v_level = 0;
-    passable_all = true;
-    passable_up = true;
-    passable_down = true;
-    passable_left = true;
-    passable_right = true;
+    passable_all = Passable::FULL;
+    passable_up = Passable::FULL;
+    passable_down = Passable::FULL;
+    passable_left = Passable::FULL;
+    passable_right = Passable::FULL;
+
+    passable_level = Passable::FULL;
+
     transparent = true;
     burn_power = 0;
     name = "NONAMESHIT";
