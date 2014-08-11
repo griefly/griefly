@@ -103,8 +103,18 @@ public:
     {
         turf_ = turf;
         if (turf_.valid())
+        {
             turf_->SetOwner(GetId());
+            sum_passable_all_ = std::min(sum_passable_all_, turf_->GetPassable(D_ALL));
+            sum_passable_up_ = std::min(sum_passable_up_, turf_->GetPassable(D_UP));
+            sum_passable_down_ = std::min(sum_passable_down_, turf_->GetPassable(D_DOWN));
+            sum_passable_left_ = std::min(sum_passable_left_, turf_->GetPassable(D_LEFT));
+            sum_passable_right_ = std::min(sum_passable_right_, turf_->GetPassable(D_RIGHT));
+        }
+        else
+            UpdatePassable();
     }
+    virtual void UpdatePassable() const override;
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
@@ -115,6 +125,13 @@ private:
     int KV_SAVEBLE(posz_);
     typedef std::vector<id_ptr_on<IOnMapObject>> InsideType;
     InsideType KV_SAVEBLE(inside_list_);
+
+    mutable PassableLevel KV_ON_LOAD(sum_passable_all_, -1);
+    mutable PassableLevel KV_ON_LOAD(sum_passable_up_, -1);
+    mutable PassableLevel KV_ON_LOAD(sum_passable_down_, -1);
+    mutable PassableLevel KV_ON_LOAD(sum_passable_left_, -1);
+    mutable PassableLevel KV_ON_LOAD(sum_passable_right_, -1);
+
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap(); // TODO
 };

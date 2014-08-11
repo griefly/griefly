@@ -45,6 +45,8 @@ public:
         case D_RIGHT: passable_right = p; break;
         case D_ALL:   passable_all = p;   break;
         }
+        if (owner)
+            owner->UpdatePassable();
     }
 
     virtual bool IsTransparent() const override

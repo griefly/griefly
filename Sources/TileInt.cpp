@@ -13,6 +13,12 @@ CubeTile::CubeTile()
     posx_ = -1;
     posy_ = -1;
     posz_ = -1;
+
+    sum_passable_all_ = -1;
+    sum_passable_up_ = -1;
+    sum_passable_down_ = -1;
+    sum_passable_left_ = -1;
+    sum_passable_right_ = -1;
 }
 
 bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
@@ -117,6 +123,13 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
     InsideType::iterator locit = itr;
     inside_list_.insert(locit, item);
     item->SetOwner(GetId());
+
+    sum_passable_all_ = std::min(sum_passable_all_, item->GetPassable(D_ALL));
+    sum_passable_up_ = std::min(sum_passable_up_, item->GetPassable(D_UP));
+    sum_passable_down_ = std::min(sum_passable_down_, item->GetPassable(D_DOWN));
+    sum_passable_left_ = std::min(sum_passable_left_, item->GetPassable(D_LEFT));
+    sum_passable_right_ = std::min(sum_passable_right_, item->GetPassable(D_RIGHT));
+
     return true;
 }
 bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
@@ -137,6 +150,7 @@ bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
         if (itr->ret_id() == item->GetId())
         {
             inside_list_.erase(itr);
+            UpdatePassable();
             return true;
         }
         ++itr;
@@ -157,12 +171,45 @@ id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct)
 
 PassableLevel CubeTile::GetPassable(Dir direct) const
 {
-    PassableLevel min = Passable::FULL;
+    if (sum_passable_all_ == -1)
+    {
+        UpdatePassable();
+    }
+    switch (direct)
+    {
+    case D_UP:    return sum_passable_up_;
+    case D_DOWN:  return sum_passable_down_;
+    case D_LEFT:  return sum_passable_left_;
+    case D_RIGHT: return sum_passable_right_;
+    case D_ALL:   return sum_passable_all_;
+    }
+    return Passable::FULL;
+}
+
+void CubeTile::UpdatePassable() const
+{
+    sum_passable_all_ = Passable::FULL;
+    sum_passable_up_ = Passable::FULL;
+    sum_passable_down_ = Passable::FULL;
+    sum_passable_left_ = Passable::FULL;
+    sum_passable_right_ = Passable::FULL;
+
     if (turf_.valid())
-        min = std::min(min, turf_->GetPassable(direct));
+    {
+        sum_passable_all_ = std::min(sum_passable_all_, turf_->GetPassable(D_ALL));
+        sum_passable_up_ = std::min(sum_passable_up_, turf_->GetPassable(D_UP));
+        sum_passable_down_ = std::min(sum_passable_down_, turf_->GetPassable(D_DOWN));
+        sum_passable_left_ = std::min(sum_passable_left_, turf_->GetPassable(D_LEFT));
+        sum_passable_right_ = std::min(sum_passable_right_, turf_->GetPassable(D_RIGHT));
+    }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        min = std::min(min, (*it)->GetPassable(direct));
-    return min;
+    {
+        sum_passable_all_ = std::min(sum_passable_all_, (*it)->GetPassable(D_ALL));
+        sum_passable_up_ = std::min(sum_passable_up_, (*it)->GetPassable(D_UP));
+        sum_passable_down_ = std::min(sum_passable_down_, (*it)->GetPassable(D_DOWN));
+        sum_passable_left_ = std::min(sum_passable_left_, (*it)->GetPassable(D_LEFT));
+        sum_passable_right_ = std::min(sum_passable_right_, (*it)->GetPassable(D_RIGHT));
+    }
 }
 
 bool CubeTile::IsTransparent() const
