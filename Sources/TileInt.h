@@ -62,15 +62,15 @@ public:
         posy_ = posy;
         posz_ = posz;
     }
-    int posx()
+    int posx() const
     {
         return posx_;
     }
-    int posy()
+    int posy() const
     {
         return posy_;
     }
-    int posz()
+    int posz() const
     {
         return posz_;
     }
@@ -83,7 +83,18 @@ public:
     {
         return posy_ * 32;
     }
-
+    virtual int GetX() const override
+    {
+        return posx();
+    }
+    virtual int GetY() const override
+    {
+        return posy();
+    }
+    virtual int GetZ() const override
+    {
+        return posz();
+    }
     virtual id_ptr_on<ITurf> GetTurf()  override
     {
         return turf_;

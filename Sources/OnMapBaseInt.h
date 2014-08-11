@@ -102,6 +102,19 @@ public:
         return is_strong_owner;
     }
 
+    virtual int GetX() const
+    {
+        return owner->GetX();
+    }
+    virtual int GetY() const
+    {
+        return owner->GetY();
+    }
+    virtual int GetZ() const
+    {
+        return owner->GetZ();
+    }
+
     virtual id_ptr_on<ITurf> GetTurf();
     virtual void SetTurf(id_ptr_on<ITurf> turf);
 protected:

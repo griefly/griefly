@@ -17,6 +17,7 @@
   <ItemGroup>
     <ClInclude Include="Sources\ApproxGLImage.h" />
     <ClInclude Include="Sources\ASpritesClass.h" />
+    <ClInclude Include="Sources\Atmos.h" />
     <ClInclude Include="Sources\AtmosHolder.h" />
     <ClInclude Include="Sources\CAliveMob.h" />
     <ClInclude Include="Sources\Chat.h" />

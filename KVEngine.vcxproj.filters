@@ -327,6 +327,9 @@
     <ClInclude Include="Sources\Girder.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Atmos.h">
+      <Filter>Header Files\Atmos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
