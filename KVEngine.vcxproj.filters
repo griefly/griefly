@@ -540,7 +540,7 @@
       <Filter>Source Files\Atmos</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Atmos.cpp">
-      <Filter>Source Files\Space</Filter>
+      <Filter>Source Files\Atmos</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
