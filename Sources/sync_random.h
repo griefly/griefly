@@ -13,6 +13,10 @@ T pick(const std::vector<T>& values)
 
 namespace random_helpers
 {
+    inline int random_shuffle(int v)
+    {
+        return static_cast<int>(get_rand() % v);
+    }
     void set_rand(unsigned int seed, unsigned int calls_counter);
     unsigned int get_seed();
     unsigned int get_calls_counter();

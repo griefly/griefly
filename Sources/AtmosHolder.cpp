@@ -90,7 +90,7 @@ void AtmosHolder::AddGase(unsigned int gase, unsigned int amount)
     UpdateMacroParams();
 }
 
-void AtmosHolder::AddEnergy(unsigned int energy)
+void AtmosHolder::AddEnergy(int energy)
 {
     energy_ += energy;
     UpdateMacroParams();
@@ -129,6 +129,16 @@ unsigned int AtmosHolder::RemoveGase(unsigned int gase, unsigned int amount)
     }
     gases_[gase] -= amount;
     return retval;
+}
+
+void AtmosHolder::Truncate()
+{
+    for (size_t i = 0; i < GASES_NUM; ++i)
+        gases_[i] = 0;
+
+    energy_ = 0;
+
+    UpdateMacroParams();
 }
 
 std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder)

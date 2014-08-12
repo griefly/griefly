@@ -162,6 +162,11 @@ bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
 
 id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct)
 {
+    return GetNeighbourImpl(direct);
+}
+
+id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct)
+{
     int new_x = posx_;
     int new_y = posy_;
     int new_z = posz_;

@@ -9,6 +9,8 @@
 
 Space::Space()
 {
+    SetAtmosState(SPACE);
+
     SetPassable(D_ALL, Passable::FULL);
     transparent = true;
     

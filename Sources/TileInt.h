@@ -43,6 +43,7 @@ public:
     virtual bool AddItem(id_ptr_on<IOnMapBase> item) override;
     virtual bool RemoveItem(id_ptr_on<IOnMapBase> item) override;
     virtual id_ptr_on<IOnMapBase> GetNeighbour(Dir direct) override;
+    id_ptr_on<CubeTile> GetNeighbourImpl(Dir direct);
     virtual void ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback) override;
     virtual bool IsVisibleByPlayer() const override
     {
@@ -116,6 +117,7 @@ public:
             UpdatePassable();
     }
     virtual void UpdatePassable() const override;
+    AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:

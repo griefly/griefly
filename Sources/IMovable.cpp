@@ -53,10 +53,12 @@ bool IMovable::checkPassable()
         owner->Bump(GetId());
         return false;
     }
-    if (   !CanPass(owner->GetNeighbour(dMove)->GetPassable(D_ALL), passable_level)
-        || !CanPass(owner->GetNeighbour(dMove)->GetPassable(helpers::revert_dir(dMove)), passable_level))
+
+    auto neighbour = owner->GetNeighbour(dMove);
+    if (   !CanPass(neighbour->GetPassable(D_ALL), passable_level)
+        || !CanPass(neighbour->GetPassable(helpers::revert_dir(dMove)), passable_level))
     {
-        owner->GetNeighbour(dMove)->Bump(GetId());
+        neighbour->Bump(GetId());
         return false;
     }
     

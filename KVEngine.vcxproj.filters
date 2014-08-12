@@ -539,5 +539,8 @@
     <ClCompile Include="Sources\AtmosHolder.cpp">
       <Filter>Source Files\Atmos</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Atmos.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -23,6 +23,11 @@ const unsigned int GASES_FREEDOM[GASES_NUM] = {OXYGEN_FREEDOM, CO2_FREEDOM, NYTR
 
 const int MAX_GAS_LEVEL = 1000;
 
+typedef int AtmosState;
+const AtmosState NON_SIMULATED = -1;
+const AtmosState SPACE = 0;
+const AtmosState SIMULATED = 1;
+
 class AtmosHolder
 {
     friend std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
@@ -42,7 +47,7 @@ public:
     void Connect(AtmosHolder* guest, 
                  int level_owner = MAX_GAS_LEVEL, int level_guest = MAX_GAS_LEVEL,
                  int div = MAX_GAS_LEVEL / 2 /*100% - owner take all*/);
-    void AddEnergy(unsigned int energy);
+    void AddEnergy(int energy);
     void AddGase(unsigned int gase, unsigned int amount);
     void SetVolume(unsigned int volume);
     unsigned int GetEnergy();
@@ -52,6 +57,8 @@ public:
     unsigned int GetGase(unsigned int gase);
     
     unsigned int RemoveGase(unsigned int gase, unsigned int amount);
+
+    void Truncate();
 
     void UpdateMacroParams();
 private:
