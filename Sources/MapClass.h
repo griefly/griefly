@@ -6,6 +6,7 @@
 #include "HelperStructers.h"
 #include "constheader.h"
 #include "TileInt.h"
+#include "Atmos.h"
 
 class CPathFinder
 {
@@ -41,6 +42,8 @@ public:
     MapMaster();
     typedef id_ptr_on<CubeTile> SqType;
     std::vector<std::vector<std::vector<SqType> > > squares;
+
+    Atmosphere atmosphere;
 
     int GetMapW() const
     {

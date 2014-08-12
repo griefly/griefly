@@ -66,7 +66,10 @@ void AtmosHolder::UpdateMacroParams()
         sum += gases_[i] * GASES_FREEDOM[i];
     sum /= 2;
 
-    temperature_ = energy_ / sum;
+    if (sum == 0)
+        temperature_ = 0;
+    else
+        temperature_ = energy_ / sum;
 
     // PV = moles * T
     // P = (moles * T) / V
@@ -75,7 +78,10 @@ void AtmosHolder::UpdateMacroParams()
     for (size_t i = 0; i < GASES_NUM; ++i)
         sum += gases_[i];
     
-    pressure_ = (sum * temperature_) / volume_;
+    if (volume_ == 0)
+        pressure_ = 0;
+    else
+        pressure_ = (sum * temperature_) / volume_;
 }
 
 void AtmosHolder::SetVolume(unsigned int volume)

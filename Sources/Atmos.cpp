@@ -11,11 +11,14 @@ void Atmosphere::Process()
     for (size_t z_counter = 0; z_counter < static_cast<size_t>(GetMapMaster()->GetMapD()); ++z_counter)
     {
         ShuffleX();
+        ShuffleY();
+        
         for (size_t x_sh = 0; x_sh < x_shuffle_.size(); ++x_sh)
         {
             size_t x_counter = x_shuffle_[x_sh];
-            
-            ShuffleY();
+            if (x_sh % 10 == 1)
+                ShuffleDir();
+            //ShuffleY();
             for (size_t y_sh = 0; y_sh < y_shuffle_.size(); ++y_sh)
             {
                 size_t y_counter = y_shuffle_[y_sh];
@@ -33,7 +36,7 @@ void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
     if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
         return;
 
-    ShuffleDir();
+    //ShuffleDir();
 
     for (size_t d_sh = 0; d_sh < dir_shuffle_.size(); ++d_sh)
     {
@@ -71,10 +74,10 @@ void Atmosphere::ShuffleX()
 
 void Atmosphere::ShuffleY()
 {
-    std::random_shuffle(y_shuffle_.begin(), y_shuffle_.end(), random_helpers::random_shuffle);
+   std::random_shuffle(y_shuffle_.begin(), y_shuffle_.end(), random_helpers::random_shuffle);
 }
 
 void Atmosphere::ShuffleDir()
 {
-    std::random_shuffle(dir_shuffle_.begin(), dir_shuffle_.end(), random_helpers::random_shuffle);
+   std::random_shuffle(dir_shuffle_.begin(), dir_shuffle_.end(), random_helpers::random_shuffle);
 }

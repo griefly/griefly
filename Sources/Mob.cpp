@@ -118,19 +118,23 @@ void Manager::process()
             MAIN_TICK++;
         }
 
+        const int ATMOS_OFTEN = 1;
+
         if(process_in && !pause)
         {
             numOfDeer = 0;
             begin_of_process = SDL_GetTicks();
             GetItemFabric()->foreachProcess();
+            if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
+                GetMapMaster()->atmosphere.Process();
             GetItemFabric()->Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
         }
          
         if (!NODRAW)
-        {         
+        {       
+            glClear(GL_COLOR_BUFFER_BIT);
             GetMapMaster()->Draw();
-            
             FabricProcesser::Get()->process();
             
             ClearGUIZone(); 
@@ -140,7 +144,8 @@ void Manager::process()
             GetMob()->processGUI();
             
             GetTexts().Process();
-                       
+            
+            //glFinish();
             GetScreen()->Swap();
         }
 
@@ -461,7 +466,7 @@ void Manager::initWorld()
     ([this](std::string* str)
     {
         std::stringstream ss; 
-        ss << last_fps; 
+        ss << last_fps - 1; 
         ss >> *str;
     }).SetFreq(1000).SetSize(20);
 

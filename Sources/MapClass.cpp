@@ -28,11 +28,9 @@
 
 void MapMaster::Draw()
 {
-    if(!canDraw())
-        return;
     if(!GetVisible()) 
         return;
-    glClear(GL_COLOR_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT);
     int z_level_m = mob_position::get_mob_z();
     for (int z_level = 0; z_level < GetMapD(); z_level++) 
     {
@@ -110,6 +108,7 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
             squares[x][y].resize(new_map_z);
         }
     }
+    atmosphere.Resize(new_map_x, new_map_y);
 }
 
 void MapMaster::makeMap()

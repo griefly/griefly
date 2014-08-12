@@ -48,6 +48,7 @@ Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
 
 void Screen::ResetScreen(int x, int y, int bpp, Uint32 flags)
 {
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     screen_ = SDL_SetVideoMode(x, y, 32, flags);
     glViewport(0, 0, x, y);
     SYSTEM_STREAM << "X: " << x << " Y: " << y << std::endl;
