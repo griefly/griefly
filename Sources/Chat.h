@@ -6,6 +6,7 @@
 #include <SDL_ttf.h>
 
 #include "TextInput.h"
+#include "MobInt.h"
 
 class Chat
 {
@@ -21,6 +22,7 @@ public:
     bool IsArea(int x, int y);
 
     void PostText(const std::string& str);
+    void PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner);
     TextInput* GetTextInput()
     {
         return text_input_;

@@ -11,4 +11,5 @@ void LoadImages()
     GetSpriter()->LoadImage("icons/shards.dmi");
     GetSpriter()->LoadImage("icons/space.png");
     GetSpriter()->LoadImage("icons/human.png");
+    GetSpriter()->LoadImage("icons/device.dmi");
 }

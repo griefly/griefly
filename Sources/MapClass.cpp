@@ -25,6 +25,7 @@
 #include "Lattice.h"
 #include "FloorTile.h"
 #include "Materials.h"
+#include "ElectricTools.h"
 
 void MapMaster::Draw()
 {
@@ -130,6 +131,8 @@ void MapMaster::makeMap()
                                                      :                 Floor::T_ITEM_S());
 
             squares[x][y][0]->SetTurf(loc);
+            if (rand() % 40 == 1)
+                GetItemFabric()->newItemOnMap<IOnMapObject>(AtmosTool::T_ITEM_S(), squares[x][y][0]); 
             if (rand() % 20 == 1)
                 GetItemFabric()->newItemOnMap<IOnMapObject>(Metal::T_ITEM_S(), squares[x][y][0]);
             if (rand() % 20 == 1)

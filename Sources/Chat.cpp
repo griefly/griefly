@@ -7,13 +7,14 @@
 #include "Text.h"
 #include "constheader.h"
 #include "Screen.h"
+#include "Creator.h"
 
 Chat* Chat::chat = 0;
 
 std::stringstream ss;
+std::fstream loc("errorfile.txt", std::ios::trunc | std::ios::out | std::ios::in);
 
-std::ostream& SYSTEM_STREAM = ss;
-std::fstream loc("errorfile.txt", std::ios::trunc | std::ios::out);
+std::ostream& SYSTEM_STREAM = loc;
 
 Chat* Chat::GetChat()
 {
@@ -65,6 +66,12 @@ void Chat::InitChat(int from_x, int from_y,
             .SetFreq(50).SetColor(0, 0, 0).SetFont("DejaVuSans.ttf");
     }
     chat->current_pos_ = chat->visible_lines_;
+}
+
+void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
+{
+    if (GetMob() == owner)
+        PostText(str);
 }
 
 void Chat::PostText(const std::string& str_)

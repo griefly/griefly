@@ -12,13 +12,10 @@ void Atmosphere::Process()
     {
         ShuffleX();
         ShuffleY();
-        
+        ShuffleDir();
         for (size_t x_sh = 0; x_sh < x_shuffle_.size(); ++x_sh)
         {
             size_t x_counter = x_shuffle_[x_sh];
-            if (x_sh % 10 == 1)
-                ShuffleDir();
-            //ShuffleY();
             for (size_t y_sh = 0; y_sh < y_shuffle_.size(); ++y_sh)
             {
                 size_t y_counter = y_shuffle_[y_sh];

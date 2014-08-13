@@ -29,6 +29,7 @@ void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
 
 void ImageMetadata::Init(const std::string& name)
 {
+    SYSTEM_STREAM << "Begin to init metadata for " << name << std::endl;
     png_byte pngsig[PNGSIGSIZE];
 
     std::ifstream source;
@@ -106,6 +107,7 @@ void ImageMetadata::Init(const std::string& name)
     //SDL_Delay(100000);
     png_destroy_read_struct(&pngPtr, &infoPtr, static_cast<png_infopp>(0));
     source.close();
+    SYSTEM_STREAM << "End load metadata for " << name << std::endl;
 }
 
 bool ImageMetadata::ParseDescription(std::stringstream& desc)
@@ -206,10 +208,10 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             }
             loc.clear();
             desc >> loc;
-      //      SYSTEM_STREAM << "New state: " << loc << std::endl;
+           // SYSTEM_STREAM << "New state: " << loc << std::endl;
             current_state = loc.substr(1, loc.length() - 2);
             metadata_[current_state].first_frame_pos = first_frame_pos;
-       //     SYSTEM_STREAM << "First frame position: " << first_frame_pos << std::endl;
+          //  SYSTEM_STREAM << "First frame position: " << first_frame_pos << std::endl;
         }
         else if (loc == "dirs")
         {
@@ -391,6 +393,9 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         loc.clear();
         desc >> loc;
     }
+
+    SYSTEM_STREAM << "End of states" << std::endl;
+
     loc.clear();
     desc >> loc;
     if (loc != "END")
@@ -406,7 +411,11 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         return false;
     }
 
+    SYSTEM_STREAM << "Begin make sequence" << std::endl;
+
     MakeSequence();
+
+    SYSTEM_STREAM << "End make sequence" << std::endl;
 
     valid_ = true;
     return true;
@@ -416,6 +425,7 @@ void ImageMetadata::MakeSequence()
 {
     for (auto it = metadata_.begin(); it != metadata_.end(); ++it)
     {
+       // SYSTEM_STREAM << "Sequence for: " << it->first << std::endl;
         auto& metadata = it->second.frames_data;
         auto& sequence = it->second.frames_sequence;
         int local_loop = it->second.loop;
@@ -430,7 +440,10 @@ void ImageMetadata::MakeSequence()
             }
             if (it->second.rewind)
             {
-                for (size_t i = metadata.size() - 2; i > 0; --i)
+                int from = metadata.size() - 2;
+                if (from < 0)
+                    from = 0;
+                for (size_t i = from; i > 0; --i)
                 {
                     sequence.push_back(i);
                 }

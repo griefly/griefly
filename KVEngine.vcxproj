@@ -28,6 +28,7 @@
     <ClInclude Include="Sources\Door.h" />
     <ClInclude Include="Sources\DrawInt.h" />
     <ClInclude Include="Sources\EffectSystem.h" />
+    <ClInclude Include="Sources\ElectricTools.h" />
     <ClInclude Include="Sources\FastIsType.h" />
     <ClInclude Include="Sources\Firebullet.h" />
     <ClInclude Include="Sources\FireEffect.h" />
@@ -112,6 +113,7 @@
     <ClCompile Include="Sources\Debug.cpp" />
     <ClCompile Include="Sources\Door.cpp" />
     <ClCompile Include="Sources\DrawInt.cpp" />
+    <ClCompile Include="Sources\ElectricTools.cpp" />
     <ClCompile Include="Sources\Firebullet.cpp" />
     <ClCompile Include="Sources\FireEffect.cpp" />
     <ClCompile Include="Sources\Floor.cpp" />

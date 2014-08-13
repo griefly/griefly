@@ -330,6 +330,9 @@
     <ClInclude Include="Sources\Atmos.h">
       <Filter>Header Files\Atmos</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\ElectricTools.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -497,9 +500,6 @@
     <ClCompile Include="Sources\Structure.cpp">
       <Filter>Source Files\Space</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ImageLoader.cpp">
-      <Filter>Source Files\Main</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\SoundLoader.cpp">
       <Filter>Source Files\Sound</Filter>
     </ClCompile>
@@ -541,6 +541,12 @@
     </ClCompile>
     <ClCompile Include="Sources\Atmos.cpp">
       <Filter>Source Files\Atmos</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ElectricTools.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImageLoader.cpp">
+      <Filter>Source Files\Sprites</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
