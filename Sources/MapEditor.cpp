@@ -28,7 +28,10 @@ MapEditor::MapEditor()
     point2_.posx = -1;
     point2_.posy = -1;
     point2_.posz = -1;
+}
 
+void MapEditor::InitCreationList()
+{
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
         IMainObject* loc = it->second();
@@ -57,6 +60,8 @@ void MapEditor::InitWorld()
     SetScreen(new Screen(sizeW, sizeH));
     SetTexts(new TextPainter);
     SetSpriter(new ASprClass);
+
+    InitCreationList();
 
     srand(SDL_GetTicks());
     
@@ -104,7 +109,15 @@ void MapEditor::InitWorld()
         std::stringstream ss; 
         ss << for_creation_[to_create_]->name; 
         ss >> *str;
-    }).SetFreq(10).SetSize(15).SetPlace(16, 16, 16 + 32 * 3);
+    }).SetFreq(10).SetSize(15).SetPlace(16, 16 + 32);
+
+    GetTexts()["Coords"].SetUpdater
+    ([this](std::string* str)
+    {
+        std::stringstream ss; 
+        ss << GetViewerX() << "," << GetViewerY() << "," << GetViewerZ(); 
+        ss >> *str;
+    }).SetFreq(10).SetSize(15).SetPlace(40, 0).SetColor(250, 100, 0);
 }
 
 void MapEditor::UpdateCoords()
@@ -123,6 +136,8 @@ void MapEditor::Run()
     {
         ProcessInput();
         UpdateVisible();
+
+        GetScreen()->Clear();
         GetMapMaster()->Draw();
         DrawPointer();
         DrawChoosenItem();
@@ -137,12 +152,12 @@ void MapEditor::DrawChoosenItem()
     GetScreen()->Draw(spr, 16 + 32 * 0, 16, 0, 0);
     GetScreen()->Draw(spr, 16 + 32 * 1, 16, 0, 0);
 
-    GetScreen()->Draw(spr, 16 + 32 * 0, 48, 0, 0);
-    GetScreen()->Draw(spr, 16 + 32 * 1, 48, 0, 0);
+   // GetScreen()->Draw(spr, 16 + 32 * 0, 48, 0, 0);
+   // GetScreen()->Draw(spr, 16 + 32 * 1, 48, 0, 0);
 
     auto ptr = for_creation_[to_create_];
 
-    ptr->DrawMain(0, 30, 32);
+    ptr->DrawMain(0, 32, 32 - 16);
 }
 
 void MapEditor::SaveMap(std::stringstream& savefile)
@@ -370,6 +385,9 @@ void MapEditor::ProcessInput()
             GetScreen()->ResetScreen(new_w, new_h, 32, SDL_OPENGL | SDL_RESIZABLE);
         }
     }
+   // SDL_PumpEvents();
+   // Uint8* keys = SDL_GetKeyState(NULL);
+   // if (keys[SDLK_UP])
 }
 
 void MapEditor::DrawPointer()

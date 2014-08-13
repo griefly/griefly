@@ -49,7 +49,7 @@ void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
             continue;
 
         int p = MAX_GAS_LEVEL / 2;
-        if (!CanPass(tile->GetTurf()->GetPassable(D_ALL), Passable::AIR))
+        if (!CanPass(tile->GetPassable(D_ALL), Passable::AIR))
             p = 0;
 
         tile->GetAtmosHolder()->Connect(

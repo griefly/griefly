@@ -60,6 +60,11 @@ void Screen::Swap()
     SDL_GL_SwapBuffers();
 }
 
+void Screen::Clear()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void Screen::Draw(const ApproxGLImage* sprite, int x_ul, int y_ul, int x_dr, int y_dr)
 {
     if (sprite == nullptr)

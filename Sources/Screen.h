@@ -10,6 +10,7 @@ public:
     void Draw(const GLSprite* sprite, int x, int y, int imageW, int imageH);
     void Draw(const ApproxGLImage* sprite, int x_ul, int y_ul, int x_dr, int y_dr);
     void ResetScreen(int x, int y, int bpp, Uint32 flags);
+    void Clear();
     void Swap();
     bool Fail();
 

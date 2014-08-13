@@ -14,7 +14,7 @@ Chat* Chat::chat = 0;
 std::stringstream ss;
 std::fstream loc("errorfile.txt", std::ios::trunc | std::ios::out | std::ios::in);
 
-std::ostream& SYSTEM_STREAM = loc;
+std::ostream& SYSTEM_STREAM = ss;
 
 Chat* Chat::GetChat()
 {

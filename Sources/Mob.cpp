@@ -133,7 +133,7 @@ void Manager::process()
          
         if (!NODRAW)
         {       
-            glClear(GL_COLOR_BUFFER_BIT);
+            GetScreen()->Clear();
             GetMapMaster()->Draw();
             FabricProcesser::Get()->process();
             
@@ -392,6 +392,11 @@ void Manager::processInput()
     SEND_KEY_MACRO(SDLK_LEFT);
     SEND_KEY_MACRO(SDLK_RIGHT);
     SEND_KEY_MACRO(SDLK_p);
+
+    SEND_KEY_MACRO(SDLK_z);
+    SEND_KEY_MACRO(SDLK_x);
+    SEND_KEY_MACRO(SDLK_c);
+    SEND_KEY_MACRO(SDLK_v);
 };
 
 void Manager::initWorld()

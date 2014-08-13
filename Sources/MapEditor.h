@@ -25,6 +25,8 @@ private:
     void SetAreaVars(int* xb, int* yb, int* zb,
                      int* xe, int* ye, int* ze);
 
+    void InitCreationList();
+
     void ProcessInput();
     void UpdateVisible();
     void DrawPointer();
