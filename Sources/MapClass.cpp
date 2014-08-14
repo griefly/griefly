@@ -44,12 +44,22 @@ void MapMaster::Draw()
                 {
                     if (it2->posz == z_level)
                     {
-                        squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
+                        /*squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
                         {
                             auto item_n = castTo<IOnMapObject>(item.ret_item());
                             if (item_n->v_level == i)
                                 item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
-                        });
+                        });*/
+
+                        auto sq = squares[it2->posx][it2->posy][it2->posz];
+                        auto& in_list = sq->GetInsideList();
+
+                        for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
+                        {
+                            if ((*list_it)->v_level == i)
+                                (*list_it)->processImage(z_level < z_level_m ? TOP : SAME);//screen
+                        }
+
                         auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
                         if (trf.valid() && trf->v_level == i)
                             trf->processImage(z_level < z_level_m ? TOP : SAME);
@@ -65,12 +75,22 @@ void MapMaster::Draw()
             {
                 if (it2->posz == z_level)
                 {
-                    squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
+                    /*squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
                     {
                         auto item_n = castTo<IOnMapObject>(item.ret_item());
                         if (item_n->v_level >= MAX_LEVEL)
                             item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
-                    });
+                    });*/
+
+                    auto sq = squares[it2->posx][it2->posy][it2->posz];
+                    auto& in_list = sq->GetInsideList();
+
+                    for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
+                    {
+                        if ((*list_it)->v_level >= MAX_LEVEL)
+                            (*list_it)->processImage(z_level < z_level_m ? TOP : SAME);//screen
+                    }
+
                     auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
                     if (trf.valid() && trf->v_level >= MAX_LEVEL)
                         trf->processImage(z_level < z_level_m ? TOP : SAME);
