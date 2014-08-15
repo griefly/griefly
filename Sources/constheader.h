@@ -50,6 +50,13 @@ struct VDir
     int z;
 };
 
+inline bool NonZero(const VDir& vdir)
+{
+    return    vdir.x
+           || vdir.y
+           || vdir.z;
+};
+
 const VDir VD_LEFT = {-1, 0, 0};
 const VDir VD_RIGHT = {1, 0, 0};
 const VDir VD_UP = {0, -1, 0};
@@ -58,6 +65,27 @@ const VDir VD_ZUP = {0, 0, 1};
 const VDir VD_ZDOWN = {0, 0, -1};
 
 const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
+
+inline Dir VDirToDir(const VDir& vdir)
+{
+    int abs_x = std::abs(vdir.x);
+    int abs_y = std::abs(vdir.y);
+    int abs_z = std::abs(vdir.z);
+    if (abs_x > abs_y && abs_x > abs_z)
+        if (vdir.x > 0)
+            return D_RIGHT;
+        else
+            return D_LEFT;
+    if (abs_y > abs_z)
+        if (vdir.y > 0)
+            return D_DOWN;
+        else
+            return D_UP;
+
+    if (vdir.z > 0)
+        return D_ZUP;
+    return D_ZDOWN;
+}
 
 const Dir DirToRDir[6] = {1, 0, 3, 2, 5, 4};
 

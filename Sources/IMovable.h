@@ -53,5 +53,21 @@ public:
     int KV_SAVEBLE(tickSpeed);
     int KV_SAVEBLE(pixSpeed);
     Dir KV_SAVEBLE(dMove);
+
+    KV_ON_LOAD_CALL(LoadInForceManager);
+    void LoadInForceManager();
 };
 ADD_TO_TYPELIST(IMovable);
+
+class ForceManager
+{
+public:
+    static ForceManager& Get();
+
+    void Add(id_ptr_on<IMovable> m);
+    void Process();
+private:
+    std::vector<id_ptr_on<IMovable>> under_force_;
+
+    std::vector<id_ptr_on<IMovable>> to_add_;
+};

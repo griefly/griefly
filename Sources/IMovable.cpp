@@ -36,12 +36,31 @@ bool IMovable::checkMove(Dir direct)
 
 void IMovable::ProcessForce()
 {
-    // TODO
+    Dir step = VDirToDir(force_);
+    VDir vstep = DirToVDir[step];
+    force_.x -= vstep.x;
+    force_.y -= vstep.y;
+    force_.z -= vstep.z;
+
+    checkMove(step);
 }
 
 void IMovable::ApplyForce(VDir force)
 {
-    // TODO
+    if (!NonZero(force))
+        return;
+    if (!NonZero(force_))
+        ForceManager::Get().Add(GetId());
+
+    force_.x += force.x;
+    force_.y += force.y;
+    force_.z += force.z;
+}
+
+void IMovable::LoadInForceManager()
+{
+    if (NonZero(force_))
+        ForceManager::Get().Add(GetId());
 }
 
 bool IMovable::checkMoveTime()
@@ -131,4 +150,43 @@ bool IMovable::IsTransp(int x, int y)
         shift = helpers::dir_to_byond(dMove);
 
     return view_.IsTransp(x, y, shift);
+}
+
+ForceManager& ForceManager::Get()
+{
+    static ForceManager* fm = new ForceManager;
+    return *fm;
+}
+
+void ForceManager::Add(id_ptr_on<IMovable> movable)
+{
+    to_add_.push_back(movable);
+}
+
+void ForceManager::Process()
+{
+    for (auto movable = to_add_.begin(); movable != to_add_.end(); ++movable)
+    {
+        if (!(*movable))
+            continue;
+        if (!NonZero((*movable)->force_))
+            continue;
+
+        under_force_.push_back(*movable);
+    }
+
+    std::vector<id_ptr_on<IMovable>> to_remove;
+
+    for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
+    {
+        if (   !(*movable)
+            || !NonZero((*movable)->force_))
+        {
+            to_remove.push_back(*movable);
+            continue;
+        }
+        (*movable)->ProcessForce();
+    }
+    for (auto it = to_remove.begin(); it != to_remove.end(); ++it)
+        under_force_.erase(std::find(under_force_.begin(), under_force_.end(), *it));
 }
