@@ -61,6 +61,7 @@ public:
 
     virtual void AttackBy(id_ptr_on<Item> item);
 
+    virtual void ApplyForce(VDir force) {};
 
     virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const
     {

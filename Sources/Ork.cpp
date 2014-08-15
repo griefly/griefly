@@ -103,22 +103,22 @@ void COrk::processGUImsg(const Message& msg)
     else if(msg.text == "SDLK_z")
     {
         id_ptr_on<CubeTile> ct = GetOwner();
-        ct->GetAtmosHolder()->AddGase(OXYGEN, 10);
+        ct->GetAtmosHolder()->AddGase(OXYGEN, 1000);
     }
     else if (msg.text == "SDLK_x")
     {
         id_ptr_on<CubeTile> ct = GetOwner();
-        ct->GetAtmosHolder()->AddGase(CO2, 10);
+        ct->GetAtmosHolder()->AddGase(CO2, 1000);
     }
     else if (msg.text == "SDLK_c")
     {
         id_ptr_on<CubeTile> ct = GetOwner();
-        ct->GetAtmosHolder()->AddGase(NYTROGEN, 10);
+        ct->GetAtmosHolder()->AddGase(NYTROGEN, 1000);
     }
     else if (msg.text == "SDLK_v")
     {
         id_ptr_on<CubeTile> ct = GetOwner();
-        ct->GetAtmosHolder()->AddEnergy(1000);
+        ct->GetAtmosHolder()->AddEnergy(10000);
     }
     else if (msg.text == "SDL_MOUSEBUTTONDOWN")
     {

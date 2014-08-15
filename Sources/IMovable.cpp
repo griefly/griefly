@@ -15,6 +15,9 @@ IMovable::IMovable()
     pixSpeed = 1;
     dMove = D_UP;
     anchored = false;
+    force_.x = 0;
+    force_.y = 0;
+    force_.z = 0;
 }
 
 bool IMovable::checkMove(Dir direct)
@@ -31,11 +34,15 @@ bool IMovable::checkMove(Dir direct)
     return mainMove();    
 };
 
-void IMovable::move(Dir direct)
+void IMovable::ProcessForce()
 {
-    assert(false);
-    // TODO: remove
-};
+    // TODO
+}
+
+void IMovable::ApplyForce(VDir force)
+{
+    // TODO
+}
 
 bool IMovable::checkMoveTime()
 {

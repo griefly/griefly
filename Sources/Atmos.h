@@ -22,8 +22,10 @@ public:
             y_shuffle_[i] = i;
     }
     void Process();
+  //  void ProcessMove();
 private:
     void ProcessTile(size_t x, size_t y, size_t z); 
+ //   void
 
     void ShuffleX();
     void ShuffleY();
