@@ -237,7 +237,9 @@ size_t CubeTile::GetItemImpl(unsigned int hash)
 
 void CubeTile::ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
 {
-    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    InsideType copy_vector = inside_list_;
+
+    for (auto it = copy_vector.begin(); it != copy_vector.end(); ++it)
         callback(*it);
 }
 
