@@ -84,6 +84,8 @@ void Atmosphere::ProcessMove()
     }
 }
 
+const unsigned int PRESSURE_MOVE_BORDER = 100;
+
 void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 {
     auto tile = GetMapMaster()->squares[x][y][z];
@@ -97,7 +99,18 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
     {
         Dir dir = dir_shuffle_[d_sh];
         auto neighbour = tile->GetNeighbourImpl(dir);
-        //
+
+        if (!(   CanPass(neighbour->GetPassable(helpers::revert_dir(dir)), Passable::AIR)
+              && CanPass(neighbour->GetPassable(D_ALL), Passable::AIR)))
+              continue;
+
+        if (   neighbour->GetTurf()->GetAtmosState() == NON_SIMULATED
+            || (neighbour->GetAtmosHolder()->GetPressure() + PRESSURE_MOVE_BORDER
+                < tile->GetAtmosHolder()->GetPressure()))
+        {
+                auto i = *tile->GetInsideList().begin();
+                i->ApplyForce(DirToVDir[dir]);
+        }
     }
 }
 
