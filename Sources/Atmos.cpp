@@ -64,6 +64,43 @@ void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
 
 }
 
+void Atmosphere::ProcessMove()
+{
+    for (size_t z_counter = 0; z_counter < static_cast<size_t>(GetMapMaster()->GetMapD()); ++z_counter)
+    {
+        ShuffleX();
+        ShuffleY();
+        ShuffleDir();
+        for (size_t x_sh = 0; x_sh < x_shuffle_.size(); ++x_sh)
+        {
+            size_t x_counter = x_shuffle_[x_sh];
+            for (size_t y_sh = 0; y_sh < y_shuffle_.size(); ++y_sh)
+            {
+                size_t y_counter = y_shuffle_[y_sh];
+
+                ProcessTileMove(x_counter, y_counter, z_counter);
+            }
+        }
+    }
+}
+
+void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
+{
+    auto tile = GetMapMaster()->squares[x][y][z];
+    
+    if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
+        return;
+    if (tile->GetTurf()->GetAtmosState() == SPACE)
+        return;
+
+    for (size_t d_sh = 0; d_sh < dir_shuffle_.size(); ++d_sh)
+    {
+        Dir dir = dir_shuffle_[d_sh];
+        auto neighbour = tile->GetNeighbourImpl(dir);
+        //
+    }
+}
+
 void Atmosphere::ShuffleX()
 {
     std::random_shuffle(x_shuffle_.begin(), x_shuffle_.end(), random_helpers::random_shuffle);
