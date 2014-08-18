@@ -77,6 +77,9 @@ bool IMovable::checkPassable()
     if (!CanPass(owner->GetPassable(dMove), passable_level))
     {
         owner->Bump(GetId());
+        force_.x = 0;
+        force_.y = 0;
+        force_.z = 0;
         return false;
     }
 
@@ -85,6 +88,9 @@ bool IMovable::checkPassable()
         || !CanPass(neighbour->GetPassable(helpers::revert_dir(dMove)), passable_level))
     {
         neighbour->Bump(GetId());
+        force_.x = 0;
+        force_.y = 0;
+        force_.z = 0;
         return false;
     }
     

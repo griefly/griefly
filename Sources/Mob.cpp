@@ -28,6 +28,7 @@
 #include "SoundLoader.h"
 #include "Chat.h"
 #include "Names.h"
+#include "IMovable.h"
 
 int ping_send;
 
@@ -119,14 +120,18 @@ void Manager::process()
         }
 
         const int ATMOS_OFTEN = 1;
+        const int ATMOS_MOVE_OFTEN = 1;
 
         if(process_in && !pause)
         {
             numOfDeer = 0;
             begin_of_process = SDL_GetTicks();
             GetItemFabric()->foreachProcess();
+            ForceManager::Get().Process();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
                 GetMapMaster()->atmosphere.Process();
+            if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
+                GetMapMaster()->atmosphere.ProcessMove();
             GetItemFabric()->Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
         }

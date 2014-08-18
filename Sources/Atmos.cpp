@@ -100,16 +100,19 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
         Dir dir = dir_shuffle_[d_sh];
         auto neighbour = tile->GetNeighbourImpl(dir);
 
-        if (!(   CanPass(neighbour->GetPassable(helpers::revert_dir(dir)), Passable::AIR)
-              && CanPass(neighbour->GetPassable(D_ALL), Passable::AIR)))
+        if (!CanPass(neighbour->GetPassable(D_ALL), Passable::AIR))
               continue;
 
-        if (   neighbour->GetTurf()->GetAtmosState() == NON_SIMULATED
+        if (   (   neighbour->GetTurf()->GetAtmosState() == NON_SIMULATED
+                && PRESSURE_MOVE_BORDER < tile->GetAtmosHolder()->GetPressure())
             || (neighbour->GetAtmosHolder()->GetPressure() + PRESSURE_MOVE_BORDER
                 < tile->GetAtmosHolder()->GetPressure()))
         {
+            if (tile->GetInsideList().size())
+            {
                 auto i = *tile->GetInsideList().begin();
                 i->ApplyForce(DirToVDir[dir]);
+            }
         }
     }
 }
