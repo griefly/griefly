@@ -46,6 +46,7 @@ public:
 
     virtual void processImage(DrawType type);
     virtual void Bump(id_ptr_on<IMovable> item) override;
+    virtual void BumpByGas(Dir dir, bool inside = false) override;
 public:
     VDir KV_SAVEBLE(force_);
     bool KV_SAVEBLE(anchored);

@@ -57,6 +57,7 @@ public:
     virtual bool Contains(id_ptr_on<IOnMapBase> item) const override;
 
     virtual void Bump(id_ptr_on<IMovable> item) override;
+    virtual void BumpByGas(Dir dir, bool inside = false) override;
 
     void SetPos(int posx, int posy, int posz = 0)
     {

@@ -108,11 +108,7 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
             || (neighbour->GetAtmosHolder()->GetPressure() + PRESSURE_MOVE_BORDER
                 < tile->GetAtmosHolder()->GetPressure()))
         {
-            if (tile->GetInsideList().size())
-            {
-                auto i = *tile->GetInsideList().begin();
-                i->ApplyForce(DirToVDir[dir]);
-            }
+            tile->BumpByGas(dir);
         }
     }
 }

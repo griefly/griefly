@@ -144,6 +144,12 @@ void IMovable::Bump(id_ptr_on<IMovable> item)
         checkMove(m->dMove);
 }
 
+void IMovable::BumpByGas(Dir dir, bool inside)
+{
+    //checkMove(dir);
+    ApplyForce(DirToVDir[dir]);
+}
+
 bool IMovable::IsTransp(int x, int y)
 {
     if (NODRAW)

@@ -105,6 +105,7 @@ public:
     }
 
     virtual void Bump(id_ptr_on<IMovable> item);
+    virtual void BumpByGas(Dir dir, bool inside = false);
 
     template<class T>
     id_ptr_on<T> GetItem()

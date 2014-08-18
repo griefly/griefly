@@ -103,6 +103,36 @@ void CubeTile::Bump(id_ptr_on<IMovable> item)
         }
 }
 
+void CubeTile::BumpByGas(Dir dir, bool inside)
+{
+    if (GetTurf())
+        GetTurf()->BumpByGas(dir);
+
+    if (inside)
+    {
+        for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+            if (!CanPass((*it)->GetPassable(dir), Passable::AIR))
+            {
+                (*it)->BumpByGas(dir);
+                return;
+            }
+        return;
+    }
+
+    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        if (!CanPass((*it)->GetPassable(helpers::revert_dir(dir)), Passable::AIR))
+        {
+            (*it)->BumpByGas(dir);
+            return;
+        }
+    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        if (!CanPass((*it)->GetPassable(D_ALL), Passable::AIR))
+        {
+            (*it)->BumpByGas(dir);
+            return;
+        }
+}
+
 bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
 {
     id_ptr_on<IOnMapObject> item = item_raw;

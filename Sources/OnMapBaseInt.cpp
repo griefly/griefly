@@ -21,6 +21,11 @@ void IOnMapBase::Bump(id_ptr_on<IMovable> item)
    // nothing
 }
 
+void IOnMapBase::BumpByGas(Dir dir, bool inside)
+{
+   // nothing
+}
+
 void IOnMapBase::AttackBy(id_ptr_on<Item> item)
 {
     // nothing
