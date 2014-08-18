@@ -107,14 +107,8 @@ public:
         if (turf_.valid())
         {
             turf_->SetOwner(GetId());
-            sum_passable_all_ = std::min(sum_passable_all_, turf_->GetPassable(D_ALL));
-            sum_passable_up_ = std::min(sum_passable_up_, turf_->GetPassable(D_UP));
-            sum_passable_down_ = std::min(sum_passable_down_, turf_->GetPassable(D_DOWN));
-            sum_passable_left_ = std::min(sum_passable_left_, turf_->GetPassable(D_LEFT));
-            sum_passable_right_ = std::min(sum_passable_right_, turf_->GetPassable(D_RIGHT));
         }
-        else
-            UpdatePassable();
+        UpdatePassable();
     }
     virtual void UpdatePassable() const override;
     AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
