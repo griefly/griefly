@@ -98,17 +98,32 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
     for (size_t d_sh = 0; d_sh < dir_shuffle_.size(); ++d_sh)
     {
         Dir dir = dir_shuffle_[d_sh];
+
         auto neighbour = tile->GetNeighbourImpl(dir);
 
-        if (!CanPass(neighbour->GetPassable(D_ALL), Passable::AIR))
-              continue;
+        if (!(   (   neighbour->GetTurf()->GetAtmosState() == NON_SIMULATED
+                  && PRESSURE_MOVE_BORDER < tile->GetAtmosHolder()->GetPressure())
+              || (neighbour->GetAtmosHolder()->GetPressure() + PRESSURE_MOVE_BORDER
+                  < tile->GetAtmosHolder()->GetPressure())))
+            continue;
 
-        if (   (   neighbour->GetTurf()->GetAtmosState() == NON_SIMULATED
-                && PRESSURE_MOVE_BORDER < tile->GetAtmosHolder()->GetPressure())
-            || (neighbour->GetAtmosHolder()->GetPressure() + PRESSURE_MOVE_BORDER
-                < tile->GetAtmosHolder()->GetPressure()))
+        if (!CanPass(tile->GetPassable(dir), Passable::AIR))
         {
-            tile->BumpByGas(dir);
+            tile->BumpByGas(dir, true);
+            continue;
+        }
+
+        if (   !CanPass(neighbour->GetPassable(D_ALL), Passable::AIR)
+            || !CanPass(neighbour->GetPassable(helpers::revert_dir(dir)), Passable::AIR))
+        {
+            neighbour->BumpByGas(dir);
+            continue;
+        }
+
+        if (tile->GetInsideList().size())
+        {
+            auto i = *tile->GetInsideList().rbegin();
+            i->ApplyForce(DirToVDir[dir]);
         }
     }
 }
