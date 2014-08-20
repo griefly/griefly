@@ -325,16 +325,17 @@ id_ptr_on<IOnMapObject> MapMaster::click(int x, int y)
         {
             if (it2->posz == z)
             {
-                squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
+                auto il = squares[it2->posx][it2->posy][it2->posz]->GetInsideList();
+                for (auto it = il.rbegin(); it != il.rend(); ++it)
                 {
-                    auto item = castTo<IOnMapObject>(item_h.ret_item());
+                    auto item = *it;
                     if (retval.ret_id() == 0)
                         if(item->v_level >= MAX_LEVEL)
                             if(!item->IsTransp(
                                 x - (item->GetDrawX() + mob_position::get_shift_x()),
                                 y - (item->GetDrawY() + mob_position::get_shift_y())))
-                                retval = item_h;
-                });
+                                retval = item;
+                }
                 auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
                 if (trf.valid())
                     if (retval.ret_id() == 0)
@@ -356,16 +357,17 @@ id_ptr_on<IOnMapObject> MapMaster::click(int x, int y)
             {
                 if (it2->posz == z)
                 {
-                    squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item_h)
+                    auto il = squares[it2->posx][it2->posy][it2->posz]->GetInsideList();
+                    for (auto it = il.rbegin(); it != il.rend(); ++it)
                     {
-                        auto item = castTo<IOnMapObject>(item_h.ret_item());
+                        auto item = *it;
                         if (retval.ret_id() == 0)
                             if(item->v_level == i)
                                 if(!item->IsTransp(
                                     x - (item->GetDrawX() + mob_position::get_shift_x()),
                                     y - (item->GetDrawY() + mob_position::get_shift_y())))
-                                    retval = item_h;
-                    });
+                                    retval = item;
+                    }
                     auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
                     if (trf.valid())
                         if (retval.ret_id() == 0)

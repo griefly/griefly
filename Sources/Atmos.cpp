@@ -84,7 +84,7 @@ void Atmosphere::ProcessMove()
     }
 }
 
-const unsigned int PRESSURE_MOVE_BORDER = 100;
+const unsigned int PRESSURE_MOVE_BORDER = 1000;
 
 void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 {
