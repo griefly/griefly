@@ -96,3 +96,18 @@ const int MAX_LEVEL = 20;
 extern size_t MAIN_TICK;
 
 const std::string RAW_DIR = "raw/";
+
+class Timer
+{
+public:
+    void Start()
+    {
+        tick_ = SDL_GetTicks();
+    }
+    unsigned int Get()
+    {
+        return SDL_GetTicks() - tick_;
+    }
+private:
+    unsigned int tick_;
+};

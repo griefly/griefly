@@ -1,5 +1,7 @@
 #include "AtmosHolder.h"
 
+#include "constheader.h"
+
 std::array<unsigned int, GASES_NUM> loc_gases;
 unsigned int loc_energy;
 
@@ -56,6 +58,8 @@ void AtmosHolder::Connect(AtmosHolder* guest, int level_owner, int level_guest, 
     guest->UpdateMacroParams();
 }
 
+const unsigned int ENERGY_CONST = 100;
+
 void AtmosHolder::UpdateMacroParams()
 {
     // E = (freedom / 2) * moles * T
@@ -69,7 +73,11 @@ void AtmosHolder::UpdateMacroParams()
     if (sum == 0)
         temperature_ = 0;
     else
-        temperature_ = energy_ / sum;
+    {
+        temperature_ = (energy_ * ENERGY_CONST) / sum;
+     //   if (temperature_ == 0)
+     //       SYSTEM_STREAM << "Energy: " << energy_ << ", sum: " << sum << std::endl;
+    }
 
     // PV = moles * T
     // P = (moles * T) / V
@@ -81,7 +89,13 @@ void AtmosHolder::UpdateMacroParams()
     if (volume_ == 0)
         pressure_ = 0;
     else
+    {
         pressure_ = (sum * temperature_) / volume_;
+    }
+
+
+ //   if (pressure_ == 0 && temperature_ == 0 && energy_ != 0 && sum != 0)
+//        SYSTEM_STREAM << "WUTOFUCK gas holder huge error" << std::endl;
 }
 
 void AtmosHolder::SetVolume(unsigned int volume)
@@ -131,9 +145,11 @@ unsigned int AtmosHolder::RemoveGase(unsigned int gase, unsigned int amount)
     {
         retval = gases_[gase];
         gases_[gase] = 0;
+        UpdateMacroParams();
         return retval;
     }
     gases_[gase] -= amount;
+    UpdateMacroParams();
     return retval;
 }
 

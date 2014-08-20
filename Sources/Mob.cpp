@@ -108,6 +108,15 @@ void Manager::process()
     int lastTimeC   = SDL_GetTicks();
     fps = 0;
     bool process_in = false;
+    Timer tick_timer, draw_timer, process_timer, atmos_move_timer, force_timer;
+    tick_timer.Start();
+    draw_timer.Start();
+    process_timer.Start();
+    atmos_move_timer.Start();
+    force_timer.Start();
+    unsigned int draw_time_per_tick = 0;
+    unsigned int process_time_per_tick = 0;
+
     while(done == 0)
     { 
 
@@ -124,20 +133,41 @@ void Manager::process()
 
         if(process_in && !pause)
         {
+            process_timer.Start();
             numOfDeer = 0;
             begin_of_process = SDL_GetTicks();
             GetItemFabric()->foreachProcess();
+            force_timer.Start();
             ForceManager::Get().Process();
+            unsigned int fm = force_timer.Get();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
                 GetMapMaster()->atmosphere.Process();
+            atmos_move_timer.Start();
             if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
                 GetMapMaster()->atmosphere.ProcessMove();
+            unsigned int amt = atmos_move_timer.Get();
             GetItemFabric()->Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
+ 
+            //////////////////////////////
+            //SYSTEM_STREAM << tick_timer.Get() / 1000.0 << std::endl;
+            //SYSTEM_STREAM << draw_time_per_tick / 1000.0 << std::endl;
+
+            if (MAIN_TICK % 10 == 0)
+            {
+               // SYSTEM_STREAM << "Draw take: " << (draw_time_per_tick * 1.0 / tick_timer.Get()) * 100.0 << "%" << std::endl;
+              //  SYSTEM_STREAM << "Process take: " << (process_timer.Get() * 1.0 / tick_timer.Get()) * 100.0 << "%" << std::endl;
+              //  SYSTEM_STREAM << "Atmos move take: " << (amt * 1.0 / tick_timer.Get()) * 100.0 << "%" << std::endl;
+              //  SYSTEM_STREAM << "Force take: " << (fm * 1.0 / tick_timer.Get()) * 100.0 << "%" << std::endl;
+            }
+            tick_timer.Start();
+            draw_time_per_tick = 0;
+        
         }
          
         if (!NODRAW)
-        {       
+        {   
+            draw_timer.Start();
             GetScreen()->Clear();
             GetMapMaster()->Draw();
             FabricProcesser::Get()->process();
@@ -152,6 +182,7 @@ void Manager::process()
             
             //glFinish();
             GetScreen()->Swap();
+            draw_time_per_tick += draw_timer.Get();
         }
 
         if((SDL_GetTicks() - lastTimeFps) >= 1000 && !pause)

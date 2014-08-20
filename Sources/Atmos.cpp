@@ -130,15 +130,21 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 
 void Atmosphere::ShuffleX()
 {
+    for (size_t i = 0; i < x_shuffle_.size(); ++i)
+        x_shuffle_[i] = i;
     std::random_shuffle(x_shuffle_.begin(), x_shuffle_.end(), random_helpers::random_shuffle);
 }
 
 void Atmosphere::ShuffleY()
 {
+    for (size_t i = 0; i < y_shuffle_.size(); ++i)
+        y_shuffle_[i] = i;
    std::random_shuffle(y_shuffle_.begin(), y_shuffle_.end(), random_helpers::random_shuffle);
 }
 
 void Atmosphere::ShuffleDir()
 {
+    for (size_t i = 0; i < dir_shuffle_.size(); ++i)
+        dir_shuffle_[i] = i;
    std::random_shuffle(dir_shuffle_.begin(), dir_shuffle_.end(), random_helpers::random_shuffle);
 }
