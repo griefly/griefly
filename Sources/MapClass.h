@@ -45,6 +45,10 @@ public:
 
     Atmosphere atmosphere;
 
+    void SaveToMapGen(const std::string& name);
+    void LoadFromMapGen(const std::string& name);
+
+
     int GetMapW() const
     {
         return squares.size();

@@ -468,8 +468,36 @@ void Manager::initWorld()
     int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 1;
     GetMapMaster()->makeTiles(x, y, z);
 
-    if (   !GetParamsHolder().GetParamBool("map_name") 
-        || !utils::IsFileExist(GetParamsHolder().GetParam<std::string>("map_name")))
+    if (   GetParamsHolder().GetParamBool("mapgen_name")
+        && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("mapgen_name")))
+    {
+        GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
+
+        auto newmob = GetItemFabric()->newItemOnMap<IMob>(
+                hash("ork"), 
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                       [GetMapMaster()->GetMapH() / 2]
+                                       [GetMapMaster()->GetMapD() / 2]);
+        ChangeMob(newmob);
+        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
+
+        auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
+                hash("Teleportator"), 
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                       [GetMapMaster()->GetMapH() / 2]
+                                       [GetMapMaster()->GetMapD() / 2]);
+        SetCreator(tptr.ret_id());
+
+        srand(SDL_GetTicks());
+    }
+    else if 
+       (   GetParamsHolder().GetParamBool("map_name") 
+         && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("map_name")))
+    {
+       std::string str = GetParamsHolder().GetParam<std::string>("map_name");
+       GetItemFabric()->loadMap(str.c_str());
+    }
+    else
     {
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
                 hash("ork"), 
@@ -488,11 +516,6 @@ void Manager::initWorld()
 
         srand(SDL_GetTicks());
         GetMapMaster()->makeMap();
-    }
-    else
-    {
-       std::string str = GetParamsHolder().GetParam<std::string>("map_name");
-       GetItemFabric()->loadMap(str.c_str());
     }
     LiquidHolder::LoadReaction();
 

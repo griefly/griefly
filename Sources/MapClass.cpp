@@ -27,6 +27,77 @@
 #include "Materials.h"
 #include "ElectricTools.h"
 
+
+#include "Creator.h"
+
+void MapMaster::SaveToMapGen(const std::string& name)
+{
+    std::fstream sfile;
+    sfile.open(name, std::ios_base::out | std::ios_base::trunc);
+    if(sfile.fail()) 
+    {
+        SYSTEM_STREAM << "Error open " << name << std::endl; 
+        return;
+    }
+
+    sfile << GetMapW() << std::endl;
+    sfile << GetMapH() << std::endl;
+    sfile << GetMapD() << std::endl;
+//    sfile << GetCreator() << std::endl;
+
+    for (size_t z = 0; z < GetMapD(); ++z)
+        for (size_t x = 0; x < GetMapW(); ++x)
+            for (size_t y = 0; y < GetMapH(); ++y)
+            {
+                auto& il = squares[x][y][z]->GetInsideList();
+                for (auto it = il.begin(); it != il.end(); ++it)
+                {
+                    if ((*it)->GetId() == GetCreator())
+                        continue;
+                    sfile << (*it)->T_ITEM() << " ";
+                    sfile << x << " ";
+                    sfile << y << " ";
+                    sfile << z << " ";
+                    sfile << std::endl;
+                }
+            }
+}
+
+void MapMaster::LoadFromMapGen(const std::string& name)
+{
+    GetItemFabric()->clearMap();
+
+    std::fstream sfile;
+    sfile.open(name, std::ios_base::in);
+    if(sfile.fail()) 
+    {
+        SYSTEM_STREAM << "Error open " << name << std::endl; 
+        return;
+    }
+
+    int x, y, z;
+    sfile >> x;
+    sfile >> y;
+    sfile >> z;
+
+ //   size_t creator;
+//    sfile >> creator;
+
+    makeTiles(x, y, z);
+
+    while (!sfile.eof())
+    {
+        unsigned int t_item;
+        size_t x, y, z;
+        sfile >> t_item;
+        sfile >> x;
+        sfile >> y;
+        sfile >> z;
+        GetItemFabric()->newItemOnMap<IOnMapObject>(t_item, squares[x][y][z]);
+    }
+   // SetCreator(creator);
+}
+
 void MapMaster::Draw()
 {
     if(!GetVisible()) 

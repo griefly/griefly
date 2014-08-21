@@ -74,16 +74,17 @@ void MapEditor::InitWorld()
 
     GetMapMaster()->makeTiles(x, y, z);
 
-    if (   !GetParamsHolder().GetParamBool("map_name") 
-        || !utils::IsFileExist(GetParamsHolder().GetParam<std::string>("map_name")))
+    if (   GetParamsHolder().GetParamBool("mapgen_name")
+        && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("mapgen_name")))
     {
+        GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
                 hash("ork"), 
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
-        SetMob(newmob.ret_id());
+        ChangeMob(newmob);
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
         auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
@@ -93,12 +94,34 @@ void MapEditor::InitWorld()
                                        [GetMapMaster()->GetMapD() / 2]);
         SetCreator(tptr.ret_id());
 
-        //GetMapMaster()->makeMap();
+        srand(SDL_GetTicks());
     }
-    else
+    else if 
+       (   GetParamsHolder().GetParamBool("map_name") 
+         && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("map_name")))
     {
        std::string str = GetParamsHolder().GetParam<std::string>("map_name");
        GetItemFabric()->loadMap(str.c_str());
+    }
+    else
+    {
+        auto newmob = GetItemFabric()->newItemOnMap<IMob>(
+                hash("ork"), 
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                       [GetMapMaster()->GetMapH() / 2]
+                                       [GetMapMaster()->GetMapD() / 2]);
+        ChangeMob(newmob);
+        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
+
+        auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
+                hash("Teleportator"), 
+                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                       [GetMapMaster()->GetMapH() / 2]
+                                       [GetMapMaster()->GetMapD() / 2]);
+        SetCreator(tptr.ret_id());
+
+        srand(SDL_GetTicks());
+     //   GetMapMaster()->makeMap();
     }
     UpdateCoords();
     LiquidHolder::LoadReaction();
@@ -317,10 +340,15 @@ void MapEditor::ProcessInput()
             }
             else if (event.key.keysym.sym == SDLK_F5)
             {
-                GetItemFabric()->saveMap(
-                    GetParamsHolder().GetParamBool("map_name") ?
-                    GetParamsHolder().GetParam<std::string>("map_name").c_str() :
-                    "default.map");
+                //GetItemFabric()->saveMap(
+                //    GetParamsHolder().GetParamBool("map_name") ?
+                //    GetParamsHolder().GetParam<std::string>("map_name").c_str() :
+                //    "default.map");
+
+                GetMapMaster()->SaveToMapGen(
+                    GetParamsHolder().GetParamBool("mapgen_name") ?
+                    GetParamsHolder().GetParam<std::string>("mapgen_name").c_str() :
+                    "default.gen");
                 SYSTEM_STREAM << "Map saved" << std::endl;
             }
             else if (event.key.keysym.sym == SDLK_DELETE)
