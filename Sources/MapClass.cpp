@@ -45,10 +45,18 @@ void MapMaster::SaveToMapGen(const std::string& name)
     sfile << GetMapD() << std::endl;
 //    sfile << GetCreator() << std::endl;
 
-    for (size_t z = 0; z < GetMapD(); ++z)
-        for (size_t x = 0; x < GetMapW(); ++x)
-            for (size_t y = 0; y < GetMapH(); ++y)
+    for (int z = 0; z < GetMapD(); ++z)
+        for (int x = 0; x < GetMapW(); ++x)
+            for (int y = 0; y < GetMapH(); ++y)
             {
+                if (auto t = squares[x][y][z]->GetTurf())
+                {
+                    sfile << t->T_ITEM() << " ";
+                    sfile << x << " ";
+                    sfile << y << " ";
+                    sfile << z << " ";
+                    sfile << std::endl;
+                }
                 auto& il = squares[x][y][z]->GetInsideList();
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
@@ -93,7 +101,20 @@ void MapMaster::LoadFromMapGen(const std::string& name)
         sfile >> x;
         sfile >> y;
         sfile >> z;
-        GetItemFabric()->newItemOnMap<IOnMapObject>(t_item, squares[x][y][z]);
+
+        auto i = GetItemFabric()->newItem<IOnMapObject>(t_item);
+        if (id_ptr_on<ITurf> t = i)
+        {
+            if (squares[x][y][z]->GetTurf())
+            {
+                SYSTEM_STREAM << "DOUBLE TURF!" << std::endl;
+            }
+            squares[x][y][z]->SetTurf(t);
+        }
+        else
+        {
+            squares[x][y][z]->AddItem(i);
+        }
     }
    // SetCreator(creator);
 }
