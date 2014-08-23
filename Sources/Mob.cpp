@@ -474,7 +474,7 @@ void Manager::initWorld()
         GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
-                hash("ork"), 
+                hash("Human"), 
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
@@ -500,7 +500,7 @@ void Manager::initWorld()
     else
     {
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
-                hash("ork"), 
+                hash("Human"), 
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);

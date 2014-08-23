@@ -41,6 +41,7 @@
     <ClInclude Include="Sources\hashes.h" />
     <ClInclude Include="Sources\helpers.h" />
     <ClInclude Include="Sources\HelperStructers.h" />
+    <ClInclude Include="Sources\Human.h" />
     <ClInclude Include="Sources\Idptr.h" />
     <ClInclude Include="Sources\ImageLoader.h" />
     <ClInclude Include="Sources\IMovable.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="Sources\Glass.cpp" />
     <ClCompile Include="Sources\GLSprite.cpp" />
     <ClCompile Include="Sources\Grille.cpp" />
+    <ClCompile Include="Sources\Human.cpp" />
     <ClCompile Include="Sources\Idptr.cpp" />
     <ClCompile Include="Sources\ImageLoader.cpp" />
     <ClCompile Include="Sources\IMovable.cpp" />
