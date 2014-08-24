@@ -30,7 +30,7 @@ void IMob::delThis()
 }
 
 void IMob::processGUImsg(const Message& msg)
-{;
+{
     if (msg.text == "SDLK_UP")
         checkMove(D_UP);
     else if (msg.text == "SDLK_DOWN")

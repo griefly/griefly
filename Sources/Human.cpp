@@ -22,6 +22,9 @@ Human::Human()
     name = GetMaleName();
   //  name = "Yes, it is human.";
     interface_.InitSlots();
+
+    lying_ = false;
+    health_ = 100;
 }
 void Human::InitGUI()
 {
@@ -70,8 +73,18 @@ bool Human::checkMove(Dir direct)
 
 void Human::processGUImsg(const Message& msg)
 {
-    IMob::processGUImsg(msg);
-
+ //   IMob::processGUImsg(msg);
+    if (!lying_)
+    {
+        if (msg.text == "SDLK_UP")
+            checkMove(D_UP);
+        else if (msg.text == "SDLK_DOWN")
+            checkMove(D_DOWN);
+        else if (msg.text == "SDLK_LEFT")
+            checkMove(D_LEFT);
+        else if (msg.text == "SDLK_RIGHT")
+            checkMove(D_RIGHT);
+    }
     if (msg.type == Net::CHAT_TYPE)
     {
         Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
@@ -141,3 +154,34 @@ void Human::processGUImsg(const Message& msg)
     }
 
 };
+
+void Human::process()
+{
+    IMob::process();
+    Live();
+}
+
+void Human::Live()
+{
+    if (id_ptr_on<CubeTile> t = owner)
+    {
+        unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
+        if (oxygen > 0)
+        {
+            t->GetAtmosHolder()->RemoveGase(OXYGEN, 1);
+            t->GetAtmosHolder()->AddGase(CO2, 1);
+        }
+        else
+        {
+            --health_;
+            Chat::GetChat()->PostText(name + " gasps!\n");
+        }
+    }
+    if (health_ < 0)
+    {
+        if (!lying_)
+        {
+            lying_ = true;
+        }
+    }
+}
