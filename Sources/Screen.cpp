@@ -88,7 +88,7 @@ void Screen::Draw(const ApproxGLImage* sprite, int x_ul, int y_ul, int x_dr, int
         SYSTEM_STREAM << glGetError() << std::endl; 
 }
 
-void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int imageH)
+void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int imageH, float angle)
 {
     if (sprite_in == nullptr)
         return;
@@ -99,12 +99,17 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
     if (glGetError())
         SYSTEM_STREAM << glGetError() << std::endl; 
 
+    glTranslatef(     x + sprite.W() / 2.0f,      y + sprite.H() / 2.0f, 0.0f); 
+    glRotatef(angle, 0.0f, 0.0f, 1.0f);
+    glTranslatef(-1 * x - sprite.W() / 2.0f, -1 * y - sprite.H() / 2.0f, 0.0f); 
+
     glBegin(GL_QUADS);
         glTexCoord2f(0.0, 0.0);     glVertex2f(static_cast<float>(x),              static_cast<float>(y));
         glTexCoord2f(0.0, 1.0);     glVertex2f(static_cast<float>(x),              static_cast<float>(y + sprite.H()));
         glTexCoord2f(1.0, 1.0);     glVertex2f(static_cast<float>(x + sprite.W()), static_cast<float>(y + sprite.H()));
         glTexCoord2f(1.0, 0.0);     glVertex2f(static_cast<float>(x + sprite.W()), static_cast<float>(y));
     glEnd();
+    glLoadIdentity();
 
     if (glGetError())
         SYSTEM_STREAM << glGetError() << std::endl; 
