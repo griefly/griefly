@@ -9,6 +9,9 @@
 #include "Chat.h"
 #include "AtmosHolder.h"
 #include "TileInt.h"
+#include "helpers.h"
+#include "mob_position.h"
+#include "sync_random.h"
 
 Human::Human()
 {
@@ -171,10 +174,12 @@ void Human::Live()
             t->GetAtmosHolder()->RemoveGase(OXYGEN, 1);
             t->GetAtmosHolder()->AddGase(CO2, 1);
         }
-        else
+        else if (health_ >= -100)
         {
             --health_;
-            Chat::GetChat()->PostText(name + " gasps!\n");
+            
+            if (get_rand() % 5 == 0)
+                Chat::GetChat()->PostText(name + " gasps!\n");
         }
     }
     if (health_ < 0)
@@ -182,6 +187,28 @@ void Human::Live()
         if (!lying_)
         {
             lying_ = true;
+            view_.SetAngle(90);
         }
+    }
+}
+
+void Human::processImage(DrawType type)
+{
+    if (NODRAW)
+        return;
+    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
+        return;
+
+    if (GetMetadata()->dirs >= 4 && !lying_)
+    {
+        DrawMain(helpers::dir_to_byond(dMove),            
+            GetDrawX() + mob_position::get_shift_x(),
+            GetDrawY() + mob_position::get_shift_y());
+    }
+    else
+    {
+        DrawMain(0,            
+            GetDrawX() + mob_position::get_shift_x(),
+            GetDrawY() + mob_position::get_shift_y());
     }
 }

@@ -9,7 +9,7 @@ void Teleportator::processGUImsg(const Message& msg)
 {   
     SYSTEM_STREAM << "void Teleportator::processGUImsg(std::string& msg)\n";
     if (msg.text == Net::MAKE_NEW)
-        CreateItem(msg.from, hash("ork"));
+        CreateItem(msg.from, hash("Human"));
 }
 
 Teleportator::Teleportator()   

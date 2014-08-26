@@ -46,13 +46,16 @@ public:
         void SetSprite(const std::string& name);
         const GLSprite* GetSprite();
         void SetState(const std::string& state);
+        void SetAngle(int angle);
         const ImageMetadata::SpriteMetadata* GetMetadata();
-        void Draw(int shift, int x, int y);
+        void Draw(int shift, int x, int y, int angle = 0);
     private:
         int step_x_;
         int step_y_;
         std::string sprite_name_;
         const GLSprite* sprite_;
+
+        int angle_;
 
         std::string state_;
         const ImageMetadata::SpriteMetadata* metadata_;
@@ -83,6 +86,7 @@ public:
     const ImageMetadata::SpriteMetadata* GetMetadata() { return GetBaseFrameset()->GetMetadata(); }
 
     void SetState(const std::string& sprite) { GetBaseFrameset()->SetState(sprite); }
+    void SetAngle(int angle);
 
     bool IsTransp(int x, int y, int shift);
     void Draw(int shift, int x, int y);
@@ -90,6 +94,8 @@ public:
 private:
     std::vector<Frameset> overlays_;
     std::vector<Frameset> underlays_;
+
+    int angle_;
 
     int step_x_;
     int step_y_;
@@ -109,10 +115,11 @@ inline unsigned int hash(const View& view)
     for (auto it = view.underlays_.begin(); it != view.underlays_.end(); ++it)
         loc += hash(*it);
     loc += hash(view.base_frameset_);
+    loc += view.angle_;
     return loc;
 }
 
 inline unsigned int hash(const View::Frameset& frameset)
 {
-    return hash(frameset.sprite_name_) + hash(frameset.state_);
+    return hash(frameset.sprite_name_) + hash(frameset.state_) + frameset.angle_;
 }

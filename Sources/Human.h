@@ -15,6 +15,8 @@ public:
     virtual void process() override;
     virtual void Live();
 
+    virtual void processImage(DrawType type) override;
+
     virtual bool checkMove(Dir direct) override;
     virtual InterfaceBase* GetInterface() override { return &interface_; }
 private:

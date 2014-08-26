@@ -15,7 +15,13 @@ View::Frameset::Frameset()
     state_ = "";
     metadata_ = nullptr;
     image_state_ = 0;
+    angle_ = 0;
     last_frame_tick_ = SDL_GetTicks();
+}
+
+void View::Frameset::SetAngle(int angle)
+{
+    angle_ = angle;
 }
 
 void View::Frameset::SetSprite(const std::string& name)
@@ -59,7 +65,7 @@ const ImageMetadata::SpriteMetadata* View::Frameset::GetMetadata()
 
 const int ANIMATION_MUL = 100;
 
-void View::Frameset::Draw(int shift, int x, int y)
+void View::Frameset::Draw(int shift, int x, int y, int angle)
 {
     if (NODRAW)
         return;
@@ -78,7 +84,8 @@ void View::Frameset::Draw(int shift, int x, int y)
 
     GetScreen()->Draw(GetSprite(), 
                       x, y, 
-                      image_state_w_, image_state_h_);
+                      image_state_w_, image_state_h_,
+                      static_cast<float>(angle + angle_));
 
     if (GetMetadata()->frames_sequence.size() == 1)
         return;
@@ -142,6 +149,12 @@ View::View()
 {
     step_x_ = 0;
     step_y_ = 0;
+    angle_ = 0;
+}
+
+void View::SetAngle(int angle)
+{
+    angle_ = angle;
 }
 
 bool View::IsTransp(int x, int y, int shift) 
@@ -159,10 +172,10 @@ bool View::IsTransp(int x, int y, int shift)
 void View::Draw(int shift, int x, int y) 
 { 
     for (auto it = underlays_.rbegin(); it != underlays_.rend(); ++it)
-        it->Draw(shift, x + GetStepX(), y + GetStepY());
-    GetBaseFrameset()->Draw(shift, x + GetStepX(), y + GetStepY());
+        it->Draw(shift, x + GetStepX(), y + GetStepY(), angle_);
+    GetBaseFrameset()->Draw(shift, x + GetStepX(), y + GetStepY(), angle_);
     for (auto it = overlays_.begin(); it != overlays_.end(); ++it)
-        it->Draw(shift, x + GetStepX(), y + GetStepY());
+        it->Draw(shift, x + GetStepX(), y + GetStepY(), angle_);
 }
 
 void View::AddOverlay(const std::string& sprite, const std::string& state)
@@ -210,6 +223,8 @@ std::ostream& operator<<(std::stringstream& file, View& view)
             file << " ";
     }
 
+    file << view.angle_ << " ";
+
     return file;
 }
 std::istream& operator>>(std::stringstream& file, View& view)
@@ -236,6 +251,8 @@ std::istream& operator>>(std::stringstream& file, View& view)
         view.overlays_[i] = f;
     }
 
+    file >> view.angle_;
+
     view.step_x_ = 0;
     view.step_y_ = 0;
 
@@ -247,6 +264,8 @@ std::ostream& operator<<(std::stringstream& file, View::Frameset& frameset)
     WrapWriteMessage(file, frameset.sprite_name_);
     file << " ";
     WrapWriteMessage(file, frameset.state_);
+    file << " ";
+    file << frameset.angle_;
     file << " ";
     return file;
 }
@@ -262,5 +281,6 @@ std::istream& operator>>(std::stringstream& file, View::Frameset& frameset)
 
     WrapReadMessage(file, frameset.sprite_name_);
     WrapReadMessage(file, frameset.state_);
+    file >> frameset.angle_;
     return file;
 }
