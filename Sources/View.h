@@ -41,7 +41,7 @@ public:
         int GetStepX() const { return step_x_; }
         int GetStepY() const { return step_y_; }
 
-        bool IsTransp(int x, int y, int shift);
+        bool IsTransp(int x, int y, int shift, int angle);
 
         void SetSprite(const std::string& name);
         const GLSprite* GetSprite();

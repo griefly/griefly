@@ -5,6 +5,8 @@
 #include "ASpritesClass.h"
 #include "StreamWrapper.h"
 
+#include <math.h>
+
 View::Frameset::Frameset()
 {
     step_x_ = 0;
@@ -76,6 +78,7 @@ void View::Frameset::Draw(int shift, int x, int y, int angle)
     x += step_x_;
     y += step_y_;
 
+
     int current_frame = GetMetadata()->frames_sequence[image_state_];
     int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
 
@@ -114,7 +117,7 @@ void View::Frameset::Draw(int shift, int x, int y, int angle)
     }
 }
 
-bool View::Frameset::IsTransp(int x, int y, int shift)
+bool View::Frameset::IsTransp(int x, int y, int shift, int angle)
 {
     if (NODRAW)
         return true;
@@ -123,6 +126,24 @@ bool View::Frameset::IsTransp(int x, int y, int shift)
 
     x += step_x_;
     y += step_y_;
+
+    float true_angle = ((angle + angle_) * 3.14f) / 180;
+
+    float sin_a = sin(static_cast<float>(+1 * true_angle));
+    float cos_a = cos(static_cast<float>(+1 * true_angle));
+
+    x -= GetSprite()->W() / 2;
+    y -= GetSprite()->H() / 2;
+
+    int new_x = static_cast<int>(     cos_a * x + sin_a * y);
+    int new_y = static_cast<int>(-1 * sin_a * x + cos_a * y);
+
+    x = new_x + GetSprite()->W() / 2;
+    y = new_y + GetSprite()->H() / 2;
+
+    //glTranslatef(     x + sprite.W() / 2.0f,      y + sprite.H() / 2.0f, 0.0f); 
+    //glRotatef(angle, 0.0f, 0.0f, 1.0f);
+    // glTranslatef(-1 * x - sprite.W() / 2.0f, -1 * y - sprite.H() / 2.0f, 0.0f); 
 
     const CSprite* loc = GetSprite()->GetSDLSprite();
     if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
@@ -160,12 +181,12 @@ void View::SetAngle(int angle)
 bool View::IsTransp(int x, int y, int shift) 
 {
     for (auto it = overlays_.rbegin(); it != overlays_.rend(); ++it)
-        if (!it->IsTransp(x + GetStepX(), y + GetStepY(), shift))
+        if (!it->IsTransp(x + GetStepX(), y + GetStepY(), shift, angle_))
             return false;
-    if (!GetBaseFrameset()->IsTransp(x + GetStepX(), y + GetStepY(), shift))
+    if (!GetBaseFrameset()->IsTransp(x + GetStepX(), y + GetStepY(), shift, angle_))
         return false;
     for (auto it = underlays_.begin(); it != underlays_.end(); ++it)
-        if (!it->IsTransp(x + GetStepX(), y + GetStepY(), shift))
+        if (!it->IsTransp(x + GetStepX(), y + GetStepY(), shift, angle_))
             return false;
     return true;
 }
