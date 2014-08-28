@@ -6,7 +6,9 @@ id_ptr_on<IMob> this_mob = 0;
 size_t creator = 0;
 
 void ChangeMob(id_ptr_on<IMob> i)
-{   
+{ 
+    if (!GetParamsHolder().GetParamBool("-editor") && this_mob)
+        this_mob->DeinitGUI();
     this_mob = i;
 
     if (this_mob.valid())

@@ -336,6 +336,9 @@
     <ClInclude Include="Sources\Human.h">
       <Filter>Header Files\Space</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Ghost.h">
+      <Filter>Header Files\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ApproxGLImage.cpp">
@@ -552,6 +555,9 @@
       <Filter>Source Files\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Human.cpp">
+      <Filter>Source Files\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Ghost.cpp">
       <Filter>Source Files\Space</Filter>
     </ClCompile>
   </ItemGroup>

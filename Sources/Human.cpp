@@ -12,6 +12,8 @@
 #include "helpers.h"
 #include "mob_position.h"
 #include "sync_random.h"
+#include "Ghost.h"
+#include "Creator.h"
 
 Human::Human()
 {
@@ -26,6 +28,7 @@ Human::Human()
   //  name = "Yes, it is human.";
     interface_.InitSlots();
 
+    dead_ = false;
     lying_ = false;
     health_ = 100;
 }
@@ -189,6 +192,21 @@ void Human::Live()
             lying_ = true;
             view_.SetAngle(90);
         }
+    }
+    if (health_ < -100 && !dead_)
+    {
+        size_t net_id = GetItemFabric()->GetNetId(GetId());
+        if (net_id)
+        {
+            auto ghost = GetItemFabric()->newItem<Ghost>(Ghost::T_ITEM_S());
+            GetItemFabric()->SetPlayerId(net_id, ghost.ret_id());
+            owner->AddItem(ghost);
+            if(thisMobControl)
+            {
+                ChangeMob(ghost);
+            }
+        }
+        dead_ = true;
     }
 }
 

@@ -34,6 +34,7 @@
     <ClInclude Include="Sources\FireEffect.h" />
     <ClInclude Include="Sources\Floor.h" />
     <ClInclude Include="Sources\FloorTile.h" />
+    <ClInclude Include="Sources\Ghost.h" />
     <ClInclude Include="Sources\Girder.h" />
     <ClInclude Include="Sources\Glass.h" />
     <ClInclude Include="Sources\GLSprite.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="Sources\FireEffect.cpp" />
     <ClCompile Include="Sources\Floor.cpp" />
     <ClCompile Include="Sources\FloorTile.cpp" />
+    <ClCompile Include="Sources\Ghost.cpp" />
     <ClCompile Include="Sources\Girder.cpp" />
     <ClCompile Include="Sources\Glass.cpp" />
     <ClCompile Include="Sources\GLSprite.cpp" />

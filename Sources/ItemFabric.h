@@ -119,6 +119,7 @@ public:
 
     void SetPlayerId(size_t net_id, size_t real_id);
     size_t GetPlayerId(size_t net_id);
+    size_t GetNetId(size_t real_id);
 private:
     void UpdateProcessingItems();
 

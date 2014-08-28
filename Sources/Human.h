@@ -23,6 +23,7 @@ private:
     HumanInterface KV_SAVEBLE(interface_);
 
     bool KV_SAVEBLE(lying_);
+    bool KV_SAVEBLE(dead_);
 
     int KV_SAVEBLE(health_);
 };

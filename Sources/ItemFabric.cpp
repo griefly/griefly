@@ -390,6 +390,14 @@ size_t ItemFabric::GetPlayerId(size_t net_id)
     return players_table_[net_id];
 }
 
+size_t ItemFabric::GetNetId(size_t real_id)
+{
+    for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
+        if (it->second == real_id)
+            return it->first;
+    return 0;
+}
+
 void ItemFabric::AddProcessingItem(id_ptr_on<IMainObject> item)
 {
     add_to_process_.push_back(item);

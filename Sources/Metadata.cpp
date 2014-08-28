@@ -206,8 +206,19 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
                 return false;
             }
+            std::string whole_str = "";
+               
             loc.clear();
             desc >> loc;
+            whole_str += loc;
+            while (loc[loc.length() - 1] != '"')
+            {
+                loc.clear();
+                desc >> loc;
+                whole_str += " ";
+                whole_str += loc;
+            }
+            loc = whole_str;
            // SYSTEM_STREAM << "New state: " << loc << std::endl;
             current_state = loc.substr(1, loc.length() - 2);
             metadata_[current_state].first_frame_pos = first_frame_pos;

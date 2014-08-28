@@ -487,7 +487,7 @@ void Manager::initWorld()
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
         SetCreator(tptr.ret_id());
-
+        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
         srand(SDL_GetTicks());
     }
     else if 
@@ -513,7 +513,7 @@ void Manager::initWorld()
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
         SetCreator(tptr.ret_id());
-
+        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
         srand(SDL_GetTicks());
         GetMapMaster()->makeMap();
     }
