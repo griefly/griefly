@@ -230,3 +230,12 @@ void Human::processImage(DrawType type)
             GetDrawY() + mob_position::get_shift_y());
     }
 }
+
+void Human::CalculateVisible(std::list<point>* visible_list)
+{
+    visible_list = 
+        GetMapMaster()->losf.calculateVisisble(visible_list, 
+            GetMob()->GetX(), 
+            GetMob()->GetY(),
+            GetMob()->GetZ());
+}

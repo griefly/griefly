@@ -19,6 +19,8 @@ public:
 
     virtual bool checkMove(Dir direct) override;
     virtual InterfaceBase* GetInterface() override { return &interface_; }
+
+    virtual void CalculateVisible(std::list<point>* visible_list) override;
 private:
     HumanInterface KV_SAVEBLE(interface_);
 

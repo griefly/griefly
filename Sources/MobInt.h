@@ -22,6 +22,8 @@ public:
 
     virtual InterfaceBase* GetInterface() { return nullptr; };
 
+    virtual void CalculateVisible(std::list<point>* visible_list) { ; }
+
     virtual bool checkMove(Dir direct) override;
     bool KV_SAVEBLE(onMobControl);
     bool KV_ON_LOAD(thisMobControl, false);

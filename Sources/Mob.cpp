@@ -89,11 +89,14 @@ Manager::Manager(std::string adrs)
 void Manager::UpdateVisible() 
 {
     visiblePoint->clear();
-    visiblePoint = 
-        GetMapMaster()->losf.calculateVisisble(visiblePoint, 
-            GetMob()->GetX(), 
-            GetMob()->GetY(),
-            GetMob()->GetZ());
+
+    GetMob()->CalculateVisible(visiblePoint);
+
+    //visiblePoint = 
+    //    GetMapMaster()->losf.calculateVisisble(visiblePoint, 
+    //        GetMob()->GetX(), 
+    //        GetMob()->GetY(),
+    //        GetMob()->GetZ());
 }
 
 void Manager::process()
