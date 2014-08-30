@@ -233,9 +233,12 @@ void Human::processImage(DrawType type)
 
 void Human::CalculateVisible(std::list<point>* visible_list)
 {
-    visible_list = 
-        GetMapMaster()->losf.calculateVisisble(visible_list, 
-            GetMob()->GetX(), 
-            GetMob()->GetY(),
-            GetMob()->GetZ());
+    if (health_ >= 0)
+    {
+        visible_list = 
+            GetMapMaster()->losf.calculateVisisble(visible_list, 
+                GetMob()->GetX(), 
+                GetMob()->GetY(),
+                GetMob()->GetZ());
+    }
 }
