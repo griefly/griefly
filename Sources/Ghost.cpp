@@ -1,6 +1,7 @@
 #include "Ghost.h"
 
 #include "MapClass.h"
+#include "Creator.h"
 
 Ghost::Ghost()
 {
@@ -12,6 +13,22 @@ Ghost::Ghost()
     passable_level = Passable::EMPTY;
 
     name = "Ghost";
+}
+
+void Ghost::processImage(DrawType type)
+{
+    static size_t mob_id = 0;
+    static bool draw = true;
+    if (mob_id != GetMob().ret_id())
+    {
+        if (id_ptr_on<Ghost> g = GetMob())
+            draw = true;
+        else
+            draw = false;
+        mob_id = GetMob().ret_id();
+    }
+    if (draw)
+        IMob::processImage(type);
 }
 
 void Ghost::CalculateVisible(std::list<point>* visible_list)
