@@ -15,7 +15,7 @@ Ghost::Ghost()
     name = "Ghost";
 }
 
-void Ghost::processImage(DrawType type)
+bool Ghost::IsMobGhost()
 {
     static size_t mob_id = 0;
     static bool draw = true;
@@ -27,8 +27,20 @@ void Ghost::processImage(DrawType type)
             draw = false;
         mob_id = GetMob().ret_id();
     }
-    if (draw)
+    return draw;
+}
+
+void Ghost::processImage(DrawType type)
+{
+    if (IsMobGhost())
         IMob::processImage(type);
+}
+
+bool Ghost::IsTransp(int x, int y)
+{
+    if (IsMobGhost())
+        return IMob::IsTransp(x, y);
+    return true;
 }
 
 void Ghost::CalculateVisible(std::list<point>* visible_list)
