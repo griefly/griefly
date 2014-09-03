@@ -19,6 +19,8 @@ bool Ghost::IsMobGhost()
 {
     static size_t mob_id = 0;
     static bool draw = true;
+    if (!GetMob())
+        return false;
     if (mob_id != GetMob().ret_id())
     {
         if (id_ptr_on<Ghost> g = GetMob())

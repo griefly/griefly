@@ -6,6 +6,9 @@ void HumanInterface::InitSlots()
 {
     r_hand_.SetPos(0, 14);
     r_hand_.GetView()->SetState("hand_r_inactive");
+
+    drop_.SetPos(7, 15);
+    drop_.GetView()->SetState("act_drop");
 }
 
 id_ptr_on<Item> HumanInterface::Click(int x, int y)
@@ -15,6 +18,13 @@ id_ptr_on<Item> HumanInterface::Click(int x, int y)
 
     if (r_hand_.Click(x, y))
         return r_hand_.Get();
+    if (drop_.Click(x, y))
+    {
+        Message msg;
+        msg.text = "SDLK_p";
+        NetClient::GetNetClient()->Send(msg);
+        return 0;
+    }
     return 0;
 }
 
@@ -38,12 +48,14 @@ HumanInterface::~HumanInterface()
 void HumanInterface::Draw()
 {
     r_hand_.Draw();
+    drop_.Draw();
 }
 
 unsigned int HumanInterface::hash() const
 {
     unsigned int hash = 0;
     hash += r_hand_.hash_member();
+    hash += drop_.hash_member();
     return hash;
 }
 
@@ -67,10 +79,12 @@ id_ptr_on<Item> HumanInterface::GetRHand()
 std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
 {
     interf.r_hand_.operator<<(file) << " ";
+    interf.drop_.operator<<(file) << " ";
     return file;
 }
 std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
 {
     interf.r_hand_.operator>>(file);
+    interf.drop_.operator>>(file);
     return file;
 }

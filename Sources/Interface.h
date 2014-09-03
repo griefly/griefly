@@ -32,6 +32,7 @@ public:
 
     id_ptr_on<Item> GetRHand();
 private:
+    Slot<Item> drop_;
     Slot<Item> r_hand_;
 };
 
