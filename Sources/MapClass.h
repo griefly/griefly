@@ -74,6 +74,8 @@ public:
         return squares[posx][posy][posz]->GetItem<T>();
     }
     
+    void FillAtmosphere();
+
     void splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz = 0);
 
     void makeTiles(int x, int y, int z);

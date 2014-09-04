@@ -285,11 +285,11 @@ void Manager::processInput()
                 {
                     click_timer = SDL_GetTicks();
                     id_ptr_on<IOnMapObject> item;
-                    if (GetMob()->GetInterface())
+                    if (GetMob()->GetInterface() && GetMob()->GetInterface()->IsArea(event.button.x, event.button.y))
                     {
                         item = GetMob()->GetInterface()->Click(event.button.x, event.button.y);
                     }
-                    if (!item)
+                    else
                     {
                         item = GetMapMaster()->click(event.button.x, event.button.y);
                     }
@@ -489,6 +489,7 @@ void Manager::initWorld()
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
+        GetMapMaster()->FillAtmosphere();
         SetCreator(tptr.ret_id());
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
         srand(SDL_GetTicks());
@@ -515,6 +516,7 @@ void Manager::initWorld()
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
+        GetMapMaster()->FillAtmosphere();
         SetCreator(tptr.ret_id());
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
         srand(SDL_GetTicks());

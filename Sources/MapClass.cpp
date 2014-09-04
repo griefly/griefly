@@ -30,6 +30,24 @@
 
 #include "Creator.h"
 
+void MapMaster::FillAtmosphere()
+{
+    for (int z = 0; z < GetMapD(); ++z)
+        for (int x = 0; x < GetMapW(); ++x)
+            for (int y = 0; y < GetMapH(); ++y)
+                if (   squares[x][y][z]->GetTurf()
+                    && squares[x][y][z]->GetTurf()->GetAtmosState() != SPACE
+                    && squares[x][y][z]->GetTurf()->GetAtmosState() != NON_SIMULATED
+                    && CanPass(squares[x][y][z]->GetPassable(D_ALL), Passable::AIR))
+                {
+                    auto a = squares[x][y][z]->GetAtmosHolder();
+                    a->AddGase(NYTROGEN, 750);
+                    a->AddGase(OXYGEN, 230);
+                    a->AddGase(CO2, 1);
+                    a->AddEnergy(1000);
+                }
+}
+
 void MapMaster::SaveToMapGen(const std::string& name)
 {
     std::fstream sfile;

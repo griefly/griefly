@@ -28,6 +28,15 @@ id_ptr_on<Item> HumanInterface::Click(int x, int y)
     return 0;
 }
 
+bool HumanInterface::IsArea(int x, int y)
+{
+    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW + guiShift) / static_cast<float>(GetScreen()->w())));;
+    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
+    
+    return    r_hand_.Click(x, y)
+           || drop_.Click(x, y);
+}
+
 bool HumanInterface::HandleClick(id_ptr_on<Item> item)
 {
     if (!item)

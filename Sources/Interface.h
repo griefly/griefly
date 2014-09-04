@@ -9,6 +9,7 @@ class InterfaceBase
 {
 public:
     virtual id_ptr_on<Item> Click(int x, int y) = 0;
+    virtual bool IsArea(int x, int y) = 0;
     virtual bool HandleClick(id_ptr_on<Item> item) = 0;
     virtual void Draw() = 0;
     virtual unsigned int hash() const = 0;
@@ -20,6 +21,7 @@ class HumanInterface: public InterfaceBase
 public:
     virtual id_ptr_on<Item> Click(int x, int y) override;
     virtual bool HandleClick(id_ptr_on<Item> item) override;
+    virtual bool IsArea(int x, int y) override;
     virtual void Draw() override;
     void InitSlots();
     virtual ~HumanInterface();
