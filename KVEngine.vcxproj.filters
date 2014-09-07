@@ -12,9 +12,6 @@
     <Filter Include="Header Files\Interfaces">
       <UniqueIdentifier>{e197bffa-6a3f-4a5e-8f44-75d2ab9da7fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\LiquidSystem">
-      <UniqueIdentifier>{9b266cd9-6a65-4111-a69f-da62a8a03b4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Net">
       <UniqueIdentifier>{34ce60c3-910e-407b-a7c7-91b54a25110b}</UniqueIdentifier>
     </Filter>
@@ -27,9 +24,6 @@
     </Filter>
     <Filter Include="Source Files\Interfaces">
       <UniqueIdentifier>{48ea1af9-d7ff-49e2-b5be-6c032b27528b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\LiquidSystem">
-      <UniqueIdentifier>{65a3224c-db1c-4054-9843-ba1c5da13f9f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Net">
       <UniqueIdentifier>{e12cd923-0118-4250-89cb-19407020e374}</UniqueIdentifier>
@@ -125,15 +119,6 @@
     </ClInclude>
     <ClInclude Include="Sources\Kivsjak.h">
       <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Liquid.h">
-      <Filter>Header Files\LiquidSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\LiquidHolder.h">
-      <Filter>Header Files\LiquidSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\LiquidSystem.h">
-      <Filter>Header Files\LiquidSystem</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Macroses.h">
       <Filter>Header Files\Main</Filter>
@@ -370,12 +355,6 @@
     </ClCompile>
     <ClCompile Include="Sources\ItemFabric.cpp">
       <Filter>Source Files\Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Liquid.cpp">
-      <Filter>Source Files\LiquidSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\LiquidHolder.cpp">
-      <Filter>Source Files\LiquidSystem</Filter>
     </ClCompile>
     <ClCompile Include="Sources\main.cpp">
       <Filter>Source Files\Main</Filter>

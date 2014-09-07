@@ -7,7 +7,6 @@
 #include "Text.h"
 
 #include "CSmallItem.h"
-#include "LiquidHolder.h"
 #include "ASpritesClass.h"
 #include "sprite.h"
 #include "ItemFabric.h"

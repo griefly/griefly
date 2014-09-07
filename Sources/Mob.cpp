@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "MapClass.h"
-#include "LiquidHolder.h"
 #include "Turf.h"
 #include "Text.h"
 
@@ -522,7 +521,6 @@ void Manager::initWorld()
         srand(SDL_GetTicks());
         GetMapMaster()->makeMap();
     }
-    LiquidHolder::LoadReaction();
 
     LoginData data;
     data.who = GetMob().ret_id();

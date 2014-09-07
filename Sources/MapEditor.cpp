@@ -7,7 +7,6 @@
 #include "ItemFabric.h"
 #include "MapClass.h"
 #include "Text.h"
-#include "LiquidHolder.h"
 #include "helpers.h"
 #include "Params.h"
 #include "MobInt.h"
@@ -124,7 +123,6 @@ void MapEditor::InitWorld()
      //   GetMapMaster()->makeMap();
     }
     UpdateCoords();
-    LiquidHolder::LoadReaction();
 
     GetTexts()["ToCreate"].SetUpdater
     ([this](std::string* str)

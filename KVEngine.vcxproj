@@ -51,9 +51,6 @@
     <ClInclude Include="Sources\ItemFabric.h" />
     <ClInclude Include="Sources\ITurf.h" />
     <ClInclude Include="Sources\Kivsjak.h" />
-    <ClInclude Include="Sources\Liquid.h" />
-    <ClInclude Include="Sources\LiquidHolder.h" />
-    <ClInclude Include="Sources\LiquidSystem.h" />
     <ClInclude Include="Sources\Macroses.h" />
     <ClInclude Include="Sources\MacrosesSavevars.h" />
     <ClInclude Include="Sources\MagicStrings.h" />
@@ -134,8 +131,6 @@
     <ClCompile Include="Sources\ItemFabric.cpp" />
     <ClCompile Include="Sources\ITurf.cpp" />
     <ClCompile Include="Sources\Kivsjak.cpp" />
-    <ClCompile Include="Sources\Liquid.cpp" />
-    <ClCompile Include="Sources\LiquidHolder.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainInt.cpp" />
     <ClCompile Include="Sources\MapClass.cpp" />

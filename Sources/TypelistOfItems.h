@@ -36,8 +36,6 @@ namespace KV_Private_NS_NullType
 #include "Ork.h"
 #include "Testmob.h"
 #include "Turf.h"
-#include "Liquid.h"
-#include "LiquidHolder.h"
 #include "Kivsjak.h"
 #include "MessageReceiver.h"
 #include "Teleportator.h"
