@@ -435,6 +435,8 @@ void Manager::processInput()
     SEND_KEY_MACRO(SDLK_x);
     SEND_KEY_MACRO(SDLK_c);
     SEND_KEY_MACRO(SDLK_v);
+
+    SEND_KEY_MACRO(SDLK_s);
 };
 
 void Manager::initWorld()

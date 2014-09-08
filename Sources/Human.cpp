@@ -124,6 +124,10 @@ void Human::processGUImsg(const Message& msg)
         id_ptr_on<CubeTile> ct = GetOwner();
         ct->GetAtmosHolder()->AddEnergy(10000);
     }
+    else if (msg.text == "SDLK_s")
+    {
+        interface_.SwapHands();
+    }
     else if (msg.text == "SDL_MOUSEBUTTONDOWN")
     {
         id_ptr_on<IOnMapObject> item = msg.from;
@@ -138,10 +142,10 @@ void Human::processGUImsg(const Message& msg)
             else if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
             {
                 SYSTEM_STREAM << "And we can touch it!" << std::endl;
-                if(!interface_.GetRHand())
+                if(!interface_.GetActiveHand().Get())
                 {
                     interface_.Pick(item);
-                    if (interface_.GetRHand())
+                    if (interface_.GetActiveHand().Get())
                     {
                         if (!item->GetOwner()->RemoveItem(item))
                             SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
@@ -152,7 +156,7 @@ void Human::processGUImsg(const Message& msg)
                 }
                 else
                 {
-                    item->AttackBy(interface_.GetRHand());
+                    item->AttackBy(interface_.GetActiveHand().Get());
                 }
                 
             }

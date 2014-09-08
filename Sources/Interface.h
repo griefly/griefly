@@ -33,9 +33,16 @@ public:
     void Drop();
 
     id_ptr_on<Item> GetRHand();
+    id_ptr_on<Item> GetLHand();
+    Slot<Item>& GetActiveHand();
+    void SwapHands();
 private:
+    bool active_hand_;
+ 
+
     Slot<Item> drop_;
     Slot<Item> r_hand_;
+    Slot<Item> l_hand_;
 };
 
 std::ostream& operator<<(std::stringstream& file, HumanInterface& interf);
