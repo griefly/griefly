@@ -103,6 +103,7 @@ unsigned int HumanInterface::hash() const
     hash += r_hand_.hash_member();
     hash += drop_.hash_member();
     hash += l_hand_.hash_member();
+    hash += active_hand_;
     return hash;
 }
 

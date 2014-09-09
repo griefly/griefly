@@ -124,7 +124,7 @@ void Human::processGUImsg(const Message& msg)
         id_ptr_on<CubeTile> ct = GetOwner();
         ct->GetAtmosHolder()->AddEnergy(10000);
     }
-    else if (msg.text == "SDLK_s")
+    else if (msg.text == "SDLK_s_down")
     {
         interface_.SwapHands();
     }

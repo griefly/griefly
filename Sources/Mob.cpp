@@ -385,6 +385,13 @@ void Manager::processInput()
                     if (event.key.keysym.sym == SDLK_DELETE)
                         { text_input_->Clean(); }
                 }
+                else if (event.key.keysym.sym == SDLK_s)
+                {
+                    Message msg;
+                    msg.text = "SDLK_s_down";
+                    NetClient::GetNetClient()->Send(msg);
+                    lastShoot = SDL_GetTicks();
+                }
             }
         }
     }
@@ -435,8 +442,6 @@ void Manager::processInput()
     SEND_KEY_MACRO(SDLK_x);
     SEND_KEY_MACRO(SDLK_c);
     SEND_KEY_MACRO(SDLK_v);
-
-    SEND_KEY_MACRO(SDLK_s);
 };
 
 void Manager::initWorld()
