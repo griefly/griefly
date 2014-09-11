@@ -119,6 +119,8 @@ void Manager::process()
     unsigned int draw_time_per_tick = 0;
     unsigned int process_time_per_tick = 0;
 
+    unsigned int last_effect_process = 0;
+
     while(done == 0)
     { 
 
@@ -172,8 +174,11 @@ void Manager::process()
             draw_timer.Start();
             GetScreen()->Clear();
             GetMapMaster()->Draw();
-            FabricProcesser::Get()->process();
-            
+            if ((SDL_GetTicks() - last_effect_process) > (1000 / 60))
+            {
+                last_effect_process = SDL_GetTicks();
+                FabricProcesser::Get()->process();
+            }
             ClearGUIZone(); 
 
             Chat::GetChat()->Process();
