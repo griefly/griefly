@@ -123,9 +123,6 @@
     <ClInclude Include="Sources\Macroses.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\MacrosesSavevars.h">
-      <Filter>Header Files\Main</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\MagicStrings.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>

@@ -52,7 +52,6 @@
     <ClInclude Include="Sources\ITurf.h" />
     <ClInclude Include="Sources\Kivsjak.h" />
     <ClInclude Include="Sources\Macroses.h" />
-    <ClInclude Include="Sources\MacrosesSavevars.h" />
     <ClInclude Include="Sources\MagicStrings.h" />
     <ClInclude Include="Sources\MainInt.h" />
     <ClInclude Include="Sources\MapClass.h" />
