@@ -5,6 +5,9 @@
 
 Ghost::Ghost()
 {
+    tickSpeed = 1;
+    pixSpeed = 2;
+
     v_level = 11;
 
     SetSprite("icons/mob.dmi");
