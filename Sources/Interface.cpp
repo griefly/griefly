@@ -1,6 +1,7 @@
 #include "Interface.h"
 
 #include "Item.h"
+#include "helpers.h"
 
 void HumanInterface::InitSlots()
 {
@@ -18,9 +19,7 @@ void HumanInterface::InitSlots()
 
 id_ptr_on<Item> HumanInterface::Click(int x, int y)
 {
-    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW + guiShift) / static_cast<float>(GetScreen()->w())));;
-    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
-
+    helpers::normalize_pixels(&x, &y);
     if (r_hand_.Click(x, y))
         return r_hand_.Get();
     if (l_hand_.Click(x, y))
@@ -61,9 +60,7 @@ Slot<Item>& HumanInterface::GetActiveHand()
 
 bool HumanInterface::IsArea(int x, int y)
 {
-    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW + guiShift) / static_cast<float>(GetScreen()->w())));;
-    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
-    
+    helpers::normalize_pixels(&x, &y);    
     return    r_hand_.Click(x, y)
            || drop_.Click(x, y);
 }

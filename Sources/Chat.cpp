@@ -8,6 +8,7 @@
 #include "constheader.h"
 #include "Screen.h"
 #include "Creator.h"
+#include "helpers.h"
 
 Chat* Chat::chat = 0;
 
@@ -169,8 +170,7 @@ void Chat::ScrollDown()
 
 bool Chat::IsArea(int x, int y)
 {
-    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW + guiShift) / static_cast<float>(GetScreen()->w())));;
-    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
+    helpers::normalize_pixels(&x, &y);
     if (   x > from_x_ && x < to_x_
         && y > from_y_ && y < to_y_)
         return true;

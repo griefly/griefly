@@ -88,4 +88,17 @@ namespace helpers
     {
         return DirToRDir[direct];
     }
+    inline void normalize_pixels(int* x, int* y)
+    {
+        *x = static_cast<int>
+            (  static_cast<float>(*x) 
+            * (  static_cast<float>(sizeW + guiShift) 
+               / static_cast<float>(GetScreen()->w())
+               ));
+        *y = static_cast<int>
+            (  static_cast<float>(*y) 
+            * (  static_cast<float>(sizeH) 
+               / static_cast<float>(GetScreen()->h())
+               ));
+    }
 }

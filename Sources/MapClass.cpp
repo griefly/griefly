@@ -27,7 +27,7 @@
 #include "Materials.h"
 #include "ElectricTools.h"
 
-
+#include "helpers.h"
 #include "Creator.h"
 
 void MapMaster::FillAtmosphere()
@@ -422,8 +422,7 @@ id_ptr_on<IOnMapObject> MapMaster::click(int x, int y)
     if(!GetVisible()) 
         return 0;
 
-    x = static_cast<int>(static_cast<float>(x) * (static_cast<float>(sizeW + guiShift) / static_cast<float>(GetScreen()->w())));;
-    y = static_cast<int>(static_cast<float>(y) * (static_cast<float>(sizeH) / static_cast<float>(GetScreen()->h())));
+    helpers::normalize_pixels(&x, &y);
 
     id_ptr_on<IOnMapObject> retval = 0;
 
