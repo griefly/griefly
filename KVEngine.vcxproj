@@ -50,7 +50,6 @@
     <ClInclude Include="Sources\Item.h" />
     <ClInclude Include="Sources\ItemFabric.h" />
     <ClInclude Include="Sources\ITurf.h" />
-    <ClInclude Include="Sources\Kivsjak.h" />
     <ClInclude Include="Sources\Macroses.h" />
     <ClInclude Include="Sources\MagicStrings.h" />
     <ClInclude Include="Sources\MainInt.h" />
@@ -129,7 +128,6 @@
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\ItemFabric.cpp" />
     <ClCompile Include="Sources\ITurf.cpp" />
-    <ClCompile Include="Sources\Kivsjak.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainInt.cpp" />
     <ClCompile Include="Sources\MapClass.cpp" />

@@ -117,9 +117,6 @@
     <ClInclude Include="Sources\ItemFabric.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Kivsjak.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Macroses.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
@@ -406,9 +403,6 @@
     </ClCompile>
     <ClCompile Include="Sources\TypelistOfItems.cpp">
       <Filter>Source Files\Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Kivsjak.cpp">
-      <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Debug.cpp">
       <Filter>Source Files\Main</Filter>
