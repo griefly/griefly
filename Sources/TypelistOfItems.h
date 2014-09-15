@@ -34,7 +34,6 @@ namespace KV_Private_NS_NullType
 #include "Firebullet.h"
 #include "MonstrClass.h"
 #include "Ork.h"
-#include "Testmob.h"
 #include "Turf.h"
 #include "MessageReceiver.h"
 #include "Teleportator.h"

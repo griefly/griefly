@@ -86,7 +86,6 @@
     <ClInclude Include="Sources\Structure.h" />
     <ClInclude Include="Sources\sync_random.h" />
     <ClInclude Include="Sources\Teleportator.h" />
-    <ClInclude Include="Sources\Testmob.h" />
     <ClInclude Include="Sources\Text.h" />
     <ClInclude Include="Sources\TextInput.h" />
     <ClInclude Include="Sources\TileInt.h" />
@@ -158,7 +157,6 @@
     <ClCompile Include="Sources\Structure.cpp" />
     <ClCompile Include="Sources\sync_random.cpp" />
     <ClCompile Include="Sources\Teleportator.cpp" />
-    <ClCompile Include="Sources\Testmob.cpp" />
     <ClCompile Include="Sources\Text.cpp" />
     <ClCompile Include="Sources\TextInput.cpp" />
     <ClCompile Include="Sources\TileInt.cpp" />

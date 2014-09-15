@@ -171,9 +171,6 @@
     <ClInclude Include="Sources\Teleportator.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Testmob.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Turf.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
@@ -393,9 +390,6 @@
       <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Teleportator.cpp">
-      <Filter>Source Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Testmob.cpp">
       <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Turf.cpp">
