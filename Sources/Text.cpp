@@ -1,7 +1,6 @@
 #include "Text.h"
 
-#include "MainInt.h"
-#include "MapClass.h"
+#include "Screen.h"
 
 SDL_Color c = {255, 255, 255, 0};
 
