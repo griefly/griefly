@@ -20,7 +20,10 @@ bool CSprite::init(InitSprite data)
     metadata.Init(data.imgFile);
     SDL_Surface* temp = IMG_Load(data.imgFile.c_str());
     if(temp == NULL)
+    {
+        SYSTEM_STREAM << "IMG_Load error: " << IMG_GetError() << std::endl;
         return false;
+    }
     if (metadata.Valid())
     {
         numFrameW = temp->w / metadata.GetW();

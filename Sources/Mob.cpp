@@ -29,6 +29,10 @@
 #include "Names.h"
 #include "IMovable.h"
 
+#include "qtopengl.h"
+
+#include <QCoreApplication>
+
 int ping_send;
 
 void Manager::checkMove(Dir direct)
@@ -172,6 +176,7 @@ void Manager::process()
         if (!NODRAW)
         {   
             draw_timer.Start();
+            MakeCurrentGLContext();
             GetScreen()->Clear();
             GetMapMaster()->Draw();
             if ((SDL_GetTicks() - last_effect_process) > (1000 / 60))
@@ -179,7 +184,7 @@ void Manager::process()
                 last_effect_process = SDL_GetTicks();
                 FabricProcesser::Get()->process();
             }
-            ClearGUIZone(); 
+            //ClearGUIZone();
 
             Chat::GetChat()->Process();
 
@@ -211,12 +216,16 @@ void Manager::process()
         {
 
         }
+        if (GetMainWidget()->isHidden())
+        {
+            break;
+        }
     }
-};
+}
 
 void Manager::ClearGUIZone()
 {
-    glColor3f(0.8f, 0.8f, 0.8f);
+    /*glColor3f(0.8f, 0.8f, 0.8f);
     glDisable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
         glVertex2i(sizeW,                0);
@@ -224,7 +233,7 @@ void Manager::ClearGUIZone()
         glVertex2i(sizeW + guiShift, sizeH);
         glVertex2i(sizeW + guiShift,     0);
     glEnd();
-    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);*/
 }
 
 void Manager::checkMoveMob()
@@ -249,7 +258,9 @@ void Manager::checkMoveMob()
 
 void Manager::processInput()
 {
-    static Uint8* keys;
+    GetQApp()->processEvents(QEventLoop::AllEvents, 40);
+    //GetQApp()->
+/*    static Uint8* keys;
     int lastShoot = 0;
     int click_timer = 0;
     if (!NODRAW)
@@ -259,7 +270,7 @@ void Manager::processInput()
         { 
             if(event.type == SDL_QUIT) 
                 done = 1; 
-           /* if(event.type == SDL_KEYUP)
+            if(event.type == SDL_KEYUP)
             {
                 if (event.key.keysym.sym == SDLK_o) 
                     pause = !pause;
@@ -272,7 +283,7 @@ void Manager::processInput()
                     msg.text = "SDLK_F2";
                     NetClient::GetNetClient()->Send(msg);
                 }
-            }*/
+            }
             if(event.type == SDL_MOUSEBUTTONDOWN)
             {
                 if (event.button.button == SDL_BUTTON_WHEELUP)
@@ -418,7 +429,7 @@ void Manager::processInput()
             i++;
         };
         SYSTEM_STREAM << "Num item: " << i << " in " << (SDL_GetTicks() - locatime) * 1.0 / 1000 << " sec" << std::endl;
-    }*/
+    }
     if(keys[SDLK_F5])
     {
         int locatime = SDL_GetTicks();
@@ -447,41 +458,119 @@ void Manager::processInput()
     SEND_KEY_MACRO(SDLK_x);
     SEND_KEY_MACRO(SDLK_c);
     SEND_KEY_MACRO(SDLK_v);
-};
+    */
+}
+
+void Manager::ProcessClick(int mouse_x, int mouse_y)
+{
+    id_ptr_on<IOnMapObject> item;
+    if (GetMob()->GetInterface() && GetMob()->GetInterface()->IsArea(mouse_x, mouse_y))
+    {
+        item = GetMob()->GetInterface()->Click(mouse_x, mouse_y);
+    }
+    else
+    {
+        item = GetMapMaster()->click(mouse_x, mouse_y);
+    }
+    if (item)
+    {
+        Message msg;
+        msg.from = item.ret_id();
+        msg.text = Input::LEFT_CLICK;
+        NetClient::GetNetClient()->Send(msg);
+        last_touch = item->name;
+    }
+//          PlaySound("click.ogx");
+}
+
+void Manager::HandleKeyboardDown(QKeyEvent* event)
+{
+    Message msg;
+    if ((event->key() == Qt::Key_8) && (event->modifiers() == Qt::KeypadModifier))
+    {
+        msg.text = Input::MOVE_UP;
+    }
+    else if ((event->key() == Qt::Key_2) && (event->modifiers() == Qt::KeypadModifier))
+    {
+        msg.text = Input::MOVE_DOWN;
+    }
+    else if ((event->key() == Qt::Key_6) && (event->modifiers() == Qt::KeypadModifier))
+    {
+        msg.text = Input::MOVE_RIGHT;
+    }
+    else if ((event->key() == Qt::Key_4) && (event->modifiers() == Qt::KeypadModifier))
+    {
+        msg.text = Input::MOVE_LEFT;
+    }
+    else if (event->key() == Qt::Key_Up)
+    {
+        msg.text = Input::MOVE_UP;
+    }
+    else if (event->key() == Qt::Key_Down)
+    {
+        msg.text = Input::MOVE_DOWN;
+    }
+    else if (event->key() == Qt::Key_Right)
+    {
+        msg.text = Input::MOVE_RIGHT;
+    }
+    else if (event->key() == Qt::Key_Left)
+    {
+        msg.text = Input::MOVE_LEFT;
+    }
+    else
+    {
+        return;
+    }
+    NetClient::GetNetClient()->Send(msg);
+}
 
 void Manager::initWorld()
 {
+    std::cout << "Begin init world" << std::endl;
     tick_recv = 0;
     isMove = 0;
-    
-    text_input_ = nullptr;
 
     if (!InitSDL())
     {
         SYSTEM_STREAM << "Fail SDL load" << std::endl;
     }
-    SDL_WM_SetCaption(Debug::GetUniqueName().c_str(), Debug::GetUniqueName().c_str());
+    //SDL_WM_SetCaption(Debug::GetUniqueName().c_str(), Debug::GetUniqueName().c_str());
 
+    std::cout << "Begin set manager" << std::endl;
     SetManager(this);
+
+    //sizeW = GetGLWidget()->width();
+    //sizeH = GetGLWidget()->height();
 
     SetItemFabric(new ItemFabric);
     SetMapMaster(new MapMaster);
+    std::cout << "Screen set" << std::endl;
+
+    int old_size_w = GetGLWidget()->width();
+    int old_size_h = GetGLWidget()->height();
     if (!NODRAW)
-        SetScreen(new Screen(sizeW + guiShift, sizeH));
+        SetScreen(new Screen(sizeW, sizeH));
+    GetGLWidget()->resize(old_size_w, old_size_h);
+    std::cout << "Screen has been set" << std::endl;
     SetTexts(new TextPainter);
     SetSpriter(new ASprClass);
 
+    std::cout << "Begin load resources" << std::endl;
     LoadImages();
     LoadSounds();
     LoadNames();
 
+    std::cout << "Net init" << std::endl;
     NetClient::Init();
 
+    std::cout << "Create tiles" << std::endl;
     int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
     int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
     int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 1;
     GetMapMaster()->makeTiles(x, y, z);
 
+    std::cout << "Begin choose map" << std::endl;
     if (   GetParamsHolder().GetParamBool("mapgen_name")
         && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("mapgen_name")))
     {
@@ -514,6 +603,7 @@ void Manager::initWorld()
     }
     else
     {
+        std::cout << "Begin create map" << std::endl;
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
                 hash("Human"), 
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
@@ -539,7 +629,7 @@ void Manager::initWorld()
     data.word_for_who = 1;
     NetClient::GetNetClient()->Connect(adrs_, DEFAULT_PORT, data);
 
-    Chat::InitChat(sizeW, sizeH / 2, sizeW + guiShift, sizeH, 15);
+    Chat::InitChat();
 
     GetTexts()["FPS"].SetUpdater
     ([this](std::string* str)
@@ -562,13 +652,15 @@ void Manager::initWorld()
             *str = "Connection lost";
         else
             *str = "";
-    }).SetFreq(100).SetPlace(60, 0).SetSize(20).SetColor(250, 0, 0);   
-};
+    }).SetFreq(100).SetPlace(60, 0).SetSize(20).SetColor(250, 0, 0);
+
+
+}
 
 void Manager::loadIniFile()
 {
 
-};
+}
 
 void Manager::process_in_msg()
 {
@@ -603,6 +695,28 @@ bool Manager::isMobVisible(int posx, int posy)
         if(it->posx == posx && it->posy == posy)
             return true;
     return false;
+}
+
+QApplication* app = nullptr;
+QApplication* GetQApp()
+{
+    return app;
+}
+
+void SetQApp(QApplication* new_app)
+{
+    app = new_app;
+}
+
+QWidget* main_widget = nullptr;
+QWidget* GetMainWidget()
+{
+    return main_widget;
+}
+
+void SetMainWidget(QWidget* widget)
+{
+    main_widget = widget;
 }
 
 Manager* manager_ = nullptr;

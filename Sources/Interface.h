@@ -43,6 +43,8 @@ private:
     Slot<Item> drop_;
     Slot<Item> r_hand_;
     Slot<Item> l_hand_;
+    Slot<Item> head_;
+    Slot<Item> suit_;
 };
 
 std::ostream& operator<<(std::stringstream& file, HumanInterface& interf);

@@ -82,13 +82,13 @@ void Human::processGUImsg(const Message& msg)
  //   IMob::processGUImsg(msg);
     if (!lying_)
     {
-        if (msg.text == "SDLK_UP")
+        if (msg.text == Input::MOVE_UP)
             checkMove(D_UP);
-        else if (msg.text == "SDLK_DOWN")
+        else if (msg.text == Input::MOVE_DOWN)
             checkMove(D_DOWN);
-        else if (msg.text == "SDLK_LEFT")
+        else if (msg.text == Input::MOVE_LEFT)
             checkMove(D_LEFT);
-        else if (msg.text == "SDLK_RIGHT")
+        else if (msg.text == Input::MOVE_RIGHT)
             checkMove(D_RIGHT);
     }
     if (msg.type == Net::CHAT_TYPE)
@@ -128,7 +128,7 @@ void Human::processGUImsg(const Message& msg)
     {
         interface_.SwapHands();
     }
-    else if (msg.text == "SDL_MOUSEBUTTONDOWN")
+    else if (msg.text == Input::LEFT_CLICK)
     {
         id_ptr_on<IOnMapObject> item = msg.from;
         if (item && item->GetOwner())

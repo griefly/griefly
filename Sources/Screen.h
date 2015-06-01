@@ -14,14 +14,10 @@ public:
     void Swap();
     bool Fail();
 
-    int w()
-    {
-        return screen_->w;
-    }
-    int h()
-    {
-        return screen_->h;
-    }
+    void PerformSizeUpdate();
+
+    int w();
+    int h();
 private:
     bool fail_;
     SDL_Surface* screen_;

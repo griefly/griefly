@@ -6,14 +6,16 @@
 #include <SDL_opengl.h>
 
 #include "Params.h"
+#include "qtopengl.h"
 
 Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
 {
     fail_ = true;
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-        return;
+    ResetScreen(x, y, 32, 0);
+    //if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    //    return;
 
-    auto flag = SDL_FULLSCREEN;
+    /*auto flag = SDL_FULLSCREEN;
     if(!fullscreen)
         flag = 0;
     ResetScreen(x, y, 32, SDL_OPENGL | SDL_RESIZABLE | flag);
@@ -42,22 +44,23 @@ Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
         if (wglSwapInterval) 
             wglSwapInterval(1);
 #endif
-    }
+    }*/
     fail_ = false;
+}
+
+void Screen::PerformSizeUpdate()
+{
+    glViewport(0, 0, GetGLWidget()->width(), GetGLWidget()->height());
 }
 
 void Screen::ResetScreen(int x, int y, int bpp, Uint32 flags)
 {
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    screen_ = SDL_SetVideoMode(x, y, 32, flags);
-    glViewport(0, 0, x, y);
-    SYSTEM_STREAM << "X: " << x << " Y: " << y << std::endl;
-    SYSTEM_STREAM << "X: " << w() << " Y: " << h() << std::endl;
+    GetGLWidget()->resize(x, y);
 }
 
 void Screen::Swap()
 {
-    SDL_GL_SwapBuffers();
+    GetGLWidget()->swapBuffers();
 }
 
 void Screen::Clear()
@@ -79,10 +82,10 @@ void Screen::Draw(const ApproxGLImage* sprite, int x_ul, int y_ul, int x_dr, int
     float text_y = sprite->GetY();
 
     glBegin(GL_QUADS);
-        glTexCoord2f(0.0,       0.0);     glVertex2f(static_cast<float>(x_ul), static_cast<float>(y_ul));
-        glTexCoord2f(0.0,    text_y);     glVertex2f(static_cast<float>(x_ul), static_cast<float>(y_dr));
-        glTexCoord2f(text_x, text_y);     glVertex2f(static_cast<float>(x_dr), static_cast<float>(y_dr));
-        glTexCoord2f(text_x,    0.0);     glVertex2f(static_cast<float>(x_dr), static_cast<float>(y_ul));
+        glTexCoord2f(0.0,       0.0);     glVertex3f(static_cast<float>(x_ul), static_cast<float>(y_ul), 0.0f);
+        glTexCoord2f(0.0,    text_y);     glVertex3f(static_cast<float>(x_ul), static_cast<float>(y_dr), 0.0f);
+        glTexCoord2f(text_x, text_y);     glVertex3f(static_cast<float>(x_dr), static_cast<float>(y_dr), 0.0f);
+        glTexCoord2f(text_x,    0.0);     glVertex3f(static_cast<float>(x_dr), static_cast<float>(y_ul), 0.0f);
     glEnd();
     if (glGetError())
         SYSTEM_STREAM << glGetError() << std::endl; 
@@ -92,6 +95,7 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
 {
     if (sprite_in == nullptr)
         return;
+
     const GLSprite& sprite = *sprite_in;
 
     glColor4f(1, 1, 1, 1);
@@ -104,16 +108,25 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
     glTranslatef(-1 * x - sprite.W() / 2.0f, -1 * y - sprite.H() / 2.0f, 0.0f); 
 
     glBegin(GL_QUADS);
-        glTexCoord2f(0.0, 0.0);     glVertex2f(static_cast<float>(x),              static_cast<float>(y));
-        glTexCoord2f(0.0, 1.0);     glVertex2f(static_cast<float>(x),              static_cast<float>(y + sprite.H()));
-        glTexCoord2f(1.0, 1.0);     glVertex2f(static_cast<float>(x + sprite.W()), static_cast<float>(y + sprite.H()));
-        glTexCoord2f(1.0, 0.0);     glVertex2f(static_cast<float>(x + sprite.W()), static_cast<float>(y));
+        glTexCoord2f(0.0, 0.0);     glVertex3f(static_cast<float>(x),              static_cast<float>(y), 0.0f);
+        glTexCoord2f(0.0, 1.0);     glVertex3f(static_cast<float>(x),              static_cast<float>(y + sprite.H()), 0.0f);
+        glTexCoord2f(1.0, 1.0);     glVertex3f(static_cast<float>(x + sprite.W()), static_cast<float>(y + sprite.H()), 0.0f);
+        glTexCoord2f(1.0, 0.0);     glVertex3f(static_cast<float>(x + sprite.W()), static_cast<float>(y), 0.0f);
     glEnd();
     glLoadIdentity();
 
     if (glGetError())
         SYSTEM_STREAM << glGetError() << std::endl; 
 
+}
+
+int Screen::w()
+{
+    return GetGLWidget()->width();
+}
+int Screen::h()
+{
+    return GetGLWidget()->height();
 }
 
 Screen* screen = nullptr;

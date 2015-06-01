@@ -119,7 +119,7 @@ void COrk::processGUImsg(const Message& msg)
         id_ptr_on<CubeTile> ct = GetOwner();
         ct->GetAtmosHolder()->AddEnergy(10000);
     }
-    else if (msg.text == "SDL_MOUSEBUTTONDOWN")
+    else if (msg.text == Input::LEFT_CLICK)
     {
         id_ptr_on<IOnMapObject> item = msg.from;
         if (item && item->GetOwner())

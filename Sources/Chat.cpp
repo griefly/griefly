@@ -25,13 +25,11 @@ Chat* Chat::GetChat()
 const size_t MAX_LINE_SIZE = 1024;
 const int SCROLL_SIZE = 10;
 
-void Chat::InitChat(int from_x, int from_y, 
-                    int   to_x, int   to_y, 
-                    int visible_lines)
+void Chat::InitChat()
 {
     chat = new Chat;
 
-    chat->from_x_ = from_x;
+    /*chat->from_x_ = from_x;
     chat->from_y_ = from_y;
     chat->to_x_   = to_x;
     chat->to_y_   = to_y;
@@ -66,7 +64,7 @@ void Chat::InitChat(int from_x, int from_y,
         }).SetSize(font_size).SetPlace(from_x + 1, to_y - (i + 2) * per_line)
             .SetFreq(50).SetColor(0, 0, 0).SetFont("DejaVuSans.ttf");
     }
-    chat->current_pos_ = chat->visible_lines_;
+    chat->current_pos_ = chat->visible_lines_;*/
 }
 
 void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
@@ -77,7 +75,10 @@ void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
 
 void Chat::PostText(const std::string& str_)
 {
-    std::string str = str_;
+    QString loc = QString::fromUtf8(str_.c_str());
+    GetTextBrowser()->append(loc);
+
+    /*std::string str = str_;
     int pos = 0;
     int oldpos = 0;
 
@@ -95,15 +96,15 @@ void Chat::PostText(const std::string& str_)
         AddLines(without);
         oldpos = pos + 1;
     }
-    block_down_ = false;
+    block_down_ = false;*/
 }
 
 void Chat::Process()
 {   
-    ClearZone();
+   /* ClearZone();
     DrawScroll();
 
-    text_input_->Process();
+    text_input_->Process();*/
 
     std::string str = ss.str();
     ss.str("");
@@ -116,6 +117,8 @@ void Chat::Process()
 
 void Chat::AddLines(const std::string& str)
 {
+    QString loc = QString::fromUtf8(str.c_str());
+    GetTextBrowser()->append(loc);
     int pos = 0;
     while (true)
     {
@@ -224,4 +227,15 @@ void Chat::DrawScroll()
         glVertex2i(to_x_,               pos - POINTER_SIZE);
     glEnd();
     glEnable(GL_TEXTURE_2D);
+}
+
+QTextBrowser* text_browser = nullptr;
+void SetTextBrowser(QTextBrowser* tb)
+{
+    text_browser = tb;
+}
+
+QTextBrowser* GetTextBrowser()
+{
+    return text_browser;
 }

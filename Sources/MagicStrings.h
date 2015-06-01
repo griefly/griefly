@@ -18,3 +18,13 @@ namespace Net
     const char* const MAP_TYPE = "map";
     const char* const CHAT_TYPE = "chat";
 }
+
+namespace Input
+{
+    const char* const LEFT_CLICK = "LEFT_CLICK";
+
+    const char* const MOVE_UP = "MOVE_UP";
+    const char* const MOVE_DOWN = "MOVE_DOWN";
+    const char* const MOVE_LEFT = "MOVE_LEFT";
+    const char* const MOVE_RIGHT = "MOVE_RIGHT";
+}

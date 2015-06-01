@@ -92,7 +92,7 @@ namespace helpers
     {
         *x = static_cast<int>
             (  static_cast<float>(*x) 
-            * (  static_cast<float>(sizeW + guiShift) 
+            * (  static_cast<float>(sizeW)
                / static_cast<float>(GetScreen()->w())
                ));
         *y = static_cast<int>

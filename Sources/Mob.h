@@ -7,6 +7,8 @@
 #include "HelperStructers.h"
 
 #include "TextInput.h"
+#include <QApplication>
+#include <QKeyEvent>
 
 class Manager
 {
@@ -17,7 +19,6 @@ public:
     void undoCenterMove(Dir direct);
     void cautLastItem(Dir direct);
     void checkMove(Dir direct);
-    void cautFromTo(int fromPosx, int fromPosy, int toPosx, int toPosy){ SYSTEM_STREAM << "void Manager::cautFromTo - not exist\n";};
     void globalMove(int direct);
     void initWorld();
     void loadIniFile();
@@ -25,6 +26,10 @@ public:
     void checkMoveMob();
     //void processGUI();
     void processInput();
+
+    void ProcessClick(int mouse_x, int mouse_y);
+
+    void HandleKeyboardDown(QKeyEvent* event);
 
     void ClearGUIZone();
 
@@ -57,7 +62,6 @@ public:
 
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:
-    TextInput* text_input_;
 
     std::string adrs_;
 
@@ -65,6 +69,12 @@ private:
 
     bool auto_player_;
 };
+
+QApplication* GetQApp();
+void SetQApp(QApplication* new_app);
+
+QWidget* GetMainWidget();
+void SetMainWidget(QWidget* widget);
 
 Manager* GetManager();
 void SetManager(Manager* manager);

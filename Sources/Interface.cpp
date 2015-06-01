@@ -11,6 +11,12 @@ void HumanInterface::InitSlots()
     l_hand_.SetPos(2, 14);
     l_hand_.GetView()->SetState("hand_l_inactive");
 
+    head_.SetPos(1, 13);
+    head_.GetView()->SetState("head");
+
+    suit_.SetPos(1, 14);
+    suit_.GetView()->SetState("suit");
+
     active_hand_ = true;
 
     drop_.SetPos(7, 15);
@@ -23,6 +29,10 @@ id_ptr_on<Item> HumanInterface::Click(int x, int y)
     if (r_hand_.Click(x, y))
         return r_hand_.Get();
     if (l_hand_.Click(x, y))
+        return l_hand_.Get();
+    if (head_.Click(x, y))
+        return l_hand_.Get();
+    if (suit_.Click(x, y))
         return l_hand_.Get();
     if (drop_.Click(x, y))
     {
@@ -92,6 +102,8 @@ void HumanInterface::Draw()
     r_hand_.Draw();
     l_hand_.Draw();
     drop_.Draw();
+    head_.Draw();
+    suit_.Draw();
 }
 
 unsigned int HumanInterface::hash() const
@@ -100,6 +112,8 @@ unsigned int HumanInterface::hash() const
     hash += r_hand_.hash_member();
     hash += drop_.hash_member();
     hash += l_hand_.hash_member();
+    hash += head_.hash_member();
+    hash += suit_.hash_member();
     hash += active_hand_;
     return hash;
 }
@@ -131,6 +145,8 @@ std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
     interf.r_hand_.operator<<(file) << " ";
     interf.drop_.operator<<(file) << " ";
     interf.l_hand_.operator<<(file) << " ";
+    interf.head_.operator<<(file) << " ";
+    interf.suit_.operator<<(file) << " ";
     file << interf.active_hand_ << " ";
     return file;
 }
@@ -139,6 +155,8 @@ std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
     interf.r_hand_.operator>>(file);
     interf.drop_.operator>>(file);
     interf.l_hand_.operator>>(file);
+    interf.head_.operator>>(file);
+    interf.suit_.operator>>(file);
     file >> interf.active_hand_;
     return file;
 }

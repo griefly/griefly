@@ -3,6 +3,8 @@
 #include "MapClass.h"
 #include "Turf.h"
 
+#include "MagicStrings.h"
+
 IMob::IMob()
 {
     thisMobControl = false;
@@ -31,13 +33,13 @@ void IMob::delThis()
 
 void IMob::processGUImsg(const Message& msg)
 {
-    if (msg.text == "SDLK_UP")
+    if (msg.text == Input::MOVE_UP)
         checkMove(D_UP);
-    else if (msg.text == "SDLK_DOWN")
+    else if (msg.text == Input::MOVE_DOWN)
         checkMove(D_DOWN);
-    else if (msg.text == "SDLK_LEFT")
+    else if (msg.text == Input::MOVE_LEFT)
         checkMove(D_LEFT);
-    else if (msg.text == "SDLK_RIGHT")
+    else if (msg.text == Input::MOVE_RIGHT)
         checkMove(D_RIGHT);
 }
 

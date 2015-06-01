@@ -6,6 +6,8 @@
 #include "Mob.h"
 #include "MainInt.h"
 
+#include "qtopengl.h"
+
 unsigned int GLSprite::FrameW() const
 {
     return gl_sprites_[0].size();
@@ -86,6 +88,7 @@ void GLSprite::Init(CSprite* sprite)
 
 GLSprite::GLSprite(const std::string& name)
 {
+    MakeCurrentGLContext();
     CSprite* sprite = new CSprite;
 
     InitSprite data;
@@ -105,6 +108,7 @@ GLSprite::GLSprite(const std::string& name)
 
 GLSprite::~GLSprite()
 {
+    MakeCurrentGLContext();
     for (size_t i = 0; i < gl_sprites_.size(); ++i)
         glDeleteTextures(gl_sprites_[i].size(), &gl_sprites_[i][0]);
     delete sdl_sprite_;

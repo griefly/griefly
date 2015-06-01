@@ -8,13 +8,13 @@
 #include "TextInput.h"
 #include "MobInt.h"
 
+#include <QTextBrowser>
+
 class Chat
 {
 public:
     static Chat* GetChat();
-    static void InitChat(int from_x, int from_y, 
-                         int   to_x, int   to_y, 
-                         int visible_lines);
+    static void InitChat();
     void Process();
     void DrawScroll();
     void ScrollUp();
@@ -23,10 +23,6 @@ public:
 
     void PostText(const std::string& str);
     void PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner);
-    TextInput* GetTextInput()
-    {
-        return text_input_;
-    }
 private:
     void ClearZone();
 
@@ -57,11 +53,12 @@ private:
 
     std::vector<Line> lines_;
 
-    TextInput* text_input_;
-
     char* text_;
 
     TTF_Font* deja;
 
     static Chat* chat;
 };
+
+void SetTextBrowser(QTextBrowser* tb);
+QTextBrowser* GetTextBrowser();

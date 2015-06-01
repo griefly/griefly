@@ -21,8 +21,6 @@ const int sizeWsq = 11;
 extern int sizeW; // visible play in pixel const
 extern int sizeH;
 
-extern int guiShift;
-
 const int beginMobPosX = 8; // posx and posx mob on screen
 const int beginMobPosY = 8; // maybe no const?
 
