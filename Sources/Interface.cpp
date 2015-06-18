@@ -72,6 +72,9 @@ bool HumanInterface::IsArea(int x, int y)
 {
     helpers::normalize_pixels(&x, &y);    
     return    r_hand_.Click(x, y)
+           || l_hand_.Click(x, y)
+           || head_.Click(x, y)
+           || suit_.Click(x, y)
            || drop_.Click(x, y);
 }
 

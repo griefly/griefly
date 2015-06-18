@@ -456,7 +456,7 @@ void Manager::processInput()
 
     SEND_KEY_MACRO(SDLK_z);
     SEND_KEY_MACRO(SDLK_x);
-    SEND_KEY_MACRO(SDLK_c);
+    SEND_KEY_MACRO(SDLK_c);j
     SEND_KEY_MACRO(SDLK_v);
     */
 }
