@@ -12,7 +12,7 @@
 class IOnMapObject: public IOnMapBase
 {
 public:
-    IOnMapObject();
+    IOnMapObject(size_t id);
     DECLARE_GET_TYPE_ITEM(ionmapitem);
     DECLARE_SAVED(IOnMapObject, IOnMapBase);
     void checkSelfLevel();

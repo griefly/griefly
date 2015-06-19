@@ -7,7 +7,7 @@ class Item: public IMovable
 public:
     DECLARE_SAVED(Item, IMovable);
     DECLARE_GET_TYPE_ITEM(Item);
-    Item();
+    Item(size_t id);
 };
 ADD_TO_TYPELIST(Item);
 
@@ -16,7 +16,7 @@ class Screwdriver: public Item
 public:
     DECLARE_SAVED(Screwdriver, Item);
     DECLARE_GET_TYPE_ITEM(Screwdriver);
-    Screwdriver();
+    Screwdriver(size_t id);
 };
 ADD_TO_TYPELIST(Screwdriver);
 
@@ -25,7 +25,7 @@ class Wirecutters: public Item
 public:
     DECLARE_SAVED(Wirecutters, Item);
     DECLARE_GET_TYPE_ITEM(Wirecutters);
-    Wirecutters();
+    Wirecutters(size_t id);
 };
 ADD_TO_TYPELIST(Wirecutters);
 
@@ -34,7 +34,7 @@ class Crowbar: public Item
 public:
     DECLARE_SAVED(Crowbar, Item);
     DECLARE_GET_TYPE_ITEM(Crowbar);
-    Crowbar();
+    Crowbar(size_t id);
 };
 ADD_TO_TYPELIST(Crowbar);
 
@@ -43,6 +43,6 @@ class Wrench: public Item
 public:
     DECLARE_SAVED(Wrench, Item);
     DECLARE_GET_TYPE_ITEM(Wrench);
-    Wrench();
+    Wrench(size_t id);
 };
 ADD_TO_TYPELIST(Wrench);

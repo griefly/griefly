@@ -7,7 +7,7 @@ class Lattice: public Structure
 public:
     DECLARE_SAVED(Lattice, Structure);
     DECLARE_GET_TYPE_ITEM(Lattice);
-    Lattice();
+    Lattice(size_t id);
     virtual void AttackBy(id_ptr_on<Item> item) override;
 };
 ADD_TO_TYPELIST(Lattice);

@@ -7,7 +7,7 @@
 #include "ItemFabric.h"
 #include "Materials.h"
 
-Grille::Grille()
+Grille::Grille(size_t id) : Structure(id)
 {
     transparent = true;
     SetPassable(D_ALL, Passable::AIR);

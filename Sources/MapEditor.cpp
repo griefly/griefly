@@ -33,7 +33,7 @@ void MapEditor::InitCreationList()
 {
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
-        IMainObject* loc = it->second();
+        IMainObject* loc = it->second(0);
         IOnMapObject* bloc = castTo<IOnMapObject>(loc);
         if (!bloc)
         {

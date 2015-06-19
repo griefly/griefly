@@ -12,7 +12,7 @@ void Teleportator::processGUImsg(const Message& msg)
         CreateItem(msg.from, hash("Human"));
 }
 
-Teleportator::Teleportator()   
+Teleportator::Teleportator(size_t id) : IMessageReceiver(id)
 {
     SetSprite("icons/teleportator.png");
 }

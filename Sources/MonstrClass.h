@@ -12,6 +12,6 @@ public:
     virtual void aaMind();
     virtual void live();
     void findTarget();
-    CMonstr();
+    CMonstr(size_t id);
 };
 ADD_TO_TYPELIST(CMonstr);

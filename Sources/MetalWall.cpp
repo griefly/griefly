@@ -9,7 +9,7 @@
 
 #include "ItemFabric.h"
 
-MetalWall::MetalWall()
+MetalWall::MetalWall(size_t id) : ITurf(id)
 {
     transparent = false;
     SetPassable(D_ALL, Passable::EMPTY);
@@ -35,7 +35,7 @@ void MetalWall::AttackBy(id_ptr_on<Item> item)
     }
 }
 
-ReinforcedWall::ReinforcedWall()
+ReinforcedWall::ReinforcedWall(size_t id) : ITurf(id)
 {
     transparent = false;
     SetPassable(D_ALL, Passable::EMPTY);

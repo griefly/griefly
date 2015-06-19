@@ -344,10 +344,12 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
     ChangeMob(GetMob());
 }
 
-IMainObject* ItemFabric::newVoidItem(unsigned int type)
+IMainObject* ItemFabric::newVoidItem(unsigned int type, size_t id)
 {
     static Initer init;
-    return (*itemList())[type]();
+    auto il = (*itemList());
+    auto f = il[type];
+    return f(id);
 };
 
 IMainObject* ItemFabric::newVoidItemSaved(unsigned int type)

@@ -23,27 +23,6 @@ void HumanInterface::InitSlots()
     drop_.GetView()->SetState("act_drop");
 }
 
-id_ptr_on<Item> HumanInterface::Click(int x, int y)
-{
-    helpers::normalize_pixels(&x, &y);
-    if (r_hand_.Click(x, y))
-        return r_hand_.Get();
-    if (l_hand_.Click(x, y))
-        return l_hand_.Get();
-    if (head_.Click(x, y))
-        return l_hand_.Get();
-    if (suit_.Click(x, y))
-        return l_hand_.Get();
-    if (drop_.Click(x, y))
-    {
-        Message msg;
-        msg.text = "SDLK_p";
-        NetClient::GetNetClient()->Send(msg);
-        return 0;
-    }
-    return 0;
-}
-
 void HumanInterface::SwapHands()
 {
     if (active_hand_)
@@ -68,32 +47,65 @@ Slot<Item>& HumanInterface::GetActiveHand()
         return l_hand_;
 }
 
-bool HumanInterface::IsArea(int x, int y)
+const std::string RIGHT_HAND = "INT_RHAND";
+const std::string LEFT_HAND = "INT_LHAND";
+const std::string HEAD = "HEAD";
+const std::string SUIT = "SUIT";
+const std::string DROP = "DROP";
+
+bool HumanInterface::Click(int x, int y)
 {
-    helpers::normalize_pixels(&x, &y);    
-    return    r_hand_.Click(x, y)
-           || l_hand_.Click(x, y)
-           || head_.Click(x, y)
-           || suit_.Click(x, y)
-           || drop_.Click(x, y);
+    helpers::normalize_pixels(&x, &y);
+    Message msg;
+    if (r_hand_.Click(x, y))
+    {
+        msg.text = RIGHT_HAND;
+    }
+    else if (l_hand_.Click(x, y))
+    {
+        msg.text = LEFT_HAND;
+    }
+    else if (head_.Click(x, y))
+    {
+        msg.text = HEAD;
+    }
+    else if (suit_.Click(x, y))
+    {
+        msg.text = SUIT;
+    }
+    else if (drop_.Click(x, y))
+    {
+        msg.text = DROP;
+    }
+    else
+    {
+        return false;
+    }
+    NetClient::GetNetClient()->Send(msg);
+    return true;
 }
 
-bool HumanInterface::HandleClick(id_ptr_on<Item> item)
+void HumanInterface::HandleClick(const std::string& place)
 {
-    if (!item)
-        return false;
-
-    if (item == r_hand_.Get())
+    if (place == RIGHT_HAND)
     {
-        item->AttackBy(0);
-        return true;
+        if (r_hand_.Get())
+            r_hand_.Get()->AttackBy(0);
     }
-    if (item == l_hand_.Get())
+    else if (place == LEFT_HAND)
     {
-        item->AttackBy(0);
-        return true;
+        if (l_hand_.Get())
+            l_hand_.Get()->AttackBy(0);
     }
-    return false;
+    else if (place == DROP)
+    {
+        if(GetActiveHand().Get())
+        {
+            owner_->GetOwner()->AddItem(GetActiveHand().Get());
+            Drop();
+        }
+    }
+    SYSTEM_STREAM << "Inteface click: " << place << std::endl;
 }
 
 HumanInterface::~HumanInterface()
@@ -118,6 +130,7 @@ unsigned int HumanInterface::hash() const
     hash += head_.hash_member();
     hash += suit_.hash_member();
     hash += active_hand_;
+    hash += owner_.ret_id();
     return hash;
 }
 
@@ -151,6 +164,7 @@ std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
     interf.head_.operator<<(file) << " ";
     interf.suit_.operator<<(file) << " ";
     file << interf.active_hand_ << " ";
+    file << interf.owner_ << " ";
     return file;
 }
 std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
@@ -161,5 +175,6 @@ std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
     interf.head_.operator>>(file);
     interf.suit_.operator>>(file);
     file >> interf.active_hand_;
+    file >> interf.owner_;
     return file;
 }

@@ -4,7 +4,7 @@
 #include "helpers.h"
 #include "MobInt.h"
 
-FlatGlass::FlatGlass()
+FlatGlass::FlatGlass(size_t id) : Structure(id)
 {
     transparent = true;
 
@@ -52,7 +52,7 @@ void FlatGlass::Bump(id_ptr_on<IMovable> item)
 }
 
 
-ReinforcedFlatGlass::ReinforcedFlatGlass()
+ReinforcedFlatGlass::ReinforcedFlatGlass(size_t id) : FlatGlass(id)
 {
     SetState("rwindow");
     name = "Reinforced window";

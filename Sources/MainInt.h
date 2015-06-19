@@ -20,8 +20,8 @@ public:
     }
 
     virtual void delThis();
-    IMainObject(){ id_ = 0; how_often_ = 0;};
-    IMainObject(NotLoadItem) {id_ = 0; how_often_ = 0;};
+    IMainObject(size_t id){ id_ = id; how_often_ = 0; }
+    IMainObject(NotLoadItem) {id_ = 0; how_often_ = 0;}
     virtual unsigned int T_ITEM()            
     {                                        
         static unsigned int result = 0;

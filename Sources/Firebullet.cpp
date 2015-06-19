@@ -32,7 +32,7 @@ void CFirebullet::process()
     else checkMove(dMove);*/
 };
 
-CFirebullet::CFirebullet()
+CFirebullet::CFirebullet(size_t id) : SmallItem(id)
 {
     tickSpeed = 8;
     pixSpeed = 4;

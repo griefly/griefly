@@ -25,6 +25,6 @@ public:
 
     int KV_SAVEBLE(max_dmg);
     int KV_SAVEBLE(tick_sm);
-    CAliveMob();
+    CAliveMob(size_t id);
 };
 ADD_TO_TYPELIST(CAliveMob);

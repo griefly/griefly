@@ -14,7 +14,7 @@ void CMonstr::aaMind()
    checkMove((Dir)(get_rand() % 4));
 };
 
-CMonstr::CMonstr()
+CMonstr::CMonstr(size_t id) : CAliveMob(id)
 {
     FindTargetTime = SDL_GetTicks() + get_rand() % 100;
     SetPassable(D_ALL, Passable::FULL);

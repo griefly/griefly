@@ -13,7 +13,7 @@
 #include "FireEffect.h"
 #include "sync_random.h"
 
-CAliveMob::CAliveMob()
+CAliveMob::CAliveMob(size_t id) : IMob(id)
 {
     dmg = 0;
     injuries = 0;

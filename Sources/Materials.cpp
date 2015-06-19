@@ -5,7 +5,7 @@
 #include "Floor.h"
 #include "Grille.h"
 
-Rod::Rod()
+Rod::Rod(size_t id) : Item(id)
 {
     SetState("rods");
 
@@ -21,7 +21,7 @@ void Rod::AttackBy(id_ptr_on<Item> item)
     }
 }
 
-Metal::Metal()
+Metal::Metal(size_t id) : Item(id)
 {
     SetState("sheet-metal");
 

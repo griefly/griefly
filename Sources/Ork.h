@@ -5,7 +5,7 @@
 #include "sound.h"
 #include "Interface.h"
 
-class Item;
+/*class Item;
 
 class COrk : public CAliveMob
 {
@@ -25,4 +25,4 @@ private:
     GLSprite* KV_ON_LOAD(gui_sprite_, nullptr);
 };
 
-ADD_TO_TYPELIST(COrk);
+ADD_TO_TYPELIST(COrk);*/

@@ -7,7 +7,7 @@
 #include "ItemFabric.h"
 #include "sound.h"
 
-Lattice::Lattice()
+Lattice::Lattice(size_t id) : Structure(id)
 {
     SetSprite("icons/structures.dmi");
     SetState("latticefull");

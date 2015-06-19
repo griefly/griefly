@@ -30,7 +30,7 @@ class IOnMapBase: public IDraw
 public:
     DECLARE_SAVED(IOnMapBase, IDraw);
     DECLARE_GET_TYPE_ITEM(IOnMapBase);
-    IOnMapBase() {owner = 0; is_strong_owner = false;};
+    IOnMapBase(size_t id) : IDraw(id) {owner = 0; is_strong_owner = false;};
     virtual bool IsVisibleByPlayer() const
     {
         return true;

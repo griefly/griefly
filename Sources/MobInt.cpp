@@ -5,7 +5,7 @@
 
 #include "MagicStrings.h"
 
-IMob::IMob()
+IMob::IMob(size_t id) : IMessageReceiver(id)
 {
     thisMobControl = false;
     onMobControl = false;

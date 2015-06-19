@@ -8,7 +8,7 @@
 
 #include "sound.h"
 
-Girder::Girder()
+Girder::Girder(size_t id) : Structure(id)
 {
     SetSprite("icons/structures.dmi");
     SetState("girder");

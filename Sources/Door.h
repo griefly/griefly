@@ -7,7 +7,7 @@ class Door: public IOnMapObject
 public:
     DECLARE_SAVED(Door, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(Door);
-    Door();
+    Door(size_t id);
     
     virtual void Open();
     virtual void Close();

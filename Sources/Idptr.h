@@ -24,20 +24,21 @@ class Manager;
 
 
 
-typedef IMainObject* (*item_creator)();
+typedef IMainObject* (*item_creator)(size_t id);
+typedef IMainObject* (*item_creator_saved)();
 typedef unsigned int (*type_item)();
 
 std::hash_map<unsigned int, item_creator>* itemList();
 
-std::hash_map<unsigned int, item_creator>* itemListSaved();
+std::hash_map<unsigned int, item_creator_saved>* itemListSaved();
 
 template<class T>
 class itemAdder 
 {
 public:
-    static IMainObject* creator()
+    static IMainObject* creator(size_t id)
     {
-        return new T;
+        return new T(id);
     };
     static IMainObject* creatorSaved()
     {

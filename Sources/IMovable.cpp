@@ -1,4 +1,4 @@
-#include "IMovable.h"
+ï»¿#include "IMovable.h"
 
 #include "EffectSystem.h"
 #include "MoveEffect.h"
@@ -8,7 +8,7 @@
 
 #include <assert.h>
 
-IMovable::IMovable()
+IMovable::IMovable(size_t id) : IOnMapObject(id)
 {
     lastMove = 0;
     tickSpeed = 1;
@@ -71,7 +71,7 @@ bool IMovable::checkMoveTime()
     return true;
 };
 
-// TODO: ÒÎÐÍÀÄÎ
+// TODO: Ð¢ÐžÐ ÐÐÐ”Ðž
 bool IMovable::checkPassable()
 {
     if (!CanPass(owner->GetPassable(dMove), passable_level))

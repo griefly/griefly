@@ -3,7 +3,7 @@
 #include "MapClass.h"
 #include "Creator.h"
 
-Ghost::Ghost()
+Ghost::Ghost(size_t id) : IMob(id)
 {
     tickSpeed = 1;
     pixSpeed = 2;

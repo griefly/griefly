@@ -9,7 +9,7 @@ public:
     DECLARE_GET_TYPE_ITEM(firebullet)
     DECLARE_SAVED(CFirebullet, SmallItem);
     virtual void process();
-    CFirebullet();
+    CFirebullet(size_t id);
 };
 
 ADD_TO_TYPELIST( CFirebullet );

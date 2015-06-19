@@ -6,7 +6,7 @@
 #include "AtmosHolder.h"
 #include "TileInt.h"
 
-AtmosTool::AtmosTool()
+AtmosTool::AtmosTool(size_t id) : Item(id)
 {
     SetSprite("icons/device.dmi");
     SetState("atmos");

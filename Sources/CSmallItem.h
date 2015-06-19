@@ -10,7 +10,7 @@ public:
     int KV_SAVEBLE(force);
     int KV_SAVEBLE(penet_force);
     virtual void use(){};
-    SmallItem()
+    SmallItem(size_t id) : IMovable(id)
     {
         force = 0;
         penet_force = 0;
@@ -23,8 +23,8 @@ class Spear: public SmallItem
 {
 public:
     DECLARE_SAVED(Spear, SmallItem);
-    DECLARE_GET_TYPE_ITEM(spear)
-    Spear()
+    DECLARE_GET_TYPE_ITEM(spear);
+    Spear(size_t id) : SmallItem(id)
     {
         SetSprite("icons/spear.png");
         name = "Spear";
@@ -38,7 +38,7 @@ class ForceSpear: public SmallItem
 public:
     DECLARE_SAVED(ForceSpear, SmallItem);
     DECLARE_GET_TYPE_ITEM(forcespear)
-    ForceSpear()
+    ForceSpear(size_t id) : SmallItem(id)
     {
         SetSprite("icons/spear.png");
         name = "Forcespear";
@@ -54,7 +54,7 @@ class CMeat : public SmallItem
 public:
     DECLARE_SAVED(CMeat, SmallItem);
     DECLARE_GET_TYPE_ITEM(meat)
-    CMeat();
+    CMeat(size_t id);
     //bool coocked;
 };
 ADD_TO_TYPELIST(CMeat);
@@ -64,7 +64,7 @@ class CupItem : public SmallItem
 public:
     DECLARE_SAVED(CupItem, SmallItem);
     DECLARE_GET_TYPE_ITEM(cupitem)
-    CupItem();
+    CupItem(size_t id);
     virtual void use(){};
 };
 ADD_TO_TYPELIST(CupItem);
@@ -75,6 +75,6 @@ public:
     DECLARE_SAVED(CWeed, SmallItem);
     DECLARE_GET_TYPE_ITEM(weed)
     virtual void process();
-    CWeed();
+    CWeed(size_t id);
 };
 ADD_TO_TYPELIST(CWeed);

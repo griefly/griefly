@@ -29,7 +29,7 @@ public:
     void Sync();
     void foreachProcess();
 
-    static IMainObject* newVoidItem(unsigned int type);
+    static IMainObject* newVoidItem(unsigned int type, size_t id);
     static IMainObject* newVoidItemSaved(unsigned int type);
 
     unsigned int hash_all();
@@ -50,12 +50,6 @@ public:
         
         static_assert(std::is_same<IOnMapObject, T>::value || std::is_base_of<IOnMapObject, T>::value, "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapObject");
         T* item;
-        item = castTo<T>(newVoidItem(hash));//TODO: FIX IT!(LOOK DOWN)
-        if(item == 0)
-        {
-            SYSTEM_STREAM << "\nERROR! ERROR!\n";
-            SDL_Delay(1000);
-        }
         if(std::max(id_new, id_) >= idTable_.size())
         {
             SYSTEM_STREAM << "RESIZE MAIN TABLE\n";
@@ -68,7 +62,14 @@ public:
             SYSTEM_STREAM << id_new << " " << id_ << "id_ptr_on<T> newItemOn\n";
             id_ = id_new + 1;
         }
-        item->SetId(id_new);
+        item = castTo<T>(newVoidItem(hash, id_new));//TODO: FIX IT!(LOOK DOWN)
+        if(item == 0)
+        {
+            SYSTEM_STREAM << "\nERROR! ERROR!\n";
+            SDL_Delay(1000);
+        }
+
+        //item->SetId(id_new);
         idTable_[id_new] = item;
 
         owner->AddItem(item->GetId());
@@ -99,15 +100,15 @@ public:
     id_ptr_on<T> newItem(unsigned int hash, size_t id_new = 0)
     {
         T* item;
-        item = castTo<T>(newVoidItem(hash));
-        if(std::max(id_new, id_) >= idTable_.size()) 
+        if(std::max(id_new, id_) >= idTable_.size())
             idTable_.resize(std::max(id_new, id_) * 2);
         if(id_new == 0)
             id_new = id_++;
         else if(id_new >= id_)
             id_ = id_new + 1;
+        item = castTo<T>(newVoidItem(hash, id_new));
         idTable_[id_new] = item;
-        item->SetId(id_new);
+//        item->SetId(id_new);
 //        item->master = master;
         id_ptr_on<T> ret_val;
         ret_val = item->GetId();

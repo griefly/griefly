@@ -4,7 +4,7 @@
 #include "sync_random.h"
 #include "ItemFabric.h"
 
-CMeat::CMeat()
+CMeat::CMeat(size_t id) : SmallItem(id)
 {
     SetSprite("icons/meat.png");
     name = "Meat";
@@ -15,7 +15,7 @@ void CWeed::process()
     SmallItem::process();
 };
 
-CWeed::CWeed()
+CWeed::CWeed(size_t id) : SmallItem(id)
 {
     v_level = 2;
     SetSprite("icons/shards.dmi");
@@ -32,7 +32,7 @@ CWeed::CWeed()
     name = "Weed";
 };
 
-CupItem::CupItem()
+CupItem::CupItem(size_t id) : SmallItem(id)
 {
     SetSprite("icons/cup.png");
     name = "Cup";

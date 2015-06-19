@@ -2,7 +2,7 @@
 
 #include "sync_random.h"
 
-Shard::Shard()
+Shard::Shard(size_t id) : Item(id)
 {
     SetSprite("icons/shards.dmi");
 

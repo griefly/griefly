@@ -6,13 +6,13 @@ std::hash_map<unsigned int, item_creator>* itemList()
 {
     static std::hash_map<unsigned int, item_creator>* result = new std::hash_map<unsigned int, item_creator>;
     return result; 
-};
+}
 
-std::hash_map<unsigned int, item_creator>* itemListSaved()
+std::hash_map<unsigned int, item_creator_saved>* itemListSaved()
 {
-    static std::hash_map<unsigned int, item_creator>* result = new std::hash_map<unsigned int, item_creator>;
+    static std::hash_map<unsigned int, item_creator_saved>* result = new std::hash_map<unsigned int, item_creator_saved>;
     return result; 
-};
+}
 
 void IMainObject::delThis()
 {

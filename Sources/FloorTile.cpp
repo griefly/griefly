@@ -1,6 +1,6 @@
 #include "FloorTile.h"
 
-FloorTile::FloorTile()
+FloorTile::FloorTile(size_t id) : Item(id)
 {
     SetState("tile");
 

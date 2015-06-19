@@ -7,7 +7,7 @@ class Human: public IMob
 public:
     DECLARE_GET_TYPE_ITEM(Human);
     DECLARE_SAVED(Human, IMob);
-    Human();
+    Human(size_t id);
     virtual void DeinitGUI() override;
     virtual void InitGUI() override;
     virtual void processGUI() override;//draw

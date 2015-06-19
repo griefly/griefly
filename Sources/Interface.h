@@ -8,20 +8,23 @@
 class InterfaceBase
 {
 public:
-    virtual id_ptr_on<Item> Click(int x, int y) = 0;
-    virtual bool IsArea(int x, int y) = 0;
-    virtual bool HandleClick(id_ptr_on<Item> item) = 0;
+    virtual bool Click(int x, int y) = 0;
+    virtual void HandleClick(const std::string& place) = 0;
     virtual void Draw() = 0;
     virtual unsigned int hash() const = 0;
-    virtual ~InterfaceBase() {};
+    virtual ~InterfaceBase() {}
 };
 
 class HumanInterface: public InterfaceBase
 {
 public:
-    virtual id_ptr_on<Item> Click(int x, int y) override;
-    virtual bool HandleClick(id_ptr_on<Item> item) override;
-    virtual bool IsArea(int x, int y) override;
+    void SetOwner(id_ptr_on<IOnMapBase> owner)
+    {
+        owner_ = owner;
+    }
+
+    virtual bool Click(int x, int y) override;
+    virtual void HandleClick(const std::string& place) override;
     virtual void Draw() override;
     void InitSlots();
     virtual ~HumanInterface();
@@ -37,8 +40,9 @@ public:
     Slot<Item>& GetActiveHand();
     void SwapHands();
 private:
+    id_ptr_on<IOnMapBase> owner_;
+
     bool active_hand_;
- 
 
     Slot<Item> drop_;
     Slot<Item> r_hand_;

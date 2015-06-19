@@ -463,15 +463,13 @@ void Manager::processInput()
 
 void Manager::ProcessClick(int mouse_x, int mouse_y)
 {
+    if (GetMob()->GetInterface() && GetMob()->GetInterface()->Click(mouse_x, mouse_y))
+    {
+        last_touch = "Interface";
+        return;
+    }
     id_ptr_on<IOnMapObject> item;
-    if (GetMob()->GetInterface() && GetMob()->GetInterface()->IsArea(mouse_x, mouse_y))
-    {
-        item = GetMob()->GetInterface()->Click(mouse_x, mouse_y);
-    }
-    else
-    {
-        item = GetMapMaster()->click(mouse_x, mouse_y);
-    }
+    item = GetMapMaster()->click(mouse_x, mouse_y);
     if (item)
     {
         Message msg;
@@ -480,7 +478,6 @@ void Manager::ProcessClick(int mouse_x, int mouse_y)
         NetClient::GetNetClient()->Send(msg);
         last_touch = item->name;
     }
-//          PlaySound("click.ogx");
 }
 
 void Manager::HandleKeyboardDown(QKeyEvent* event)

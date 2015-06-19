@@ -15,7 +15,7 @@
 #include "Ghost.h"
 #include "Creator.h"
 
-Human::Human()
+Human::Human(size_t id) : IMob(id)
 {
     tickSpeed = 1;
     pixSpeed = 2;
@@ -27,6 +27,7 @@ Human::Human()
     name = GetMaleName();
   //  name = "Yes, it is human.";
     interface_.InitSlots();
+    interface_.SetOwner(GetId());
 
     dead_ = false;
     lying_ = false;
@@ -135,11 +136,8 @@ void Human::processGUImsg(const Message& msg)
         {
 
             SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
-            if (interface_.HandleClick(item))
-            {
-            }
             // It isn't fine
-            else if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
+            if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
             {
                 SYSTEM_STREAM << "And we can touch it!" << std::endl;
                 if(!interface_.GetActiveHand().Get())
@@ -161,6 +159,10 @@ void Human::processGUImsg(const Message& msg)
                 
             }
         } 
+    }
+    else
+    {
+        interface_.HandleClick(msg.text);
     }
 
 };

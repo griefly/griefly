@@ -6,7 +6,7 @@
 #include "Item.h"
 #include "Weldingtool.h"
 
-Door::Door()
+Door::Door(size_t id) : IOnMapObject(id)
 {
     transparent = true;
     SetPassable(D_ALL, Passable::EMPTY);

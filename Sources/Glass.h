@@ -7,7 +7,7 @@ class FlatGlass: public Structure
 public:
     DECLARE_SAVED(FlatGlass, Structure);
     DECLARE_GET_TYPE_ITEM(FlatGlass);
-    FlatGlass();
+    FlatGlass(size_t id);
 
     virtual bool checkMove(Dir direct) override;
     virtual void Bump(id_ptr_on<IMovable> item) override;
@@ -19,6 +19,6 @@ class ReinforcedFlatGlass: public FlatGlass
 public:
     DECLARE_SAVED(ReinforcedFlatGlass, FlatGlass);
     DECLARE_GET_TYPE_ITEM(ReinforcedFlatGlass);
-    ReinforcedFlatGlass();
+    ReinforcedFlatGlass(size_t id);
 };
 ADD_TO_TYPELIST(ReinforcedFlatGlass);

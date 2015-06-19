@@ -8,7 +8,7 @@ class ITurf : public IOnMapObject
 public:
     DECLARE_SAVED(ITurf, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(ITurf);
-    ITurf() { atmos_state_ = SIMULATED; };
+    ITurf(size_t id) : IOnMapObject(id) { atmos_state_ = SIMULATED; };
     virtual void delThis() override;
     AtmosState GetAtmosState() const { return atmos_state_; }
     void SetAtmosState(AtmosState as) { atmos_state_ = as; }

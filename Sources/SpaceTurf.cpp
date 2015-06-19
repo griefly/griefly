@@ -7,7 +7,7 @@
 #include "Lattice.h"
 #include "ItemFabric.h"
 
-Space::Space()
+Space::Space(size_t id) : ITurf(id)
 {
     SetAtmosState(SPACE);
 

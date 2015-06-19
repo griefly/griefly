@@ -7,7 +7,7 @@
 
 #include "ItemFabric.h"
 
-Floor::Floor()
+Floor::Floor(size_t id) : ITurf(id)
 {
     transparent = true;
     SetPassable(D_ALL, Passable::FULL);

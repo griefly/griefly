@@ -2,6 +2,6 @@
 #include "MapClass.h"
 #include "ItemFabric.h"
 
-IDraw::IDraw()
+IDraw::IDraw(size_t id) : IMainObject(id)
 {
 }

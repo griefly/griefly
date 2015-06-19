@@ -4,7 +4,7 @@
 
 #include "sync_random.h"
 
-Item::Item()
+Item::Item(size_t id) : IMovable(id)
 {
     passable_level = Passable::SMALL_ITEM;
 
@@ -12,7 +12,7 @@ Item::Item()
     SetSprite("icons/items.dmi");
 }
 
-Screwdriver::Screwdriver()
+Screwdriver::Screwdriver(size_t id) : Item(id)
 {
     unsigned int value = get_rand() % 8;
 
@@ -25,21 +25,21 @@ Screwdriver::Screwdriver()
     name = "Screwdriver";
 }
 
-Wirecutters::Wirecutters()
+Wirecutters::Wirecutters(size_t id) : Item(id)
 {
     SetState("cutters");
 
     name = "Wirecutters";
 }
 
-Crowbar::Crowbar()
+Crowbar::Crowbar(size_t id) : Item(id)
 {
     SetState("crowbar");
 
     name = "Crowbar";
 }
 
-Wrench::Wrench()
+Wrench::Wrench(size_t id) : Item(id)
 {
     SetState("wrench");
 

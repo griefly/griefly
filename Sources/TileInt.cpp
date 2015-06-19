@@ -6,7 +6,7 @@
 #include "TileInt.h"
 #include "IMovable.h"
 
-CubeTile::CubeTile()
+CubeTile::CubeTile(size_t id) : IOnMapBase(id)
 {
     turf_ = 0;
 

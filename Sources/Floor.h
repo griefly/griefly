@@ -7,7 +7,7 @@ class Floor: public ITurf
 public:
     DECLARE_SAVED(Floor, ITurf);
     DECLARE_GET_TYPE_ITEM(Floor);
-    Floor();
+    Floor(size_t id);
     virtual void AttackBy(id_ptr_on<Item> item) override;
     void SetOpen(bool o);
 private:
