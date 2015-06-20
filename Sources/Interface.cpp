@@ -89,13 +89,35 @@ void HumanInterface::HandleClick(const std::string& place)
 {
     if (place == RIGHT_HAND)
     {
-        if (r_hand_.Get())
-            r_hand_.Get()->AttackBy(0);
+        if (active_hand_)
+        {
+            if (r_hand_.Get())
+                r_hand_.Get()->AttackBy(0);
+        }
+        else
+        {
+            if (l_hand_.Get())
+            {
+                r_hand_.Set(l_hand_.Get());
+                l_hand_.Remove();
+            }
+        }
     }
     else if (place == LEFT_HAND)
     {
-        if (l_hand_.Get())
-            l_hand_.Get()->AttackBy(0);
+        if (!active_hand_)
+        {
+            if (l_hand_.Get())
+                l_hand_.Get()->AttackBy(0);
+        }
+        else
+        {
+            if (r_hand_.Get())
+            {
+                l_hand_.Set(r_hand_.Get());
+                r_hand_.Remove();
+            }
+        }
     }
     else if (place == DROP)
     {
