@@ -85,39 +85,41 @@ bool HumanInterface::Click(int x, int y)
     return true;
 }
 
+void HumanInterface::ApplyActiveHandOnSlot(Slot<Item>* slot)
+{
+    if (GetActiveHand().Get() && !slot->Get())
+    {
+        slot->Set(GetActiveHand().Get());
+        GetActiveHand().Remove();
+    }
+    else if (slot->Get() && !GetActiveHand().Get())
+    {
+        GetActiveHand().Set(slot->Get());
+        slot->Remove();
+    }
+    else if (slot->Get())
+    {
+        slot->Get()->AttackBy(GetActiveHand().Get());
+    }
+}
+
 void HumanInterface::HandleClick(const std::string& place)
 {
     if (place == RIGHT_HAND)
     {
-        if (active_hand_)
-        {
-            if (r_hand_.Get())
-                r_hand_.Get()->AttackBy(0);
-        }
-        else
-        {
-            if (l_hand_.Get())
-            {
-                r_hand_.Set(l_hand_.Get());
-                l_hand_.Remove();
-            }
-        }
+        ApplyActiveHandOnSlot(&r_hand_);
     }
     else if (place == LEFT_HAND)
     {
-        if (!active_hand_)
-        {
-            if (l_hand_.Get())
-                l_hand_.Get()->AttackBy(0);
-        }
-        else
-        {
-            if (r_hand_.Get())
-            {
-                l_hand_.Set(r_hand_.Get());
-                r_hand_.Remove();
-            }
-        }
+        ApplyActiveHandOnSlot(&l_hand_);
+    }
+    else if (place == HEAD)
+    {
+        ApplyActiveHandOnSlot(&head_);
+    }
+    else if (place == SUIT)
+    {
+        ApplyActiveHandOnSlot(&suit_);
     }
     else if (place == DROP)
     {

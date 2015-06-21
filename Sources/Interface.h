@@ -40,6 +40,8 @@ public:
     Slot<Item>& GetActiveHand();
     void SwapHands();
 private:
+    void ApplyActiveHandOnSlot(Slot<Item>* slot);
+
     id_ptr_on<IOnMapBase> owner_;
 
     bool active_hand_;
