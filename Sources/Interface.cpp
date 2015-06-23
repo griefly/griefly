@@ -21,6 +21,10 @@ void HumanInterface::InitSlots()
 
     drop_.SetPos(7, 15);
     drop_.GetView()->SetState("act_drop");
+
+    swap_.SetPos(6, 15);
+    swap_.GetView()->SetSprite("icons/screen1_old.dmi");
+    swap_.GetView()->SetState("hand");
 }
 
 void HumanInterface::SwapHands()
@@ -52,6 +56,7 @@ const std::string LEFT_HAND = "INT_LHAND";
 const std::string HEAD = "HEAD";
 const std::string SUIT = "SUIT";
 const std::string DROP = "DROP";
+const std::string SWAP = "SWAP";
 
 bool HumanInterface::Click(int x, int y)
 {
@@ -76,6 +81,10 @@ bool HumanInterface::Click(int x, int y)
     else if (drop_.Click(x, y))
     {
         msg.text = DROP;
+    }
+    else if (swap_.Click(x, y))
+    {
+        msg.text = SWAP;
     }
     else
     {
@@ -129,6 +138,10 @@ void HumanInterface::HandleClick(const std::string& place)
             Drop();
         }
     }
+    else if (place == SWAP)
+    {
+        SwapHands();
+    }
     SYSTEM_STREAM << "Inteface click: " << place << std::endl;
 }
 
@@ -143,6 +156,7 @@ void HumanInterface::Draw()
     drop_.Draw();
     head_.Draw();
     suit_.Draw();
+    swap_.Draw(helpers::dir_to_byond(active_hand_ ? D_UP : D_DOWN));
 }
 
 unsigned int HumanInterface::hash() const
@@ -154,6 +168,7 @@ unsigned int HumanInterface::hash() const
     hash += head_.hash_member();
     hash += suit_.hash_member();
     hash += active_hand_;
+    hash += swap_.hash_member();
     hash += owner_.ret_id();
     return hash;
 }
@@ -187,6 +202,7 @@ std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
     interf.l_hand_.operator<<(file) << " ";
     interf.head_.operator<<(file) << " ";
     interf.suit_.operator<<(file) << " ";
+    interf.swap_.operator<<(file) << " ";
     file << interf.active_hand_ << " ";
     file << interf.owner_ << " ";
     return file;
@@ -198,6 +214,7 @@ std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
     interf.l_hand_.operator>>(file);
     interf.head_.operator>>(file);
     interf.suit_.operator>>(file);
+    interf.swap_.operator>>(file);
     file >> interf.active_hand_;
     file >> interf.owner_;
     return file;

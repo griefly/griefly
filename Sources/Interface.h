@@ -47,6 +47,8 @@ private:
     bool active_hand_;
 
     Slot<Item> drop_;
+    Slot<Item> swap_;
+
     Slot<Item> r_hand_;
     Slot<Item> l_hand_;
     Slot<Item> head_;

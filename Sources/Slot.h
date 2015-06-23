@@ -51,7 +51,11 @@ public:
     }
     virtual void Draw() override
     {
-        view_.Draw(0, 32 * posx_, 32 * posy_);
+        Draw(0);
+    }
+    virtual void Draw(int shift)
+    {
+        view_.Draw(shift, 32 * posx_, 32 * posy_);
         if (item_)
             item_->DrawMain(0, 32 * posx_, 32 * posy_);
     }
