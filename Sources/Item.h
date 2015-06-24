@@ -8,6 +8,7 @@ public:
     DECLARE_SAVED(Item, IMovable);
     DECLARE_GET_TYPE_ITEM(Item);
     Item(size_t id);
+    std::string KV_SAVEBLE(type);
 };
 ADD_TO_TYPELIST(Item);
 

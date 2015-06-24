@@ -8,6 +8,8 @@ Item::Item(size_t id) : IMovable(id)
 {
     passable_level = Passable::SMALL_ITEM;
 
+    type = "DEFAULT";
+
     v_level = 5;
     SetSprite("icons/items.dmi");
 }

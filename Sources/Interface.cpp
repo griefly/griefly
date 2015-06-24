@@ -16,6 +16,7 @@ void HumanInterface::InitSlots()
 
     suit_.SetPos(1, 14);
     suit_.GetView()->SetState("suit");
+    suit_.SetType("SUIT");
 
     active_hand_ = true;
 
@@ -98,11 +99,15 @@ void HumanInterface::ApplyActiveHandOnSlot(Slot<Item>* slot)
 {
     if (GetActiveHand().Get() && !slot->Get())
     {
+        if (!slot->MatchType(GetActiveHand().Get()->type))
+            return;
         slot->Set(GetActiveHand().Get());
         GetActiveHand().Remove();
     }
     else if (slot->Get() && !GetActiveHand().Get())
     {
+        if (!GetActiveHand().MatchType(slot->Get()->type))
+            return;
         GetActiveHand().Set(slot->Get());
         slot->Remove();
     }

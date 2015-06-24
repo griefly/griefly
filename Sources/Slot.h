@@ -26,6 +26,7 @@ public:
     {
         view_.SetSprite("icons/screen_retro.dmi");
         item_ = 0;
+        type_ = "ANYTHING";
     }
     virtual bool Set(id_ptr_on<Item> ptr) override
     {
@@ -48,6 +49,22 @@ public:
     {
         posx_ = x;
         posy_ = y;
+    }
+    void SetType(const std::string& type)
+    {
+        type_ = type;
+    }
+    bool MatchType(const std::string& type)
+    {
+        if (type_ == "ANYTHING")
+        {
+            return true;
+        }
+        if (type_.find(type) == std::string::npos)
+        {
+            return false;
+        }
+        return true;
     }
     virtual void Draw() override
     {
@@ -73,6 +90,7 @@ public:
         file << item_ << " ";
         file << posx_ << " ";
         file << posy_ << " ";
+        file << type_ << " ";
         return file;
     }
     virtual std::istream& operator>>(std::stringstream& file) override
@@ -81,6 +99,7 @@ public:
         file >> item_;
         file >> posx_;
         file >> posy_;
+        file >> type_;
         return file;
     }
     virtual unsigned int hash_member() const override
@@ -88,13 +107,15 @@ public:
         return   hash(view_)
                + hash(item_)
                + hash(posx_)
-               + hash(posy_);
+               + hash(posy_)
+               + hash(type_);
     }
 private:
     View view_;
     id_ptr_on<T> item_;
     int posx_;
     int posy_;
+    std::string type_;
 };
 
 template <class T>

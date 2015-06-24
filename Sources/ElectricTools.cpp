@@ -16,7 +16,7 @@ AtmosTool::AtmosTool(size_t id) : Item(id)
 
 void AtmosTool::AttackBy(id_ptr_on<Item> item)
 {
-    if (!item)
+    if (item.ret_id() == GetId())
     {
         id_ptr_on<CubeTile> ct = GetOwner()->GetOwner(); 
 
