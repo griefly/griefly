@@ -18,7 +18,7 @@ public:
 class HumanInterface: public InterfaceBase
 {
 public:
-    void SetOwner(id_ptr_on<IOnMapBase> owner)
+    void SetOwner(id_ptr_on<IOnMapObject> owner)
     {
         owner_ = owner;
     }
@@ -35,6 +35,8 @@ public:
     void Pick(id_ptr_on<Item> item);
     void Drop();
 
+    void AddOverlays();
+
     id_ptr_on<Item> GetRHand();
     id_ptr_on<Item> GetLHand();
     Slot<Item>& GetActiveHand();
@@ -42,7 +44,7 @@ public:
 private:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
 
-    id_ptr_on<IOnMapBase> owner_;
+    id_ptr_on<IOnMapObject> owner_;
 
     bool active_hand_;
 

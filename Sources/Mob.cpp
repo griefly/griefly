@@ -515,6 +515,10 @@ void Manager::HandleKeyboardDown(QKeyEvent* event)
     {
         msg.text = Input::MOVE_LEFT;
     }
+    else if (event->key() == Qt::Key_Q)
+    {
+        msg.text = Input::KEY_Q;
+    }
     else
     {
         return;

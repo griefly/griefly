@@ -42,6 +42,11 @@ const GLSprite* View::Frameset::GetSprite()
     return sprite_;
 }
 
+std::string View::Frameset::GetState()
+{
+    return state_;
+}
+
 void View::Frameset::SetState(const std::string& name)
 {
     state_ = name;

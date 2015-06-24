@@ -46,6 +46,7 @@ public:
         void SetSprite(const std::string& name);
         const GLSprite* GetSprite();
         void SetState(const std::string& state);
+        std::string GetState();
         void SetAngle(int angle);
         const ImageMetadata::SpriteMetadata* GetMetadata();
         void Draw(int shift, int x, int y, int angle = 0);

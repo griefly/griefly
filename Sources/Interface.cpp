@@ -117,6 +117,15 @@ void HumanInterface::ApplyActiveHandOnSlot(Slot<Item>* slot)
     }
 }
 
+void HumanInterface::AddOverlays()
+{
+    if (suit_.Get())
+    {
+        std::string state_name = suit_.Get()->GetView()->GetBaseFrameset()->GetState();
+        owner_->GetView()->AddOverlay("icons/suit.dmi", state_name);
+    }
+}
+
 void HumanInterface::HandleClick(const std::string& place)
 {
     if (place == RIGHT_HAND)
@@ -147,6 +156,10 @@ void HumanInterface::HandleClick(const std::string& place)
     {
         SwapHands();
     }
+
+    owner_->GetView()->RemoveOverlays();
+    AddOverlays();
+
     SYSTEM_STREAM << "Inteface click: " << place << std::endl;
 }
 

@@ -96,7 +96,10 @@ void Human::processGUImsg(const Message& msg)
     {
         Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
     }
-
+    if(msg.text == Input::KEY_Q)
+    {
+        GetItemFabric()->newItemOnMap<Item>(SimpleCloth::T_ITEM_S(), GetOwner());
+    }
     if(msg.text == "SDLK_p")
     {
         if(interface_.GetRHand()) // TODO: active hand

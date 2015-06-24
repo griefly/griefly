@@ -27,4 +27,6 @@ namespace Input
     const char* const MOVE_DOWN = "MOVE_DOWN";
     const char* const MOVE_LEFT = "MOVE_LEFT";
     const char* const MOVE_RIGHT = "MOVE_RIGHT";
+
+    const char* const KEY_Q = "KEY_Q";
 }
