@@ -3,6 +3,8 @@
 #include "Item.h"
 #include "helpers.h"
 
+#include "Human.h"
+
 void HumanInterface::InitSlots()
 {
     r_hand_.SetPos(0, 14);
@@ -26,6 +28,11 @@ void HumanInterface::InitSlots()
     swap_.SetPos(6, 15);
     swap_.GetView()->SetSprite("icons/screen1_old.dmi");
     swap_.GetView()->SetState("hand");
+
+    if (id_ptr_on<Human> owner = owner_)
+    {
+        owner->UpdateOverlays();
+    }
 }
 
 void HumanInterface::SwapHands()
@@ -169,8 +176,10 @@ void HumanInterface::HandleClick(const std::string& place)
         SwapHands();
     }
 
-    owner_->GetView()->RemoveOverlays();
-    AddOverlays();
+    if (id_ptr_on<Human> owner = owner_)
+    {
+        owner->UpdateOverlays();
+    }
 
     SYSTEM_STREAM << "Inteface click: " << place << std::endl;
 }
@@ -208,6 +217,10 @@ void HumanInterface::Pick(id_ptr_on<Item> item)
     if (GetActiveHand().Get())
         return;
     GetActiveHand().Set(item);
+    if (id_ptr_on<Human> owner = owner_)
+    {
+        owner->UpdateOverlays();
+    }
 }
 
 void HumanInterface::Drop()

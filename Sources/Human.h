@@ -21,6 +21,8 @@ public:
     virtual InterfaceBase* GetInterface() override { return &interface_; }
 
     virtual void CalculateVisible(std::list<point>* visible_list) override;
+
+    void UpdateOverlays();
 private:
     HumanInterface KV_SAVEBLE(interface_);
 

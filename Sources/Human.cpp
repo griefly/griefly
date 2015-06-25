@@ -168,7 +168,13 @@ void Human::processGUImsg(const Message& msg)
         interface_.HandleClick(msg.text);
     }
 
-};
+}
+
+void Human::UpdateOverlays()
+{
+    view_.RemoveOverlays();
+    interface_.AddOverlays();
+}
 
 void Human::process()
 {
