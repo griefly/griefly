@@ -55,6 +55,8 @@ private:
     Slot<Item> l_hand_;
     Slot<Item> head_;
     Slot<Item> suit_;
+    Slot<Item> uniform_;
+    Slot<Item> feet_;
 };
 
 std::ostream& operator<<(std::stringstream& file, HumanInterface& interf);

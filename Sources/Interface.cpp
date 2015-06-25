@@ -20,6 +20,12 @@ void HumanInterface::InitSlots()
     suit_.GetView()->SetState("suit");
     suit_.SetType("SUIT");
 
+    uniform_.SetPos(1, 15);
+    uniform_.GetView()->SetState("uniform");
+
+    feet_.SetPos(3, 14);
+    feet_.GetView()->SetState("shoes");
+
     active_hand_ = true;
 
     drop_.SetPos(7, 15);
@@ -63,6 +69,8 @@ const std::string RIGHT_HAND = "INT_RHAND";
 const std::string LEFT_HAND = "INT_LHAND";
 const std::string HEAD = "HEAD";
 const std::string SUIT = "SUIT";
+const std::string UNIFORM = "UNIFORM";
+const std::string FEET = "FEET";
 const std::string DROP = "DROP";
 const std::string SWAP = "SWAP";
 
@@ -85,6 +93,14 @@ bool HumanInterface::Click(int x, int y)
     else if (suit_.Click(x, y))
     {
         msg.text = SUIT;
+    }
+    else if (feet_.Click(x, y))
+    {
+        msg.text = FEET;
+    }
+    else if (uniform_.Click(x, y))
+    {
+        msg.text = UNIFORM;
     }
     else if (drop_.Click(x, y))
     {
@@ -163,6 +179,14 @@ void HumanInterface::HandleClick(const std::string& place)
     {
         ApplyActiveHandOnSlot(&suit_);
     }
+    else if (place == FEET)
+    {
+        ApplyActiveHandOnSlot(&feet_);
+    }
+    else if (place == UNIFORM)
+    {
+        ApplyActiveHandOnSlot(&uniform_);
+    }
     else if (place == DROP)
     {
         if(GetActiveHand().Get())
@@ -195,6 +219,8 @@ void HumanInterface::Draw()
     drop_.Draw();
     head_.Draw();
     suit_.Draw();
+    uniform_.Draw();
+    feet_.Draw();
     swap_.Draw(helpers::dir_to_byond(active_hand_ ? D_UP : D_DOWN));
 }
 
@@ -206,6 +232,8 @@ unsigned int HumanInterface::hash() const
     hash += l_hand_.hash_member();
     hash += head_.hash_member();
     hash += suit_.hash_member();
+    hash += feet_.hash_member();
+    hash += uniform_.hash_member();
     hash += active_hand_;
     hash += swap_.hash_member();
     hash += owner_.ret_id();
@@ -245,6 +273,8 @@ std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
     interf.l_hand_.operator<<(file) << " ";
     interf.head_.operator<<(file) << " ";
     interf.suit_.operator<<(file) << " ";
+    interf.uniform_.operator<<(file) << " ";
+    interf.feet_.operator<<(file) << " ";
     interf.swap_.operator<<(file) << " ";
     file << interf.active_hand_ << " ";
     file << interf.owner_ << " ";
@@ -257,6 +287,8 @@ std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
     interf.l_hand_.operator>>(file);
     interf.head_.operator>>(file);
     interf.suit_.operator>>(file);
+    interf.uniform_.operator>>(file);
+    interf.feet_.operator>>(file);
     interf.swap_.operator>>(file);
     file >> interf.active_hand_;
     file >> interf.owner_;
