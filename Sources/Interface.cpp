@@ -124,6 +124,18 @@ void HumanInterface::AddOverlays()
         std::string state_name = suit_.Get()->GetView()->GetBaseFrameset()->GetState();
         owner_->GetView()->AddOverlay("icons/suit.dmi", state_name);
     }
+
+    if (r_hand_.Get())
+    {
+        std::string state_name = r_hand_.Get()->GetView()->GetBaseFrameset()->GetState();
+        owner_->GetView()->AddOverlay("icons/items_righthand.dmi", state_name);
+    }
+
+    if (l_hand_.Get())
+    {
+        std::string state_name = l_hand_.Get()->GetView()->GetBaseFrameset()->GetState();
+        owner_->GetView()->AddOverlay("icons/items_lefthand.dmi", state_name);
+    }
 }
 
 void HumanInterface::HandleClick(const std::string& place)
