@@ -23,6 +23,8 @@ public:
     virtual void CalculateVisible(std::list<point>* visible_list) override;
 
     void UpdateOverlays();
+
+    int GetHealth() { return health_; }
 private:
     HumanInterface KV_SAVEBLE(interface_);
 

@@ -41,6 +41,9 @@ public:
     id_ptr_on<Item> GetLHand();
     Slot<Item>& GetActiveHand();
     void SwapHands();
+
+    void UpdateHealth();
+
 private:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
 
@@ -50,6 +53,8 @@ private:
 
     Slot<Item> drop_;
     Slot<Item> swap_;
+
+    Slot<Item> health_;
 
     Slot<Item> r_hand_;
     Slot<Item> l_hand_;

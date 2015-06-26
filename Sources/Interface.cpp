@@ -35,6 +35,10 @@ void HumanInterface::InitSlots()
     swap_.GetView()->SetSprite("icons/screen1_old.dmi");
     swap_.GetView()->SetState("hand");
 
+    health_.SetPos(15, 12);
+    health_.GetView()->SetSprite("icons/screen1_old.dmi");
+    health_.GetView()->SetState("health0");
+
     if (id_ptr_on<Human> owner = owner_)
     {
         owner->UpdateOverlays();
@@ -74,6 +78,42 @@ const std::string FEET = "FEET";
 const std::string DROP = "DROP";
 const std::string SWAP = "SWAP";
 
+void HumanInterface::UpdateHealth()
+{
+    if (id_ptr_on<Human> human = owner_)
+    {
+        int health = human->GetHealth();
+        if (health == 100)
+        {
+            health_.GetView()->SetState("health0");
+        }
+        else if (health >= 80)
+        {
+            health_.GetView()->SetState("health1");
+        }
+        else if (health >= 60)
+        {
+            health_.GetView()->SetState("health2");
+        }
+        else if (health >= 40)
+        {
+            health_.GetView()->SetState("health3");
+        }
+        else if (health >= 20)
+        {
+            health_.GetView()->SetState("health4");
+        }
+        else if (health >= 0)
+        {
+            health_.GetView()->SetState("health5");
+        }
+        else if (health_.GetView()->GetBaseFrameset()->GetState() != "health6")
+        {
+            health_.GetView()->SetState("health6");
+        }
+    }
+}
+
 bool HumanInterface::Click(int x, int y)
 {
     helpers::normalize_pixels(&x, &y);
@@ -109,6 +149,10 @@ bool HumanInterface::Click(int x, int y)
     else if (swap_.Click(x, y))
     {
         msg.text = SWAP;
+    }
+    else if (health_.Click(x, y))
+    {
+        return true;
     }
     else
     {
@@ -222,6 +266,7 @@ void HumanInterface::Draw()
     uniform_.Draw();
     feet_.Draw();
     swap_.Draw(helpers::dir_to_byond(active_hand_ ? D_UP : D_DOWN));
+    health_.Draw();
 }
 
 unsigned int HumanInterface::hash() const
@@ -236,6 +281,7 @@ unsigned int HumanInterface::hash() const
     hash += uniform_.hash_member();
     hash += active_hand_;
     hash += swap_.hash_member();
+    hash += health_.hash_member();
     hash += owner_.ret_id();
     return hash;
 }
@@ -276,6 +322,7 @@ std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
     interf.uniform_.operator<<(file) << " ";
     interf.feet_.operator<<(file) << " ";
     interf.swap_.operator<<(file) << " ";
+    interf.health_.operator<<(file) << " ";
     file << interf.active_hand_ << " ";
     file << interf.owner_ << " ";
     return file;
@@ -290,6 +337,7 @@ std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
     interf.uniform_.operator>>(file);
     interf.feet_.operator>>(file);
     interf.swap_.operator>>(file);
+    interf.health_.operator>>(file);
     file >> interf.active_hand_;
     file >> interf.owner_;
     return file;

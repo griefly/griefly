@@ -200,6 +200,9 @@ void Human::Live()
                 Chat::GetChat()->PostText(name + " gasps!\n");
         }
     }
+
+    interface_.UpdateHealth();
+
     if (health_ < 0)
     {
         if (!lying_)
