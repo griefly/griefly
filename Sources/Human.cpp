@@ -14,6 +14,7 @@
 #include "sync_random.h"
 #include "Ghost.h"
 #include "Creator.h"
+#include "Clothes.h"
 
 Human::Human(size_t id) : IMob(id)
 {
