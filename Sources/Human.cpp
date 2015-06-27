@@ -99,7 +99,19 @@ void Human::processGUImsg(const Message& msg)
     }
     if(msg.text == Input::KEY_Q)
     {
-        GetItemFabric()->newItemOnMap<Item>(SimpleCloth::T_ITEM_S(), GetOwner());
+        GetItemFabric()->newItemOnMap<Item>(Armor::T_ITEM_S(), GetOwner());
+    }
+    if(msg.text == Input::KEY_W)
+    {
+        GetItemFabric()->newItemOnMap<Item>(Helmet::T_ITEM_S(), GetOwner());
+    }
+    if(msg.text == Input::KEY_E)
+    {
+        GetItemFabric()->newItemOnMap<Item>(EngineUniform::T_ITEM_S(), GetOwner());
+    }
+    if(msg.text == Input::KEY_R)
+    {
+        GetItemFabric()->newItemOnMap<Item>(OrangeBoots::T_ITEM_S(), GetOwner());
     }
     if(msg.text == "SDLK_p")
     {

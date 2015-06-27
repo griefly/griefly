@@ -15,16 +15,19 @@ void HumanInterface::InitSlots()
 
     head_.SetPos(1, 13);
     head_.GetView()->SetState("head");
+    head_.SetType(Slots::HEAD);
 
     suit_.SetPos(1, 14);
     suit_.GetView()->SetState("suit");
-    suit_.SetType("SUIT");
+    suit_.SetType(Slots::SUIT);
 
     uniform_.SetPos(1, 15);
     uniform_.GetView()->SetState("uniform");
+    uniform_.SetType(Slots::UNIFORM);
 
     feet_.SetPos(3, 14);
     feet_.GetView()->SetState("shoes");
+    feet_.SetType(Slots::FEET);
 
     active_hand_ = true;
 
@@ -186,6 +189,21 @@ void HumanInterface::ApplyActiveHandOnSlot(Slot<Item>* slot)
 
 void HumanInterface::AddOverlays()
 {
+    if (uniform_.Get())
+    {
+        std::string state_name = uniform_.Get()->GetView()->GetBaseFrameset()->GetState();
+        owner_->GetView()->AddOverlay("icons/uniform.dmi", state_name + "_s");
+    }
+    if (feet_.Get())
+    {
+        std::string state_name = feet_.Get()->GetView()->GetBaseFrameset()->GetState();
+        owner_->GetView()->AddOverlay("icons/feet.dmi", state_name);
+    }
+    if (head_.Get())
+    {
+        std::string state_name = head_.Get()->GetView()->GetBaseFrameset()->GetState();
+        owner_->GetView()->AddOverlay("icons/head.dmi", state_name);
+    }
     if (suit_.Get())
     {
         std::string state_name = suit_.Get()->GetView()->GetBaseFrameset()->GetState();

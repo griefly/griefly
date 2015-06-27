@@ -6,6 +6,16 @@
 
 #include "hashes.h"
 
+namespace Slots
+{
+    const std::string SUIT = "SUIT";
+    const std::string HEAD = "HEAD";
+    const std::string ANYTHING = "ANYTHING";
+    const std::string FEET = "FEET";
+    const std::string UNIFORM = "UNIFORM";
+    const std::string DEFAULT = "DEFAULT";
+}
+
 class BaseSlot
 {
 public:
@@ -26,7 +36,7 @@ public:
     {
         view_.SetSprite("icons/screen_retro.dmi");
         item_ = 0;
-        type_ = "ANYTHING";
+        type_ = Slots::ANYTHING;
     }
     virtual bool Set(id_ptr_on<Item> ptr) override
     {
@@ -56,7 +66,7 @@ public:
     }
     bool MatchType(const std::string& type)
     {
-        if (type_ == "ANYTHING")
+        if (type_ == Slots::ANYTHING)
         {
             return true;
         }

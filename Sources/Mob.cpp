@@ -519,6 +519,18 @@ void Manager::HandleKeyboardDown(QKeyEvent* event)
     {
         msg.text = Input::KEY_Q;
     }
+    else if (event->key() == Qt::Key_W)
+    {
+        msg.text = Input::KEY_W;
+    }
+    else if (event->key() == Qt::Key_E)
+    {
+        msg.text = Input::KEY_E;
+    }
+    else if (event->key() == Qt::Key_R)
+    {
+        msg.text = Input::KEY_R;
+    }
     else
     {
         return;

@@ -29,4 +29,7 @@ namespace Input
     const char* const MOVE_RIGHT = "MOVE_RIGHT";
 
     const char* const KEY_Q = "KEY_Q";
+    const char* const KEY_W = "KEY_W";
+    const char* const KEY_E = "KEY_E";
+    const char* const KEY_R = "KEY_R";
 }

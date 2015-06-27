@@ -3,12 +3,13 @@
 #include <sstream>
 
 #include "sync_random.h"
+#include "Slot.h"
 
 Item::Item(size_t id) : IMovable(id)
 {
     passable_level = Passable::SMALL_ITEM;
 
-    type = "DEFAULT";
+    type = Slots::DEFAULT;
 
     v_level = 5;
     SetSprite("icons/items.dmi");
