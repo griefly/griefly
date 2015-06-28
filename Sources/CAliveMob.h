@@ -9,7 +9,6 @@ public:
     DECLARE_SAVED(CAliveMob, IMob);
     virtual void process();
     virtual void live();
-    virtual void aaMind();
 
     virtual void DeinitGUI() override;
     virtual void InitGUI() override;

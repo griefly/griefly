@@ -8,17 +8,13 @@
 IMob::IMob(size_t id) : IMessageReceiver(id)
 {
     thisMobControl = false;
-    onMobControl = false;
     SetFreq(1);
     SetSprite("icons/ork.png");        
 }
 
 void IMob::cautOverMind()
 {
-    if(onMobControl)
-    {
-    }
-};
+}
 
 void IMob::processGUI()
 {

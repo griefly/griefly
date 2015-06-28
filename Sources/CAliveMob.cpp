@@ -29,11 +29,8 @@ CAliveMob::CAliveMob(size_t id) : IMob(id)
 void CAliveMob::process()
 {
     IMob::process();
-    if(!onMobControl) aaMind();
     live();
-};
-
-void CAliveMob::aaMind() {};
+}
 
 void CAliveMob::live()
 { 

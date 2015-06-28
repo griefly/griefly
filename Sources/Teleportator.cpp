@@ -21,7 +21,7 @@ void Teleportator::CreateItem(unsigned int from_id, size_t hash)
 {
     auto newmob = GetItemFabric()->newItemOnMap<IMob>(hash, owner);
     SYSTEM_STREAM << "NEW MOB CREATE HIS ID " << newmob.ret_id() << "\n";
-    newmob->onMobControl = true;
+    //newmob->onMobControl = true;
     
     GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 

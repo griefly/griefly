@@ -215,7 +215,7 @@ void Human::Live()
             auto ghost = GetItemFabric()->newItem<Ghost>(Ghost::T_ITEM_S());
             GetItemFabric()->SetPlayerId(net_id, ghost.ret_id());
             owner->AddItem(ghost);
-            if(thisMobControl)
+            if (thisMobControl)
             {
                 ChangeMob(ghost);
             }
