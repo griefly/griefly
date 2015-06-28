@@ -15,6 +15,8 @@ public:
     virtual void process() override;
     virtual void Live();
 
+    virtual void AttackBy(id_ptr_on<Item> item) override;
+
     virtual void processImage(DrawType type) override;
 
     virtual bool checkMove(Dir direct) override;

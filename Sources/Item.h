@@ -9,6 +9,7 @@ public:
     DECLARE_GET_TYPE_ITEM(Item);
     Item(size_t id);
     std::string KV_SAVEBLE(type);
+    int KV_SAVEBLE(damage);
 };
 ADD_TO_TYPELIST(Item);
 

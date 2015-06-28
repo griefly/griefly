@@ -267,7 +267,7 @@ void HumanInterface::HandleClick(const std::string& place)
         owner->UpdateOverlays();
     }
 
-    SYSTEM_STREAM << "Inteface click: " << place << std::endl;
+    //SYSTEM_STREAM << "Inteface click: " << place << std::endl;
 }
 
 HumanInterface::~HumanInterface()

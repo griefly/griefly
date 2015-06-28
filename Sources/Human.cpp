@@ -38,6 +38,8 @@ void Human::InitGUI()
 {
 }
 
+
+
 void Human::DeinitGUI()
 {
     //GetTexts().Delete("Sync");
@@ -206,6 +208,12 @@ void Human::Live()
             lying_ = true;
             view_.SetAngle(90);
         }
+        if (health_ >= -100)
+        {
+            --health_;
+            if (get_rand() % 5 == 0)
+                Chat::GetChat()->PostText(name + " gasps!\n");
+        }
     }
     if (health_ < -100 && !dead_)
     {
@@ -221,6 +229,29 @@ void Human::Live()
             }
         }
         dead_ = true;
+    }
+}
+
+void Human::AttackBy(id_ptr_on<Item> item)
+{
+    if (item->damage > 0)
+    {
+        health_ -= item->damage;
+        unsigned int value = get_rand() % 3;
+        std::string snd;
+        if (value == 0)
+            snd = "genhit1.ogg";
+        if (value == 1)
+            snd = "genhit2.ogg";
+        if (value == 2)
+            snd = "genhit3.ogg";
+        PlaySoundIfVisible(snd, owner.ret_id());
+        if (id_ptr_on<IOnMapObject> item_owner = item->GetOwner())
+        {
+            Chat::GetChat()->PostText(
+                name + " is attacked by " + item_owner->name + " with " + item->name + "\n"
+                );
+        }
     }
 }
 
