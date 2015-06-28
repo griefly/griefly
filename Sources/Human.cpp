@@ -36,33 +36,16 @@ Human::Human(size_t id) : IMob(id)
 }
 void Human::InitGUI()
 {
-    GetTexts()["Sync"].SetUpdater
-    ([&](std::string* str)
-    {
-        std::stringstream ss;
-        ss << ((GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash()) ? "SYNC:" : "UNSYNC:") 
-           << GetItemFabric()->get_hash_last();
-        ss >> *str;
-    }).SetSize(15).SetPlace(0, 30, 200, 50);
 }
 
 void Human::DeinitGUI()
 {
-    GetTexts().Delete("Sync");
+    //GetTexts().Delete("Sync");
 }
 void Human::processGUI()
 {
     ////
     IMob::processGUI();
-    static int locTime = 0;
-    if(SDL_GetTicks() - locTime > 100)
-    {
-        SDL_Color color = {255, 0, 0, 0};
-        if (GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash())
-            GetTexts()["Sync"].SetColor(0, 255, 100);
-        else
-            GetTexts()["Sync"].SetColor(255, 160, 0);
-    }
     //////
 
     interface_.Draw();

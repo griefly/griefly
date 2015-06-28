@@ -124,7 +124,7 @@ void Manager::process()
     unsigned int process_time_per_tick = 0;
 
     unsigned int last_effect_process = 0;
-
+    static int locTime = 0;
     while(done == 0)
     { 
 
@@ -215,6 +215,13 @@ void Manager::process()
         if (NetClient::GetNetClient()->Process() == false)
         {
 
+        }
+        if(SDL_GetTicks() - locTime > 100)
+        {
+            if (GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash())
+                GetTexts()["Sync"].SetColor(0, 255, 100);
+            else
+                GetTexts()["Sync"].SetColor(255, 160, 0);
         }
         if (GetMainWidget()->isHidden())
         {
@@ -651,6 +658,15 @@ void Manager::initWorld()
         ss << last_fps - 1; 
         ss >> *str;
     }).SetFreq(1000).SetSize(20);
+
+    GetTexts()["Sync"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << ((GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash()) ? "SYNC:" : "UNSYNC:")
+           << GetItemFabric()->get_hash_last();
+        ss >> *str;
+    }).SetSize(15).SetPlace(0, 30, 200, 50);
 
     GetTexts()["LastTouch"].SetUpdater
     ([this](std::string* str)
