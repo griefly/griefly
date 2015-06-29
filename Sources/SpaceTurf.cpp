@@ -14,6 +14,8 @@ Space::Space(size_t id) : ITurf(id)
     SetPassable(D_ALL, Passable::FULL);
     transparent = true;
     
+    SetFriction(0);
+
     SetSprite("icons/space.png"); 
     std::stringstream conv;
     size_t value = get_rand() % 25 + 1;
