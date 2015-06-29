@@ -2,15 +2,15 @@
 #include "MapClass.h"
 #include "ItemFabric.h"
 
-std::hash_map<unsigned int, item_creator>* itemList()
+std::unordered_map<unsigned int, item_creator>* itemList()
 {
-    static std::hash_map<unsigned int, item_creator>* result = new std::hash_map<unsigned int, item_creator>;
+    static std::unordered_map<unsigned int, item_creator>* result = new std::unordered_map<unsigned int, item_creator>;
     return result; 
 }
 
-std::hash_map<unsigned int, item_creator_saved>* itemListSaved()
+std::unordered_map<unsigned int, item_creator_saved>* itemListSaved()
 {
-    static std::hash_map<unsigned int, item_creator_saved>* result = new std::hash_map<unsigned int, item_creator_saved>;
+    static std::unordered_map<unsigned int, item_creator_saved>* result = new std::unordered_map<unsigned int, item_creator_saved>;
     return result; 
 }
 

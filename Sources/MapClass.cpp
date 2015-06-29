@@ -2,7 +2,6 @@
 #include <sstream>
 #include <iostream>
 #include <assert.h>
-#include <hash_map>
 
 #include "MapClass.h"
 #include "MainInt.h"

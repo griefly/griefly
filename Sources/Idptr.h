@@ -2,16 +2,11 @@
 
 #include <stdlib.h>
 
-#include <hash_map>
-#include <strstream>
+#include <unordered_map>
+//#include <sstream>
 #include <fstream>
 
 #include <SDL.h>
-
-#if defined(__linux__)
-#include <ext/hash_map>
-namespace std { using namespace __gnu_cxx; }
-#endif // linux
 
 #include "Macroses.h"
 #include "FastIsType.h"
@@ -28,9 +23,9 @@ typedef IMainObject* (*item_creator)(size_t id);
 typedef IMainObject* (*item_creator_saved)();
 typedef unsigned int (*type_item)();
 
-std::hash_map<unsigned int, item_creator>* itemList();
+std::unordered_map<unsigned int, item_creator>* itemList();
 
-std::hash_map<unsigned int, item_creator_saved>* itemListSaved();
+std::unordered_map<unsigned int, item_creator_saved>* itemListSaved();
 
 template<class T>
 class itemAdder 

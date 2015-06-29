@@ -1,12 +1,6 @@
 #include <string>
-//#include <hash_map>
 #include <unordered_map>
 #include <vector>
-
-#if defined(__linux__)
-//#include <ext/unordered_map>
-namespace std { using namespace __gnu_cxx; }
-#endif // linux
 
 #include <SFML/Audio.hpp>
 
