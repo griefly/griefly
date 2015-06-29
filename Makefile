@@ -16,7 +16,7 @@ travis-get-deps:
 clean:
 	rm -f build
 
-Exec/KVEngine: build
+Exec/KVEngine:
 	mkdir -p build
 	cd build && cmake ../ && make
 	cp build/KVEngine Exec
