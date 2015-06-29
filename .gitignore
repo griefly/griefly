@@ -120,6 +120,7 @@ ipch
 /Release/mainmap
 Release Fast
 /Exec/KVEngine.exe
+/Exec/KVEngine
 /Exec/KVEngine.pdb
 /Exec/*.dll
 /Exec/Saves/
