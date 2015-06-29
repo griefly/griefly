@@ -16,9 +16,10 @@ travis-get-deps:
 
 .PHONY: clean
 clean:
-	rm -f build
+	rm -rf build
+	rm -f Exec/KVEngine
 
 Exec/KVEngine:
 	mkdir -p build
-	cd build && cmake ../ && make
+	cd build && cmake ../ && make CXX=$(CXX) CC=$(CC)
 	cp build/KVEngine Exec
