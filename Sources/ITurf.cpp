@@ -26,13 +26,18 @@ int Friction::CombinedFriction(id_ptr_on<ITurf> turf)
 
     // TODO: Remake
 
-    if (   turf->GetItem<Lattice>()
-        || turf->GetNeighbour(D_UP)->GetItem<Lattice>()
-        || turf->GetNeighbour(D_DOWN)->GetItem<Lattice>()
-        || turf->GetNeighbour(D_LEFT)->GetItem<Lattice>()
-        || turf->GetNeighbour(D_RIGHT)->GetItem<Lattice>()
-        )
-        retval = Friction::BASE_FRICTION;
+    if (retval < Friction::BASE_FRICTION)
+    {
+        if (   turf->GetItem<Lattice>()
+            || turf->GetNeighbour(D_UP)->GetItem<Lattice>()
+            || turf->GetNeighbour(D_DOWN)->GetItem<Lattice>()
+            || turf->GetNeighbour(D_LEFT)->GetItem<Lattice>()
+            || turf->GetNeighbour(D_RIGHT)->GetItem<Lattice>()
+            )
+        {
+            retval = Friction::BASE_FRICTION;
+        }
+    }
 
     return retval;
 }
