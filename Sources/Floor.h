@@ -10,6 +10,8 @@ public:
     Floor(size_t id);
     virtual void AttackBy(id_ptr_on<Item> item) override;
     void SetOpen(bool o);
+
+    bool KV_SAVEBLE(bloody);
 private:
     bool KV_SAVEBLE(open_);
 };

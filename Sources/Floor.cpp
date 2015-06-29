@@ -18,6 +18,7 @@ Floor::Floor(size_t id) : ITurf(id)
     name = "Floor";
 
     SetOpen(true);
+    bloody = false;
 }
 
 void Floor::AttackBy(id_ptr_on<Item> item)
@@ -53,4 +54,5 @@ void Floor::SetOpen(bool o)
     {
         SetState("floor");
     }
+    GetView()->RemoveOverlays();
 }

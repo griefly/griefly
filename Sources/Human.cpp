@@ -15,6 +15,7 @@
 #include "Ghost.h"
 #include "Creator.h"
 #include "Clothes.h"
+#include "Floor.h"
 
 Human::Human(size_t id) : IMob(id)
 {
@@ -236,7 +237,7 @@ void Human::Live()
 
 void Human::AttackBy(id_ptr_on<Item> item)
 {
-    if (item->damage > 0)
+    if (item && (item->damage > 0))
     {
         health_ -= item->damage;
         unsigned int value = get_rand() % 3;
@@ -253,6 +254,19 @@ void Human::AttackBy(id_ptr_on<Item> item)
             Chat::GetChat()->PostText(
                 name + " is attacked by " + item_owner->name + " with " + item->name + "\n"
                 );
+        }
+
+        unsigned int blood_value = (get_rand() % 7) + 1;
+        std::stringstream conv;
+        conv << "floor" << blood_value;
+
+        if (id_ptr_on<Floor> f = GetTurf())
+        {
+            if (!f->bloody)
+            {
+                f->GetView()->AddOverlay("icons/blood.dmi", conv.str());
+                f->bloody = true;
+            }
         }
     }
 }
