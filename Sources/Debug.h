@@ -1,6 +1,21 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
+#include <vector>
+
+struct HashTick
+{
+    unsigned int hash;
+    unsigned int tick;
+};
+
+struct HashHistory
+{
+    std::unordered_map
+        <unsigned int, std::vector<unsigned int>> net_values;
+    std::vector<HashTick> local_values;
+};
 
 namespace Debug
 {
@@ -9,9 +24,16 @@ namespace Debug
         class UnsyncDebug 
         {
         public:
+            void AddNetSyncPair(unsigned int hash_value, unsigned int tick_value);
+            void AddLocalSyncPair(unsigned int hash_value, unsigned int tick_value);
+
+            std::string PrintHashInfo();
+
             bool Save();
             UnsyncDebug();
         private:
+            HashHistory hash_history_;
+
             std::string GetNextNameToSave(const std::string& folder);
             unsigned int counter_;
         };

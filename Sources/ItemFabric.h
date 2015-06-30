@@ -20,6 +20,10 @@ public:
     {
         return hash_last_;
     }
+    unsigned int get_hash_last_tick()
+    {
+        return hash_last_tick_;
+    }
 
     std::vector<IMainObject*>& idTable()
     {
@@ -131,6 +135,8 @@ private:
     std::vector<id_ptr_on<IMainObject>> remove_from_process_;
 
     unsigned int hash_last_;
+    unsigned int hash_last_tick_;
+
     size_t id_;
 
     std::map<size_t, size_t> players_table_;

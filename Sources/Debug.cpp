@@ -26,6 +26,43 @@ Debug::Impl::UnsyncDebug::UnsyncDebug()
     counter_ = 0;
 }
 
+void Debug::Impl::UnsyncDebug::AddLocalSyncPair(unsigned int hash_value, unsigned int tick_value)
+{
+    HashTick val;
+    val.hash = hash_value;
+    val.tick = tick_value;
+    hash_history_.local_values.push_back(val);
+}
+
+void Debug::Impl::UnsyncDebug::AddNetSyncPair(unsigned int hash_value, unsigned int tick_value)
+{
+    hash_history_.net_values[tick_value].push_back(hash_value);
+}
+
+std::string Debug::Impl::UnsyncDebug::PrintHashInfo()
+{
+    std::stringstream ss;
+
+    ss << "Local hashes" << std::endl;
+    for (auto it = hash_history_.local_values.begin(); it != hash_history_.local_values.end(); ++it)
+    {
+        ss << "Tick: " << it->tick << ", hash: " << it->hash << std::endl;
+    }
+    ss << "Net hashes" << std::endl;
+
+    for (auto it = hash_history_.net_values.begin(); it != hash_history_.net_values.end(); ++it)
+    {
+        ss << "Tick: " << it->first << " Hashes: ";
+        for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2)
+        {
+            ss << (*it2) << " ";
+        }
+        ss << std::endl;
+    }
+
+    return ss.str();
+}
+
 std::string Debug::Impl::UnsyncDebug::GetNextNameToSave(const std::string& folder)
 {
     std::stringstream converter;

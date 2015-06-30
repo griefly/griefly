@@ -25,6 +25,8 @@ void ItemFabric::Sync()
     {
         hash_last_ = hash_all();
 
+        Debug::UnsyncDebug().AddLocalSyncPair(hash_last_, MAIN_TICK);
+
         //Debug::UnsyncDebug().Save();
 
         Message msg;
@@ -32,6 +34,7 @@ void ItemFabric::Sync()
         msg.type = Net::SYSTEM_TYPE;
         msg.text = Net::HASH;
         msg.from = hash_last_;
+        msg.to = static_cast<int>(MAIN_TICK);
 
         NetClient::GetNetClient()->Send(msg);
     }

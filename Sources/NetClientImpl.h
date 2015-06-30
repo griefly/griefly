@@ -25,6 +25,7 @@ public:
     virtual bool IsFail() override;
 
     virtual unsigned int Hash() const override;
+    virtual unsigned int HashTick() const override;
 private:
     NetClient() {}
     std::string ip_;
@@ -43,4 +44,5 @@ private:
     bool ready_;
 
     unsigned int hash_;
+    unsigned int hash_tick_;
 };

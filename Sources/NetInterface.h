@@ -31,6 +31,7 @@ public:
     virtual bool IsFail() = 0;
 
     virtual unsigned int Hash() const = 0;
+    virtual unsigned int HashTick() const = 0;
 protected:
     INetClient() {}
 };

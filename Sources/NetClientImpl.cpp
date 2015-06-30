@@ -8,6 +8,7 @@
 #include "Mob.h"
 #include "ItemFabric.h"
 #include "Creator.h"
+#include "Debug.h"
 
 INetClient* net_client = nullptr;
 
@@ -19,6 +20,7 @@ void NetClient::Init()
     val->amount_ticks_ = 0;
     val->hash_ = 0;
     val->number_last_message_ = 0;
+    val->hash_tick_ = 0;
     net_client = val;
 }
 
@@ -205,8 +207,11 @@ bool NetClient::Process()
             ++amount_ticks_;
         }
         else if (message.text == Net::HASH)
-        {
+        {   
             hash_ = message.from;
+            hash_tick_ = message.to;
+
+            Debug::UnsyncDebug().AddNetSyncPair(hash_, hash_tick_);
             continue;
         }
         else if (message.text == Net::MAP_REQUEST)
@@ -239,4 +244,9 @@ bool NetClient::Process()
 unsigned int NetClient::Hash() const
 {
     return hash_;
+}
+
+unsigned int NetClient::HashTick() const
+{
+    return hash_tick_;
 }

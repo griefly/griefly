@@ -547,6 +547,11 @@ void Manager::HandleKeyboardDown(QKeyEvent* event)
     {
         msg.text = Input::KEY_R;
     }
+    else if (event->key() == Qt::Key_F3)
+    {
+        SYSTEM_STREAM << Debug::UnsyncDebug().PrintHashInfo();
+        return;
+    }
     else
     {
         return;
@@ -676,6 +681,14 @@ void Manager::initWorld()
            << GetItemFabric()->get_hash_last();
         ss >> *str;
     }).SetSize(15).SetPlace(0, 30, 200, 50);
+
+    GetTexts()["SyncTick"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << NetClient::GetNetClient()->HashTick();
+        ss >> *str;
+    }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);
 
     GetTexts()["LastTouch"].SetUpdater
     ([this](std::string* str)
