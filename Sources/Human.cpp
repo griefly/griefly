@@ -154,7 +154,10 @@ void Human::processGUImsg(const Message& msg)
                         item->SetOwner(GetId());
                     }
                     else
+                    {
                         interface_.Pick(0);
+                        item->AttackBy(0);
+                    }
                 }
                 else
                 {
@@ -237,6 +240,7 @@ void Human::Live()
 
 void Human::AttackBy(id_ptr_on<Item> item)
 {
+    bool damaged = false;
     if (item && (item->damage > 0))
     {
         health_ -= item->damage;
@@ -256,17 +260,36 @@ void Human::AttackBy(id_ptr_on<Item> item)
                 );
         }
 
-        unsigned int blood_value = (get_rand() % 7) + 1;
-        std::stringstream conv;
-        conv << "floor" << blood_value;
+        damaged = true;
+    }
+    else if (!item)
+    {
+        health_ -= 1;
 
-        if (id_ptr_on<Floor> f = GetTurf())
+        unsigned int punch_value = (get_rand() % 4) + 1;
+        std::stringstream conv;
+        conv << "punch" << punch_value << ".ogg";
+        PlaySoundIfVisible(conv.str(), owner.ret_id());
+
+        damaged = true;
+    }
+
+    if (!damaged)
+        return;
+
+    if ((get_rand() % 3) != 0)
+        return;
+
+    unsigned int blood_value = (get_rand() % 7) + 1;
+    std::stringstream conv;
+    conv << "floor" << blood_value;
+
+    if (id_ptr_on<Floor> f = GetTurf())
+    {
+        if (!f->bloody)
         {
-            if (!f->bloody)
-            {
-                f->GetView()->AddOverlay("icons/blood.dmi", conv.str());
-                f->bloody = true;
-            }
+            f->GetView()->AddOverlay("icons/blood.dmi", conv.str());
+            f->bloody = true;
         }
     }
 }
