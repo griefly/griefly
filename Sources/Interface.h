@@ -43,6 +43,7 @@ public:
     void SwapHands();
 
     void UpdateHealth();
+    void UpdateLaying();
 
 private:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
@@ -55,6 +56,8 @@ private:
     Slot<Item> swap_;
 
     Slot<Item> health_;
+
+    Slot<Item> lay_;
 
     Slot<Item> r_hand_;
     Slot<Item> l_hand_;

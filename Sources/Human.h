@@ -15,6 +15,11 @@ public:
     virtual void process() override;
     virtual void Live();
 
+    void SetLying(bool value);
+    bool GetLying() const { return lying_; }
+
+    void AddLyingTimer(int value);
+
     virtual void AttackBy(id_ptr_on<Item> item) override;
 
     virtual void processImage(DrawType type) override;
@@ -29,6 +34,8 @@ public:
     int GetHealth() { return health_; }
 private:
     HumanInterface KV_SAVEBLE(interface_);
+
+    int KV_SAVEBLE(lay_timer_);
 
     bool KV_SAVEBLE(lying_);
     bool KV_SAVEBLE(dead_);

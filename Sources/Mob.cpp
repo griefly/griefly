@@ -28,6 +28,7 @@
 #include "Chat.h"
 #include "Names.h"
 #include "IMovable.h"
+#include "Human.h"
 
 #include "qtopengl.h"
 
@@ -475,6 +476,14 @@ void Manager::ProcessClick(int mouse_x, int mouse_y)
         last_touch = "Interface";
         return;
     }
+
+    // TODO: Remake, huge exploit
+    if (id_ptr_on<Human> h = GetMob())
+    {
+        if (h->GetLying() == true)
+            return;
+    }
+
     id_ptr_on<IOnMapObject> item;
     item = GetMapMaster()->click(mouse_x, mouse_y);
     if (item)

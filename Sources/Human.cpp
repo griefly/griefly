@@ -31,6 +31,8 @@ Human::Human(size_t id) : IMob(id)
     interface_.InitSlots();
     interface_.SetOwner(GetId());
 
+    lay_timer_ = 0;
+
     dead_ = false;
     lying_ = false;
     health_ = 100;
@@ -139,11 +141,11 @@ void Human::processGUImsg(const Message& msg)
         if (item && item->GetOwner())
         {
 
-            SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
+            //SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
             // It isn't fine
             if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
             {
-                SYSTEM_STREAM << "And we can touch it!" << std::endl;
+                //SYSTEM_STREAM << "And we can touch it!" << std::endl;
                 if(!interface_.GetActiveHand().Get())
                 {
                     interface_.Pick(item);
@@ -161,7 +163,10 @@ void Human::processGUImsg(const Message& msg)
                 }
                 else
                 {
-                    item->AttackBy(interface_.GetActiveHand().Get());
+                    if (this->GetLying() == false)
+                    {
+                        item->AttackBy(interface_.GetActiveHand().Get());
+                    }
                 }
                 
             }
@@ -186,6 +191,30 @@ void Human::process()
     Live();
 }
 
+void Human::SetLying(bool value)
+{
+    if (value == false && lay_timer_ > 0)
+        return;
+
+    lying_ = value;
+    if (lying_)
+    {
+        Chat::GetChat()->PostText(name + " is lying now\n");
+        view_.SetAngle(90);
+    }
+    else
+    {
+        Chat::GetChat()->PostText(name + " is standing now!\n");
+        view_.SetAngle(0);
+    }
+    interface_.UpdateLaying();
+}
+
+void Human::AddLyingTimer(int value)
+{
+    lay_timer_ += value;
+}
+
 void Human::Live()
 {
     if (id_ptr_on<CubeTile> t = owner)
@@ -207,12 +236,14 @@ void Human::Live()
 
     interface_.UpdateHealth();
 
+    if (lay_timer_ > 0)
+        --lay_timer_;
+
     if (health_ < 0)
     {
         if (!lying_)
         {
-            lying_ = true;
-            view_.SetAngle(90);
+            SetLying(true);
         }
         if (health_ >= -100)
         {
@@ -270,6 +301,13 @@ void Human::AttackBy(id_ptr_on<Item> item)
         std::stringstream conv;
         conv << "punch" << punch_value << ".ogg";
         PlaySoundIfVisible(conv.str(), owner.ret_id());
+
+        if (get_rand() % 5 == 0)
+        {
+            SetLying(true);
+            AddLyingTimer(100);
+            Chat::GetChat()->PostText(name + " has been knocked out!");
+        }
 
         damaged = true;
     }
