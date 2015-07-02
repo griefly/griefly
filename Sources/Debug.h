@@ -29,9 +29,17 @@ namespace Debug
 
             std::string PrintHashInfo();
 
+            void ProcessDebug();
+
+            void GenerateAndSaveReport();
+
             bool Save();
             UnsyncDebug();
         private:
+            bool report_generated_;
+
+            bool IsReportNeeded();
+
             HashHistory hash_history_;
 
             std::string GetNextNameToSave(const std::string& folder);

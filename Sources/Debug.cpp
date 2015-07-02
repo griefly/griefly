@@ -8,6 +8,12 @@
 
 #include "ItemFabric.h"
 
+#include "Params.h"
+
+#include <QUuid>
+#include <QDir>
+#include <QTextStream>
+
 const char* const DEFAULT_FOLDER = "Saves/";
 const char* const SAVE_WITHOUT_NUMBER = "save";
 
@@ -24,6 +30,23 @@ Debug::Impl::UnsyncDebug& Debug::UnsyncDebug()
 Debug::Impl::UnsyncDebug::UnsyncDebug()
 {
     counter_ = 0;
+    report_generated_ = false;
+}
+
+bool Debug::Impl::UnsyncDebug::IsReportNeeded()
+{
+    for (auto it = hash_history_.net_values.begin(); it != hash_history_.net_values.end(); ++it)
+    {
+        unsigned int val = *it->second.begin();
+        for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2)
+        {
+            if (*it2 != val)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void Debug::Impl::UnsyncDebug::AddLocalSyncPair(unsigned int hash_value, unsigned int tick_value)
@@ -37,6 +60,41 @@ void Debug::Impl::UnsyncDebug::AddLocalSyncPair(unsigned int hash_value, unsigne
 void Debug::Impl::UnsyncDebug::AddNetSyncPair(unsigned int hash_value, unsigned int tick_value)
 {
     hash_history_.net_values[tick_value].push_back(hash_value);
+}
+
+void Debug::Impl::UnsyncDebug::ProcessDebug()
+{
+    static bool is_autogen_report = GetParamsHolder().GetParamBool("-autogen_reports");
+    if (is_autogen_report)
+    {
+        if (!report_generated_)
+        {
+            if (IsReportNeeded())
+            {
+                GenerateAndSaveReport();
+                report_generated_ = true;
+            }
+        }
+    }
+}
+
+void Debug::Impl::UnsyncDebug::GenerateAndSaveReport()
+{
+    QUuid uuid = QUuid::createUuid();
+    QString dir_path = "debug_reports//" + uuid.toString();
+
+    QDir().mkdir(dir_path);
+    QFile file(dir_path + "//hash_report.txt");
+    if (file.open(QIODevice::ReadWrite))
+    {
+        QTextStream stream(&file);
+        stream << Debug::UnsyncDebug().PrintHashInfo().c_str();
+    }
+    file.close();
+
+    GetItemFabric()->saveMap((dir_path + "//map.map").toStdString().c_str());
+
+    SYSTEM_STREAM << "Debug report saved as " << uuid.toString().toStdString() << std::endl;
 }
 
 std::string Debug::Impl::UnsyncDebug::PrintHashInfo()

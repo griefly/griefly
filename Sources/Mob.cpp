@@ -33,9 +33,6 @@
 #include "qtopengl.h"
 
 #include <QCoreApplication>
-#include <QUuid>
-#include <QDir>
-#include <QTextStream>
 
 int ping_send;
 
@@ -220,6 +217,9 @@ void Manager::process()
         {
 
         }
+
+        Debug::UnsyncDebug().ProcessDebug();
+
         if(SDL_GetTicks() - locTime > 100)
         {
             if (GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash())
@@ -552,16 +552,7 @@ void Manager::HandleKeyboardDown(QKeyEvent* event)
     }
     else if (event->key() == Qt::Key_F3)
     {
-        auto uuid = QUuid::createUuid();
-        QDir().mkdir("debug_reports//" + uuid.toString());
-        QFile file("debug_reports//" + uuid.toString() + "//hash_report.txt");
-        if (file.open(QIODevice::ReadWrite))
-        {
-            QTextStream stream(&file);
-            stream << Debug::UnsyncDebug().PrintHashInfo().c_str();
-        }
-        file.close();
-        SYSTEM_STREAM << "Debug report saved as " << uuid.toString().toStdString() << std::endl;
+        Debug::UnsyncDebug().GenerateAndSaveReport();
         return;
     }
     else
