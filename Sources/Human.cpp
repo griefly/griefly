@@ -85,7 +85,8 @@ void Human::processGUImsg(const Message& msg)
     }
     if (msg.type == Net::CHAT_TYPE)
     {
-        Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
+        //Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
+        Chat::GetChat()->PostWords(name, msg.text);
     }
     if(msg.text == Input::KEY_Q)
     {

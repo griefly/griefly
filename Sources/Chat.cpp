@@ -80,6 +80,12 @@ void Chat::InitChat()
     chat->current_pos_ = chat->visible_lines_;*/
 }
 
+void Chat::PostWords(const std::string& who, const std::string& text)
+{
+    GetTextBrowser()->insertHtml
+        (("<b>" + who + "</b>: " + "<span>" + text + "</span><br>").c_str());
+}
+
 void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
 {
     if (GetMob() == owner)

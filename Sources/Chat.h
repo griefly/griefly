@@ -23,6 +23,8 @@ public:
 
     void PostText(const std::string& str);
     void PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner);
+
+    void PostWords(const std::string& who, const std::string& text);
 private:
     void ClearZone();
 
