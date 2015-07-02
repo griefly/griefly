@@ -564,6 +564,12 @@ void Manager::HandleKeyboardDown(QKeyEvent* event)
 
 void Manager::initWorld()
 {
+    if (!GetParamsHolder().GetParamBool("-debug_to_chat"))
+    {
+        SetLogToFile();
+    }
+
+
     std::cout << "Begin init world" << std::endl;
     tick_recv = 0;
     isMove = 0;

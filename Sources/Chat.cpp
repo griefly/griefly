@@ -10,12 +10,25 @@
 #include "Creator.h"
 #include "helpers.h"
 
+#include <QUuid>
+
 Chat* Chat::chat = 0;
 
 std::stringstream ss;
-std::fstream loc("errorfile.txt", std::ios::trunc | std::ios::out | std::ios::in);
+std::fstream loc("debug_reports//" + QUuid::createUuid().toString().toStdString() + ".txt", std::ios::trunc | std::ios::out | std::ios::in);
 
-std::ostream& SYSTEM_STREAM = ss;
+std::ostream* local_stream = &ss;
+//std::ostream& SYSTEM_STREAM = *local_stream;
+
+void SetLogToFile()
+{
+    local_stream = &loc;
+}
+
+std::ostream& get_system_stream()
+{
+    return *local_stream;
+}
 
 Chat* Chat::GetChat()
 {

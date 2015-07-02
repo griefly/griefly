@@ -28,7 +28,10 @@ extern bool NODRAW; // probably nodraw mode
 
 extern int TITLE_SIZE;//no comment
 
-extern std::ostream& SYSTEM_STREAM;//some system information here
+std::ostream& get_system_stream();
+
+#define SYSTEM_STREAM get_system_stream()
+//extern std::ostream& SYSTEM_STREAM;//some system information here
 
 const int HASH_OFTEN = 20;
 

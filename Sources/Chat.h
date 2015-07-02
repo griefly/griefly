@@ -60,5 +60,7 @@ private:
     static Chat* chat;
 };
 
+void SetLogToFile();
+
 void SetTextBrowser(QTextBrowser* tb);
 QTextBrowser* GetTextBrowser();
