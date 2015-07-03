@@ -10,6 +10,8 @@
 #include "Creator.h"
 #include "helpers.h"
 
+#include "visible_points.h"
+
 #include <QUuid>
 
 Chat* Chat::chat = 0;
@@ -80,8 +82,27 @@ void Chat::InitChat()
     chat->current_pos_ = chat->visible_lines_;*/
 }
 
-void Chat::PostWords(const std::string& who, const std::string& text)
+void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 {
+    if (!IsTileVisible(tile_id))
+        return;
+    GetTextBrowser()->insertHtml((str + "<br>").c_str());
+}
+
+void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id)
+{
+    if (!IsTileVisible(tile_id))
+        return;
+
+    GetTextBrowser()->insertHtml
+        (("<font color=\"red\">" + who + " is attacked by " + by + " with " + object + "</font><br>").c_str());
+}
+
+void Chat::PostWords(const std::string& who, const std::string& text, size_t tile_id)
+{
+    if (!IsTileVisible(tile_id))
+        return;
+
     GetTextBrowser()->insertHtml
         (("<b>" + who + "</b>: " + "<span>" + text + "</span><br>").c_str());
 }

@@ -21,10 +21,13 @@ public:
     void ScrollDown();
     bool IsArea(int x, int y);
 
-    void PostText(const std::string& str);
     void PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner);
 
-    void PostWords(const std::string& who, const std::string& text);
+    void PostText(const std::string& str);
+
+    void PostSimpleText(const std::string& str, size_t tile_id);
+    void PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id);
+    void PostWords(const std::string& who, const std::string& text, size_t tile_id);
 private:
     void ClearZone();
 

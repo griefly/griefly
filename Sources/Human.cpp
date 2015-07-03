@@ -86,7 +86,7 @@ void Human::processGUImsg(const Message& msg)
     if (msg.type == Net::CHAT_TYPE)
     {
         //Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
-        Chat::GetChat()->PostWords(name, msg.text);
+        Chat::GetChat()->PostWords(name, msg.text, owner->GetId());
     }
     if(msg.text == Input::KEY_Q)
     {
@@ -200,12 +200,12 @@ void Human::SetLying(bool value)
     lying_ = value;
     if (lying_)
     {
-        Chat::GetChat()->PostText(name + " is lying now\n");
+        Chat::GetChat()->PostSimpleText(name + " is lying now", owner->GetId());
         view_.SetAngle(90);
     }
     else
     {
-        Chat::GetChat()->PostText(name + " is standing now!\n");
+        Chat::GetChat()->PostSimpleText(name + " is standing now!", owner->GetId());
         view_.SetAngle(0);
     }
     interface_.UpdateLaying();
@@ -231,7 +231,7 @@ void Human::Live()
             --health_;
             
             if (get_rand() % 5 == 0)
-                Chat::GetChat()->PostText(name + " gasps!\n");
+                Chat::GetChat()->PostSimpleText(name + " gasps!", owner->GetId());
         }
     }
 
@@ -250,7 +250,7 @@ void Human::Live()
         {
             --health_;
             if (get_rand() % 5 == 0)
-                Chat::GetChat()->PostText(name + " gasps!\n");
+                Chat::GetChat()->PostSimpleText(name + " gasps!", owner->GetId());
         }
     }
     if (health_ < -100 && !dead_)
@@ -287,9 +287,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
         PlaySoundIfVisible(snd, owner.ret_id());
         if (id_ptr_on<IOnMapObject> item_owner = item->GetOwner())
         {
-            Chat::GetChat()->PostText(
-                name + " is attacked by " + item_owner->name + " with " + item->name + "\n"
-                );
+            Chat::GetChat()->PostDamage(item_owner->name, name, item->name, owner->GetId());
         }
 
         damaged = true;
@@ -307,7 +305,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
         {
             SetLying(true);
             AddLyingTimer(100);
-            Chat::GetChat()->PostText(name + " has been knocked out!");
+            Chat::GetChat()->PostSimpleText(name + " has been knocked out!", owner->GetId());
         }
 
         damaged = true;
