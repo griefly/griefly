@@ -16,14 +16,24 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>20</y>
+     <x>10</x>
+     <y>10</y>
      <width>201</width>
-     <height>41</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string>This is MapEditor</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>70</y>
+     <width>231</width>
+     <height>281</height>
+    </rect>
    </property>
   </widget>
  </widget>

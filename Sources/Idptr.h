@@ -111,7 +111,9 @@ public:
     }
     const T* operator->() const
     {
-        if(nullptr == GetFromIdTable(id))
+        if (id == 0)
+            return nullptr;
+        if (nullptr == GetFromIdTable(id))
             return nullptr;
         if (!item)
             item = castTo<T>(GetFromIdTable(id));
