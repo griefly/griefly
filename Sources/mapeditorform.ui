@@ -49,16 +49,6 @@
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QOpenGLWidget" name="openGLWidget">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>360</y>
-     <width>81</width>
-     <height>61</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>
