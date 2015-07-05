@@ -25,7 +25,6 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
             //delete loc;
             continue;
         }
-        ui->listWidget->addItem(bloc->name.c_str());
 
         if (bloc->GetMetadata() == nullptr)
         {
@@ -38,14 +37,18 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         int image_state_w_ = current_frame_pos % bloc->GetSprite()->FrameW();
 
         SDL_Surface* s = bloc->GetSprite()->GetSDLSprite()->frames
-                [4];
+                [0];
                 //[image_state_h_ * bloc->GetSprite()->FrameW() + image_state_w_];
         // SDL_Surface s = bloc->GetSprite()->GetSDLSprite()->frames[image_state_w_][image_state_h_];
         QImage img(static_cast<uchar*>(s->pixels),
                                s->w, s->h, QImage::Format_ARGB32);
 
-        if (it == ++(*itemList()).begin())
-            ui->imageLabel->setPixmap(QPixmap::fromImage(img));
+        //ui->imageLabel->setPixmap(QPixmap::fromImage(img));
+
+        QListWidgetItem* new_item
+                = new QListWidgetItem(QIcon(QPixmap::fromImage(img)), bloc->name.c_str());
+
+        ui->listWidget->addItem(new_item);
 
     }
 }
