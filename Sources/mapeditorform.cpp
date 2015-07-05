@@ -37,9 +37,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         int image_state_w_ = current_frame_pos % bloc->GetSprite()->FrameW();
 
         SDL_Surface* s = bloc->GetSprite()->GetSDLSprite()->frames
-                [0];
-                //[image_state_h_ * bloc->GetSprite()->FrameW() + image_state_w_];
-        // SDL_Surface s = bloc->GetSprite()->GetSDLSprite()->frames[image_state_w_][image_state_h_];
+                [image_state_w_ * bloc->GetSprite()->FrameH() + image_state_h_];
         QImage img(static_cast<uchar*>(s->pixels),
                                s->w, s->h, QImage::Format_ARGB32);
 
