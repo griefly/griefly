@@ -73,7 +73,8 @@ QtOpenGL* GetGLWidget()
 
 void MakeCurrentGLContext()
 {
-    widget->makeCurrent();
+    if (widget)
+        widget->makeCurrent();
 }
 
 void SetGLContext(QtOpenGL* new_widget)

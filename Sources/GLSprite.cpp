@@ -37,9 +37,16 @@ void GLSprite::Init(CSprite* sprite)
 {
     fail_ = true;
 
+    // Hack for mapeditor
+    bool force_no_fail = false;
+    if (GetGLWidget() == nullptr)
+    {
+        force_no_fail = true;
+    }
+
     GLint maxTexSize;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
-    if(sprite->w > maxTexSize || sprite->h > maxTexSize)
+    if ((sprite->w > maxTexSize || sprite->h > maxTexSize) && !force_no_fail)
     {
         SYSTEM_STREAM << "OpenGL texture load fail: texture too big, maximal allowed size is " << maxTexSize << std::endl;
         return;
