@@ -6,6 +6,10 @@
 #include "Text.h"
 
 #include <QBitmap>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+
+QGraphicsScene* scene;
 
 MapEditorForm::MapEditorForm(QWidget *parent) :
     QWidget(parent),
@@ -13,8 +17,13 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    scene = new QGraphicsScene;
+
+    ui->graphicsView->setScene(scene);
+
+    scene->addLine(0.0, 0.0, 100.0, 100.0);
+
     SetSpriter(new ASprClass);
-    //SetGLContext(ui->openGLWidget);
 
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
@@ -42,6 +51,9 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
                                s->w, s->h, QImage::Format_ARGB32);
 
         //ui->imageLabel->setPixmap(QPixmap::fromImage(img));
+
+        QGraphicsPixmapItem* i = scene->addPixmap(QPixmap::fromImage(img));
+        i->setPos(0, 0);
 
         QListWidgetItem* new_item
                 = new QListWidgetItem(QIcon(QPixmap::fromImage(img)), bloc->name.c_str());
