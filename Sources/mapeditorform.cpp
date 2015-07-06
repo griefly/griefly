@@ -11,6 +11,26 @@
 
 QGraphicsScene* scene;
 
+struct EditorEntry
+{
+    unsigned int item_type;
+
+    QGraphicsPixmapItem* pixmap_item;
+};
+
+struct EditorTile
+{
+    EditorEntry turf;
+    std::vector<EditorEntry> items;
+};
+
+std::vector<
+    std::vector<
+        std::vector<
+            EditorTile
+        >>> editor_map;
+
+
 MapEditorForm::MapEditorForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MapEditorForm)
