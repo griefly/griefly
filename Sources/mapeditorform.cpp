@@ -25,6 +25,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
     SetSpriter(new ASprClass);
 
+    int i = 0;
+
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
         IMainObject* loc = it->second(0);
@@ -52,8 +54,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         //ui->imageLabel->setPixmap(QPixmap::fromImage(img));
 
-        QGraphicsPixmapItem* i = scene->addPixmap(QPixmap::fromImage(img));
-        i->setPos(0, 0);
+        QGraphicsPixmapItem* pixmap_item = scene->addPixmap(QPixmap::fromImage(img));
+        pixmap_item->setPos(32 * (i++), 0);
 
         QListWidgetItem* new_item
                 = new QListWidgetItem(QIcon(QPixmap::fromImage(img)), bloc->name.c_str());
