@@ -15,7 +15,6 @@
 #include "helpers.h"
 #include "Floor.h"
 #include "Door.h"
-#include "CSmallItem.h"
 #include "Grille.h"
 #include "Glass.h"
 #include "Item.h"
