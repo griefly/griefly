@@ -5,13 +5,15 @@
 #include "MapClass.h"
 #include "Text.h"
 
+#include <map>
+
 #include <QBitmap>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
 QGraphicsScene* scene;
 
-class MapEditor
+class MapEditor2
 {
 public:
     struct EditorEntry
@@ -27,33 +29,57 @@ public:
         std::vector<EditorEntry> items;
     };
 
-    MapEditor(QGraphicsScene* scene)
+    MapEditor2(QGraphicsScene* scene)
         : scene_(scene)
     {
 
+    }
+
+    void Resize(int posx, int posy, int posz)
+    {
+        editor_map_.resize(posx);
+        for (auto it_y = editor_map_.begin(); it_y != editor_map_.end(); ++it_y)
+        {
+            it_y->resize(posy);
+            for (auto it_z = it_y->begin(); it_z != it_y->end(); ++it_z)
+            {
+                it_z->resize(posz);
+            }
+        }
+    }
+
+    void AddItemType(unsigned int item_type, QPixmap image)
+    {
+        image_holder_[item_type] = image;
     }
 
     void AddItem(unsigned int item_type, int posx, int posy, int posz)
     {
         EditorEntry new_entry;
         new_entry.item_type = item_type;
-        //new_entry.pixmap_item = scene_->addPixmap(QPixmap::fromImage(img));
+        new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type]);
+        new_entry.pixmap_item->setPos(posx * 32, posy * 32);
         editor_map_[posx][posy][posz].items.push_back(new_entry);
     }
     void SetTurf(unsigned int item_type, int posx, int posy, int posz)
     {
         EditorEntry new_entry;
         new_entry.item_type = item_type;
-        //new_entry.pixmap_item = scene_->addPixmap(QPixmap::fromImage(img));
+        new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type]);
+        new_entry.pixmap_item->setPos(posx * 32, posy * 32);
         editor_map_[posx][posy][posz].turf = new_entry;
     }
 
 private:
+    std::map<unsigned int, QPixmap> image_holder_;
+
     QGraphicsScene* scene_;
 
     typedef std::vector<std::vector<std::vector<EditorTile>>> MapType;
     MapType editor_map_;
 };
+
+MapEditor2* map_editor_ = nullptr;
 
 MapEditorForm::MapEditorForm(QWidget *parent) :
     QWidget(parent),
@@ -61,11 +87,13 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    scene = new QGraphicsScene;
+    scene = new QGraphicsScene;    
+    map_editor_ = new MapEditor2(scene);
+    map_editor_->Resize(100, 100, 1);
 
     ui->graphicsView->setScene(scene);
 
-    scene->addLine(0.0, 0.0, 100.0, 100.0);
+    //scene->addLine(0.0, 0.0, 100.0, 100.0);
 
     SetSpriter(new ASprClass);
 
@@ -98,8 +126,11 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         //ui->imageLabel->setPixmap(QPixmap::fromImage(img));
 
-        QGraphicsPixmapItem* pixmap_item = scene->addPixmap(QPixmap::fromImage(img));
-        pixmap_item->setPos(32 * (i++), 0);
+        map_editor_->AddItemType(it->first, QPixmap::fromImage(img));
+        map_editor_->AddItem(it->first, i++, i, 0);
+
+        //QGraphicsPixmapItem* pixmap_item = scene->addPixmap(QPixmap::fromImage(img));
+        //pixmap_item->setPos(32 * (i++), 0);
 
         QListWidgetItem* new_item
                 = new QListWidgetItem(QIcon(QPixmap::fromImage(img)), bloc->name.c_str());
