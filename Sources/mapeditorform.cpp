@@ -11,25 +11,49 @@
 
 QGraphicsScene* scene;
 
-struct EditorEntry
+class MapEditor
 {
-    unsigned int item_type;
+public:
+    struct EditorEntry
+    {
+        unsigned int item_type;
 
-    QGraphicsPixmapItem* pixmap_item;
+        QGraphicsPixmapItem* pixmap_item;
+    };
+
+    struct EditorTile
+    {
+        EditorEntry turf;
+        std::vector<EditorEntry> items;
+    };
+
+    MapEditor(QGraphicsScene* scene)
+        : scene_(scene)
+    {
+
+    }
+
+    void AddItem(unsigned int item_type, int posx, int posy, int posz)
+    {
+        EditorEntry new_entry;
+        new_entry.item_type = item_type;
+        //new_entry.pixmap_item = scene_->addPixmap(QPixmap::fromImage(img));
+        editor_map_[posx][posy][posz].items.push_back(new_entry);
+    }
+    void SetTurf(unsigned int item_type, int posx, int posy, int posz)
+    {
+        EditorEntry new_entry;
+        new_entry.item_type = item_type;
+        //new_entry.pixmap_item = scene_->addPixmap(QPixmap::fromImage(img));
+        editor_map_[posx][posy][posz].turf = new_entry;
+    }
+
+private:
+    QGraphicsScene* scene_;
+
+    typedef std::vector<std::vector<std::vector<EditorTile>>> MapType;
+    MapType editor_map_;
 };
-
-struct EditorTile
-{
-    EditorEntry turf;
-    std::vector<EditorEntry> items;
-};
-
-std::vector<
-    std::vector<
-        std::vector<
-            EditorTile
-        >>> editor_map;
-
 
 MapEditorForm::MapEditorForm(QWidget *parent) :
     QWidget(parent),
