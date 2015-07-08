@@ -79,7 +79,7 @@ private:
     MapType editor_map_;
 };
 
-MapEditor2* map_editor_ = nullptr;
+MapEditor2* map_editor2_ = nullptr;
 
 MapEditorForm::MapEditorForm(QWidget *parent) :
     QWidget(parent),
@@ -88,8 +88,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     ui->setupUi(this);
 
     scene = new QGraphicsScene;    
-    map_editor_ = new MapEditor2(scene);
-    map_editor_->Resize(100, 100, 1);
+    map_editor2_ = new MapEditor2(scene);
+    map_editor2_->Resize(100, 100, 1);
 
     ui->graphicsView->setScene(scene);
 
@@ -126,8 +126,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         //ui->imageLabel->setPixmap(QPixmap::fromImage(img));
 
-        map_editor_->AddItemType(it->first, QPixmap::fromImage(img));
-        map_editor_->AddItem(it->first, i++, i, 0);
+        map_editor2_->AddItemType(it->first, QPixmap::fromImage(img));
+        map_editor2_->AddItem(it->first, i++, i, 0);
 
         //QGraphicsPixmapItem* pixmap_item = scene->addPixmap(QPixmap::fromImage(img));
         //pixmap_item->setPos(32 * (i++), 0);
