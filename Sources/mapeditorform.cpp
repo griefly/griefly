@@ -97,7 +97,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
     SetSpriter(new ASprClass);
 
-    int i = 0;
+    //int i = 0;
 
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
@@ -127,13 +127,15 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         //ui->imageLabel->setPixmap(QPixmap::fromImage(img));
 
         map_editor2_->AddItemType(it->first, QPixmap::fromImage(img));
-        map_editor2_->AddItem(it->first, i++, i, 0);
+        //map_editor2_->AddItem(it->first, i++, i, 0);
 
         //QGraphicsPixmapItem* pixmap_item = scene->addPixmap(QPixmap::fromImage(img));
         //pixmap_item->setPos(32 * (i++), 0);
 
         QListWidgetItem* new_item
                 = new QListWidgetItem(QIcon(QPixmap::fromImage(img)), bloc->name.c_str());
+
+        types_.push_back(it->first);
 
         ui->listWidget->addItem(new_item);
 
@@ -143,4 +145,16 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 MapEditorForm::~MapEditorForm()
 {
     delete ui;
+}
+
+void MapEditorForm::on_createItem_clicked()
+{
+    static int i = 0;
+    int current_row = ui->listWidget->currentRow();
+    if (current_row < 0)
+    {
+        return;
+    }
+    unsigned int type = types_[current_row];
+    map_editor2_->AddItem(type, i++, i, 0);
 }

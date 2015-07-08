@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include <vector>
+
 namespace Ui {
 class MapEditorForm;
 }
@@ -15,7 +17,12 @@ public:
     explicit MapEditorForm(QWidget *parent = 0);
     ~MapEditorForm();
 
+private slots:
+    void on_createItem_clicked();
+
 private:
+    std::vector<unsigned int> types_;
+
     Ui::MapEditorForm *ui;
 };
 
