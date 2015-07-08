@@ -2,6 +2,7 @@
 #define MAPEDITORFORM_H
 
 #include <QWidget>
+#include <QGraphicsScene>
 
 #include <vector>
 
@@ -24,6 +25,15 @@ private:
     std::vector<unsigned int> types_;
 
     Ui::MapEditorForm *ui;
+};
+
+class GraphicsScene: public QGraphicsScene
+{
+    Q_OBJECT
+public:
+    explicit GraphicsScene(QWidget *parent = 0);
+public slots:
+    void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
 };
 
 #endif // MAPEDITORFORM_H
