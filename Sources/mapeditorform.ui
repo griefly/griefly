@@ -170,17 +170,23 @@
       <widget class="QWidget" name="widget" native="true">
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
-         <widget class="QSplitter" name="splitter">
+         <widget class="QSplitter" name="splitter_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="QListWidget" name="listWidget">
-           <property name="minimumSize">
-            <size>
-             <width>150</width>
-             <height>0</height>
-            </size>
+          <widget class="QSplitter" name="splitter">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
+           <widget class="QListWidget" name="listWidget">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+           <widget class="QListWidget" name="listWidgetTurf"/>
           </widget>
           <widget class="QGraphicsView" name="graphicsView"/>
          </widget>

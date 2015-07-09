@@ -23,6 +23,7 @@ private slots:
 
 private:
     std::vector<unsigned int> types_;
+    std::vector<unsigned int> turf_types_;
 
     Ui::MapEditorForm *ui;
 };

@@ -194,6 +194,11 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
             //delete loc;
             continue;
         }
+        bool is_turf = false;
+        if (castTo<ITurf>(loc))
+        {
+            is_turf = true;
+        }
 
         if (bloc->GetMetadata() == nullptr)
         {
@@ -221,9 +226,16 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         QListWidgetItem* new_item
                 = new QListWidgetItem(QIcon(QPixmap::fromImage(img)), bloc->name.c_str());
 
-        types_.push_back(it->first);
-
-        ui->listWidget->addItem(new_item);
+        if (!is_turf)
+        {
+            types_.push_back(it->first);
+            ui->listWidget->addItem(new_item);
+        }
+        else
+        {
+            turf_types_.push_back(it->first);
+            ui->listWidgetTurf->addItem(new_item);
+        }
 
     }
 
