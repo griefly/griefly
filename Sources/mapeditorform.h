@@ -21,6 +21,8 @@ public:
 private slots:
     void on_createItem_clicked();
 
+    void on_createTurf_clicked();
+
 private:
     std::vector<unsigned int> types_;
     std::vector<unsigned int> turf_types_;

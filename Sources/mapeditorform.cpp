@@ -25,6 +25,11 @@ class MapEditor2
 public:
     struct EditorEntry
     {
+        EditorEntry()
+        {
+            pixmap_item = nullptr;
+        }
+
         unsigned int item_type;
 
         QGraphicsPixmapItem* pixmap_item;
@@ -131,10 +136,23 @@ public:
         new_entry.item_type = item_type;
         new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type]);
         new_entry.pixmap_item->setPos(posx * 32, posy * 32);
+        new_entry.pixmap_item->setZValue(50);
+
         editor_map_[posx][posy][posz].items.push_back(new_entry);
     }
+
+    void SetTurf(unsigned int item_type)
+    {
+        SetTurf(item_type, pointer_.posx, pointer_.posy, 0);
+    }
+
     void SetTurf(unsigned int item_type, int posx, int posy, int posz)
     {
+        if (editor_map_[posx][posy][posz].turf.pixmap_item != nullptr)
+        {
+            scene_->removeItem(editor_map_[posx][posy][posz].turf.pixmap_item);
+        }
+
         EditorEntry new_entry;
         new_entry.item_type = item_type;
         new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type]);
@@ -262,4 +280,15 @@ void MapEditorForm::on_createItem_clicked()
     }
     unsigned int type = types_[current_row];
     map_editor2_->AddItem(type);
+}
+
+void MapEditorForm::on_createTurf_clicked()
+{
+    int current_row = ui->listWidgetTurf->currentRow();
+    if (current_row < 0)
+    {
+        return;
+    }
+    unsigned int type = turf_types_[current_row];
+    map_editor2_->SetTurf(type);
 }
