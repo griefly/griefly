@@ -65,10 +65,33 @@ public:
 
         pointer_.image = scene->addPolygon(p, pen, brush);
         pointer_.image->setZValue(100);
+
+        QPolygonF p2;
+        p2.push_back(QPointF(0.0, 0.0));
+        p2.push_back(QPointF(0.0, 10 * 32.0));
+        p2.push_back(QPointF(10 * 32.0, 10 * 32.0));
+        p2.push_back(QPointF(10 * 32.0, 0.0));
+
+        QPen pen2(QColor(0, 100, 200));
+        pen2.setWidth(2);
+
+        border_image_ = scene->addPolygon(p2, pen2);
+        border_image_->setZValue(99);
     }
 
     void SetPointer(int posx, int posy)
     {
+        if (posx < 0)
+            posx = 0;
+        if (posx >= static_cast<int>(editor_map_.size()))
+            posx = static_cast<int>(editor_map_.size()) - 1;
+        if (posy < 0)
+            posy = 0;
+        if (posy >= static_cast<int>(editor_map_[0].size()))
+            posy = static_cast<int>(editor_map_[0].size()) - 1;
+
+        pointer_.posx = posx;
+        pointer_.posy = posy;
         pointer_.image->setPos(posx * 32, posy * 32);
     }
 
@@ -83,11 +106,23 @@ public:
                 it_z->resize(posz);
             }
         }
+
+        QPolygonF p2;
+        p2.push_back(QPointF(0.0, 0.0));
+        p2.push_back(QPointF(0.0, posy * 32.0));
+        p2.push_back(QPointF(posx * 32.0, posy * 32.0));
+        p2.push_back(QPointF(posx * 32.0, 0.0));
+        border_image_->setPolygon(p2);
     }
 
     void AddItemType(unsigned int item_type, QPixmap image)
     {
         image_holder_[item_type] = image;
+    }
+
+    void AddItem(unsigned int item_type)
+    {
+        AddItem(item_type, pointer_.posx, pointer_.posy, 0);
     }
 
     void AddItem(unsigned int item_type, int posx, int posy, int posz)
@@ -108,6 +143,8 @@ public:
     }
 
 private:
+    QGraphicsPolygonItem* border_image_;
+
     Pointer pointer_;
 
     std::map<unsigned int, QPixmap> image_holder_;
@@ -190,13 +227,13 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
     }
 
-    for (int i = 0; i < 100; ++i)
+    /*for (int i = 0; i < 100; ++i)
     {
         for (int j = 0; j < 100; ++j)
         {
             map_editor2_->AddItem(types_[(j + i) % types_.size()], i, j, 0);
         }
-    }
+    }*/
 }
 
 MapEditorForm::~MapEditorForm()
@@ -206,13 +243,11 @@ MapEditorForm::~MapEditorForm()
 
 void MapEditorForm::on_createItem_clicked()
 {
-    static int i = 0;
     int current_row = ui->listWidget->currentRow();
     if (current_row < 0)
     {
         return;
     }
     unsigned int type = types_[current_row];
-    map_editor2_->AddItem(type, i, i, 0);
-    ++i;
+    map_editor2_->AddItem(type);
 }
