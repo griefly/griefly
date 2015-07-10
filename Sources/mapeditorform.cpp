@@ -149,6 +149,27 @@ public:
         }
     }
 
+    void RemoveItems()
+    {
+        for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
+        {
+            for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
+            {
+                RemoveItems(x, y, 0);
+            }
+        }
+    }
+
+    void RemoveItems(int posx, int posy, int posz)
+    {
+        auto& items = editor_map_[posx][posy][posz].items;
+        for (auto it = items.begin(); it != items.end(); ++it)
+        {
+            scene_->removeItem(it->pixmap_item);
+            delete it->pixmap_item;
+        }
+    }
+
     void AddItem(unsigned int item_type, int posx, int posy, int posz)
     {
         EditorEntry new_entry;
@@ -176,6 +197,7 @@ public:
         if (editor_map_[posx][posy][posz].turf.pixmap_item != nullptr)
         {
             scene_->removeItem(editor_map_[posx][posy][posz].turf.pixmap_item);
+            delete editor_map_[posx][posy][posz].turf.pixmap_item;
         }
 
         EditorEntry new_entry;
@@ -390,4 +412,9 @@ void MapEditorForm::on_createTurf_clicked()
 void MapEditorForm::on_beginSelection_clicked()
 {
     map_editor2_->SetSelectionStage(1);
+}
+
+void MapEditorForm::on_removeItem_clicked()
+{
+    map_editor2_->RemoveItems();
 }

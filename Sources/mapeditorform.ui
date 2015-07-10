@@ -125,19 +125,6 @@
          <string>Remove Item</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="removeTurf">
-        <property name="geometry">
-         <rect>
-          <x>90</x>
-          <y>40</y>
-          <width>75</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Remove Turf</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="saveMap">
         <property name="geometry">
          <rect>

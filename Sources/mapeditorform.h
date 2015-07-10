@@ -25,6 +25,8 @@ private slots:
 
     void on_beginSelection_clicked();
 
+    void on_removeItem_clicked();
+
 private:
     std::vector<unsigned int> types_;
     std::vector<unsigned int> turf_types_;
