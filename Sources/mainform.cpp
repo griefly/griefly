@@ -87,7 +87,9 @@ void MainForm::startGameLoop()
 
 void MainForm::on_lineEdit_returnPressed()
 {
-    if (ui->lineEdit->text().toStdString() == "/connect") {
+    static bool connected = false;
+    if (!connected && ui->lineEdit->text().toStdString() == "/connect") {
+        connected = true;
         ui->lineEdit->clear();
         startGameLoop();
         return;
