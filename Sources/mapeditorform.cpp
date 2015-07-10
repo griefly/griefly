@@ -45,13 +45,18 @@ public:
     {
         Pointer()
         {
-            posx = 0;
-            posy = 0;
+            first_posx = 0;
+            first_posy = 0;
+            second_posx = 0;
+            second_posy = 0;
             image = nullptr;
         }
 
-        int posx;
-        int posy;
+        int first_posx;
+        int first_posy;
+
+        int second_posx;
+        int second_posy;
 
         QGraphicsPolygonItem* image;
     };
@@ -59,6 +64,8 @@ public:
     MapEditor2(QGraphicsScene* scene)
         : scene_(scene)
     {
+        selection_stage_ = 0;
+
         QPolygonF p;
         p.push_back(QPointF(0.0, 0.0));
         p.push_back(QPointF(0.0, 32.0));
@@ -84,20 +91,26 @@ public:
         border_image_->setZValue(99);
     }
 
+    void fix_borders(int* posx, int* posy)
+    {
+        if (*posx < 0)
+            *posx = 0;
+        if (*posx >= static_cast<int>(editor_map_.size()))
+            *posx = static_cast<int>(editor_map_.size()) - 1;
+        if (*posy < 0)
+            *posy = 0;
+        if (*posy >= static_cast<int>(editor_map_[0].size()))
+            *posy = static_cast<int>(editor_map_[0].size()) - 1;
+    }
+
     void SetPointer(int posx, int posy)
     {
-        if (posx < 0)
-            posx = 0;
-        if (posx >= static_cast<int>(editor_map_.size()))
-            posx = static_cast<int>(editor_map_.size()) - 1;
-        if (posy < 0)
-            posy = 0;
-        if (posy >= static_cast<int>(editor_map_[0].size()))
-            posy = static_cast<int>(editor_map_[0].size()) - 1;
+        fix_borders(&posx, &posy);
 
-        pointer_.posx = posx;
-        pointer_.posy = posy;
-        pointer_.image->setPos(posx * 32, posy * 32);
+        SetFirstSelectionPoint(posx, posy);
+        SetSecondSelectionPoint(posx, posy);
+
+        //pointer_.image->setPos(posx * 32, posy * 32);
     }
 
     void Resize(int posx, int posy, int posz)
@@ -127,7 +140,13 @@ public:
 
     void AddItem(unsigned int item_type)
     {
-        AddItem(item_type, pointer_.posx, pointer_.posy, 0);
+        for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
+        {
+            for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
+            {
+                AddItem(item_type, x, y, 0);
+            }
+        }
     }
 
     void AddItem(unsigned int item_type, int posx, int posy, int posz)
@@ -143,7 +162,13 @@ public:
 
     void SetTurf(unsigned int item_type)
     {
-        SetTurf(item_type, pointer_.posx, pointer_.posy, 0);
+        for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
+        {
+            for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
+            {
+                SetTurf(item_type, x, y, 0);
+            }
+        }
     }
 
     void SetTurf(unsigned int item_type, int posx, int posy, int posz)
@@ -160,7 +185,59 @@ public:
         editor_map_[posx][posy][posz].turf = new_entry;
     }
 
+    void SetSelectionStage(int stage)
+    {
+        selection_stage_ = stage;
+    }
+    int GetSelectionStage() const
+    {
+        return selection_stage_;
+    }
+
+    void SetFirstSelectionPoint(int x, int y)
+    {
+        fix_borders(&x, &y);
+
+        first_selection_x_ = x;
+        first_selection_y_ = y;
+    }
+
+    void SetSecondSelectionPoint(int x, int y)
+    {
+        fix_borders(&x, &y);
+
+        second_selection_x_ = x;
+        second_selection_y_ = y;
+
+        if (first_selection_x_ > second_selection_x_)
+            std::swap(first_selection_x_, second_selection_x_);
+        if (first_selection_y_ > second_selection_y_)
+            std::swap(first_selection_y_, second_selection_y_);
+
+        pointer_.first_posx = first_selection_x_;
+        pointer_.first_posy = first_selection_y_;
+
+        pointer_.second_posx = second_selection_x_;
+        pointer_.second_posy = second_selection_y_;
+
+        QPolygonF p;
+        p.push_back(QPointF(pointer_.first_posx * 32.0, pointer_.first_posy * 32.0));
+        p.push_back(QPointF(pointer_.first_posx * 32.0, (pointer_.second_posy + 1)  * 32.0));
+        p.push_back(QPointF((pointer_.second_posx + 1) * 32.0, (pointer_.second_posy + 1)  * 32.0));
+        p.push_back(QPointF((pointer_.second_posx + 1) * 32.0, pointer_.first_posy * 32.0));
+        pointer_.image->setPolygon(p);
+        pointer_.image->setPos(0, 0);
+    }
+
 private:
+    int selection_stage_;
+
+    int first_selection_x_;
+    int first_selection_y_;
+
+    int second_selection_x_;
+    int second_selection_y_;
+
     QGraphicsPolygonItem* border_image_;
 
     Pointer pointer_;
@@ -177,10 +254,27 @@ MapEditor2* map_editor2_ = nullptr;
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-    qDebug() << mouseEvent->scenePos();
-    map_editor2_->SetPointer(
-                static_cast<int>(mouseEvent->scenePos().rx()) / 32,
-                static_cast<int>(mouseEvent->scenePos().ry()) / 32);
+    if (map_editor2_->GetSelectionStage() == 0)
+    {
+        qDebug() << mouseEvent->scenePos();
+        map_editor2_->SetPointer(
+                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
+                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
+    }
+    else if (map_editor2_->GetSelectionStage() == 1)
+    {
+        map_editor2_->SetFirstSelectionPoint(
+                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
+                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
+        map_editor2_->SetSelectionStage(2);
+    }
+    else
+    {
+        map_editor2_->SetSecondSelectionPoint(
+                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
+                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
+        map_editor2_->SetSelectionStage(0);
+    }
 }
 
 MapEditorForm::MapEditorForm(QWidget *parent) :
@@ -291,4 +385,9 @@ void MapEditorForm::on_createTurf_clicked()
     }
     unsigned int type = turf_types_[current_row];
     map_editor2_->SetTurf(type);
+}
+
+void MapEditorForm::on_beginSelection_clicked()
+{
+    map_editor2_->SetSelectionStage(1);
 }

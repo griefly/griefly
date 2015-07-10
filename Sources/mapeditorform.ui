@@ -59,7 +59,7 @@
        <widget class="QPushButton" name="newMap">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>300</x>
           <y>10</y>
           <width>81</width>
           <height>23</height>
@@ -72,7 +72,7 @@
        <widget class="QLineEdit" name="posxEdit">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>300</x>
           <y>40</y>
           <width>21</width>
           <height>20</height>
@@ -82,7 +82,7 @@
        <widget class="QLineEdit" name="posyEdit">
         <property name="geometry">
          <rect>
-          <x>220</x>
+          <x>330</x>
           <y>40</y>
           <width>21</width>
           <height>20</height>
@@ -92,7 +92,7 @@
        <widget class="QLineEdit" name="poszEdit">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>360</x>
           <y>40</y>
           <width>21</width>
           <height>20</height>
@@ -102,7 +102,7 @@
        <widget class="QLabel" name="xyz_label">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>300</x>
           <y>60</y>
           <width>81</width>
           <height>16</height>
@@ -141,7 +141,7 @@
        <widget class="QPushButton" name="saveMap">
         <property name="geometry">
          <rect>
-          <x>290</x>
+          <x>390</x>
           <y>10</y>
           <width>75</width>
           <height>23</height>
@@ -154,7 +154,7 @@
        <widget class="QPushButton" name="loadMap">
         <property name="geometry">
          <rect>
-          <x>290</x>
+          <x>390</x>
           <y>40</y>
           <width>75</width>
           <height>23</height>
@@ -162,6 +162,19 @@
         </property>
         <property name="text">
          <string>Load Map</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="beginSelection">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>10</y>
+          <width>71</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Selection</string>
         </property>
        </widget>
       </widget>
