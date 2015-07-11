@@ -445,5 +445,23 @@ void MapEditorForm::on_removeItem_clicked()
 
 void MapEditorForm::on_newMap_clicked()
 {
+    bool ok = false;
+
+    int size_x = ui->posxEdit->text().toInt(&ok);
+    if (!ok || (size_x <= 0))
+    {
+        return;
+    }
+    int size_y = ui->posyEdit->text().toInt(&ok);
+    if (!ok || (size_y <= 0))
+    {
+        return;
+    }
+    int size_z = ui->poszEdit->text().toInt(&ok);
+    if (!ok || (size_z <= 0))
+    {
+        return;
+    }
     map_editor2_->ClearMap();
+    map_editor2_->Resize(size_x, size_y, size_z);
 }
