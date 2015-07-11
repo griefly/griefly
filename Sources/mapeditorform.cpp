@@ -251,6 +251,30 @@ public:
         pointer_.image->setPos(0, 0);
     }
 
+    void ClearMap()
+    {
+        for (auto it_x = editor_map_.begin(); it_x != editor_map_.end(); ++it_x)
+        {
+            for (auto it_y = it_x->begin(); it_y != it_x->end(); ++it_y)
+            {
+                for (auto it_z = it_y->begin(); it_z != it_y->end(); ++it_z)
+                {
+                    auto& items = it_z->items;
+                    for (auto it = items.begin(); it != items.end(); ++it)
+                    {
+                        scene_->removeItem(it->pixmap_item);
+                        delete it->pixmap_item;
+                    }
+                    scene_->removeItem(it_z->turf.pixmap_item);
+                    delete it_z->turf.pixmap_item;
+
+                    items.clear();
+                    it_z->turf.pixmap_item = nullptr;
+                }
+            }
+        }
+    }
+
 private:
     int selection_stage_;
 
@@ -417,4 +441,9 @@ void MapEditorForm::on_beginSelection_clicked()
 void MapEditorForm::on_removeItem_clicked()
 {
     map_editor2_->RemoveItems();
+}
+
+void MapEditorForm::on_newMap_clicked()
+{
+    map_editor2_->ClearMap();
 }
