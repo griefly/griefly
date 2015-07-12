@@ -255,6 +255,7 @@ public:
             scene_->removeItem(it->pixmap_item);
             delete it->pixmap_item;
         }
+        items.clear();
     }
 
     void AddItem(unsigned int item_type, int posx, int posy, int posz)
