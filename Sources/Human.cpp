@@ -74,14 +74,17 @@ void Human::processGUImsg(const Message& msg)
          && Friction::CombinedFriction(GetTurf())
         )
     {
-        if (msg.text == Input::MOVE_UP)
-            ApplyForce(DirToVDir[D_UP]);
-        else if (msg.text == Input::MOVE_DOWN)
-            ApplyForce(DirToVDir[D_DOWN]);
-        else if (msg.text == Input::MOVE_LEFT)
-            ApplyForce(DirToVDir[D_LEFT]);
-        else if (msg.text == Input::MOVE_RIGHT)
-            ApplyForce(DirToVDir[D_RIGHT]);
+        if (std::abs(force_.x) + std::abs(force_.y) + std::abs(force_.z) < 4)
+        {
+            if (msg.text == Input::MOVE_UP)
+                ApplyForce(DirToVDir[D_UP]);
+            else if (msg.text == Input::MOVE_DOWN)
+                ApplyForce(DirToVDir[D_DOWN]);
+            else if (msg.text == Input::MOVE_LEFT)
+                ApplyForce(DirToVDir[D_LEFT]);
+            else if (msg.text == Input::MOVE_RIGHT)
+                ApplyForce(DirToVDir[D_RIGHT]);
+        }
     }
     if (msg.type == Net::CHAT_TYPE)
     {
