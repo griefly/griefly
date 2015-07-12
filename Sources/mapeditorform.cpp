@@ -6,6 +6,7 @@
 #include "Text.h"
 
 #include <map>
+#include <set>
 
 #include <QBitmap>
 #include <QGraphicsScene>
@@ -133,6 +134,45 @@ public:
                 }
     }
 
+    void LoadMapgen(const std::string& name)
+    {
+        std::fstream sfile;
+        sfile.open(name, std::ios_base::in);
+        if(sfile.fail())
+        {
+            SYSTEM_STREAM << "Error open " << name << std::endl;
+            return;
+        }
+
+        ClearMap();
+
+        int x, y, z;
+        sfile >> x;
+        sfile >> y;
+        sfile >> z;
+
+        Resize(x, y, z);
+
+        while (!sfile.eof())
+        {
+            unsigned int t_item;
+            size_t x, y, z;
+            sfile >> t_item;
+            sfile >> x;
+            sfile >> y;
+            sfile >> z;
+
+            if (turf_types_.find(t_item) != turf_types_.end())
+            {
+                SetTurf(t_item, x, y, z);
+            }
+            else
+            {
+                AddItem(t_item, x, y, z);
+            }
+        }
+    }
+
     void fix_borders(int* posx, int* posy)
     {
         if (*posx < 0)
@@ -178,6 +218,11 @@ public:
     void AddItemType(unsigned int item_type, QPixmap image)
     {
         image_holder_[item_type] = image;
+    }
+
+    void AddTurfType(unsigned int type)
+    {
+        turf_types_.insert(type);
     }
 
     void AddItem(unsigned int item_type)
@@ -307,8 +352,12 @@ public:
                         scene_->removeItem(it->pixmap_item);
                         delete it->pixmap_item;
                     }
-                    scene_->removeItem(it_z->turf.pixmap_item);
-                    delete it_z->turf.pixmap_item;
+
+                    if (it_z->turf.pixmap_item)
+                    {
+                        scene_->removeItem(it_z->turf.pixmap_item);
+                        delete it_z->turf.pixmap_item;
+                    }
 
                     items.clear();
                     it_z->turf.pixmap_item = nullptr;
@@ -331,6 +380,8 @@ private:
     Pointer pointer_;
 
     std::map<unsigned int, QPixmap> image_holder_;
+
+    std::set<unsigned int> turf_types_;
 
     QGraphicsScene* scene_;
 
@@ -434,6 +485,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         else
         {
             turf_types_.push_back(it->first);
+            map_editor2_->AddTurfType(it->first);
             ui->listWidgetTurf->addItem(new_item);
         }
 
@@ -521,4 +573,19 @@ void MapEditorForm::on_saveMap_clicked()
 
     file_names = dialog.selectedFiles();
     map_editor2_->SaveMapgen(file_names[0].toStdString());
+}
+
+void MapEditorForm::on_loadMap_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    dialog.setNameFilter(tr("Mapgen files (*.gen)"));
+    QStringList file_names;
+    if (!dialog.exec())
+    {
+        return;
+    }
+
+    file_names = dialog.selectedFiles();
+    map_editor2_->LoadMapgen(file_names[0].toStdString());
 }

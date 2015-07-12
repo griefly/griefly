@@ -31,7 +31,10 @@ private slots:
 
     void on_saveMap_clicked();
 
+    void on_loadMap_clicked();
+
 private:
+    // Metainfo
     std::vector<unsigned int> types_;
     std::vector<unsigned int> turf_types_;
 
