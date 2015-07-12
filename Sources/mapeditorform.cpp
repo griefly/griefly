@@ -12,6 +12,7 @@
 #include <QGraphicsPixmapItem>
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
+#include <QFileDialog>
 
 GraphicsScene::GraphicsScene(QWidget *parent)
 {
@@ -89,6 +90,47 @@ public:
 
         border_image_ = scene->addPolygon(p2, pen2);
         border_image_->setZValue(99);
+    }
+
+    void SaveMapgen(const std::string& name)
+    {
+        std::fstream sfile;
+        sfile.open(name, std::ios_base::out | std::ios_base::trunc);
+        if(sfile.fail())
+        {
+            return;
+        }
+
+        int size_x = editor_map_.size();
+        int size_y = editor_map_[0].size();
+        int size_z = editor_map_[0][0].size();
+
+        sfile << size_x << std::endl;
+        sfile << size_y << std::endl;
+        sfile << size_z << std::endl;
+
+        for (int z = 0; z < size_z; ++z)
+            for (int x = 0; x < size_x; ++x)
+                for (int y = 0; y < size_y; ++y)
+                {
+                    if (editor_map_[x][y][z].turf.pixmap_item)
+                    {
+                        sfile << editor_map_[x][y][z].turf.item_type << " ";
+                        sfile << x << " ";
+                        sfile << y << " ";
+                        sfile << z << " ";
+                        sfile << std::endl;
+                    }
+                    auto& il = editor_map_[x][y][z].items;
+                    for (auto it = il.begin(); it != il.end(); ++it)
+                    {
+                        sfile << it->item_type << " ";
+                        sfile << x << " ";
+                        sfile << y << " ";
+                        sfile << z << " ";
+                        sfile << std::endl;
+                    }
+                }
     }
 
     void fix_borders(int* posx, int* posy)
@@ -464,4 +506,19 @@ void MapEditorForm::on_newMap_clicked()
     }
     map_editor2_->ClearMap();
     map_editor2_->Resize(size_x, size_y, size_z);
+}
+
+void MapEditorForm::on_saveMap_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    dialog.setNameFilter(tr("Mapgen files (*.gen)"));
+    QStringList file_names;
+    if (!dialog.exec())
+    {
+        return;
+    }
+
+    file_names = dialog.selectedFiles();
+    map_editor2_->SaveMapgen(file_names[0].toStdString());
 }
