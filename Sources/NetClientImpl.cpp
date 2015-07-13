@@ -29,6 +29,24 @@ INetClient* NetClient::GetNetClient()
     return net_client;
 }
 
+bool NetClient::SendProtocolVersion()
+{
+    // Version 1.0
+    // "S13*"
+    // * - version
+    std::string sendval = "S131";
+
+    const char* begin_pos = sendval.c_str();
+    size_t length = sendval.length();
+
+    if (SDLNet_TCP_Send(*main_socket_, begin_pos, length) != length)
+    {
+        SYSTEM_STREAM << SDLNet_GetError() << std::endl;
+        return false;
+    }
+    return true;
+}
+
 bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data)
 {
     if (connected_ == true)
@@ -54,6 +72,14 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
         delete main_socket_;
         return !(fail_ = true);
     }
+
+    if (!SendProtocolVersion())
+    {
+        SYSTEM_STREAM << SDLNet_GetError() << std::endl;
+        delete main_socket_;
+        return !(fail_ = true);
+    }
+
     Message message;
     message.from = data.who;
     message.to = data.word_for_who; // TODO: take word from net

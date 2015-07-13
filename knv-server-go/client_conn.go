@@ -221,13 +221,29 @@ func ListenAndServe(addr string, r *Registry) error {
 	if err != nil {
 		return err
 	}
-
+    
+    var version = make([]byte, 4)
+    
 	for {
 		conn, err := socket.Accept()
 		if err != nil {
 			log.Println("listener: error on accept:", err)
 			continue
 		}
+        
+         _, err = conn.Read(version)
+        if err != nil {
+			log.Println("listener: error on accept:", err)
+			continue
+        }
+        
+        var str_version = string(version[:])
+        
+        if str_version != "S131" {
+            log.Println("listener: wrong protocol version:", str_version)
+            conn.Close()
+            continue
+        }
 
 		client := &ClientConnection{conn: conn, reg: r, id: -1}
 		go client.Run()

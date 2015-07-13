@@ -27,6 +27,8 @@ public:
     virtual unsigned int Hash() const override;
     virtual unsigned int HashTick() const override;
 private:
+    bool SendProtocolVersion();
+
     NetClient() {}
     std::string ip_;
     unsigned int port_;
