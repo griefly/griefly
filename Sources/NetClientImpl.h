@@ -28,6 +28,7 @@ public:
     virtual unsigned int HashTick() const override;
 private:
     bool SendProtocolVersion();
+    bool SendAndCheckClientVersion();
 
     NetClient() {}
     std::string ip_;

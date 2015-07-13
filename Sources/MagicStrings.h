@@ -12,6 +12,7 @@ namespace Net
     const char* const MAKE_NEW = "make_new_mob";
     const char* const NEW_MAKED = "create";
     const char* const MAP_REQUEST = "need_map";
+    const char* const GOOD_VERSION = "good_version";
 
     const char* const SYSTEM_TYPE = "system";
     const char* const ORDINARY_TYPE = "ordinary";

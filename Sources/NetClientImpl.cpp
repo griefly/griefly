@@ -47,6 +47,35 @@ bool NetClient::SendProtocolVersion()
     return true;
 }
 
+bool NetClient::SendAndCheckClientVersion()
+{
+    // It will be compile time macro
+    std::string client_version = "SomeTestVersion";
+
+    Message message;
+    message.text = client_version;
+
+    // Check version
+    if (SendSocketMessage(*main_socket_, message) == false)
+    {
+        SYSTEM_STREAM << "Fail send verison information" << std::endl;
+        return false;
+    }
+    if (RecvSocketMessage(*main_socket_, &message) == false)
+    {
+        SYSTEM_STREAM << "Fail receive verison information" << std::endl;
+        return false;
+    }
+
+    if (message.text != Net::GOOD_VERSION)
+    {
+        SYSTEM_STREAM << "Wrong version" << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
 bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data)
 {
     if (connected_ == true)
@@ -76,6 +105,14 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
     if (!SendProtocolVersion())
     {
         SYSTEM_STREAM << SDLNet_GetError() << std::endl;
+        SDLNet_TCP_Close(*main_socket_);
+        delete main_socket_;
+        return !(fail_ = true);
+    }
+
+    if (!SendAndCheckClientVersion())
+    {
+        SDLNet_TCP_Close(*main_socket_);
         delete main_socket_;
         return !(fail_ = true);
     }
@@ -89,12 +126,14 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
     if (SendSocketMessage(*main_socket_, message) == false)
     {
         SYSTEM_STREAM << "Fail send login information" << std::endl;
+        SDLNet_TCP_Close(*main_socket_);
         delete main_socket_;
         return !(fail_ = true);
     }
     if (RecvSocketMessage(*main_socket_, &message) == false)
     {
         SYSTEM_STREAM << "Fail receive login information" << std::endl;
+        SDLNet_TCP_Close(*main_socket_);
         delete main_socket_;
         return !(fail_ = true);
     }
@@ -112,6 +151,7 @@ bool NetClient::Connect(const std::string& ip, unsigned int port, LoginData data
     if (RecvSocketMessage(*main_socket_, &message) == false)
     {
         SYSTEM_STREAM << "Fail receive map information" << std::endl;
+        SDLNet_TCP_Close(*main_socket_);
         delete main_socket_;
         return !(fail_ = true);
     }
@@ -137,6 +177,7 @@ bool NetClient::Disconnect()
     SDLNet_TCP_Close(*main_socket_);
     
     delete main_socket_;
+    main_socket_ = nullptr;
 
     fail_ = false;
     return retval;

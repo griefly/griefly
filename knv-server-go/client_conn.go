@@ -134,8 +134,30 @@ func (c *ClientConnection) reciever() {
 func (c *ClientConnection) Run() {
 	defer c.conn.Close()
 
-	// read hello
+	// read version
 	m, err := c.readMessage()
+	if err != nil {
+		log.Println("client: failed to read 'version' message:", err)
+		return
+	}
+
+	var clientVersion = string(m.content)
+
+	// TODO: macro
+	if clientVersion != "SomeTestVersion" {
+		log.Println("client: version mismatch:", clientVersion)
+		return
+	}
+
+	m.content = []byte("good_version")
+	err = c.writeMessage(m)
+	if err != nil {
+		log.Println("client: failed to send 'good version' response:", err)
+		return
+	}
+
+	// read hello
+	m, err = c.readMessage()
 	if err != nil {
 		log.Println("client: failed to read 'hello' message:", err)
 		return
