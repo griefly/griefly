@@ -367,6 +367,7 @@ public:
         }
     }
 
+    const Pointer& GetPointer() const { return pointer_; }
 private:
     int selection_stage_;
 
@@ -392,11 +393,13 @@ private:
 
 MapEditor2* map_editor2_ = nullptr;
 
+QLabel* pos_label = nullptr;
+
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (map_editor2_->GetSelectionStage() == 0)
     {
-        qDebug() << mouseEvent->scenePos();
+        //qDebug() << mouseEvent->scenePos();
         map_editor2_->SetPointer(
                     static_cast<int>(mouseEvent->scenePos().rx()) / 32,
                     static_cast<int>(mouseEvent->scenePos().ry()) / 32);
@@ -415,6 +418,11 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
                     static_cast<int>(mouseEvent->scenePos().ry()) / 32);
         map_editor2_->SetSelectionStage(0);
     }
+    pos_label->setText(
+                "("
+                + QString::number(map_editor2_->GetPointer().first_posx) + ", "
+                + QString::number(map_editor2_->GetPointer().first_posy)
+                + ")");
 }
 
 MapEditorForm::MapEditorForm(QWidget *parent) :
@@ -422,6 +430,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     ui(new Ui::MapEditorForm)
 {
     ui->setupUi(this);
+
+    pos_label = ui->cursor_label;
 
     scene = new GraphicsScene;
     map_editor2_ = new MapEditor2(scene);
