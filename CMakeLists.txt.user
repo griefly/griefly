@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.3.0, 2015-07-14T02:41:38. -->
+<!-- Written by QtCreator 3.3.0, 2015-07-14T08:06:58. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -115,6 +115,9 @@
      <value type="QString">SDL_NET_INCLUDE_DIRS=C:\Users\Kremius\Documents\ExternalLibs\SDL_net-1.2.8\include</value>
      <value type="QString">SDL_NET_LIBRARIES=C:\Users\Kremius\Documents\ExternalLibs\SDL_net-1.2.8\lib\x86\SDL_net.lib</value>
      <value type="QString">SDLNETDIR=C:\Users\Kremius\Documents\ExternalLibs\SDL_net-1.2.8</value>
+     <value type="QString">GIT_PATH=C:\Program Files (x86)\Git\bin\git.exe</value>
+     <value type="QString">GO_PATH=C:\Go\bin\go.exe</value>
+     <value type="QString">GOFMT_PATH=C:\Go\bin\gofmt.exe</value>
     </valuelist>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">all</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>

@@ -131,6 +131,8 @@ func (c *ClientConnection) reciever() {
 	}
 }
 
+var clientVersionBuild string
+
 func (c *ClientConnection) Run() {
 	defer c.conn.Close()
 
@@ -143,8 +145,9 @@ func (c *ClientConnection) Run() {
 
 	var clientVersion = string(m.content)
 
+	log.Println("client: current version:", clientVersionBuild)
 	// TODO: macro
-	if clientVersion != "SomeTestVersion" {
+	if clientVersion != clientVersionBuild {
 		log.Println("client: version mismatch:", clientVersion)
 		return
 	}

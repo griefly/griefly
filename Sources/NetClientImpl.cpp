@@ -47,10 +47,13 @@ bool NetClient::SendProtocolVersion()
     return true;
 }
 
+#define XSTR(x) #x
+#define STR(x) XSTR(x)
+
 bool NetClient::SendAndCheckClientVersion()
 {
-    // It will be compile time macro
-    std::string client_version = "SomeTestVersion";
+    // It is compile time macro with version (/D or -D)
+    std::string client_version = STR(DEFINED_VERSION);
 
     Message message;
     message.text = client_version;
