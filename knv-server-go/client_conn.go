@@ -146,7 +146,6 @@ func (c *ClientConnection) Run() {
 	var clientVersion = string(m.content)
 
 	log.Println("client: current version:", clientVersionBuild)
-	// TODO: macro
 	if clientVersion != clientVersionBuild {
 		log.Println("client: version mismatch:", clientVersion)
 		return

@@ -88,12 +88,19 @@ void MainForm::startGameLoop()
 void MainForm::on_lineEdit_returnPressed()
 {
     static bool connected = false;
-    if (!connected && ui->lineEdit->text().toStdString() == "/connect") {
+    if (!connected && ui->lineEdit->text().toStdString() == "/connect")
+    {
         connected = true;
         ui->lineEdit->clear();
         startGameLoop();
         return;
     }
+
+    if (!connected)
+    {
+        return;
+    }
+
     Message msg;
     msg.type = Net::CHAT_TYPE;
     msg.text = ui->lineEdit->text().toStdString();
