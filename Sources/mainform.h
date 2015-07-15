@@ -2,6 +2,7 @@
 #define MAINFORM_H
 
 #include <QWidget>
+#include <QTimer>
 
 namespace Ui {
 class MainForm;
@@ -17,16 +18,20 @@ public:
 protected:
     void resizeEvent(QResizeEvent* event);
 private slots:
+    void helperAutoConnect();
     void on_lineEdit_returnPressed();
 
     void on_splitter_splitterMoved(int pos, int index);
+signals:
+    void autoConnect();
 
 private:
+    void startGameLoop();
+
+    QTimer* activeTimer;
 
     int left_column;
     int right_column;
-
-    void startGameLoop();
 
     int argc_;
     char** argv_;

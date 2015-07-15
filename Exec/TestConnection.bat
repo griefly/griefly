@@ -1,1 +1,1 @@
-FOR /L %%i IN (1,1,4) DO START KVEngine.exe -auto %%i ip=178.49.192.28
+FOR /L %%i IN (1,1,4) DO START KVEngine.exe -auto mapgen_name=default.gen -autogen_reports -auto_connect

@@ -37,6 +37,24 @@ MainForm::MainForm(QWidget *parent) :
     ui->widget->hide();
 
     SetMainWidget(this);
+
+    connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
+
+    if (GetParamsHolder().GetParamBool("-auto_connect"))
+    {
+        activeTimer = new QTimer(this);
+        activeTimer->setInterval(1 * 1000);
+        activeTimer->setSingleShot(true);
+        connect(activeTimer, &QTimer::timeout, this, &MainForm::helperAutoConnect);
+        activeTimer->start();
+    }
+}
+
+void MainForm::helperAutoConnect()
+{
+    ui->lineEdit->setText("/connect");
+
+    emit autoConnect();
 }
 
 MainForm::~MainForm()
