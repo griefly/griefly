@@ -49,6 +49,11 @@ std::string View::Frameset::GetState()
 
 void View::Frameset::SetState(const std::string& name)
 {
+    bool no_change = false;
+    if (state_ == name)
+    {
+        no_change = true;
+    }
     state_ = name;
     if (!GetSprite())
         return;
@@ -59,8 +64,11 @@ void View::Frameset::SetState(const std::string& name)
 
     metadata_ = &GetSprite()->GetSDLSprite()->metadata.GetSpriteMetadata(state_);
     
-    image_state_ = 0;
-    last_frame_tick_ = SDL_GetTicks();
+    if (!no_change)
+    {
+        image_state_ = 0;
+        last_frame_tick_ = SDL_GetTicks();
+    }
 }
 
 const ImageMetadata::SpriteMetadata* View::Frameset::GetMetadata()

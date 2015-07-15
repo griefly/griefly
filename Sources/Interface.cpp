@@ -130,7 +130,7 @@ void HumanInterface::UpdateHealth()
         {
             health_.GetView()->SetState("health5");
         }
-        else if (health_.GetView()->GetBaseFrameset()->GetState() != "health6")
+        else //if (health_.GetView()->GetBaseFrameset()->GetState() != "health6")
         {
             health_.GetView()->SetState("health6");
         }
