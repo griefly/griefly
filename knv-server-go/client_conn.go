@@ -127,6 +127,12 @@ func (c *ClientConnection) reciever() {
 		if m.t == "ordinary" || m.t == "chat" {
 			m.to = c.gameId
 		}
+		if m.t == "system" && string(m.content) == "ping_request" {
+			m.content = []byte("ping_response")
+			c.inbox <- m
+			continue
+		}
+
 		c.reg.RecvMessage(m)
 	}
 }

@@ -699,6 +699,14 @@ void Manager::initWorld()
         ss >> *str;
     }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);
 
+    GetTexts()["PingTimer"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Ping: " << NetClient::GetNetClient()->Ping() << "ms";
+        *str = ss.str();
+    }).SetSize(15).SetPlace(300, 0).SetColor(0, 140, 0);
+
     GetTexts()["LastTouch"].SetUpdater
     ([this](std::string* str)
     {

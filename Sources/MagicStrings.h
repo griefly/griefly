@@ -13,6 +13,8 @@ namespace Net
     const char* const NEW_MAKED = "create";
     const char* const MAP_REQUEST = "need_map";
     const char* const GOOD_VERSION = "good_version";
+    const char* const PING_REQUEST = "ping_request";
+    const char* const PING_RESPONSE = "ping_response";
 
     const char* const SYSTEM_TYPE = "system";
     const char* const ORDINARY_TYPE = "ordinary";

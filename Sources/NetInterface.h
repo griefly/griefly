@@ -32,6 +32,8 @@ public:
 
     virtual unsigned int Hash() const = 0;
     virtual unsigned int HashTick() const = 0;
+
+    virtual unsigned int Ping() const = 0;
 protected:
     INetClient() {}
 };

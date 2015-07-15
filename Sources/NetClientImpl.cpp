@@ -21,12 +21,19 @@ void NetClient::Init()
     val->hash_ = 0;
     val->number_last_message_ = 0;
     val->hash_tick_ = 0;
+    val->last_ping_send_ = 0;
+    val->current_ping_ = 999;
     net_client = val;
 }
 
 INetClient* NetClient::GetNetClient()
 {
     return net_client;
+}
+
+unsigned int NetClient::Ping() const
+{
+    return current_ping_;
 }
 
 bool NetClient::SendProtocolVersion()
@@ -266,7 +273,7 @@ bool NetClient::Process()
     while (SocketReady(*main_socket_) && counter < MAX_MSG)
     {
         Message message;
-        if(RecvSocketMessage(*main_socket_, &message) == false)
+        if (RecvSocketMessage(*main_socket_, &message) == false)
         {
             SYSTEM_STREAM << "Fail message receive" << std::endl;
             return false;
@@ -293,6 +300,11 @@ bool NetClient::Process()
             SYSTEM_STREAM << "New mob must created!" << std::endl;
             //message.to = man_->GetCreator();
         }
+        else if (message.text == Net::PING_RESPONSE)
+        {
+            current_ping_ = SDL_GetTicks() - last_ping_send_;
+            continue;
+        }
         else if (   message.type != Net::ORDINARY_TYPE
                  && message.type != Net::CHAT_TYPE)
         {
@@ -308,6 +320,21 @@ bool NetClient::Process()
         messages_.push(message);
         ++counter;
     }
+
+    const unsigned int PING_TIMER = 1000;
+    if (SDL_GetTicks() - last_ping_send_ > PING_TIMER)
+    {
+        Message ping_message;
+        ping_message.type = Net::SYSTEM_TYPE;
+        ping_message.text = Net::PING_REQUEST;
+        if (SendSocketMessage(*main_socket_, ping_message) == false)
+        {
+            SYSTEM_STREAM << "Fail send ping message" << std::endl;
+            return false;
+        }
+        last_ping_send_ = SDL_GetTicks();
+    }
+
     return true;
 }
 

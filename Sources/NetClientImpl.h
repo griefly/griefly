@@ -26,9 +26,14 @@ public:
 
     virtual unsigned int Hash() const override;
     virtual unsigned int HashTick() const override;
+
+    virtual unsigned int Ping() const override;
 private:
     bool SendProtocolVersion();
     bool SendAndCheckClientVersion();
+
+    unsigned int last_ping_send_;
+    unsigned int current_ping_;
 
     NetClient() {}
     std::string ip_;
