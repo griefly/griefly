@@ -39,6 +39,7 @@ MainForm::MainForm(QWidget *parent) :
     SetMainWidget(this);
 
     connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
+    connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);
 
     if (GetParamsHolder().GetParamBool("-auto_connect"))
     {
@@ -48,6 +49,11 @@ MainForm::MainForm(QWidget *parent) :
         connect(activeTimer, &QTimer::timeout, this, &MainForm::helperAutoConnect);
         activeTimer->start();
     }
+}
+
+void MainForm::setFocusOnLineEdit()
+{
+    ui->lineEdit->setFocus();
 }
 
 void MainForm::helperAutoConnect()

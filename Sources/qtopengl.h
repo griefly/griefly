@@ -11,7 +11,7 @@ public:
     ~QtOpenGL();
 
 signals:
-
+    void enterPressed();
 public slots:
 protected:
     void mousePressEvent(QMouseEvent* event);

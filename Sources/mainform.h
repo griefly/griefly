@@ -18,6 +18,8 @@ public:
 protected:
     void resizeEvent(QResizeEvent* event);
 private slots:
+    void setFocusOnLineEdit();
+
     void helperAutoConnect();
     void on_lineEdit_returnPressed();
 

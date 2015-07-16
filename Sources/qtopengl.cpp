@@ -8,6 +8,7 @@
 
 QtOpenGL::QtOpenGL(QWidget *parent) : QGLWidget(parent)
 {
+    setFocusPolicy(Qt::StrongFocus);
     SetGLContext(this);
 }
 
@@ -27,6 +28,11 @@ void QtOpenGL::mousePressEvent(QMouseEvent* event)
 
 void QtOpenGL::keyPressEvent(QKeyEvent* event)
 {
+    if ((event->key() == Qt::Key_Enter) || (event->key() == Qt::Key_Return))
+    {
+        emit enterPressed();
+        return;
+    }
     if (GetManager())
     {
         GetManager()->HandleKeyboardDown(event);
