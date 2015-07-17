@@ -361,8 +361,8 @@ void Human::CalculateVisible(std::list<point>* visible_list)
     {
         visible_list = 
             GetMapMaster()->losf.calculateVisisble(visible_list, 
-                GetMob()->GetX(), 
-                GetMob()->GetY(),
-                GetMob()->GetZ());
+                 GetX(),
+                 GetY(),
+                 GetZ());
     }
 }
