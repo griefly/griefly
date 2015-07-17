@@ -1,7 +1,7 @@
 #include "Closet.h"
 
 #include "Human.h"
-#include "Sound.h"
+#include "sound.h"
 
 Closet::Closet(size_t id)
     : IMovable(id)
