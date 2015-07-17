@@ -366,7 +366,7 @@ void Manager::HandleKeyboardDown(QKeyEvent* event)
     {
         msg.text = Input::KEY_R;
     }
-    else if ((!event && (val % 100 == 13)) || (event && event->key() == Qt::Key_F3))
+    else if (/* NO! */ (event && event->key() == Qt::Key_F3))
     {
         Debug::UnsyncDebug().GenerateAndSaveReport();
         return;
