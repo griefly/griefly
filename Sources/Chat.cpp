@@ -19,7 +19,9 @@ Chat* Chat::chat = 0;
 std::stringstream ss;
 std::fstream loc("debug_reports//" + QUuid::createUuid().toString().toStdString() + ".txt", std::ios::trunc | std::ios::out | std::ios::in);
 
-std::ostream* local_stream = &ss;
+std::ostream* local_stream = &loc;
+
+//std::ostream* local_stream = &ss;
 //std::ostream& SYSTEM_STREAM = *local_stream;
 
 void SetLogToFile()

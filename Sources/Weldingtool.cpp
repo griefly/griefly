@@ -20,6 +20,16 @@ void Weldingtool::process()
     }
 }
 
+int Weldingtool::AddFuel(int amount)
+{
+    fuel_ += amount;
+    if (fuel_ < 0)
+        fuel_ = 0;
+    if (fuel_ > 50)
+        fuel_ = 50;
+    return fuel_;
+}
+
 void Weldingtool::TurnOn()
 {
     if (Working())

@@ -13,6 +13,7 @@ public:
     void TurnOn();
     void TurnOff();
     bool Working() const { return on_; }
+    int AddFuel(int amount);
 private:
     int KV_SAVEBLE(fuel_);
     bool KV_SAVEBLE(on_);

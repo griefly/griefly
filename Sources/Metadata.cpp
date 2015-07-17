@@ -28,7 +28,7 @@ void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
 }
 
 void ImageMetadata::Init(const std::string& name)
-{
+{   
     SYSTEM_STREAM << "Begin to init metadata for " << name << std::endl;
     png_byte pngsig[PNGSIGSIZE];
 
@@ -219,7 +219,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 whole_str += loc;
             }
             loc = whole_str;
-           // SYSTEM_STREAM << "New state: " << loc << std::endl;
+            SYSTEM_STREAM << "New state: " << loc << std::endl;
             current_state = loc.substr(1, loc.length() - 2);
             metadata_[current_state].first_frame_pos = first_frame_pos;
           //  SYSTEM_STREAM << "First frame position: " << first_frame_pos << std::endl;
