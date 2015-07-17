@@ -78,13 +78,26 @@ bool IMovable::checkMoveTime()
 // TODO: ТОРНАДО
 bool IMovable::checkPassable()
 {
+    PassableLevel loc = GetPassable(dMove);
+    if (loc != Passable::FULL)
+    {
+        SetPassable(dMove, Passable::FULL);
+    }
     if (!CanPass(owner->GetPassable(dMove), passable_level))
     {
         owner->Bump(GetId());
         force_.x = 0;
         force_.y = 0;
         force_.z = 0;
+        if (loc != Passable::FULL)
+        {
+            SetPassable(dMove, loc);
+        }
         return false;
+    }
+    if (loc != Passable::FULL)
+    {
+        SetPassable(dMove, loc);
     }
 
     auto neighbour = owner->GetNeighbour(dMove);
