@@ -129,3 +129,5 @@ Release
 Saves
 /Exec.zip
 /CMakeLists.txt.user.PW6104
+/Exec/stdout.txt
+/Exec/debug_reports
