@@ -10,9 +10,13 @@
 #include "Creator.h"
 #include "helpers.h"
 
+
+
 #include "visible_points.h"
 
 #include <QUuid>
+#include <QScrollBar>
+
 
 Chat* Chat::chat = 0;
 
@@ -88,7 +92,13 @@ void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 {
     if (!IsTileVisible(tile_id))
         return;
+
+    QScrollBar *v = GetTextBrowser()->verticalScrollBar();
+    v->setValue(v->maximum());
+
     GetTextBrowser()->insertHtml((str + "<br>").c_str());
+
+    v->setValue(v->maximum());
 }
 
 void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id)
@@ -96,8 +106,13 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
     if (!IsTileVisible(tile_id))
         return;
 
+    QScrollBar *v = GetTextBrowser()->verticalScrollBar();
+    v->setValue(v->maximum());
+
     GetTextBrowser()->insertHtml
         (("<font color=\"red\">" + who + " is attacked by " + by + " with " + object + "</font><br>").c_str());
+
+    v->setValue(v->maximum());
 }
 
 void Chat::PostWords(const std::string& who, const std::string& text, size_t tile_id)
@@ -105,8 +120,13 @@ void Chat::PostWords(const std::string& who, const std::string& text, size_t til
     if (!IsTileVisible(tile_id))
         return;
 
+    QScrollBar *v = GetTextBrowser()->verticalScrollBar();
+    v->setValue(v->maximum());
+
     GetTextBrowser()->insertHtml
         (("<b>" + who + "</b>: " + "<span>" + text + "</span><br>").c_str());
+
+    v->setValue(v->maximum());
 }
 
 void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
@@ -117,8 +137,13 @@ void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
 
 void Chat::PostText(const std::string& str_)
 {
+    QScrollBar *v = GetTextBrowser()->verticalScrollBar();
+    v->setValue(v->maximum());
+
     QString loc = QString::fromUtf8(str_.c_str());
-    GetTextBrowser()->append(loc);
+    GetTextBrowser()->insertHtml(loc.replace('\n', "<br>"));
+
+    v->setValue(v->maximum());
 
     /*std::string str = str_;
     int pos = 0;
