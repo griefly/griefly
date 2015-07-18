@@ -45,19 +45,3 @@ void IMob::processPhysics()
     if(thisMobControl) 
         GetManager()->UpdateVisible();
 }
-
-bool IMob::checkMove(Dir direct)
-{
-    if(IMovable::checkMove(direct))
-    {        
-        
-        if(thisMobControl)
-        {            
-            //SYSTEM_STREAM << "Function IMob::checkMove called: onMobControl == true\n";
-            GetManager()->checkMove(direct);
-            GetManager()->UpdateVisible();
-        }
-        return true;
-    }
-    return false;
-}

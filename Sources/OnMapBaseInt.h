@@ -99,8 +99,8 @@ public:
 
     virtual bool Contains(id_ptr_on<IOnMapBase> item) const
     {
-        if (owner.valid())
-            return owner->Contains(item);
+        // if (owner.valid())
+        //    return owner->Contains(item);
         return false;
     }
 

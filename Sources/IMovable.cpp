@@ -6,6 +6,9 @@
 #include "MobInt.h"
 #include "mob_position.h"
 
+#include "Creator.h"
+#include "Mob.h"
+
 #include <assert.h>
 
 IMovable::IMovable(size_t id) : IOnMapObject(id)
@@ -129,6 +132,14 @@ bool IMovable::mainMove()
         eff->Init(TITLE_SIZE, dMove, pixSpeed, GetId(), true);
         eff->Start();
     }
+
+    if (   GetMob().ret_id() == GetId()
+        || Contains(GetMob()))
+    {
+        GetManager()->checkMove(dMove);
+        GetManager()->UpdateVisible();
+    }
+
     return true;
 };
 

@@ -55,6 +55,7 @@ namespace KV_Private_NS_NullType
 #include "Clothes.h"
 #include "Tanks.h"
 #include "Closet.h"
+#include "GasTank.h"
 
 const int local_num = __COUNTER__; 
 typedef Private::TypelistMaker<local_num - 1>::typelist ItemsTypelist;
