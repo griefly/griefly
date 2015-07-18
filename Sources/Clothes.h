@@ -38,6 +38,33 @@ public:
 };
 ADD_TO_TYPELIST(EngineUniform);
 
+class JanitorUniform: public Cloth
+{
+public:
+    DECLARE_SAVED(JanitorUniform, Cloth);
+    DECLARE_GET_TYPE_ITEM(JanitorUniform);
+    JanitorUniform(size_t id);
+};
+ADD_TO_TYPELIST(JanitorUniform);
+
+class ClownUniform: public Cloth
+{
+public:
+    DECLARE_SAVED(ClownUniform, Cloth);
+    DECLARE_GET_TYPE_ITEM(ClownUniform);
+    ClownUniform(size_t id);
+};
+ADD_TO_TYPELIST(ClownUniform);
+
+class RedUniform: public Cloth
+{
+public:
+    DECLARE_SAVED(RedUniform, Cloth);
+    DECLARE_GET_TYPE_ITEM(RedUniform);
+    RedUniform(size_t id);
+};
+ADD_TO_TYPELIST(RedUniform);
+
 class OrangeBoots: public Cloth
 {
 public:

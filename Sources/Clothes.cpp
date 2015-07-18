@@ -37,6 +37,36 @@ EngineUniform::EngineUniform(size_t id) : Cloth(id)
     name = "Engine uniform";
 }
 
+RedUniform::RedUniform(size_t id) : Cloth(id)
+{
+    SetSprite("icons/uniforms.dmi");
+    SetState("red");
+
+    type = Slots::UNIFORM;
+
+    name = "Red uniform";
+}
+
+JanitorUniform::JanitorUniform(size_t id) : Cloth(id)
+{
+    SetSprite("icons/uniforms.dmi");
+    SetState("janitor");
+
+    type = Slots::UNIFORM;
+
+    name = "Janitor uniform";
+}
+
+ClownUniform::ClownUniform(size_t id) : Cloth(id)
+{
+    SetSprite("icons/uniforms.dmi");
+    SetState("clown");
+
+    type = Slots::UNIFORM;
+
+    name = "Clown uniform";
+}
+
 OrangeBoots::OrangeBoots(size_t id) : Cloth(id)
 {
     SetSprite("icons/shoes.dmi");
