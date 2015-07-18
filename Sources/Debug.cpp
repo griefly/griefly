@@ -49,6 +49,11 @@ bool Debug::Impl::UnsyncDebug::IsReportNeeded()
     return false;
 }
 
+bool Debug::Impl::UnsyncDebug::IsReportGenerated()
+{
+    return report_generated_;
+}
+
 void Debug::Impl::UnsyncDebug::AddLocalSyncPair(unsigned int hash_value, unsigned int tick_value)
 {
     HashTick val;

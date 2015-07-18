@@ -33,6 +33,8 @@ namespace Debug
 
             void GenerateAndSaveReport();
 
+            bool IsReportGenerated();
+
             bool Save();
             UnsyncDebug();
         private:

@@ -507,6 +507,17 @@ void Manager::initWorld()
         ss >> *str;
     }).SetSize(15).SetPlace(0, 30, 200, 50);
 
+    GetTexts()["MorePreciseSync"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        if (Debug::UnsyncDebug().IsReportGenerated())
+        {
+            ss << "!!REPORT!!";
+        }
+        ss >> *str;
+    }).SetSize(15).SetPlace(200, 30).SetColor(200, 0, 0);
+
     GetTexts()["SyncTick"].SetUpdater
     ([&](std::string* str)
     {

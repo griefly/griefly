@@ -91,7 +91,7 @@ void Human::processGUImsg(const Message& msg)
         //Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
         Chat::GetChat()->PostWords(name, msg.text, owner->GetId());
     }
-    if(msg.text == Input::KEY_Q)
+  /*  if(msg.text == Input::KEY_Q)
     {
         GetItemFabric()->newItemOnMap<Item>(Armor::T_ITEM_S(), GetOwner());
     }
@@ -134,7 +134,7 @@ void Human::processGUImsg(const Message& msg)
     {
         id_ptr_on<CubeTile> ct = GetOwner();
         ct->GetAtmosHolder()->AddEnergy(10000);
-    }
+    }*/
     else if (msg.text == "SDLK_s_down")
     {
         interface_.SwapHands();
