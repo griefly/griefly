@@ -15,7 +15,7 @@
 #include "visible_points.h"
 
 #include <QUuid>
-#include <QScrollBar>
+#include <QTextCursor>
 
 
 Chat* Chat::chat = 0;
@@ -88,17 +88,23 @@ void Chat::InitChat()
     chat->current_pos_ = chat->visible_lines_;*/
 }
 
+void SetCursorAtEnd()
+{
+    QTextCursor cursor = GetTextBrowser()->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    GetTextBrowser()->setTextCursor(cursor);
+}
+
 void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 {
     if (!IsTileVisible(tile_id))
         return;
 
-    QScrollBar *v = GetTextBrowser()->verticalScrollBar();
-    v->setValue(v->maximum());
+    SetCursorAtEnd();
 
     GetTextBrowser()->insertHtml((str + "<br>").c_str());
 
-    v->setValue(v->maximum());
+    SetCursorAtEnd();
 }
 
 void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id)
@@ -106,13 +112,12 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
     if (!IsTileVisible(tile_id))
         return;
 
-    QScrollBar *v = GetTextBrowser()->verticalScrollBar();
-    v->setValue(v->maximum());
+    SetCursorAtEnd();
 
     GetTextBrowser()->insertHtml
         (("<font color=\"red\">" + who + " is attacked by " + by + " with " + object + "</font><br>").c_str());
 
-    v->setValue(v->maximum());
+    SetCursorAtEnd();
 }
 
 void Chat::PostWords(const std::string& who, const std::string& text, size_t tile_id)
@@ -120,13 +125,12 @@ void Chat::PostWords(const std::string& who, const std::string& text, size_t til
     if (!IsTileVisible(tile_id))
         return;
 
-    QScrollBar *v = GetTextBrowser()->verticalScrollBar();
-    v->setValue(v->maximum());
+    SetCursorAtEnd();
 
     GetTextBrowser()->insertHtml
         (("<b>" + who + "</b>: " + "<span>" + text + "</span><br>").c_str());
 
-    v->setValue(v->maximum());
+    SetCursorAtEnd();
 }
 
 void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
@@ -137,13 +141,12 @@ void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
 
 void Chat::PostText(const std::string& str_)
 {
-    QScrollBar *v = GetTextBrowser()->verticalScrollBar();
-    v->setValue(v->maximum());
+    SetCursorAtEnd();
 
     QString loc = QString::fromUtf8(str_.c_str());
     GetTextBrowser()->insertHtml(loc.replace('\n', "<br>"));
 
-    v->setValue(v->maximum());
+    SetCursorAtEnd();
 
     /*std::string str = str_;
     int pos = 0;
