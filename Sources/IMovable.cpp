@@ -203,6 +203,18 @@ void ForceManager::Add(id_ptr_on<IMovable> movable)
     to_add_.push_back(movable);
 }
 
+unsigned int ForceManager::Hash()
+{
+    unsigned int hash = 0;
+    int i = 1;
+    for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
+    {
+        hash += movable->ret_id() * i;
+        ++i;
+    }
+    return hash;
+}
+
 void ForceManager::Process()
 {
     Timer timer, remove_timer;

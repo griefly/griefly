@@ -383,6 +383,15 @@ unsigned int ItemFabric::hash_all()
     for (size_t i = 1; i < table_size; ++i)
         if (idTable_[i] != nullptr)
             h += idTable_[i]->hashSelf();
+    h += ForceManager::Get().Hash();
+
+    int i = 1;
+    for (auto p = process_table_.begin(); p != process_table_.end(); ++p)
+    {
+        h += p->ret_id() * i;
+        i++;
+    }
+
     return h;
 }
 

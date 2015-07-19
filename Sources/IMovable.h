@@ -67,6 +67,7 @@ public:
 
     void Add(id_ptr_on<IMovable> m);
     void Process();
+    unsigned int Hash();
 private:
     std::vector<id_ptr_on<IMovable>> under_force_;
 
