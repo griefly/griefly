@@ -122,8 +122,16 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 
         if (tile->GetInsideList().size())
         {
-            auto i = *tile->GetInsideList().rbegin();
-            i->ApplyForce(DirToVDir[dir]);
+            auto i = tile->GetInsideList().rbegin();
+            while (   (i != tile->GetInsideList().rend())
+                   && ((*i)->passable_level == Passable::EMPTY))
+            {
+                ++i;
+            }
+            if (i != tile->GetInsideList().rend())
+            {
+                (*i)->ApplyForce(DirToVDir[dir]);
+            }
         }
     }
 }

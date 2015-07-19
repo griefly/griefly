@@ -8,8 +8,7 @@ FlatGlass::FlatGlass(size_t id) : Structure(id)
 {
     transparent = true;
 
-    dMove = get_rand() % 4;
-    SetPassable(dMove, Passable::EMPTY);
+    Rotate(get_rand() % 4);
 
     tickSpeed = 5;
     pixSpeed = 1;
@@ -29,20 +28,26 @@ void FlatGlass::Bump(id_ptr_on<IMovable> item)
     if (!m)
         return;
 
-    if (item->dMove != dMove)
+    if (item->GetDir() != GetDir())
     {
         if (!CanPass(owner->GetPassable(D_ALL), passable_level))
             return;
         if (anchored)
             return;
-        SetPassable(dMove, Passable::FULL);
-        dMove = item->dMove;
-        SetPassable(dMove, Passable::EMPTY);
+
+        Rotate(item->GetDir());
         return;
     }
     IMovable::Bump(item);
 }
 
+bool FlatGlass::Rotate(Dir dir)
+{
+    SetPassable(GetDir(), Passable::FULL);
+    Structure::Rotate(dir);
+    SetPassable(GetDir(), Passable::EMPTY);
+    return true;
+}
 
 ReinforcedFlatGlass::ReinforcedFlatGlass(size_t id) : FlatGlass(id)
 {

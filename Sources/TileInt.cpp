@@ -81,7 +81,7 @@ void CubeTile::Bump(id_ptr_on<IMovable> item)
     if (item->GetOwner().ret_id() == GetId())
     {
         for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-            if (!CanPass((*it)->GetPassable(item->dMove), item->passable_level))
+            if (!CanPass((*it)->GetPassable(item->GetDir()), item->passable_level))
             {
                 (*it)->Bump(item);
                 return;
@@ -90,7 +90,7 @@ void CubeTile::Bump(id_ptr_on<IMovable> item)
     }
 
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!CanPass((*it)->GetPassable(helpers::revert_dir(item->dMove)), item->passable_level))
+        if (!CanPass((*it)->GetPassable(helpers::revert_dir(item->GetDir())), item->passable_level))
         {
             (*it)->Bump(item);
             return;

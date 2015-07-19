@@ -37,6 +37,9 @@ public:
     bool checkPassable();
     bool mainMove();
 
+    virtual bool Rotate(Dir dir);
+    Dir GetDir() const { return dMove; }
+
     virtual void ProcessForce();
     virtual void ApplyForce(VDir force) override;
 
@@ -53,10 +56,11 @@ public:
     int KV_SAVEBLE(lastMove);
     int KV_SAVEBLE(tickSpeed);
     int KV_SAVEBLE(pixSpeed);
-    Dir KV_SAVEBLE(dMove);
 
     KV_ON_LOAD_CALL(LoadInForceManager);
     void LoadInForceManager();
+private:
+    Dir KV_SAVEBLE(dMove);
 };
 ADD_TO_TYPELIST(IMovable);
 

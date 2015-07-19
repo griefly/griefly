@@ -29,7 +29,8 @@ bool IMovable::checkMove(Dir direct)
         return false;
     if (anchored)
         return false;
-    dMove = direct;
+    if (!Rotate(direct))
+        return false;
     if (!checkPassable())
     {
         return false;
@@ -115,6 +116,12 @@ bool IMovable::checkPassable()
     
     return true;
 };
+
+bool IMovable::Rotate(Dir dir)
+{
+    dMove = dir;
+    return true;
+}
 
 bool IMovable::mainMove()
 {

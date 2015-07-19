@@ -10,6 +10,7 @@ public:
     FlatGlass(size_t id);
 
     virtual void Bump(id_ptr_on<IMovable> item) override;
+    virtual bool Rotate(Dir dir) override;
 };
 ADD_TO_TYPELIST(FlatGlass);
 

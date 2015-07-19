@@ -41,12 +41,6 @@ void Manager::checkMove(Dir direct)
     moveEach(direct);
 };
 
-
-void Manager::touchEach(Dir direct)
-{
-    GetMob()->dMove = direct;
-}
-
 void Manager::moveEach(Dir direct)
 {
     undoCenterMove(direct);

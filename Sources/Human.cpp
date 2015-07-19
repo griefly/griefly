@@ -345,7 +345,7 @@ void Human::processImage(DrawType type)
 
     if (GetMetadata()->dirs >= 4 && !lying_)
     {
-        DrawMain(helpers::dir_to_byond(dMove),            
+        DrawMain(helpers::dir_to_byond(GetDir()),
             GetDrawX() + mob_position::get_shift_x(),
             GetDrawY() + mob_position::get_shift_y());
     }

@@ -14,7 +14,6 @@ class Manager
 {
 public:
     void move(int direct);
-    void touchEach(Dir direct);//Say items that they must move
     void moveEach(Dir direct);
     void undoCenterMove(Dir direct);
     void cautLastItem(Dir direct);
