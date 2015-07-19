@@ -14,6 +14,7 @@ void Teleportator::processGUImsg(const Message& msg)
 
 Teleportator::Teleportator(size_t id) : IMessageReceiver(id)
 {
+    anchored = true;
     SetSprite("icons/teleportator.png");
 }
 
