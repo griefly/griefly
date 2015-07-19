@@ -4,10 +4,10 @@
 #include "Turf.h"
 
 #include "MagicStrings.h"
+#include "Creator.h"
 
 IMob::IMob(size_t id) : IMessageReceiver(id)
 {
-    thisMobControl = false;
     SetFreq(1);
     SetSprite("icons/ork.png");        
 }
@@ -42,6 +42,6 @@ void IMob::processGUImsg(const Message& msg)
 void IMob::processPhysics()
 {
     IMessageReceiver::processPhysics();
-    if(thisMobControl) 
+    if(GetId() == GetMob().ret_id())
         GetManager()->UpdateVisible();
 }

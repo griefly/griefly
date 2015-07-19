@@ -9,7 +9,6 @@ public:
     DECLARE_GET_TYPE_ITEM(FlatGlass);
     FlatGlass(size_t id);
 
-    virtual bool checkMove(Dir direct) override;
     virtual void Bump(id_ptr_on<IMovable> item) override;
 };
 ADD_TO_TYPELIST(FlatGlass);

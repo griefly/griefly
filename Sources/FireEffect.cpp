@@ -21,7 +21,7 @@ void Fire::process()
 {
     assert(master.ret_id());
     //SYSTEM_STREAM << master.ret_id() << " " << this << "\n";
-    if(master->burn_power <= 0)
+    if(/*master->burn_power <= 0*/true)
     {
         Release();
         return;

@@ -172,6 +172,7 @@ void Manager::process()
             tick_timer.Start();
             draw_time_per_tick = 0;
         
+          //  Debug::UnsyncDebug().CheckSaves();
         }
          
         if (!NODRAW)

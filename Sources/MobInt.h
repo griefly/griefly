@@ -23,8 +23,6 @@ public:
     virtual InterfaceBase* GetInterface() { return nullptr; };
 
     virtual void CalculateVisible(std::list<point>* visible_list) { ; }
-
-    bool KV_ON_LOAD(thisMobControl, false);
 };
 
 ADD_TO_TYPELIST(IMob);

@@ -14,11 +14,11 @@ CubeTile::CubeTile(size_t id) : IOnMapBase(id)
     posy_ = -1;
     posz_ = -1;
 
-    sum_passable_all_ = -1;
-    sum_passable_up_ = -1;
-    sum_passable_down_ = -1;
-    sum_passable_left_ = -1;
-    sum_passable_right_ = -1;
+    sum_passable_all_ = Passable::FULL;
+    sum_passable_up_ = Passable::FULL;
+    sum_passable_down_ = Passable::FULL;
+    sum_passable_left_ = Passable::FULL;
+    sum_passable_right_ = Passable::FULL;
 }
 
 bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
@@ -206,10 +206,6 @@ id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct)
 
 PassableLevel CubeTile::GetPassable(Dir direct) const
 {
-    if (sum_passable_all_ == -1)
-    {
-        UpdatePassable();
-    }
     switch (direct)
     {
     case D_UP:    return sum_passable_up_;

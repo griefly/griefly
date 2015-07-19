@@ -167,7 +167,7 @@ void Human::processGUImsg(const Message& msg)
                 }
                 else
                 {
-                    if (this->GetLying() == false)
+                    if (GetLying() == false)
                     {
                         item->AttackBy(interface_.GetActiveHand().Get());
                     }
@@ -205,11 +205,13 @@ void Human::SetLying(bool value)
     {
         Chat::GetChat()->PostSimpleText(name + " is lying now", owner->GetId());
         view_.SetAngle(90);
+        SetPassable(D_ALL, Passable::FULL);
     }
     else
     {
         Chat::GetChat()->PostSimpleText(name + " is standing now!", owner->GetId());
         view_.SetAngle(0);
+        SetPassable(D_ALL, Passable::BIG_ITEM);
     }
     interface_.UpdateLaying();
 }
@@ -264,7 +266,7 @@ void Human::Live()
             auto ghost = GetItemFabric()->newItem<Ghost>(Ghost::T_ITEM_S());
             GetItemFabric()->SetPlayerId(net_id, ghost.ret_id());
             owner->AddItem(ghost);
-            if (thisMobControl)
+            if (GetId() == GetMob().ret_id())
             {
                 ChangeMob(ghost);
             }

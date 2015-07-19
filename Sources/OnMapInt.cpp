@@ -91,6 +91,5 @@ IOnMapObject::IOnMapObject(size_t id) : IOnMapBase(id)
     passable_level = Passable::FULL;
 
     transparent = true;
-    burn_power = 0;
     name = "NONAMESHIT";
 }

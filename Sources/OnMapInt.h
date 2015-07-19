@@ -94,7 +94,6 @@ public:
     PassableLevel KV_SAVEBLE(passable_level);
 
     bool KV_SAVEBLE(transparent);
-    int KV_SAVEBLE(burn_power);//0 - 1 - MUCH MUCH
     std::string KV_SAVEBLE(name);
 protected:
     View KV_SAVEBLE(view_);

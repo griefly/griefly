@@ -129,11 +129,11 @@ private:
 
     InsideType KV_SAVEBLE(inside_list_);
 
-    mutable PassableLevel KV_ON_LOAD(sum_passable_all_, -1);
-    mutable PassableLevel KV_ON_LOAD(sum_passable_up_, -1);
-    mutable PassableLevel KV_ON_LOAD(sum_passable_down_, -1);
-    mutable PassableLevel KV_ON_LOAD(sum_passable_left_, -1);
-    mutable PassableLevel KV_ON_LOAD(sum_passable_right_, -1);
+    mutable PassableLevel KV_SAVEBLE(sum_passable_all_);
+    mutable PassableLevel KV_SAVEBLE(sum_passable_up_);
+    mutable PassableLevel KV_SAVEBLE(sum_passable_down_);
+    mutable PassableLevel KV_SAVEBLE(sum_passable_left_);
+    mutable PassableLevel KV_SAVEBLE(sum_passable_right_);
 
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap(); // TODO

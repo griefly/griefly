@@ -74,7 +74,6 @@ bool IMovable::checkMoveTime()
 {
     if((static_cast<int>(MAIN_TICK) - lastMove) < tickSpeed) 
         return false;
-    lastMove = static_cast<int>(MAIN_TICK);
     return true;
 };
 
@@ -140,6 +139,7 @@ bool IMovable::mainMove()
         GetManager()->UpdateVisible();
     }
 
+    lastMove = static_cast<int>(MAIN_TICK);
     return true;
 };
 
@@ -216,9 +216,16 @@ void ForceManager::Process()
 
         under_force_.push_back(*movable);
     }
-    to_add_.clear();
+    if (to_add_.size())
+    {
+        std::sort(under_force_.begin(), under_force_.end(),
+        [](id_ptr_on<IMovable> item1, id_ptr_on<IMovable> item2)
+        {
+            return item1.ret_id() < item2.ret_id();
+        });
+        to_add_.clear();
+    }
 
-    std::vector<id_ptr_on<IMovable>> to_remove;
   //  SYSTEM_STREAM << "Remove size: " << to_remove.size() << " Force size: " << under_force_.size() << std::endl;
     remove_timer.Start();
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
@@ -226,10 +233,19 @@ void ForceManager::Process()
         if (   !(*movable)
             || !NonZero((*movable)->force_))
         {
-            to_remove.push_back(*movable);
             continue;
         }
         (*movable)->ProcessForce();
+    }
+
+    std::vector<id_ptr_on<IMovable>> to_remove;
+    for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
+    {
+        if (   !(*movable)
+            || !NonZero((*movable)->force_))
+        {
+            to_remove.push_back(*movable);
+        }
     }
     for (auto it = to_remove.begin(); it != to_remove.end(); ++it)
         under_force_.erase(std::find(under_force_.begin(), under_force_.end(), *it));

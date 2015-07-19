@@ -13,8 +13,6 @@ void ChangeMob(id_ptr_on<IMob> i)
 
     if (this_mob.valid())
     {
-        //this_mob->onMobControl = true;
-        this_mob->thisMobControl = true;
         if (!GetParamsHolder().GetParamBool("-editor"))
             this_mob->InitGUI();
     }

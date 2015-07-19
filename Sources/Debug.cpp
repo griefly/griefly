@@ -76,11 +76,42 @@ void Debug::Impl::UnsyncDebug::ProcessDebug()
         {
             if (IsReportNeeded())
             {
-                GenerateAndSaveReport();
-                report_generated_ = true;
+                if (MAIN_TICK % 20 == 1)
+                {
+                    GenerateAndSaveReport();
+                    report_generated_ = true;
+                }
             }
         }
     }
+}
+
+void Debug::Impl::UnsyncDebug::CheckSaves()
+{
+    const int TICK_SAVED = 50;
+
+    static QUuid uuid = QUuid::createUuid();
+    QString dir_path = "debug_reports//" + uuid.toString() + "saves";
+
+    if (report_generated_)
+    {
+        return;
+    }
+
+    QDir().mkdir(dir_path);
+
+    std::stringstream ss;
+
+    GetItemFabric()->saveMap(ss, false);
+
+    if (MAIN_TICK > TICK_SAVED)
+    {
+      /*  QFile(dir_path
+              + "//map"
+              + QString::number(MAIN_TICK - TICK_SAVED)
+              + ".map").remove();*/
+    }
+
 }
 
 void Debug::Impl::UnsyncDebug::GenerateAndSaveReport()

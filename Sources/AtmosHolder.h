@@ -43,7 +43,6 @@ public:
         for (size_t i = 0; i < GASES_NUM; ++i)
             gases_[i] = 0;
         temperature_ = 0;
-        volume_ = 0;
         energy_ = 0;
         pressure_ = 0;
         volume_ = 1;

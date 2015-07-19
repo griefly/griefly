@@ -35,6 +35,8 @@ namespace Debug
 
             bool IsReportGenerated();
 
+            void CheckSaves();
+
             bool Save();
             UnsyncDebug();
         private:

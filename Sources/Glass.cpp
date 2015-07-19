@@ -22,14 +22,6 @@ FlatGlass::FlatGlass(size_t id) : Structure(id)
     name = "Window";
 }
 
-bool FlatGlass::checkMove(Dir direct)
-{
-    SetPassable(dMove, Passable::FULL);
-    bool retval = IMovable::checkMove(direct);
-    SetPassable(dMove, Passable::EMPTY);
-    return retval;
-}
-
 void FlatGlass::Bump(id_ptr_on<IMovable> item)
 {
     id_ptr_on<IMob> m;
