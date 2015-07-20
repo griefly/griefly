@@ -206,12 +206,14 @@ void Human::SetLying(bool value)
         Chat::GetChat()->PostSimpleText(name + " is lying now", owner->GetId());
         view_.SetAngle(90);
         SetPassable(D_ALL, Passable::FULL);
+        v_level = 8;
     }
     else
     {
         Chat::GetChat()->PostSimpleText(name + " is standing now!", owner->GetId());
         view_.SetAngle(0);
         SetPassable(D_ALL, Passable::BIG_ITEM);
+        v_level = 9;
     }
     interface_.UpdateLaying();
 }
