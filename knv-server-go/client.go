@@ -222,15 +222,19 @@ func (r *Registry) Run() {
 			r.sendAll(nexttick)
 		case old_id := <-r.oldClients:
 			s_old_id := strconv.Itoa(old_id)
+
+			if r.clients[old_id] != nil {
+				close(r.clients[old_id])
+				r.clients[old_id] = nil
+			}
+			delete(newPlayers, s_old_id)
+			delete(mapWaiters, s_old_id)
+
 			if old_id != r.masterId {
 				log.Println("registry: detached slave client", old_id)
-				r.clients[old_id] = nil
-				delete(newPlayers, s_old_id)
-				delete(mapWaiters, s_old_id)
 			} else {
 				log.Println("registry: detached master client", old_id)
 				r.masterId = -1
-				r.clients[old_id] = nil
 				for id, c := range r.clients {
 					if c != nil {
 						r.masterId = id
@@ -242,8 +246,6 @@ func (r *Registry) Run() {
 				} else {
 					log.Printf("registry: praise the new master %d!", r.masterId)
 				}
-				delete(newPlayers, s_old_id)
-				delete(mapWaiters, s_old_id)
 
 				for _, c := range newPlayers {
 					close(c.response)

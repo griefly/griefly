@@ -232,8 +232,16 @@ func (c *ClientConnection) Run() {
 			} else {
 				err := c.writeMessage(m)
 				if err != nil {
-					c.reg.RemovePlayer(c.id)
+					go c.reg.RemovePlayer(c.id)
 					log.Printf("client[%d]: sender failed to send message: %s", c.id, err.Error())
+
+					// blackhole all writes for this client to prevent registry deadlock
+					for {
+						_, ok := <-c.inbox
+						if !ok {
+							break
+						}
+					}
 					return
 				}
 			}
