@@ -326,9 +326,9 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
             SYSTEM_STREAM << "Error! " << j << "\n";
             SDL_Delay(10000);
         }
-        unsigned int type;
+        std::string type;
         savefile >> type;
-        if(type == 0)
+        if(type == "0")
         {
             SYSTEM_STREAM << "Zero id reached" << std::endl;
             break;
@@ -347,7 +347,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
     ChangeMob(GetMob());
 }
 
-IMainObject* ItemFabric::newVoidItem(unsigned int type, size_t id)
+IMainObject* ItemFabric::newVoidItem(const std::string& type, size_t id)
 {
     static Initer init;
     auto il = (*itemList());
@@ -355,7 +355,7 @@ IMainObject* ItemFabric::newVoidItem(unsigned int type, size_t id)
     return f(id);
 };
 
-IMainObject* ItemFabric::newVoidItemSaved(unsigned int type)
+IMainObject* ItemFabric::newVoidItemSaved(const std::string& type)
 {
     static Initer init;
     return (*itemListSaved())[type]();

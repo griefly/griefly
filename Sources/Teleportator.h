@@ -12,7 +12,7 @@ public:
     Teleportator(size_t id);
     virtual void processGUImsg(const Message& msg) override;
 protected:
-    void CreateItem(unsigned int from_id, size_t hash);
+    void CreateItem(unsigned int from_id, const std::string& hash);
 };
 
 ADD_TO_TYPELIST(Teleportator);

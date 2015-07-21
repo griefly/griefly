@@ -22,19 +22,14 @@ public:
     virtual void delThis();
     IMainObject(size_t id){ id_ = id; how_often_ = 0; }
     IMainObject(NotLoadItem) {id_ = 0; how_often_ = 0;}
-    virtual unsigned int T_ITEM()            
+    virtual const std::string& T_ITEM()
     {                                        
-        static unsigned int result = 0;
-        if(result) return result;            
-        result = hash("main");                  
-        return result;                       
+        return T_ITEM_S();
     }                                        
-    static unsigned int T_ITEM_S()            
+    static const std::string& T_ITEM_S()
     {                                         
-        static unsigned int result = 0;       
-        if(result) return result;             
-        result = hash("main");                   
-        return result;                        
+        static std::string result = "main";
+        return result;
     }
     static int REAL_TYPE_ITEM;                
     virtual int RT_ITEM()                     

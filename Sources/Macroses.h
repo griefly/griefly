@@ -103,33 +103,15 @@ template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash, Fak
 
 #define KV_ON_LOAD_CALL(function) struct Z_Impl##function { static const int function##counter = __COUNTER__;}; __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##function :: function##counter>){KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##function :: function##counter + 1>());} __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##function ::function##counter>){ function(); KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##function :: function##counter + 1>());} __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##function :: function##counter>){return KV_HASH_FUNC(h, FakeParamClass<Z_Impl##function :: function##counter + 1>());};
 
-#define DECLARE_REAL_TYPE_ITEM \
-    static int RealType;       \
-    virtual int RT_ITEM()      \
-    {                          \
-        return RealType;       \
-    }                          \
-    int RT_ITEM_S()            \
-    {                          \
-        return RealType;       \
-    }
-
-#define DECLARE_EASY_ITEM(str)         \
-    virtual unsigned int T_ITEM()      \
-    {                                  \
-        static unsigned int result = hash(str);\
-        return result;                 \
-    }
 
 #define DECLARE_GET_TYPE_ITEM(str)            \
-    virtual unsigned int T_ITEM()             \
+    virtual const std::string& T_ITEM()             \
     {                                         \
-        static unsigned int result = hash(#str);\
-        return result;                        \
+        return T_ITEM_S();                       \
     }                                         \
-    static unsigned int T_ITEM_S()            \
+    static const std::string& T_ITEM_S()            \
     {                                         \
-        static unsigned int result = hash(#str);\
+        static std::string result = #str;\
         return result;                        \
     }                                         \
     static int REAL_TYPE_ITEM;                \

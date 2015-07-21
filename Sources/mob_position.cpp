@@ -1,6 +1,5 @@
 #include "mob_position.h"
 
-#include "MapEditor.h"
 #include "Mob.h"
 #include "constheader.h"
 #include "TileInt.h"
@@ -12,19 +11,19 @@ namespace mob_position
     {
         if (GetManager())
             return GetMob()->GetDrawX() * (-1) + (sizeW / 2); // TODO
-        return GetMapEditor()->GetViewerX() * 32 * (-1) + (sizeW / 2);
+        return 0;
     }
     int get_shift_y()
     {
         if (GetManager())
             return GetMob()->GetDrawY() * (-1) + (sizeH / 2) - 16;
-        return GetMapEditor()->GetViewerY() * 32 * (-1) + (sizeH / 2) - 16;
+        return 0;
     }
     int get_mob_z()
     {
         if (GetManager())
             return GetMob()->GetZ();
-        return GetMapEditor()->GetViewerZ();
+        return 0;
     }
 
 }

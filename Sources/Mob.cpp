@@ -29,6 +29,7 @@
 #include "Names.h"
 #include "IMovable.h"
 #include "Human.h"
+#include "Teleportator.h"
 
 #include "qtopengl.h"
 
@@ -431,7 +432,7 @@ void Manager::initWorld()
         GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
-                hash("Human"), 
+                Human::T_ITEM_S(),
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
@@ -439,7 +440,7 @@ void Manager::initWorld()
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
         auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
-                hash("Teleportator"), 
+                Teleportator::T_ITEM_S(),
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
@@ -459,7 +460,7 @@ void Manager::initWorld()
     {
         std::cout << "Begin create map" << std::endl;
         auto newmob = GetItemFabric()->newItemOnMap<IMob>(
-                hash("Human"), 
+                Human::T_ITEM_S(),
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);
@@ -467,7 +468,7 @@ void Manager::initWorld()
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
         auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
-                hash("Teleportator"), 
+                Teleportator::T_ITEM_S(),
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
                                        [GetMapMaster()->GetMapD() / 2]);

@@ -23,9 +23,9 @@ typedef IMainObject* (*item_creator)(size_t id);
 typedef IMainObject* (*item_creator_saved)();
 typedef unsigned int (*type_item)();
 
-std::unordered_map<unsigned int, item_creator>* itemList();
+std::unordered_map<std::string, item_creator>* itemList();
 
-std::unordered_map<unsigned int, item_creator_saved>* itemListSaved();
+std::unordered_map<std::string, item_creator_saved>* itemListSaved();
 
 template<class T>
 class itemAdder 
@@ -42,7 +42,7 @@ public:
     itemAdder()
     {
         //T item;
-        unsigned int key = T::T_ITEM_S();
+        std::string key = T::T_ITEM_S();
         if (   itemList()->find(key) != itemList()->end()
             || itemListSaved()->find(key) != itemListSaved()->end())
         {

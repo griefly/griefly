@@ -35,8 +35,8 @@ private slots:
 
 private:
     // Metainfo
-    std::vector<unsigned int> types_;
-    std::vector<unsigned int> turf_types_;
+    std::vector<std::string> types_;
+    std::vector<std::string> turf_types_;
 
     Ui::MapEditorForm *ui;
 };

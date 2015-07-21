@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 bool FastIsType(int typeto, int typefrom);
 
 template<typename Typeto>
@@ -19,8 +21,7 @@ inline Typeto* castTo(TypeObjectFrom* ptr)
     return nullptr;/**/
 }
 
-unsigned int Num2Hash(int hash);
-int Hash2Num(unsigned int hash);
+const std::string& Num2Hash(int hash);
 
 class Initer
 {

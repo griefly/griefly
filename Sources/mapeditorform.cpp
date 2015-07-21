@@ -32,7 +32,7 @@ public:
             pixmap_item = nullptr;
         }
 
-        unsigned int item_type;
+        std::string item_type;
 
         QGraphicsPixmapItem* pixmap_item;
     };
@@ -155,9 +155,13 @@ public:
 
         while (!sfile.eof())
         {
-            unsigned int t_item;
+            std::string t_item;
             size_t x, y, z;
             sfile >> t_item;
+            if (t_item == "")
+            {
+                continue;
+            }
             sfile >> x;
             sfile >> y;
             sfile >> z;
@@ -215,17 +219,17 @@ public:
         border_image_->setPolygon(p2);
     }
 
-    void AddItemType(unsigned int item_type, QPixmap image)
+    void AddItemType(const std::string& item_type, QPixmap image)
     {
         image_holder_[item_type] = image;
     }
 
-    void AddTurfType(unsigned int type)
+    void AddTurfType(const std::string& item_type)
     {
-        turf_types_.insert(type);
+        turf_types_.insert(item_type);
     }
 
-    void AddItem(unsigned int item_type)
+    void AddItem(const std::string& item_type)
     {
         for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
         {
@@ -258,7 +262,7 @@ public:
         items.clear();
     }
 
-    void AddItem(unsigned int item_type, int posx, int posy, int posz)
+    void AddItem(const std::string& item_type, int posx, int posy, int posz)
     {
         EditorEntry new_entry;
         new_entry.item_type = item_type;
@@ -269,7 +273,7 @@ public:
         editor_map_[posx][posy][posz].items.push_back(new_entry);
     }
 
-    void SetTurf(unsigned int item_type)
+    void SetTurf(const std::string& item_type)
     {
         for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
         {
@@ -280,7 +284,7 @@ public:
         }
     }
 
-    void SetTurf(unsigned int item_type, int posx, int posy, int posz)
+    void SetTurf(const std::string& item_type, int posx, int posy, int posz)
     {
         if (editor_map_[posx][posy][posz].turf.pixmap_item != nullptr)
         {
@@ -381,9 +385,9 @@ private:
 
     Pointer pointer_;
 
-    std::map<unsigned int, QPixmap> image_holder_;
+    std::map<std::string, QPixmap> image_holder_;
 
-    std::set<unsigned int> turf_types_;
+    std::set<std::string> turf_types_;
 
     QGraphicsScene* scene_;
 
@@ -523,7 +527,7 @@ void MapEditorForm::on_createItem_clicked()
     {
         return;
     }
-    unsigned int type = types_[current_row];
+    std::string type = types_[current_row];
     map_editor2_->AddItem(type);
 }
 
@@ -534,7 +538,7 @@ void MapEditorForm::on_createTurf_clicked()
     {
         return;
     }
-    unsigned int type = turf_types_[current_row];
+    std::string type = turf_types_[current_row];
     map_editor2_->SetTurf(type);
 }
 

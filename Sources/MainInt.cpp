@@ -2,18 +2,6 @@
 #include "MapClass.h"
 #include "ItemFabric.h"
 
-std::unordered_map<unsigned int, item_creator>* itemList()
-{
-    static std::unordered_map<unsigned int, item_creator>* result = new std::unordered_map<unsigned int, item_creator>;
-    return result; 
-}
-
-std::unordered_map<unsigned int, item_creator_saved>* itemListSaved()
-{
-    static std::unordered_map<unsigned int, item_creator_saved>* result = new std::unordered_map<unsigned int, item_creator_saved>;
-    return result; 
-}
-
 void IMainObject::delThis()
 {
     GetItemFabric()->idTable()[id_] = 0;

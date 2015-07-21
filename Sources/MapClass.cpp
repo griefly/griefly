@@ -111,9 +111,13 @@ void MapMaster::LoadFromMapGen(const std::string& name)
 
     while (!sfile.eof())
     {
-        unsigned int t_item;
+        std::string t_item;
         size_t x, y, z;
         sfile >> t_item;
+        if (t_item == "")
+        {
+            continue;
+        }
         sfile >> x;
         sfile >> y;
         sfile >> z;

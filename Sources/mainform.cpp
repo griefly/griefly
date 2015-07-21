@@ -6,7 +6,6 @@
 #include "MapClass.h"
 #include "Debug.h"
 #include "Params.h"
-#include "MapEditor.h"
 #include "Mob.h"
 #include "MagicStrings.h"
 
@@ -85,28 +84,22 @@ void MainForm::startGameLoop()
     ui->widget->show();
     on_splitter_splitterMoved(0, 0);
 
-    if (!GetParamsHolder().GetParamBool("-editor"))
-    {
-        if (GetParamsHolder().GetParamBool("-nodraw"))
-            NODRAW = true;
+    if (GetParamsHolder().GetParamBool("-nodraw"))
+        NODRAW = true;
 
-        std::string adrs = "127.0.0.1";
-        if (GetParamsHolder().GetParamBool("ip"))
-            adrs = GetParamsHolder().GetParam<std::string>("ip");
+    std::string adrs = "127.0.0.1";
+    if (GetParamsHolder().GetParamBool("ip"))
+        adrs = GetParamsHolder().GetParam<std::string>("ip");
 
-        if (GetParamsHolder().GetParamBool("name"))
-            Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
+    if (GetParamsHolder().GetParamBool("name"))
+        Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
 
-        Manager man(adrs);
-        man.initWorld();
-        if (GetParamsHolder().GetParamBool("-auto"))
-            man.ToogleAutoplay();
-        man.process();
-        return;
-    }
-    MapEditor map_editor;
-    map_editor.InitWorld();
-    map_editor.Run();
+    Manager man(adrs);
+    man.initWorld();
+    if (GetParamsHolder().GetParamBool("-auto"))
+        man.ToogleAutoplay();
+    man.process();
+    return;
 }
 
 void MainForm::on_lineEdit_returnPressed()

@@ -33,8 +33,8 @@ public:
     void Sync();
     void foreachProcess();
 
-    static IMainObject* newVoidItem(unsigned int type, size_t id);
-    static IMainObject* newVoidItemSaved(unsigned int type);
+    static IMainObject* newVoidItem(const std::string& type, size_t id);
+    static IMainObject* newVoidItemSaved(const std::string& type);
 
     unsigned int hash_all();
 
@@ -49,7 +49,7 @@ public:
     void clearMap();
 
     template<typename T>
-    id_ptr_on<T> newItemOnMap(unsigned int hash, id_ptr_on<IOnMapBase> owner, size_t id_new = 0)
+    id_ptr_on<T> newItemOnMap(const std::string& hash, id_ptr_on<IOnMapBase> owner, size_t id_new = 0)
     {
         
         static_assert(std::is_same<IOnMapObject, T>::value || std::is_base_of<IOnMapObject, T>::value, "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapObject");
@@ -82,7 +82,7 @@ public:
     }
     
     template<typename T>
-    id_ptr_on<T> newItemSaved(unsigned int hash, size_t id_new = 0)
+    id_ptr_on<T> newItemSaved(const std::string& hash, size_t id_new = 0)
     {
         T* item;
         item = castTo<T>(newVoidItemSaved(hash));
@@ -101,7 +101,7 @@ public:
     }
     
     template<typename T>
-    id_ptr_on<T> newItem(unsigned int hash, size_t id_new = 0)
+    id_ptr_on<T> newItem(const std::string& hash, size_t id_new = 0)
     {
         T* item;
         if(std::max(id_new, id_) >= idTable_.size())

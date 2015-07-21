@@ -106,7 +106,6 @@ public:
 static Initer init4;
 static IniteRT init2;
 
-int Hash2Num(unsigned int hash);
 bool FastIsType(int typeto, int typefrom)
 {
     static Initer init0;
@@ -114,7 +113,7 @@ bool FastIsType(int typeto, int typefrom)
     return FastDC[typeto][typefrom];
 };
 
-unsigned int Num2HashData[ItemsTLLength];
+std::string Num2HashData[ItemsTLLength];
 
 template<typename T>
 class InitNum2HashData;
@@ -146,7 +145,7 @@ public:
     }
 };
 
-unsigned int Num2Hash(int num)
+const std::string& Num2Hash(int num)
 {
     static IniterNum2Hash init;
     assert(num >= 0);
