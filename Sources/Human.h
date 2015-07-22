@@ -5,8 +5,8 @@
 class Human: public IMob
 {
 public:
-    DECLARE_GET_TYPE_ITEM(Human);
     DECLARE_SAVED(Human, IMob);
+    DECLARE_GET_TYPE_ITEM(Human);
     Human(size_t id);
     virtual void DeinitGUI() override;
     virtual void InitGUI() override;

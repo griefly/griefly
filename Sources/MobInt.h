@@ -8,8 +8,8 @@ class IMob: public IMessageReceiver
 {
 public:
     IMob(size_t id);
-    DECLARE_GET_TYPE_ITEM(imob)
     DECLARE_SAVED(IMob, IMessageReceiver);
+    DECLARE_GET_TYPE_ITEM(imob)
     virtual void delThis();
     virtual void cautOverMind();
 

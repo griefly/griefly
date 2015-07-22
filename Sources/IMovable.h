@@ -28,8 +28,8 @@ inline unsigned int hash(const VDir& vdir)
 class IMovable : public IOnMapObject
 {
 public:
-    DECLARE_GET_TYPE_ITEM(IMovable);
     DECLARE_SAVED(IMovable, IOnMapObject);
+    DECLARE_GET_TYPE_ITEM(IMovable);
     IMovable(size_t id);
     void processMove();//for move
     virtual bool checkMove(Dir direct);

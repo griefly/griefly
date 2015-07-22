@@ -5,8 +5,8 @@
 class Ghost: public IMob
 {
 public:
-    DECLARE_GET_TYPE_ITEM(Ghost);
     DECLARE_SAVED(Ghost, IMob);
+    DECLARE_GET_TYPE_ITEM(Ghost);
     Ghost(size_t id);
     virtual void processImage(DrawType type) override;
     virtual bool IsTransp(int x, int y) override;

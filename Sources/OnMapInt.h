@@ -13,8 +13,8 @@ class IOnMapObject: public IOnMapBase
 {
 public:
     IOnMapObject(size_t id);
-    DECLARE_GET_TYPE_ITEM(ionmapitem);
     DECLARE_SAVED(IOnMapObject, IOnMapBase);
+    DECLARE_GET_TYPE_ITEM(ionmapitem);
     void checkSelfLevel();
 
     virtual bool IsVisibleByPlayer() const override
