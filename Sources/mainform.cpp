@@ -126,7 +126,7 @@ void MainForm::on_lineEdit_returnPressed()
     NetClient::GetNetClient()->Send(msg);
     ui->lineEdit->clear();
 
-    ui->widget->setFocus();
+    //ui->widget->setFocus();
 }
 
 void MainForm::on_splitter_splitterMoved(int pos, int index)
