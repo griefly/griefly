@@ -5,8 +5,6 @@
 #include "Idptr.h"
 #include "hashes.h"
 
-#define DECLARE_RAW_TYPE(thisclass, supclass) DECLARE_RAW_LOADED DECLARE_GET_TYPE_ITEM(thisclass, supclass)//load from raw, type
-
 class IMainObject
 {
 public:
