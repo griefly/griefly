@@ -133,3 +133,4 @@ Saves
 /Exec/debug_reports
 /Exec/platforms
 /metadata.json
+/Sources/AutogenMetadata.cpp
