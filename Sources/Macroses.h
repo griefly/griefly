@@ -52,9 +52,6 @@ public:
 };
 
 #define ADD_TO_TYPELIST(classname)                                              \
-namespace {                                                               \
-struct CONTAC(UnusedClass_, classname) {static int REAL_TYPE_ITEM;};   BR_CLOSE_IF_OPEN          \
-     int type_if_else<OPEN_STATIC_VARS, classname, CONTAC(UnusedClass_, classname)>::value::REAL_TYPE_ITEM = -1; BR_CLOSE_IF_NO_OPEN \
 namespace Private                                                                 \
 {                                                                                 \
     const int CONTAC(now_count_, classname) = __COUNTER__;                        \
@@ -73,6 +70,7 @@ template<int>
 struct FakeParamClass {};
 
 #define DECLARE_SAVED(thisclass, masterclass)  \
+         typedef thisclass THIS_CLASS_TYPE;      \
         static const int THIS_COUNTER = __COUNTER__;           \
 template<int num> __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<num>){};     \
 template<int num> __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<num>){};     \
@@ -97,7 +95,7 @@ template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash, Fak
         }; \
         thisclass (NotLoadItem) : masterclass(nouse) {}
 
-#define KV_SAVEBLE(name) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){file << " "; WrapWriteMessage(file, name); file << " "; KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){WrapReadMessage(file, name); KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##name :: name##counter>){return hash(name) * (Z_Impl##name :: name##counter + 1) + KV_HASH_FUNC(h, FakeParamClass<Z_Impl##name :: name##counter + 1>());};
+#define KV_SAVEBLE(name) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){file << " "; WrapWriteMessage(file, name); file << " "; KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){WrapReadMessage(file, name); KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##name :: name##counter>){return hash(name) * (Z_Impl##name :: name##counter + 1) + KV_HASH_FUNC(h, FakeParamClass<Z_Impl##name :: name##counter + 1>());};__forceinline void _Z_KV_SETTERS##name (IMainObject* ptr, std::stringstream& str){ THIS_CLASS_TYPE *ptr_loc = reinterpret_cast<THIS_CLASS_TYPE *>(ptr); WrapWriteMessage(str, ptr_loc-> name);}
 
 #define KV_ON_LOAD(name, value) name; struct Z_Impl##name { static const int name##counter = __COUNTER__;}; __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name :: name##counter>){KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##name ::name##counter + 1>());} __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<Z_Impl##name ::name##counter>){name = value; KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##name :: name##counter + 1>());} __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##name :: name##counter>){return KV_HASH_FUNC(h, FakeParamClass<Z_Impl##name :: name##counter + 1>());};
 
