@@ -27,10 +27,10 @@ INCLUDE_DIRECTORIES(${SDL_TTF_INCLUDE_DIR})
 IF(CMAKE_COMPILER_IS_GNUCXX)
     EXECUTE_PROCESS(
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMAND python metadata_generator.py)
+        COMMAND python2.7 metadata_generator.py)
     EXECUTE_PROCESS(
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMAND python autogen.py)
+        COMMAND python2.7 autogen.py)
 ENDIF()
 
 INCLUDE_DIRECTORIES("Sources")
