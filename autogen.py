@@ -18,12 +18,14 @@ for class_data in metadata["classes"]:
 
 with open("Sources/AutogenMetadata.cpp", "w") as autogen_file:
     print('#include "AutogenMetadata.h"', file = autogen_file)
+    print('#include "Idptr.h"', file = autogen_file)
+    print("", file = autogen_file)
     for header in header_list:
         print('#include "' + header + '"', file = autogen_file)
     print("", file = autogen_file)
-    print("int IMainObject::REAL_TYPE_ITEM = -1;", file = autogen_file)
+    print("int IMainObject::REAL_TYPE_ITEM;", file = autogen_file)
     for class_data in metadata["classes"]:
-        print("int " + class_data["class"] + "::REAL_TYPE_ITEM = -1;", file = autogen_file)
+        print("int " + class_data["class"] + "::REAL_TYPE_ITEM;", file = autogen_file)
     print("", file = autogen_file)
     print("void InitRealTypes()", file = autogen_file)
     print("{", file = autogen_file)
@@ -32,3 +34,12 @@ with open("Sources/AutogenMetadata.cpp", "w") as autogen_file:
         index = str(metadata["classes"].index(class_data) + 1)
         print("    " + class_data["class"] + "::REAL_TYPE_ITEM = " + index + ";", file = autogen_file)
     print("}", file = autogen_file)
+    print("", file = autogen_file)
+    print("void InitCreators()", file = autogen_file)
+    print("{", file = autogen_file)
+    for class_data in metadata["classes"]:
+        class_name = class_data["class"]
+        print("    (*itemList())[" + class_name + "::T_ITEM_S()] = &" + class_name + "::_Z_creator;", file = autogen_file)
+        print("    (*itemListSaved())[" + class_name + "::T_ITEM_S()] = &" + class_name + "::_Z_creatorSaved;", file = autogen_file)
+    print("}", file = autogen_file)
+    

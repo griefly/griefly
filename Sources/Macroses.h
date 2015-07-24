@@ -1,68 +1,12 @@
 #pragma once
 
-#ifndef OPEN_STATIC_VARS
-#define OPEN_STATIC_VARS false
-#endif //OPEN_STATIC_VARS
-
-#ifndef BR_CLOSE_IF_OPEN 
-#define BR_CLOSE_IF_OPEN
-#endif //BR_CLOSE_IF_OPEN 
-
-#ifndef BR_CLOSE_IF_NO_OPEN 
-#define BR_CLOSE_IF_NO_OPEN }
-#endif //BR_CLOSE_IF_NO_OPEN
-
-#define CONTAC(a, b) a##b
-
 #if defined(__linux__)
 #define __forceinline __attribute__((always_inline))
 #endif
 
-#include <Typelist.h>
-
 #include "StreamWrapper.h"
 
-namespace Private
-{
-    template<int count>
-    class TypelistMaker;
-
-    template<>
-    class TypelistMaker<__COUNTER__>
-    {
-    public:
-        typedef Loki::NullType typelist;
-    };
-}
-template<bool State, class T1, class T2>
-class type_if_else;
-
-template<class T1, class T2>
-class type_if_else<true, T1, T2>
-{
-public:
-    typedef T1 value;
-};
-
-template<class T1, class T2>
-class type_if_else<false, T1, T2>
-{
-public:
-    typedef T2 value;
-};
-
 #define ADD_TO_TYPELIST(classname)                                              \
-namespace Private                                                                 \
-{                                                                                 \
-    const int CONTAC(now_count_, classname) = __COUNTER__;                        \
-    template<>                                                                    \
-    class TypelistMaker<CONTAC(now_count_, classname)>                            \
-    {                                                                             \
-    public:                                                                       \
-        typedef Loki::Typelist<classname, TypelistMaker<classname :: THIS_COUNTER - 1>::typelist> typelist;\
-    };                                                                            \
-}
-
 
 class NotLoadItem {} const nouse;
 
@@ -71,6 +15,8 @@ struct FakeParamClass {};
 
 #define DECLARE_SAVED(thisclass, masterclass)  \
          typedef thisclass THIS_CLASS_TYPE;      \
+    static IMainObject* _Z_creator(size_t id) { return new thisclass(id); };\
+    static IMainObject* _Z_creatorSaved() { return new thisclass(nouse);}; \
         static const int THIS_COUNTER = __COUNTER__;           \
 template<int num> __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<num>){};     \
 template<int num> __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<num>){};     \

@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <Typelist.h>
-
 #include "MainInt.h"
 #include "NetClientImpl.h"
 

@@ -23,8 +23,8 @@ inline Typeto* castTo(TypeObjectFrom* ptr)
 
 const std::string& Num2Hash(int hash);
 
-class Initer
+/*class Initer
 {
 public:
     Initer();
-};
+};*/

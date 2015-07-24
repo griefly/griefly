@@ -349,7 +349,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
 
 IMainObject* ItemFabric::newVoidItem(const std::string& type, size_t id)
 {
-    static Initer init;
+    //static Initer init;
     auto il = (*itemList());
     auto f = il[type];
     return f(id);
@@ -357,7 +357,7 @@ IMainObject* ItemFabric::newVoidItem(const std::string& type, size_t id)
 
 IMainObject* ItemFabric::newVoidItemSaved(const std::string& type)
 {
-    static Initer init;
+    //static Initer init;
     return (*itemListSaved())[type]();
 };
 
