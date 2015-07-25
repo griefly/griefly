@@ -9,6 +9,12 @@ with open("metadata.json", "r") as json_file:
 
 metadata = json.JSONDecoder().decode(raw_json)
 
+def get_class_data(class_name):
+    for class_data in metadata["classes"]:
+        if class_data["class"] == class_name:
+            return class_data
+    return None
+
 header_list = []
 
 for class_data in metadata["classes"]:
@@ -52,8 +58,11 @@ with open("Sources/AutogenMetadata.cpp", "w") as autogen_file:
     print("void InitSettersForTypes()", file = autogen_file)
     print("{", file = autogen_file)
     for class_data in metadata["classes"]:
-        for variable in class_data["variables"]:
-            print('    get_setters_for_types()["' + class_data["class"] + '"]["' + variable + '"] = &' + class_data["class"] + '::_Z_KV_SETTERS' + variable + ';', file = autogen_file)
+        class_data_loc = class_data
+        while class_data_loc:
+            for variable in class_data_loc["variables"]:
+                print('    get_setters_for_types()["' + class_data["type"] + '"]["' + variable + '"] = &' + class_data_loc["class"] + '::_Z_KV_SETTERS' + variable + ';', file = autogen_file)
+            class_data_loc = get_class_data(class_data_loc["base_class"])
         #print("", file = autogen_file)
     print("}", file = autogen_file)
     
