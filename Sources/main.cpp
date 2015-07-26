@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QStyleFactory>
 
 #include "mainform.h"
 #include "mapeditorform.h"
@@ -14,6 +15,8 @@ int main(int argc, char *argv[])
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
     SetQApp(&app);
+
+    app.setStyle(QStyleFactory::create("fusion"));
 
     if (!GetParamsHolder().GetParamBool("-editor"))
     {
