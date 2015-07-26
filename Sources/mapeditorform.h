@@ -6,6 +6,8 @@
 
 #include <vector>
 
+#include "MapEditor.h"
+
 namespace Ui {
 class MapEditorForm;
 }
