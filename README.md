@@ -1,8 +1,9 @@
 karya-valya
 ===========
 
-It was Karya &amp; Valya Rogue-like, but now it is Yet Another Space Station Remake
 ![build status](https://travis-ci.org/kremius/karya-valya.svg?branch=master)
+
+It used to be Karya &amp; Valya Rogue-like, but now it is Yet Another Space Station Remake
 
 It's work now.
 
