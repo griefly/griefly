@@ -56,6 +56,37 @@ MapEditor::MapEditor(QGraphicsScene* scene)
     border_image_->setZValue(99);
 }
 
+void MapEditor::mousePressedEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    if (GetSelectionStage() == 0)
+    {
+        //qDebug() << mouseEvent->scenePos();
+        SetPointer(
+                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
+                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
+    }
+    else if (GetSelectionStage() == 1)
+    {
+        SetFirstSelectionPoint(
+                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
+                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
+        SetSelectionStage(2);
+    }
+    else
+    {
+        SetSecondSelectionPoint(
+                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
+                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
+        SetSelectionStage(0);
+    }
+   // TOOD: emit "posChanged"
+   // pos_label->setText(
+   //             "("
+   //             + QString::number(map_editor2_->GetPointer().first_posx) + ", "
+   //             + QString::number(map_editor2_->GetPointer().first_posy)
+   //             + ")");
+}
+
 void MapEditor::SaveMapgen(const std::string &name)
 {
     std::fstream sfile;
@@ -305,6 +336,10 @@ void MapEditor::SetSecondSelectionPoint(int x, int y)
     p.push_back(QPointF((pointer_.second_posx + 1) * 32.0, pointer_.first_posy * 32.0));
     pointer_.image->setPolygon(p);
     pointer_.image->setPos(0, 0);
+
+    emit newSelectionSetted(
+                first_selection_x_, first_selection_y_,
+                second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::ClearMap()

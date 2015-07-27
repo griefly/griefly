@@ -20,40 +20,9 @@ GraphicsScene::GraphicsScene(QWidget *parent)
 
 }
 
-QGraphicsScene* scene;
-
-MapEditor* map_editor2_ = nullptr;
-
-QLabel* pos_label = nullptr;
-
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-    if (map_editor2_->GetSelectionStage() == 0)
-    {
-        //qDebug() << mouseEvent->scenePos();
-        map_editor2_->SetPointer(
-                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
-                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
-    }
-    else if (map_editor2_->GetSelectionStage() == 1)
-    {
-        map_editor2_->SetFirstSelectionPoint(
-                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
-                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
-        map_editor2_->SetSelectionStage(2);
-    }
-    else
-    {
-        map_editor2_->SetSecondSelectionPoint(
-                    static_cast<int>(mouseEvent->scenePos().rx()) / 32,
-                    static_cast<int>(mouseEvent->scenePos().ry()) / 32);
-        map_editor2_->SetSelectionStage(0);
-    }
-    pos_label->setText(
-                "("
-                + QString::number(map_editor2_->GetPointer().first_posx) + ", "
-                + QString::number(map_editor2_->GetPointer().first_posy)
-                + ")");
+    emit mousePressed(mouseEvent);
 }
 
 MapEditorForm::MapEditorForm(QWidget *parent) :
@@ -62,21 +31,19 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    pos_label = ui->cursor_label;
+    scene_ = new GraphicsScene;
+    map_editor_ = new MapEditor(scene_);
 
-    scene = new GraphicsScene;
-    map_editor2_ = new MapEditor(scene);
-    map_editor2_->Resize(100, 100, 1);
+    connect(scene_, &GraphicsScene::mousePressed, map_editor_, &MapEditor::mousePressedEvent);
+    connect(map_editor_, &MapEditor::newSelectionSetted, this, &MapEditorForm::newSelectionSetted);
 
-    map_editor2_->SetPointer(2, 2);
+    map_editor_->Resize(100, 100, 1);
 
-    ui->graphicsView->setScene(scene);
+    map_editor_->SetPointer(2, 2);
 
-    //scene->addLine(0.0, 0.0, 100.0, 100.0);
+    ui->graphicsView->setScene(scene_);
 
     SetSpriter(new ASprClass);
-
-    //int i = 0;
 
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
@@ -108,13 +75,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         QImage img(static_cast<uchar*>(s->pixels),
                                s->w, s->h, QImage::Format_ARGB32);
 
-        //ui->imageLabel->setPixmap(QPixmap::fromImage(img));
-
-        map_editor2_->AddItemType(it->first, QPixmap::fromImage(img));
-        //map_editor2_->AddItem(it->first, i++, i, 0);
-
-        //QGraphicsPixmapItem* pixmap_item = scene->addPixmap(QPixmap::fromImage(img));
-        //pixmap_item->setPos(32 * (i++), 0);
+        map_editor_->AddItemType(it->first, QPixmap::fromImage(img));
 
         QListWidgetItem* new_item
                 = new QListWidgetItem(QIcon(QPixmap::fromImage(img)), bloc->T_ITEM().c_str());
@@ -127,24 +88,27 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         else
         {
             turf_types_.push_back(it->first);
-            map_editor2_->AddTurfType(it->first);
+            map_editor_->AddTurfType(it->first);
             ui->listWidgetTurf->addItem(new_item);
         }
 
     }
-
-    /*for (int i = 0; i < 100; ++i)
-    {
-        for (int j = 0; j < 100; ++j)
-        {
-            map_editor2_->AddItem(types_[(j + i) % types_.size()], i, j, 0);
-        }
-    }*/
 }
 
 MapEditorForm::~MapEditorForm()
 {
     delete ui;
+    delete scene_;
+    delete map_editor_;
+}
+
+void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, int second_y)
+{
+    ui->cursor_label->setText(
+        "("
+        + QString::number(first_x) + ", "
+        + QString::number(first_y)
+        + ")");
 }
 
 void MapEditorForm::on_createItem_clicked()
@@ -155,7 +119,7 @@ void MapEditorForm::on_createItem_clicked()
         return;
     }
     std::string type = types_[current_row];
-    map_editor2_->AddItem(type);
+    map_editor_->AddItem(type);
 }
 
 void MapEditorForm::on_createTurf_clicked()
@@ -166,17 +130,17 @@ void MapEditorForm::on_createTurf_clicked()
         return;
     }
     std::string type = turf_types_[current_row];
-    map_editor2_->SetTurf(type);
+    map_editor_->SetTurf(type);
 }
 
 void MapEditorForm::on_beginSelection_clicked()
 {
-    map_editor2_->SetSelectionStage(1);
+    map_editor_->SetSelectionStage(1);
 }
 
 void MapEditorForm::on_removeItem_clicked()
 {
-    map_editor2_->RemoveItems();
+    map_editor_->RemoveItems();
 }
 
 void MapEditorForm::on_newMap_clicked()
@@ -198,8 +162,8 @@ void MapEditorForm::on_newMap_clicked()
     {
         return;
     }
-    map_editor2_->ClearMap();
-    map_editor2_->Resize(size_x, size_y, size_z);
+    map_editor_->ClearMap();
+    map_editor_->Resize(size_x, size_y, size_z);
 }
 
 void MapEditorForm::on_saveMap_clicked()
@@ -214,7 +178,7 @@ void MapEditorForm::on_saveMap_clicked()
     }
 
     file_names = dialog.selectedFiles();
-    map_editor2_->SaveMapgen(file_names[0].toStdString());
+    map_editor_->SaveMapgen(file_names[0].toStdString());
 }
 
 void MapEditorForm::on_loadMap_clicked()
@@ -229,5 +193,5 @@ void MapEditorForm::on_loadMap_clicked()
     }
 
     file_names = dialog.selectedFiles();
-    map_editor2_->LoadMapgen(file_names[0].toStdString());
+    map_editor_->LoadMapgen(file_names[0].toStdString());
 }

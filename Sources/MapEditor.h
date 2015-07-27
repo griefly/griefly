@@ -4,12 +4,15 @@
 #include <vector>
 #include <set>
 
+#include <QObject>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsPolygonItem>
+#include <QGraphicsSceneMouseEvent>
 
-class MapEditor
+class MapEditor: public QObject
 {
+    Q_OBJECT
 public:
     struct EditorEntry
     {
@@ -77,6 +80,10 @@ public:
     void ClearMap();
 
     const Pointer& GetPointer() const { return pointer_; }
+signals:
+    void newSelectionSetted(int first_x, int first_y, int second_x, int second_y);
+public slots:
+    void mousePressedEvent(QGraphicsSceneMouseEvent* mouseEvent);
 private:
     int selection_stage_;
 

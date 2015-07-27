@@ -12,6 +12,17 @@ namespace Ui {
 class MapEditorForm;
 }
 
+class GraphicsScene: public QGraphicsScene
+{
+    Q_OBJECT
+public:
+    explicit GraphicsScene(QWidget *parent = 0);
+signals:
+    void mousePressed(QGraphicsSceneMouseEvent* mouseEvent);
+public slots:
+    void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
+};
+
 class MapEditorForm : public QWidget
 {
     Q_OBJECT
@@ -20,6 +31,8 @@ public:
     explicit MapEditorForm(QWidget *parent = 0);
     ~MapEditorForm();
 
+public slots:
+    void newSelectionSetted(int first_x, int first_y, int second_x, int second_y);
 private slots:
     void on_createItem_clicked();
 
@@ -36,20 +49,14 @@ private slots:
     void on_loadMap_clicked();
 
 private:
+    GraphicsScene* scene_;
+    MapEditor* map_editor_;
+
     // Metainfo
     std::vector<std::string> types_;
     std::vector<std::string> turf_types_;
 
     Ui::MapEditorForm *ui;
-};
-
-class GraphicsScene: public QGraphicsScene
-{
-    Q_OBJECT
-public:
-    explicit GraphicsScene(QWidget *parent = 0);
-public slots:
-    void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
 };
 
 #endif // MAPEDITORFORM_H
