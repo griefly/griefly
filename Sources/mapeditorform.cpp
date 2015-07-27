@@ -109,6 +109,14 @@ void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, i
         + QString::number(first_x) + ", "
         + QString::number(first_y)
         + ")");
+
+    auto entries = map_editor_->GetEntriesFor(first_x, first_y, 0);
+
+    ui->listWidgetTile->clear();
+    for (auto it = entries.begin(); it != entries.end(); ++it)
+    {
+        ui->listWidgetTile->addItem(it->item_type.c_str());
+    }
 }
 
 void MapEditorForm::on_createItem_clicked()

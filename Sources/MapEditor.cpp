@@ -370,3 +370,8 @@ void MapEditor::ClearMap()
     }
 }
 
+const std::vector<MapEditor::EditorEntry> &MapEditor::GetEntriesFor(int posx, int posy, int posz)
+{
+    return editor_map_[posx][posy][posz].items;
+}
+

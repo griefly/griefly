@@ -79,6 +79,8 @@ public:
 
     void ClearMap();
 
+    const std::vector<EditorEntry>& GetEntriesFor(int posx, int posy, int posz);
+
     const Pointer& GetPointer() const { return pointer_; }
 signals:
     void newSelectionSetted(int first_x, int first_y, int second_x, int second_y);
