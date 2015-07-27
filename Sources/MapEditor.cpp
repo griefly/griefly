@@ -60,7 +60,6 @@ void MapEditor::mousePressedEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (GetSelectionStage() == 0)
     {
-        //qDebug() << mouseEvent->scenePos();
         SetPointer(
                     static_cast<int>(mouseEvent->scenePos().rx()) / 32,
                     static_cast<int>(mouseEvent->scenePos().ry()) / 32);
@@ -79,12 +78,6 @@ void MapEditor::mousePressedEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     static_cast<int>(mouseEvent->scenePos().ry()) / 32);
         SetSelectionStage(0);
     }
-   // TOOD: emit "posChanged"
-   // pos_label->setText(
-   //             "("
-   //             + QString::number(map_editor2_->GetPointer().first_posx) + ", "
-   //             + QString::number(map_editor2_->GetPointer().first_posy)
-   //             + ")");
 }
 
 void MapEditor::SaveMapgen(const std::string &name)

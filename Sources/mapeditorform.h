@@ -48,6 +48,8 @@ private slots:
 
     void on_loadMap_clicked();
 
+    void on_listWidgetTile_itemSelectionChanged();
+
 private:
     GraphicsScene* scene_;
     MapEditor* map_editor_;

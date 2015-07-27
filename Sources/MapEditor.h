@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <map>
 
 #include <QObject>
 #include <QPixmap>
@@ -19,6 +20,8 @@ public:
         EditorEntry();
 
         std::string item_type;
+
+        std::map<std::string, std::string> variables;
 
         QGraphicsPixmapItem* pixmap_item;
     };

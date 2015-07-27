@@ -15,6 +15,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QFileDialog>
 
+#include "AutogenMetadata.h"
+
 GraphicsScene::GraphicsScene(QWidget *parent)
 {
 
@@ -30,6 +32,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     ui(new Ui::MapEditorForm)
 {
     ui->setupUi(this);
+
+    InitSettersForTypes();
 
     scene_ = new GraphicsScene;
     map_editor_ = new MapEditor(scene_);
@@ -202,4 +206,21 @@ void MapEditorForm::on_loadMap_clicked()
 
     file_names = dialog.selectedFiles();
     map_editor_->LoadMapgen(file_names[0].toStdString());
+}
+
+void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
+{
+    ui->listWidgetVariables->clear();
+    if (ui->listWidgetTile->selectedItems().size() == 0)
+    {
+        return;
+    }
+    QListWidgetItem* item = ui->listWidgetTile->selectedItems().first();
+
+    auto& variables = get_setters_for_types()[item->text().toStdString()];
+
+    for (auto it = variables.begin(); it != variables.end(); ++it)
+    {
+        ui->listWidgetVariables->addItem(it->first.c_str());
+    }
 }
