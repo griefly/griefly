@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QFileDialog>
+#include <QInputDialog>
 
 #include "AutogenMetadata.h"
 
@@ -222,5 +223,55 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     for (auto it = variables.begin(); it != variables.end(); ++it)
     {
         ui->listWidgetVariables->addItem(it->first.c_str());
+    }
+
+    int current_index = ui->listWidgetTile->currentRow();
+
+    int current_x = map_editor_->GetPointer().first_posx;
+    int current_y = map_editor_->GetPointer().first_posy;
+    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
+
+    MapEditor::EditorEntry& ee = entries[current_index];
+
+    UpdateVariablesColor(ee);
+}
+
+void MapEditorForm::on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item)
+{
+    int current_index = ui->listWidgetTile->currentRow();
+
+    int current_x = map_editor_->GetPointer().first_posx;
+    int current_y = map_editor_->GetPointer().first_posy;
+    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
+
+    MapEditor::EditorEntry& ee = entries[current_index];
+
+    std::string& variable_value = ee.variables[item->text().toStdString()];
+
+    bool ok = false;
+
+    QString result =
+            QInputDialog::getText(
+                nullptr, "Text Input", "New variable value:", QLineEdit::Normal, variable_value.c_str(), &ok);
+
+    if (ok)
+    {
+        variable_value = result.toStdString();
+    }
+    UpdateVariablesColor(ee);
+}
+
+void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
+{
+    for (int i = 0; i < ui->listWidgetVariables->count(); ++i)
+    {
+        if (ee.variables[ui->listWidgetVariables->item(i)->text().toStdString()].size())
+        {
+            ui->listWidgetVariables->item(i)->setBackgroundColor(QColor(200, 150, 170));
+        }
+        else
+        {
+            ui->listWidgetVariables->item(i)->setBackgroundColor(QColor(255, 255, 255));
+        }
     }
 }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include <QListWidgetItem>
 
 #include <vector>
 
@@ -50,7 +51,11 @@ private slots:
 
     void on_listWidgetTile_itemSelectionChanged();
 
+    void on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item);
+
 private:
+    void UpdateVariablesColor(MapEditor::EditorEntry& ee);
+
     GraphicsScene* scene_;
     MapEditor* map_editor_;
 

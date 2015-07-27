@@ -82,7 +82,7 @@ public:
 
     void ClearMap();
 
-    const std::vector<EditorEntry>& GetEntriesFor(int posx, int posy, int posz);
+    std::vector<EditorEntry>& GetEntriesFor(int posx, int posy, int posz);
 
     const Pointer& GetPointer() const { return pointer_; }
 signals:
