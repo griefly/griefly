@@ -17,6 +17,7 @@
 #include <QInputDialog>
 
 #include "AutogenMetadata.h"
+#include "StreamWrapper.h"
 
 GraphicsScene::GraphicsScene(QWidget *parent)
 {
@@ -225,26 +226,13 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
         ui->listWidgetVariables->addItem(it->first.c_str());
     }
 
-    int current_index = ui->listWidgetTile->currentRow();
-
-    int current_x = map_editor_->GetPointer().first_posx;
-    int current_y = map_editor_->GetPointer().first_posy;
-    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
-
-    MapEditor::EditorEntry& ee = entries[current_index];
-
+    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
     UpdateVariablesColor(ee);
 }
 
-void MapEditorForm::on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item)
+/*void MapEditorForm::on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item)
 {
-    int current_index = ui->listWidgetTile->currentRow();
-
-    int current_x = map_editor_->GetPointer().first_posx;
-    int current_y = map_editor_->GetPointer().first_posy;
-    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
-
-    MapEditor::EditorEntry& ee = entries[current_index];
+    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
 
     std::string& variable_value = ee.variables[item->text().toStdString()];
 
@@ -259,6 +247,18 @@ void MapEditorForm::on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *it
         variable_value = result.toStdString();
     }
     UpdateVariablesColor(ee);
+}*/
+
+MapEditor::EditorEntry& MapEditorForm::GetCurrentEditorEntry()
+{
+    int current_index = ui->listWidgetTile->currentRow();
+
+    int current_x = map_editor_->GetPointer().first_posx;
+    int current_y = map_editor_->GetPointer().first_posy;
+    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
+
+    MapEditor::EditorEntry& ee = entries[current_index];
+    return ee;
 }
 
 void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
@@ -274,4 +274,51 @@ void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
             ui->listWidgetVariables->item(i)->setBackgroundColor(QColor(255, 255, 255));
         }
     }
+}
+
+void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
+{
+    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
+
+    std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+
+    ui->lineEditRaw->setText(variable_value.c_str());
+
+    std::stringstream ss;
+    ss << variable_value;
+
+    std::string parsed_value;
+    if (WrapReadMessage(ss, parsed_value).fail())
+    {
+        parsed_value = "PARSING_ERROR";
+    }
+
+    ui->lineEditAsString->setText(parsed_value.c_str());
+}
+
+void MapEditorForm::on_lineEditRaw_returnPressed()
+{
+    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
+
+    std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+
+    variable_value = ui->lineEditRaw->text().toStdString();
+
+    on_listWidgetVariables_itemSelectionChanged();
+    UpdateVariablesColor(ee);
+}
+
+void MapEditorForm::on_lineEditAsString_returnPressed()
+{
+    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
+
+    std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+
+    std::stringstream ss;
+    WrapWriteMessage(ss, ui->lineEditAsString->text().toStdString());
+
+    variable_value = ss.str();
+
+    on_listWidgetVariables_itemSelectionChanged();
+    UpdateVariablesColor(ee);
 }

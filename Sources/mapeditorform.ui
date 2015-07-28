@@ -208,6 +208,41 @@
            </property>
            <widget class="QListWidget" name="listWidgetTile"/>
            <widget class="QListWidget" name="listWidgetVariables"/>
+           <widget class="QTabWidget" name="tabWidgetVariables">
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
+            <widget class="QWidget" name="tabRaw">
+             <attribute name="title">
+              <string>Raw</string>
+             </attribute>
+             <widget class="QLineEdit" name="lineEditRaw">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>113</width>
+                <height>20</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="tabString">
+             <attribute name="title">
+              <string>As String</string>
+             </attribute>
+             <widget class="QLineEdit" name="lineEditAsString">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>113</width>
+                <height>20</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+           </widget>
           </widget>
          </widget>
         </item>

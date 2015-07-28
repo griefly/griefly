@@ -36,7 +36,7 @@ inline std::stringstream& WrapReadMessage(std::stringstream& file, std::string& 
     if (c != ' ')
     {
         SYSTEM_STREAM << "Error: corrupted string info" << std::endl;
-        SDL_Delay(10000);
+        return file;
     }
 
     if (size == 0)

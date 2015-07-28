@@ -51,9 +51,17 @@ private slots:
 
     void on_listWidgetTile_itemSelectionChanged();
 
-    void on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item);
+//    void on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_listWidgetVariables_itemSelectionChanged();
+
+    void on_lineEditRaw_returnPressed();
+
+    void on_lineEditAsString_returnPressed();
 
 private:
+    MapEditor::EditorEntry& GetCurrentEditorEntry();
+
     void UpdateVariablesColor(MapEditor::EditorEntry& ee);
 
     GraphicsScene* scene_;
