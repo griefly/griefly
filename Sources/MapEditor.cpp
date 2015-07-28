@@ -31,6 +31,11 @@ MapEditor::MapEditor(QGraphicsScene* scene)
 {
     selection_stage_ = 0;
 
+    first_selection_x_ = 0;
+    first_selection_y_ = 0;
+    second_selection_x_ = 0;
+    second_selection_y_ = 0;
+
     QPolygonF p;
     p.push_back(QPointF(0.0, 0.0));
     p.push_back(QPointF(0.0, 32.0));
@@ -204,6 +209,10 @@ void MapEditor::Resize(int posx, int posy, int posz)
     p2.push_back(QPointF(posx * 32.0, posy * 32.0));
     p2.push_back(QPointF(posx * 32.0, 0.0));
     border_image_->setPolygon(p2);
+
+    emit newSelectionSetted(
+                first_selection_x_, first_selection_y_,
+                second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::AddItemType(const std::string &item_type, QPixmap image)
@@ -225,6 +234,10 @@ void MapEditor::AddItem(const std::string &item_type)
             AddItem(item_type, x, y, 0);
         }
     }
+
+    emit newSelectionSetted(
+                first_selection_x_, first_selection_y_,
+                second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::RemoveItems()
@@ -247,6 +260,10 @@ void MapEditor::RemoveItems(int posx, int posy, int posz)
         delete it->pixmap_item;
     }
     items.clear();
+
+    emit newSelectionSetted(
+                first_selection_x_, first_selection_y_,
+                second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::AddItem(const std::string &item_type, int posx, int posy, int posz)
@@ -269,6 +286,10 @@ void MapEditor::SetTurf(const std::string &item_type)
             SetTurf(item_type, x, y, 0);
         }
     }
+
+    emit newSelectionSetted(
+                first_selection_x_, first_selection_y_,
+                second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::SetTurf(const std::string &item_type, int posx, int posy, int posz)

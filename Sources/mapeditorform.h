@@ -31,7 +31,6 @@ class MapEditorForm : public QWidget
 public:
     explicit MapEditorForm(QWidget *parent = 0);
     ~MapEditorForm();
-
 public slots:
     void newSelectionSetted(int first_x, int first_y, int second_x, int second_y);
 private slots:

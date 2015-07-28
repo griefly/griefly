@@ -123,6 +123,10 @@ void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, i
     {
         ui->listWidgetTile->addItem(it->item_type.c_str());
     }
+
+    ui->listWidgetVariables->clear();
+    ui->lineEditAsString->clear();
+    ui->lineEditRaw->clear();
 }
 
 void MapEditorForm::on_createItem_clicked()
@@ -298,6 +302,11 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 
 void MapEditorForm::on_lineEditRaw_returnPressed()
 {
+    if (!ui->listWidgetVariables->currentItem())
+    {
+        return;
+    }
+
     MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
 
     std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
@@ -310,6 +319,11 @@ void MapEditorForm::on_lineEditRaw_returnPressed()
 
 void MapEditorForm::on_lineEditAsString_returnPressed()
 {
+    if (!ui->listWidgetVariables->currentItem())
+    {
+        return;
+    }
+
     MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
 
     std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
