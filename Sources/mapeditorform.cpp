@@ -315,7 +315,8 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
     std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
 
     std::stringstream ss;
-    WrapWriteMessage(ss, ui->lineEditAsString->text().toStdString());
+    std::string loc = ui->lineEditAsString->text().toStdString();
+    WrapWriteMessage(ss, loc);
 
     variable_value = ss.str();
 
