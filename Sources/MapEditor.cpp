@@ -10,6 +10,8 @@
 #include <fstream>
 
 #include "constheader.h"
+#include "StreamWrapper.h"
+
 
 MapEditor::EditorEntry::EditorEntry()
 {
@@ -87,20 +89,15 @@ void MapEditor::mousePressedEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void MapEditor::SaveMapgen(const std::string &name)
 {
-    std::fstream sfile;
-    sfile.open(name, std::ios_base::out | std::ios_base::trunc);
-    if(sfile.fail())
-    {
-        return;
-    }
-
     int size_x = editor_map_.size();
     int size_y = editor_map_[0].size();
     int size_z = editor_map_[0][0].size();
 
-    sfile << size_x << std::endl;
-    sfile << size_y << std::endl;
-    sfile << size_z << std::endl;
+    std::stringstream ss;
+
+    ss << size_x << std::endl;
+    ss << size_y << std::endl;
+    ss << size_z << std::endl;
 
     for (int z = 0; z < size_z; ++z)
         for (int x = 0; x < size_x; ++x)
@@ -108,22 +105,32 @@ void MapEditor::SaveMapgen(const std::string &name)
             {
                 if (editor_map_[x][y][z].turf.pixmap_item)
                 {
-                    sfile << editor_map_[x][y][z].turf.item_type << " ";
-                    sfile << x << " ";
-                    sfile << y << " ";
-                    sfile << z << " ";
-                    sfile << std::endl;
+                    ss << editor_map_[x][y][z].turf.item_type << " ";
+                    ss << x << " ";
+                    ss << y << " ";
+                    ss << z << " ";
+                    WrapWriteMessage(ss, editor_map_[x][y][z].turf.variables);
+                    ss << std::endl;
                 }
                 auto& il = editor_map_[x][y][z].items;
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
-                    sfile << it->item_type << " ";
-                    sfile << x << " ";
-                    sfile << y << " ";
-                    sfile << z << " ";
-                    sfile << std::endl;
+                    ss << it->item_type << " ";
+                    ss << x << " ";
+                    ss << y << " ";
+                    ss << z << " ";
+                    WrapWriteMessage(ss, it->variables);
+                    ss << std::endl;
                 }
             }
+
+    std::fstream sfile;
+    sfile.open(name, std::ios_base::out | std::ios_base::trunc);
+    if(sfile.fail())
+    {
+        return;
+    }
+    sfile << ss.str();
 }
 
 void MapEditor::LoadMapgen(const std::string &name)
@@ -138,34 +145,50 @@ void MapEditor::LoadMapgen(const std::string &name)
 
     ClearMap();
 
+    std::stringstream ss;
+
+    sfile.seekg (0, std::ios::end);
+    std::streamoff length = sfile.tellg();
+    sfile.seekg (0, std::ios::beg);
+    char* buff = new char[static_cast<size_t>(length)];
+
+    sfile.read(buff, length);
+    sfile.close();
+    ss.write(buff, length);
+    delete[] buff;
+    sfile.close();
+
     int x, y, z;
-    sfile >> x;
-    sfile >> y;
-    sfile >> z;
+    ss >> x;
+    ss >> y;
+    ss >> z;
 
     Resize(x, y, z);
 
-    while (!sfile.eof())
+    while (!ss.eof())
     {
         std::string t_item;
         size_t x, y, z;
-        sfile >> t_item;
-        if (t_item == "")
+        ss >> t_item;
+        if (ss.fail() || ss.eof())
         {
             continue;
         }
-        sfile >> x;
-        sfile >> y;
-        sfile >> z;
+        ss >> x;
+        ss >> y;
+        ss >> z;
 
+        MapEditor::EditorEntry* ee;
         if (turf_types_.find(t_item) != turf_types_.end())
         {
-            SetTurf(t_item, x, y, z);
+            ee = &SetTurf(t_item, x, y, z);
         }
         else
         {
-            AddItem(t_item, x, y, z);
+            ee = &AddItem(t_item, x, y, z);
         }
+
+        WrapReadMessage(ss, ee->variables);
     }
 }
 
@@ -266,7 +289,7 @@ void MapEditor::RemoveItems(int posx, int posy, int posz)
                 second_selection_x_, second_selection_y_);
 }
 
-void MapEditor::AddItem(const std::string &item_type, int posx, int posy, int posz)
+MapEditor::EditorEntry& MapEditor::AddItem(const std::string &item_type, int posx, int posy, int posz)
 {
     EditorEntry new_entry;
     new_entry.item_type = item_type;
@@ -275,6 +298,7 @@ void MapEditor::AddItem(const std::string &item_type, int posx, int posy, int po
     new_entry.pixmap_item->setZValue(50);
 
     editor_map_[posx][posy][posz].items.push_back(new_entry);
+    return editor_map_[posx][posy][posz].items[editor_map_[posx][posy][posz].items.size() - 1];
 }
 
 void MapEditor::SetTurf(const std::string &item_type)
@@ -292,7 +316,7 @@ void MapEditor::SetTurf(const std::string &item_type)
                 second_selection_x_, second_selection_y_);
 }
 
-void MapEditor::SetTurf(const std::string &item_type, int posx, int posy, int posz)
+MapEditor::EditorEntry& MapEditor::SetTurf(const std::string &item_type, int posx, int posy, int posz)
 {
     if (editor_map_[posx][posy][posz].turf.pixmap_item != nullptr)
     {
@@ -305,6 +329,7 @@ void MapEditor::SetTurf(const std::string &item_type, int posx, int posy, int po
     new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type]);
     new_entry.pixmap_item->setPos(posx * 32, posy * 32);
     editor_map_[posx][posy][posz].turf = new_entry;
+    return editor_map_[posx][posy][posz].turf;
 }
 
 void MapEditor::SetSelectionStage(int stage)

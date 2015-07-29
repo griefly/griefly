@@ -252,7 +252,7 @@ void ItemFabric::loadMap(const char* path)
 
     rfile.read(buff, length);
     rfile.close();
-    savefile << buff;
+    savefile.write(buff, length);
     delete[] buff;
     SYSTEM_STREAM << "End map load" << std::endl;
     loadMap(savefile, false);

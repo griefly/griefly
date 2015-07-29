@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.3.0, 2015-07-28T12:27:26. -->
+<!-- Written by QtCreator 3.3.0, 2015-07-29T06:25:47. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -107,8 +107,8 @@
      <value type="QString">ZLIB_INCLUDE_DIR=C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll\include</value>
      <value type="QString">PNG_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\lpng1612\projects\vstudio\Release\libpng16.lib</value>
      <value type="QString">ZLIB_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll\lib\zdll.lib</value>
-     <value type="QString">SFML_AUDIO_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-audio.lib</value>
-     <value type="QString">SFML_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-main.lib</value>
+     <value type="QString">SFML_AUDIO_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-audio-d.lib</value>
+     <value type="QString">SFML_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-main-d.lib</value>
      <value type="QString">SDLDIR=C:\Users\Kremius\Documents\ExternalLibs\SDL-1.2.15</value>
      <value type="QString">SDLTTFDIR=C:\Users\Kremius\Documents\ExternalLibs\SDL_ttf-2.0.11</value>
      <value type="QString">SDLIMAGEDIR=C:\Users\Kremius\Documents\ExternalLibs\SDL_image-1.2.12</value>

@@ -59,7 +59,7 @@ private slots:
     void on_lineEditAsString_returnPressed();
 
 private:
-    MapEditor::EditorEntry& GetCurrentEditorEntry();
+    MapEditor::EditorEntry* GetCurrentEditorEntry();
 
     void UpdateVariablesColor(MapEditor::EditorEntry& ee);
 

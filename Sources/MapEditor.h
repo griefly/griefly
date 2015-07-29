@@ -67,11 +67,11 @@ public:
 
     void RemoveItems(int posx, int posy, int posz);
 
-    void AddItem(const std::string& item_type, int posx, int posy, int posz);
+    MapEditor::EditorEntry& AddItem(const std::string& item_type, int posx, int posy, int posz);
 
     void SetTurf(const std::string& item_type);
 
-    void SetTurf(const std::string& item_type, int posx, int posy, int posz);
+    MapEditor::EditorEntry& SetTurf(const std::string& item_type, int posx, int posy, int posz);
 
     void SetSelectionStage(int stage);
     int GetSelectionStage() const;

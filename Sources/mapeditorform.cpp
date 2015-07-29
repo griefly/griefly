@@ -230,8 +230,11 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
         ui->listWidgetVariables->addItem(it->first.c_str());
     }
 
-    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
-    UpdateVariablesColor(ee);
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (ee)
+    {
+        UpdateVariablesColor(*ee);
+    }
 }
 
 /*void MapEditorForm::on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item)
@@ -253,7 +256,7 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     UpdateVariablesColor(ee);
 }*/
 
-MapEditor::EditorEntry& MapEditorForm::GetCurrentEditorEntry()
+MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
 {
     int current_index = ui->listWidgetTile->currentRow();
 
@@ -261,8 +264,11 @@ MapEditor::EditorEntry& MapEditorForm::GetCurrentEditorEntry()
     int current_y = map_editor_->GetPointer().first_posy;
     auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
 
-    MapEditor::EditorEntry& ee = entries[current_index];
-    return ee;
+    if (entries.size())
+    {
+        return &entries[current_index];
+    }
+    return nullptr;
 }
 
 void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
@@ -282,9 +288,13 @@ void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
 
 void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 {
-    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
 
-    std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+    std::string& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
 
     ui->lineEditRaw->setText(variable_value.c_str());
 
@@ -307,14 +317,18 @@ void MapEditorForm::on_lineEditRaw_returnPressed()
         return;
     }
 
-    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
 
-    std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+    std::string& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
 
     variable_value = ui->lineEditRaw->text().toStdString();
 
     on_listWidgetVariables_itemSelectionChanged();
-    UpdateVariablesColor(ee);
+    UpdateVariablesColor(*ee);
 }
 
 void MapEditorForm::on_lineEditAsString_returnPressed()
@@ -324,9 +338,13 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
         return;
     }
 
-    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
 
-    std::string& variable_value = ee.variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+    std::string& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
 
     std::stringstream ss;
     std::string loc = ui->lineEditAsString->text().toStdString();
@@ -335,5 +353,5 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
     variable_value = ss.str();
 
     on_listWidgetVariables_itemSelectionChanged();
-    UpdateVariablesColor(ee);
+    UpdateVariablesColor(*ee);
 }
