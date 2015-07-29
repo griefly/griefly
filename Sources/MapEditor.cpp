@@ -156,7 +156,6 @@ void MapEditor::LoadMapgen(const std::string &name)
     sfile.close();
     ss.write(buff, length);
     delete[] buff;
-    sfile.close();
 
     int x, y, z;
     ss >> x;
@@ -165,18 +164,30 @@ void MapEditor::LoadMapgen(const std::string &name)
 
     Resize(x, y, z);
 
-    while (!ss.eof())
+    while (ss)
     {
         std::string t_item;
         size_t x, y, z;
         ss >> t_item;
-        if (ss.fail() || ss.eof())
+        if (!ss)
         {
             continue;
         }
         ss >> x;
+        if (!ss)
+        {
+            continue;
+        }
         ss >> y;
+        if (!ss)
+        {
+            continue;
+        }
         ss >> z;
+        if (!ss)
+        {
+            continue;
+        }
 
         MapEditor::EditorEntry* ee;
         if (turf_types_.find(t_item) != turf_types_.end())

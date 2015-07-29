@@ -3,6 +3,8 @@
 #include <iostream>
 #include <assert.h>
 
+#include <QDebug>
+
 #include "MapClass.h"
 #include "MainInt.h"
 #include "TileInt.h"
@@ -27,6 +29,7 @@
 
 #include "helpers.h"
 #include "Creator.h"
+#include "AutogenMetadata.h"
 
 void MapMaster::FillAtmosphere()
 {
@@ -61,6 +64,8 @@ void MapMaster::SaveToMapGen(const std::string& name)
     sfile << GetMapD() << std::endl;
 //    sfile << GetCreator() << std::endl;
 
+    std::map<std::string, std::string> dummy;
+
     for (int z = 0; z < GetMapD(); ++z)
         for (int x = 0; x < GetMapW(); ++x)
             for (int y = 0; y < GetMapH(); ++y)
@@ -84,6 +89,9 @@ void MapMaster::SaveToMapGen(const std::string& name)
                     sfile << z << " ";
                     sfile << std::endl;
                 }
+                std::stringstream ss;
+                WrapWriteMessage(ss, dummy);
+                sfile << ss.str();
             }
 }
 
@@ -99,30 +107,73 @@ void MapMaster::LoadFromMapGen(const std::string& name)
         return;
     }
 
+    std::stringstream ss;
+
+    sfile.seekg (0, std::ios::end);
+    std::streamoff length = sfile.tellg();
+    sfile.seekg (0, std::ios::beg);
+    char* buff = new char[static_cast<size_t>(length)];
+
+    sfile.read(buff, length);
+    sfile.close();
+    ss.write(buff, length);
+    delete[] buff;
+
     int x, y, z;
-    sfile >> x;
-    sfile >> y;
-    sfile >> z;
+    ss >> x;
+    ss >> y;
+    ss >> z;
 
  //   size_t creator;
 //    sfile >> creator;
 
     makeTiles(x, y, z);
 
-    while (!sfile.eof())
+   // qDebug() << "Begin loading cycle";
+    while (ss)
     {
         std::string t_item;
         size_t x, y, z;
-        sfile >> t_item;
-        if (t_item == "")
+        ss >> t_item;
+        if (!ss)
         {
             continue;
         }
-        sfile >> x;
-        sfile >> y;
-        sfile >> z;
+        ss >> x;
+        if (!ss)
+        {
+            continue;
+        }
+        ss >> y;
+        if (!ss)
+        {
+            continue;
+        }
+        ss >> z;
+        if (!ss)
+        {
+            continue;
+        }
 
         auto i = GetItemFabric()->newItem<IOnMapObject>(t_item);
+
+        std::map<std::string, std::string> variables;
+        WrapReadMessage(ss, variables);
+
+        for (auto it = variables.begin(); it != variables.end(); ++it)
+        {
+            if ((it->second.size() == 0) || (it->first.size() == 0))
+            {
+                continue;
+            }
+            std::stringstream local_variable;
+            local_variable << it->second;
+
+            //qDebug() << it->second.c_str();
+
+            get_setters_for_types()[t_item][it->first](i.ret_item(), local_variable);
+        }
+
         if (id_ptr_on<ITurf> t = i)
         {
             if (squares[x][y][z]->GetTurf())

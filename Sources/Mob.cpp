@@ -31,6 +31,8 @@
 #include "Human.h"
 #include "Teleportator.h"
 
+#include "AutogenMetadata.h"
+
 #include "qtopengl.h"
 
 #include <QCoreApplication>
@@ -381,6 +383,8 @@ void Manager::initWorld()
         SetLogToFile();
     }
 
+
+    InitSettersForTypes();
 
     std::cout << "Begin init world" << std::endl;
     tick_recv = 0;

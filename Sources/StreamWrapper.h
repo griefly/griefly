@@ -85,6 +85,11 @@ inline std::stringstream& WrapReadMessage(
 {
     size_t size;
     file >> size;
+    //qDebug() << size;
+    if (size == 0)
+    {
+        return file;
+    }
     for (size_t i = 0; i < size; ++i)
     {
         KeyType key;
