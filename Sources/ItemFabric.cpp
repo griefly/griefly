@@ -4,7 +4,7 @@
 
 #include "MainInt.h"
 #include "OnMapInt.h"
-#include "Mob.h"
+#include "Manager.h"
 #include "MapClass.h"
 #include "sync_random.h"
 #include "Creator.h"

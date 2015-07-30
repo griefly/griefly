@@ -3,7 +3,7 @@
 #include "GLSprite.h"
 #include "constheader.h"
 
-#include "Mob.h"
+#include "Manager.h"
 #include "MainInt.h"
 
 #include "qtopengl.h"

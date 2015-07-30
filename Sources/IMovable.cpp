@@ -7,7 +7,7 @@
 #include "mob_position.h"
 
 #include "Creator.h"
-#include "Mob.h"
+#include "Manager.h"
 
 #include <assert.h>
 

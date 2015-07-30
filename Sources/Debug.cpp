@@ -3,7 +3,7 @@
 #include "Debug.h"
 #include "MainInt.h"
 
-#include "Mob.h"
+#include "Manager.h"
 #include "NetClientImpl.h"
 
 #include "ItemFabric.h"

@@ -8,7 +8,7 @@
 #include "MapClass.h"
 #include "MainInt.h"
 #include "TileInt.h"
-#include "Mob.h"
+#include "Manager.h"
 #include "mob_position.h"
 #include "ItemFabric.h"
 #include "visible_points.h"

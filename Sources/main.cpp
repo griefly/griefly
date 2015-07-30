@@ -7,7 +7,7 @@
 #include "mainform.h"
 #include "mapeditorform.h"
 
-#include "Mob.h"
+#include "Manager.h"
 #include "Params.h"
 
 int main(int argc, char *argv[])

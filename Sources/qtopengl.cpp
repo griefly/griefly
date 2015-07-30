@@ -1,7 +1,7 @@
 #include "qtopengl.h"
 
 #include "Screen.h"
-#include "Mob.h"
+#include "Manager.h"
 
 #include <QMouseEvent>
 #include <QKeyEvent>

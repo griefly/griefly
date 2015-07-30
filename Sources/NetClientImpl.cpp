@@ -5,7 +5,7 @@
 #include <SDL_net.h>
 
 #include "MagicStrings.h"
-#include "Mob.h"
+#include "Manager.h"
 #include "ItemFabric.h"
 #include "Creator.h"
 #include "Debug.h"

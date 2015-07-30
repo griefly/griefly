@@ -6,7 +6,7 @@
 #include "MapClass.h"
 #include "Debug.h"
 #include "Params.h"
-#include "Mob.h"
+#include "Manager.h"
 #include "MagicStrings.h"
 
 #include "Metadata.h"

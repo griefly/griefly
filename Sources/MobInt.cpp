@@ -1,5 +1,5 @@
 #include "MobInt.h"
-#include "Mob.h"
+#include "Manager.h"
 #include "MapClass.h"
 #include "Turf.h"
 

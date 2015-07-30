@@ -1,6 +1,6 @@
 #include "visible_points.h"
 
-#include "Mob.h"
+#include "Manager.h"
 #include "TileInt.h"
 #include "MapClass.h"
 

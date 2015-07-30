@@ -1,6 +1,6 @@
 #include "mob_position.h"
 
-#include "Mob.h"
+#include "Manager.h"
 #include "constheader.h"
 #include "TileInt.h"
 #include "Creator.h"
