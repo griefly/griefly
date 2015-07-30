@@ -86,6 +86,24 @@ bool Closet::RemoveItem(id_ptr_on<IOnMapBase> item)
     return false;
 }
 
+void Closet::AfterWorldCreation()
+{
+    IMovable::AfterWorldCreation();
+
+    if (!owner)
+    {
+        return;
+    }
+
+    owner->ForEach([this](id_ptr_on<IOnMapBase> object)
+    {
+       if (AddItem(object))
+       {
+           owner->RemoveItem(object);
+       }
+    });
+}
+
 void Closet::Close()
 {
     owner->ForEach([this](id_ptr_on<IOnMapBase> item)

@@ -20,6 +20,8 @@ public:
     virtual bool AddItem(id_ptr_on<IOnMapBase> item) override;
     virtual bool RemoveItem(id_ptr_on<IOnMapBase> item) override;
 
+    virtual void AfterWorldCreation() override;
+
     // TODO: ForEach (?)
 private:
     void Open();
