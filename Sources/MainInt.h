@@ -20,6 +20,7 @@ public:
     virtual void delThis();
     IMainObject(size_t id){ id_ = id; how_often_ = 0; }
     IMainObject(NotLoadItem) {id_ = 0; how_often_ = 0;}
+    virtual void AfterWorldCreation() { }
     virtual const std::string& T_ITEM()
     {                                        
         return T_ITEM_S();

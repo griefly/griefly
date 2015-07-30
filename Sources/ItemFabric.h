@@ -48,6 +48,9 @@ public:
     
     void clearMap();
 
+    void BeginWorldCreation();
+    void FinishWorldCreation();
+
     template<typename T>
     id_ptr_on<T> newItemOnMap(const std::string& hash, id_ptr_on<IOnMapBase> owner, size_t id_new = 0)
     {
@@ -77,6 +80,11 @@ public:
         idTable_[id_new] = item;
 
         owner->AddItem(item->GetId());
+
+        if (!is_world_generating_)
+        {
+            item->AfterWorldCreation();
+        }
 
         return item->GetId();
     }
@@ -116,6 +124,10 @@ public:
 //        item->master = master;
         id_ptr_on<T> ret_val;
         ret_val = item->GetId();
+        if (!is_world_generating_)
+        {
+            item->AfterWorldCreation();
+        }
         return ret_val;
     }
 
@@ -126,6 +138,8 @@ public:
     size_t GetPlayerId(size_t net_id);
     size_t GetNetId(size_t real_id);
 private:
+    bool is_world_generating_;
+
     void UpdateProcessingItems();
 
     std::vector<IMainObject*> idTable_;

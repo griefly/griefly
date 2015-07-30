@@ -119,6 +119,8 @@ void MapMaster::LoadFromMapGen(const std::string& name)
     ss.write(buff, length);
     delete[] buff;
 
+    GetItemFabric()->BeginWorldCreation();
+
     int x, y, z;
     ss >> x;
     ss >> y;
@@ -187,7 +189,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             squares[x][y][z]->AddItem(i);
         }
     }
-   // SetCreator(creator);
+   GetItemFabric()->FinishWorldCreation();
 }
 
 void MapMaster::Draw()
