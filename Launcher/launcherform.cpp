@@ -28,7 +28,8 @@ void LauncherForm::changeEvent(QEvent* e)
     case QEvent::WindowStateChange:
         if (this->windowState() & Qt::WindowMinimized)
         {
-            QTimer::singleShot(0, this, &LauncherForm::hide);
+            // Workaround for travis build
+            QTimer::singleShot(0, this, SLOT(hide()));
         }
         break;
     default:
