@@ -12,7 +12,7 @@ travis-get-deps:
 	sudo apt-get install --yes gcc-4.9 g++-4.9
 	sudo apt-get install --yes libsdl-ttf2.0-dev libsdl-image1.2-dev libsdl-mixer1.2-dev \
 		libsdl-net1.2-dev zlib1g-dev libsfml-dev libpng-dev
-	sudo apt-get -qq install qt54tools qt54svg qt54webkit qt54creator
+	sudo apt-get -qq install qt54tools qt54base qt54svg qt54webkit qt54creator
 	sudo apt-get install cmake
 
 .PHONY: clean
