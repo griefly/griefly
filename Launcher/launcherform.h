@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QEvent>
 #include <QSystemTrayIcon>
+#include <QSharedMemory>
+#include <QTimer>
 
 namespace Ui {
 class LauncherForm;
@@ -20,10 +22,15 @@ public:
     void changeEvent(QEvent* e);
 public slots:
     void onShowHide(QSystemTrayIcon::ActivationReason reason);
+    void checkSharedMemory();
 private slots:
     void on_exitButton_clicked();
-
 private:
+    void Popup();
+
+    QSharedMemory pop_up_needed_;
+    QTimer timer_;
+
     void CreateTrayIcon();
 
     QSystemTrayIcon* icon_;

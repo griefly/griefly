@@ -10,8 +10,13 @@ LauncherForm::LauncherForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    pop_up_needed_.setKey("4668074d-98a4-4052-b8fb-0a3a7a84905c");
+    pop_up_needed_.create(1);
+
+    connect(&timer_, &QTimer::timeout, this, &LauncherForm::checkSharedMemory);
     connect(ui->exitButton, &QPushButton::clicked, &QApplication::quit);
 
+    timer_.start(300);
     setWindowFlags(Qt::SubWindow);
     CreateTrayIcon();
 }
@@ -28,7 +33,7 @@ void LauncherForm::changeEvent(QEvent* e)
     case QEvent::WindowStateChange:
         if (this->windowState() & Qt::WindowMinimized)
         {
-            // Workaround for travis build
+            // SLOT is workaround for travis build
             QTimer::singleShot(0, this, SLOT(hide()));
         }
         break;
@@ -55,12 +60,23 @@ void LauncherForm::onShowHide(QSystemTrayIcon::ActivationReason reason)
     }
     else
     {
-        setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
-        raise();  // for MacOS
-        activateWindow(); // for Windows
-        show();
-        setFocus();
+        Popup();
     }
+}
+
+void LauncherForm::checkSharedMemory()
+{
+    pop_up_needed_.lock();
+
+    bool* is_needed = static_cast<bool*>(pop_up_needed_.data());
+
+    if (*is_needed)
+    {
+        Popup();
+        *is_needed = false;
+    }
+
+    pop_up_needed_.unlock();
 }
 
 void LauncherForm::CreateTrayIcon()
@@ -77,4 +93,13 @@ void LauncherForm::CreateTrayIcon()
 void LauncherForm::on_exitButton_clicked()
 {
     //close();
+}
+
+void LauncherForm::Popup()
+{
+    setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+    raise();  // for MacOS
+    activateWindow(); // for Windows
+    show();
+    setFocus();
 }

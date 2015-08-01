@@ -5,6 +5,19 @@
 
 #include "launcherform.h"
 
+void popup_existing_launcher()
+{
+    QSharedMemory popup("4668074d-98a4-4052-b8fb-0a3a7a84905c");
+    if (popup.attach())
+    {
+        popup.lock();
+        bool* is_needed = static_cast<bool*>(popup.data());
+        *is_needed = true;
+        popup.unlock();
+        popup.detach();
+    }
+}
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -31,10 +44,11 @@ int main(int argc, char *argv[])
     }
 
     sema.release();
-    //
+    // End unique laucnher
 
     if (isRunning)
     {
+        popup_existing_launcher();
         return -1;
     }
 
