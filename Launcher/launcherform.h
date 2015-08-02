@@ -6,6 +6,7 @@
 #include <QSystemTrayIcon>
 #include <QSharedMemory>
 #include <QTimer>
+#include <QProcess>
 
 namespace Ui {
 class LauncherForm;
@@ -23,10 +24,17 @@ public:
 public slots:
     void onShowHide(QSystemTrayIcon::ActivationReason reason);
     void checkSharedMemory();
+    void onProcessEnd(int exitCode, QProcess::ExitStatus status);
 private slots:
     void on_exitButton_clicked();
+    void on_connectPushButton_clicked();
+
+    void on_hidePushButton_clicked();
+
 private:
     void Popup();
+
+    QProcess kv_process_;
 
     QSharedMemory pop_up_needed_;
     QTimer timer_;

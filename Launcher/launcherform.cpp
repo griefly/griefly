@@ -3,6 +3,7 @@
 
 #include <QTimer>
 #include <QPixmap>
+#include <QMessageBox>
 
 LauncherForm::LauncherForm(QWidget *parent) :
     QWidget(parent),
@@ -13,8 +14,9 @@ LauncherForm::LauncherForm(QWidget *parent) :
     pop_up_needed_.setKey("4668074d-98a4-4052-b8fb-0a3a7a84905c");
     pop_up_needed_.create(1);
 
+    connect(&kv_process_, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+            this, &LauncherForm::onProcessEnd);
     connect(&timer_, &QTimer::timeout, this, &LauncherForm::checkSharedMemory);
-    connect(ui->exitButton, &QPushButton::clicked, &QApplication::quit);
 
     timer_.start(300);
     setWindowFlags(Qt::SubWindow);
@@ -54,14 +56,7 @@ void LauncherForm::onShowHide(QSystemTrayIcon::ActivationReason reason)
         }
     }
 
-    if (isVisible())
-    {
-        hide();
-    }
-    else
-    {
-        Popup();
-    }
+    Popup();
 }
 
 void LauncherForm::checkSharedMemory()
@@ -79,6 +74,12 @@ void LauncherForm::checkSharedMemory()
     pop_up_needed_.unlock();
 }
 
+void LauncherForm::onProcessEnd(int exitCode, QProcess::ExitStatus status)
+{
+    Popup();
+    ui->connectPushButton->setEnabled(true);
+}
+
 void LauncherForm::CreateTrayIcon()
 {
     QPixmap pixmap(32, 32);
@@ -92,7 +93,18 @@ void LauncherForm::CreateTrayIcon()
 
 void LauncherForm::on_exitButton_clicked()
 {
-    //close();
+    if (kv_process_.state() == QProcess::Running)
+    {
+        QMessageBox::StandardButton reply
+                = QMessageBox::question(
+                    this, "Terminate launcher", "Are you sure? The game window will be closed!",
+                    QMessageBox::Yes | QMessageBox::No);
+        if (reply == QMessageBox::No)
+        {
+            return;
+        }
+    }
+    QApplication::exit();
 }
 
 void LauncherForm::Popup()
@@ -102,4 +114,22 @@ void LauncherForm::Popup()
     activateWindow(); // for Windows
     show();
     setFocus();
+}
+
+void LauncherForm::on_connectPushButton_clicked()
+{
+    QStringList args;
+    args.push_back("ip=" + ui->serverLineEdit->text());
+    args.push_back("port=" + ui->portLineEdit->text());
+    args.push_back("-auto_connect");
+    args.push_back("mapgen_name=default.gen");
+
+    hide();
+    ui->connectPushButton->setEnabled(false);
+    kv_process_.start("KVEngine.exe", args);
+}
+
+void LauncherForm::on_hidePushButton_clicked()
+{
+    hide();
 }
