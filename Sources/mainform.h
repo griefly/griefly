@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QLineEdit>
+#include <QKeyEvent>
 
 namespace Ui {
 class MainForm;

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="GamingLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -88,6 +88,11 @@ stop:0.6 rgba(255, 255, 255, 0));
    <extends>QWidget</extends>
    <header>qtopengl.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GamingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>gaminglineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
