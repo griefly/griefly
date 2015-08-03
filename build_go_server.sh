@@ -1,10 +1,10 @@
 #!/bin/bash
 
-version = `git describe --tags --abbrev=4`
+version=`git describe --tags --abbrev=4`
 echo "Github version: $version"
 if [[ -n "$1" ]]
 then
-    version = $1
+    version=$1
     echo "Forced version: $version"
 fi
 
