@@ -93,7 +93,7 @@ IF (WIN32)
 ELSE()
     EXECUTE_PROCESS(
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMAND bash build_go_server.sh)
+        COMMAND bash build_go_server.sh ${CLIENT_VERSION})
 ENDIF()
 
 FILE(GLOB SOURCES "${SOURCE_DIR}*.cpp")
