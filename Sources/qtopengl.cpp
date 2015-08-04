@@ -17,6 +17,10 @@ QtOpenGL::~QtOpenGL()
 
 }
 
+void QtOpenGL::handlePassedKey(QKeyEvent* event)
+{
+    keyPressEvent(event);
+}
 
 void QtOpenGL::mousePressEvent(QMouseEvent* event)
 {

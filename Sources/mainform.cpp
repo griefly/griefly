@@ -40,6 +40,8 @@ MainForm::MainForm(QWidget *parent) :
     connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
     connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);
 
+    connect(ui->lineEdit, &GamingLineEdit::keyToPass, ui->widget, &QtOpenGL::handlePassedKey);
+
     if (GetParamsHolder().GetParamBool("-auto_connect"))
     {
         activeTimer = new QTimer(this);

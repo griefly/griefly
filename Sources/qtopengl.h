@@ -13,6 +13,7 @@ public:
 signals:
     void enterPressed();
 public slots:
+    void handlePassedKey(QKeyEvent* event);
 protected:
     void mousePressEvent(QMouseEvent* event);
     void keyPressEvent(QKeyEvent* event);
