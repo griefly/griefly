@@ -3,6 +3,9 @@
 #include "MapClass.h"
 #include "Creator.h"
 
+#include "MagicStrings.h"
+#include "Chat.h"
+
 Ghost::Ghost(size_t id) : IMob(id)
 {
     tickSpeed = 1;
@@ -64,4 +67,16 @@ void Ghost::CalculateVisible(std::list<point>* visible_list)
             p.posy = j;
             visible_list->push_back(p);
         }
+}
+
+void Ghost::processGUImsg(const Message& msg)
+{
+    IMob::processGUImsg(msg);
+    if (msg.type == Net::CHAT_TYPE)
+    {
+        if (msg.text.length() >= 3 && (msg.text.substr(0, 3) == "OOC"))
+        {
+            Chat::GetChat()->PostOOCText(name + " (ghost)", msg.text.substr(3));
+        }
+    }
 }

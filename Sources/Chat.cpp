@@ -147,35 +147,20 @@ void Chat::PostText(const std::string& str_)
     GetTextBrowser()->insertHtml(loc.replace('\n', "<br>"));
 
     SetCursorAtEnd();
+}
 
-    /*std::string str = str_;
-    int pos = 0;
-    int oldpos = 0;
+void Chat::PostOOCText(const std::string &who, const std::string& text)
+{
+    SetCursorAtEnd();
 
-    str = lines_.back().text + str;
+    GetTextBrowser()->insertHtml
+        (("<font color=\"blue\"><b>" + who + "</b>: " + "<span>" + text + "</span></font><br>").c_str());
 
-    if (current_pos_ < static_cast<int>(lines_.size()))
-        block_down_ = true;
-
-    lines_.pop_back();
-    while (pos != std::string::npos)
-    {
-        pos = str.find_first_of("\n", oldpos);
-        std::string without = str.substr(oldpos,  pos == std::string::npos 
-                                                ? pos : pos - oldpos);
-        AddLines(without);
-        oldpos = pos + 1;
-    }
-    block_down_ = false;*/
+    SetCursorAtEnd();
 }
 
 void Chat::Process()
 {   
-   /* ClearZone();
-    DrawScroll();
-
-    text_input_->Process();*/
-
     std::string str = ss.str();
     ss.str("");
 

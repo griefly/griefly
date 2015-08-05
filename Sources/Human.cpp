@@ -89,55 +89,14 @@ void Human::processGUImsg(const Message& msg)
     if (msg.type == Net::CHAT_TYPE)
     {
         //Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
-        Chat::GetChat()->PostWords(name, msg.text, owner->GetId());
-    }
-  /*  if(msg.text == Input::KEY_Q)
-    {
-        GetItemFabric()->newItemOnMap<Item>(Armor::T_ITEM_S(), GetOwner());
-    }
-    if(msg.text == Input::KEY_W)
-    {
-        GetItemFabric()->newItemOnMap<Item>(Helmet::T_ITEM_S(), GetOwner());
-    }
-    if(msg.text == Input::KEY_E)
-    {
-        GetItemFabric()->newItemOnMap<Item>(EngineUniform::T_ITEM_S(), GetOwner());
-    }
-    if(msg.text == Input::KEY_R)
-    {
-        GetItemFabric()->newItemOnMap<Item>(OrangeBoots::T_ITEM_S(), GetOwner());
-    }
-    if(msg.text == "SDLK_p")
-    {
-        if(interface_.GetRHand()) // TODO: active hand
+        if (msg.text.length() >= 3 && (msg.text.substr(0, 3) == "OOC"))
         {
-            owner->AddItem(interface_.GetRHand());
-            interface_.Drop();
+            Chat::GetChat()->PostOOCText(name, msg.text.substr(3));
         }
-    }
-    else if(msg.text == "SDLK_z")
-    {
-        id_ptr_on<CubeTile> ct = GetOwner();
-        ct->GetAtmosHolder()->AddGase(OXYGEN, 1000);
-    }
-    else if (msg.text == "SDLK_x")
-    {
-        id_ptr_on<CubeTile> ct = GetOwner();
-        ct->GetAtmosHolder()->AddGase(CO2, 1000);
-    }
-    else if (msg.text == "SDLK_c")
-    {
-        id_ptr_on<CubeTile> ct = GetOwner();
-        ct->GetAtmosHolder()->AddGase(NYTROGEN, 1000);
-    }
-    else if (msg.text == "SDLK_v")
-    {
-        id_ptr_on<CubeTile> ct = GetOwner();
-        ct->GetAtmosHolder()->AddEnergy(10000);
-    }*/
-    else if (msg.text == "SDLK_s_down")
-    {
-        interface_.SwapHands();
+        else
+        {
+            Chat::GetChat()->PostWords(name, msg.text, owner->GetId());
+        }
     }
     else if (msg.text == Input::LEFT_CLICK)
     {
@@ -266,6 +225,7 @@ void Human::Live()
         if (net_id)
         {
             auto ghost = GetItemFabric()->newItem<Ghost>(Ghost::T_ITEM_S());
+            ghost->name = name;
             GetItemFabric()->SetPlayerId(net_id, ghost.ret_id());
             owner->AddItem(ghost);
             if (GetId() == GetMob().ret_id())
