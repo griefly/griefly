@@ -83,4 +83,6 @@ def main():
         json_file.write(json_data)
 
 if __name__ == "__main__":
+    print("Metadata generation started")
     main()
+    print("Metadata generation finished")

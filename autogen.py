@@ -4,6 +4,8 @@ import os
 import sys
 import json
 
+print('Autogen started')
+
 with open("metadata.json", "r") as json_file:
     raw_json = json_file.read()
 
@@ -22,7 +24,7 @@ for class_data in metadata["classes"]:
     if header not in header_list:
         header_list.append(header)
 
-with open("Sources/AutogenMetadata.cpp", "w") as autogen_file:
+with open("AutogenMetadata.cpp", "w") as autogen_file:
     print('#include "AutogenMetadata.h"', file = autogen_file)
     print('#include "Idptr.h"', file = autogen_file)
     print("", file = autogen_file)
@@ -65,4 +67,5 @@ with open("Sources/AutogenMetadata.cpp", "w") as autogen_file:
             class_data_loc = get_class_data(class_data_loc["base_class"])
         #print("", file = autogen_file)
     print("}", file = autogen_file)
+print('Autogen finished')
     

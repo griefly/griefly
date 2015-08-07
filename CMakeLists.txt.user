@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.3.0, 2015-08-07T00:06:21. -->
+<!-- Written by QtCreator 3.3.0, 2015-08-08T01:13:55. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -118,6 +118,7 @@
      <value type="QString">GIT_PATH=C:\Program Files (x86)\Git\bin\git.exe</value>
      <value type="QString">GO_PATH=C:\Go\bin\go.exe</value>
      <value type="QString">GOFMT_PATH=C:\Go\bin\gofmt.exe</value>
+     <value type="QString">PYTHON_PATH=C:\Python27\python.exe</value>
     </valuelist>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">all</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
