@@ -3,7 +3,7 @@ Message structure:
 
 Header structure:
 [body size][message type]
-Body size and message type is 2 bytes variables (it means that the header size is 4 bytes).
+Body size and message type is 4 bytes variables (it means that the header size is 8 bytes).
 
 Body structure:
 Json
@@ -12,23 +12,23 @@ Examples:
 
 System type:
 
-[[0x0031][0x0001]]
+[[0x00000031][0x00000001]]
 [{"login" : "retard", "password" : "iamnotretard"}]
 
-[[0x0031][0x0001]]
+[[0x00000031][0x00000001]]
 [{"url_to_upload_map" : "grief.ly/FFFFFFFFFFFFFFFF"}]
 
-[[0x0035][0x0001]]
+[[0x00000035][0x00000001]]
 [{"url_to_download_map" : "grief.ly/FFFFFFFFFFFFFFFF"}]
 
 
 Ordinary typa (aka keyboard type):
-[[0x001C][0x0002]]
+[[0x0000001C][0x00000002]]
 [{"id" : 1, "key" : "KEY_UP"}]
 
-[[0x0020][0x0002]]
+[[0x00000020][0x00000002]]
 [{"id" : 0, "key" : "CREATE_NEW"}]
 
 Message type:
-[[0x0032][0x0003]]
+[[0x00000032][0x00000003]]
 [{"id" : 1, "type" : "OOC", "text" : "Hello world"}]
