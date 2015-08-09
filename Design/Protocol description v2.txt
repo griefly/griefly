@@ -102,6 +102,35 @@ For example, during the process master client disconnects, or something else
 ////////////////////////////////
 END OF LOGIN STAGE
 
+II. ACTIVE CONNECTION STAGE
+
+No specific order
+
+X - NOT 1 (X may be 2, 3, 4, etc)
+In other words, if other action is not defined for this type of the message then server should broadcast the message
+
+1. 
+
+from CLIENT to SERVER
+ type: X
+{some json}
+
+after that
+
+from SERVER to ALL CLIENTS (event inital client):
+ type: X
+{"id" : 42, some json}
+
+2.
+
+from SERVER to CLIENT
+ type: 4 (NEW_TICK)
+(empty)
+
+
+
+
+
 
 
 
