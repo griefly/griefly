@@ -70,9 +70,9 @@ d) MASTER CLIENT EXISTS AND "login" DOES NOT HAVE ID
 Server creates new client, gives number to him (number - NOT -1)
 
  from SERVER to ALL CLIENTS
- type: 2 (ORDINARY)
+ type: 5 (NEW CLIENT)
  "id" - new number for new client
-{"id" : 42, "key" : "CREATE_NEW"}
+{"id" : 42}
 
  from SERVER to MASTER CLIENT
  type: 1 (SYSTEM)
