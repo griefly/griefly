@@ -50,20 +50,20 @@ type: 1 (SYSTEM)
 b) WRONG GAME VERSION
  from SERVER to CLIENT
 type: 1 (SYSTEM)
-{"error" : "game_version", "correct_game_version" : "v0.2.2"}
+{"result" : "game_version_error", "correct_game_version" : "v0.2.2"}
 -> connection closed
 
 a) WRONG LOGIN OR PASSWORD
  from SERVER to CLIENT
 type: 1 (SYSTEM)
-{"error" : "authentication"}
+{"result" : "authentication_error"}
 -> connection closed
 
 c) MASTER CLIENT DOES NOT EXIST
  from SERVER to CLIENT
 Server creates new client, gives number to him (number - NOT -1)
 type: 1 (SYSTEM)
-{"error" : "success", "map" : "no_map", "your_id" : 42}
+{"result" : "success", "map" : "no_map", "your_id" : 42}
 New client now master client
 
 d) MASTER CLIENT EXISTS AND "login" DOES NOT HAVE ID
@@ -80,7 +80,7 @@ Server creates new client, gives number to him (number - NOT -1)
 
  from SERVER to CLIENT
 type: 1 (SYSTEM)
-{"error" : "success", "map" : "grief.ly/blah", "your_id" : 42}
+{"result" : "success", "map" : "grief.ly/blah", "your_id" : 42}
 
 c) MASTER CLIENT EXISTS AND "login" DOES HAVE ID
 Server uses existing client info, takes number from that info
@@ -91,13 +91,13 @@ Server uses existing client info, takes number from that info
 
  from SERVER to CLIENT
 type: 1 (SYSTEM)
-{"error" : "success", "map" : "grief.ly/blah", "your_id" : 24}
+{"result" : "success", "map" : "grief.ly/blah", "your_id" : 24}
 
 d) UNDEFINED ERROR
 For example, during the process master client disconnects, or something else
 
  from SERVER to CLIENT
-{"error" : "undefined"}
+{"result" : "undefined_error"}
 
 ////////////////////////////////
 END OF LOGIN STAGE
@@ -115,13 +115,15 @@ from CLIENT to SERVER
  type: X
 {some json}
 
-after that
+after that broadcast message
 
-from SERVER to ALL CLIENTS (event inital client):
+from SERVER to ALL CLIENTS (even inital client):
  type: X
 {"id" : 42, some json}
 
 2.
+
+Each T milliseconds (now T is 100, 10 messages per second)
 
 from SERVER to CLIENT
  type: 4 (NEW_TICK)
