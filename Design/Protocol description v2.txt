@@ -129,6 +129,32 @@ from SERVER to CLIENT
  type: 4 (NEW_TICK)
 (empty)
 
+///////////////
+END OF ACTIVE CONNECTION STAGE
+
+III. END CONNECTION STAGE
+
+No special messages for finishing connection, server/client just close socket if it is needed.
+
+IF CLIENT CLOSES HIS CONNECTION:
+
+a) It is a regular client
+
+Server should remove this client from the client list.
+Note that when any new client will be created server should not reuse numbers for clients.
+So we dont send to this client messages anymore, but we still keep information about it (login + number, maybe something
+else later (ip?)).
+
+b) It is master client, and there is at least one other client.
+
+Make a) with master client, but make some client (in future here will be some heuristic probably) master client.
+If master client happens during a new client connection - we do not care.
+The master client disconnection should be really rare case
+
+c) It is master client, and there is no any other clients.
+
+Forget everything. Basically, restart server (well, at least do not keep information about logins + ids)
+
 
 
 
