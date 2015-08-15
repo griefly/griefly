@@ -33,6 +33,11 @@ Message type:
 [[0x00000032][0x00000003]]
 [{"id" : 1, "type" : "OOC", "text" : "Hello world"}]
 
+LIST OF TYPES:
+
+1 - SYSTEM
+4 - NEW TICK
+5 - NEW CLIENT
 
 PROTOCOL:
 
@@ -42,27 +47,27 @@ I. LOGIN STAGE
 protocol version, 4 bytes ("S132")
 
 2. from CLIENT to SERVER
-type: 1 (SYSTEM)
+type: SYSTEM
 {"login" : "Someone", "password" : "12345", "game_version" : "v0.2.1"}
 
 3.
 (It is better to check game version first always)
 b) WRONG GAME VERSION
  from SERVER to CLIENT
-type: 1 (SYSTEM)
+type: SYSTEM
 {"result" : "game_version_error", "correct_game_version" : "v0.2.2"}
 -> connection closed
 
 a) WRONG LOGIN OR PASSWORD
  from SERVER to CLIENT
-type: 1 (SYSTEM)
+type: SYSTEM
 {"result" : "authentication_error"}
 -> connection closed
 
 c) MASTER CLIENT DOES NOT EXIST
  from SERVER to CLIENT
 Server creates new client, gives number to him (number - NOT -1)
-type: 1 (SYSTEM)
+type: SYSTEM
 {"result" : "success", "map" : "no_map", "your_id" : 42}
 New client now master client
 
@@ -70,27 +75,27 @@ d) MASTER CLIENT EXISTS AND "login" DOES NOT HAVE ID
 Server creates new client, gives number to him (number - NOT -1)
 
  from SERVER to ALL CLIENTS
- type: 5 (NEW CLIENT)
+ type: NEW CLIENT
  "id" - new number for new client
 {"id" : 42}
 
  from SERVER to MASTER CLIENT
- type: 1 (SYSTEM)
+ type: SYSTEM
 {"url_to_upload_map" : "grief.ly/blah"}
 
  from SERVER to CLIENT
-type: 1 (SYSTEM)
+type: SYSTEM
 {"result" : "success", "map" : "grief.ly/blah", "your_id" : 42}
 
 c) MASTER CLIENT EXISTS AND "login" DOES HAVE ID
 Server uses existing client info, takes number from that info
 
  from SERVER to MASTER CLIENT
- type: 1 (SYSTEM)
+ type: SYSTEM
 {"url_to_upload_map" : "grief.ly/blah"}
 
  from SERVER to CLIENT
-type: 1 (SYSTEM)
+type: SYSTEM
 {"result" : "success", "map" : "grief.ly/blah", "your_id" : 24}
 
 d) UNDEFINED ERROR
@@ -126,7 +131,7 @@ from SERVER to ALL CLIENTS (even inital client):
 Each T milliseconds (now T is 100, 10 messages per second)
 
 from SERVER to CLIENT
- type: 4 (NEW_TICK)
+ type: NEW_TICK
 (empty)
 
 ///////////////
