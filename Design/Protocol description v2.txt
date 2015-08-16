@@ -35,9 +35,22 @@ Message type:
 
 LIST OF TYPES:
 
-1 - SYSTEM
-4 - NEW TICK
-5 - NEW CLIENT
+DEFINED TYPES:
+1 - INITAL LOGIN MESSAGE
+2 - WRONG GAME VERSION
+3 - WRONG AUTHENTICATION
+4 - SUCCESS CONNECTION
+5 - MAP UPLOAD
+6 - UNDEFINED ERROR
+7 - NEW TICK
+8 - NEW CLIENT
+
+GAME (BROADCASTED) TYPES:
+
+They are used only in client (mostly)
+1001 - oridnary/keyboard
+1002 - message
+1003 - some complicated gui message
 
 PROTOCOL:
 
@@ -47,32 +60,32 @@ I. LOGIN STAGE
 protocol version, 4 bytes ("S132")
 
 2. from CLIENT to SERVER
-type: SYSTEM
+type: INITAL LOGIN MESSAGE
 {"login" : "Someone", "password" : "12345", "game_version" : "v0.2.1"}
 
 3.
 (It is better to check game version first always)
 b) WRONG GAME VERSION
  from SERVER to CLIENT
-type: SYSTEM
+type: WRONG GAME VERSION
 {"result" : "game_version_error", "correct_game_version" : "v0.2.2"}
 -> connection closed
 
 a) WRONG LOGIN OR PASSWORD
  from SERVER to CLIENT
-type: SYSTEM
+type: WRONG AUTHENTICATION
 {"result" : "authentication_error"}
 -> connection closed
 
 c) MASTER CLIENT DOES NOT EXIST
  from SERVER to CLIENT
-Server creates new client, gives number to him (number - NOT -1)
-type: SYSTEM
+Server creates new client, gives number to him
+type: SUCCESS CONNECTION
 {"result" : "success", "map" : "no_map", "your_id" : 42}
 New client now master client
 
 d) MASTER CLIENT EXISTS AND "login" DOES NOT HAVE ID
-Server creates new client, gives number to him (number - NOT -1)
+Server creates new client, gives number to him
 
  from SERVER to ALL CLIENTS
  type: NEW CLIENT
@@ -80,28 +93,29 @@ Server creates new client, gives number to him (number - NOT -1)
 {"id" : 42}
 
  from SERVER to MASTER CLIENT
- type: SYSTEM
+ type: MAP UPLOAD
 {"url_to_upload_map" : "grief.ly/blah"}
 
  from SERVER to CLIENT
-type: SYSTEM
+type: SUCCESS CONNECTION
 {"result" : "success", "map" : "grief.ly/blah", "your_id" : 42}
 
 c) MASTER CLIENT EXISTS AND "login" DOES HAVE ID
 Server uses existing client info, takes number from that info
 
  from SERVER to MASTER CLIENT
- type: SYSTEM
+ type: MAP UPLOAD
 {"url_to_upload_map" : "grief.ly/blah"}
 
  from SERVER to CLIENT
-type: SYSTEM
+type: SUCCESS CONNECTION
 {"result" : "success", "map" : "grief.ly/blah", "your_id" : 24}
 
 d) UNDEFINED ERROR
 For example, during the process master client disconnects, or something else
 
  from SERVER to CLIENT
+ type UNDEFINED ERROR
 {"result" : "undefined_error"}
 
 ////////////////////////////////
@@ -111,8 +125,9 @@ II. ACTIVE CONNECTION STAGE
 
 No specific order
 
-X - NOT 1 (X may be 2, 3, 4, etc)
+X - NOT DEFINED TYPE (X may be 1000, 2000 etc)
 In other words, if other action is not defined for this type of the message then server should broadcast the message
+message type >=1000
 
 1. 
 
