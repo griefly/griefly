@@ -29,12 +29,3 @@ void SetMob(size_t new_mob)
 {
     this_mob = new_mob;
 }
-
-void SetCreator(size_t new_creator)
-{
-    creator = new_creator;
-}
-size_t GetCreator()
-{
-    return creator;
-}

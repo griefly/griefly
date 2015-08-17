@@ -81,8 +81,6 @@ void MapMaster::SaveToMapGen(const std::string& name)
                 auto& il = squares[x][y][z]->GetInsideList();
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
-                    if ((*it)->GetId() == GetCreator())
-                        continue;
                     sfile << (*it)->T_ITEM() << " ";
                     sfile << x << " ";
                     sfile << y << " ";

@@ -29,7 +29,6 @@
 #include "Names.h"
 #include "IMovable.h"
 #include "Human.h"
-#include "Teleportator.h"
 
 #include "AutogenMetadata.h"
 
@@ -443,13 +442,8 @@ void Manager::initWorld()
         ChangeMob(newmob);
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
-        auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
-                Teleportator::T_ITEM_S(),
-                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
-                                       [GetMapMaster()->GetMapH() / 2]
-                                       [GetMapMaster()->GetMapD() / 2]);
         GetMapMaster()->FillAtmosphere();
-        SetCreator(tptr.ret_id());
+
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
         srand(SDL_GetTicks());
     }
@@ -471,13 +465,8 @@ void Manager::initWorld()
         ChangeMob(newmob);
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
-        auto tptr = GetItemFabric()->newItemOnMap<IOnMapObject>(
-                Teleportator::T_ITEM_S(),
-                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
-                                       [GetMapMaster()->GetMapH() / 2]
-                                       [GetMapMaster()->GetMapD() / 2]);
         GetMapMaster()->FillAtmosphere();
-        SetCreator(tptr.ret_id());
+
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
         srand(SDL_GetTicks());
         GetMapMaster()->makeMap();
@@ -563,6 +552,29 @@ void Manager::process_in_msg()
     while (true)
     {
         NetClient::GetNetClient()->Recv(&msg);
+
+        if (msg.text == Net::MAKE_NEW)
+        {
+            auto newmob = GetItemFabric()->newItemOnMap<IMob>(
+                        Human::T_ITEM_S(),
+                        GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
+                                               [GetMapMaster()->GetMapH() / 2]
+                                               [GetMapMaster()->GetMapD() / 2]);
+            SYSTEM_STREAM << "NEW MOB CREATE HIS ID " << newmob.ret_id() << "\n";
+            //newmob->onMobControl = true;
+
+            GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
+
+            Message msg_new;
+            msg_new.from = msg.from;
+            msg_new.to = newmob.ret_id();
+            msg_new.type = Net::SYSTEM_TYPE;
+            msg_new.text = Net::NEW_MAKED;
+
+            NetClient::GetNetClient()->Send(msg_new);
+            continue;
+        }
+
         if (msg.text == "SDLK_F2")
         {
             SYSTEM_STREAM << "Ping is: " << (SDL_GetTicks() - ping_send) / 1000.0 << "s" << std::endl;

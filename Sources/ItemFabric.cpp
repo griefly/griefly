@@ -100,8 +100,6 @@ void ItemFabric::saveMapHeader(std::stringstream& savefile)
     savefile << random_helpers::get_seed() << std::endl;
     savefile << random_helpers::get_calls_counter() << std::endl;
 
-    savefile << GetCreator() << std::endl;
-
     // Save Map Size
 
     savefile << GetMapMaster()->GetMapW() << std::endl;
@@ -141,12 +139,6 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     savefile >> new_calls_counter;
 
     random_helpers::set_rand(new_seed, new_calls_counter);
-
-    size_t new_creator;
-    savefile >> new_creator;
-    SYSTEM_STREAM << "new_creator: " << new_creator << std::endl;
-
-    SetCreator(new_creator);
 
     idTable_.resize(id_ + 1);
 

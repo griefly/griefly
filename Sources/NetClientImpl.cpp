@@ -253,7 +253,7 @@ bool NetClient::Recv(Message* msg)
     number_last_message_ = msg->message_number;
     if (msg->text == Net::MAKE_NEW)
     {
-        msg->to = GetCreator();
+        ;
     }
     else
     {
