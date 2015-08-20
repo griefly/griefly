@@ -17,6 +17,6 @@ public:
 
     // virtual InterfaceBase* GetInterface() override { return &interface_; }
 
-    // virtual void CalculateVisible(std::list<point>* visible_list) override;
+    virtual void CalculateVisible(std::list<point>* visible_list) override;
 };
 ADD_TO_TYPELIST(LoginMob);

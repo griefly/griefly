@@ -28,3 +28,8 @@ void LoginMob::processGUImsg(const Message& msg)
 {
 
 }
+
+void LoginMob::CalculateVisible(std::list<point>* visible_list)
+{
+    visible_list->clear();
+}
