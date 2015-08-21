@@ -64,15 +64,6 @@ bool IOnMapObject::IsTransp(int x, int y)
 {
     return view_.IsTransp(x, y, 0);
 }
-bool IOnMapObject::isVisible(int x, int y)
-{
-    if ( x >= std::max(0, GetMob()->GetX() - sizeHsq) &&
-         x <= std::min(GetMob()->GetX() + sizeHsq, GetMapMaster()->GetMapH() - 1) &&
-         y >= std::max(0, GetMob()->GetY() - sizeWsq) &&
-         y <= std::min(GetMob()->GetY() + sizeWsq, GetMapMaster()->GetMapW() - 1))
-        return 1;
-    return 0;
-};
 
 void IOnMapObject::delThis()
 {

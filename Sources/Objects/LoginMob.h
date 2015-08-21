@@ -13,6 +13,33 @@ public:
     virtual void processGUI() override;//draw
     virtual void processGUImsg(const Message& msg) override;
 
+    virtual void process() override;
+
+    virtual int GetDrawX() const override
+    {
+        return 0;
+    }
+
+    virtual int GetDrawY() const override
+    {
+        return 0;
+    }
+
+    virtual int GetX() const override
+    {
+        return 0;
+    }
+
+    virtual int GetY() const override
+    {
+        return 0;
+    }
+
+    virtual int GetZ() const override
+    {
+        return 0;
+    }
+
     // virtual void processImage(DrawType type) override;
 
     // virtual InterfaceBase* GetInterface() override { return &interface_; }

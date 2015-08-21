@@ -3,7 +3,7 @@
 
 LoginMob::LoginMob(size_t id) : IMob(id)
 {
-
+    //SetFreq(0);
 }
 
 void LoginMob::DeinitGUI()
@@ -25,6 +25,11 @@ void LoginMob::processGUI()
 
 
 void LoginMob::processGUImsg(const Message& msg)
+{
+
+}
+
+void LoginMob::process()
 {
 
 }

@@ -68,9 +68,6 @@ public:
         processPhysics();
     }
     virtual void processPhysics();
-
-    //void mobMove();
-    static bool isVisible(int x, int y);
     
     virtual void delThis() override;
     virtual std::list<HashAmount> insertLiquid(std::list<HashAmount>);

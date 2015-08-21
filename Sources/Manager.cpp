@@ -29,6 +29,7 @@
 #include "Names.h"
 #include "IMovable.h"
 #include "Human.h"
+#include "LoginMob.h"
 
 #include "AutogenMetadata.h"
 
@@ -434,17 +435,19 @@ void Manager::initWorld()
     {
         GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
-        auto newmob = GetItemFabric()->newItemOnMap<IMob>(
+       /* auto newmob = GetItemFabric()->newItemOnMap<IMob>(
                 Human::T_ITEM_S(),
                 GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
                                        [GetMapMaster()->GetMapH() / 2]
-                                       [GetMapMaster()->GetMapD() / 2]);
+                                       [GetMapMaster()->GetMapD() / 2]);*/
+
+        auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
+
         ChangeMob(newmob);
         GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
 
         GetMapMaster()->FillAtmosphere();
 
-        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
         srand(SDL_GetTicks());
     }
     else if 
