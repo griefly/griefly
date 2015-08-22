@@ -558,11 +558,7 @@ void Manager::process_in_msg()
 
         if (msg.text == Net::MAKE_NEW)
         {
-            auto newmob = GetItemFabric()->newItemOnMap<IMob>(
-                        Human::T_ITEM_S(),
-                        GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
-                                               [GetMapMaster()->GetMapH() / 2]
-                                               [GetMapMaster()->GetMapD() / 2]);
+            auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
             SYSTEM_STREAM << "NEW MOB CREATE HIS ID " << newmob.ret_id() << "\n";
             //newmob->onMobControl = true;
 
