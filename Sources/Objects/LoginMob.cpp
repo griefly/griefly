@@ -1,5 +1,7 @@
 #include "LoginMob.h"
+
 #include "Text.h"
+#include "sound.h"
 
 LoginMob::LoginMob(size_t id) : IMob(id)
 {
@@ -11,6 +13,7 @@ LoginMob::LoginMob(size_t id) : IMob(id)
 void LoginMob::DeinitGUI()
 {
     GetTexts().Delete("LoginScreen");
+    GetSoundPlayer().StopMusic();
 }
 
 
@@ -23,6 +26,8 @@ void LoginMob::InitGUI()
     }).SetFreq(1000)
       .SetSize(26)
       .SetPlace(sizeW / 2 - 144 + 16, sizeH / 2 - 13);
+
+    GetSoundPlayer().PlayMusic("lobby.ogg", 70.0f);
 }
 
 

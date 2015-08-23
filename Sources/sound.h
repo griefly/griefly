@@ -57,7 +57,27 @@ public:
         sounds_[i].play();
         return &sounds_[i];
     }
+    void PlayMusic(const std::string& name, float volume = 100.0f)
+    {
+        StopMusic();
+
+        if (!music_.openFromFile("music/" + name))
+        {
+            SYSTEM_STREAM << "Cannot open music file " << "music/" << name << std::endl;
+        }
+        music_.setLoop(true);
+        music_.setVolume(volume);
+        music_.play();
+    }
+    void StopMusic()
+    {
+        if (music_.getStatus() != sf::Music::Status::Stopped)
+        {
+            music_.stop();
+        }
+    }
 private:
+    sf::Music music_;
     std::vector<sf::Sound> sounds_;
 };
 
