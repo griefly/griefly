@@ -1,26 +1,34 @@
 #include "LoginMob.h"
-
+#include "Text.h"
 
 LoginMob::LoginMob(size_t id) : IMob(id)
 {
     //SetFreq(0);
+    SetSprite("icons/288x288.dmi");
+    SetState("singularity_s9");
 }
 
 void LoginMob::DeinitGUI()
 {
-
+    GetTexts().Delete("LoginScreen");
 }
 
 
 void LoginMob::InitGUI()
 {
-
+    GetTexts()["LoginScreen"].SetUpdater
+    ([this](std::string* str)
+    {
+        *str = "CLICK ME";
+    }).SetFreq(1000)
+      .SetSize(26)
+      .SetPlace(sizeW / 2 - 144 + 16, sizeH / 2 - 13);
 }
 
 
 void LoginMob::processGUI()
 {
-
+    DrawMain(0, sizeW / 2 - 144, sizeH / 2 - 144);
 }
 
 
