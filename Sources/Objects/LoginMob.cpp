@@ -3,6 +3,9 @@
 #include "Text.h"
 #include "sound.h"
 
+std::ostream& operator<<(std::stringstream& file, LoginInterface& interf) { return file; }
+std::istream& operator>>(std::stringstream& file, LoginInterface& interf) { return file; }
+
 LoginMob::LoginMob(size_t id) : IMob(id)
 {
     //SetFreq(0);
@@ -27,7 +30,7 @@ void LoginMob::InitGUI()
       .SetSize(26)
       .SetPlace(sizeW / 2 - 144 + 16, sizeH / 2 - 13);
 
-    GetSoundPlayer().PlayMusic("lobby.ogg", 70.0f);
+    GetSoundPlayer().PlayMusic("lobby.ogg", 10.0f);
 }
 
 
