@@ -2,14 +2,21 @@
 
 #include "MobInt.h"
 #include "Interface.h"
+#include "View.h"
 
 class LoginInterface: public InterfaceBase
 {
+    friend std::ostream& operator<<(std::stringstream& file, LoginInterface& interf);
+    friend std::istream& operator>>(std::stringstream& file, LoginInterface& interf);
 public:
-    virtual bool Click(int x, int y) override { return true; }
+    void Init();
+
+    virtual bool Click(int x, int y) override;
     virtual void HandleClick(const std::string& place) override {}
-    virtual void Draw() override {}
-    virtual unsigned int hash() const override { return 0; }
+    virtual void Draw() override;
+    virtual unsigned int hash() const override;
+private:
+    View view_;
 };
 
 std::ostream& operator<<(std::stringstream& file, LoginInterface& interf);

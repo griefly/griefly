@@ -3,14 +3,10 @@
 #include "Text.h"
 #include "sound.h"
 
-std::ostream& operator<<(std::stringstream& file, LoginInterface& interf) { return file; }
-std::istream& operator>>(std::stringstream& file, LoginInterface& interf) { return file; }
-
 LoginMob::LoginMob(size_t id) : IMob(id)
 {
     //SetFreq(0);
-    SetSprite("icons/288x288.dmi");
-    SetState("singularity_s9");
+    interface_.Init();
 }
 
 void LoginMob::DeinitGUI()
@@ -36,7 +32,7 @@ void LoginMob::InitGUI()
 
 void LoginMob::processGUI()
 {
-    DrawMain(0, sizeW / 2 - 144, sizeH / 2 - 144);
+    interface_.Draw();
 }
 
 
@@ -53,4 +49,36 @@ void LoginMob::process()
 void LoginMob::CalculateVisible(std::list<point>* visible_list)
 {
     visible_list->clear();
+}
+
+std::ostream& operator<<(std::stringstream& file, LoginInterface& interf)
+{
+    WrapWriteMessage(file, interf.view_);
+    return file;
+}
+std::istream& operator>>(std::stringstream& file, LoginInterface& interf)
+{
+    WrapReadMessage(file, interf.view_);
+    return file;
+}
+
+void LoginInterface::Init()
+{
+    view_.SetSprite("icons/288x288.dmi");
+    view_.SetState("singularity_s9");
+}
+
+bool LoginInterface::Click(int x, int y)
+{
+    return !view_.IsTransp(x - (sizeW / 2 - 144), y - (sizeH / 2 - 144), 0);
+}
+
+void LoginInterface::Draw()
+{
+    view_.Draw(0, sizeW / 2 - 144, sizeH / 2 - 144);
+}
+
+unsigned int LoginInterface::hash() const
+{
+    return ::hash(view_);
 }
