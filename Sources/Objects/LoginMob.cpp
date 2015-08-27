@@ -2,6 +2,12 @@
 
 #include "Text.h"
 #include "sound.h"
+#include "Human.h"
+#include "ItemFabric.h"
+#include "MapClass.h"
+#include "Creator.h"
+
+const char* LOGIN_CLICK = "login_click";
 
 LoginMob::LoginMob(size_t id) : IMob(id)
 {
@@ -38,7 +44,24 @@ void LoginMob::processGUI()
 
 void LoginMob::processGUImsg(const Message& msg)
 {
-
+    if (msg.text == LOGIN_CLICK)
+    {
+        size_t net_id = GetItemFabric()->GetNetId(GetId());
+        if (net_id)
+        {
+            auto human = GetItemFabric()->newItem<Human>(Human::T_ITEM_S());
+            //ghost->name = name;
+            GetItemFabric()->SetPlayerId(net_id, human.ret_id());
+            GetMapMaster()->
+             squares[GetMapMaster()->GetMapW() / 2]
+                    [GetMapMaster()->GetMapH() / 2]
+                    [GetMapMaster()->GetMapD() / 2]->AddItem(human);
+            if (GetId() == GetMob().ret_id())
+            {
+                ChangeMob(human);
+            }
+        }
+    }
 }
 
 void LoginMob::process()
@@ -70,7 +93,16 @@ void LoginInterface::Init()
 
 bool LoginInterface::Click(int x, int y)
 {
-    return !view_.IsTransp(x - (sizeW / 2 - 144), y - (sizeH / 2 - 144), 0);
+    bool is_tr = !view_.IsTransp(x - (sizeW / 2 - 144), y - (sizeH / 2 - 144), 0);
+
+    if (is_tr)
+    {
+        Message msg;
+        msg.text = LOGIN_CLICK;
+        NetClient::GetNetClient()->Send(msg);
+    }
+
+    return is_tr;
 }
 
 void LoginInterface::Draw()
