@@ -9,6 +9,9 @@
 #include "Lobby.h"
 #include "MagicStrings.h"
 #include "Chat.h"
+#include "helpers.h"
+
+#include <QDebug>
 
 const char* LOGIN_CLICK = "login_click";
 
@@ -141,6 +144,8 @@ void LoginInterface::Init()
 
 bool LoginInterface::Click(int x, int y)
 {
+    helpers::normalize_pixels(&x, &y);
+
     bool is_tr = !view_.IsTransp(x - (sizeW / 2 - 144), y - (sizeH / 2 - 144), 0);
 
     if (is_tr)
