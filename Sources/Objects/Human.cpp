@@ -89,7 +89,7 @@ void Human::processGUImsg(const Message& msg)
     if (msg.type == Net::CHAT_TYPE)
     {
         //Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
-        if (msg.text.length() >= 3 && (msg.text.substr(0, 3) == "OOC"))
+        if (Chat::IsOOCMessage(msg.text))
         {
             Chat::GetChat()->PostOOCText(name, msg.text.substr(3));
         }

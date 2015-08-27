@@ -15,6 +15,9 @@ class Chat
 public:
     static Chat* GetChat();
     static void InitChat();
+
+    static bool IsOOCMessage(const std::string& text);
+
     void Process();
     void DrawScroll();
     void ScrollUp();

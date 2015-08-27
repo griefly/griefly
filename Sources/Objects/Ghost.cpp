@@ -74,7 +74,7 @@ void Ghost::processGUImsg(const Message& msg)
     IMob::processGUImsg(msg);
     if (msg.type == Net::CHAT_TYPE)
     {
-        if (msg.text.length() >= 3 && (msg.text.substr(0, 3) == "OOC"))
+        if (Chat::IsOOCMessage(msg.text))
         {
             Chat::GetChat()->PostOOCText(name + " (ghost)", msg.text.substr(3));
         }

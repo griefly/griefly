@@ -88,6 +88,18 @@ void Chat::InitChat()
     chat->current_pos_ = chat->visible_lines_;*/
 }
 
+bool Chat::IsOOCMessage(const std::string &text)
+{
+    if (    text.length() >= 3
+        && (   (text.substr(0, 3) == "OOC")
+            || (text.substr(0, 3) == "ooc"))
+        )
+    {
+        return true;
+    }
+    return false;
+}
+
 void SetCursorAtEnd()
 {
     QTextCursor cursor = GetTextBrowser()->textCursor();

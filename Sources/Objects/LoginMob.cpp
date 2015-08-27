@@ -7,12 +7,17 @@
 #include "MapClass.h"
 #include "Creator.h"
 #include "Lobby.h"
+#include "MagicStrings.h"
+#include "Chat.h"
 
 const char* LOGIN_CLICK = "login_click";
 
 LoginMob::LoginMob(size_t id) : IMob(id)
 {
-    //SetFreq(0);
+    std::stringstream conv;
+    conv << "LobbyPlayer" << id;
+    name = conv.str();
+
     interface_.Init();
 }
 
@@ -96,6 +101,13 @@ void LoginMob::processGUImsg(const Message& msg)
             {
                 ChangeMob(human);
             }
+        }
+    }
+    if (msg.type == Net::CHAT_TYPE)
+    {
+        if (Chat::IsOOCMessage(msg.text))
+        {
+            Chat::GetChat()->PostOOCText(name, msg.text.substr(3));
         }
     }
 }
