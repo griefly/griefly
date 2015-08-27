@@ -6,6 +6,7 @@
 #include "ItemFabric.h"
 #include "MapClass.h"
 #include "Creator.h"
+#include "Lobby.h"
 
 const char* LOGIN_CLICK = "login_click";
 
@@ -18,6 +19,7 @@ LoginMob::LoginMob(size_t id) : IMob(id)
 void LoginMob::DeinitGUI()
 {
     GetTexts().Delete("LoginScreen");
+    GetTexts().Delete("LoginScreenCount");
     GetSoundPlayer().StopMusic();
 }
 
@@ -27,10 +29,40 @@ void LoginMob::InitGUI()
     GetTexts()["LoginScreen"].SetUpdater
     ([this](std::string* str)
     {
-        *str = "CLICK ME";
+        if (GetLobby().GetSecondUntilStart() <= 0)
+        {
+            *str = "CLICK ME";
+        }
+        else
+        {
+            *str = "";
+        }
     }).SetFreq(1000)
       .SetSize(26)
       .SetPlace(sizeW / 2 - 144 + 16, sizeH / 2 - 13);
+
+    GetTexts()["LoginScreenCount"].SetUpdater
+    ([this](std::string* str)
+    {
+        std::stringstream conv;
+        if (GetLobby().GetSecondUntilStart() < 0)
+        {
+            *str = "000";
+            return;
+        }
+        conv << GetLobby().GetSecondUntilStart();
+        *str = conv.str();
+        if (str->length() == 2)
+        {
+            *str = "0" + *str;
+        }
+        else if (str->length() == 1)
+        {
+            *str = "00" + *str;
+        }
+    }).SetFreq(250)
+      .SetSize(26)
+      .SetPlace(sizeW / 2 - 26 - 13, sizeH / 2 + 30 + 13);
 
     GetSoundPlayer().PlayMusic("lobby.ogg", 10.0f);
 }
@@ -46,6 +78,10 @@ void LoginMob::processGUImsg(const Message& msg)
 {
     if (msg.text == LOGIN_CLICK)
     {
+        if (GetLobby().GetSecondUntilStart() > 0)
+        {
+            return;
+        }
         size_t net_id = GetItemFabric()->GetNetId(GetId());
         if (net_id)
         {
