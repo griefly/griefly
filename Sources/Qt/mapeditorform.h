@@ -20,6 +20,7 @@ public:
     explicit GraphicsScene(QWidget *parent = 0);
 signals:
     void mousePressed(QGraphicsSceneMouseEvent* mouseEvent);
+    void rightClick();
 public slots:
     void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
 };
@@ -33,8 +34,8 @@ public:
     ~MapEditorForm();
 public slots:
     void newSelectionSetted(int first_x, int first_y, int second_x, int second_y);
-private slots:
     void on_createItem_clicked();
+private slots:
 
     void on_createTurf_clicked();
 

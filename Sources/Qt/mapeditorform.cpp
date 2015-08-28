@@ -19,7 +19,7 @@
 #include "AutogenMetadata.h"
 #include "StreamWrapper.h"
 
-GraphicsScene::GraphicsScene(QWidget *parent)
+GraphicsScene::GraphicsScene(QWidget *parent) : QGraphicsScene(parent)
 {
 
 }
@@ -27,6 +27,10 @@ GraphicsScene::GraphicsScene(QWidget *parent)
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     emit mousePressed(mouseEvent);
+    if (mouseEvent->button() == Qt::RightButton)
+    {
+        emit rightClick();
+    }
 }
 
 MapEditorForm::MapEditorForm(QWidget *parent) :
@@ -41,6 +45,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     map_editor_ = new MapEditor(scene_);
 
     connect(scene_, &GraphicsScene::mousePressed, map_editor_, &MapEditor::mousePressedEvent);
+    connect(scene_, &GraphicsScene::rightClick, this, &MapEditorForm::on_createItem_clicked);
     connect(map_editor_, &MapEditor::newSelectionSetted, this, &MapEditorForm::newSelectionSetted);
 
     map_editor_->Resize(100, 100, 1);
