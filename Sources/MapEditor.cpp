@@ -31,6 +31,8 @@ MapEditor::Pointer::Pointer()
 MapEditor::MapEditor(QGraphicsScene* scene)
     : scene_(scene)
 {
+    copypaste_items_.clear();
+
     selection_stage_ = 0;
 
     first_selection_x_ = 0;
@@ -92,13 +94,31 @@ void MapEditor::keyPressedEvent(QKeyEvent *event)
     if (    (event->key() == Qt::Key_C)
          && (event->modifiers() & Qt::ControlModifier))
     {
-        qDebug() << "Ctrl + C";
+        CopyItemsFromCurrentTile();
     }
     if (    (event->key() == Qt::Key_V)
          && (event->modifiers() & Qt::ControlModifier))
     {
-        qDebug() << "Ctrl + V";
+        PasteItemsToCurrentTile();
     }
+}
+
+void MapEditor::CopyItemsFromCurrentTile()
+{
+    copypaste_items_ = editor_map_[pointer_.first_posx][pointer_.first_posy][0].items;
+}
+
+void MapEditor::PasteItemsToCurrentTile()
+{
+    for (auto it = copypaste_items_.begin(); it != copypaste_items_.end(); ++it)
+    {
+        auto& new_item = AddItem(it->item_type, pointer_.first_posx, pointer_.first_posy, 0);
+        new_item.variables = it->variables;
+    }
+
+    emit newSelectionSetted(
+                first_selection_x_, first_selection_y_,
+                second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::SaveMapgen(const std::string &name)
@@ -323,7 +343,7 @@ MapEditor::EditorEntry& MapEditor::AddItem(const std::string &item_type, int pos
     new_entry.pixmap_item->setZValue(50);
 
     editor_map_[posx][posy][posz].items.push_back(new_entry);
-    return editor_map_[posx][posy][posz].items[editor_map_[posx][posy][posz].items.size() - 1];
+    return editor_map_[posx][posy][posz].items.back();
 }
 
 void MapEditor::SetTurf(const std::string &item_type)

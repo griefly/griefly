@@ -92,6 +92,11 @@ public slots:
     void mousePressedEvent(QGraphicsSceneMouseEvent* mouseEvent);
     void keyPressedEvent(QKeyEvent* event);
 private:
+    std::vector<EditorEntry> copypaste_items_;
+
+    void CopyItemsFromCurrentTile();
+    void PasteItemsToCurrentTile();
+
     int selection_stage_;
 
     int first_selection_x_;
