@@ -87,6 +87,20 @@ void MapEditor::mousePressedEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
+void MapEditor::keyPressedEvent(QKeyEvent *event)
+{
+    if (    (event->key() == Qt::Key_C)
+         && (event->modifiers() & Qt::ControlModifier))
+    {
+        qDebug() << "Ctrl + C";
+    }
+    if (    (event->key() == Qt::Key_V)
+         && (event->modifiers() & Qt::ControlModifier))
+    {
+        qDebug() << "Ctrl + V";
+    }
+}
+
 void MapEditor::SaveMapgen(const std::string &name)
 {
     int size_x = editor_map_.size();

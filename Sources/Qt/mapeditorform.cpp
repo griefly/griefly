@@ -33,6 +33,11 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
     }
 }
 
+void GraphicsScene::keyPressEvent(QKeyEvent *event)
+{
+    emit keyboardPressed(event);
+}
+
 MapEditorForm::MapEditorForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MapEditorForm)
@@ -45,6 +50,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     map_editor_ = new MapEditor(scene_);
 
     connect(scene_, &GraphicsScene::mousePressed, map_editor_, &MapEditor::mousePressedEvent);
+    connect(scene_, &GraphicsScene::keyboardPressed, map_editor_, &MapEditor::keyPressedEvent);
     connect(scene_, &GraphicsScene::rightClick, this, &MapEditorForm::on_createItem_clicked);
     connect(map_editor_, &MapEditor::newSelectionSetted, this, &MapEditorForm::newSelectionSetted);
 

@@ -10,6 +10,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsPolygonItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QKeyEvent>
 
 class MapEditor: public QObject
 {
@@ -89,6 +90,7 @@ signals:
     void newSelectionSetted(int first_x, int first_y, int second_x, int second_y);
 public slots:
     void mousePressedEvent(QGraphicsSceneMouseEvent* mouseEvent);
+    void keyPressedEvent(QKeyEvent* event);
 private:
     int selection_stage_;
 

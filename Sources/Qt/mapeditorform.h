@@ -20,9 +20,11 @@ public:
     explicit GraphicsScene(QWidget *parent = 0);
 signals:
     void mousePressed(QGraphicsSceneMouseEvent* mouseEvent);
+    void keyboardPressed(QKeyEvent* event);
     void rightClick();
 public slots:
     void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
+    void keyPressEvent(QKeyEvent* event);
 };
 
 class MapEditorForm : public QWidget
