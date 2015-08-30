@@ -9,6 +9,8 @@ public:
     DECLARE_GET_TYPE_ITEM(FlatGlass);
     FlatGlass(size_t id);
 
+    virtual void AfterWorldCreation() override;
+
     virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual bool Rotate(Dir dir) override;
 };

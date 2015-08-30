@@ -8,7 +8,8 @@ FlatGlass::FlatGlass(size_t id) : Structure(id)
 {
     transparent = true;
 
-    Rotate(get_rand() % 4);
+    // Rotate(get_rand() % 4);
+    Rotate(D_UP);
 
     tickSpeed = 5;
     pixSpeed = 1;
@@ -19,6 +20,18 @@ FlatGlass::FlatGlass(size_t id) : Structure(id)
     SetState("window");
     
     name = "Window";
+}
+
+void FlatGlass::AfterWorldCreation()
+{
+    Structure::AfterWorldCreation();
+
+    SetPassable(D_UP, Passable::FULL);
+    SetPassable(D_DOWN, Passable::FULL);
+    SetPassable(D_LEFT, Passable::FULL);
+    SetPassable(D_RIGHT, Passable::FULL);
+
+    SetPassable(GetDir(), Passable::EMPTY);
 }
 
 void FlatGlass::Bump(id_ptr_on<IMovable> item)
