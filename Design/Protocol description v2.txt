@@ -194,6 +194,24 @@ c) It is master client, and there is no any other clients.
 
 Forget everything. Basically, restart server (well, at least do not keep information about logins + ids)
 
+//////////
+END OF END CONNECTION STAGE
+
+HOW CLIENT UPLOADS MAP TO SERVER:
+POST request to some url ("grief.ly/blah")
+Content-Length as header
+Binary map in the body of the POST request.
+Response 200 OK
+Other responses - error.
+
+HOW CLIENT DOWNLOADS MAP FROM SERVER
+GET request to some url ("grief.ly/blah")
+Response 200 OK
+Content-Length in the response
+Content-Type: application/octet-stream in the response
+Body is the binary map
+Response 200 OK
+Other responses - error.
 
 
 
