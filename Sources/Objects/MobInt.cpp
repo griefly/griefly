@@ -1,7 +1,6 @@
 #include "MobInt.h"
 #include "Manager.h"
 #include "MapClass.h"
-#include "Turf.h"
 
 #include "MagicStrings.h"
 #include "Creator.h"
