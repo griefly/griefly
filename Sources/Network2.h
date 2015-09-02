@@ -3,13 +3,27 @@
 #include <QObject>
 #include <QString>
 #include <QTcpSocket>
-
+#include <QThread>
 #include <QQueue>
+#include <QMutex>
 
 struct Message
 {
     qint32 type;
     QString json;
+};
+
+class Network2;
+
+class SocketReader: public QObject
+{
+    Q_OBJECT
+public:
+    SocketReader(Network2* network);
+public slots:
+    void process();
+private:
+    Network2* network_;
 };
 
 class Network2: public QObject
@@ -24,14 +38,14 @@ public:
 
     void SendMessage(const Message& message);
 
-    Message RecvMessage();
+    Message PopMessage();
 
     void Disconnect();
 
-public slots:
-    void pushReceivedMessage(Message message);
+    void PushMessage(Message message);
 
-private:
+private:  
+    QMutex queue_mutex_;
     QQueue<Message> received_messages_;
 
     Network2();
@@ -43,4 +57,6 @@ private:
         NOT_CONNECTED, CONNECTING, CONNECTED, DISCONNECTED
     };
     NetworkState state_;
+
+    SocketReader reader_;
 };
