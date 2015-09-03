@@ -31,24 +31,14 @@ Network2::Network2()
 
 
 SocketReader::SocketReader(Network2* network)
-    : network_(network)
+    : network_(network),
+      state_(ReadingState::HEADER)
 {
 
 }
 
 void SocketReader::process()
 {
-    qint32 message_size;
-    qint32 message_type;
-    QByteArray body;
-
-    QByteArray old_data;
-
-    enum ReadingState
-    {
-        SIZE, TYPE, BODY
-    } state = ReadingState::SIZE;
-
     while (network_->socket_.isValid())
     {
         if (!network_->socket_.waitForReadyRead(1000))
@@ -58,32 +48,36 @@ void SocketReader::process()
 
         QByteArray new_data = network_->socket_.readAll();
 
-        if (new_data.size() == 0)
-        {
-            continue;
-        }
+        buffer_.append(new_data);
 
-        old_data.append(new_data);
-
-        switch (state)
+        switch (state_)
         {
-        case ReadingState::SIZE:
-            if (old_data.size() >= 4)
-            {
-                QByteArray loc = old_data.mid(0, 4);
-                message_size = qFromBigEndian<qint32>((const uchar*)loc.data());
-                if (old_data.size() == 4)
-                {
-                    old_data.clear();
-                }
-                else
-                {
-                    old_data = old_data.mid(4);
-                }
-                state = ReadingState::TYPE;
-            }
+        case ReadingState::HEADER:
+            HandleHeader();
+            break;
+        case ReadingState::BODY:
+            HandleBody();
             break;
         }
     }
+
+}
+
+void SocketReader::HandleHeader()
+{
+    if (buffer_.size() >= 8)
+    {
+        QByteArray loc = buffer_.mid(0, 4);
+        message_size_ = qFromBigEndian<qint32>((const uchar*)loc.data());
+
+        loc = buffer_.mid(4, 4);
+        message_type_ = qFromBigEndian<qint32>((const uchar*)loc.data());
+
+        state_ = ReadingState::BODY;
+    }
+}
+
+void SocketReader::HandleBody()
+{
 
 }

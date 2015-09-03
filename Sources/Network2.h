@@ -23,6 +23,19 @@ public:
 public slots:
     void process();
 private:
+    qint32 message_size_;
+    qint32 message_type_;
+
+    QByteArray buffer_;
+
+    enum ReadingState
+    {
+        HEADER, BODY
+    } state_;
+
+    void HandleHeader();
+    void HandleBody();
+
     Network2* network_;
 };
 
