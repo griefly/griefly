@@ -30,6 +30,8 @@ class Network2: public QObject
 {
     Q_OBJECT
 public:
+    friend class SocketReader;
+
     static Network2& GetInstance();
 
     bool IsGood();
@@ -38,11 +40,10 @@ public:
 
     void SendMessage(const Message& message);
 
-    Message PopMessage();
-
     void Disconnect();
 
     void PushMessage(Message message);
+    Message PopMessage();
 
 private:  
     QMutex queue_mutex_;
