@@ -1,6 +1,7 @@
 #include "Network2.h"
 
 #include <QMutexLocker>
+#include <QtEndian>
 
 Network2 &Network2::GetInstance()
 {
@@ -37,13 +38,52 @@ SocketReader::SocketReader(Network2* network)
 
 void SocketReader::process()
 {
+    qint32 message_size;
+    qint32 message_type;
+    QByteArray body;
+
+    QByteArray old_data;
+
+    enum ReadingState
+    {
+        SIZE, TYPE, BODY
+    } state = ReadingState::SIZE;
+
     while (network_->socket_.isValid())
     {
-        network_->socket_.waitForReadyRead();
+        if (!network_->socket_.waitForReadyRead(1000))
+        {
+            continue;
+        }
 
-        QByteArray data = network_->socket_.readAll();
+        QByteArray new_data = network_->socket_.readAll();
 
-        // TODO
+        if (new_data.size() == 0)
+        {
+            continue;
+        }
+
+        old_data.append(new_data);
+
+        switch (state)
+        {
+        case ReadingState::SIZE:
+            if (old_data.size() >= 4)
+            {
+                QByteArray loc = old_data.mid(0, 4);
+                message_size = qFromBigEndian<qint32>((const uchar*)loc.data());
+                if (old_data.size() == 4)
+                {
+                    old_data.clear();
+                }
+                else
+                {
+                    old_data = old_data.mid(4);
+                }
+                state = ReadingState::TYPE;
+            }
+            break;
+        }
     }
 
 }
