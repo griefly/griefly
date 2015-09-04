@@ -9,14 +9,14 @@ Network2 &Network2::GetInstance()
     return *network;
 }
 
-void Network2::PushMessage(Message message)
+void Network2::PushMessage(Message2 message)
 {
     QMutexLocker locker(&queue_mutex_);
 
     received_messages_.enqueue(message);
 }
 
-Message Network2::PopMessage()
+Message2 Network2::PopMessage()
 {
     QMutexLocker locker(&queue_mutex_);
 
@@ -34,7 +34,7 @@ SocketReader::SocketReader(Network2* network)
     : network_(network),
       state_(ReadingState::HEADER)
 {
-
+    utf_codec_ = QTextCodec::codecForName("UTF-8");
 }
 
 void SocketReader::process()
@@ -63,21 +63,44 @@ void SocketReader::process()
 
 }
 
+const int HEADER_SIZE = 8;
+
 void SocketReader::HandleHeader()
 {
-    if (buffer_.size() >= 8)
+    if (buffer_.size() > HEADER_SIZE)
     {
-        QByteArray loc = buffer_.mid(0, 4);
-        message_size_ = qFromBigEndian<qint32>((const uchar*)loc.data());
-
-        loc = buffer_.mid(4, 4);
-        message_type_ = qFromBigEndian<qint32>((const uchar*)loc.data());
-
-        state_ = ReadingState::BODY;
+        return;
     }
+    QByteArray loc = buffer_.mid(0, 4);
+    message_size_ = qFromBigEndian<qint32>((const uchar*)loc.data());
+
+    loc = buffer_.mid(4, 4);
+    message_type_ = qFromBigEndian<qint32>((const uchar*)loc.data());
+
+    state_ = ReadingState::BODY;
 }
 
 void SocketReader::HandleBody()
 {
+    if (buffer_.size() < HEADER_SIZE + message_size_)
+    {
+        return;
+    }
 
+    Message2 new_message;
+    new_message.type = message_type_;
+
+    QByteArray loc = buffer_.mid(HEADER_SIZE, message_size_);
+    new_message.json = utf_codec_->toUnicode(loc);
+
+    network_->PushMessage(new_message);
+
+    if (buffer_.size() == HEADER_SIZE + message_size_)
+    {
+        buffer_.clear();
+    }
+    else
+    {
+        buffer_ = buffer_.mid(HEADER_SIZE + message_size_);
+    }
 }

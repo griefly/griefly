@@ -6,8 +6,9 @@
 #include <QThread>
 #include <QQueue>
 #include <QMutex>
+#include <QTextCodec>
 
-struct Message
+struct Message2
 {
     qint32 type;
     QString json;
@@ -23,6 +24,8 @@ public:
 public slots:
     void process();
 private:
+    QTextCodec* utf_codec_;
+
     qint32 message_size_;
     qint32 message_type_;
 
@@ -51,16 +54,17 @@ public:
 
     void Connect(QString host, int port, QString login, QString password);
 
-    void SendMessage(const Message& message);
+    void SendMessage(const Message2& message);
 
     void Disconnect();
 
-    void PushMessage(Message message);
-    Message PopMessage();
+    Message2 PopMessage();
 
-private:  
+private:
+    void PushMessage(Message2 message);
+
     QMutex queue_mutex_;
-    QQueue<Message> received_messages_;
+    QQueue<Message2> received_messages_;
 
     Network2();
 
