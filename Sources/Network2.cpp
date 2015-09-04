@@ -9,6 +9,29 @@ Network2 &Network2::GetInstance()
     return *network;
 }
 
+void Network2::SendMessage(Message2 message)
+{
+    QByteArray json = net_codec_->fromUnicode(message.json);
+
+    QByteArray data;
+
+    uchar temp[4];
+
+    qToBigEndian(json.size(), temp);
+    data.append((char*)temp, 4);
+
+    qToBigEndian(message.type, temp);
+    data.append((char*)temp, 4);
+
+    data.append(json);
+
+    int counter = 0;
+    while (counter != data.length())
+    {
+        counter += socket_.write(data.data() + counter, data.length() - counter);
+    }
+}
+
 void Network2::PushMessage(Message2 message)
 {
     QMutexLocker locker(&queue_mutex_);
@@ -26,7 +49,7 @@ Message2 Network2::PopMessage()
 Network2::Network2()
     : reader_(this)
 {
-
+    net_codec_ = QTextCodec::codecForName("UTF-8");
 }
 
 
@@ -34,14 +57,14 @@ SocketReader::SocketReader(Network2* network)
     : network_(network),
       state_(ReadingState::HEADER)
 {
-    utf_codec_ = QTextCodec::codecForName("UTF-8");
+
 }
 
 void SocketReader::process()
 {
     while (network_->socket_.isValid())
     {
-        if (!network_->socket_.waitForReadyRead(1000))
+        if (!network_->socket_.waitForReadyRead(200))
         {
             continue;
         }
@@ -91,7 +114,7 @@ void SocketReader::HandleBody()
     new_message.type = message_type_;
 
     QByteArray loc = buffer_.mid(HEADER_SIZE, message_size_);
-    new_message.json = utf_codec_->toUnicode(loc);
+    new_message.json = network_->net_codec_->toUnicode(loc);
 
     network_->PushMessage(new_message);
 
@@ -103,4 +126,6 @@ void SocketReader::HandleBody()
     {
         buffer_ = buffer_.mid(HEADER_SIZE + message_size_);
     }
+
+    state_ = ReadingState::HEADER;
 }

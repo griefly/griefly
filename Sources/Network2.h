@@ -24,8 +24,6 @@ public:
 public slots:
     void process();
 private:
-    QTextCodec* utf_codec_;
-
     qint32 message_size_;
     qint32 message_type_;
 
@@ -54,13 +52,15 @@ public:
 
     void Connect(QString host, int port, QString login, QString password);
 
-    void SendMessage(const Message2& message);
+    void SendMessage(Message2 message);
 
     void Disconnect();
 
     Message2 PopMessage();
 
 private:
+    QTextCodec* net_codec_;
+
     void PushMessage(Message2 message);
 
     QMutex queue_mutex_;
