@@ -4,9 +4,11 @@ Message structure:
 Header structure:
 [body size][message type]
 Body size and message type is 4 bytes variables (it means that the header size is 8 bytes).
+Body size and message type are big endian
 
 Body structure:
 Json
+(utf8)
 
 Examples:
 
