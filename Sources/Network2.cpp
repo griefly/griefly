@@ -3,6 +3,11 @@
 #include <QMutexLocker>
 #include <QtEndian>
 
+#include <QJsonObject>
+#include <QJsonDocument>
+
+#include "NetworkMessagesTypes.h"
+
 Network2 &Network2::GetInstance()
 {
     static Network2* network = new Network2;
@@ -22,10 +27,26 @@ void Network2::Connect(QString host, int port, QString login, QString password)
     socket_.connectToHost(host, port);
 }
 
+#define KV_XSTR(x) #x
+#define KV_STR(x) KV_XSTR(x)
 
 void Network2::socketConnected()
 {
     SendData("S132");
+
+    Message2 login_message;
+    login_message.type = MessageType::INITAL_LOGIN_MESSAGE;
+
+    QJsonObject obj;
+    obj["login"] = "Guest";\
+    obj["password"] = "";
+
+    // It is compile time macro with version (/D or -D)
+    obj["game_version"] = KV_STR(DEFINED_VERSION);
+
+    QJsonDocument doc(obj);
+
+    login_message.json = doc.toJson(QJsonDocument::Compact);
 
 
 }
