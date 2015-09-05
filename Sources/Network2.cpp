@@ -46,7 +46,7 @@ void Network2::socketConnected()
 
     QJsonDocument doc(obj);
 
-    login_message.json = doc.toJson(QJsonDocument::Compact);
+    login_message.json = doc.toJson(QJsonDocument::JsonFormat::Compact);
 
 
 }
