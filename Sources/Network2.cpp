@@ -38,11 +38,11 @@ void Network2::socketConnected()
     login_message.type = MessageType::INITAL_LOGIN_MESSAGE;
 
     QJsonObject obj;
-    obj["login"] = "Guest";\
-    obj["password"] = "";
+    obj["login"] = QString("Guest");
+    obj["password"] = QString("");
 
     // It is compile time macro with version (/D or -D)
-    obj["game_version"] = KV_STR(DEFINED_VERSION);
+    obj["game_version"] = QString(KV_STR(DEFINED_VERSION));
 
     QJsonDocument doc(obj);
 
