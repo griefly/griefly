@@ -9,6 +9,41 @@ Network2 &Network2::GetInstance()
     return *network;
 }
 
+Network2::Network2()
+    : reader_(this)
+{
+    net_codec_ = QTextCodec::codecForName("UTF-8");
+
+    connect(&socket_, &QTcpSocket::connected, this, &Network2::socketConnected);
+}
+
+void Network2::Connect(QString host, int port, QString login, QString password)
+{
+    socket_.connectToHost(host, port);
+}
+
+
+void Network2::socketConnected()
+{
+    SendData("S132");
+
+
+}
+
+void Network2::socketError()
+{
+
+}
+
+void Network2::SendData(const QByteArray &data)
+{
+    int counter = 0;
+    while (counter != data.length() && socket_.isValid())
+    {
+        counter += socket_.write(data.data() + counter, data.length() - counter);
+    }
+}
+
 void Network2::SendMessage(Message2 message)
 {
     QByteArray json = net_codec_->fromUnicode(message.json);
@@ -25,11 +60,7 @@ void Network2::SendMessage(Message2 message)
 
     data.append(json);
 
-    int counter = 0;
-    while (counter != data.length())
-    {
-        counter += socket_.write(data.data() + counter, data.length() - counter);
-    }
+    SendData(data);
 }
 
 void Network2::PushMessage(Message2 message)
@@ -45,13 +76,6 @@ Message2 Network2::PopMessage()
 
     return received_messages_.dequeue();
 }
-
-Network2::Network2()
-    : reader_(this)
-{
-    net_codec_ = QTextCodec::codecForName("UTF-8");
-}
-
 
 SocketReader::SocketReader(Network2* network)
     : network_(network),

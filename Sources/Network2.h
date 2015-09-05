@@ -7,6 +7,7 @@
 #include <QQueue>
 #include <QMutex>
 #include <QTextCodec>
+#include <QByteArray>
 
 struct Message2
 {
@@ -57,8 +58,16 @@ public:
     void Disconnect();
 
     Message2 PopMessage();
+public slots:
+    void socketConnected();
+    void socketError();
+
+signals:
+    void connected();
 
 private:
+    void SendData(const QByteArray& data);
+
     QTextCodec* net_codec_;
 
     void PushMessage(Message2 message);
