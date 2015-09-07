@@ -20,6 +20,9 @@ Network2::Network2()
     net_codec_ = QTextCodec::codecForName("UTF-8");
 
     connect(&socket_, &QTcpSocket::connected, this, &Network2::socketConnected);
+
+    reader_.moveToThread(&thread_);
+    connect(&thread_, &QThread::started, &reader_, &SocketReader::process);
 }
 
 void Network2::Connect(QString host, int port, QString login, QString password)
@@ -31,8 +34,10 @@ void Network2::Connect(QString host, int port, QString login, QString password)
 #define KV_STR(x) KV_XSTR(x)
 
 void Network2::socketConnected()
-{
+{    
     SendData("S132");
+
+    thread_.start();
 
     Message2 login_message;
     login_message.type = MessageType::INITAL_LOGIN_MESSAGE;
@@ -48,12 +53,12 @@ void Network2::socketConnected()
 
     login_message.json = doc.toJson();
 
-
+    SendMessage(login_message);
 }
 
 void Network2::socketError()
 {
-
+    thread_.wait();
 }
 
 void Network2::SendData(const QByteArray &data)
@@ -82,6 +87,13 @@ void Network2::SendMessage(Message2 message)
     data.append(json);
 
     SendData(data);
+}
+
+bool Network2::IsMessageAvailable()
+{
+    QMutexLocker locker(&queue_mutex_);
+
+    return received_messages_.size() > 0;
 }
 
 void Network2::PushMessage(Message2 message)

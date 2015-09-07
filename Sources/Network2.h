@@ -57,6 +57,7 @@ public:
 
     void Disconnect();
 
+    bool IsMessageAvailable();
     Message2 PopMessage();
 public slots:
     void socketConnected();
@@ -86,4 +87,5 @@ private:
     NetworkState state_;
 
     SocketReader reader_;
+    QThread thread_;
 };
