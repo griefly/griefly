@@ -22,9 +22,13 @@ class SocketReader: public QObject
     Q_OBJECT
 public:
     SocketReader(Network2* network);
+signals:
+    void firstMessage();
 public slots:
     void process();
 private:
+    bool is_first_message_;
+
     qint32 message_size_;
     qint32 message_type_;
 
@@ -51,7 +55,7 @@ public:
 
     bool IsGood();
 
-    void Connect(QString host, int port, QString login, QString password);
+    void TryConnect(QString host, int port, QString login, QString password);
 
     void SendMessage(Message2 message);
 

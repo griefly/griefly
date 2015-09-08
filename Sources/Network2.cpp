@@ -17,6 +17,8 @@ Network2 &Network2::GetInstance()
 Network2::Network2()
     : reader_(this)
 {
+    state_ = NetworkState::NOT_CONNECTED;
+
     net_codec_ = QTextCodec::codecForName("UTF-8");
 
     connect(&socket_, &QTcpSocket::connected, this, &Network2::socketConnected);
@@ -25,7 +27,7 @@ Network2::Network2()
     connect(&thread_, &QThread::started, &reader_, &SocketReader::process);
 }
 
-void Network2::Connect(QString host, int port, QString login, QString password)
+void Network2::TryConnect(QString host, int port, QString login, QString password)
 {
     socket_.connectToHost(host, port);
 }
@@ -34,7 +36,9 @@ void Network2::Connect(QString host, int port, QString login, QString password)
 #define KV_STR(x) KV_XSTR(x)
 
 void Network2::socketConnected()
-{    
+{
+    state_ = NetworkState::CONNECTING;
+
     SendData("S132");
 
     thread_.start();
@@ -59,6 +63,7 @@ void Network2::socketConnected()
 void Network2::socketError()
 {
     thread_.wait();
+    state_ = NetworkState::NOT_CONNECTED;
 }
 
 void Network2::SendData(const QByteArray &data)
@@ -111,14 +116,16 @@ Message2 Network2::PopMessage()
 }
 
 SocketReader::SocketReader(Network2* network)
-    : network_(network),
-      state_(ReadingState::HEADER)
+    : network_(network)
 {
 
 }
 
 void SocketReader::process()
 {
+    state_ = ReadingState::HEADER;
+    is_first_message_ = true;
+
     while (network_->socket_.isValid())
     {
         if (!network_->socket_.waitForReadyRead(200))
@@ -185,4 +192,10 @@ void SocketReader::HandleBody()
     }
 
     state_ = ReadingState::HEADER;
+
+    if (is_first_message_)
+    {
+        emit firstMessage();
+        is_first_message_ = false;
+    }
 }
