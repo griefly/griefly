@@ -22,6 +22,10 @@ Network2::Network2()
     net_codec_ = QTextCodec::codecForName("UTF-8");
 
     connect(&socket_, &QTcpSocket::connected, this, &Network2::socketConnected);
+    connect(&socket_,
+            static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error),
+            this,
+            &Network2::socketError);
 
     reader_.moveToThread(&thread_);
     connect(&thread_, &QThread::started, &reader_, &SocketReader::process);
@@ -31,7 +35,11 @@ Network2::Network2()
 
 void Network2::TryConnect(QString host, int port, QString login, QString password)
 {
+    login_ = login;
+    password_ = password;
     socket_.connectToHost(host, port);
+
+    qDebug() << "TryConnect()";
 }
 
 #define KV_XSTR(x) #x
@@ -39,6 +47,7 @@ void Network2::TryConnect(QString host, int port, QString login, QString passwor
 
 void Network2::socketConnected()
 {
+    qDebug() << "socketConnected()";
     state_ = NetworkState::CONNECTING;
 
     SendData("S132");
@@ -49,8 +58,8 @@ void Network2::socketConnected()
     login_message.type = MessageType::INITAL_LOGIN_MESSAGE;
 
     QJsonObject obj;
-    obj["login"] = QString("Guest");
-    obj["password"] = QString("");
+    obj["login"] = login_;
+    obj["password"] = password_;
 
     // It is compile time macro with version (/D or -D)
     obj["game_version"] = QString(KV_STR(DEFINED_VERSION));
@@ -64,6 +73,7 @@ void Network2::socketConnected()
 
 void Network2::socketError()
 {
+    qDebug() << "socketError()";
     thread_.wait();
     state_ = NetworkState::NOT_CONNECTED;
 }

@@ -14,8 +14,9 @@
 #include "qtopengl.h"
 
 #include "Chat.h"
-
+#include "Network2.h"
 #include <QDebug>
+#include <QString>
 
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
@@ -104,6 +105,15 @@ void MainForm::startGameLoop()
     return;
 }
 
+void MainForm::connectToHost()
+{
+    std::string adrs = "127.0.0.1";
+    if (GetParamsHolder().GetParamBool("ip"))
+        adrs = GetParamsHolder().GetParam<std::string>("ip");
+
+    Network2::GetInstance().TryConnect(QString::fromStdString(adrs), 1111, "Guest", "");
+}
+
 void MainForm::on_lineEdit_returnPressed()
 {
     static bool connected = false;
@@ -111,7 +121,9 @@ void MainForm::on_lineEdit_returnPressed()
     {
         connected = true;
         ui->lineEdit->clear();
-        startGameLoop();
+       // startGameLoop();
+        connectToHost();
+
         return;
     }
 

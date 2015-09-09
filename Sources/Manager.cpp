@@ -29,11 +29,13 @@
 #include "IMovable.h"
 #include "Human.h"
 #include "LoginMob.h"
-#include "Lobby.h"""
+#include "Lobby.h"
 
 #include "AutogenMetadata.h"
 
 #include "qtopengl.h"
+
+#include "Network2.h"
 
 #include <QCoreApplication>
 

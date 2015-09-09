@@ -32,6 +32,8 @@ signals:
 private:
     void startGameLoop();
 
+    void connectToHost();
+
     QTimer* activeTimer;
 
     int left_column;

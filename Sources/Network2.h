@@ -73,6 +73,9 @@ signals:
     void connected();
 
 private:
+    QString login_;
+    QString password_;
+
     void SendData(const QByteArray& data);
 
     QTextCodec* net_codec_;
