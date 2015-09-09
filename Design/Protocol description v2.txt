@@ -81,20 +81,20 @@ type: INITAL LOGIN MESSAGE
 b) WRONG GAME VERSION
  from SERVER to CLIENT
 type: WRONG GAME VERSION
-{"result" : "game_version_error", "correct_game_version" : "v0.2.2"}
+{"correct_game_version" : "v0.2.2"}
 -> connection closed
 
 a) WRONG LOGIN OR PASSWORD
  from SERVER to CLIENT
 type: WRONG AUTHENTICATION
-{"result" : "authentication_error"}
+(empty)
 -> connection closed
 
 c) MASTER CLIENT DOES NOT EXIST
  from SERVER to CLIENT
 Server creates new client, gives number to him
 type: SUCCESS CONNECTION
-{"result" : "success", "map" : "no_map", "your_id" : 42}
+{"map" : "no_map", "your_id" : 42}
 New client now master client
 
 d) MASTER CLIENT EXISTS AND "login" DOES NOT HAVE ID
@@ -111,7 +111,7 @@ Server creates new client, gives number to him
 
  from SERVER to CLIENT
 type: SUCCESS CONNECTION
-{"result" : "success", "map" : "grief.ly/blah", "your_id" : 42}
+{"map" : "grief.ly/blah", "your_id" : 42}
 
 c) MASTER CLIENT EXISTS AND "login" DOES HAVE ID
 Server uses existing client info, takes number from that info
@@ -122,14 +122,14 @@ Server uses existing client info, takes number from that info
 
  from SERVER to CLIENT
 type: SUCCESS CONNECTION
-{"result" : "success", "map" : "grief.ly/blah", "your_id" : 24}
+{"map" : "grief.ly/blah", "your_id" : 24}
 
 d) UNDEFINED ERROR
 For example, during the process master client disconnects, or something else
 
  from SERVER to CLIENT
  type UNDEFINED ERROR
-{"result" : "undefined_error"}
+(empty)
 
 ////////////////////////////////
 END OF LOGIN STAGE
