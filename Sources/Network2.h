@@ -67,6 +67,8 @@ public slots:
     void socketConnected();
     void socketError();
 
+    void firstMessage();
+
 signals:
     void connected();
 

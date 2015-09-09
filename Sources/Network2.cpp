@@ -25,6 +25,8 @@ Network2::Network2()
 
     reader_.moveToThread(&thread_);
     connect(&thread_, &QThread::started, &reader_, &SocketReader::process);
+
+    connect(&reader_, &SocketReader::firstMessage, this, &Network2::firstMessage);
 }
 
 void Network2::TryConnect(QString host, int port, QString login, QString password)
@@ -64,6 +66,31 @@ void Network2::socketError()
 {
     thread_.wait();
     state_ = NetworkState::NOT_CONNECTED;
+}
+
+void Network2::firstMessage()
+{
+    Message2 m = PopMessage();
+
+    switch (m.type)
+    {
+    case MessageType::WRONG_GAME_VERSION:
+        qDebug() << "Wrong game version";
+        qDebug() << m.json;
+        break;
+    case MessageType::WRONG_AUTHENTICATION:
+        qDebug() << "Wrong authentication";
+        qDebug() << m.json;
+        break;
+    case MessageType::SUCCESS_CONNECTION:
+        qDebug() << "Success";
+        qDebug() << m.json;
+        break;
+    default:
+        qDebug() << "Unknown message type: " << m.type;
+        qDebug() << m.json;
+        break;
+    }
 }
 
 void Network2::SendData(const QByteArray &data)
