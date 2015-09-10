@@ -76,6 +76,9 @@ protocol version, 4 bytes ("S132")
 type: INITAL LOGIN MESSAGE
 {"login" : "Someone", "password" : "12345", "game_version" : "v0.2.1"}
 
+Note: if "login" == "Guest" then server should interpret this login as random not used login
+ with empty ("") password, for example "Guest4242". Authentication will be always successful.
+
 3.
 (It is better to check game version first always)
 b) WRONG GAME VERSION
@@ -84,7 +87,7 @@ type: WRONG GAME VERSION
 {"correct_game_version" : "v0.2.2"}
 -> connection closed
 
-a) WRONG LOGIN OR PASSWORD
+a) WRONG LOGIN OR PASSWORD 
  from SERVER to CLIENT
 type: WRONG AUTHENTICATION
 (empty)
