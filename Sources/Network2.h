@@ -73,6 +73,8 @@ signals:
     void connected();
 
 private:
+    void HandleSuccessConnection(Message2 message);
+
     QString login_;
     QString password_;
 

@@ -95,12 +95,22 @@ void Network2::firstMessage()
     case MessageType::SUCCESS_CONNECTION:
         qDebug() << "Success";
         qDebug() << m.json;
+        HandleSuccessConnection(m);
         break;
     default:
         qDebug() << "Unknown message type: " << m.type;
         qDebug() << m.json;
         break;
     }
+}
+
+void Network2::HandleSuccessConnection(Message2 message)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(message.json.toUtf8());
+    QJsonObject obj = doc.object();
+
+    qDebug() << obj["map"];
+    qDebug() << obj["your_id"];
 }
 
 void Network2::SendData(const QByteArray &data)
