@@ -157,6 +157,8 @@ from SERVER to ALL CLIENTS (even inital client):
  type: X
 {"id" : 42, some json}
 
+"id" - number of initial client (message sender)
+
 2.
 
 Each T milliseconds (now T is 100, 10 messages per second)
