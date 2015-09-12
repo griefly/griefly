@@ -71,9 +71,13 @@ public slots:
 
 signals:
     void connected();
-
+    void readyToStart();
+    void downloadMapRequest();
 private:
     void HandleSuccessConnection(Message2 message);
+
+    QString map_;
+    int your_id_;
 
     QString login_;
     QString password_;

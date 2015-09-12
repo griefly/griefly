@@ -111,6 +111,18 @@ void Network2::HandleSuccessConnection(Message2 message)
 
     qDebug() << obj["map"];
     qDebug() << obj["your_id"];
+
+    map_ = obj["map"].toString();
+    your_id_ = obj["your_id"].toInt();
+
+    if (map_ == "no_map")
+    {
+        emit readyToStart();
+    }
+    else
+    {
+        emit downloadMapRequest();
+    }
 }
 
 void Network2::SendData(const QByteArray &data)
