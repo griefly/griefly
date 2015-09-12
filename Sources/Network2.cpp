@@ -5,6 +5,8 @@
 
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonValue>
+#include <QJsonValueRef>
 
 #include "NetworkMessagesTypes.h"
 
@@ -113,7 +115,9 @@ void Network2::HandleSuccessConnection(Message2 message)
     qDebug() << obj["your_id"];
 
     map_ = obj["map"].toString();
-    your_id_ = obj["your_id"].toInt();
+
+    QJsonValue val = obj["your_id"];
+    your_id_ = val.toInt();
 
     if (map_ == "no_map")
     {
