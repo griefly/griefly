@@ -269,7 +269,7 @@ void Manager::checkMoveMob()
 
 void Manager::processInput()
 {
-    GetQApp()->processEvents(QEventLoop::AllEvents, 40);
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
     if (!auto_player_)
         return;
     int w = GetGLWidget()->width();
