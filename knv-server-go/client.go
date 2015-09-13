@@ -44,7 +44,7 @@ type Registry struct {
 }
 
 func newRegistry(as *AssetServer) *Registry {
-	return &Registry{0, make(map[int]chan *Envelope), make(map[string]PlayerInfo), -1,
+	return &Registry{1, make(map[int]chan *Envelope), make(map[string]PlayerInfo), -1,
 		make(chan PlayerEnvelope), make(chan int), make(chan *Envelope), nil, as}
 }
 
@@ -96,10 +96,17 @@ func (r *Registry) Run() {
 	for {
 		select {
 		case m := <-r.inbox:
+			frv, ok := m.Message.(Forwardable)
+			if !ok {
+				log.Printf("registry: cannot set id for message while forwarding it, dropping. ID: %d, type: %s",
+					m.From, m.Message.TypeName())
+				continue
+			}
+			frv.SetID(m.From)
 			r.sendAll(m)
 		case <-r.ticker.C:
 			m := &MessageNewTick{}
-			e := &Envelope{m, MsgidNewTick}
+			e := &Envelope{m, MsgidNewTick, 0}
 			r.sendAll(e)
 		case newPlayer := <-r.newPlayers:
 			r.registerPlayer(newPlayer)
@@ -140,14 +147,14 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		var mapUploadURL string
 		mapUploadURL, mapDownloadURL = r.assetServer.MakePipe()
 		m := &MessageMapUpload{mapUploadURL}
-		e := &Envelope{m, MsgidMapUpload}
+		e := &Envelope{m, MsgidMapUpload, 0}
 		r.sendMaster(e)
 	}
 
 	if !existed {
 		// create player on maps
 		newm := &MessageNewClient{id}
-		e := &Envelope{newm, MsgidNewClient}
+		e := &Envelope{newm, MsgidNewClient, 0}
 		r.sendAll(e)
 		log.Printf("registry: creating new unit for client %d, login '%s'", id, m.Login)
 	}
@@ -184,5 +191,5 @@ func (r *Registry) removePlayer(id int) {
 
 func (r *Registry) cleanUp() {
 	r.players = make(map[string]PlayerInfo)
-	r.nextID = 0
+	r.nextID = 1
 }

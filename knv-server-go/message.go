@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"strconv"
 )
 
 const (
@@ -19,13 +20,18 @@ type Message interface {
 	TypeName() string
 }
 
+type Forwardable interface {
+	SetID(int)
+}
+
 type Envelope struct {
 	Message
 	Kind uint32
+	From int
 }
 
 var (
-	emptyMessage = MessageEmpty{}
+	emptyMessage = &MessageEmpty{}
 )
 
 func getConcreteMessage(id uint32) Message {
@@ -54,33 +60,42 @@ func getConcreteMessage(id uint32) Message {
 	case id == MsgidWrongAuth:
 		return &ErrmsgWrongAuth{}
 	case id >= 1000:
-		return &OpaqueMessage{}
+		m := make(map[string]json.RawMessage)
+		return OpaqueMessage(m)
 	}
 	return nil
 }
 
+type MessageIDEmbed struct {
+	ID int `json:"id"`
+}
+
+func (m *MessageIDEmbed) SetID(id int) {
+	m.ID = id
+}
+
 type MessageEmpty struct{}
 
-func (m MessageEmpty) TypeName() string {
+func (m *MessageEmpty) TypeName() string {
 	return "<empty>"
 }
 
 type MessageInput struct {
-	ID  int    `json:"id"`
+	MessageIDEmbed
 	Key string `json:"key"`
 }
 
-func (m MessageInput) TypeName() string {
+func (m *MessageInput) TypeName() string {
 	return "MessageInput"
 }
 
 type MessageChat struct {
-	ID   int    `json:"id"`
+	MessageIDEmbed
 	Type string `json:"type"`
 	Text string `json:"text"`
 }
 
-func (m MessageChat) TypeName() string {
+func (m *MessageChat) TypeName() string {
 	return "MessageChat"
 }
 
@@ -90,7 +105,7 @@ type MessageLogin struct {
 	GameVersion string `json:"game_version"`
 }
 
-func (m MessageLogin) TypeName() string {
+func (m *MessageLogin) TypeName() string {
 	return "MessageLogin"
 }
 
@@ -99,7 +114,7 @@ type MessageSuccessfulConnect struct {
 	MapURL string `json:"map"`
 }
 
-func (m MessageSuccessfulConnect) TypeName() string {
+func (m *MessageSuccessfulConnect) TypeName() string {
 	return "MessageSuccessfulConnect"
 }
 
@@ -107,21 +122,21 @@ type MessageMapUpload struct {
 	MapURL string `json:"url_to_upload_map"`
 }
 
-func (m MessageMapUpload) TypeName() string {
+func (m *MessageMapUpload) TypeName() string {
 	return "MessageMapUpload"
 }
 
 type MessageNewTick struct{}
 
-func (m MessageNewTick) TypeName() string {
+func (m *MessageNewTick) TypeName() string {
 	return "MessageNewTick"
 }
 
 type MessageNewClient struct {
-	ID int
+	ID int `json:"id"`
 }
 
-func (m MessageNewClient) TypeName() string {
+func (m *MessageNewClient) TypeName() string {
 	return "MessageNewClient"
 }
 
@@ -130,21 +145,24 @@ type ErrmsgWrongGameVersion struct {
 	CorrectVersion string `json:"correct_game_version"`
 }
 
-func (m ErrmsgWrongGameVersion) TypeName() string {
+func (m *ErrmsgWrongGameVersion) TypeName() string {
 	return "ErrmsgWrongGameVersion"
 }
 
 type ErrmsgWrongAuth struct {
 }
 
-func (m ErrmsgWrongAuth) TypeName() string {
+func (m *ErrmsgWrongAuth) TypeName() string {
 	return "ErrmsgWrongAuth"
 }
 
-type OpaqueMessage struct {
-	json.RawMessage
-}
+type OpaqueMessage map[string]json.RawMessage
 
 func (m OpaqueMessage) TypeName() string {
 	return "OpaqueMessage"
+}
+
+func (m OpaqueMessage) SetID(id int) {
+	strID := strconv.Itoa(id)
+	m["id"] = json.RawMessage(strID)
 }

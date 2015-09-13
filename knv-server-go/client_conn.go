@@ -47,7 +47,7 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 	}
 
 	if length == 0 {
-		return &Envelope{emptyMessage, kind}, nil
+		return &Envelope{emptyMessage, kind, 0}, nil
 	}
 
 	// read body
@@ -64,7 +64,7 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 		return nil, err
 	}
 
-	return &Envelope{msg, kind}, nil
+	return &Envelope{msg, kind, 0}, nil
 }
 
 func (c *ClientConnection) writeMessage(e *Envelope) error {
@@ -104,6 +104,7 @@ func (c *ClientConnection) reciever() {
 			return
 		}
 
+		e.From = c.id
 		c.reg.RecvMessage(e)
 	}
 }
@@ -144,7 +145,7 @@ func (c *ClientConnection) Run() {
 		log.Printf("client: version mismatch. Server version: '%s', client version: '%s'",
 			clientVersionBuild, login.GameVersion)
 		msg := &ErrmsgWrongGameVersion{CorrectVersion: clientVersionBuild}
-		reply := &Envelope{msg, MsgidWrongGameVersion}
+		reply := &Envelope{msg, MsgidWrongGameVersion, 0}
 		c.writeMessage(reply)
 		return
 	}
@@ -158,7 +159,7 @@ func (c *ClientConnection) Run() {
 
 	if master {
 		msg := &MessageSuccessfulConnect{MapURL: "no_map", ID: c.id}
-		e := &Envelope{msg, MsgidSuccessfulConnect}
+		e := &Envelope{msg, MsgidSuccessfulConnect, 0}
 		err = c.writeMessage(e)
 
 		if err != nil {
@@ -168,7 +169,7 @@ func (c *ClientConnection) Run() {
 		}
 	} else {
 		msg := &MessageSuccessfulConnect{MapURL: mapDownloadURL, ID: c.id}
-		e := &Envelope{msg, MsgidSuccessfulConnect}
+		e := &Envelope{msg, MsgidSuccessfulConnect, 0}
 		err = c.writeMessage(e)
 
 		if err != nil {
