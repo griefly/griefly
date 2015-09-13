@@ -56,12 +56,17 @@ func (as *AssetServer) MakePipe() (input, output string) {
 	pipe := NewPipe(readID, writeID)
 	as.pipes[readID] = pipe
 	as.pipes[writeID] = pipe
-	return as.makePipeURL(readID), as.makePipeURL(writeID)
+	return as.makePipeURL(writeID), as.makePipeURL(readID)
 }
 
 func (as *AssetServer) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
 	id := req.URL.Query().Get("id")
+
+	if id == "" {
+		http.Error(rw, "", http.StatusForbidden)
+		return
+	}
 
 	as.pipeMutex.Lock()
 	pipe, ok := as.pipes[id]
@@ -147,6 +152,7 @@ func (as *AssetServer) pipeUpload(rw http.ResponseWriter, req *http.Request, id 
 		info.Err = err
 		pipe.info <- info
 	}
+	pipe.Close()
 }
 
 type PipeInfo struct {

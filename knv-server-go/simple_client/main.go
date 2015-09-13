@@ -2,12 +2,15 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"math/rand"
 	"net"
+	"net/http"
 	"strconv"
 	"time"
 )
@@ -94,7 +97,61 @@ func main() {
 			fmt.Println("failed to read message:", err)
 			break
 		}
+
 		fmt.Printf("msg of %d: %v\n", kind, msg)
+		if kind == 202 {
+			// upload "map"
+			data := "hello world!"
+			url := msg["url_to_upload_map"].(string)
+			req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(data)))
+			req.Header.Set("Content-Length", strconv.Itoa(len(data)))
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println("uploading map")
+			resp, err := http.DefaultClient.Do(req)
+			if err != nil {
+				fmt.Println("failed to upload map:", err)
+			}
+			if resp.StatusCode != 200 {
+				body, _ := ioutil.ReadAll(resp.Body)
+				fmt.Printf("failed to upload map: code %d, content: %s\n", resp.StatusCode, string(body))
+			}
+			fmt.Println("upload done!")
+			resp.Body.Close()
+		}
+
+		if kind == 201 {
+			// download "map" if needed
+			url := msg["map"].(string)
+			if url == "no_map" {
+				continue
+			}
+
+			fmt.Println("downloading map")
+			resp, err := http.Get(url)
+			if err != nil {
+				fmt.Println("failed to download map:", err)
+			}
+			data, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				fmt.Println("failed to download map:", err)
+			}
+			resp.Body.Close()
+
+			length, err := strconv.Atoi(resp.Header.Get("Content-Length"))
+			if err != nil {
+				fmt.Println("failed to parse content-length:", err)
+			} else {
+				if length != len(data) {
+					fmt.Printf("content length mismatch! Header: %d, real: %d\n", length, len(data))
+				}
+			}
+
+			fmt.Println("got map!: ", string(data))
+		}
+
 		if counter%10 == 4 {
 			fmt.Println("sending random message")
 			writeMessage(remote, 1001, makeRandomMessage(counter))

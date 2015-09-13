@@ -6,9 +6,12 @@ import (
 )
 
 const (
-	NEXTTICK            = 100 * time.Millisecond
 	PlayerQueueLength   = 32
 	RegistryQueueLength = 8
+)
+
+var (
+	TickInterval = 100 * time.Millisecond
 )
 
 type newPlayerReply struct {
@@ -92,7 +95,7 @@ func (r *Registry) sendMaster(m *Envelope) {
 }
 
 func (r *Registry) Run() {
-	r.ticker = time.NewTicker(NEXTTICK)
+	r.ticker = time.NewTicker(TickInterval)
 
 	for {
 		select {
