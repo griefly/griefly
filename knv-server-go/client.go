@@ -148,6 +148,13 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		r.masterID = id
 		master = true
 	} else {
+		if !existed {
+			// create player on maps
+			newm := &MessageNewClient{id}
+			e := &Envelope{newm, MsgidNewClient, 0}
+			r.sendAll(e)
+			log.Printf("registry: creating new unit for client %d, login '%s'", id, m.Login)
+		}
 		// immediately request map for new player
 		var mapUploadURL string
 		mapUploadURL, mapDownloadURL = r.assetServer.MakePipe()
@@ -155,14 +162,6 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		e := &Envelope{m, MsgidMapUpload, 0}
 		log.Printf("registry: requesting master %d to send map", r.masterID)
 		r.sendMaster(e)
-	}
-
-	if !existed {
-		// create player on maps
-		newm := &MessageNewClient{id}
-		e := &Envelope{newm, MsgidNewClient, 0}
-		r.sendAll(e)
-		log.Printf("registry: creating new unit for client %d, login '%s'", id, m.Login)
 	}
 
 	response := newPlayerReply{id: id, master: master, mapDownloadURL: mapDownloadURL, inbox: inbox}
