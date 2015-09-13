@@ -1,139 +1,110 @@
 package main
 
 import (
-	"bytes"
+	"bufio"
+	"encoding/binary"
+	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net"
-	"strconv"
 )
+
+const (
+	MaxMessageLength  = 1 * 1024 * 1024 // 1M
+	ProtoVersionMagic = "S131"
+)
+
+type MessageIsTooLongError int
+
+func (m MessageIsTooLongError) Error() string {
+	return fmt.Sprintf("message is too long: %d", int(m))
+}
 
 type ClientConnection struct {
 	conn     net.Conn
+	bufConn  *bufio.ReadWriter
 	reg      *Registry
-	inbox    chan Message
+	inbox    chan *Envelope
 	readErrs chan error
 
-	id     int
-	master bool
-	gameId string
+	id int
 }
 
-func (c *ClientConnection) readMessage() (Message, error) {
-	lengthStr, err := readUntil(c.conn, ' ')
+func (c *ClientConnection) readMessage() (*Envelope, error) {
+	// read header
+	var header [8]byte
+	_, err := io.ReadAtLeast(c.bufConn, header[:], len(header))
 	if err != nil {
-		return Message{}, err
+		return nil, err
 	}
 
-	length, err := strconv.Atoi(string(lengthStr))
+	length := int(binary.BigEndian.Uint32(header[:4]))
+	kind := binary.BigEndian.Uint32(header[4:])
+
+	if length > MaxMessageLength {
+		return nil, MessageIsTooLongError(length)
+	}
+
+	if length == 0 {
+		return &Envelope{emptyMessage, kind}, nil
+	}
+
+	// read body
+	buf := make([]byte, length)
+	_, err = io.ReadAtLeast(c.bufConn, buf, length)
+
 	if err != nil {
-		return Message{}, err
+		return nil, err
 	}
 
-	// TODO: buffer cache
-	data := make([]byte, 0, length)
-	buf := bytes.NewBuffer(data)
-
-	_, err = io.CopyN(buf, c.conn, int64(length))
+	msg := getConcreteMessage(kind)
+	err = json.Unmarshal(buf, msg)
 	if err != nil {
-		return Message{}, err
+		return nil, err
 	}
 
-	data = buf.Bytes()
-
-	var m Message
-	// read message fields
-	var n int
-	// read msg number
-	n = bytes.IndexByte(data, ' ')
-	m.id, _ = strconv.Atoi(string(data[:n]))
-	data = data[n+1:]
-
-	// read from
-	n = bytes.IndexByte(data, ' ')
-	m.from = string(data[:n])
-	data = data[n+1:]
-
-	// read to
-	n = bytes.IndexByte(data, ' ')
-	m.to = string(data[:n])
-	data = data[n+1:]
-
-	// read type
-	n = bytes.IndexByte(data, ' ')
-	m.t = string(data[:n])
-	data = data[n+1:]
-
-	// set content
-	m.content = data
-
-	if m.t == "system" && string(m.content) == "hash" {
-	} else {
-		//log.Printf("client[%d]: recieved message: %s", c.id, m.String())
-	}
-	return m, nil
+	return &Envelope{msg, kind}, nil
 }
 
-func (c *ClientConnection) writeMessage(m Message) error {
+func (c *ClientConnection) writeMessage(e *Envelope) error {
+	var buf []byte
+	var err error
 
-	if m.from == "" {
-		m.from = "-1"
-	}
-	if m.to == "" {
-		m.to = "-1"
-	}
-	if m.t == "" {
-		m.t = "-1"
-	}
-	if len(m.content) == 0 {
-		m.content = []byte("-1")
+	if e.Message != emptyMessage {
+		buf, err = json.Marshal(e.Message)
+		if err != nil {
+			return err
+		}
 	}
 
-	if m.t == "system" && string(m.content) == "hash" {
-	} else if m.t == "ordinary" && string(m.content) == "nexttick" {
-	} else {
-		//log.Printf("client[%d]: sending message: %s", c.id, m.String())
-	}
+	length := uint32(len(buf))
+	var header [8]byte
+	binary.BigEndian.PutUint32(header[:4], length)
+	binary.BigEndian.PutUint32(header[4:], e.Kind)
 
-	// 4 = len of four spaces inbetween
-	mid := strconv.Itoa(m.id)
-	headerLen := len(mid) + len(m.from) + len(m.to) + len(m.t) + len(m.content) + 4
-	header := strconv.Itoa(headerLen) + " " + mid + " " + m.from + " " + m.to + " " + m.t + " "
-
-	// write header
-	_, err := c.conn.Write([]byte(header))
+	_, err = c.bufConn.Write(header[:])
 	if err != nil {
 		return err
 	}
 
-	// write content
-	_, err = io.Copy(c.conn, bytes.NewBuffer(m.content))
+	_, err = c.bufConn.Write(buf)
 	if err != nil {
 		return err
 	}
 
-	return nil
+	return c.bufConn.Writer.Flush()
 }
 
 func (c *ClientConnection) reciever() {
 	for {
-		m, err := c.readMessage()
+		e, err := c.readMessage()
 		if err != nil {
 			c.readErrs <- err
 			return
 		}
 
-		m.connId = c.id
-		if m.t == "ordinary" || m.t == "chat" {
-			m.to = c.gameId
-		}
-		if m.t == "system" && string(m.content) == "ping_request" {
-			m.content = []byte("ping_response")
-			c.inbox <- m
-			continue
-		}
-
-		c.reg.RecvMessage(m)
+		c.reg.RecvMessage(e)
 	}
 }
 
@@ -142,84 +113,72 @@ var clientVersionBuild string
 func (c *ClientConnection) Run() {
 	defer c.conn.Close()
 
+	var err error
+
+	var version = make([]byte, 4)
+	_, err = c.bufConn.Read(version)
+	if err != nil {
+		log.Println("client: error on reading version:", err)
+		return
+	}
+
+	if string(version) != ProtoVersionMagic {
+		log.Println("client: wrong protocol version:", string(version))
+		return
+	}
+
 	// read version
-	m, err := c.readMessage()
+	e, err := c.readMessage()
 	if err != nil {
-		log.Println("client: failed to read 'version' message:", err)
+		log.Println("client: failed to read initial login message:", err)
 		return
 	}
 
-	var clientVersion = string(m.content)
+	if e.Kind != MsgidLogin {
+		log.Println("client: invalid first message kind:", e.Kind)
+	}
 
-	log.Println("client: current version:", clientVersionBuild)
-	if clientVersion != clientVersionBuild {
-		log.Println("client: version mismatch:", clientVersion)
+	login := e.Message.(*MessageLogin)
+
+	if login.GameVersion != clientVersionBuild {
+		log.Printf("client: version mismatch. Server version: '%s', client version: '%s'",
+			clientVersionBuild, login.GameVersion)
+		msg := &ErrmsgWrongGameVersion{CorrectVersion: clientVersionBuild}
+		reply := &Envelope{msg, MsgidWrongGameVersion}
+		c.writeMessage(reply)
 		return
 	}
 
-	m.content = []byte("good_version")
-	err = c.writeMessage(m)
-	if err != nil {
-		log.Println("client: failed to send 'good version' response:", err)
-		return
-	}
-
-	// read hello
-	m, err = c.readMessage()
-	if err != nil {
-		log.Println("client: failed to read 'hello' message:", err)
-		return
-	}
-
-	log.Println("client: recieved hello")
-
-	c.gameId = m.from
 	log.Println("client: registering client")
-	c.id, c.master = c.reg.AddClient(m)
-	log.Println("client: registered as", c.id, "master?", c.master)
-	var nextInboxChan chan chan Message
-	if c.master {
-		// just respond with almost same message
-		// that client have reference map
-		log.Println("client: creating master...")
-		c.inbox = c.reg.CreateMasterPlayer(c.id)
-		log.Println("client: created master")
-		m.content = []byte("nomap")
-		err = c.writeMessage(m)
+	// TODO(mechmind): authenticate player
+	var mapDownloadURL string
+	var master bool
+	c.inbox, c.id, master, mapDownloadURL = c.reg.CreatePlayer(e)
+	log.Printf("client: registered as %d, is it master? %t", c.id, master)
+
+	if master {
+		msg := &MessageSuccessfulConnect{MapURL: "no_map", ID: c.id}
+		e := &Envelope{msg, MsgidSuccessfulConnect}
+		err = c.writeMessage(e)
+
 		if err != nil {
 			c.reg.RemovePlayer(c.id)
-			log.Println("client: failed to send hello response:", err)
+			log.Printf("client[%d]: failed to send hello response: %v", c.id, err)
 			return
 		}
 	} else {
-		// create new player
-		var mapChan chan Message
-		var lastID int
-		c.inbox, mapChan, nextInboxChan, c.gameId, lastID = c.reg.CreatePlayer(c.id)
-		// send 'map' message to client
-		waitMapM := Message{from: strconv.Itoa(lastID), to: c.gameId, t: "system",
-			content: []byte("map")}
-		err = c.writeMessage(waitMapM)
+		msg := &MessageSuccessfulConnect{MapURL: mapDownloadURL, ID: c.id}
+		e := &Envelope{msg, MsgidSuccessfulConnect}
+		err = c.writeMessage(e)
+
 		if err != nil {
 			c.reg.RemovePlayer(c.id)
-			log.Printf("client[%d]: failed to send waitmap message: %s", c.id, err.Error())
-			return
-		}
-		// wait for map from master
-		mapM := <-mapChan
-		// send map to client
-		err = c.writeMessage(mapM)
-		if err != nil {
-			c.reg.RemovePlayer(c.id)
-			log.Println("client[%d]: failed to send map message: %s", c.id, err.Error())
+			log.Printf("client[%d]: failed to send hello response: %v", c.id, err)
 			return
 		}
 	}
 
-	// login complete
-
-	var nextInbox chan Message
-	// run game loop
+	// login complete, run game loop
 	log.Printf("client[%d]: starting main loop", c.id)
 	go c.reciever()
 	for {
@@ -227,29 +186,28 @@ func (c *ClientConnection) Run() {
 		case m, ok := <-c.inbox:
 			if !ok {
 				// channel is empty, switch to next
-				log.Printf("client[%d]: switching channels...", c.id)
-				c.inbox = nextInbox
-			} else {
-				err := c.writeMessage(m)
-				if err != nil {
-					go c.reg.RemovePlayer(c.id)
-					log.Printf("client[%d]: sender failed to send message: %s", c.id, err.Error())
+				log.Printf("client[%d]: inbox closed, closing connection", c.id)
+				go c.reg.RemovePlayer(c.id)
+				return
+			}
+			err := c.writeMessage(m)
+			if err != nil {
+				go c.reg.RemovePlayer(c.id)
+				log.Printf("client[%d]: sender failed to send message: %s", c.id, err.Error())
 
-					// blackhole all writes for this client to prevent registry deadlock
-					for {
-						_, ok := <-c.inbox
-						if !ok {
-							break
-						}
+				// blackhole all writes for this client to prevent registry deadlock
+				for {
+					_, ok := <-c.inbox
+					if !ok {
+						break
 					}
-					return
 				}
+				return
 			}
 		case err = <-c.readErrs:
 			c.reg.RemovePlayer(c.id)
 			log.Printf("client[%d]: reciever failed to read message: %s", c.id, err.Error())
 			return
-		case nextInbox = <-nextInboxChan:
 		}
 	}
 }
@@ -260,8 +218,6 @@ func ListenAndServe(addr string, r *Registry) error {
 		return err
 	}
 
-	var version = make([]byte, 4)
-
 	for {
 		conn, err := socket.Accept()
 		if err != nil {
@@ -269,22 +225,8 @@ func ListenAndServe(addr string, r *Registry) error {
 			continue
 		}
 
-		_, err = conn.Read(version)
-		if err != nil {
-			log.Println("listener: error on reading version:", err)
-			conn.Close()
-			continue
-		}
-
-		var str_version = string(version)
-
-		if str_version != "S131" {
-			log.Println("listener: wrong protocol version:", str_version)
-			conn.Close()
-			continue
-		}
-
-		client := &ClientConnection{conn: conn, reg: r, id: -1}
+		bufrw := bufio.NewReadWriter(bufio.NewReader(conn), bufio.NewWriter(conn))
+		client := &ClientConnection{conn: conn, bufConn: bufrw, reg: r, id: -1}
 		go client.Run()
 	}
 }
