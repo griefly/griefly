@@ -44,12 +44,11 @@ func (as *AssetServer) MakePipe() (input, output string) {
 			continue
 		}
 
-		switch {
-		case readID == "":
+		if readID == "" {
 			readID = id
-		case writeID == "":
+		} else if writeID == "" {
 			writeID = id
-		default:
+		} else {
 			break
 		}
 	}

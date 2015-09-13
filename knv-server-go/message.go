@@ -60,8 +60,8 @@ func getConcreteMessage(id uint32) Message {
 	case id == MsgidWrongAuth:
 		return &ErrmsgWrongAuth{}
 	case id >= 1000:
-		m := make(map[string]json.RawMessage)
-		return OpaqueMessage(m)
+		m := OpaqueMessage(make(map[string]*json.RawMessage))
+		return &m
 	}
 	return nil
 }
@@ -156,13 +156,13 @@ func (m *ErrmsgWrongAuth) TypeName() string {
 	return "ErrmsgWrongAuth"
 }
 
-type OpaqueMessage map[string]json.RawMessage
+type OpaqueMessage map[string]*json.RawMessage
 
-func (m OpaqueMessage) TypeName() string {
+func (m *OpaqueMessage) TypeName() string {
 	return "OpaqueMessage"
 }
 
-func (m OpaqueMessage) SetID(id int) {
-	strID := strconv.Itoa(id)
-	m["id"] = json.RawMessage(strID)
+func (m *OpaqueMessage) SetID(id int) {
+	bytesID := json.RawMessage(strconv.Itoa(id))
+	(*m)["id"] = &bytesID
 }

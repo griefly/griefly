@@ -6,8 +6,9 @@ import (
 )
 
 const (
-	NEXTTICK          = 100 * time.Millisecond
-	PlayerQueueLength = 32
+	NEXTTICK            = 100 * time.Millisecond
+	PlayerQueueLength   = 32
+	RegistryQueueLength = 8
 )
 
 type newPlayerReply struct {
@@ -44,8 +45,8 @@ type Registry struct {
 }
 
 func newRegistry(as *AssetServer) *Registry {
-	return &Registry{1, make(map[int]chan *Envelope), make(map[string]PlayerInfo), -1,
-		make(chan PlayerEnvelope), make(chan int), make(chan *Envelope), nil, as}
+	return &Registry{1, make(map[int]chan *Envelope, RegistryQueueLength), make(map[string]PlayerInfo),
+		-1, make(chan PlayerEnvelope), make(chan int), make(chan *Envelope), nil, as}
 }
 
 // async api
@@ -130,6 +131,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		r.nextID++
 		info = PlayerInfo{id: id, login: m.Login}
 		r.players[m.Login] = info
+		log.Printf("registry: registered new id %d for player '%s'", id, m.Login)
 	}
 
 	// create inbox for client
@@ -148,6 +150,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		mapUploadURL, mapDownloadURL = r.assetServer.MakePipe()
 		m := &MessageMapUpload{mapUploadURL}
 		e := &Envelope{m, MsgidMapUpload, 0}
+		log.Printf("registry: requesting master %d to send map", r.masterID)
 		r.sendMaster(e)
 	}
 

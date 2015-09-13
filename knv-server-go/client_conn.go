@@ -12,7 +12,7 @@ import (
 
 const (
 	MaxMessageLength  = 1 * 1024 * 1024 // 1M
-	ProtoVersionMagic = "S131"
+	ProtoVersionMagic = "S132"
 )
 
 type MessageIsTooLongError int
@@ -33,8 +33,8 @@ type ClientConnection struct {
 
 func (c *ClientConnection) readMessage() (*Envelope, error) {
 	// read header
-	var header [8]byte
-	_, err := io.ReadAtLeast(c.bufConn, header[:], len(header))
+	header := make([]byte, 8)
+	_, err := io.ReadFull(c.bufConn, header)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 
 	// read body
 	buf := make([]byte, length)
-	_, err = io.ReadAtLeast(c.bufConn, buf, length)
+	_, err = io.ReadFull(c.bufConn, buf)
 
 	if err != nil {
 		return nil, err
@@ -227,7 +227,7 @@ func ListenAndServe(addr string, r *Registry) error {
 		}
 
 		bufrw := bufio.NewReadWriter(bufio.NewReader(conn), bufio.NewWriter(conn))
-		client := &ClientConnection{conn: conn, bufConn: bufrw, reg: r, id: -1}
+		client := &ClientConnection{conn: conn, bufConn: bufrw, reg: r, id: -1, readErrs: make(chan error)}
 		go client.Run()
 	}
 }
