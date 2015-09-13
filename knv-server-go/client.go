@@ -43,9 +43,9 @@ type Registry struct {
 	assetServer *AssetServer
 }
 
-func newRegistry() *Registry {
+func newRegistry(as *AssetServer) *Registry {
 	return &Registry{0, make(map[int]chan *Envelope), make(map[string]PlayerInfo), -1,
-		make(chan PlayerEnvelope), make(chan int), make(chan *Envelope), nil, nil}
+		make(chan PlayerEnvelope), make(chan int), make(chan *Envelope), nil, as}
 }
 
 // async api
