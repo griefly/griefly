@@ -65,6 +65,8 @@ They are used only in client (mostly)
 1002 - message
 1003 - some complicated gui message
 
+1101 - hash message
+
 PROTOCOL:
 
 I. LOGIN STAGE
