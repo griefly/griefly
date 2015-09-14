@@ -36,9 +36,9 @@ public slots:
 signals:
     void firstMessage();
     void connectionEnd();
-    void readyToStart(int your_id);
-    void downloadMapRequest();
+    void readyToStart(int your_id, QString map);
 private:
+    void DownloadMapRequest();
     void HandleSuccessConnection(Message2 m);
 
     QTcpSocket socket_;

@@ -178,7 +178,7 @@ void SocketHandler::socketConnected()
 {
     qDebug() << "socketConnected()";
 
-    SendData("S131");
+    SendData("S132");
 
     Message2 login_message;
     login_message.type = MessageType::INITAL_LOGIN_MESSAGE;
@@ -188,7 +188,7 @@ void SocketHandler::socketConnected()
     obj["password"] = password_;
 
     // It is compile time macro with version (/D or -D)
-    obj["game_version"] = QString("v0.1.1-100-gf12e");//QString(KV_STR(DEFINED_VERSION));
+    obj["game_version"] = QString("v0.1.1-105-g7ff0");//QString(KV_STR(DEFINED_VERSION));
 
     QJsonDocument doc(obj);
 
@@ -271,14 +271,19 @@ void SocketHandler::HandleSuccessConnection(Message2 message)
     QJsonValue val = obj["your_id"];
     your_id_ = val.toVariant().toInt();
 
+    DownloadMapRequest();
+}
+
+
+void SocketHandler::DownloadMapRequest()
+{
     if (map_ == "no_map")
     {
-        emit readyToStart(your_id_);
+        emit readyToStart(your_id_, map_);
+        return;
     }
-    else
-    {
-        emit downloadMapRequest();
-    }
+
+    // TODO
 }
 
 void SocketHandler::SendData(const QByteArray &data)
