@@ -10,6 +10,10 @@ Body structure:
 Json
 (utf8)
 
+Note:
+Body should not be empty.
+If there is not any data body should contains empty json object ("{}")
+
 Examples:
 
 System type:
