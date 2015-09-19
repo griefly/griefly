@@ -372,6 +372,8 @@ void ItemFabric::clearMap()
     add_to_process_.clear();
     remove_from_process_.clear();
     players_table_.clear();
+
+    id_ = 0;
 }
 
 void ItemFabric::BeginWorldCreation()

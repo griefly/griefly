@@ -40,12 +40,17 @@ bool IMovable::checkMove(Dir direct)
 
 void IMovable::ProcessForce()
 {
+
     Dir step = VDirToDir(force_);
 
     checkMove(step);
 
     if (!NonZero(force_))
         return;
+
+    // qDebug() << "Process force: " << GetId();
+    // qDebug() << force_.x;
+    // qDebug() << force_.y;
 
     VDir vstep = DirToVDir[step];
     force_.x -= (vstep.x * Friction::CombinedFriction(GetTurf())) / Friction::BASE_FRICTION;

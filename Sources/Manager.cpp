@@ -141,6 +141,8 @@ void Manager::process()
 
         if(process_in_ && !pause)
         {
+            ++MAIN_TICK;
+
             process_timer.Start();
             numOfDeer = 0;
             begin_of_process = SDL_GetTicks();
@@ -499,6 +501,14 @@ void Manager::initWorld(int id, std::string map_name)
         ss >> *str;
     }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);*/
 
+    GetTexts()["SyncTick"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << MAIN_TICK;
+        ss >> *str;
+    }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);
+
     /*GetTexts()["PingTimer"].SetUpdater
     ([&](std::string* str)
     {
@@ -580,7 +590,8 @@ void Manager::process_in_msg()
             process_in_ = true;
             break;
         }
-        if (msg.type == MessageType::ORDINARY)
+        if (   msg.type == MessageType::ORDINARY
+            || msg.type == MessageType::MOUSE_CLICK)
         {
             QJsonObject obj = Network2::ParseJson(msg);
             QJsonValue v = obj["id"];

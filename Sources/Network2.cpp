@@ -13,6 +13,8 @@
 
 #include "NetworkMessagesTypes.h"
 
+
+
 QJsonObject Network2::ParseJson(Message2 message)
 {
     QJsonDocument doc = QJsonDocument::fromJson(message.json.toUtf8());
@@ -131,7 +133,7 @@ void SocketHandler::process()
 
 void SocketHandler::handleNewData()
 {
-    qDebug() << "handleNewData()";
+    //qDebug() << "handleNewData()";
 
     QByteArray new_data = socket_.readAll();
 
@@ -179,7 +181,7 @@ void SocketHandler::HandleBody()
     QByteArray loc = buffer_.mid(HEADER_SIZE, message_size_);
     new_message.json = net_codec_->toUnicode(loc);
 
-    qDebug() << new_message.json;
+    //qDebug() << new_message.json;
 
     network_->PushMessage(new_message);
 

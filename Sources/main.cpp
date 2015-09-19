@@ -12,6 +12,8 @@
 
 int main(int argc, char *argv[])
 {   
+    qRegisterMetaType<Message2>();
+
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
     SetQApp(&app);

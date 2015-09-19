@@ -18,6 +18,8 @@ struct Message2
     QString json;
 };
 
+Q_DECLARE_METATYPE(Message2)
+
 class Network2;
 
 class SocketHandler: public QObject
