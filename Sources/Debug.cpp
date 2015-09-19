@@ -4,7 +4,6 @@
 #include "MainInt.h"
 
 #include "Manager.h"
-#include "NetClientImpl.h"
 
 #include "ItemFabric.h"
 
@@ -166,7 +165,8 @@ std::string Debug::Impl::UnsyncDebug::GetNextNameToSave(const std::string& folde
 
 bool Debug::Impl::UnsyncDebug::Save()
 {
-    if (NetClient::GetNetClient()->Hash() != GetItemFabric()->get_hash_last())
+    // TODO
+    /*if (NetClient::GetNetClient()->Hash() != GetItemFabric()->get_hash_last())
         ++counter_;
     else
         --counter_;
@@ -180,7 +180,7 @@ bool Debug::Impl::UnsyncDebug::Save()
     std::stringstream converter;
     converter << MAIN_TICK - HASH_OFTEN * AMOUNT;
     remove((DEFAULT_FOLDER + unique_name + SAVE_WITHOUT_NUMBER + converter.str()).c_str());
-    GetItemFabric()->saveMap(GetNextNameToSave(DEFAULT_FOLDER).c_str());
+    GetItemFabric()->saveMap(GetNextNameToSave(DEFAULT_FOLDER).c_str());*/
     return true;
 }
 

@@ -17,6 +17,8 @@ class MainForm : public QWidget
 public:
     explicit MainForm(QWidget *parent = 0);
     ~MainForm();
+public slots:
+    void startGameLoop(int id, QString map);
 protected:
     void resizeEvent(QResizeEvent* event);
 private slots:
@@ -30,7 +32,6 @@ signals:
     void autoConnect();
 
 private:
-    void startGameLoop();
 
     void connectToHost();
 

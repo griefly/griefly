@@ -19,4 +19,11 @@ namespace MessageType
     const int MAP_UPLOAD = 202;
     const int NEW_TICK = 203;
     const int NEW_CLIENT = 404;
+
+    // GAME MESSAGES
+    const int ORDINARY = 1001;
+
+    const int MOUSE_CLICK = 1004;
+
+    const int HASH = 1101;
 }

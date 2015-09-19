@@ -82,9 +82,12 @@ void LoginMob::processGUI()
 }
 
 
-void LoginMob::processGUImsg(const Message& msg)
+void LoginMob::processGUImsg(const Message2& msg)
 {
-    if (msg.text == LOGIN_CLICK)
+    QJsonObject obj = Network2::ParseJson(msg);
+
+    if (    msg.type == MessageType::ORDINARY
+         && Network2::IsKey(obj, LOGIN_CLICK))
     {
         if (GetLobby().GetSecondUntilStart() > 0)
         {
@@ -106,13 +109,13 @@ void LoginMob::processGUImsg(const Message& msg)
             }
         }
     }
-    if (msg.type == Net::CHAT_TYPE)
+   /* if (msg.type == Net::CHAT_TYPE)
     {
         if (Chat::IsOOCMessage(msg.text))
         {
             Chat::GetChat()->PostOOCText(name, msg.text.substr(3));
         }
-    }
+    }*/
 }
 
 void LoginMob::process()
@@ -150,9 +153,7 @@ bool LoginInterface::Click(int x, int y)
 
     if (is_tr)
     {
-        Message msg;
-        msg.text = LOGIN_CLICK;
-        NetClient::GetNetClient()->Send(msg);
+        Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(LOGIN_CLICK));
     }
 
     return is_tr;

@@ -9,6 +9,7 @@
 #include "sync_random.h"
 #include "Creator.h"
 #include "MagicStrings.h"
+#include "NetworkMessagesTypes.h"
 
 #include "Debug.h"
 
@@ -30,14 +31,18 @@ void ItemFabric::Sync()
 
         //Debug::UnsyncDebug().Save();
 
-        Message msg;
+        Message2 msg;
 
-        msg.type = Net::SYSTEM_TYPE;
-        msg.text = Net::HASH;
-        msg.from = hash_last_;
-        msg.to = static_cast<int>(MAIN_TICK);
+        msg.type = MessageType::HASH;
+        msg.json =
+                  "{\"hash\":"
+                + QString::number(hash_last_)
+                + ",\"tick\":"
+                + QString::number(MAIN_TICK)
+                + "}";
 
-        NetClient::GetNetClient()->Send(msg);
+        Network2::GetInstance().SendMsg(msg);
+
     }
 }
 

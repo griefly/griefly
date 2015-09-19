@@ -11,7 +11,7 @@ public:
     virtual void processImage(DrawType type) override;
     virtual bool IsTransp(int x, int y) override;
     virtual void CalculateVisible(std::list<point>* visible_list) override;
-    virtual void processGUImsg(const Message& msg) override;
+    virtual void processGUImsg(const Message2& msg) override;
 private:
     bool IsMobGhost();
 };

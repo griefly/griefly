@@ -16,6 +16,7 @@
 #include "Creator.h"
 #include "Clothes.h"
 #include "Floor.h"
+#include "NetworkMessagesTypes.h"
 
 Human::Human(size_t id) : IMob(id)
 {
@@ -67,26 +68,31 @@ bool Human::checkMove(Dir direct)
     return false;
 }
 
-void Human::processGUImsg(const Message& msg)
+void Human::processGUImsg(const Message2 &msg)
 {
+    QJsonObject obj = Network2::ParseJson(msg);
+
+
  //   IMob::processGUImsg(msg);
-    if (    !lying_
+    if (    msg.type == MessageType::ORDINARY
+         && !lying_
          && Friction::CombinedFriction(GetTurf())
         )
     {
         if (std::abs(force_.x) + std::abs(force_.y) + std::abs(force_.z) < 4)
         {
-            if (msg.text == Input::MOVE_UP)
+            if (Network2::IsKey(obj, Input::MOVE_UP))
                 ApplyForce(DirToVDir[D_UP]);
-            else if (msg.text == Input::MOVE_DOWN)
+            else if (Network2::IsKey(obj, Input::MOVE_DOWN))
                 ApplyForce(DirToVDir[D_DOWN]);
-            else if (msg.text == Input::MOVE_LEFT)
+            else if (Network2::IsKey(obj, Input::MOVE_LEFT))
                 ApplyForce(DirToVDir[D_LEFT]);
-            else if (msg.text == Input::MOVE_RIGHT)
+            else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
                 ApplyForce(DirToVDir[D_RIGHT]);
         }
     }
-    if (msg.type == Net::CHAT_TYPE)
+    // TODO
+    /*if (msg.type == Net::CHAT_TYPE)
     {
         //Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
         if (Chat::IsOOCMessage(msg.text))
@@ -98,9 +104,9 @@ void Human::processGUImsg(const Message& msg)
             Chat::GetChat()->PostWords(name, msg.text, owner->GetId());
         }
     }
-    else if (msg.text == Input::LEFT_CLICK)
+    else*/ if (msg.type == MessageType::MOUSE_CLICK)
     {
-        id_ptr_on<IOnMapObject> item = msg.from;
+        id_ptr_on<IOnMapObject> item = Network2::ExtractObjId(obj);
         if (item && item->GetOwner())
         {
 
@@ -137,7 +143,8 @@ void Human::processGUImsg(const Message& msg)
     }
     else
     {
-        interface_.HandleClick(msg.text);
+        // TODO
+        interface_.HandleClick(obj["key"].toString().toStdString());
     }
 
 }

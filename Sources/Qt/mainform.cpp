@@ -38,6 +38,8 @@ MainForm::MainForm(QWidget *parent) :
 
     SetMainWidget(this);
 
+    connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
+
     connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
     connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);
 
@@ -82,7 +84,7 @@ void MainForm::resizeEvent(QResizeEvent* event) {
     on_splitter_splitterMoved(0, 0);
 }
 
-void MainForm::startGameLoop()
+void MainForm::startGameLoop(int id, QString map)
 {
     ui->widget->show();
     on_splitter_splitterMoved(0, 0);
@@ -90,15 +92,11 @@ void MainForm::startGameLoop()
     if (GetParamsHolder().GetParamBool("-nodraw"))
         NODRAW = true;
 
-    std::string adrs = "127.0.0.1";
-    if (GetParamsHolder().GetParamBool("ip"))
-        adrs = GetParamsHolder().GetParam<std::string>("ip");
-
     if (GetParamsHolder().GetParamBool("name"))
         Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
 
-    Manager man(adrs);
-    man.initWorld();
+    Manager man;
+    man.initWorld(id, map.toStdString());
     if (GetParamsHolder().GetParamBool("-auto"))
         man.ToogleAutoplay();
     man.process();
@@ -121,9 +119,7 @@ void MainForm::on_lineEdit_returnPressed()
     {
         connected = true;
         ui->lineEdit->clear();
-       // startGameLoop();
         connectToHost();
-
         return;
     }
 
@@ -132,12 +128,13 @@ void MainForm::on_lineEdit_returnPressed()
         return;
     }
 
-    Message msg;
+    // TODO
+    /*Message msg;
     msg.type = Net::CHAT_TYPE;
     msg.text = ui->lineEdit->text().toStdString();
     if (msg.text.length() == 0)
         return;
-    NetClient::GetNetClient()->Send(msg);
+    NetClient::GetNetClient()->Send(msg);*/
     ui->lineEdit->clear();
 
     //ui->widget->setFocus();

@@ -19,7 +19,7 @@ public:
     void cautLastItem(Dir direct);
     void checkMove(Dir direct);
     void globalMove(int direct);
-    void initWorld();
+    void initWorld(int id, std::string map_name);
     void loadIniFile();
     void process();
     void checkMoveMob();
@@ -36,7 +36,7 @@ public:
 
     int threadPathfind(void* data);
 
-    Manager(std::string adrs);
+    Manager();
 
     bool isMove;
     int numOfDeer;
@@ -61,6 +61,7 @@ public:
 
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:
+    bool process_in_;
 
     std::string adrs_;
 

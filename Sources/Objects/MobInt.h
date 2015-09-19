@@ -16,7 +16,7 @@ public:
     virtual void InitGUI(){};
     virtual void DeinitGUI(){};
     virtual void processGUI();//draw
-    virtual void processGUImsg(const Message& msg) override;
+    virtual void processGUImsg(const Message2& msg) override;
     
     virtual void processPhysics() override;
 

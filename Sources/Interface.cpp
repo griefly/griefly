@@ -140,42 +140,42 @@ void HumanInterface::UpdateHealth()
 bool HumanInterface::Click(int x, int y)
 {
     helpers::normalize_pixels(&x, &y);
-    Message msg;
+    std::string msg;
     if (r_hand_.Click(x, y))
     {
-        msg.text = RIGHT_HAND;
+        msg = RIGHT_HAND;
     }
     else if (l_hand_.Click(x, y))
     {
-        msg.text = LEFT_HAND;
+        msg = LEFT_HAND;
     }
     else if (head_.Click(x, y))
     {
-        msg.text = HEAD;
+        msg = HEAD;
     }
     else if (suit_.Click(x, y))
     {
-        msg.text = SUIT;
+        msg = SUIT;
     }
     else if (feet_.Click(x, y))
     {
-        msg.text = FEET;
+        msg = FEET;
     }
     else if (uniform_.Click(x, y))
     {
-        msg.text = UNIFORM;
+        msg = UNIFORM;
     }
     else if (drop_.Click(x, y))
     {
-        msg.text = DROP;
+        msg = DROP;
     }
     else if (swap_.Click(x, y))
     {
-        msg.text = SWAP;
+        msg = SWAP;
     }
     else if (lay_.Click(x, y))
     {
-        msg.text = LAY;
+        msg = LAY;
     }
     else if (health_.Click(x, y))
     {
@@ -185,7 +185,9 @@ bool HumanInterface::Click(int x, int y)
     {
         return false;
     }
-    NetClient::GetNetClient()->Send(msg);
+
+    Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(msg));
+
     return true;
 }
 

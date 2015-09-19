@@ -5,6 +5,9 @@
 #include "MagicStrings.h"
 #include "Creator.h"
 
+
+#include "NetworkMessagesTypes.h"
+
 IMob::IMob(size_t id) : IMessageReceiver(id)
 {
     SetFreq(1);
@@ -26,15 +29,20 @@ void IMob::delThis()
     IOnMapObject::delThis();
 }
 
-void IMob::processGUImsg(const Message& msg)
+void IMob::processGUImsg(const Message2 &msg)
 {
-    if (msg.text == Input::MOVE_UP)
+    if (msg.type != MessageType::ORDINARY)
+        return;
+
+    QJsonObject obj = Network2::ParseJson(msg);
+
+    if (Network2::IsKey(obj, Input::MOVE_UP))
         checkMove(D_UP);
-    else if (msg.text == Input::MOVE_DOWN)
+    else if (Network2::IsKey(obj, Input::MOVE_DOWN))
         checkMove(D_DOWN);
-    else if (msg.text == Input::MOVE_LEFT)
+    else if (Network2::IsKey(obj, Input::MOVE_LEFT))
         checkMove(D_LEFT);
-    else if (msg.text == Input::MOVE_RIGHT)
+    else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
         checkMove(D_RIGHT);
 }
 

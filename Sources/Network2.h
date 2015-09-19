@@ -8,6 +8,9 @@
 #include <QMutex>
 #include <QTextCodec>
 #include <QByteArray>
+#include <QJsonObject>
+
+#include "NetworkMessagesTypes.h"
 
 struct Message2
 {
@@ -83,13 +86,20 @@ class Network2: public QObject
 public:
     friend class SocketHandler;
 
+    static QJsonObject ParseJson(Message2 message);
+
+    static bool IsKey(const QJsonObject& json, const std::string& key);
+    static size_t ExtractObjId(const QJsonObject& json);
+
     static Network2& GetInstance();
 
     bool IsGood();
 
     void TryConnect(QString host, int port, QString login, QString password);
 
-    void SendMessage(Message2 message);
+    void SendMsg(Message2 message);
+
+    void SendOrdinaryMessage(QString text);
 
     void Disconnect();
 
@@ -99,7 +109,7 @@ signals:
     void connectRequested(QString host, int port, QString login, QString password);
     void sendMessage(Message2 message);
     void disconnectRequested();
-
+    void connectionSuccess(int your_id, QString map);
 private:
     void PushMessage(Message2 message);
 

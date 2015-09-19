@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "MainInt.h"
-#include "NetClientImpl.h"
 
 enum DrawType {SAME, TOP};
 

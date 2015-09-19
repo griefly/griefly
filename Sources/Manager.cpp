@@ -7,7 +7,6 @@
 
 #include "mob_position.h"
 
-#include "NetClientImpl.h"
 #include "EffectSystem.h"
 #include "MoveEffect.h"
 #include "sync_random.h"
@@ -36,8 +35,10 @@
 #include "qtopengl.h"
 
 #include "Network2.h"
+#include "NetworkMessagesTypes.h"
 
 #include <QCoreApplication>
+#include <QJsonObject>
 
 int ping_send;
 
@@ -78,9 +79,8 @@ void Manager::undoCenterMove(Dir direct)
         }
 };
 
-Manager::Manager(std::string adrs)
+Manager::Manager()
 {
-    adrs_ = adrs;
     auto_player_ = false;
     visiblePoint = new std::list<point>;
     isMove = false;
@@ -113,7 +113,7 @@ void Manager::process()
     int lastTimeFps = SDL_GetTicks();
     int lastTimeC   = SDL_GetTicks();
     fps = 0;
-    bool process_in = false;
+    process_in_ = false;
     Timer tick_timer, draw_timer, process_timer, atmos_move_timer, force_timer;
     tick_timer.Start();
     draw_timer.Start();
@@ -129,17 +129,17 @@ void Manager::process()
     { 
 
         processInput();
-        if(NetClient::GetNetClient()->Ready() && !pause)
-        {
-            process_in = true;
+        //if(NetClient::GetNetClient()->Ready() && !pause)
+        //{
+        //    process_in = true;
             process_in_msg();
-            MAIN_TICK++;
-        }
+        //    MAIN_TICK++;
+        //}
 
         const int ATMOS_OFTEN = 1;
         const int ATMOS_MOVE_OFTEN = 1;
 
-        if(process_in && !pause)
+        if(process_in_ && !pause)
         {
             process_timer.Start();
             numOfDeer = 0;
@@ -212,8 +212,8 @@ void Manager::process()
             GetMapMaster()->numOfPathfind = 0;
         }
         ++fps;
-        process_in = false;
-        if (NetClient::GetNetClient()->Process() == false)
+        process_in_ = false;
+        if (Network2::GetInstance().IsGood() == false)
         {
 
         }
@@ -222,10 +222,11 @@ void Manager::process()
 
         if(SDL_GetTicks() - locTime > 100)
         {
-            if (GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash())
+            // TODO
+          /*  if (GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash())
                 GetTexts()["Sync"].SetColor(0, 255, 100);
             else
-                GetTexts()["Sync"].SetColor(255, 160, 0);
+                GetTexts()["Sync"].SetColor(255, 160, 0);*/
         }
         if (GetMainWidget()->isHidden())
         {
@@ -304,67 +305,69 @@ void Manager::ProcessClick(int mouse_x, int mouse_y)
     item = GetMapMaster()->click(mouse_x, mouse_y);
     if (item)
     {
-        Message msg;
-        msg.from = item.ret_id();
-        msg.text = Input::LEFT_CLICK;
-        NetClient::GetNetClient()->Send(msg);
+        Message2 msg;
+        msg.type = MessageType::MOUSE_CLICK;
+        msg.json = "{\"obj\":" + QString::number(item.ret_id()) + "}";
+
+        Network2::GetInstance().SendMsg(msg);
+
         last_touch = item->name;
     }
 }
 
 void Manager::HandleKeyboardDown(QKeyEvent* event)
 {
-    Message msg;
+    std::string text;
 
     int val = rand();
 
     if ((!event && (val % 100 == 1)) || (event && event->key() == Qt::Key_8) && (event->modifiers() == Qt::KeypadModifier))
     {
-        msg.text = Input::MOVE_UP;
+        text = Input::MOVE_UP;
     }
     else if ((!event && (val % 100 == 2)) || (event && event->key() == Qt::Key_2) && (event->modifiers() == Qt::KeypadModifier))
     {
-        msg.text = Input::MOVE_DOWN;
+        text = Input::MOVE_DOWN;
     }
     else if ((!event && (val % 100 == 3)) || (event && event->key() == Qt::Key_6) && (event->modifiers() == Qt::KeypadModifier))
     {
-        msg.text = Input::MOVE_RIGHT;
+        text = Input::MOVE_RIGHT;
     }
     else if ((!event && (val % 100 == 4)) || (event && event->key() == Qt::Key_4) && (event->modifiers() == Qt::KeypadModifier))
     {
-        msg.text = Input::MOVE_LEFT;
+        text = Input::MOVE_LEFT;
     }
     else if ((!event && (val % 100 == 5)) || (event && event->key() == Qt::Key_Up))
     {
-        msg.text = Input::MOVE_UP;
+        text = Input::MOVE_UP;
     }
     else if ((!event && (val % 100 == 6)) || (event && event->key() == Qt::Key_Down))
     {
-        msg.text = Input::MOVE_DOWN;
+        text = Input::MOVE_DOWN;
     }
     else if ((!event && (val % 100 == 7)) || (event && event->key() == Qt::Key_Right))
     {
-        msg.text = Input::MOVE_RIGHT;
+        text = Input::MOVE_RIGHT;
     }
     else if ((!event&& (val % 100 == 8)) || (event && event->key() == Qt::Key_Left))
     {
-        msg.text = Input::MOVE_LEFT;
+        text = Input::MOVE_LEFT;
     }
     else if ((!event && (val % 100 == 9)) || (event && event->key() == Qt::Key_Q))
     {
-        msg.text = Input::KEY_Q;
+        text = Input::KEY_Q;
     }
     else if ((!event && (val % 100 == 10)) || (event && event->key() == Qt::Key_W))
     {
-        msg.text = Input::KEY_W;
+        text = Input::KEY_W;
     }
     else if ((!event && (val % 100 == 11)) || (event && event->key() == Qt::Key_E))
     {
-        msg.text = Input::KEY_E;
+        text = Input::KEY_E;
     }
     else if ((!event && (val % 100 == 12)) || (event && event->key() == Qt::Key_R))
     {
-        msg.text = Input::KEY_R;
+        text = Input::KEY_R;
     }
     else if (/* NO! */ (event && event->key() == Qt::Key_F3))
     {
@@ -375,10 +378,11 @@ void Manager::HandleKeyboardDown(QKeyEvent* event)
     {
         return;
     }
-    NetClient::GetNetClient()->Send(msg);
+
+    Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(text));
 }
 
-void Manager::initWorld()
+void Manager::initWorld(int id, std::string map_name)
 {
     if (!GetParamsHolder().GetParamBool("-debug_to_chat"))
     {
@@ -401,9 +405,6 @@ void Manager::initWorld()
     std::cout << "Begin set manager" << std::endl;
     SetManager(this);
 
-    //sizeW = GetGLWidget()->width();
-    //sizeH = GetGLWidget()->height();
-
     SetItemFabric(new ItemFabric);
     SetMapMaster(new MapMaster);
     std::cout << "Screen set" << std::endl;
@@ -422,9 +423,6 @@ void Manager::initWorld()
     LoadSounds();
     LoadNames();
 
-    std::cout << "Net init" << std::endl;
-    NetClient::Init();
-
     std::cout << "Create tiles" << std::endl;
     int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
     int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
@@ -432,60 +430,36 @@ void Manager::initWorld()
     GetMapMaster()->makeTiles(x, y, z);
 
     std::cout << "Begin choose map" << std::endl;
-    if (   GetParamsHolder().GetParamBool("mapgen_name")
-        && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("mapgen_name")))
+    if (map_name == "no_map")
     {
-        srand(SDL_GetTicks());
+        if (   GetParamsHolder().GetParamBool("mapgen_name")
+            && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("mapgen_name")))
+        {
+            srand(SDL_GetTicks());
 
-        GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
+            GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
+            GetItemFabric()->newItem<Lobby>(Lobby::T_ITEM_S());
 
-       /* auto newmob = GetItemFabric()->newItemOnMap<IMob>(
-                Human::T_ITEM_S(),
-                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
-                                       [GetMapMaster()->GetMapH() / 2]
-                                       [GetMapMaster()->GetMapD() / 2]);*/
-
-        GetItemFabric()->newItem<Lobby>(Lobby::T_ITEM_S());
-
-        auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
+            auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
 
 
-        ChangeMob(newmob);
-        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
+            ChangeMob(newmob);
+            GetItemFabric()->SetPlayerId(id, newmob.ret_id());
 
-        GetMapMaster()->FillAtmosphere();
+            GetMapMaster()->FillAtmosphere();
 
-    }
-    else if 
-       (   GetParamsHolder().GetParamBool("map_name") 
-         && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("map_name")))
-    {
-       std::string str = GetParamsHolder().GetParam<std::string>("map_name");
-       GetItemFabric()->loadMap(str.c_str());
+        }
+        else
+        {
+            // TODO: do smth
+            return;
+        }
     }
     else
     {
-        std::cout << "Begin create map" << std::endl;
-        auto newmob = GetItemFabric()->newItemOnMap<IMob>(
-                Human::T_ITEM_S(),
-                GetMapMaster()->squares[GetMapMaster()->GetMapW() / 2]
-                                       [GetMapMaster()->GetMapH() / 2]
-                                       [GetMapMaster()->GetMapD() / 2]);
-        ChangeMob(newmob);
-        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
-
-        GetMapMaster()->FillAtmosphere();
-
-        GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
-        srand(SDL_GetTicks());
-        GetMapMaster()->makeMap();
+        // TODO
     }
-
-    LoginData data;
-    data.who = GetMob().ret_id();
-    data.word_for_who = 1;
-    NetClient::GetNetClient()->Connect(adrs_, DEFAULT_PORT, data);
 
     Chat::InitChat();
 
@@ -497,14 +471,14 @@ void Manager::initWorld()
         ss >> *str;
     }).SetFreq(1000).SetSize(20);
 
-    GetTexts()["Sync"].SetUpdater
+  /*  GetTexts()["Sync"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
         ss << ((GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash()) ? "SYNC:" : "UNSYNC:")
            << GetItemFabric()->get_hash_last();
         ss >> *str;
-    }).SetSize(15).SetPlace(0, 30, 200, 50);
+    }).SetSize(15).SetPlace(0, 30, 200, 50);*/
 
     GetTexts()["MorePreciseSync"].SetUpdater
     ([&](std::string* str)
@@ -517,21 +491,21 @@ void Manager::initWorld()
         ss >> *str;
     }).SetSize(15).SetPlace(200, 30).SetColor(200, 0, 0);
 
-    GetTexts()["SyncTick"].SetUpdater
+   /* GetTexts()["SyncTick"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
         ss << NetClient::GetNetClient()->HashTick();
         ss >> *str;
-    }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);
+    }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);*/
 
-    GetTexts()["PingTimer"].SetUpdater
+    /*GetTexts()["PingTimer"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
         ss << "Ping: " << NetClient::GetNetClient()->Ping() << "ms";
         *str = ss.str();
-    }).SetSize(15).SetPlace(300, 0).SetColor(0, 140, 0);
+    }).SetSize(15).SetPlace(300, 0).SetColor(0, 140, 0);*/
 
     GetTexts()["LastTouch"].SetUpdater
     ([this](std::string* str)
@@ -539,14 +513,14 @@ void Manager::initWorld()
         *str = last_touch;
     }).SetFreq(20).SetPlace(0, 485).SetSize(22);
 
-    GetTexts()["Connection"].SetUpdater
+   /* GetTexts()["Connection"].SetUpdater
     ([this](std::string* str)
     {
         if (NetClient::GetNetClient()->IsFail())
             *str = "Connection lost";
         else
             *str = "";
-    }).SetFreq(100).SetPlace(60, 0).SetSize(20).SetColor(250, 0, 0);
+    }).SetFreq(100).SetPlace(60, 0).SetSize(20).SetColor(250, 0, 0);*/
 
 
 }
@@ -558,7 +532,7 @@ void Manager::loadIniFile()
 
 void Manager::process_in_msg()
 {
-    Message msg;
+   /* Message msg;
     while (true)
     {
         NetClient::GetNetClient()->Recv(&msg);
@@ -596,6 +570,27 @@ void Manager::process_in_msg()
             i->processGUImsg(msg);
         else
             SYSTEM_STREAM << "Wrong id accepted - " << msg.to << std::endl;
+    }*/
+
+    while (Network2::GetInstance().IsMessageAvailable())
+    {
+        Message2 msg = Network2::GetInstance().PopMessage();
+        if (msg.type == MessageType::NEW_TICK)
+        {
+            process_in_ = true;
+            break;
+        }
+        if (msg.type == MessageType::ORDINARY)
+        {
+            QJsonObject obj = Network2::ParseJson(msg);
+            QJsonValue v = obj["id"];
+            int net_id = v.toVariant().toInt();
+            size_t game_id = GetItemFabric()->GetPlayerId(net_id);
+            id_ptr_on<IMessageReceiver> game_object = game_id;
+            game_object->processGUImsg(msg);
+        }
+
+        // TODO: other stuff
     }
 }
 

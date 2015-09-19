@@ -69,14 +69,15 @@ void Ghost::CalculateVisible(std::list<point>* visible_list)
         }
 }
 
-void Ghost::processGUImsg(const Message& msg)
+void Ghost::processGUImsg(const Message2& msg)
 {
     IMob::processGUImsg(msg);
-    if (msg.type == Net::CHAT_TYPE)
+    // TODO
+    /*if (msg.type == Net::CHAT_TYPE)
     {
         if (Chat::IsOOCMessage(msg.text))
         {
             Chat::GetChat()->PostOOCText(name + " (ghost)", msg.text.substr(3));
         }
-    }
+    }*/
 }

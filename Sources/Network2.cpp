@@ -13,10 +13,37 @@
 
 #include "NetworkMessagesTypes.h"
 
+QJsonObject Network2::ParseJson(Message2 message)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(message.json.toUtf8());
+    return doc.object();
+}
+
+bool Network2::IsKey(const QJsonObject& json, const std::string& key)
+{
+    if (json["key"] == QString::fromStdString(key)) {
+        return true;
+    }
+    return false;
+}
+
+size_t Network2::ExtractObjId(const QJsonObject &json)
+{
+    QJsonValue val = json["obj"];
+
+    return val.toVariant().toInt();
+}
+
 Network2 &Network2::GetInstance()
 {
     static Network2* network = new Network2;
     return *network;
+}
+
+bool Network2::IsGood()
+{
+    // TODO
+    return true;
 }
 
 Network2::Network2()
@@ -26,12 +53,28 @@ Network2::Network2()
     connect(&thread_, &QThread::started, &handler_, &SocketHandler::process);
 
     connect(this, &Network2::connectRequested, &handler_, &SocketHandler::tryConnect);
+    connect(&handler_, &SocketHandler::readyToStart, this, &Network2::connectionSuccess);
+    connect(this, &Network2::sendMessage, &handler_, &SocketHandler::sendMessage);
 }
 
 void Network2::TryConnect(QString host, int port, QString login, QString password)
 {
     thread_.start();
     emit connectRequested(host, port, login, password);
+}
+
+void Network2::SendMsg(Message2 message)
+{
+    emit sendMessage(message);
+}
+
+void Network2::SendOrdinaryMessage(QString text)
+{
+    Message2 msg;
+    msg.type = MessageType::ORDINARY;
+    msg.json = "{\"key\":\"" + text + "\"}";
+
+    SendMsg(msg);
 }
 
 bool Network2::IsMessageAvailable()
@@ -260,8 +303,7 @@ void SocketHandler::handleFirstMessage()
 
 void SocketHandler::HandleSuccessConnection(Message2 message)
 {
-    QJsonDocument doc = QJsonDocument::fromJson(message.json.toUtf8());
-    QJsonObject obj = doc.object();
+    QJsonObject obj = Network2::ParseJson(message);
 
     qDebug() << obj["map"];
     qDebug() << obj["your_id"];
