@@ -470,17 +470,16 @@ void Manager::initWorld(int id, std::string map_name)
     {
         std::stringstream ss; 
         ss << last_fps - 1; 
-        ss >> *str;
+        *str = ss.str();
     }).SetFreq(1000).SetSize(20);
 
-  /*  GetTexts()["Sync"].SetUpdater
+    GetTexts()["Sync"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << ((GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash()) ? "SYNC:" : "UNSYNC:")
-           << GetItemFabric()->get_hash_last();
-        ss >> *str;
-    }).SetSize(15).SetPlace(0, 30, 200, 50);*/
+        ss << "Hash: " << GetItemFabric()->get_hash_last();
+        *str = ss.str();
+    }).SetSize(15).SetPlace(0, 30);//, 200, 50);
 
     GetTexts()["MorePreciseSync"].SetUpdater
     ([&](std::string* str)
@@ -490,7 +489,7 @@ void Manager::initWorld(int id, std::string map_name)
         {
             ss << "!!REPORT!!";
         }
-        ss >> *str;
+        *str = ss.str();
     }).SetSize(15).SetPlace(200, 30).SetColor(200, 0, 0);
 
    /* GetTexts()["SyncTick"].SetUpdater
@@ -501,12 +500,12 @@ void Manager::initWorld(int id, std::string map_name)
         ss >> *str;
     }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);*/
 
-    GetTexts()["SyncTick"].SetUpdater
+    GetTexts()["Tick"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
         ss << MAIN_TICK;
-        ss >> *str;
+        *str = ss.str();
     }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);
 
     /*GetTexts()["PingTimer"].SetUpdater
@@ -590,6 +589,20 @@ void Manager::process_in_msg()
             process_in_ = true;
             break;
         }
+
+        if (msg.type == MessageType::HASH)
+        {
+            QJsonObject obj = Network2::ParseJson(msg);
+
+            QJsonValue hash_v = obj["hash"];
+            int hash = hash_v.toVariant().toInt();
+
+            QJsonValue tick_v = obj["tick"];
+            int tick = tick_v.toVariant().toInt();
+
+            Debug::UnsyncDebug().AddNetSyncPair(hash, tick);
+        }
+
         if (   msg.type == MessageType::ORDINARY
             || msg.type == MessageType::MOUSE_CLICK)
         {

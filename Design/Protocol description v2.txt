@@ -73,6 +73,7 @@ They are used only in client (mostly)
 {"obj":42}
 
 1101 - hash message
+{"hash":42,"tick":42}
 
 PROTOCOL:
 
