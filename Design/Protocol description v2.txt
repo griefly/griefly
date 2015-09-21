@@ -67,7 +67,9 @@ GAME (BROADCASTED) TYPES:
 They are used only in client (mostly)
 1001 - oridnary/keyboard
 {"key":"ENTER"}
-1002 - message
+1002 - message 
+{"text":"some text"}
+
 1003 - some complicated gui message
 1004 - mouse click
 {"obj":42}

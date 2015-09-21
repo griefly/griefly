@@ -91,20 +91,20 @@ void Human::processGUImsg(const Message2 &msg)
                 ApplyForce(DirToVDir[D_RIGHT]);
         }
     }
-    // TODO
-    /*if (msg.type == Net::CHAT_TYPE)
+    if (msg.type == MessageType::MESSAGE)
     {
+        std::string text = obj["text"].toString().toStdString();
         //Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
-        if (Chat::IsOOCMessage(msg.text))
+        if (Chat::IsOOCMessage(text))
         {
-            Chat::GetChat()->PostOOCText(name, msg.text.substr(3));
+            Chat::GetChat()->PostOOCText(name, text.substr(3));
         }
         else
         {
-            Chat::GetChat()->PostWords(name, msg.text, owner->GetId());
+            Chat::GetChat()->PostWords(name, text, owner->GetId());
         }
     }
-    else*/ if (msg.type == MessageType::MOUSE_CLICK)
+    else if (msg.type == MessageType::MOUSE_CLICK)
     {
         id_ptr_on<IOnMapObject> item = Network2::ExtractObjId(obj);
         if (item && item->GetOwner())

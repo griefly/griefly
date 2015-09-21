@@ -15,8 +15,12 @@
 
 #include "Chat.h"
 #include "Network2.h"
+#include "NetworkMessagesTypes.h"
+
 #include <QDebug>
 #include <QString>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
@@ -128,13 +132,20 @@ void MainForm::on_lineEdit_returnPressed()
         return;
     }
 
-    // TODO
-    /*Message msg;
-    msg.type = Net::CHAT_TYPE;
-    msg.text = ui->lineEdit->text().toStdString();
-    if (msg.text.length() == 0)
+
+    Message2 msg;
+    msg.type = MessageType::MESSAGE;
+    if (ui->lineEdit->text().length() == 0)
         return;
-    NetClient::GetNetClient()->Send(msg);*/
+
+    QJsonObject object;
+    object["text"] = ui->lineEdit->text();
+
+    QJsonDocument doc(object);
+    msg.json = doc.toJson();
+
+    Network2::GetInstance().SendMsg(msg);
+
     ui->lineEdit->clear();
 
     //ui->widget->setFocus();

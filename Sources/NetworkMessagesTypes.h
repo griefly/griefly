@@ -22,6 +22,7 @@ namespace MessageType
 
     // GAME MESSAGES
     const int ORDINARY = 1001;
+    const int MESSAGE = 1002;
 
     const int MOUSE_CLICK = 1004;
 

@@ -604,7 +604,8 @@ void Manager::process_in_msg()
         }
 
         if (   msg.type == MessageType::ORDINARY
-            || msg.type == MessageType::MOUSE_CLICK)
+            || msg.type == MessageType::MOUSE_CLICK
+            || msg.type == MessageType::MESSAGE)
         {
             QJsonObject obj = Network2::ParseJson(msg);
             QJsonValue v = obj["id"];
