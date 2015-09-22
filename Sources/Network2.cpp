@@ -8,12 +8,11 @@
 #include <QJsonValue>
 #include <QJsonValueRef>
 #include <QVariant>
+#include <QUrl>
 
 #include <QCoreApplication>
 
 #include "NetworkMessagesTypes.h"
-
-
 
 QJsonObject Network2::ParseJson(Message2 message)
 {
@@ -51,11 +50,15 @@ bool Network2::IsGood()
 Network2::Network2()
     : handler_(this)
 {
+    net_manager_ = new QNetworkAccessManager(this);
+
     handler_.moveToThread(&thread_);
     connect(&thread_, &QThread::started, &handler_, &SocketHandler::process);
 
+    connect(net_manager_, &QNetworkAccessManager::finished, this, &Network2::mapDownloaded);
+
     connect(this, &Network2::connectRequested, &handler_, &SocketHandler::tryConnect);
-    connect(&handler_, &SocketHandler::readyToStart, this, &Network2::connectionSuccess);
+    connect(&handler_, &SocketHandler::readyToStart, this, &Network2::downloadMap);
     connect(this, &Network2::sendMessage, &handler_, &SocketHandler::sendMessage);
 }
 
@@ -100,10 +103,37 @@ Message2 Network2::PopMessage()
     return received_messages_.dequeue();
 }
 
+QByteArray Network2::GetMapData()
+{
+    return map_data_;
+}
+
+void Network2::mapDownloaded(QNetworkReply* reply)
+{
+    map_data_ = reply->readAll();
+    reply->deleteLater();
+    emit connectionSuccess(your_id_, "map_buffer");
+}
+
+void Network2::downloadMap(int your_id, QString map)
+{
+    your_id_ = your_id;
+    if (map == "no_map")
+    {
+        emit connectionSuccess(your_id, map);
+        return;
+    }
+
+    QUrl url(map);
+    QNetworkRequest r(url);
+
+    net_manager_->get(r);
+}
+
 SocketHandler::SocketHandler(Network2* network)
     : network_(network),
       socket_(this)
-{
+{    
     state_ = NetworkState::NOT_CONNECTED;
 
     net_codec_ = QTextCodec::codecForName("UTF-8");
@@ -315,19 +345,7 @@ void SocketHandler::HandleSuccessConnection(Message2 message)
     QJsonValue val = obj["your_id"];
     your_id_ = val.toVariant().toInt();
 
-    DownloadMapRequest();
-}
-
-
-void SocketHandler::DownloadMapRequest()
-{
-    if (map_ == "no_map")
-    {
-        emit readyToStart(your_id_, map_);
-        return;
-    }
-
-    // TODO
+    emit readyToStart(your_id_, map_);
 }
 
 void SocketHandler::SendData(const QByteArray &data)

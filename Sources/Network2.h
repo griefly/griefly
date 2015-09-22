@@ -7,8 +7,11 @@
 #include <QQueue>
 #include <QMutex>
 #include <QTextCodec>
-#include <QByteArray>
 #include <QJsonObject>
+#include <QByteArray>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 
 #include "NetworkMessagesTypes.h"
 
@@ -43,7 +46,6 @@ signals:
     void connectionEnd();
     void readyToStart(int your_id, QString map);
 private:
-    void DownloadMapRequest();
     void HandleSuccessConnection(Message2 m);
 
     QTcpSocket socket_;
@@ -107,12 +109,19 @@ public:
 
     bool IsMessageAvailable();
     Message2 PopMessage();
+
+    QByteArray GetMapData();
 signals:
     void connectRequested(QString host, int port, QString login, QString password);
     void sendMessage(Message2 message);
     void disconnectRequested();
     void connectionSuccess(int your_id, QString map);
+private slots:
+    void mapDownloaded(QNetworkReply* reply);
+    void downloadMap(int your_id, QString map);
 private:
+    int your_id_;
+
     void PushMessage(Message2 message);
 
     QMutex queue_mutex_;
@@ -122,4 +131,7 @@ private:
 
     SocketHandler handler_;
     QThread thread_;
+
+    QNetworkAccessManager* net_manager_;
+    QByteArray map_data_;
 };
