@@ -179,7 +179,7 @@ void SocketHandler::process()
 
     while (state_ != NetworkState::DISCONNECTED)
     {
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
+        QCoreApplication::processEvents();
     }
 
     qDebug() << "Socket no longer valid";

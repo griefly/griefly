@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.3.0, 2015-09-23T12:20:10. -->
+<!-- Written by QtCreator 3.3.0, 2015-09-23T15:22:33. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -124,7 +124,67 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeBuildConfiguration</value>
    </valuemap>
-   <value type="int" key="ProjectExplorer.Target.BuildConfigurationCount">1</value>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
+    <value type="bool" key="CMakeProjectManager.CMakeBuildConfiguration.UseNinja">false</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Kremius/Documents/Qt/KVEngineQt-build</value>
+    <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
+     <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
+      <value type="QString" key="CMakeProjectManager.MakeStep.AdditionalArguments"></value>
+      <valuelist type="QVariantList" key="CMakeProjectManager.MakeStep.BuildTargets"/>
+      <value type="bool" key="CMakeProjectManager.MakeStep.Clean">false</value>
+      <value type="QString" key="CMakeProjectManager.MakeStep.MakeCommand"></value>
+      <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Make</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.MakeStep</value>
+     </valuemap>
+     <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build</value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Build</value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.1">
+     <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
+      <value type="QString" key="CMakeProjectManager.MakeStep.AdditionalArguments">clean</value>
+      <valuelist type="QVariantList" key="CMakeProjectManager.MakeStep.BuildTargets"/>
+      <value type="bool" key="CMakeProjectManager.MakeStep.Clean">true</value>
+      <value type="QString" key="CMakeProjectManager.MakeStep.MakeCommand"></value>
+      <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Make</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.MakeStep</value>
+     </valuemap>
+     <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Clean</value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Clean</value>
+    </valuemap>
+    <value type="int" key="ProjectExplorer.BuildConfiguration.BuildStepListCount">2</value>
+    <value type="bool" key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment">false</value>
+    <valuelist type="QVariantList" key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges">
+     <value type="QString">PNG_INCLUDE_DIR=C:\Users\Kremius\Documents\ExternalLibs\lpng1612</value>
+     <value type="QString">SFML_INCLUDE_DIR=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\include</value>
+     <value type="QString">ZLIB_INCLUDE_DIR=C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll\include</value>
+     <value type="QString">PNG_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\lpng1612\projects\vstudio\Release\libpng16.lib</value>
+     <value type="QString">ZLIB_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll\lib\zdll.lib</value>
+     <value type="QString">SFML_AUDIO_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-audio-d.lib</value>
+     <value type="QString">SFML_LIBRARY=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-main-d.lib</value>
+     <value type="QString">SDLDIR=C:\Users\Kremius\Documents\ExternalLibs\SDL-1.2.15</value>
+     <value type="QString">SDLTTFDIR=C:\Users\Kremius\Documents\ExternalLibs\SDL_ttf-2.0.11</value>
+     <value type="QString">SDLIMAGEDIR=C:\Users\Kremius\Documents\ExternalLibs\SDL_image-1.2.12</value>
+     <value type="QString">SDL_NET_INCLUDE_DIRS=C:\Users\Kremius\Documents\ExternalLibs\SDL_net-1.2.8\include</value>
+     <value type="QString">SDL_NET_LIBRARIES=C:\Users\Kremius\Documents\ExternalLibs\SDL_net-1.2.8\lib\x86\SDL_net.lib</value>
+     <value type="QString">SDLNETDIR=C:\Users\Kremius\Documents\ExternalLibs\SDL_net-1.2.8</value>
+     <value type="QString">GIT_PATH=C:\Program Files (x86)\Git\bin\git.exe</value>
+     <value type="QString">GO_PATH=C:\Go\bin\go.exe</value>
+     <value type="QString">GOFMT_PATH=C:\Go\bin\gofmt.exe</value>
+     <value type="QString">PYTHON_PATH=C:\Python27\python.exe</value>
+    </valuelist>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">all</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Debug</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeBuildConfiguration</value>
+   </valuemap>
+   <value type="int" key="ProjectExplorer.Target.BuildConfigurationCount">2</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.DeployConfiguration.0">
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">0</value>

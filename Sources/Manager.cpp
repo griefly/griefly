@@ -126,6 +126,8 @@ void Manager::process()
 
     unsigned int last_effect_process = 0;
     static int locTime = 0;
+
+    Debug::UnsyncDebug().GenerateAndSaveReport();
     while(done == 0)
     { 
 
@@ -606,11 +608,20 @@ void Manager::process_in_msg()
             QJsonValue new_id_v = obj["id"];
             int new_id = new_id_v.toVariant().toInt();
 
+            size_t game_id = GetItemFabric()->GetPlayerId(new_id);
+
+            if (game_id != 0)
+            {
+                qDebug() << "game_id " << game_id << " already exists";
+                continue;
+            }
+
             auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
 
             qDebug() << "New client " << newmob.ret_id();
 
             GetItemFabric()->SetPlayerId(new_id, newmob.ret_id());
+            continue;
         }
         if (msg.type == MessageType::MAP_UPLOAD)
         {

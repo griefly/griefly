@@ -168,10 +168,10 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
         SetPlayerId(first, second);
     }
 
-    qDebug() << real_this_mob;
+    qDebug() << "This mob: " << real_this_mob;
 
     if (real_this_mob == 0)
-        SetMob(GetPlayerId(loc));
+        SetMob(loc);
     else
         SetMob(GetPlayerId(real_this_mob));
 }
@@ -378,7 +378,7 @@ void ItemFabric::clearMap()
     remove_from_process_.clear();
     players_table_.clear();
 
-    id_ = 0;
+    id_ = 1;
 }
 
 void ItemFabric::BeginWorldCreation()
@@ -424,7 +424,12 @@ void ItemFabric::SetPlayerId(size_t net_id, size_t real_id)
 }
 size_t ItemFabric::GetPlayerId(size_t net_id)
 {
-    return players_table_[net_id];
+    auto it = players_table_.find(net_id);
+    if (it != players_table_.end())
+    {
+        return it->second;
+    }
+    return 0;
 }
 
 size_t ItemFabric::GetNetId(size_t real_id)
