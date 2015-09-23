@@ -43,8 +43,7 @@ Network2 &Network2::GetInstance()
 
 bool Network2::IsGood()
 {
-    // TODO
-    return true;
+    return is_good_;
 }
 
 void Network2::SendMap(QString url, QByteArray data)
@@ -72,6 +71,7 @@ Network2::Network2()
     connect(this, &Network2::connectRequested, &handler_, &SocketHandler::tryConnect);
     connect(&handler_, &SocketHandler::readyToStart, this, &Network2::downloadMap);
     connect(this, &Network2::sendMessage, &handler_, &SocketHandler::sendMessage);
+    connect(&handler_, &SocketHandler::connectionEnd, this, &Network2::onConnectionEnd);
 }
 
 void Network2::TryConnect(QString host, int port, QString login, QString password)
@@ -120,6 +120,12 @@ QByteArray Network2::GetMapData()
     return map_data_;
 }
 
+void Network2::onConnectionEnd(QString reason)
+{
+    is_good_ = false;
+    emit connectionFailed(reason);
+}
+
 void Network2::mapDownloaded(QNetworkReply* reply)
 {
     if (reply->request().url() != map_url_)
@@ -128,11 +134,19 @@ void Network2::mapDownloaded(QNetworkReply* reply)
         return;
     }
 
+    if (reply->error() != QNetworkReply::NoError)
+    {
+        emit connectionFailed("Unable download map: " + reply->errorString());
+        reply->deleteLater();
+        return;
+    }
+
     map_data_ = reply->readAll();
     reply->deleteLater();
 
     qDebug() << "Map length: " << map_data_.length();
 
+    is_good_ = true;
     emit connectionSuccess(your_id_, "map_buffer");
 }
 
@@ -142,6 +156,7 @@ void Network2::downloadMap(int your_id, QString map)
     map_url_ = map;
     if (map == "no_map")
     {
+        is_good_ = true;
         emit connectionSuccess(your_id, map);
         return;
     }
@@ -176,13 +191,6 @@ void SocketHandler::process()
 {
     reading_state_ = ReadingState::HEADER;
     is_first_message_ = true;
-
-    while (state_ != NetworkState::DISCONNECTED)
-    {
-        QCoreApplication::processEvents();
-    }
-
-    qDebug() << "Socket no longer valid";
 }
 
 void SocketHandler::handleNewData()
@@ -328,7 +336,8 @@ void SocketHandler::errorSocket(QAbstractSocket::SocketError error)
     qDebug() << error;
     //thread_.wait();
     state_ = NetworkState::NOT_CONNECTED;
-    emit connectionEnd();
+    network_->thread_.exit(-1);
+    emit connectionEnd("Socket error: " + QString::number(error));
 }
 
 void SocketHandler::handleFirstMessage()

@@ -43,7 +43,7 @@ public slots:
     void handleNewData();
 signals:
     void firstMessage();
-    void connectionEnd();
+    void connectionEnd(QString reason);
     void readyToStart(int your_id, QString map);
 private:
     void HandleSuccessConnection(Message2 m);
@@ -113,15 +113,20 @@ public:
     Message2 PopMessage();
 
     QByteArray GetMapData();
+public slots:
+    void onConnectionEnd(QString reason);
 signals:
     void connectRequested(QString host, int port, QString login, QString password);
     void sendMessage(Message2 message);
     void disconnectRequested();
     void connectionSuccess(int your_id, QString map);
+    void connectionFailed(QString reason);
 private slots:
     void mapDownloaded(QNetworkReply* reply);
     void downloadMap(int your_id, QString map);
 private:
+    bool is_good_;
+
     int your_id_;
     QString map_url_;
 

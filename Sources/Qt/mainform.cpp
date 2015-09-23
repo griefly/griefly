@@ -43,6 +43,7 @@ MainForm::MainForm(QWidget *parent) :
     SetMainWidget(this);
 
     connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
+    connect(&Network2::GetInstance(), &Network2::connectionFailed, this, &MainForm::connectionFailed);
 
     connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
     connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);
@@ -105,6 +106,13 @@ void MainForm::startGameLoop(int id, QString map)
         man.ToogleAutoplay();
     man.process();
     return;
+}
+
+void MainForm::connectionFailed(QString reason)
+{
+    ui->textBrowser->insertHtml("<b>Connection failed!</b>");
+    ui->textBrowser->append(reason);
+    ui->textBrowser->insertHtml("<br>If you would like to reconnect then do it manually");
 }
 
 void MainForm::connectToHost()

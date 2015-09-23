@@ -19,6 +19,7 @@ public:
     ~MainForm();
 public slots:
     void startGameLoop(int id, QString map);
+    void connectionFailed(QString reason);
 protected:
     void resizeEvent(QResizeEvent* event);
 private slots:
