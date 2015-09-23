@@ -115,7 +115,7 @@ New client now master client
 d) MASTER CLIENT EXISTS AND "login" DOES NOT HAVE ID
 Server creates new client, gives number to him
 
- from SERVER to ALL CLIENTS
+ from SERVER to ALL CLIENTS (EXCEPT NEW CLIENT)
  type: NEW CLIENT
  "id" - new number for new client
 {"id" : 42}
