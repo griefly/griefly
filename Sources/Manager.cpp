@@ -39,6 +39,7 @@
 
 #include <QCoreApplication>
 #include <QJsonObject>
+#include <QByteArray>
 
 int ping_send;
 
@@ -460,7 +461,15 @@ void Manager::initWorld(int id, std::string map_name)
     }
     else
     {
-        // TODO
+        qDebug() << "Begin load map";
+
+        QByteArray map_data = Network2::GetInstance().GetMapData();
+
+        std::stringstream ss;
+        ss.write(map_data.data(), map_data.length());
+        ss.seekg(0, std::ios::beg);
+
+        GetItemFabric()->loadMap(ss, false, id);
     }
 
     Chat::InitChat();
@@ -584,10 +593,40 @@ void Manager::process_in_msg()
     while (Network2::GetInstance().IsMessageAvailable())
     {
         Message2 msg = Network2::GetInstance().PopMessage();
+
         if (msg.type == MessageType::NEW_TICK)
         {
             process_in_ = true;
             break;
+        }
+        if (msg.type == MessageType::NEW_CLIENT)
+        {
+            QJsonObject obj = Network2::ParseJson(msg);
+
+            QJsonValue new_id_v = obj["id"];
+            int new_id = new_id_v.toVariant().toInt();
+
+            auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
+
+            qDebug() << "New client " << newmob.ret_id();
+
+            GetItemFabric()->SetPlayerId(new_id, newmob.ret_id());
+        }
+        if (msg.type == MessageType::MAP_UPLOAD)
+        {
+            QJsonObject obj = Network2::ParseJson(msg);
+            QString map_url = obj["url_to_upload_map"].toString();
+
+            qDebug() << "Map upload to " << map_url;
+
+            std::stringstream ss;
+            GetItemFabric()->saveMap(ss, false);
+            std::string string_data = ss.str();
+
+            QByteArray data(string_data.c_str(), string_data.size());
+
+            Network2::GetInstance().SendMap(map_url, data);
+            continue;
         }
 
         if (msg.type == MessageType::HASH)

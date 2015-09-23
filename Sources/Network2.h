@@ -99,6 +99,8 @@ public:
 
     bool IsGood();
 
+    void SendMap(QString url, QByteArray data);
+
     void TryConnect(QString host, int port, QString login, QString password);
 
     void SendMsg(Message2 message);
@@ -121,6 +123,7 @@ private slots:
     void downloadMap(int your_id, QString map);
 private:
     int your_id_;
+    QString map_url_;
 
     void PushMessage(Message2 message);
 

@@ -18,7 +18,7 @@ namespace MessageType
     const int SUCCESS_CONNECTION = 201;
     const int MAP_UPLOAD = 202;
     const int NEW_TICK = 203;
-    const int NEW_CLIENT = 404;
+    const int NEW_CLIENT = 204;
 
     // GAME MESSAGES
     const int ORDINARY = 1001;

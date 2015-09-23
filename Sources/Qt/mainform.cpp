@@ -111,9 +111,21 @@ void MainForm::connectToHost()
 {
     std::string adrs = "127.0.0.1";
     if (GetParamsHolder().GetParamBool("ip"))
+    {
         adrs = GetParamsHolder().GetParam<std::string>("ip");
+    }
 
-    Network2::GetInstance().TryConnect(QString::fromStdString(adrs), 1111, "Guest", "");
+    std::string login = "Guest";
+    if (GetParamsHolder().GetParamBool("login"))
+    {
+        login = GetParamsHolder().GetParam<std::string>("login");
+    }
+
+    Network2::GetInstance().TryConnect(
+                QString::fromStdString(adrs),
+                1111,
+                QString::fromStdString(login),
+                "");
 }
 
 void MainForm::on_lineEdit_returnPressed()

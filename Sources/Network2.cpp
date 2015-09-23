@@ -47,6 +47,18 @@ bool Network2::IsGood()
     return true;
 }
 
+void Network2::SendMap(QString url, QByteArray data)
+{
+    QUrl send_url(url);
+    QNetworkRequest request(send_url);
+    request.setHeader(QNetworkRequest::ContentLengthHeader, data.length());
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/octet-stream");
+
+    net_manager_->post(request, data);
+
+    qDebug() << "Map has been sended to " << url << ", length: " << data.length();
+}
+
 Network2::Network2()
     : handler_(this)
 {
@@ -110,19 +122,31 @@ QByteArray Network2::GetMapData()
 
 void Network2::mapDownloaded(QNetworkReply* reply)
 {
+    if (reply->request().url() != map_url_)
+    {
+        qDebug() << "End map upload";
+        return;
+    }
+
     map_data_ = reply->readAll();
     reply->deleteLater();
+
+    qDebug() << "Map length: " << map_data_.length();
+
     emit connectionSuccess(your_id_, "map_buffer");
 }
 
 void Network2::downloadMap(int your_id, QString map)
 {
     your_id_ = your_id;
+    map_url_ = map;
     if (map == "no_map")
     {
         emit connectionSuccess(your_id, map);
         return;
     }
+
+    qDebug() << "Begin download map from " << map_url_;
 
     QUrl url(map);
     QNetworkRequest r(url);

@@ -132,11 +132,6 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
     size_t loc;
     savefile >> loc;
     SYSTEM_STREAM << "thisMob: " << loc << std::endl;
-
-    if (real_this_mob == 0)
-        SetMob(loc);
-    else
-        SetMob(real_this_mob);
     
     unsigned int new_seed;
     unsigned int new_calls_counter;
@@ -167,8 +162,18 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
         savefile >> first;
         size_t second;
         savefile >> second;
+
+        qDebug() << first;
+        qDebug() << second;
         SetPlayerId(first, second);
     }
+
+    qDebug() << real_this_mob;
+
+    if (real_this_mob == 0)
+        SetMob(GetPlayerId(loc));
+    else
+        SetMob(GetPlayerId(real_this_mob));
 }
 
 void ItemFabric::saveMap(const char* path)
