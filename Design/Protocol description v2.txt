@@ -76,6 +76,8 @@ They are used only in client (mostly)
 
 1101 - hash message
 {"hash":42,"tick":42}
+1102 - ping message
+{"ping_id":42}
 
 PROTOCOL:
 
