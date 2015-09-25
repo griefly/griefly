@@ -109,13 +109,14 @@ void LoginMob::processGUImsg(const Message2& msg)
             }
         }
     }
-   /* if (msg.type == Net::CHAT_TYPE)
+    if (msg.type == MessageType::MESSAGE)
     {
-        if (Chat::IsOOCMessage(msg.text))
+        std::string text = obj["text"].toString().toStdString();
+        if (Chat::IsOOCMessage(text))
         {
-            Chat::GetChat()->PostOOCText(name, msg.text.substr(3));
+            Chat::GetChat()->PostOOCText(name, text.substr(3));
         }
-    }*/
+    }
 }
 
 void LoginMob::process()
