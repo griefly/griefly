@@ -9,6 +9,7 @@
 #include "TextInput.h"
 #include <QApplication>
 #include <QKeyEvent>
+#include <QString>
 
 class Manager
 {
@@ -61,6 +62,13 @@ public:
 
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:
+    QString ping_id_;
+    int ping_send_time_;
+
+    int current_ping_;
+
+    bool ping_send_is_requested_;
+
     bool process_in_;
 
     std::string adrs_;

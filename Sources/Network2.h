@@ -107,6 +107,8 @@ public:
 
     void SendOrdinaryMessage(QString text);
 
+    void SendPing(QString ping_id);
+
     void Disconnect();
 
     bool IsMessageAvailable();

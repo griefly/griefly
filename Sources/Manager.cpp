@@ -40,6 +40,7 @@
 #include <QCoreApplication>
 #include <QJsonObject>
 #include <QByteArray>
+#include <QUuid>
 
 int ping_send;
 
@@ -88,6 +89,13 @@ Manager::Manager()
     done = 0;
     pause = false;
     last_fps = FPS_MAX;
+
+    ping_id_ = "";
+    ping_send_time_ = 0;
+
+    current_ping_ = 0;
+
+    ping_send_is_requested_ = true;
 };
 
 void Manager::UpdateVisible() 
@@ -127,17 +135,15 @@ void Manager::process()
     unsigned int last_effect_process = 0;
     static int locTime = 0;
 
+    unsigned int ping_send_time = 0;
+
     Debug::UnsyncDebug().GenerateAndSaveReport();
     while(done == 0)
     { 
 
         processInput();
-        //if(NetClient::GetNetClient()->Ready() && !pause)
-        //{
-        //    process_in = true;
-            process_in_msg();
-        //    MAIN_TICK++;
-        //}
+
+        process_in_msg();
 
         const int ATMOS_OFTEN = 1;
         const int ATMOS_MOVE_OFTEN = 1;
@@ -216,6 +222,16 @@ void Manager::process()
 
             GetMapMaster()->numOfPathfind = 0;
         }
+
+        if (   (SDL_GetTicks() - ping_send_time) > 1000
+            && ping_send_is_requested_)
+        {
+            ping_id_ = QUuid::createUuid().toString();
+            Network2::GetInstance().SendPing(ping_id_);
+            ping_send_time_ = SDL_GetTicks();
+            ping_send_is_requested_ = false;
+        }
+
         ++fps;
         process_in_ = false;
         if (Network2::GetInstance().IsGood() == false)
@@ -225,14 +241,6 @@ void Manager::process()
 
         Debug::UnsyncDebug().ProcessDebug();
 
-        if(SDL_GetTicks() - locTime > 100)
-        {
-            // TODO
-          /*  if (GetItemFabric()->get_hash_last() == NetClient::GetNetClient()->Hash())
-                GetTexts()["Sync"].SetColor(0, 255, 100);
-            else
-                GetTexts()["Sync"].SetColor(255, 160, 0);*/
-        }
         if (GetMainWidget()->isHidden())
         {
             break;
@@ -242,42 +250,19 @@ void Manager::process()
 
 void Manager::ClearGUIZone()
 {
-    /*glColor3f(0.8f, 0.8f, 0.8f);
-    glDisable(GL_TEXTURE_2D);
-    glBegin(GL_QUADS);
-        glVertex2i(sizeW,                0);
-        glVertex2i(sizeW,            sizeH);
-        glVertex2i(sizeW + guiShift, sizeH);
-        glVertex2i(sizeW + guiShift,     0);
-    glEnd();
-    glEnable(GL_TEXTURE_2D);*/
 }
 
 void Manager::checkMoveMob()
 {
-};
-
-#define SEND_KEY_MACRO(key) \
-      if((auto_player_ && (rand() % 100 == 1)) || (!NODRAW && keys[key])) \
-      { \
-          if(SDL_GetTicks() - lastShoot >= 80) \
-          { \
-              Message msg; \
-              msg.text = #key; \
-              NetClient::GetNetClient()->Send(msg); \
-              lastShoot = SDL_GetTicks(); \
-          } \
-      }
-
-#define LETTER_ADD(letter) \
-    if (event.key.keysym.sym == SDLK_##letter) \
-        { text_input_->AddLetter(#letter); }
+}
 
 void Manager::processInput()
 {
     QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
+
     if (!auto_player_)
         return;
+
     int w = GetGLWidget()->width();
     int h = GetGLWidget()->height();
 
@@ -519,13 +504,13 @@ void Manager::initWorld(int id, std::string map_name)
         *str = ss.str();
     }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);
 
-    /*GetTexts()["PingTimer"].SetUpdater
+    GetTexts()["PingTimer"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << "Ping: " << NetClient::GetNetClient()->Ping() << "ms";
+        ss << "Ping: " << current_ping_ << "ms";
         *str = ss.str();
-    }).SetSize(15).SetPlace(300, 0).SetColor(0, 140, 0);*/
+    }).SetSize(15).SetPlace(300, 0).SetColor(0, 140, 0);
 
     GetTexts()["LastTouch"].SetUpdater
     ([this](std::string* str)
@@ -552,46 +537,6 @@ void Manager::loadIniFile()
 
 void Manager::process_in_msg()
 {
-   /* Message msg;
-    while (true)
-    {
-        NetClient::GetNetClient()->Recv(&msg);
-
-        if (msg.text == Net::MAKE_NEW)
-        {
-            auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
-            SYSTEM_STREAM << "NEW MOB CREATE HIS ID " << newmob.ret_id() << "\n";
-            //newmob->onMobControl = true;
-
-            GetItemFabric()->SetPlayerId(newmob.ret_id(), newmob.ret_id());
-
-            Message msg_new;
-            msg_new.from = msg.from;
-            msg_new.to = newmob.ret_id();
-            msg_new.type = Net::SYSTEM_TYPE;
-            msg_new.text = Net::NEW_MAKED;
-
-            NetClient::GetNetClient()->Send(msg_new);
-            continue;
-        }
-
-        if (msg.text == "SDLK_F2")
-        {
-            SYSTEM_STREAM << "Ping is: " << (SDL_GetTicks() - ping_send) / 1000.0 << "s" << std::endl;
-            continue;
-        }
-        if (msg.text == Net::NEXTTICK)
-            return;
-        
-        id_ptr_on<IMessageReceiver> i;
-        i = msg.to;
-
-        if (i.valid())
-            i->processGUImsg(msg);
-        else
-            SYSTEM_STREAM << "Wrong id accepted - " << msg.to << std::endl;
-    }*/
-
     while (Network2::GetInstance().IsMessageAvailable())
     {
         Message2 msg = Network2::GetInstance().PopMessage();
@@ -651,6 +596,24 @@ void Manager::process_in_msg()
             int tick = tick_v.toVariant().toInt();
 
             Debug::UnsyncDebug().AddNetSyncPair(hash, tick);
+
+            continue;
+        }
+
+        if (msg.type == MessageType::PING)
+        {
+            QJsonObject obj = Network2::ParseJson(msg);
+
+            QString ping_id = obj["ping_id"].toString();
+
+            if (ping_id != ping_id_)
+            {
+                continue;
+            }
+
+            current_ping_ = SDL_GetTicks() - ping_send_time_;
+            ping_send_is_requested_ = true;
+            continue;
         }
 
         if (   msg.type == MessageType::ORDINARY

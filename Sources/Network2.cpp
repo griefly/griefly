@@ -94,6 +94,15 @@ void Network2::SendOrdinaryMessage(QString text)
     SendMsg(msg);
 }
 
+void Network2::SendPing(QString ping_id)
+{
+    Message2 msg;
+    msg.type = MessageType::PING;
+    msg.json = "{\"ping_id\":\"" + ping_id + "\"}";
+
+    SendMsg(msg);
+}
+
 bool Network2::IsMessageAvailable()
 {
     QMutexLocker locker(&queue_mutex_);

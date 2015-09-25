@@ -27,4 +27,5 @@ namespace MessageType
     const int MOUSE_CLICK = 1004;
 
     const int HASH = 1101;
+    const int PING = 1102;
 }
