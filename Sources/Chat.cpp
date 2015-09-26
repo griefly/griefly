@@ -49,43 +49,6 @@ const int SCROLL_SIZE = 10;
 void Chat::InitChat()
 {
     chat = new Chat;
-
-    /*chat->from_x_ = from_x;
-    chat->from_y_ = from_y;
-    chat->to_x_   = to_x;
-    chat->to_y_   = to_y;
-
-    chat->visible_lines_ = visible_lines;
-
-    chat->text_ = new char[MAX_LINE_SIZE + 1];
-
-    chat->block_down_ = false;
-
-    chat->scroll_speed_ = 3;
-
-    int per_line = (to_y - from_y) / (visible_lines + 1);
-    int font_size = (per_line * 3) / 4;
-    chat->font_size_ = font_size;
-    chat->per_line_ = per_line;
-
-    chat->deja = GetTexts().GetFont("DejaVuSans.ttf", chat->font_size_);
-
-    chat->text_input_ = new TextInput(from_x, to_y - per_line, to_x, to_y, font_size);
-
-    for (int i = 0; i < chat->visible_lines_; ++i)
-    {
-        std::stringstream converter;
-        converter << "text_line" << i;
-        Chat::Line l;
-        l.text = "";
-        chat->lines_.push_back(l);
-        GetTexts()[converter.str()].SetUpdater([&, i](std::string* str)
-        {
-            *str = chat->lines_[chat->current_pos_ - i - 1].text;
-        }).SetSize(font_size).SetPlace(from_x + 1, to_y - (i + 2) * per_line)
-            .SetFreq(50).SetColor(0, 0, 0).SetFont("DejaVuSans.ttf");
-    }
-    chat->current_pos_ = chat->visible_lines_;*/
 }
 
 bool Chat::IsOOCMessage(const std::string &text)
@@ -114,7 +77,7 @@ void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 
     SetCursorAtEnd();
 
-    GetTextBrowser()->insertHtml((str + "<br>").c_str());
+    GetTextBrowser()->insertHtml(QString::fromStdString(str + "<br>"));
 
     SetCursorAtEnd();
 }
@@ -126,8 +89,19 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
 
     SetCursorAtEnd();
 
+    QString q_by = QString::fromStdString(by).toHtmlEscaped();
+    QString q_who = QString::fromStdString(who).toHtmlEscaped();
+    QString q_object = QString::fromStdString(object).toHtmlEscaped();
+
     GetTextBrowser()->insertHtml
-        (("<font color=\"red\">" + who + " is attacked by " + by + " with " + object + "</font><br>").c_str());
+        (
+           "<font color=\"red\">"
+         + q_who
+         + " is attacked by "
+         + q_by
+         + " with "
+         + q_object
+         + "</font><br>");
 
     SetCursorAtEnd();
 }
@@ -139,8 +113,17 @@ void Chat::PostWords(const std::string& who, const std::string& text, size_t til
 
     SetCursorAtEnd();
 
+    QString q_who = QString::fromStdString(who).toHtmlEscaped();
+    QString q_text = QString::fromStdString(text).toHtmlEscaped();
+
     GetTextBrowser()->insertHtml
-        (("<b>" + who + "</b>: " + "<span>" + text + "</span><br>").c_str());
+        (
+           "<b>"
+         + q_who
+         + "</b>: "
+         + "<span>"
+         + q_text
+         + "</span><br>");
 
     SetCursorAtEnd();
 }
@@ -155,7 +138,7 @@ void Chat::PostText(const std::string& str_)
 {
     SetCursorAtEnd();
 
-    QString loc = QString::fromUtf8(str_.c_str());
+    QString loc = QString::fromStdString(str_).toHtmlEscaped();
     GetTextBrowser()->insertHtml(loc.replace('\n', "<br>"));
 
     SetCursorAtEnd();
@@ -165,8 +148,17 @@ void Chat::PostOOCText(const std::string &who, const std::string& text)
 {
     SetCursorAtEnd();
 
+    QString q_who = QString::fromStdString(who).toHtmlEscaped();
+    QString q_text = QString::fromStdString(text).toHtmlEscaped();
+
     GetTextBrowser()->insertHtml
-        (("<font color=\"blue\"><b>" + who + "</b>: " + "<span>" + text + "</span></font><br>").c_str());
+        (
+           "<font color=\"blue\"><b>"
+         + q_who
+         + "</b>: "
+         + "<span>"
+         + q_text
+         + "</span></font><br>");
 
     SetCursorAtEnd();
 }
@@ -184,7 +176,7 @@ void Chat::Process()
 
 void Chat::AddLines(const std::string& str)
 {
-    QString loc = QString::fromUtf8(str.c_str());
+    QString loc = QString::fromStdString(str).toHtmlEscaped();
     GetTextBrowser()->append(loc);
     int pos = 0;
     while (true)
