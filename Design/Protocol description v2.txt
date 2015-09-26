@@ -67,17 +67,23 @@ GAME (BROADCASTED) TYPES:
 They are used only in client (mostly)
 1001 - oridnary/keyboard
 {"key":"ENTER"}
+Size < 512
+
 1002 - message 
 {"text":"some text"}
+Size < 2 * 1024
 
 1003 - some complicated gui message
 1004 - mouse click
 {"obj":42}
+Size < 512
 
 1101 - hash message
 {"hash":42,"tick":42}
+Size < 512
 1102 - ping message
 {"ping_id":"42"}
+Size < 512
 
 PROTOCOL:
 
