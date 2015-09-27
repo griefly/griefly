@@ -171,6 +171,8 @@ from CLIENT to SERVER
  type: X
 {some json}
 
+validate message (length, json structure)
+if success:
 after that broadcast message
 
 from SERVER to ALL CLIENTS (even inital client):
