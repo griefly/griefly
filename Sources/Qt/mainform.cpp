@@ -112,7 +112,7 @@ void MainForm::connectionFailed(QString reason)
 {
     ui->textBrowser->insertHtml("<b>Connection failed!</b>");
     ui->textBrowser->append(reason);
-    ui->textBrowser->insertHtml("<br>If you would like to reconnect then do it manually");
+    ui->textBrowser->insertHtml("<br>If you would like to reconnect then do it manually<br>");
 }
 
 void MainForm::connectToHost()

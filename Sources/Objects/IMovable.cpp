@@ -233,12 +233,16 @@ void ForceManager::Process()
     timer.Start();
     for (auto movable = to_add_.begin(); movable != to_add_.end(); ++movable)
     {
-        if (!(*movable))
+        if (!(*movable).valid())
             continue;
         if (!NonZero((*movable)->force_))
             continue;
 
-        under_force_.push_back(*movable);
+        auto to_add = std::find(under_force_.begin(), under_force_.end(), *movable);
+        if (to_add == under_force_.end())
+        {
+            under_force_.push_back(*movable);
+        }
     }
     if (to_add_.size())
     {
@@ -261,7 +265,13 @@ void ForceManager::Process()
         }
         (*movable)->ProcessForce();
     }
+  //  SYSTEM_STREAM << "Remove take: " << (remove_timer.Get() * 1.0 / timer.Get()) * 100.0 << "%" << std::endl;
+  //  SYSTEM_STREAM << "Remove size: " << to_remove.size() << " Force size: " << under_force_.size() << std::endl;
+    //SYSTEM_STREAM << "Force take: " << timer.Get() / 1000.0 << std::endl;
+}
 
+void ForceManager::Clear()
+{
     std::vector<id_ptr_on<IMovable>> to_remove;
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
@@ -273,8 +283,4 @@ void ForceManager::Process()
     }
     for (auto it = to_remove.begin(); it != to_remove.end(); ++it)
         under_force_.erase(std::find(under_force_.begin(), under_force_.end(), *it));
-
-  //  SYSTEM_STREAM << "Remove take: " << (remove_timer.Get() * 1.0 / timer.Get()) * 100.0 << "%" << std::endl;
-  //  SYSTEM_STREAM << "Remove size: " << to_remove.size() << " Force size: " << under_force_.size() << std::endl;
-    //SYSTEM_STREAM << "Force take: " << timer.Get() / 1000.0 << std::endl;
 }

@@ -5,8 +5,6 @@
 void IMainObject::delThis()
 {
     GetItemFabric()->idTable()[id_] = 0;
-    if (GetFreq())
-        GetItemFabric()->RemoveProcessingItem(GetId());
     delete this;
 }
 
@@ -32,16 +30,14 @@ bool IMainObject::loadSelf(std::stringstream& file)
 void IMainObject::SetFreq(int freq)
 {
     how_often_ = freq;
+
+    // TODO: Why is it here?
     if (!GetId())
         return;
 
     if (how_often_ != 0)
     {
         GetItemFabric()->AddProcessingItem(GetId());
-    }
-    else
-    {
-        GetItemFabric()->RemoveProcessingItem(GetId());
     }
 }
 

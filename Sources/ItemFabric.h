@@ -132,7 +132,8 @@ public:
     }
 
     void AddProcessingItem(id_ptr_on<IMainObject> item);
-    void RemoveProcessingItem(id_ptr_on<IMainObject> item);
+
+    void ClearProcessing();
 
     void SetPlayerId(size_t net_id, size_t real_id);
     size_t GetPlayerId(size_t net_id);
@@ -146,7 +147,6 @@ private:
     std::vector<id_ptr_on<IMainObject>> process_table_;
 
     std::vector<id_ptr_on<IMainObject>> add_to_process_;
-    std::vector<id_ptr_on<IMainObject>> remove_from_process_;
 
     unsigned int hash_last_;
     unsigned int hash_last_tick_;

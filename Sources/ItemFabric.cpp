@@ -48,39 +48,32 @@ void ItemFabric::Sync()
 
 void ItemFabric::UpdateProcessingItems()
 {   
-    if (remove_from_process_.size())
+    if (!add_to_process_.size())
     {
-        for (auto it = remove_from_process_.begin(); it != remove_from_process_.end(); ++it)
-        {   
-            auto to_del = std::find(process_table_.begin(), process_table_.end(), *it);
-            if (to_del != process_table_.end())
-                process_table_.erase(to_del);
-        }       
+        return;
     }
-
-    if (add_to_process_.size())
+    for (auto it = add_to_process_.begin(); it != add_to_process_.end(); ++it)
     {
-        for (auto it = add_to_process_.begin(); it != add_to_process_.end(); ++it)
+        if (!(*it).valid())
         {
-            auto to_add = std::find(process_table_.begin(), process_table_.end(), *it);
-            if (to_add == process_table_.end())
-                process_table_.push_back(*it);
+            continue;
+        }
+        if ((*it)->GetFreq() == 0)
+        {
+            continue;
+        }
+        auto to_add = std::find(process_table_.begin(), process_table_.end(), *it);
+        if (to_add == process_table_.end())
+        {
+            process_table_.push_back(*it);
         }
     }
-    if (remove_from_process_.size() || add_to_process_.size())
+    std::sort(process_table_.begin(), process_table_.end(),
+    [](id_ptr_on<IMainObject> item1, id_ptr_on<IMainObject> item2)
     {
-        std::sort(process_table_.begin(), process_table_.end(),
-        [](id_ptr_on<IMainObject> item1, id_ptr_on<IMainObject> item2)
-        {
-            return item1.ret_id() < item2.ret_id();
-        });
-        remove_from_process_.clear();
-        add_to_process_.clear();
-
-        SYSTEM_STREAM << "Size of processed: " << process_table_.size() << std::endl;
-        //for (auto it = process_table_.begin(); it != process_table_.end(); ++it)
-        //    SYSTEM_STREAM << "Id: " << it->ret_id() << std::endl;
-    }
+        return item1.ret_id() < item2.ret_id();
+    });
+    add_to_process_.clear();
 }
 
 void ItemFabric::foreachProcess()
@@ -89,10 +82,17 @@ void ItemFabric::foreachProcess()
 
     size_t table_size = process_table_.size();
     for (size_t i = 0; i < table_size; ++i)
-        if (process_table_[i].valid() && process_table_[i]->GetFreq() && ((MAIN_TICK % process_table_[i]->GetFreq()) == 0))
+    {
+        if (!(   process_table_[i].valid()
+              && process_table_[i]->GetFreq()))
+        {
+            continue;
+        }
+        else if ((MAIN_TICK % process_table_[i]->GetFreq()) == 0)
+        {
             process_table_[i]->process();
-
-    UpdateProcessingItems();
+        }
+    }
 }
 
 void ItemFabric::saveMapHeader(std::stringstream& savefile)
@@ -375,7 +375,6 @@ void ItemFabric::clearMap()
 
     process_table_.clear();
     add_to_process_.clear();
-    remove_from_process_.clear();
     players_table_.clear();
 
     id_ = 1;
@@ -404,9 +403,17 @@ unsigned int ItemFabric::hash_all()
     unsigned int h = 0;
     size_t table_size = idTable_.size();
     for (size_t i = 1; i < table_size; ++i)
+    {
         if (idTable_[i] != nullptr)
+        {
             h += idTable_[i]->hashSelf();
+        }
+    }
+
+    ForceManager::Get().Clear();
     h += ForceManager::Get().Hash();
+
+    ClearProcessing();
 
     int i = 1;
     for (auto p = process_table_.begin(); p != process_table_.end(); ++p)
@@ -445,9 +452,23 @@ void ItemFabric::AddProcessingItem(id_ptr_on<IMainObject> item)
     add_to_process_.push_back(item);
 }
 
-void ItemFabric::RemoveProcessingItem(id_ptr_on<IMainObject> item)
+void ItemFabric::ClearProcessing()
 {
-    remove_from_process_.push_back(item);  
+    std::vector<id_ptr_on<IMainObject>> remove_from_process;
+    size_t table_size = process_table_.size();
+    for (size_t i = 0; i < table_size; ++i)
+    {
+        if (!(   process_table_[i].valid()
+              && process_table_[i]->GetFreq()))
+        {
+            remove_from_process.push_back(process_table_[i]);
+        }
+    }
+
+    for (auto it = remove_from_process.begin(); it != remove_from_process.end(); ++it)
+    {
+        process_table_.erase(std::find(process_table_.begin(), process_table_.end(), *it));
+    }
 }
 
 ItemFabric* item_fabric_ = 0;
