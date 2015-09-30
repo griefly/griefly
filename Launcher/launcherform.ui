@@ -84,7 +84,7 @@
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>140</y>
+     <y>150</y>
      <width>75</width>
      <height>31</height>
     </rect>
@@ -143,6 +143,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="loginLineEdit">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -153,6 +156,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="passwordLineEdit">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>140</x>
@@ -182,6 +188,12 @@
    </property>
    <property name="text">
     <string>Guest?</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="tristate">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QLabel" name="loginLabel">

@@ -123,17 +123,29 @@ void MainForm::connectToHost()
         adrs = GetParamsHolder().GetParam<std::string>("ip");
     }
 
+    int port = 1111;
+    if (GetParamsHolder().GetParamBool("port"))
+    {
+        port = GetParamsHolder().GetParam<int>("port");
+    }
+
     std::string login = "Guest";
     if (GetParamsHolder().GetParamBool("login"))
     {
         login = GetParamsHolder().GetParam<std::string>("login");
     }
 
+    std::string password = "";
+    if (GetParamsHolder().GetParamBool("password"))
+    {
+        password = GetParamsHolder().GetParam<std::string>("password");
+    }
+
     Network2::GetInstance().TryConnect(
                 QString::fromStdString(adrs),
-                1111,
+                port,
                 QString::fromStdString(login),
-                "");
+                QString::fromStdString(password));
 }
 
 void MainForm::on_lineEdit_returnPressed()

@@ -119,7 +119,23 @@ void LauncherForm::Popup()
 void LauncherForm::on_connectPushButton_clicked()
 {
     QStringList args;
-    args.push_back("ip=" + ui->serverLineEdit->text());
+    if (ui->localhostCheckBox->isChecked() == true)
+    {
+        args.push_back("ip=127.0.0.1");
+    }
+    else
+    {
+        args.push_back("ip=" + ui->serverLineEdit->text());
+    }
+    if (ui->guestCheckBox->isChecked() == true)
+    {
+        args.push_back("login=Guest");
+    }
+    else
+    {
+        args.push_back("login=" + ui->loginLineEdit->text());
+        args.push_back("password=" + ui->passwordLineEdit->text());
+    }
     args.push_back("port=" + ui->portLineEdit->text());
     args.push_back("-auto_connect");
     args.push_back("mapgen_name=default.gen");
@@ -133,4 +149,30 @@ void LauncherForm::on_connectPushButton_clicked()
 void LauncherForm::on_hidePushButton_clicked()
 {
     hide();
+}
+
+void LauncherForm::on_guestCheckBox_stateChanged(int arg1)
+{
+    if (arg1 == Qt::Checked)
+    {
+        ui->passwordLineEdit->setEnabled(false);
+        ui->loginLineEdit->setEnabled(false);
+    }
+    else
+    {
+        ui->passwordLineEdit->setEnabled(true);
+        ui->loginLineEdit->setEnabled(true);
+    }
+}
+
+void LauncherForm::on_localhostCheckBox_stateChanged(int arg1)
+{
+    if (arg1 == Qt::Checked)
+    {
+        ui->serverLineEdit->setEnabled(false);
+    }
+    else
+    {
+        ui->serverLineEdit->setEnabled(true);
+    }
 }

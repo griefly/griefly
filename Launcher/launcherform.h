@@ -31,6 +31,10 @@ private slots:
 
     void on_hidePushButton_clicked();
 
+    void on_guestCheckBox_stateChanged(int arg1);
+
+    void on_localhostCheckBox_stateChanged(int arg1);
+
 private:
     void Popup();
 
