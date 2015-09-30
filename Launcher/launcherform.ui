@@ -49,7 +49,7 @@
     <rect>
      <x>20</x>
      <y>40</y>
-     <width>141</width>
+     <width>151</width>
      <height>31</height>
     </rect>
    </property>
@@ -65,7 +65,7 @@
   <widget class="QLineEdit" name="portLineEdit">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>180</x>
      <y>40</y>
      <width>71</width>
      <height>31</height>
@@ -84,7 +84,7 @@
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>40</y>
+     <y>140</y>
      <width>75</width>
      <height>31</height>
     </rect>
@@ -106,7 +106,7 @@
     <string>Hide</string>
    </property>
   </widget>
-  <widget class="QLabel" name="addressLabel">
+  <widget class="QLabel" name="serverLabel">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -121,13 +121,13 @@
     </font>
    </property>
    <property name="text">
-    <string>Address</string>
+    <string>Server</string>
    </property>
   </widget>
   <widget class="QLabel" name="portLabel">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>180</x>
      <y>20</y>
      <width>61</width>
      <height>16</height>
@@ -140,6 +140,97 @@
    </property>
    <property name="text">
     <string>Port</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="loginLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>100</y>
+     <width>113</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="passwordLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>100</y>
+     <width>110</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="guestCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>100</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Guest?</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="loginLabel">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>78</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="passwordLabel">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>80</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Password</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="localhostCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>40</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Local?</string>
    </property>
   </widget>
  </widget>
