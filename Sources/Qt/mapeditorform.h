@@ -36,8 +36,9 @@ public:
     ~MapEditorForm();
 public slots:
     void newSelectionSetted(int first_x, int first_y, int second_x, int second_y);
-    void on_createItem_clicked();
+    void mapClicked();
 private slots:
+    void on_createItem_clicked();
 
     void on_createTurf_clicked();
 
@@ -61,7 +62,13 @@ private slots:
 
     void on_lineEditAsString_returnPressed();
 
+    void on_listWidgetTurf_clicked(const QModelIndex &index);
+
+    void on_listWidget_clicked(const QModelIndex &index);
+
 private:
+    bool is_turf_selected_;
+
     MapEditor::EditorEntry* GetCurrentEditorEntry();
 
     void UpdateVariablesColor(MapEditor::EditorEntry& ee);

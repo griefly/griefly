@@ -44,6 +44,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    is_turf_selected_ = false;
+
     InitSettersForTypes();
 
     scene_ = new GraphicsScene;
@@ -51,7 +53,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
     connect(scene_, &GraphicsScene::mousePressed, map_editor_, &MapEditor::mousePressedEvent);
     connect(scene_, &GraphicsScene::keyboardPressed, map_editor_, &MapEditor::keyPressedEvent);
-    connect(scene_, &GraphicsScene::rightClick, this, &MapEditorForm::on_createItem_clicked);
+    connect(scene_, &GraphicsScene::rightClick, this, &MapEditorForm::mapClicked);
     connect(map_editor_, &MapEditor::newSelectionSetted, this, &MapEditorForm::newSelectionSetted);
 
     map_editor_->Resize(100, 100, 1);
@@ -149,6 +151,18 @@ void MapEditorForm::on_createItem_clicked()
     }
     std::string type = types_[current_row];
     map_editor_->AddItem(type);
+}
+
+void MapEditorForm::mapClicked()
+{
+    if (is_turf_selected_)
+    {
+        on_createTurf_clicked();
+    }
+    else
+    {
+        on_createItem_clicked();
+    }
 }
 
 void MapEditorForm::on_createTurf_clicked()
@@ -365,4 +379,14 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
+}
+
+void MapEditorForm::on_listWidgetTurf_clicked(const QModelIndex&index)
+{
+    is_turf_selected_ = true;
+}
+
+void MapEditorForm::on_listWidget_clicked(const QModelIndex &index)
+{
+    is_turf_selected_ = false;
 }
