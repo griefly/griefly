@@ -283,7 +283,7 @@ void MapEditor::Resize(int posx, int posy, int posz)
                 second_selection_x_, second_selection_y_);
 }
 
-void MapEditor::AddItemType(const std::string &item_type, QPixmap image)
+void MapEditor::AddItemType(const std::string &item_type, QVector<QPixmap> image)
 {
     image_holder_[item_type] = image;
 }
@@ -338,7 +338,7 @@ MapEditor::EditorEntry& MapEditor::AddItem(const std::string &item_type, int pos
 {
     EditorEntry new_entry;
     new_entry.item_type = item_type;
-    new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type]);
+    new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type][0]);
     new_entry.pixmap_item->setPos(posx * 32, posy * 32);
     new_entry.pixmap_item->setZValue(50);
 
@@ -371,7 +371,7 @@ MapEditor::EditorEntry& MapEditor::SetTurf(const std::string &item_type, int pos
 
     EditorEntry new_entry;
     new_entry.item_type = item_type;
-    new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type]);
+    new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type][0]);
     new_entry.pixmap_item->setPos(posx * 32, posy * 32);
     editor_map_[posx][posy][posz].turf = new_entry;
     return editor_map_[posx][posy][posz].turf;

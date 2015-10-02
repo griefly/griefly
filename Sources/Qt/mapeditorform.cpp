@@ -84,20 +84,26 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
             continue;
         }
 
-        int current_frame_pos = bloc->GetMetadata()->first_frame_pos;
+        QVector<QPixmap> images;
 
-        int image_state_h_ = current_frame_pos / bloc->GetSprite()->FrameW();
-        int image_state_w_ = current_frame_pos % bloc->GetSprite()->FrameW();
+        for (int dir = 0; dir < bloc->GetMetadata()->dirs; ++dir)
+        {
+            int current_frame_pos = bloc->GetMetadata()->first_frame_pos;
 
-        SDL_Surface* s = bloc->GetSprite()->GetSDLSprite()->frames
-                [image_state_w_ * bloc->GetSprite()->FrameH() + image_state_h_];
-        QImage img(static_cast<uchar*>(s->pixels),
-                               s->w, s->h, QImage::Format_ARGB32);
+            int image_state_h_ = current_frame_pos / bloc->GetSprite()->FrameW();
+            int image_state_w_ = current_frame_pos % bloc->GetSprite()->FrameW();
 
-        map_editor_->AddItemType(it->first, QPixmap::fromImage(img));
+            SDL_Surface* s = bloc->GetSprite()->GetSDLSprite()->frames
+                    [image_state_w_ * bloc->GetSprite()->FrameH() + image_state_h_ + dir];
+            QImage img(static_cast<uchar*>(s->pixels),
+                                   s->w, s->h, QImage::Format_ARGB32);
+
+            images.push_back(QPixmap::fromImage(img));
+        }
+        map_editor_->AddItemType(it->first, images);
 
         QListWidgetItem* new_item
-                = new QListWidgetItem(QIcon(QPixmap::fromImage(img)), bloc->T_ITEM().c_str());
+                = new QListWidgetItem(QIcon(images[0]), bloc->T_ITEM().c_str());
 
         if (!is_turf)
         {
@@ -110,7 +116,6 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
             map_editor_->AddTurfType(it->first);
             ui->listWidgetTurf->addItem(new_item);
         }
-
     }
 }
 

@@ -11,6 +11,7 @@
 #include <QGraphicsPolygonItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
+#include <QVector>
 
 class MapEditor: public QObject
 {
@@ -58,7 +59,7 @@ public:
 
     void Resize(int posx, int posy, int posz);
 
-    void AddItemType(const std::string& item_type, QPixmap image);
+    void AddItemType(const std::string& item_type, QVector<QPixmap> images);
 
     void AddTurfType(const std::string& item_type);
 
@@ -109,7 +110,7 @@ private:
 
     Pointer pointer_;
 
-    std::map<std::string, QPixmap> image_holder_;
+    std::map<std::string, QVector<QPixmap>> image_holder_;
 
     std::set<std::string> turf_types_;
 
