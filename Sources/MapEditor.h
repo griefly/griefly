@@ -65,6 +65,8 @@ public:
 
     void AddItem(const std::string& item_type);
 
+    void UpdateDirs(EditorEntry* ee);
+
     void RemoveItems();
 
     void RemoveItems(int posx, int posy, int posz);

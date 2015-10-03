@@ -88,13 +88,13 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         for (int dir = 0; dir < bloc->GetMetadata()->dirs; ++dir)
         {
-            int current_frame_pos = bloc->GetMetadata()->first_frame_pos;
+            int current_frame_pos = bloc->GetMetadata()->first_frame_pos + dir;
 
             int image_state_h_ = current_frame_pos / bloc->GetSprite()->FrameW();
             int image_state_w_ = current_frame_pos % bloc->GetSprite()->FrameW();
 
             SDL_Surface* s = bloc->GetSprite()->GetSDLSprite()->frames
-                    [image_state_w_ * bloc->GetSprite()->FrameH() + image_state_h_ + dir];
+                    [image_state_w_ * bloc->GetSprite()->FrameH() + image_state_h_];
             QImage img(static_cast<uchar*>(s->pixels),
                                    s->w, s->h, QImage::Format_ARGB32);
 
@@ -294,7 +294,7 @@ MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
     int current_y = map_editor_->GetPointer().first_posy;
     auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
 
-    if (entries.size())
+    if (entries.size() > current_index)
     {
         return &entries[current_index];
     }
@@ -353,12 +353,16 @@ void MapEditorForm::on_lineEditRaw_returnPressed()
         return;
     }
 
+
+
     std::string& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
 
     variable_value = ui->lineEditRaw->text().toStdString();
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
+
+    map_editor_->UpdateDirs(ee);
 }
 
 void MapEditorForm::on_lineEditAsString_returnPressed()

@@ -11,7 +11,7 @@
 
 #include "constheader.h"
 #include "StreamWrapper.h"
-
+#include "helpers.h"
 
 MapEditor::EditorEntry::EditorEntry()
 {
@@ -234,6 +234,9 @@ void MapEditor::LoadMapgen(const std::string &name)
         }
 
         WrapReadMessage(ss, ee->variables);
+
+        // TODO
+        UpdateDirs(ee);
     }
 }
 
@@ -306,6 +309,24 @@ void MapEditor::AddItem(const std::string &item_type)
     emit newSelectionSetted(
                 first_selection_x_, first_selection_y_,
                 second_selection_x_, second_selection_y_);
+}
+
+void MapEditor::UpdateDirs(MapEditor::EditorEntry *ee)
+{
+    if (ee && ee->variables["dMove"].size())
+    {
+        std::stringstream conv;
+        conv << ee->variables["dMove"];
+        int dMove;
+        conv >> dMove;
+
+        int byond_dir = helpers::dir_to_byond(dMove);
+
+        if (byond_dir < image_holder_[ee->item_type].size())
+        {
+            ee->pixmap_item->setPixmap(image_holder_[ee->item_type][byond_dir]);
+        }
+    }
 }
 
 void MapEditor::RemoveItems()
