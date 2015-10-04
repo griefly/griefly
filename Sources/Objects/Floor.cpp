@@ -17,7 +17,7 @@ Floor::Floor(size_t id) : ITurf(id)
 
     name = "Floor";
 
-    SetOpen(true);
+    SetOpen(false);
     bloody = false;
 }
 
@@ -55,4 +55,10 @@ void Floor::SetOpen(bool o)
         SetState("floor");
     }
     GetView()->RemoveOverlays();
+}
+
+
+Plating::Plating(size_t id) : Floor(id)
+{
+    SetOpen(true);
 }

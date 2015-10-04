@@ -137,7 +137,7 @@ void Manager::process()
 
     unsigned int ping_send_time = 0;
 
-    Debug::UnsyncDebug().GenerateAndSaveReport();
+    //Debug::UnsyncDebug().GenerateAndSaveReport();
     while(done == 0)
     { 
 
