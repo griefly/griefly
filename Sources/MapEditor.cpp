@@ -114,6 +114,7 @@ void MapEditor::PasteItemsToCurrentTile()
     {
         auto& new_item = AddItem(it->item_type, pointer_.first_posx, pointer_.first_posy, 0);
         new_item.variables = it->variables;
+        UpdateDirs(&new_item);
     }
 
     emit newSelectionSetted(
