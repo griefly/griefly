@@ -94,9 +94,9 @@ protocol version, 4 bytes ("S132")
 
 2. from CLIENT to SERVER
 type: INITAL LOGIN MESSAGE
-{"login" : "Someone", "password" : "12345", "game_version" : "v0.2.1"}
+{"login" : "Someone", "password" : "12345", "game_version" : "v0.2.1", "guest" : false}
 
-Note: if "login" == "Guest" then server should interpret this login as random not used login
+If "guest" is true then server should interpret this login as random not used login
  with empty ("") password, for example "Guest4242". Authentication will be always successful.
 
 3.
