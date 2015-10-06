@@ -139,6 +139,9 @@ type: SUCCESS CONNECTION
 c) MASTER CLIENT EXISTS AND "login" DOES HAVE ID
 Server uses existing client info, takes number from that info
 
+If there is an old alive connection that is associated with login then
+server should drop the old connection.
+
  from SERVER to MASTER CLIENT
  type: MAP UPLOAD
 {"url_to_upload_map" : "grief.ly/blah"}
