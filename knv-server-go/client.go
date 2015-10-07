@@ -123,11 +123,9 @@ func (r *Registry) Run() {
 func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	m := newPlayer.m.Message.(*MessageLogin)
 	var id int
-	var existed bool
 	// look up for existing player avatar for current map
 	if info, ok := r.players[m.Login]; ok {
 		id = info.id
-		existed = true
 		log.Printf("registry: reusing existing id %d for player '%s'", id, m.Login)
 	} else {
 		id = r.nextID
@@ -135,6 +133,12 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		info = PlayerInfo{id: id, login: m.Login}
 		r.players[m.Login] = info
 		log.Printf("registry: registered new id %d for player '%s'", id, m.Login)
+
+		// create player on maps
+		newm := &MessageNewClient{id}
+		e := &Envelope{newm, MsgidNewClient, 0}
+		r.sendAll(e)
+		log.Printf("registry: creating new unit for client %d, login '%s'", id, m.Login)
 	}
 
 	// create inbox for client
@@ -148,13 +152,6 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		r.masterID = id
 		master = true
 	} else {
-		if !existed {
-			// create player on maps
-			newm := &MessageNewClient{id}
-			e := &Envelope{newm, MsgidNewClient, 0}
-			r.sendAll(e)
-			log.Printf("registry: creating new unit for client %d, login '%s'", id, m.Login)
-		}
 		// immediately request map for new player
 		var mapUploadURL string
 		mapUploadURL, mapDownloadURL = r.assetServer.MakePipe()
