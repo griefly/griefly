@@ -116,3 +116,97 @@ void Door::AttackBy(id_ptr_on<Item> item)
     else
         Open();
 }
+
+
+GlassDoor::GlassDoor(size_t id) : IMovable(id)
+{
+    transparent = true;
+
+    v_level = 10;
+
+    door_prefix_ = "left";
+
+    anchored = true;
+
+    door_state_ = CLOSED;
+
+    SetSprite("icons/windoor.dmi");
+
+    name = "Glass door";
+}
+
+void GlassDoor::AfterWorldCreation()
+{
+    IMovable::AfterWorldCreation();
+
+    SetPassable(GetDir(), Passable::EMPTY);
+    SetState(door_prefix_);
+}
+
+void GlassDoor::Open()
+{
+    if (door_state_ != CLOSED)
+        return;
+    SetState(door_prefix_ + "opening");
+    PlaySoundIfVisible("windowdoor.ogg", owner.ret_id());
+    door_state_ = OPENING;
+    last_tick_ = MAIN_TICK;
+    SetFreq(1);
+}
+
+void GlassDoor::Close()
+{
+    if (door_state_ != OPEN)
+        return;
+    SetState(door_prefix_ + "closing");
+    PlaySoundIfVisible("windowdoor.ogg", owner.ret_id());
+    SetPassable(GetDir(), Passable::EMPTY);
+    door_state_ = CLOSING;
+    last_tick_ = MAIN_TICK;
+}
+
+void GlassDoor::process()
+{
+    if (door_state_ == OPENING)
+    {
+        if (MAIN_TICK - last_tick_ > 9)
+        {
+            door_state_ = OPEN;
+            SetPassable(GetDir(), Passable::FULL);
+            last_tick_ = MAIN_TICK;
+            SetState(door_prefix_ + "open");
+        }
+        return;
+    }
+    if (door_state_ == CLOSING)
+    {
+        if (MAIN_TICK - last_tick_ > 9)
+        {
+            door_state_ = CLOSED;
+            last_tick_ = MAIN_TICK;
+            SetState(door_prefix_);
+            SetFreq(0);
+        }
+        return;
+    }
+    if (door_state_ == OPEN)
+        if (MAIN_TICK - last_tick_ > 50)
+            Close();
+}
+
+void GlassDoor::Bump(id_ptr_on<IMovable> item)
+{
+    if (id_ptr_on<IMob> m = item)
+    {
+        if (door_state_ == CLOSED)
+            Open();
+    }
+}
+
+void GlassDoor::AttackBy(id_ptr_on<Item> item)
+{
+    if (IsOpen())
+        Close();
+    else
+        Open();
+}
