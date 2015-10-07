@@ -306,9 +306,14 @@ void SocketHandler::socketConnected()
     // It is compile time macro with version (/D or -D)
     obj["game_version"] = QString("v0.1.1-105-g7ff0");//QString(KV_STR(DEFINED_VERSION));
 
+    bool is_guest = (login_ == "Guest");
+    obj["guest"] = is_guest;
+
     QJsonDocument doc(obj);
 
     login_message.json = doc.toJson();
+
+    qDebug() << login_message.json;
 
     sendMessage(login_message);
 
