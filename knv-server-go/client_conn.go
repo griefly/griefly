@@ -58,6 +58,13 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 		return nil, err
 	}
 
+	// profilactic unmarshal to check message syntax correctness
+	var checker interface{}
+	err = json.Unmarshal(buf, &checker)
+	if err != nil {
+		return nil, err
+	}
+
 	msg := getConcreteMessage(kind)
 	err = json.Unmarshal(buf, msg)
 	if err != nil {
