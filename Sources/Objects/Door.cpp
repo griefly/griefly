@@ -149,6 +149,16 @@ void NontransparentDoor::Close()
     Door::Close();
 }
 
+ExternalDoor::ExternalDoor(size_t id) : NontransparentDoor(id)
+{
+    SetSprite("icons/Doorext.dmi");
+}
+
+MaintenanceDoor::MaintenanceDoor(size_t id) : NontransparentDoor(id)
+{
+    SetSprite("icons/Doormaint.dmi");
+}
+
 GlassDoor::GlassDoor(size_t id) : IMovable(id)
 {
     transparent = true;

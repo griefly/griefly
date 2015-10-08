@@ -49,6 +49,24 @@ public:
 };
 ADD_TO_TYPELIST(NontransparentDoor);
 
+class ExternalDoor: public NontransparentDoor
+{
+public:
+    DECLARE_SAVED(ExternalDoor, NontransparentDoor);
+    DECLARE_GET_TYPE_ITEM(ExternalDoor);
+    ExternalDoor(size_t id);
+};
+ADD_TO_TYPELIST(ExternalDoor);
+
+class MaintenanceDoor: public NontransparentDoor
+{
+public:
+    DECLARE_SAVED(MaintenanceDoor, NontransparentDoor);
+    DECLARE_GET_TYPE_ITEM(MaintenanceDoor);
+    MaintenanceDoor(size_t id);
+};
+ADD_TO_TYPELIST(MaintenanceDoor);
+
 class GlassDoor: public IMovable
 {
 public:
