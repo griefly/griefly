@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"math/rand"
+	"strconv"
 	"time"
 )
 
@@ -76,7 +78,7 @@ func (r *Registry) sendAll(m *Envelope) {
 			select {
 			case c <- m:
 			default:
-				// client is too slow, drop him
+				// client is too slow, drop him (later)
 				deadPlayers = append(deadPlayers, idx)
 			}
 		}
@@ -123,6 +125,14 @@ func (r *Registry) Run() {
 func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	m := newPlayer.m.Message.(*MessageLogin)
 	var id int
+
+	if m.IsGuest {
+		// generate new guest user
+		m.Login = newGuest(r, m.Login)
+	}
+
+	// TODO(mechmind): authenticate players
+
 	// look up for existing player avatar for current map
 	if info, ok := r.players[m.Login]; ok {
 		id = info.id
@@ -139,6 +149,11 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		e := &Envelope{newm, MsgidNewClient, 0}
 		r.sendAll(e)
 		log.Printf("registry: creating new unit for client %d, login '%s'", id, m.Login)
+	}
+
+	// if there are queue for previous connection of client then close it
+	if r.clients[id] != nil {
+		close(r.clients[id])
 	}
 
 	// create inbox for client
@@ -194,4 +209,14 @@ func (r *Registry) removePlayer(id int) {
 func (r *Registry) cleanUp() {
 	r.players = make(map[string]PlayerInfo)
 	r.nextID = 1
+}
+
+func newGuest(r *Registry, prefix string) string {
+	for {
+		next := rand.Intn(8192)
+		name := prefix + strconv.Itoa(next)
+		if _, ok := r.players[name]; !ok {
+			return name
+		}
+	}
 }

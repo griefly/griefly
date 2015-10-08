@@ -193,9 +193,9 @@ func (c *ClientConnection) Run() {
 		select {
 		case m, ok := <-c.inbox:
 			if !ok {
-				// channel is empty, switch to next
+				// channel is empty, close connection
 				log.Printf("client[%d]: inbox closed, closing connection", c.id)
-				go c.reg.RemovePlayer(c.id)
+				c.conn.Close()
 				return
 			}
 			err := c.writeMessage(m)
@@ -234,7 +234,7 @@ func ListenAndServe(addr string, r *Registry) error {
 		}
 
 		bufrw := bufio.NewReadWriter(bufio.NewReader(conn), bufio.NewWriter(conn))
-		client := &ClientConnection{conn: conn, bufConn: bufrw, reg: r, id: -1, readErrs: make(chan error)}
+		client := &ClientConnection{conn: conn, bufConn: bufrw, reg: r, id: -1, readErrs: make(chan error, 1)}
 		go client.Run()
 	}
 }

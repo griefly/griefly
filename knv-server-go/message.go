@@ -102,6 +102,7 @@ func (m *MessageChat) TypeName() string {
 type MessageLogin struct {
 	Login       string `json:"login"`
 	Password    string `json:"password"`
+	IsGuest     bool   `json:"guest"`
 	GameVersion string `json:"game_version"`
 }
 
