@@ -16,6 +16,7 @@ public:
     virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual void AttackBy(id_ptr_on<Item> item) override;
     bool IsOpen() const { return door_state_ == OPEN; }
+    bool IsClosed() const { return door_state_ == CLOSED; }
     void Weld();
 private:
     enum STATE
@@ -26,6 +27,27 @@ private:
     size_t KV_SAVEBLE(last_tick_);
 };
 ADD_TO_TYPELIST(Door);
+
+class SecurityDoor: public Door
+{
+public:
+    DECLARE_SAVED(SecurityDoor, Door);
+    DECLARE_GET_TYPE_ITEM(SecurityDoor);
+    SecurityDoor(size_t id);
+};
+ADD_TO_TYPELIST(SecurityDoor);
+
+class NontransparentDoor: public Door
+{
+public:
+    DECLARE_SAVED(NontransparentDoor, Door);
+    DECLARE_GET_TYPE_ITEM(NontransparentDoor);
+    NontransparentDoor(size_t id);
+
+    virtual void Open() override;
+    virtual void Close() override;
+};
+ADD_TO_TYPELIST(NontransparentDoor);
 
 class GlassDoor: public IMovable
 {

@@ -105,7 +105,7 @@ void Door::AttackBy(id_ptr_on<Item> item)
 {
     if (id_ptr_on<Weldingtool> w = item)
     {
-        if (w->Working())
+        if (IsClosed() && w->Working())
             Weld();
         return;
     }
@@ -113,10 +113,41 @@ void Door::AttackBy(id_ptr_on<Item> item)
 
     if (IsOpen())
         Close();
-    else
+    else if (IsClosed())
         Open();
 }
 
+SecurityDoor::SecurityDoor(size_t id) : Door(id)
+{
+    SetSprite("icons/Doorsecglass.dmi");
+}
+
+
+NontransparentDoor::NontransparentDoor(size_t id) : Door(id)
+{
+    SetSprite("icons/Doorsec.dmi");
+    transparent = false;
+}
+
+void NontransparentDoor::Open()
+{
+    if (!IsClosed())
+    {
+        return;
+    }
+    transparent = true;
+    Door::Open();
+}
+
+void NontransparentDoor::Close()
+{
+    if (!IsOpen())
+    {
+        return;
+    }
+    transparent = false;
+    Door::Close();
+}
 
 GlassDoor::GlassDoor(size_t id) : IMovable(id)
 {
@@ -131,6 +162,7 @@ GlassDoor::GlassDoor(size_t id) : IMovable(id)
     door_state_ = CLOSED;
 
     SetSprite("icons/windoor.dmi");
+    SetState(door_prefix_);
 
     name = "Glass door";
 }
