@@ -82,7 +82,7 @@ Size < 512
 {"hash":42,"tick":42}
 Size < 512
 1102 - ping message
-{"ping_id":"42"}
+{"ping_id":"some_unique_string"}
 Size < 512
 
 PROTOCOL:
