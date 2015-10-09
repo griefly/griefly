@@ -137,6 +137,10 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	if info, ok := r.players[m.Login]; ok {
 		id = info.id
 		log.Printf("registry: reusing existing id %d for player '%s'", id, m.Login)
+		// remove player and then add him again
+		r.removePlayer(id)
+		info = PlayerInfo{id: id, login: m.Login}
+		r.players[m.Login] = info
 	} else {
 		id = r.nextID
 		r.nextID++
