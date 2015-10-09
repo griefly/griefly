@@ -141,7 +141,8 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		r.removePlayer(id)
 		if _, ok := r.players[m.Login]; !ok {
 			// server was restarted, so restart registration process
-			return r.registerPlayer(newPlayer)
+			r.registerPlayer(newPlayer)
+			return
 		}
 
 		info = PlayerInfo{id: id, login: m.Login}
