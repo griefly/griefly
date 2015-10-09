@@ -8,9 +8,6 @@ FlatGlass::FlatGlass(size_t id) : Structure(id)
 {
     transparent = true;
 
-    // Rotate(get_rand() % 4);
-    Rotate(D_UP);
-
     tickSpeed = 5;
     pixSpeed = 1;
 

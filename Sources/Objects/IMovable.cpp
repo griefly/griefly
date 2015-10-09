@@ -16,7 +16,7 @@ IMovable::IMovable(size_t id) : IOnMapObject(id)
     lastMove = 0;
     tickSpeed = 1;
     pixSpeed = 1;
-    dMove = D_UP;
+    dMove = D_DOWN;
     anchored = false;
     force_.x = 0;
     force_.y = 0;
