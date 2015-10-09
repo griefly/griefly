@@ -304,7 +304,7 @@ void SocketHandler::socketConnected()
     obj["password"] = password_;
 
     // It is compile time macro with version (/D or -D)
-    obj["game_version"] = QString("v0.1.1-105-g7ff0");//QString(KV_STR(DEFINED_VERSION));
+    obj["game_version"] = QString("v0.1.1-108-g6f0a");//QString(KV_STR(DEFINED_VERSION));
 
     bool is_guest = (login_ == "Guest");
     obj["guest"] = is_guest;
@@ -351,7 +351,11 @@ void SocketHandler::errorSocket(QAbstractSocket::SocketError error)
     //thread_.wait();
     state_ = NetworkState::NOT_CONNECTED;
     network_->thread_.exit(-1);
-    emit connectionEnd("Socket error: " + QString::number(error));
+    emit connectionEnd(
+              "Socket error: "
+            + QString::number(error)
+            + ", reason: "
+            + possible_error_reason_);
 }
 
 void SocketHandler::handleFirstMessage()
@@ -363,10 +367,12 @@ void SocketHandler::handleFirstMessage()
     case MessageType::WRONG_GAME_VERSION:
         qDebug() << "Wrong game version";
         qDebug() << m.json;
+        possible_error_reason_ = "Wrong game version: " + m.json;
         break;
     case MessageType::WRONG_AUTHENTICATION:
         qDebug() << "Wrong authentication";
         qDebug() << m.json;
+        possible_error_reason_ = "Wrong authentication";
         break;
     case MessageType::SUCCESS_CONNECTION:
         qDebug() << "Success";
@@ -376,6 +382,7 @@ void SocketHandler::handleFirstMessage()
     default:
         qDebug() << "Unknown message type: " << m.type;
         qDebug() << m.json;
+        possible_error_reason_ = "Unknown message type";
         break;
     }
 }

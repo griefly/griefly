@@ -81,6 +81,8 @@ private:
     void HandleHeader();
     void HandleBody();
 
+    QString possible_error_reason_;
+
     Network2* network_;
 };
 
