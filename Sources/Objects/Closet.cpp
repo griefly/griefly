@@ -143,3 +143,68 @@ void Closet::Open()
 
     PlaySoundIfVisible("click.ogg", owner.ret_id());
 }
+
+
+SecurityLocker::SecurityLocker(size_t id) : Closet(id)
+{
+    locked_ = true;
+    SetState("secure1");
+
+    name = "Security locker";
+}
+
+void SecurityLocker::AttackBy(id_ptr_on<Item> item)
+{
+    if (item.valid())
+    {
+        if (!open_)
+        {
+            if (locked_)
+            {
+                Unlock();
+            }
+            else
+            {
+                Lock();
+            }
+            return;
+        }
+    }
+    Closet::AttackBy(item);
+}
+
+void SecurityLocker::Lock()
+{
+    if (open_)
+    {
+        return;
+    }
+    locked_ = true;
+    SetState("secure1");
+}
+
+void SecurityLocker::Unlock()
+{
+    if (open_)
+    {
+        return;
+    }
+    locked_ = false;
+    SetState("secure");
+}
+
+void SecurityLocker::Open()
+{
+    if (locked_)
+    {
+        return;
+    }
+    Closet::Open();
+    SetState("secureopen");
+}
+
+void SecurityLocker::Close()
+{
+    Closet::Close();
+    SetState("secure");
+}

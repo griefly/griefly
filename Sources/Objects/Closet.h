@@ -23,12 +23,29 @@ public:
     virtual void AfterWorldCreation() override;
 
     // TODO: ForEach (?)
-private:
-    void Open();
-    void Close();
+protected:
+    virtual void Open();
+    virtual void Close();
 
     bool KV_SAVEBLE(open_);
 
     std::vector<id_ptr_on<IMovable>> KV_SAVEBLE(content_);
 };
 ADD_TO_TYPELIST(Closet);
+
+class SecurityLocker: public Closet
+{
+public:
+    DECLARE_SAVED(SecurityLocker, Closet);
+    DECLARE_GET_TYPE_ITEM(SecurityLocker);
+    SecurityLocker(size_t id);
+    virtual void AttackBy(id_ptr_on<Item> item) override;
+protected:
+    virtual void Lock();
+    virtual void Unlock();
+
+    virtual void Open() override;
+    virtual void Close() override;
+    bool locked_;
+};
+ADD_TO_TYPELIST(SecurityLocker);
