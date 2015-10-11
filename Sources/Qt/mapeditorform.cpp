@@ -86,7 +86,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         QVector<QPixmap> images;
 
-        for (int dir = 0; dir < bloc->GetMetadata()->dirs; ++dir)
+        for (size_t dir = 0; dir < bloc->GetMetadata()->dirs; ++dir)
         {
             int current_frame_pos = bloc->GetMetadata()->first_frame_pos + dir;
 
@@ -294,7 +294,7 @@ MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
     int current_y = map_editor_->GetPointer().first_posy;
     auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
 
-    if (entries.size() > current_index)
+    if (entries.size() > static_cast<size_t>(current_index))
     {
         return &entries[current_index];
     }
