@@ -134,3 +134,5 @@ Saves
 /Exec/platforms
 /metadata.json
 /Sources/AutogenMetadata.cpp
+/Exec/metadata.json
+/Exec/Launcher.exe
