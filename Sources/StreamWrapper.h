@@ -3,8 +3,12 @@
 #include <sstream>
 #include <string>
 #include <map>
+#include <vector>
+
+#include <QDebug>
 
 #include "constheader.h"
+#include "Idptr.h"
 
 template<class T>
 inline std::stringstream& WrapWriteMessage(std::stringstream& file, T& to_write)

@@ -99,10 +99,10 @@ void LoginMob::processGUImsg(const Message2& msg)
             auto human = GetItemFabric()->newItem<Human>(Human::T_ITEM_S());
             //ghost->name = name;
             GetItemFabric()->SetPlayerId(net_id, human.ret_id());
-            GetMapMaster()->
-             squares[GetMapMaster()->GetMapW() / 2]
-                    [GetMapMaster()->GetMapH() / 2]
-                    [GetMapMaster()->GetMapD() / 2]->AddItem(human);
+
+            auto tiles = GetLobby().GetTilesFor("default");
+
+            tiles[0]->AddItem(human);
             if (GetId() == GetMob().ret_id())
             {
                 ChangeMob(human);

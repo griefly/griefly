@@ -29,6 +29,7 @@
 #include "Human.h"
 #include "LoginMob.h"
 #include "Lobby.h"
+#include "SpawnPoints.h"
 
 #include "AutogenMetadata.h"
 
@@ -430,6 +431,16 @@ void Manager::initWorld(int id, std::string map_name)
             GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
             GetItemFabric()->newItem<Lobby>(Lobby::T_ITEM_S());
+
+            for (auto it = GetItemFabric()->idTable().begin();
+                      it != GetItemFabric()->idTable().end();
+                      ++it)
+            {
+                if ((*it) && ((*it)->RT_ITEM() == SpawnPoint::REAL_TYPE_ITEM))
+                {
+                    GetLobby().AddSpawnPoint((*it)->GetId());
+                }
+            }
 
             auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
 

@@ -10,7 +10,6 @@
 
 #include "Macroses.h"
 #include "FastIsType.h"
-#include "Idptr.h"
 
 class IMainObject;
 class MapMaster;
@@ -185,4 +184,43 @@ std::istream& operator>>(std::istream& stream, id_ptr_on<T>& ptr)
     stream >> l;
     ptr = l;
     return stream;
+}
+
+template<class T>
+std::ostream& operator<<(std::ostream& stream, const std::vector<id_ptr_on<T>>& to_write)
+{
+    file << static_cast<size_t>(to_write.size()) << " ";
+    for (auto it = to_write.begin(); it != to_write.end(); ++it)
+    {
+        file << *it;
+    }
+    return file;
+}
+
+template<class T>
+std::istream& operator>>(std::istream& stream, std::vector<id_ptr_on<T>>& to_read)
+{
+    size_t size;
+    file >> size;
+
+    char c;
+    file.get(c);
+    if (c != ' ')
+    {
+        SYSTEM_STREAM << "Error: corrupted string info" << std::endl;
+        return file;
+    }
+
+    qDebug() << "Size: " << size;
+
+    to_read.resize(size);
+    for (size_t i = 0; i < size; ++i)
+    {
+        size_t new_item;
+        file >> new_item;
+        qDebug() << "new item: " << new_item;
+        to_read[i] = new_item;
+    }
+
+    return file;
 }
