@@ -55,6 +55,8 @@ public:
         if (i == sounds_.size())
             sounds_.resize(sounds_.size() * 2);
         GetSoundManager().InitSound(&sounds_[i], name);
+        // TODO: volume
+        sounds_[i].setVolume(15.0f);
         sounds_[i].play();
         return &sounds_[i];
     }
