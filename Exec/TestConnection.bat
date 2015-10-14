@@ -1,1 +1,0 @@
-FOR /L %%i IN (1,1,4) DO START KVEngine.exe ip=grief.ly -auto mapgen_name=default.gen -autogen_reports -auto_connect

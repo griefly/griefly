@@ -46,6 +46,6 @@ protected:
 
     virtual void Open() override;
     virtual void Close() override;
-    bool locked_;
+    bool KV_SAVEBLE(locked_);
 };
 ADD_TO_TYPELIST(SecurityLocker);

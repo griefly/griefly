@@ -1,1 +1,0 @@
-START KVEngine.exe -neditor ip=grief.ly mapgen_name=default.gen mapg1en_name=unsync_test.gen map_x=70 map_y=70 map_z=1 -autogen_reports -auto_connect

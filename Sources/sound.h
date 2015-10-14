@@ -47,6 +47,7 @@ public:
     }
     sf::Sound* PlaySound(const std::string& name)
     {
+        // TODO: 256 limit in sfml
         size_t i;
         for (i = 0; i < sounds_.size(); ++i)
             if (sounds_[i].getStatus() == sf::SoundSource::Stopped)
