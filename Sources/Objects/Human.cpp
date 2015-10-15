@@ -203,7 +203,7 @@ void Human::Live()
         {
             --health_;
             
-            if (get_rand() % 5 == 0)
+            if (get_rand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
                 Chat::GetChat()->PostSimpleText(name + " gasps!", owner->GetId());
         }
     }
@@ -222,7 +222,7 @@ void Human::Live()
         if (health_ >= -100)
         {
             --health_;
-            if (get_rand() % 5 == 0)
+            if (get_rand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
                 Chat::GetChat()->PostSimpleText(name + " gasps!", owner->GetId());
         }
     }
