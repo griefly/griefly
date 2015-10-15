@@ -60,7 +60,10 @@ public:
     {
         return height_;
     }
-    void Init(const std::string& file_name);
+    void Init(const std::string& file_name, int width, int height);
+
+    void InitWithoutMetadata();
+
     const SpriteMetadata& GetSpriteMetadata(const std::string& name);
     bool IsValidState(const std::string& name);
 private:

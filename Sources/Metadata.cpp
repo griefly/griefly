@@ -27,10 +27,13 @@ void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
         read(reinterpret_cast<char*>(data), length);
 }
 
-void ImageMetadata::Init(const std::string& name)
+void ImageMetadata::Init(const std::string& name, int width, int height)
 {   
     SYSTEM_STREAM << "Begin to init metadata for " << name << std::endl;
     png_byte pngsig[PNGSIGSIZE];
+
+    width_ = width;
+    height_ = height;
 
     std::ifstream source;
     source.open(name, std::fstream::binary);
@@ -52,8 +55,10 @@ void ImageMetadata::Init(const std::string& name)
 
     int is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
 
-    if (is_png) {
+    if (is_png)
+    {
         SYSTEM_STREAM << "ERROR: Data is not valid PNG-data: " << is_png << std::endl;
+        InitWithoutMetadata();
         return;
     }
 
@@ -108,6 +113,20 @@ void ImageMetadata::Init(const std::string& name)
     png_destroy_read_struct(&pngPtr, &infoPtr, static_cast<png_infopp>(0));
     source.close();
     SYSTEM_STREAM << "End load metadata for " << name << std::endl;
+
+    if (!Valid())
+    {
+        InitWithoutMetadata();
+    }
+}
+
+void ImageMetadata::InitWithoutMetadata()
+{
+    SYSTEM_STREAM << "Fail metadata load, try without it" << std::endl;
+    metadata_[""].first_frame_pos = 0;
+
+    metadata_[""].frames_sequence.push_back(0);
+    valid_ = true;
 }
 
 bool ImageMetadata::ParseDescription(std::stringstream& desc)

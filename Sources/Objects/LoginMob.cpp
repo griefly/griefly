@@ -142,15 +142,14 @@ std::istream& operator>>(std::stringstream& file, LoginInterface& interf)
 
 void LoginInterface::Init()
 {
-    view_.SetSprite("icons/288x288.dmi");
-    view_.SetState("singularity_s9");
+    view_.SetSprite("icons/login_screen.jpg");
 }
 
 bool LoginInterface::Click(int x, int y)
 {
     helpers::normalize_pixels(&x, &y);
 
-    bool is_tr = !view_.IsTransp(x - (sizeW / 2 - 144), y - (sizeH / 2 - 144), 0);
+    bool is_tr = !view_.IsTransp(x, y, 0);
 
     if (is_tr)
     {
@@ -162,7 +161,7 @@ bool LoginInterface::Click(int x, int y)
 
 void LoginInterface::Draw()
 {
-    view_.Draw(0, sizeW / 2 - 144, sizeH / 2 - 144);
+    view_.Draw(0, 0, 0);
 }
 
 unsigned int LoginInterface::hash() const
