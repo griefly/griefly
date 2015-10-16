@@ -76,16 +76,6 @@ Slot<Item>& HumanInterface::GetActiveHand()
         return l_hand_;
 }
 
-const std::string RIGHT_HAND = "INT_RHAND";
-const std::string LEFT_HAND = "INT_LHAND";
-const std::string HEAD = "HEAD";
-const std::string SUIT = "SUIT";
-const std::string UNIFORM = "UNIFORM";
-const std::string FEET = "FEET";
-const std::string DROP = "DROP";
-const std::string SWAP = "SWAP";
-const std::string LAY = "SWITCH_LAY";
-
 void HumanInterface::UpdateLaying()
 {
     if (id_ptr_on<Human> human = owner_)
@@ -143,39 +133,39 @@ bool HumanInterface::Click(int x, int y)
     std::string msg;
     if (r_hand_.Click(x, y))
     {
-        msg = RIGHT_HAND;
+        msg = HumanInterfacePlaces::RIGHT_HAND;
     }
     else if (l_hand_.Click(x, y))
     {
-        msg = LEFT_HAND;
+        msg = HumanInterfacePlaces::LEFT_HAND;
     }
     else if (head_.Click(x, y))
     {
-        msg = HEAD;
+        msg = HumanInterfacePlaces::HEAD;
     }
     else if (suit_.Click(x, y))
     {
-        msg = SUIT;
+        msg = HumanInterfacePlaces::SUIT;
     }
     else if (feet_.Click(x, y))
     {
-        msg = FEET;
+        msg = HumanInterfacePlaces::FEET;
     }
     else if (uniform_.Click(x, y))
     {
-        msg = UNIFORM;
+        msg = HumanInterfacePlaces::UNIFORM;
     }
     else if (drop_.Click(x, y))
     {
-        msg = DROP;
+        msg = HumanInterfacePlaces::DROP;
     }
     else if (swap_.Click(x, y))
     {
-        msg = SWAP;
+        msg = HumanInterfacePlaces::SWAP;
     }
     else if (lay_.Click(x, y))
     {
-        msg = LAY;
+        msg = HumanInterfacePlaces::LAY;
     }
     else if (health_.Click(x, y))
     {
@@ -251,31 +241,31 @@ void HumanInterface::AddOverlays()
 
 void HumanInterface::HandleClick(const std::string& place)
 {
-    if (place == RIGHT_HAND)
+    if (place == HumanInterfacePlaces::RIGHT_HAND)
     {
         ApplyActiveHandOnSlot(&r_hand_);
     }
-    else if (place == LEFT_HAND)
+    else if (place == HumanInterfacePlaces::LEFT_HAND)
     {
         ApplyActiveHandOnSlot(&l_hand_);
     }
-    else if (place == HEAD)
+    else if (place == HumanInterfacePlaces::HEAD)
     {
         ApplyActiveHandOnSlot(&head_);
     }
-    else if (place == SUIT)
+    else if (place == HumanInterfacePlaces::SUIT)
     {
         ApplyActiveHandOnSlot(&suit_);
     }
-    else if (place == FEET)
+    else if (place == HumanInterfacePlaces::FEET)
     {
         ApplyActiveHandOnSlot(&feet_);
     }
-    else if (place == UNIFORM)
+    else if (place == HumanInterfacePlaces::UNIFORM)
     {
         ApplyActiveHandOnSlot(&uniform_);
     }
-    else if (place == DROP)
+    else if (place == HumanInterfacePlaces::DROP)
     {
         if(GetActiveHand().Get())
         {
@@ -283,7 +273,7 @@ void HumanInterface::HandleClick(const std::string& place)
             Drop();
         }
     }
-    else if (place == LAY)
+    else if (place == HumanInterfacePlaces::LAY)
     {
         if (id_ptr_on<Human> owner = owner_)
         {
@@ -299,7 +289,7 @@ void HumanInterface::HandleClick(const std::string& place)
             }
         }
     }
-    else if (place == SWAP)
+    else if (place == HumanInterfacePlaces::SWAP)
     {
         SwapHands();
     }

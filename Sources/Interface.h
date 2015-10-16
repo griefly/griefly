@@ -15,6 +15,19 @@ public:
     virtual ~InterfaceBase() {}
 };
 
+namespace HumanInterfacePlaces
+{
+    const std::string RIGHT_HAND = "INT_RHAND";
+    const std::string LEFT_HAND = "INT_LHAND";
+    const std::string HEAD = "HEAD";
+    const std::string SUIT = "SUIT";
+    const std::string UNIFORM = "UNIFORM";
+    const std::string FEET = "FEET";
+    const std::string DROP = "DROP";
+    const std::string SWAP = "SWAP";
+    const std::string LAY = "SWITCH_LAY";
+}
+
 class HumanInterface: public InterfaceBase
 {
 public:

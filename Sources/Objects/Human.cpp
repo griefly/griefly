@@ -38,6 +38,12 @@ Human::Human(size_t id) : IMob(id)
     lying_ = false;
     health_ = 100;
 }
+
+void Human::AfterWorldCreation()
+{
+    interface_.Pick(GetItemFabric()->newItem<Item>(JanitorUniform::T_ITEM_S()));
+    interface_.HandleClick(HumanInterfacePlaces::UNIFORM);
+}
 void Human::InitGUI()
 {
 }
