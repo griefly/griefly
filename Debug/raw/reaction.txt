@@ -1,4 +1,0 @@
-petrol 1
-honey 1
-any 0
-firehoney 2
