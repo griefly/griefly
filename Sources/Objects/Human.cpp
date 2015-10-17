@@ -206,6 +206,11 @@ void Human::AddLyingTimer(int value)
 
 void Human::Live()
 {
+    if (dead_)
+    {
+        return;
+    }
+
     if (id_ptr_on<CubeTile> t = owner)
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
@@ -256,6 +261,7 @@ void Human::Live()
             }
         }
         dead_ = true;
+        SetFreq(0);
     }
 }
 
