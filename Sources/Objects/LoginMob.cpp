@@ -81,6 +81,8 @@ void LoginMob::processGUI()
     interface_.Draw();
 }
 
+const std::string SECURITY_TEXT = "You are security\n";
+const std::string JANITOR_TEXT = "You are janitor\n";
 
 void LoginMob::processGUImsg(const Message2& msg)
 {
@@ -98,15 +100,18 @@ void LoginMob::processGUImsg(const Message2& msg)
         {
             id_ptr_on<Human> human;
             std::vector<id_ptr_on<CubeTile>> tiles;
+            std::string text;
             if (net_id % 2)
             {
                 human = GetItemFabric()->newItem<Human>(CaucasianHuman::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("security");
+                text = SECURITY_TEXT;
             }
             else
             {
                 human = GetItemFabric()->newItem<Human>(Human::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("janitor");
+                text = JANITOR_TEXT;
             }
             //ghost->name = name;
             GetItemFabric()->SetPlayerId(net_id, human.ret_id());
@@ -116,6 +121,8 @@ void LoginMob::processGUImsg(const Message2& msg)
             {
                 ChangeMob(human);
             }
+
+            Chat::GetChat()->PostTextFor(text, human);
         }
     }
     if (msg.type == MessageType::MESSAGE)
