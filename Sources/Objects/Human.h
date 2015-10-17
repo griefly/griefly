@@ -35,7 +35,7 @@ public:
     void UpdateOverlays();
 
     int GetHealth() { return health_; }
-private:
+protected:
     HumanInterface KV_SAVEBLE(interface_);
 
     int KV_SAVEBLE(lay_timer_);
@@ -46,3 +46,13 @@ private:
     int KV_SAVEBLE(health_);
 };
 ADD_TO_TYPELIST(Human);
+
+class CaucasianHuman: public Human
+{
+public:
+    DECLARE_SAVED(CaucasianHuman, Human);
+    DECLARE_GET_TYPE_ITEM(CaucasianHuman);
+    CaucasianHuman(size_t id);
+    virtual void AfterWorldCreation() override;
+};
+ADD_TO_TYPELIST(CaucasianHuman);

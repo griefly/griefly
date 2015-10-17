@@ -22,7 +22,7 @@ Human::Human(size_t id) : IMob(id)
 {
     tickSpeed = 1;
     pixSpeed = 2;
-    SetSprite("icons/human.png");
+    SetSprite("icons/human.dmi");
     SetState("african1_m_s");
     SetPassable(D_ALL, Passable::BIG_ITEM);
     v_level = 9;
@@ -41,8 +41,13 @@ Human::Human(size_t id) : IMob(id)
 
 void Human::AfterWorldCreation()
 {
-    interface_.Pick(GetItemFabric()->newItem<Item>(JanitorUniform::T_ITEM_S()));
-    interface_.HandleClick(HumanInterfacePlaces::UNIFORM);
+    IMob::AfterWorldCreation();
+
+    interface_.uniform_.Set(GetItemFabric()->newItem<Item>(JanitorUniform::T_ITEM_S()));
+    interface_.feet_.Set(GetItemFabric()->newItem<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(GetItemFabric()->newItem<Item>(Crowbar::T_ITEM_S()));
+
+    UpdateOverlays();
 }
 void Human::InitGUI()
 {
@@ -342,4 +347,25 @@ void Human::CalculateVisible(std::list<point>* visible_list)
                  GetY(),
                  GetZ());
     }
+}
+
+
+CaucasianHuman::CaucasianHuman(size_t id) : Human(id)
+{
+    SetState("caucasian2_m_s");
+}
+
+void CaucasianHuman::AfterWorldCreation()
+{
+    // It is not mistake - we don't want to call Human function
+    // because it create some new items
+    IMob::AfterWorldCreation();
+
+    interface_.uniform_.Set(GetItemFabric()->newItem<Item>(RedUniform::T_ITEM_S()));
+    interface_.feet_.Set(GetItemFabric()->newItem<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(GetItemFabric()->newItem<Item>(Wrench::T_ITEM_S()));
+    interface_.head_.Set(GetItemFabric()->newItem<Item>(Helmet::T_ITEM_S()));
+    interface_.suit_.Set(GetItemFabric()->newItem<Item>(Armor::T_ITEM_S()));
+
+    UpdateOverlays();
 }

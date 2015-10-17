@@ -96,7 +96,7 @@ void LoginMob::processGUImsg(const Message2& msg)
         size_t net_id = GetItemFabric()->GetNetId(GetId());
         if (net_id)
         {
-            auto human = GetItemFabric()->newItem<Human>(Human::T_ITEM_S());
+            auto human = GetItemFabric()->newItem<Human>(CaucasianHuman::T_ITEM_S());
             //ghost->name = name;
             GetItemFabric()->SetPlayerId(net_id, human.ret_id());
 

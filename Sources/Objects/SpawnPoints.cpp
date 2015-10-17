@@ -12,6 +12,8 @@ SpawnPoint::SpawnPoint(size_t id) : IOnMapObject(id)
 
 void SpawnPoint::AfterWorldCreation()
 {
+    IOnMapObject::AfterWorldCreation();
+
     SetState("");
 
     //GetLobby().AddSpawnPoint(GetId());

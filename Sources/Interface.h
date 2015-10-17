@@ -58,7 +58,7 @@ public:
     void UpdateHealth();
     void UpdateLaying();
 
-private:
+public:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
 
     id_ptr_on<IOnMapObject> owner_;
