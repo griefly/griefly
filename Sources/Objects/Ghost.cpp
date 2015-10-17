@@ -5,6 +5,11 @@
 
 #include "MagicStrings.h"
 #include "Chat.h"
+#include "ItemFabric.h"
+#include "Lobby.h"
+#include "Text.h"
+
+#include "Human.h"
 
 Ghost::Ghost(size_t id) : IMob(id)
 {
@@ -19,6 +24,10 @@ Ghost::Ghost(size_t id) : IMob(id)
     passable_level = Passable::EMPTY;
 
     name = "Ghost";
+
+    SetFreq(10);
+
+    seconds_until_respawn_ = 15;
 }
 
 bool Ghost::IsMobGhost()
@@ -80,6 +89,57 @@ void Ghost::processGUImsg(const Message2& msg)
         if (Chat::IsOOCMessage(text))
         {
             Chat::GetChat()->PostOOCText(name + " (ghost)", text.substr(3));
+        }
+    }
+}
+
+void Ghost::InitGUI()
+{
+    GetTexts()["RespawnCount"].SetUpdater
+    ([this](std::string* str)
+    {
+        std::stringstream conv;
+        conv << "Until respawn: " << seconds_until_respawn_;
+        *str = conv.str();
+    }).SetFreq(250)
+      .SetSize(17)
+      .SetPlace(sizeW / 2 - 140, sizeH / 2 - 200)
+      .SetColor(250, 140, 140);
+}
+
+void Ghost::DeinitGUI()
+{
+    GetTexts().Delete("RespawnCount");
+}
+
+void Ghost::process()
+{
+    --seconds_until_respawn_;
+    if (seconds_until_respawn_ < 0)
+    {
+        size_t net_id = GetItemFabric()->GetNetId(GetId());
+        if (net_id)
+        {
+            id_ptr_on<Human> human;
+            std::vector<id_ptr_on<CubeTile>> tiles;
+            if (net_id % 2)
+            {
+                human = GetItemFabric()->newItem<Human>(CaucasianHuman::T_ITEM_S());
+                tiles = GetLobby().GetTilesFor("security");
+            }
+            else
+            {
+                human = GetItemFabric()->newItem<Human>(Human::T_ITEM_S());
+                tiles = GetLobby().GetTilesFor("janitor");
+            }
+            //ghost->name = name;
+            GetItemFabric()->SetPlayerId(net_id, human.ret_id());
+
+            tiles[0]->AddItem(human);
+            if (GetId() == GetMob().ret_id())
+            {
+                ChangeMob(human);
+            }
         }
     }
 }

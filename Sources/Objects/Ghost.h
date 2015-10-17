@@ -12,7 +12,13 @@ public:
     virtual bool IsTransp(int x, int y) override;
     virtual void CalculateVisible(std::list<point>* visible_list) override;
     virtual void processGUImsg(const Message2& msg) override;
+
+    virtual void InitGUI() override;
+    virtual void DeinitGUI() override;
+
+    virtual void process() override;
 private:
+    int KV_SAVEBLE(seconds_until_respawn_);
     bool IsMobGhost();
 };
 ADD_TO_TYPELIST(Ghost);
