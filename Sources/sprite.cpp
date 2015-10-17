@@ -18,12 +18,12 @@ void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask)
 bool CSprite::init(InitSprite data)
 {
     SDL_Surface* temp = IMG_Load(data.imgFile.c_str());
-    metadata.Init(data.imgFile, temp->w, temp->h);
     if(temp == NULL)
     {
         SYSTEM_STREAM << "IMG_Load error: " << IMG_GetError() << std::endl;
         return false;
     }
+    metadata.Init(data.imgFile, temp->w, temp->h);
     if (metadata.Valid())
     {
         numFrameW = temp->w / metadata.GetW();

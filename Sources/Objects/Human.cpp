@@ -47,6 +47,10 @@ void Human::AfterWorldCreation()
     interface_.feet_.Set(GetItemFabric()->newItem<Item>(OrangeBoots::T_ITEM_S()));
     interface_.r_hand_.Set(GetItemFabric()->newItem<Item>(Crowbar::T_ITEM_S()));
 
+    interface_.uniform_.Get()->SetOwner(GetId());
+    interface_.feet_.Get()->SetOwner(GetId());
+    interface_.r_hand_.Get()->SetOwner(GetId());
+
     UpdateOverlays();
 }
 void Human::InitGUI()
@@ -112,7 +116,7 @@ void Human::processGUImsg(const Message2 &msg)
         }
         else
         {
-            Chat::GetChat()->PostWords(name, text, owner->GetId());
+            Chat::GetChat()->PostWords(name, text, owner.ret_id());
         }
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
@@ -258,7 +262,7 @@ void Human::Live()
 void Human::AttackBy(id_ptr_on<Item> item)
 {
     bool damaged = false;
-    if (item && (item->damage > 0))
+    if (item.valid() && (item->damage > 0))
     {
         health_ -= item->damage;
         unsigned int value = get_rand() % 3;
@@ -272,12 +276,12 @@ void Human::AttackBy(id_ptr_on<Item> item)
         PlaySoundIfVisible(snd, owner.ret_id());
         if (id_ptr_on<IOnMapObject> item_owner = item->GetOwner())
         {
-            Chat::GetChat()->PostDamage(item_owner->name, name, item->name, owner->GetId());
+            Chat::GetChat()->PostDamage(item_owner->name, name, item->name, owner.ret_id());
         }
 
         damaged = true;
     }
-    else if (!item)
+    else if (!item.valid())
     {
         health_ -= 1;
 
@@ -366,6 +370,12 @@ void CaucasianHuman::AfterWorldCreation()
     interface_.r_hand_.Set(GetItemFabric()->newItem<Item>(Wrench::T_ITEM_S()));
     interface_.head_.Set(GetItemFabric()->newItem<Item>(Helmet::T_ITEM_S()));
     interface_.suit_.Set(GetItemFabric()->newItem<Item>(Armor::T_ITEM_S()));
+
+    interface_.uniform_.Get()->SetOwner(GetId());
+    interface_.feet_.Get()->SetOwner(GetId());
+    interface_.r_hand_.Get()->SetOwner(GetId());
+    interface_.head_.Get()->SetOwner(GetId());
+    interface_.suit_.Get()->SetOwner(GetId());
 
     UpdateOverlays();
 }

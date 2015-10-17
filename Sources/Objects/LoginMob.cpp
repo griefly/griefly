@@ -96,11 +96,20 @@ void LoginMob::processGUImsg(const Message2& msg)
         size_t net_id = GetItemFabric()->GetNetId(GetId());
         if (net_id)
         {
-            auto human = GetItemFabric()->newItem<Human>(CaucasianHuman::T_ITEM_S());
+            id_ptr_on<Human> human;
+            std::vector<id_ptr_on<CubeTile>> tiles;
+            if (net_id % 2)
+            {
+                human = GetItemFabric()->newItem<Human>(CaucasianHuman::T_ITEM_S());
+                tiles = GetLobby().GetTilesFor("security");
+            }
+            else
+            {
+                human = GetItemFabric()->newItem<Human>(Human::T_ITEM_S());
+                tiles = GetLobby().GetTilesFor("janitor");
+            }
             //ghost->name = name;
             GetItemFabric()->SetPlayerId(net_id, human.ret_id());
-
-            auto tiles = GetLobby().GetTilesFor("default");
 
             tiles[0]->AddItem(human);
             if (GetId() == GetMob().ret_id())

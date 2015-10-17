@@ -348,6 +348,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
     ChangeMob(GetMob());
+    is_world_generating_ = false;
 }
 
 IMainObject* ItemFabric::newVoidItem(const std::string& type, size_t id)
