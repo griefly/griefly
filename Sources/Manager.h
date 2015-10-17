@@ -30,6 +30,7 @@ public:
     void ProcessClick(int mouse_x, int mouse_y);
 
     void HandleKeyboardDown(QKeyEvent* event);
+    void HandleKeyboardUp(QKeyEvent* event);
 
     void ClearGUIZone();
 

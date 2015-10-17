@@ -15,6 +15,9 @@ Lobby::Lobby(size_t id): IMainObject(id)
 {
     seconds_ = 10;//60 * 2;
 
+    security_score_ = 0;
+    janitors_score_ = 0;
+
     SetFreq(10);
     SetThisAsLobby();
 }

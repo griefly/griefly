@@ -17,6 +17,7 @@ public slots:
 protected:
     void mousePressEvent(QMouseEvent* event);
     void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event) override;
 
     void initializeGL();
     void paintGL();

@@ -17,6 +17,7 @@
 #include "Clothes.h"
 #include "Floor.h"
 #include "NetworkMessagesTypes.h"
+#include "Lobby.h"
 
 Human::Human(size_t id) : IMob(id)
 {
@@ -248,21 +249,28 @@ void Human::Live()
     }
     if (health_ < -100 && !dead_)
     {
-        size_t net_id = GetItemFabric()->GetNetId(GetId());
-        if (net_id)
-        {
-            auto ghost = GetItemFabric()->newItem<Ghost>(Ghost::T_ITEM_S());
-            ghost->name = name;
-            GetItemFabric()->SetPlayerId(net_id, ghost.ret_id());
-            owner->AddItem(ghost);
-            if (GetId() == GetMob().ret_id())
-            {
-                ChangeMob(ghost);
-            }
-        }
-        dead_ = true;
-        SetFreq(0);
+        OnDeath();
     }
+}
+
+void Human::OnDeath()
+{
+    size_t net_id = GetItemFabric()->GetNetId(GetId());
+    if (net_id)
+    {
+        auto ghost = GetItemFabric()->newItem<Ghost>(Ghost::T_ITEM_S());
+        ghost->name = name;
+        GetItemFabric()->SetPlayerId(net_id, ghost.ret_id());
+        owner->AddItem(ghost);
+        if (GetId() == GetMob().ret_id())
+        {
+            ChangeMob(ghost);
+        }
+    }
+    dead_ = true;
+    SetFreq(0);
+
+    GetLobby().security_score_ += 1;
 }
 
 void Human::AttackBy(id_ptr_on<Item> item)
@@ -384,4 +392,12 @@ void CaucasianHuman::AfterWorldCreation()
     interface_.suit_.Get()->SetOwner(GetId());
 
     UpdateOverlays();
+}
+
+void CaucasianHuman::OnDeath()
+{
+    Human::OnDeath();
+
+    GetLobby().security_score_ -= 1;
+    GetLobby().janitors_score_ += 1;
 }

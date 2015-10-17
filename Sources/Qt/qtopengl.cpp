@@ -43,6 +43,14 @@ void QtOpenGL::keyPressEvent(QKeyEvent* event)
     }
 }
 
+void QtOpenGL::keyReleaseEvent(QKeyEvent *event)
+{
+    if (GetManager())
+    {
+        GetManager()->HandleKeyboardUp(event);
+    }
+}
+
 void QtOpenGL::initializeGL()
 {
     glMatrixMode(GL_PROJECTION);

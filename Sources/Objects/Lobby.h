@@ -15,6 +15,9 @@ public:
 
     void AddSpawnPoint(id_ptr_on<SpawnPoint> point);
     std::vector<id_ptr_on<CubeTile>> GetTilesFor(const std::string& type);
+
+    int KV_SAVEBLE(security_score_);
+    int KV_SAVEBLE(janitors_score_);
 private:
     int KV_SAVEBLE(seconds_);
     std::vector<id_ptr_on<SpawnPoint>> KV_SAVEBLE(spawn_points_);

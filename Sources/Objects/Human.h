@@ -18,6 +18,8 @@ public:
     virtual void process() override;
     virtual void Live();
 
+    virtual void OnDeath();
+
     void SetLying(bool value);
     bool GetLying() const { return lying_; }
 
@@ -54,5 +56,7 @@ public:
     DECLARE_GET_TYPE_ITEM(CaucasianHuman);
     CaucasianHuman(size_t id);
     virtual void AfterWorldCreation() override;
+
+    virtual void OnDeath() override;
 };
 ADD_TO_TYPELIST(CaucasianHuman);

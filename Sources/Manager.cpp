@@ -365,12 +365,40 @@ void Manager::HandleKeyboardDown(QKeyEvent* event)
         Debug::UnsyncDebug().GenerateAndSaveReport();
         return;
     }
+    else if (event && event->key() == Qt::Key_QuoteLeft)
+    {
+        GetTexts()["SecScore"].SetUpdater
+        ([&](std::string* str)
+        {
+            std::stringstream ss;
+            ss << "Security: " << GetLobby().security_score_;
+            *str = ss.str();
+        }).SetSize(15).SetPlace(10, 50).SetColor(140, 140, 240);
+        GetTexts()["JanScore"].SetUpdater
+        ([&](std::string* str)
+        {
+            std::stringstream ss;
+            ss << "Janitors: " << GetLobby().janitors_score_;
+            *str = ss.str();
+        }).SetSize(15).SetPlace(10, 70).SetColor(140, 140, 240);
+        return;
+    }
     else
     {
         return;
     }
 
     Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(text));
+}
+
+void Manager::HandleKeyboardUp(QKeyEvent *event)
+{
+    if (event && event->key() == Qt::Key_QuoteLeft)
+    {
+        GetTexts().Delete("SecScore");
+        GetTexts().Delete("JanScore");
+        return;
+    }
 }
 
 void Manager::initWorld(int id, std::string map_name)
