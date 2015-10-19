@@ -33,7 +33,7 @@ MainForm::MainForm(QWidget *parent) :
     sizes.push_back(256);
     ui->splitter->setSizes(sizes);
 
-    setWindowTitle("Yet Another Space Station Remake");
+    setWindowTitle("Griefly");
 
     left_column = ui->leftColumn->width();
     right_column = ui->rightColumn->width();
