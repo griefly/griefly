@@ -217,7 +217,7 @@ PassableLevel CubeTile::GetPassable(Dir direct) const
     return Passable::FULL;
 }
 
-void CubeTile::UpdatePassable() const
+void CubeTile::UpdatePassable()
 {
     sum_passable_all_ = Passable::FULL;
     sum_passable_up_ = Passable::FULL;

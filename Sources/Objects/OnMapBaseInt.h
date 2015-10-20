@@ -137,7 +137,7 @@ public:
     {
         return owner->GetZ();
     }
-    virtual void UpdatePassable() const {};
+    virtual void UpdatePassable() {}
     virtual id_ptr_on<ITurf> GetTurf();
     virtual void SetTurf(id_ptr_on<ITurf> turf);
 protected:

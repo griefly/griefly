@@ -30,7 +30,7 @@ void Move::start()
 
 void Move::process()
 {
-    if (master.ret_id() == 0 || master.ret_item() == nullptr || way == 0)
+    if (!master.valid() || way == 0)
     {
         Release();
         return;
@@ -50,7 +50,7 @@ void Move::end()
 
 void Move::release()
 {
-    if (!(master.ret_id() == 0 || master.ret_item() == nullptr || way == 0))
+    if (!(master.valid() || way == 0))
     {
         int x = master->GetView()->GetStepX();
         int y = master->GetView()->GetStepY();

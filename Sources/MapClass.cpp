@@ -171,7 +171,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
 
             //qDebug() << it->second.c_str();
 
-            get_setters_for_types()[t_item][it->first](i.ret_item(), local_variable);
+            get_setters_for_types()[t_item][it->first](i.operator*(), local_variable);
         }
 
         if (id_ptr_on<ITurf> t = i)

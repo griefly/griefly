@@ -63,71 +63,55 @@ public:
     id_ptr_on()
     {
         id = 0;
-        item = nullptr;
     }
     template<class T2>
     bool operator==(const id_ptr_on<T2>& rval)
     {
         return ret_id() == rval.ret_id();
     }
-    /* template<class R>
-    operator id_ptr_on<R>()
-    {
-        id_ptr_on<R> retval;
-        retval = ret_id();
-        return retval;
-    }
-    template<class R>
-    operator id_ptr_on<R>() const
-    {
-        id_ptr_on<R> retval;
-        retval = ret_id();
-        return retval;
-    }*/
+
     T* operator*()
     {
-        if(nullptr == GetFromIdTable(id))
+        if (id == 0)
+        {
             return nullptr;
-        if (!item)
-            item = castTo<T>(GetFromIdTable(id));
-        return item;
+        }
+        IMainObject* local = GetFromIdTable(id);
+        if (nullptr == local)
+        {
+            return nullptr;
+        }
+        return castTo<T>(local);
     }
     const T* operator*() const
     {
-        if(nullptr == GetFromIdTable(id))
+        if (id == 0)
+        {
             return nullptr;
-        if (!item)
-            item = castTo<T>(GetFromIdTable(id));
-        return item;
+        }
+        IMainObject* local = GetFromIdTable(id);
+        if (nullptr == local)
+        {
+            return nullptr;
+        }
+        return castTo<T>(local);
     }
     T* operator->()
     {
-        if(nullptr == GetFromIdTable(id))
-            return nullptr;
-        if (!item)
-            item = castTo<T>(GetFromIdTable(id));
-        return item;
+        return operator*();
     }
     const T* operator->() const
     {
-        if (id == 0)
-            return nullptr;
-        if (nullptr == GetFromIdTable(id))
-            return nullptr;
-        if (!item)
-            item = castTo<T>(GetFromIdTable(id));
-        return item;
+        return operator*();
     }
     id_ptr_on& operator=(size_t id_new)
     {
         id = id_new;
-        item = nullptr;
         return *this;
     }
     template<typename T2>
     id_ptr_on& operator=(id_ptr_on<T2> value)
     {
-        item = castTo<T>(value.ret_item());
         id = value.ret_id();
         return *this;
     }
@@ -135,10 +119,7 @@ public:
     id_ptr_on(id_ptr_on<T2> value)
     {
         id = value.ret_id();
-        item = nullptr;
     }
-
-    ///operator size_t() { return id; }
 
     bool valid() const
     {
@@ -151,22 +132,12 @@ public:
     id_ptr_on(size_t id_new)
     {
         id = id_new;
-        item = nullptr;
     }
     size_t ret_id() const
     {
         return id;
     }
-    T* ret_item()
-    {
-        if(nullptr == GetFromIdTable(id))
-            return nullptr;
-        if (!item)
-            item = castTo<T>(GetFromIdTable(id)); 
-        return item;
-    }
 private:
-    mutable T* item; 
     size_t id;
 };
 

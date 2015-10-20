@@ -111,7 +111,7 @@ public:
         }
         UpdatePassable();
     }
-    virtual void UpdatePassable() const override;
+    virtual void UpdatePassable() override;
     AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 
     typedef std::vector<id_ptr_on<IOnMapObject>> InsideType;
@@ -129,11 +129,11 @@ private:
 
     InsideType KV_SAVEBLE(inside_list_);
 
-    mutable PassableLevel KV_SAVEBLE(sum_passable_all_);
-    mutable PassableLevel KV_SAVEBLE(sum_passable_up_);
-    mutable PassableLevel KV_SAVEBLE(sum_passable_down_);
-    mutable PassableLevel KV_SAVEBLE(sum_passable_left_);
-    mutable PassableLevel KV_SAVEBLE(sum_passable_right_);
+    PassableLevel KV_SAVEBLE(sum_passable_all_);
+    PassableLevel KV_SAVEBLE(sum_passable_up_);
+    PassableLevel KV_SAVEBLE(sum_passable_down_);
+    PassableLevel KV_SAVEBLE(sum_passable_left_);
+    PassableLevel KV_SAVEBLE(sum_passable_right_);
 
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap(); // TODO
