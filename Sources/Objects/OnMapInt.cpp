@@ -82,5 +82,5 @@ IOnMapObject::IOnMapObject(size_t id) : IOnMapBase(id)
     passable_level = Passable::FULL;
 
     transparent = true;
-    name = "NONAMESHIT";
+    name = "nameless";
 }
