@@ -101,7 +101,7 @@ void Debug::Impl::UnsyncDebug::CheckSaves()
 
     std::stringstream ss;
 
-    GetItemFabric()->saveMap(ss, false);
+    GetItemFabric().saveMap(ss, false);
 
     if (MAIN_TICK > TICK_SAVED)
     {
@@ -127,7 +127,7 @@ void Debug::Impl::UnsyncDebug::GenerateAndSaveReport()
     }
     file.close();
 
-    GetItemFabric()->saveMap((dir_path + "//map.map").toStdString().c_str());
+    GetItemFabric().saveMap((dir_path + "//map.map").toStdString().c_str());
 
     SYSTEM_STREAM << "Debug report saved as " << uuid.toString().toStdString() << std::endl;
 }

@@ -44,9 +44,9 @@ void Human::AfterWorldCreation()
 {
     IMob::AfterWorldCreation();
 
-    interface_.uniform_.Set(GetItemFabric()->newItem<Item>(JanitorUniform::T_ITEM_S()));
-    interface_.feet_.Set(GetItemFabric()->newItem<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(GetItemFabric()->newItem<Item>(Crowbar::T_ITEM_S()));
+    interface_.uniform_.Set(GetItemFabric().newItem<Item>(JanitorUniform::T_ITEM_S()));
+    interface_.feet_.Set(GetItemFabric().newItem<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(GetItemFabric().newItem<Item>(Crowbar::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());
@@ -255,12 +255,12 @@ void Human::Live()
 
 void Human::OnDeath()
 {
-    size_t net_id = GetItemFabric()->GetNetId(GetId());
+    size_t net_id = GetItemFabric().GetNetId(GetId());
     if (net_id)
     {
-        auto ghost = GetItemFabric()->newItem<Ghost>(Ghost::T_ITEM_S());
+        auto ghost = GetItemFabric().newItem<Ghost>(Ghost::T_ITEM_S());
         ghost->name = name;
-        GetItemFabric()->SetPlayerId(net_id, ghost.ret_id());
+        GetItemFabric().SetPlayerId(net_id, ghost.ret_id());
         owner->AddItem(ghost);
         if (GetId() == GetMob().ret_id())
         {
@@ -379,11 +379,11 @@ void CaucasianHuman::AfterWorldCreation()
     // because it create some new items
     IMob::AfterWorldCreation();
 
-    interface_.uniform_.Set(GetItemFabric()->newItem<Item>(RedUniform::T_ITEM_S()));
-    interface_.feet_.Set(GetItemFabric()->newItem<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(GetItemFabric()->newItem<Item>(Wrench::T_ITEM_S()));
-    interface_.head_.Set(GetItemFabric()->newItem<Item>(Helmet::T_ITEM_S()));
-    interface_.suit_.Set(GetItemFabric()->newItem<Item>(Armor::T_ITEM_S()));
+    interface_.uniform_.Set(GetItemFabric().newItem<Item>(RedUniform::T_ITEM_S()));
+    interface_.feet_.Set(GetItemFabric().newItem<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(GetItemFabric().newItem<Item>(Wrench::T_ITEM_S()));
+    interface_.head_.Set(GetItemFabric().newItem<Item>(Helmet::T_ITEM_S()));
+    interface_.suit_.Set(GetItemFabric().newItem<Item>(Armor::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());

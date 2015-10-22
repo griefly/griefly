@@ -95,7 +95,7 @@ void MapMaster::SaveToMapGen(const std::string& name)
 
 void MapMaster::LoadFromMapGen(const std::string& name)
 {
-    GetItemFabric()->clearMap();
+    GetItemFabric().clearMap();
 
     std::fstream sfile;
     sfile.open(name, std::ios_base::in);
@@ -117,7 +117,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
     ss.write(buff, length);
     delete[] buff;
 
-    GetItemFabric()->BeginWorldCreation();
+    GetItemFabric().BeginWorldCreation();
 
     int x, y, z;
     ss >> x;
@@ -155,7 +155,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             continue;
         }
 
-        auto i = GetItemFabric()->newItem<IOnMapObject>(t_item);
+        auto i = GetItemFabric().newItem<IOnMapObject>(t_item);
 
         std::map<std::string, std::string> variables;
         WrapReadMessage(ss, variables);
@@ -187,7 +187,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             squares[x][y][z]->AddItem(i);
         }
     }
-   GetItemFabric()->FinishWorldCreation();
+   GetItemFabric().FinishWorldCreation();
 }
 
 void MapMaster::Draw()
@@ -273,7 +273,7 @@ void MapMaster::makeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMapD(); z++)
             {
-                auto loc = GetItemFabric()->newItem<CubeTile>(CubeTile::T_ITEM_S());
+                auto loc = GetItemFabric().newItem<CubeTile>(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 squares[x][y][z] = loc;
             }
@@ -295,64 +295,10 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
     atmosphere.Resize(new_map_x, new_map_y);
 }
 
-void MapMaster::makeMap()
-{
-    // End gen
-    for(int x = 0; x < GetMapW(); x++)
-    {
-        for(int y = 0; y < GetMapH(); y++) 
-        {     
-            // Ge
-            //
-            bool chk = (rand() % 10 != 1);
-            bool bin = (rand() % 2) == 0;
-            bool bin2 = (rand() % 2) == 0;
-            id_ptr_on<IOnMapObject> loc = 
-                GetItemFabric()->newItem<IOnMapObject>(  chk  ?        Space::T_ITEM_S() 
-                                                     : bin  ?      MetalWall::T_ITEM_S()
-                                                     : bin2 ? ReinforcedWall::T_ITEM_S()
-                                                     :                 Floor::T_ITEM_S());
-
-            squares[x][y][0]->SetTurf(loc);
-            if (rand() % 40 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(AtmosTool::T_ITEM_S(), squares[x][y][0]); 
-            if (rand() % 20 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Metal::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 20 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Rod::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 20 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(FloorTile::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 15 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Lattice::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 30 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Wrench::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 30 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Weldingtool::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 24 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Crowbar::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 14 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Wirecutters::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 7 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Screwdriver::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 20 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(ReinforcedFlatGlass::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 9 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(FlatGlass::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 9 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Grille::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 10 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Door::T_ITEM_S(), squares[x][y][0]);
-            if (rand() % 40 == 1)
-                GetItemFabric()->newItemOnMap<IOnMapObject>(Shard::T_ITEM_S(), squares[x][y][0]);//*/
-        }
-    }
-    SYSTEM_STREAM << "End create map\n";
-};
-
 MapMaster::MapMaster()
 {
     ms_last_draw = 0;
-};
+}
 
 bool MapMaster::canDraw()
 {

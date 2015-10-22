@@ -118,12 +118,12 @@ void Ghost::process()
     --seconds_until_respawn_;
     if (seconds_until_respawn_ < 0)
     {
-        size_t net_id = GetItemFabric()->GetNetId(GetId());
+        size_t net_id = GetItemFabric().GetNetId(GetId());
         if (net_id)
         {
-            auto login_mob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
+            auto login_mob = GetItemFabric().newItem<IMob>(LoginMob::T_ITEM_S());
 
-            GetItemFabric()->SetPlayerId(net_id, login_mob.ret_id());
+            GetItemFabric().SetPlayerId(net_id, login_mob.ret_id());
             if (GetId() == GetMob().ret_id())
             {
                 ChangeMob(login_mob);

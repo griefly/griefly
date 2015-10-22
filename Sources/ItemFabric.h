@@ -157,5 +157,5 @@ private:
 
 };
 
-ItemFabric* GetItemFabric();
+ItemFabric& GetItemFabric();
 void SetItemFabric(ItemFabric* item_fabric);

@@ -22,7 +22,7 @@ void Lattice::AttackBy(id_ptr_on<Item> item)
         tile->delThis();
 
         GetTurf()->delThis();
-        SetTurf(GetItemFabric()->newItem<ITurf>(Floor::T_ITEM_S()));
+        SetTurf(GetItemFabric().newItem<ITurf>(Floor::T_ITEM_S()));
 
         PlaySoundIfVisible("Deconstruct.ogg", owner.ret_id());
 

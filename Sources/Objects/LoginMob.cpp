@@ -101,7 +101,7 @@ void LoginMob::processGUImsg(const Message2& msg)
         {
             return;
         }
-        size_t net_id = GetItemFabric()->GetNetId(GetId());
+        size_t net_id = GetItemFabric().GetNetId(GetId());
         if (net_id)
         {
             id_ptr_on<Human> human;
@@ -109,18 +109,18 @@ void LoginMob::processGUImsg(const Message2& msg)
             std::string text;
             if (net_id % 2)
             {
-                human = GetItemFabric()->newItem<Human>(CaucasianHuman::T_ITEM_S());
+                human = GetItemFabric().newItem<Human>(CaucasianHuman::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("security");
                 text = SECURITY_TEXT;
             }
             else
             {
-                human = GetItemFabric()->newItem<Human>(Human::T_ITEM_S());
+                human = GetItemFabric().newItem<Human>(Human::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("janitor");
                 text = JANITOR_TEXT;
             }
             //ghost->name = name;
-            GetItemFabric()->SetPlayerId(net_id, human.ret_id());
+            GetItemFabric().SetPlayerId(net_id, human.ret_id());
 
             tiles[0]->AddItem(human);
             if (GetId() == GetMob().ret_id())

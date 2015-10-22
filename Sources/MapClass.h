@@ -79,7 +79,6 @@ public:
     void splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz = 0);
 
     void makeTiles(int x, int y, int z);
-    void makeMap();
     void centerFromTo(int nowPosx, int nowPosy, int nowPosz = 0);
     PassableLevel GetPassable(int posx, int posy, int posz = 0, Dir direct = D_ALL);
 //   bool fastisPassable(int posx, int posy);

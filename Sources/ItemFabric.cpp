@@ -473,9 +473,9 @@ void ItemFabric::ClearProcessing()
 }
 
 ItemFabric* item_fabric_ = 0;
-ItemFabric* GetItemFabric()
+ItemFabric& GetItemFabric()
 {
-    return item_fabric_;
+    return *item_fabric_;
 }
 void SetItemFabric(ItemFabric* item_fabric)
 {

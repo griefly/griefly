@@ -27,9 +27,9 @@ void MetalWall::AttackBy(id_ptr_on<Item> item)
         if (wtool->Working())
         {
             PlaySoundIfVisible("Welder.ogg", owner.ret_id());
-            GetItemFabric()->newItemOnMap<IOnMapObject>(Girder::T_ITEM_S(), GetOwner());
-            GetItemFabric()->newItemOnMap<IOnMapObject>(Metal::T_ITEM_S(), GetOwner());
-            SetTurf(GetItemFabric()->newItem<ITurf>(Floor::T_ITEM_S()));
+            GetItemFabric().newItemOnMap<IOnMapObject>(Girder::T_ITEM_S(), GetOwner());
+            GetItemFabric().newItemOnMap<IOnMapObject>(Metal::T_ITEM_S(), GetOwner());
+            SetTurf(GetItemFabric().newItem<ITurf>(Floor::T_ITEM_S()));
             delThis();
         }
     }

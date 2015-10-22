@@ -16,7 +16,7 @@ void Rod::AttackBy(id_ptr_on<Item> item)
 {
     if (item.ret_id() == GetId()) // Attack self
     {
-        GetItemFabric()->newItemOnMap<IOnMapObject>(Grille::T_ITEM_S(), GetTurf());
+        GetItemFabric().newItemOnMap<IOnMapObject>(Grille::T_ITEM_S(), GetTurf());
         delThis();
     }
 }
@@ -34,7 +34,7 @@ void Metal::AttackBy(id_ptr_on<Item> item)
     {
         if (id_ptr_on<Floor> floor = GetTurf())
         {
-            GetItemFabric()->newItemOnMap<IOnMapObject>(Girder::T_ITEM_S(), GetTurf());
+            GetItemFabric().newItemOnMap<IOnMapObject>(Girder::T_ITEM_S(), GetTurf());
             delThis();
         }
     }

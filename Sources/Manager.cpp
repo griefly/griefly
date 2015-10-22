@@ -156,7 +156,7 @@ void Manager::process()
             process_timer.Start();
             numOfDeer = 0;
             begin_of_process = SDL_GetTicks();
-            GetItemFabric()->foreachProcess();
+            GetItemFabric().foreachProcess();
             force_timer.Start();
             ForceManager::Get().Process();
             unsigned int fm = force_timer.Get();
@@ -166,7 +166,7 @@ void Manager::process()
             if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
                 GetMapMaster()->atmosphere.ProcessMove();
             unsigned int amt = atmos_move_timer.Get();
-            GetItemFabric()->Sync();
+            GetItemFabric().Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
  
             //////////////////////////////
@@ -464,10 +464,10 @@ void Manager::initWorld(int id, std::string map_name)
 
             GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
-            GetItemFabric()->newItem<Lobby>(Lobby::T_ITEM_S());
+            GetItemFabric().newItem<Lobby>(Lobby::T_ITEM_S());
 
-            for (auto it = GetItemFabric()->idTable().begin();
-                      it != GetItemFabric()->idTable().end();
+            for (auto it = GetItemFabric().idTable().begin();
+                      it != GetItemFabric().idTable().end();
                       ++it)
             {
                 if ((*it) && ((*it)->RT_ITEM() == SpawnPoint::REAL_TYPE_ITEM))
@@ -476,11 +476,11 @@ void Manager::initWorld(int id, std::string map_name)
                 }
             }
 
-            auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
+            auto newmob = GetItemFabric().newItem<IMob>(LoginMob::T_ITEM_S());
 
 
             ChangeMob(newmob);
-            GetItemFabric()->SetPlayerId(id, newmob.ret_id());
+            GetItemFabric().SetPlayerId(id, newmob.ret_id());
 
             GetMapMaster()->FillAtmosphere();
 
@@ -501,7 +501,7 @@ void Manager::initWorld(int id, std::string map_name)
         ss.write(map_data.data(), map_data.length());
         ss.seekg(0, std::ios::beg);
 
-        GetItemFabric()->loadMap(ss, false, id);
+        GetItemFabric().loadMap(ss, false, id);
     }
 
     Chat::InitChat();
@@ -519,7 +519,7 @@ void Manager::initWorld(int id, std::string map_name)
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << "Hash: " << GetItemFabric()->get_hash_last();
+        ss << "Hash: " << GetItemFabric().get_hash_last();
         *str = ss.str();
     }).SetSize(15).SetPlace(0, 30);//, 200, 50);
 
@@ -599,7 +599,7 @@ void Manager::process_in_msg()
             QJsonValue new_id_v = obj["id"];
             int new_id = new_id_v.toVariant().toInt();
 
-            size_t game_id = GetItemFabric()->GetPlayerId(new_id);
+            size_t game_id = GetItemFabric().GetPlayerId(new_id);
 
             if (game_id != 0)
             {
@@ -607,11 +607,11 @@ void Manager::process_in_msg()
                 continue;
             }
 
-            auto newmob = GetItemFabric()->newItem<IMob>(LoginMob::T_ITEM_S());
+            auto newmob = GetItemFabric().newItem<IMob>(LoginMob::T_ITEM_S());
 
             qDebug() << "New client " << newmob.ret_id();
 
-            GetItemFabric()->SetPlayerId(new_id, newmob.ret_id());
+            GetItemFabric().SetPlayerId(new_id, newmob.ret_id());
             continue;
         }
         if (msg.type == MessageType::MAP_UPLOAD)
@@ -622,7 +622,7 @@ void Manager::process_in_msg()
             qDebug() << "Map upload to " << map_url;
 
             std::stringstream ss;
-            GetItemFabric()->saveMap(ss, false);
+            GetItemFabric().saveMap(ss, false);
             std::string string_data = ss.str();
 
             QByteArray data(string_data.c_str(), string_data.size());
@@ -669,7 +669,7 @@ void Manager::process_in_msg()
             QJsonObject obj = Network2::ParseJson(msg);
             QJsonValue v = obj["id"];
             int net_id = v.toVariant().toInt();
-            size_t game_id = GetItemFabric()->GetPlayerId(net_id);
+            size_t game_id = GetItemFabric().GetPlayerId(net_id);
             id_ptr_on<IMessageReceiver> game_object = game_id;
             game_object->processGUImsg(msg);
         }
