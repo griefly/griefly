@@ -282,6 +282,9 @@ void SocketHandler::tryConnect(QString host, int port, QString login, QString pa
 {
     login_ = login;
     password_ = password;
+
+    socket_.setSocketOption(QAbstractSocket::LowDelayOption, 1);
+
     socket_.connectToHost(host, port);
 
     qDebug() << "tryConnect()";
