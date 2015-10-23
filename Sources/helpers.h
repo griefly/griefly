@@ -3,7 +3,7 @@
 #include <assert.h>
 
 #include "constheader.h"
-#include "MapClass.h"
+#include "Map.h"
 
 namespace helpers
 {

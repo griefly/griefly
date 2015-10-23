@@ -4,7 +4,7 @@
 #include "sound.h"
 #include "Human.h"
 #include "ItemFabric.h"
-#include "MapClass.h"
+#include "Map.h"
 #include "Creator.h"
 #include "Lobby.h"
 #include "MagicStrings.h"

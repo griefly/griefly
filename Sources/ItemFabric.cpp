@@ -5,7 +5,7 @@
 #include "MainInt.h"
 #include "OnMapInt.h"
 #include "Manager.h"
-#include "MapClass.h"
+#include "Map.h"
 #include "sync_random.h"
 #include "Creator.h"
 #include "MagicStrings.h"

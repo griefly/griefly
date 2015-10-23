@@ -2,7 +2,7 @@
 
 #include "Manager.h"
 #include "TileInt.h"
-#include "MapClass.h"
+#include "Map.h"
 
 const std::list<point>* GetVisible()
 {

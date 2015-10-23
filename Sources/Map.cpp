@@ -5,7 +5,7 @@
 
 #include <QDebug>
 
-#include "MapClass.h"
+#include "Map.h"
 #include "MainInt.h"
 #include "TileInt.h"
 #include "Manager.h"

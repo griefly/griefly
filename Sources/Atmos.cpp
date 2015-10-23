@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "sync_random.h"
-#include "MapClass.h"
+#include "Map.h"
 #include "helpers.h"
 
 void Atmosphere::Process()

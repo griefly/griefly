@@ -1,5 +1,5 @@
 #include "MoveEffect.h"
-#include "MapClass.h"
+#include "Map.h"
 
 Move::Move()
 {

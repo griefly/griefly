@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "MapClass.h"
+#include "Map.h"
 #include "Debug.h"
 #include "Params.h"
 #include "Manager.h"

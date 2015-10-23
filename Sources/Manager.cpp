@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "MapClass.h"
+#include "Map.h"
 #include "Text.h"
 
 #include "mob_position.h"

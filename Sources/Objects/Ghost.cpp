@@ -1,6 +1,6 @@
 #include "Ghost.h"
 
-#include "MapClass.h"
+#include "Map.h"
 #include "Creator.h"
 
 #include "MagicStrings.h"

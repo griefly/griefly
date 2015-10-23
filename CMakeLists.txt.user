@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.3.0, 2015-10-23T00:53:49. -->
+<!-- Written by QtCreator 3.3.0, 2015-10-24T03:05:48. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -235,7 +235,7 @@
      <value type="int">14</value>
     </valuelist>
     <value type="QString" key="CMakeProjectManager.CMakeRunConfiguation.Title">KVEngine</value>
-    <value type="QString" key="CMakeProjectManager.CMakeRunConfiguration.Arguments">mapgen_name=brig_small.gen ip=grief.ly map_x=70 map_y=70 map_z=1 -autogen_reports -edi1tor -a1uto -auto_connect login=Guest</value>
+    <value type="QString" key="CMakeProjectManager.CMakeRunConfiguration.Arguments">mapgen_name=brig_small.gen i1p=grief.ly map_x=70 map_y=70 map_z=1 -autogen_reports -edi1tor -a1uto -auto_connect login=Guest</value>
     <value type="bool" key="CMakeProjectManager.CMakeRunConfiguration.UseTerminal">false</value>
     <value type="QString" key="CMakeProjectManager.CMakeRunConfiguration.UserWorkingDirectory"></value>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>

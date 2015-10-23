@@ -1,7 +1,7 @@
 #include <assert.h>
 
 #include "OnMapInt.h"
-#include "MapClass.h"
+#include "Map.h"
 #include "MobInt.h"
 #include "Manager.h"
 #include "MoveEffect.h"

@@ -1,7 +1,7 @@
 #include <assert.h>
 
 #include "helpers.h"
-#include "MapClass.h"
+#include "Map.h"
 #include "OnMapInt.h"
 #include "TileInt.h"
 #include "IMovable.h"

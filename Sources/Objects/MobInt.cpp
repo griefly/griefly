@@ -1,6 +1,6 @@
 #include "MobInt.h"
 #include "Manager.h"
-#include "MapClass.h"
+#include "Map.h"
 
 #include "MagicStrings.h"
 #include "Creator.h"

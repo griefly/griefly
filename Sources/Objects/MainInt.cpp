@@ -1,5 +1,5 @@
 #include "MainInt.h"
-#include "MapClass.h"
+#include "Map.h"
 #include "ItemFabric.h"
 
 void IMainObject::delThis()

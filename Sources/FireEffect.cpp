@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-#include "MapClass.h"
+#include "Map.h"
 
 Fire::Fire()
 {

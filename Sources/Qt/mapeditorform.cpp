@@ -2,7 +2,7 @@
 #include "ui_mapeditorform.h"
 
 #include "ItemFabric.h"
-#include "MapClass.h"
+#include "Map.h"
 #include "Text.h"
 
 #include <map>
