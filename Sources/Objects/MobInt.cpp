@@ -50,5 +50,5 @@ void IMob::processPhysics()
 {
     IMessageReceiver::processPhysics();
     if(GetId() == GetMob().ret_id())
-        GetManager()->UpdateVisible();
+        GetManager().UpdateVisible();
 }

@@ -242,7 +242,7 @@ void Manager::process()
 
         Debug::UnsyncDebug().ProcessDebug();
 
-        if (GetMainWidget()->isHidden())
+        if (GetMainWidget().isHidden())
         {
             break;
         }
@@ -576,11 +576,6 @@ void Manager::initWorld(int id, std::string map_name)
 
 }
 
-void Manager::loadIniFile()
-{
-
-}
-
 void Manager::process_in_msg()
 {
     while (Network2::GetInstance().IsMessageAvailable())
@@ -689,21 +684,10 @@ bool Manager::isMobVisible(int posx, int posy)
     return false;
 }
 
-QApplication* app = nullptr;
-QApplication* GetQApp()
-{
-    return app;
-}
-
-void SetQApp(QApplication* new_app)
-{
-    app = new_app;
-}
-
 QWidget* main_widget = nullptr;
-QWidget* GetMainWidget()
+QWidget& GetMainWidget()
 {
-    return main_widget;
+    return *main_widget;
 }
 
 void SetMainWidget(QWidget* widget)
@@ -712,9 +696,9 @@ void SetMainWidget(QWidget* widget)
 }
 
 Manager* manager_ = nullptr;
-Manager* GetManager()
+Manager& GetManager()
 {
-    return manager_;
+    return *manager_;
 }
 
 void SetManager(Manager* manager)
@@ -722,4 +706,7 @@ void SetManager(Manager* manager)
     manager_ = manager;
 }
 
-
+bool IsManagerValid()
+{
+    return manager_ != nullptr;
+}

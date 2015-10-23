@@ -147,8 +147,8 @@ bool IMovable::mainMove()
     if (   GetMob().ret_id() == GetId()
         || Contains(GetMob()))
     {
-        GetManager()->checkMove(dMove);
-        GetManager()->UpdateVisible();
+        GetManager().checkMove(dMove);
+        GetManager().UpdateVisible();
     }
 
     lastMove = static_cast<int>(MAIN_TICK);

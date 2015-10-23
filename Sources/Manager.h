@@ -21,7 +21,6 @@ public:
     void checkMove(Dir direct);
     void globalMove(int direct);
     void initWorld(int id, std::string map_name);
-    void loadIniFile();
     void process();
     void checkMoveMob();
     //void processGUI();
@@ -79,11 +78,9 @@ private:
     bool auto_player_;
 };
 
-QApplication* GetQApp();
-void SetQApp(QApplication* new_app);
-
-QWidget* GetMainWidget();
+QWidget& GetMainWidget();
 void SetMainWidget(QWidget* widget);
 
-Manager* GetManager();
+Manager& GetManager();
+bool IsManagerValid();
 void SetManager(Manager* manager);

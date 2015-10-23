@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
-    SetQApp(&app);
 
     app.setStyle(QStyleFactory::create("fusion"));
 

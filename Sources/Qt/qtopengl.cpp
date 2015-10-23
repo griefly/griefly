@@ -24,9 +24,9 @@ void QtOpenGL::handlePassedKey(QKeyEvent* event)
 
 void QtOpenGL::mousePressEvent(QMouseEvent* event)
 {
-    if ((event->button() == Qt::LeftButton) && GetManager())
+    if ((event->button() == Qt::LeftButton) && IsManagerValid())
     {
-        GetManager()->ProcessClick(event->x(), event->y());
+        GetManager().ProcessClick(event->x(), event->y());
     }
 }
 
@@ -37,17 +37,17 @@ void QtOpenGL::keyPressEvent(QKeyEvent* event)
         emit enterPressed();
         return;
     }
-    if (GetManager())
+    if (IsManagerValid())
     {
-        GetManager()->HandleKeyboardDown(event);
+        GetManager().HandleKeyboardDown(event);
     }
 }
 
 void QtOpenGL::keyReleaseEvent(QKeyEvent *event)
 {
-    if (GetManager())
+    if (IsManagerValid())
     {
-        GetManager()->HandleKeyboardUp(event);
+        GetManager().HandleKeyboardUp(event);
     }
 }
 
