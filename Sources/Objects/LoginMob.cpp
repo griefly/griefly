@@ -128,7 +128,7 @@ void LoginMob::processGUImsg(const Message2& msg)
                 ChangeMob(human);
             }
 
-            Chat::GetChat()->PostTextFor(text, human);
+            GetChat().PostTextFor(text, human);
         }
     }
     if (msg.type == MessageType::MESSAGE)
@@ -136,7 +136,7 @@ void LoginMob::processGUImsg(const Message2& msg)
         std::string text = obj["text"].toString().toStdString();
         if (Chat::IsOOCMessage(text))
         {
-            Chat::GetChat()->PostOOCText(name, text.substr(3));
+            GetChat().PostOOCText(name, text.substr(3));
         }
     }
 }

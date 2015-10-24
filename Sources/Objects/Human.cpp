@@ -110,14 +110,14 @@ void Human::processGUImsg(const Message2 &msg)
     if (msg.type == MessageType::MESSAGE)
     {
         std::string text = obj["text"].toString().toStdString();
-        //Chat::GetChat()->PostText(name + ": " + msg.text + "\n");
+        //GetChat().PostText(name + ": " + msg.text + "\n");
         if (Chat::IsOOCMessage(text))
         {
-            Chat::GetChat()->PostOOCText(name, text.substr(3));
+            GetChat().PostOOCText(name, text.substr(3));
         }
         else
         {
-            Chat::GetChat()->PostWords(name, text, owner.ret_id());
+            GetChat().PostWords(name, text, owner.ret_id());
         }
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
@@ -185,14 +185,14 @@ void Human::SetLying(bool value)
     lying_ = value;
     if (lying_)
     {
-        Chat::GetChat()->PostSimpleText(name + " is lying now", owner->GetId());
+        GetChat().PostSimpleText(name + " is lying now", owner->GetId());
         view_.SetAngle(90);
         SetPassable(D_ALL, Passable::FULL);
         v_level = 8;
     }
     else
     {
-        Chat::GetChat()->PostSimpleText(name + " is standing now!", owner->GetId());
+        GetChat().PostSimpleText(name + " is standing now!", owner->GetId());
         view_.SetAngle(0);
         SetPassable(D_ALL, Passable::BIG_ITEM);
         v_level = 9;
@@ -225,7 +225,7 @@ void Human::Live()
             --health_;
             
             if (get_rand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
-                Chat::GetChat()->PostSimpleText(name + " gasps!", owner->GetId());
+                GetChat().PostSimpleText(name + " gasps!", owner->GetId());
         }
     }
 
@@ -244,7 +244,7 @@ void Human::Live()
         {
             --health_;
             if (get_rand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
-                Chat::GetChat()->PostSimpleText(name + " gasps!", owner->GetId());
+                GetChat().PostSimpleText(name + " gasps!", owner->GetId());
         }
     }
     if (health_ < -100 && !dead_)
@@ -290,7 +290,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
         PlaySoundIfVisible(snd, owner.ret_id());
         if (id_ptr_on<IOnMapObject> item_owner = item->GetOwner())
         {
-            Chat::GetChat()->PostDamage(item_owner->name, name, item->name, owner.ret_id());
+            GetChat().PostDamage(item_owner->name, name, item->name, owner.ret_id());
         }
 
         damaged = true;
@@ -308,7 +308,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
         {
             SetLying(true);
             AddLyingTimer(100);
-            Chat::GetChat()->PostSimpleText(name + " has been knocked out!", owner->GetId());
+            GetChat().PostSimpleText(name + " has been knocked out!", owner->GetId());
         }
 
         damaged = true;

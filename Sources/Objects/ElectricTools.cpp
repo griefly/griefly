@@ -34,7 +34,7 @@ void AtmosTool::AttackBy(id_ptr_on<Item> item)
     {
         if (id_ptr_on<CubeTile> ct = GetOwner()->GetOwner())
         {
-            Chat::GetChat()->PostTextFor(GetInfo(*ct->GetAtmosHolder()), GetOwner());
+            GetChat().PostTextFor(GetInfo(*ct->GetAtmosHolder()), GetOwner());
         }
     }
 }

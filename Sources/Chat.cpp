@@ -18,7 +18,7 @@
 #include <QTextCursor>
 
 
-Chat* Chat::chat = 0;
+Chat* chat = nullptr;
 
 std::stringstream ss;
 std::fstream loc("debug_reports//" + QUuid::createUuid().toString().toStdString() + ".txt", std::ios::trunc | std::ios::out | std::ios::in);
@@ -38,17 +38,17 @@ std::ostream& get_system_stream()
     return *local_stream;
 }
 
-Chat* Chat::GetChat()
+Chat& GetChat()
 {
-    return chat;
+    return *chat;
 }
 
 const size_t MAX_LINE_SIZE = 1024;
 const int SCROLL_SIZE = 10;
 
-void Chat::InitChat()
+void InitChat(QTextBrowser* tb)
 {
-    chat = new Chat;
+    chat = new Chat(tb);
 }
 
 bool Chat::IsOOCMessage(const std::string &text)
@@ -63,11 +63,16 @@ bool Chat::IsOOCMessage(const std::string &text)
     return false;
 }
 
-void SetCursorAtEnd()
+Chat::Chat(QTextBrowser *tb) : tb_(tb)
 {
-    QTextCursor cursor = GetTextBrowser()->textCursor();
+
+}
+
+void Chat::SetCursorAtEnd()
+{
+    QTextCursor cursor = tb_->textCursor();
     cursor.movePosition(QTextCursor::End);
-    GetTextBrowser()->setTextCursor(cursor);
+    tb_->setTextCursor(cursor);
 }
 
 void Chat::PostSimpleText(const std::string& str, size_t tile_id)
@@ -77,7 +82,7 @@ void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 
     SetCursorAtEnd();
 
-    GetTextBrowser()->insertHtml(QString::fromStdString(str + "<br>"));
+    tb_->insertHtml(QString::fromStdString(str + "<br>"));
 
     SetCursorAtEnd();
 }
@@ -93,7 +98,7 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
     QString q_who = QString::fromStdString(who).toHtmlEscaped();
     QString q_object = QString::fromStdString(object).toHtmlEscaped();
 
-    GetTextBrowser()->insertHtml
+    tb_->insertHtml
         (
            "<font color=\"red\">"
          + q_who
@@ -116,7 +121,7 @@ void Chat::PostWords(const std::string& who, const std::string& text, size_t til
     QString q_who = QString::fromStdString(who).toHtmlEscaped();
     QString q_text = QString::fromStdString(text).toHtmlEscaped();
 
-    GetTextBrowser()->insertHtml
+    tb_->insertHtml
         (
            "<b>"
          + q_who
@@ -139,7 +144,7 @@ void Chat::PostText(const std::string& str_)
     SetCursorAtEnd();
 
     QString loc = QString::fromStdString(str_).toHtmlEscaped();
-    GetTextBrowser()->insertHtml(loc.replace('\n', "<br>"));
+    tb_->insertHtml(loc.replace('\n', "<br>"));
 
     SetCursorAtEnd();
 }
@@ -151,7 +156,7 @@ void Chat::PostOOCText(const std::string &who, const std::string& text)
     QString q_who = QString::fromStdString(who).toHtmlEscaped();
     QString q_text = QString::fromStdString(text).toHtmlEscaped();
 
-    GetTextBrowser()->insertHtml
+    tb_->insertHtml
         (
            "<font color=\"blue\"><b>"
          + q_who
@@ -177,7 +182,7 @@ void Chat::Process()
 void Chat::AddLines(const std::string& str)
 {
     QString loc = QString::fromStdString(str).toHtmlEscaped();
-    GetTextBrowser()->append(loc);
+    tb_->append(loc);
     int pos = 0;
     while (true)
     {
@@ -202,13 +207,13 @@ int Chat::CalculateAmount(const std::string& str, int pos)
 
     text_[copy_size] = '\0';
     int w;
-    if (int err = TTF_SizeText(deja, text_, &w, nullptr))
+    if (int err = TTF_SizeText(deja_, text_, &w, nullptr))
         std::cout << "Some ttf error " << err << std::endl;
     while (w > (to_x_ - from_x_ - SCROLL_SIZE))
     {
         --copy_size;
         text_[copy_size] = '\0';
-        if (int err = TTF_SizeText(deja, text_, &w, nullptr))
+        if (int err = TTF_SizeText(deja_, text_, &w, nullptr))
             std::cout << "Some ttf error " << err << std::endl;
     }
     return copy_size;
@@ -294,7 +299,7 @@ void SetTextBrowser(QTextBrowser* tb)
     text_browser = tb;
 }
 
-QTextBrowser* GetTextBrowser()
+QTextBrowser& GetTextBrowser()
 {
-    return text_browser;
+    return *text_browser;
 }

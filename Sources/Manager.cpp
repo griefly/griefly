@@ -199,7 +199,7 @@ void Manager::process()
             }
             //ClearGUIZone();
 
-            Chat::GetChat()->Process();
+            GetChat().Process();
 
             GetMob()->processGUI();
             
@@ -504,8 +504,7 @@ void Manager::initWorld(int id, std::string map_name)
         GetItemFabric().loadMap(ss, false, id);
     }
 
-    Chat::InitChat();
-    Chat::GetChat()->PostText(ON_LOGIN_MESSAGE);
+    GetChat().PostText(ON_LOGIN_MESSAGE);
 
     GetTexts()["FPS"].SetUpdater
     ([this](std::string* str)

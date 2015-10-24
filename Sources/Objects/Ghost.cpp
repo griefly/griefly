@@ -89,7 +89,7 @@ void Ghost::processGUImsg(const Message2& msg)
         std::string text = obj["text"].toString().toStdString();
         if (Chat::IsOOCMessage(text))
         {
-            Chat::GetChat()->PostOOCText(name + " (ghost)", text.substr(3));
+            GetChat().PostOOCText(name + " (ghost)", text.substr(3));
         }
     }
 }

@@ -27,7 +27,7 @@ MainForm::MainForm(QWidget *parent) :
     ui(new Ui::MainForm)
 {
     ui->setupUi(this);
-    SetTextBrowser(ui->textBrowser);
+    InitChat(ui->textBrowser);
     QList<int> sizes;
     sizes.push_back(512);
     sizes.push_back(256);

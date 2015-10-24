@@ -13,10 +13,8 @@
 class Chat
 {
 public:
-    static Chat* GetChat();
-    static void InitChat();
-
     static bool IsOOCMessage(const std::string& text);
+    Chat(QTextBrowser* tb);
 
     void Process();
     void DrawScroll();
@@ -34,13 +32,14 @@ public:
     void PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id);
     void PostWords(const std::string& who, const std::string& text, size_t tile_id);
 private:
+    void SetCursorAtEnd();
+
     void ClearZone();
 
     void AddLines(const std::string& str);
 
     int CalculateAmount(const std::string& str, int from);
 
-    Chat() {};
     struct Line
     {
         std::string text;
@@ -65,12 +64,14 @@ private:
 
     char* text_;
 
-    TTF_Font* deja;
-
-    static Chat* chat;
+    TTF_Font* deja_;
+    QTextBrowser* tb_;
 };
 
 void SetLogToFile();
 
-void SetTextBrowser(QTextBrowser* tb);
-QTextBrowser* GetTextBrowser();
+Chat& GetChat();
+void InitChat(QTextBrowser* tb);
+
+/*void SetTextBrowser(QTextBrowser* tb);
+QTextBrowser& GetTextBrowser();*/
