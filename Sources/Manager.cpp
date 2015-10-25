@@ -441,7 +441,7 @@ void Manager::initWorld(int id, std::string map_name)
     GetGLWidget()->resize(old_size_w, old_size_h);
     std::cout << "Screen has been set" << std::endl;
     SetTexts(new TextPainter);
-    SetSpriter(new ASprClass);
+    SetSpriter(new SpriteHolder);
 
     std::cout << "Begin load resources" << std::endl;
     LoadImages();

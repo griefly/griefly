@@ -1,6 +1,6 @@
 #include "ASpritesClass.h"
 
-GLSprite* ASprClass::returnSpr(const std::string& type)
+GLSprite* SpriteHolder::returnSpr(const std::string& type)
 {
     if (NODRAW)
         return nullptr;
@@ -9,21 +9,21 @@ GLSprite* ASprClass::returnSpr(const std::string& type)
     return sprites[type];
 }
 
-ASprClass::ASprClass()
+SpriteHolder::SpriteHolder()
 {
 };
 
-ASprClass* aspr_ = nullptr;
-ASprClass* GetSpriter()
+SpriteHolder* aspr_ = nullptr;
+SpriteHolder* GetSpriter()
 {
     return aspr_;
 }
-void SetSpriter(ASprClass* aspr)
+void SetSpriter(SpriteHolder* aspr)
 {
     aspr_ = aspr;
 }
 
-void ASprClass::LoadImage(const std::string& image)
+void SpriteHolder::LoadImage(const std::string& image)
 {
     sprites[image] = new GLSprite(image);
 }

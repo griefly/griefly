@@ -62,7 +62,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
     ui->graphicsView->setScene(scene_);
 
-    SetSpriter(new ASprClass);
+    SetSpriter(new SpriteHolder);
 
     for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
     {
