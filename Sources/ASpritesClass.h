@@ -18,5 +18,6 @@ private:
     std::map<std::string, GLSprite*> sprites;
 };
 
-SpriteHolder* GetSpriter();
+SpriteHolder& GetSpriter();
+bool IsSpriterValid();
 void SetSpriter(SpriteHolder* aspr);

@@ -14,10 +14,16 @@ SpriteHolder::SpriteHolder()
 };
 
 SpriteHolder* aspr_ = nullptr;
-SpriteHolder* GetSpriter()
+SpriteHolder& GetSpriter()
 {
-    return aspr_;
+    return *aspr_;
 }
+
+bool IsSpriterValid()
+{
+    return aspr_ != nullptr;
+}
+
 void SetSpriter(SpriteHolder* aspr)
 {
     aspr_ = aspr;

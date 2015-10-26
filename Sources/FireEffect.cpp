@@ -6,7 +6,7 @@
 
 Fire::Fire()
 {
-    sprite = GetSpriter()->returnSpr("icons/fire_anim.png");
+    //sprite = GetSpriter()->returnSpr("icons/fire_anim.png");
     master = 0;
 }
 

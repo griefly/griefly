@@ -29,9 +29,9 @@ void View::Frameset::SetAngle(int angle)
 void View::Frameset::SetSprite(const std::string& name)
 {
     sprite_name_ = name;
-    if (!GetSpriter())
+    if (!IsSpriterValid())
         return;
-    sprite_ = GetSpriter()->returnSpr(name);
+    sprite_ = GetSpriter().returnSpr(name);
     SetState(state_);
 }
 
