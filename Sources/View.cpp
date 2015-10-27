@@ -2,7 +2,7 @@
 
 #include <SDL.h>
 
-#include "ASpritesClass.h"
+#include "SpriteHolder.h"
 #include "StreamWrapper.h"
 
 #include <math.h>

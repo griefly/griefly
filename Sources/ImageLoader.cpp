@@ -1,5 +1,5 @@
 #include "ImageLoader.h"
-#include "ASpritesClass.h"
+#include "SpriteHolder.h"
 
 void LoadImages()
 {

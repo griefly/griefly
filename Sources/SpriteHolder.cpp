@@ -1,4 +1,4 @@
-#include "ASpritesClass.h"
+#include "SpriteHolder.h"
 
 GLSprite* SpriteHolder::returnSpr(const std::string& type)
 {

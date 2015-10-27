@@ -4,7 +4,7 @@
 
 #include "OnMapBaseInt.h"
 #include "GLSprite.h"
-#include "ASpritesClass.h"
+#include "SpriteHolder.h"
 #include "HelperStructers.h"
 #include "Metadata.h"
 #include "View.h"
