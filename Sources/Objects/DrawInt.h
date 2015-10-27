@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "MainInt.h"
+#include "MainObject.h"
 
 enum DrawType {SAME, TOP};
 

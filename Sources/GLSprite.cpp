@@ -4,7 +4,7 @@
 #include "constheader.h"
 
 #include "Manager.h"
-#include "MainInt.h"
+#include "MainObject.h"
 
 #include "qtopengl.h"
 

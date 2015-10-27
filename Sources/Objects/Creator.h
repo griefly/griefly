@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MobInt.h"
+#include "Mob.h"
 #include "Idptr.h"
 
 void ChangeMob(id_ptr_on<IMob> new_mob);

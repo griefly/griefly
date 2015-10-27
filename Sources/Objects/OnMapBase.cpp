@@ -1,6 +1,6 @@
-#include "OnMapBaseInt.h"
-#include "ITurf.h"
-#include "IMovable.h"
+#include "OnMapBase.h"
+#include "Turf.h"
+#include "Movable.h"
 #include "Item.h"
 
 id_ptr_on<ITurf> IOnMapBase::GetTurf()

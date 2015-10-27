@@ -1,7 +1,7 @@
 #include "Lattice.h"
 
 #include "FloorTile.h"
-#include "ITurf.h"
+#include "Turf.h"
 #include "Floor.h"
 
 #include "ItemFabric.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OnMapInt.h"
+#include "OnMapObject.h"
 
 inline std::istream& operator>>(std::stringstream& file, VDir& vdir)
 {

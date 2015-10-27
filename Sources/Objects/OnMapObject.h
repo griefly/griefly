@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "OnMapBaseInt.h"
+#include "OnMapBase.h"
 #include "GLSprite.h"
 #include "SpriteHolder.h"
 #include "HelperStructers.h"

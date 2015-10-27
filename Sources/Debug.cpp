@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "Debug.h"
-#include "MainInt.h"
+#include "MainObject.h"
 
 #include "Manager.h"
 

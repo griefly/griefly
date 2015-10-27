@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MobInt.h"
+#include "Mob.h"
 
 class Human: public IMob
 {

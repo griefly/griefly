@@ -2,7 +2,7 @@
 
 #include "Manager.h"
 #include "constheader.h"
-#include "TileInt.h"
+#include "Tile.h"
 #include "Creator.h"
 
 namespace mob_position 

@@ -1,6 +1,6 @@
 #include "Grille.h"
 
-#include "MobInt.h"
+#include "Mob.h"
 #include "Item.h"
 #include "sound.h"
 

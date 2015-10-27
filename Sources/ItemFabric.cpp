@@ -2,8 +2,8 @@
 
 #include <zlib.h>
 
-#include "MainInt.h"
-#include "OnMapInt.h"
+#include "MainObject.h"
+#include "OnMapObject.h"
 #include "Manager.h"
 #include "Map.h"
 #include "sync_random.h"

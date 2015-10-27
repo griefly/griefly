@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MobInt.h"
+#include "Mob.h"
 #include "Interface.h"
 #include "View.h"
 

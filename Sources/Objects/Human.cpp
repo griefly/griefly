@@ -8,7 +8,7 @@
 #include "MagicStrings.h"
 #include "Chat.h"
 #include "AtmosHolder.h"
-#include "TileInt.h"
+#include "Tile.h"
 #include "helpers.h"
 #include "mob_position.h"
 #include "sync_random.h"

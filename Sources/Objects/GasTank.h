@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IMovable.h"
+#include "Movable.h"
 
 #include "AtmosHolder.h"
 #include "Item.h"

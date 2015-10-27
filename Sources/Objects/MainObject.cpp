@@ -1,4 +1,4 @@
-#include "MainInt.h"
+#include "MainObject.h"
 #include "Map.h"
 #include "ItemFabric.h"
 

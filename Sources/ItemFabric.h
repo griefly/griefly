@@ -4,8 +4,8 @@
 #include <memory>
 
 #include "Idptr.h"
-#include "OnMapBaseInt.h"
-#include "OnMapInt.h"
+#include "OnMapBase.h"
+#include "OnMapObject.h"
 
 class ItemFabric
 {

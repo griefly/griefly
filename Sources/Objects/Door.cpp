@@ -1,8 +1,8 @@
 #include "Door.h"
 
 #include "sound.h"
-#include "IMovable.h"
-#include "MobInt.h"
+#include "Movable.h"
+#include "Mob.h"
 #include "Item.h"
 #include "Weldingtool.h"
 

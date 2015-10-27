@@ -4,7 +4,7 @@
 
 #include "Chat.h"
 #include "AtmosHolder.h"
-#include "TileInt.h"
+#include "Tile.h"
 
 AtmosTool::AtmosTool(size_t id) : Item(id)
 {

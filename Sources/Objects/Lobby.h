@@ -1,8 +1,8 @@
 #pragma once
 
-#include "MainInt.h"
+#include "MainObject.h"
 #include "SpawnPoints.h"
-#include "TileInt.h"
+#include "Tile.h"
 
 class Lobby: public IMainObject
 {

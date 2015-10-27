@@ -1,7 +1,7 @@
 #pragma once
 
-#include "OnMapInt.h"
-#include "IMovable.h"
+#include "OnMapObject.h"
+#include "Movable.h"
 
 class Door: public IOnMapObject
 {

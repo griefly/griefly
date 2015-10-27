@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "MobInt.h"
+#include "Mob.h"
 
 #include "HelperStructers.h"
 

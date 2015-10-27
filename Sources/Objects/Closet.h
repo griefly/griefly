@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IMovable.h"
+#include "Movable.h"
 
-#include "TileInt.h"
+#include "Tile.h"
 #include "Item.h"
 
 class Closet: public IMovable

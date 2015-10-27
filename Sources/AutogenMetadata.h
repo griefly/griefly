@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MainInt.h"
+#include "MainObject.h"
 
 typedef void (*variable_setter)(IMainObject* ptr, std::stringstream& str);
 

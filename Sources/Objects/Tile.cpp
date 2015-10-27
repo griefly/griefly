@@ -2,9 +2,9 @@
 
 #include "helpers.h"
 #include "Map.h"
-#include "OnMapInt.h"
-#include "TileInt.h"
-#include "IMovable.h"
+#include "OnMapObject.h"
+#include "Tile.h"
+#include "Movable.h"
 
 CubeTile::CubeTile(size_t id) : IOnMapBase(id)
 {

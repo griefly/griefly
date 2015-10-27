@@ -1,9 +1,9 @@
-﻿#include "IMovable.h"
+﻿#include "Movable.h"
 
 #include "EffectSystem.h"
 #include "MoveEffect.h"
 #include "helpers.h"
-#include "MobInt.h"
+#include "Mob.h"
 #include "mob_position.h"
 
 #include "Creator.h"

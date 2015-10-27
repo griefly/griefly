@@ -6,8 +6,8 @@
 #include <QDebug>
 
 #include "Map.h"
-#include "MainInt.h"
-#include "TileInt.h"
+#include "MainObject.h"
+#include "Tile.h"
 #include "Manager.h"
 #include "mob_position.h"
 #include "ItemFabric.h"

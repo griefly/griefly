@@ -1,4 +1,4 @@
-#include "MobInt.h"
+#include "Mob.h"
 #include "Manager.h"
 #include "Map.h"
 

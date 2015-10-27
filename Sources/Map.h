@@ -5,7 +5,7 @@
 
 #include "HelperStructers.h"
 #include "constheader.h"
-#include "TileInt.h"
+#include "Tile.h"
 #include "Atmos.h"
 
 class CPathFinder

@@ -1,8 +1,8 @@
 #include "Idptr.h"
 
-#include "MainInt.h"
+#include "MainObject.h"
 #include "ItemFabric.h"
-#include "OnMapBaseInt.h"
+#include "OnMapBase.h"
 #include "AutogenMetadata.h"
 
 bool is_creators_inited()

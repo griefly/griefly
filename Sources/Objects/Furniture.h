@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IMovable.h"
+#include "Movable.h"
 
 class Bed: public IMovable
 {

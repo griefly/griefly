@@ -1,11 +1,11 @@
 #include <assert.h>
 
-#include "OnMapInt.h"
+#include "OnMapObject.h"
 #include "Map.h"
-#include "MobInt.h"
+#include "Mob.h"
 #include "Manager.h"
 #include "MoveEffect.h"
-#include "TileInt.h"
+#include "Tile.h"
 
 #include "Creator.h"
 #include "mob_position.h"

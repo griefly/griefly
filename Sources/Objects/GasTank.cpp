@@ -1,6 +1,6 @@
 #include "GasTank.h"
 
-#include "TileInt.h"
+#include "Tile.h"
 #include "Chat.h"
 
 #include "ElectricTools.h"

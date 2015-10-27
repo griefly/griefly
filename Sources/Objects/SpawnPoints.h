@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OnMapInt.h"
+#include "OnMapObject.h"
 
 class SpawnPoint: public IOnMapObject
 {

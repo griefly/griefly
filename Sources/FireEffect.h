@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EffectSystem.h"
-#include "OnMapInt.h"
+#include "OnMapObject.h"
 
 class Fire: public BaseEffect
 {

@@ -2,9 +2,9 @@
 
 #include <vector>
 
-#include "ITurf.h"
-#include "OnMapBaseInt.h"
-#include "OnMapInt.h"
+#include "Turf.h"
+#include "OnMapBase.h"
+#include "OnMapObject.h"
 #include "AtmosHolder.h"
 
 template<class T>
