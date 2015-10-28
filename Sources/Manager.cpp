@@ -45,24 +45,14 @@
 
 int ping_send;
 
-void Manager::checkMove(Dir direct)
-{
-    moveEach(direct);
-};
-
-void Manager::moveEach(Dir direct)
-{
-    undoCenterMove(direct);
-};
-
-void Manager::undoCenterMove(Dir direct)
+void Manager::CheckMove(Dir direct)
 {
     //TODO
     for (int z = 0; z < GetMapMaster()->GetMapD(); ++z)
-        for(int x = std::max(0, GetMob()->GetX() - sizeHsq); 
+        for(int x = std::max(0, GetMob()->GetX() - sizeHsq);
             x <= std::min(GetMob()->GetX() + sizeHsq, GetMapMaster()->GetMapH() - 1); x++)
         {
-            for(int y = std::max(0, GetMob()->GetY() - sizeWsq); 
+            for(int y = std::max(0, GetMob()->GetY() - sizeWsq);
                 y <= std::min(GetMob()->GetY() + sizeWsq, GetMapMaster()->GetMapW() - 1); y++)
             {
                 GetMapMaster()->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
@@ -80,7 +70,7 @@ void Manager::undoCenterMove(Dir direct)
                 }
             }
         }
-};
+}
 
 Manager::Manager()
 {
@@ -112,7 +102,7 @@ void Manager::UpdateVisible()
     //        GetMob()->GetZ());
 }
 
-void Manager::process()
+void Manager::Process()
 {
     GetMapMaster()->numOfPathfind = 0;
     SDL_Color color = {255, 255, 255, 0};
@@ -142,7 +132,7 @@ void Manager::process()
     while(done == 0)
     { 
 
-        processInput();
+        HandleInput();
 
         process_in_msg();
 
@@ -249,15 +239,7 @@ void Manager::process()
     }
 }
 
-void Manager::ClearGUIZone()
-{
-}
-
-void Manager::checkMoveMob()
-{
-}
-
-void Manager::processInput()
+void Manager::HandleInput()
 {
     QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
 
@@ -407,7 +389,7 @@ const std::string ON_LOGIN_MESSAGE =
         " Use prefix ooc in the chat if you would like to use the ooc channel (it is a global channel)."
         " The special button is '`' (tilde button) - it shows the current scoreboard.\n\n";
 
-void Manager::initWorld(int id, std::string map_name)
+void Manager::InitWorld(int id, std::string map_name)
 {
     if (!GetParamsHolder().GetParamBool("-debug_to_chat"))
     {
@@ -672,7 +654,7 @@ void Manager::process_in_msg()
     }
 }
 
-bool Manager::isMobVisible(int posx, int posy)
+bool Manager::IsMobVisible(int posx, int posy)
 {
     // TODO: matrix for fast check
     if (visiblePoint == nullptr)

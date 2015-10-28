@@ -101,10 +101,10 @@ void MainForm::startGameLoop(int id, QString map)
         Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
 
     Manager man;
-    man.initWorld(id, map.toStdString());
+    man.InitWorld(id, map.toStdString());
     if (GetParamsHolder().GetParamBool("-auto"))
         man.ToogleAutoplay();
-    man.process();
+    man.Process();
     return;
 }
 

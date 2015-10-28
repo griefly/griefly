@@ -147,7 +147,7 @@ bool IMovable::mainMove()
     if (   GetMob().ret_id() == GetId()
         || Contains(GetMob()))
     {
-        GetManager().checkMove(dMove);
+        GetManager().CheckMove(dMove);
         GetManager().UpdateVisible();
     }
 

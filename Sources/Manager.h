@@ -14,28 +14,17 @@
 class Manager
 {
 public:
-    void move(int direct);
-    void moveEach(Dir direct);
-    void undoCenterMove(Dir direct);
-    void cautLastItem(Dir direct);
-    void checkMove(Dir direct);
-    void globalMove(int direct);
-    void initWorld(int id, std::string map_name);
-    void process();
-    void checkMoveMob();
-    //void processGUI();
-    void processInput();
+    void CheckMove(Dir direct);
+    void InitWorld(int id, std::string map_name);
+    void Process();
+    void HandleInput();
+
+    bool IsMobVisible(int posx, int posy);
 
     void ProcessClick(int mouse_x, int mouse_y);
 
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);
-
-    void ClearGUIZone();
-
-    bool isMobVisible(int posx, int posy);
-
-    int threadPathfind(void* data);
 
     Manager();
 
