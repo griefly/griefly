@@ -28,26 +28,17 @@ public:
 
     Manager();
 
-    bool isMove;
-    int numOfDeer;
-    //main
     int done;
     bool pause;
-    //SDL_Surface* screen;
-    //SDL_Surface* back;
     void UpdateVisible();
     std::list<point>* visiblePoint;
-    ///////////
     int fps;
     int last_fps;
     int delay;
-    int lastTimeFps;
-    int lastTimeC;
     std::string last_touch;
-    SDL_Surface* sFPS;
-    ///////////
+
     int tick_recv;
-    void process_in_msg();
+    void ProcessInputMessages();
 
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 private:

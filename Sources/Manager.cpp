@@ -76,7 +76,6 @@ Manager::Manager()
 {
     auto_player_ = false;
     visiblePoint = new std::list<point>;
-    isMove = false;
     done = 0;
     pause = false;
     last_fps = FPS_MAX;
@@ -134,7 +133,7 @@ void Manager::Process()
 
         HandleInput();
 
-        process_in_msg();
+        ProcessInputMessages();
 
         const int ATMOS_OFTEN = 1;
         const int ATMOS_MOVE_OFTEN = 1;
@@ -144,7 +143,6 @@ void Manager::Process()
             ++MAIN_TICK;
 
             process_timer.Start();
-            numOfDeer = 0;
             begin_of_process = SDL_GetTicks();
             GetItemFabric().foreachProcess();
             force_timer.Start();
@@ -401,7 +399,6 @@ void Manager::InitWorld(int id, std::string map_name)
 
     std::cout << "Begin init world" << std::endl;
     tick_recv = 0;
-    isMove = 0;
 
     if (!InitSDL())
     {
@@ -557,7 +554,7 @@ void Manager::InitWorld(int id, std::string map_name)
 
 }
 
-void Manager::process_in_msg()
+void Manager::ProcessInputMessages()
 {
     while (Network2::GetInstance().IsMessageAvailable())
     {
