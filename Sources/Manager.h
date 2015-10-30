@@ -28,33 +28,24 @@ public:
 
     Manager();
 
-    int done;
-    bool pause;
     void UpdateVisible();
-    std::list<point>* visiblePoint;
-    int fps;
-    int last_fps;
-    int delay;
-    std::string last_touch;
-
-    int tick_recv;
     void ProcessInputMessages();
-
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
+
+    std::list<point>* GetVisiblePoints() { return visible_points_; }
 private:
+    std::list<point>* visible_points_;
+    int fps_;
+    int last_fps_;
+    std::string last_touch_;
+
     QString ping_id_;
     int ping_send_time_;
-
     int current_ping_;
-
     bool ping_send_is_requested_;
-
     bool process_in_;
-
     std::string adrs_;
-
     size_t creator_;
-
     bool auto_player_;
 };
 

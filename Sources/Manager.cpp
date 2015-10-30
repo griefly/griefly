@@ -75,10 +75,8 @@ void Manager::CheckMove(Dir direct)
 Manager::Manager()
 {
     auto_player_ = false;
-    visiblePoint = new std::list<point>;
-    done = 0;
-    pause = false;
-    last_fps = FPS_MAX;
+    visible_points_ = new std::list<point>;
+    last_fps_ = FPS_MAX;
 
     ping_id_ = "";
     ping_send_time_ = 0;
@@ -90,28 +88,18 @@ Manager::Manager()
 
 void Manager::UpdateVisible() 
 {
-    visiblePoint->clear();
+    visible_points_->clear();
 
-    GetMob()->CalculateVisible(visiblePoint);
-
-    //visiblePoint = 
-    //    GetMapMaster()->losf.calculateVisisble(visiblePoint, 
-    //        GetMob()->GetX(), 
-    //        GetMob()->GetY(),
-    //        GetMob()->GetZ());
+    GetMob()->CalculateVisible(visible_points_);
 }
 
 void Manager::Process()
 {
-    GetMapMaster()->numOfPathfind = 0;
-    SDL_Color color = {255, 255, 255, 0};
-
     int begin_of_process;
 
     int delay = 0;
     int lastTimeFps = SDL_GetTicks();
-    int lastTimeC   = SDL_GetTicks();
-    fps = 0;
+    fps_ = 0;
     process_in_ = false;
     Timer tick_timer, draw_timer, process_timer, atmos_move_timer, force_timer;
     tick_timer.Start();
@@ -120,15 +108,11 @@ void Manager::Process()
     atmos_move_timer.Start();
     force_timer.Start();
     unsigned int draw_time_per_tick = 0;
-    unsigned int process_time_per_tick = 0;
 
     unsigned int last_effect_process = 0;
-    static int locTime = 0;
 
     unsigned int ping_send_time = 0;
-
-    //Debug::UnsyncDebug().GenerateAndSaveReport();
-    while(done == 0)
+    while (true)
     { 
 
         HandleInput();
@@ -138,7 +122,7 @@ void Manager::Process()
         const int ATMOS_OFTEN = 1;
         const int ATMOS_MOVE_OFTEN = 1;
 
-        if(process_in_ && !pause)
+        if(process_in_)
         {
             ++MAIN_TICK;
 
@@ -198,18 +182,13 @@ void Manager::Process()
             draw_time_per_tick += draw_timer.Get();
         }
 
-        if((SDL_GetTicks() - lastTimeFps) >= 1000 && !pause)
+        if((SDL_GetTicks() - lastTimeFps) >= 1000)
         {
             UpdateVisible();
 
-            if(!(fps > FPS_MAX - 10 && fps < FPS_MAX - 10))
-            delay = (int)(1000.0 / FPS_MAX + delay - 1000.0 / fps);
             lastTimeFps = SDL_GetTicks();
-            last_fps = fps;
-            fps = 0;
-          
-
-            GetMapMaster()->numOfPathfind = 0;
+            last_fps_ = fps_;
+            fps_ = 0;
         }
 
         if (   (SDL_GetTicks() - ping_send_time) > 1000
@@ -221,7 +200,7 @@ void Manager::Process()
             ping_send_is_requested_ = false;
         }
 
-        ++fps;
+        ++fps_;
         process_in_ = false;
         if (Network2::GetInstance().IsGood() == false)
         {
@@ -261,7 +240,7 @@ void Manager::ProcessClick(int mouse_x, int mouse_y)
 {
     if (GetMob()->GetInterface() && GetMob()->GetInterface()->Click(mouse_x, mouse_y))
     {
-        last_touch = "Interface";
+        last_touch_ = "Interface";
         return;
     }
 
@@ -282,7 +261,7 @@ void Manager::ProcessClick(int mouse_x, int mouse_y)
 
         Network2::GetInstance().SendMsg(msg);
 
-        last_touch = item->name;
+        last_touch_ = item->name;
     }
 }
 
@@ -398,8 +377,6 @@ void Manager::InitWorld(int id, std::string map_name)
     InitSettersForTypes();
 
     std::cout << "Begin init world" << std::endl;
-    tick_recv = 0;
-
     if (!InitSDL())
     {
         SYSTEM_STREAM << "Fail SDL load" << std::endl;
@@ -489,7 +466,7 @@ void Manager::InitWorld(int id, std::string map_name)
     ([this](std::string* str)
     {
         std::stringstream ss; 
-        ss << last_fps - 1; 
+        ss << last_fps_ - 1;
         *str = ss.str();
     }).SetFreq(1000).SetSize(20);
 
@@ -539,7 +516,7 @@ void Manager::InitWorld(int id, std::string map_name)
     GetTexts()["LastTouch"].SetUpdater
     ([this](std::string* str)
     {
-        *str = last_touch;
+        *str = last_touch_;
     }).SetFreq(20).SetPlace(0, 485).SetSize(22);
 
    /* GetTexts()["Connection"].SetUpdater
@@ -654,9 +631,9 @@ void Manager::ProcessInputMessages()
 bool Manager::IsMobVisible(int posx, int posy)
 {
     // TODO: matrix for fast check
-    if (visiblePoint == nullptr)
+    if (visible_points_ == nullptr)
         return false;
-    for (auto it = visiblePoint->begin(); it != visiblePoint->end(); ++it)
+    for (auto it = visible_points_->begin(); it != visible_points_->end(); ++it)
         if(it->posx == posx && it->posy == posy)
             return true;
     return false;

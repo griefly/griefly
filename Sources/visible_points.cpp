@@ -8,7 +8,7 @@ const std::list<point>* GetVisible()
 {
     if (!IsManagerValid())
         return nullptr;
-    return GetManager().visiblePoint;
+    return GetManager().GetVisiblePoints();
 }
 
 bool IsTileVisible(size_t tile_id)
