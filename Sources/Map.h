@@ -8,23 +8,6 @@
 #include "Tile.h"
 #include "Atmos.h"
 
-class CPathFinder
-{
-public:
-    std::list<Dir> calculatePath(int fromPosx, int fromPosy, int toPosx, int toPosy, int toPosz = 0);
-private:
-    std::list<square*> openList;
-    std::vector<std::vector<square> > squares;
-    void clearPathfinding();
-    void addNear(int posx, int posy, int toPosx, int toPosy);
-    int calcCost(int posx, int posy, int toPosx, int toPosy);
-    bool removeFromOpen(int posx, int posy);
-    void addToOpen(int posx, int posy);
-    int numOfPathfind;
-};
-
-
-
 class LOSfinder
 {
 public:
@@ -94,7 +77,6 @@ public:
     id_ptr_on<IOnMapObject> click(int x, int y);
     
     int numOfPathfind;
-    CPathFinder pathf;
     LOSfinder losf;
     void checkZeroId();
 };

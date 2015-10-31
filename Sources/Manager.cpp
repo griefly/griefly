@@ -628,6 +628,7 @@ void Manager::ProcessInputMessages()
     }
 }
 
+
 bool Manager::IsMobVisible(int posx, int posy)
 {
     // TODO: matrix for fast check
