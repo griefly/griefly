@@ -127,7 +127,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
  //   size_t creator;
 //    sfile >> creator;
 
-    makeTiles(x, y, z);
+    MakeTiles(x, y, z);
 
    // qDebug() << "Begin loading cycle";
     while (ss)
@@ -262,9 +262,9 @@ void MapMaster::Draw()
             ++it2;
         }
     }
-};
+}
 
-void MapMaster::makeTiles(int new_map_x, int new_map_y, int new_map_z)
+void MapMaster::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
 {
     ResizeMap(new_map_x, new_map_y, new_map_z);
     for(int x = 0; x < GetMapW(); x++)
@@ -297,17 +297,7 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 
 MapMaster::MapMaster()
 {
-    ms_last_draw = 0;
-}
 
-bool MapMaster::canDraw()
-{
-    if (SDL_GetTicks() - ms_last_draw > static_cast<size_t>(1000 / DRAW_MAX + 1))
-    {
-        ms_last_draw = SDL_GetTicks();
-        return true;
-    }
-    return false;
 }
 
 PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)
@@ -361,7 +351,7 @@ bool MapMaster::checkOutBorder(int posx, int posy)
         || posx < 0 || posx > (GetMapMaster()->GetMapW() - 1)) 
         return false;
     return true;
-};
+}
 
 bool MapMaster::checkOutBorder(int posx, int posy, Dir direct)
 {
@@ -371,28 +361,13 @@ bool MapMaster::checkOutBorder(int posx, int posy, Dir direct)
         || (direct == D_RIGHT && posx >= (GetMapMaster()->GetMapW() - 1))) 
         return false;
     return true;
-};
+}
 
-bool MapMaster::isVisible(int posx, int posy, int posz)
+bool MapMaster::IsTransparent(int posx, int posy, int posz)
 {
     if(!checkOutBorder(posx, posy/*TODO: posz*/))
         return false;
     return squares[posx][posy][posz]->IsTransparent();
-};
-
-void MapMaster::splashLiquid(std::list<HashAmount> ha, int posx, int posy, int posz)
-{
-    // TODO:
-    /*std::list<HashAmount>* loc = &ha;
-    auto it = squares[posx][posy][].end();
-    if(it == squares[posx][posy].begin())
-        return;
-    do
-    {
-        --it;
-        std::list<HashAmount> ha = (*it)->insertLiquid(*loc);
-    }
-    while(ha.size() && it != squares[posx][posy].begin());*/
 }
 
 id_ptr_on<IOnMapObject> MapMaster::click(int x, int y)
@@ -575,7 +550,7 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     auto itr = worklist.begin();
     while(itr != worklist.end())
     {
-        if(GetMapMaster()->isVisible(itr->posx, itr->posy, itr->posz) 
+        if(GetMapMaster()->IsTransparent(itr->posx, itr->posy, itr->posz)
             && itr->posx != posx - sizeHsq && itr->posx != posx + sizeHsq
             && itr->posy != posy - sizeWsq && itr->posy != posy + sizeWsq
             && 

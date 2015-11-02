@@ -408,7 +408,7 @@ void Manager::InitWorld(int id, std::string map_name)
     int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
     int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
     int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 1;
-    GetMapMaster()->makeTiles(x, y, z);
+    GetMapMaster()->MakeTiles(x, y, z);
 
     std::cout << "Begin choose map" << std::endl;
     if (map_name == "no_map")
