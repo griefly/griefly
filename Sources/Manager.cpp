@@ -252,7 +252,7 @@ void Manager::ProcessClick(int mouse_x, int mouse_y)
     }
 
     id_ptr_on<IOnMapObject> item;
-    item = GetMapMaster()->click(mouse_x, mouse_y);
+    item = GetMapMaster()->Click(mouse_x, mouse_y);
     if (item)
     {
         Message2 msg;

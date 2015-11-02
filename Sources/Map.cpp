@@ -203,30 +203,20 @@ void MapMaster::Draw()
             auto it2 = GetVisible()->begin();
             while(it2 != GetVisible()->end())
             {   
-                if(checkOutBorder(it2->posx, it2->posy))
+                if (it2->posz == z_level)
                 {
-                    if (it2->posz == z_level)
+                    auto sq = squares[it2->posx][it2->posy][it2->posz];
+                    auto& in_list = sq->GetInsideList();
+
+                    for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
                     {
-                        /*squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
-                        {
-                            auto item_n = castTo<IOnMapObject>(item.ret_item());
-                            if (item_n->v_level == i)
-                                item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
-                        });*/
-
-                        auto sq = squares[it2->posx][it2->posy][it2->posz];
-                        auto& in_list = sq->GetInsideList();
-
-                        for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
-                        {
-                            if ((*list_it)->v_level == i)
-                                (*list_it)->processImage(z_level < z_level_m ? TOP : SAME);//screen
-                        }
-
-                        auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
-                        if (trf.valid() && trf->v_level == i)
-                            trf->processImage(z_level < z_level_m ? TOP : SAME);
+                        if ((*list_it)->v_level == i)
+                            (*list_it)->processImage(z_level < z_level_m ? TOP : SAME);//screen
                     }
+
+                    auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+                    if (trf.valid() && trf->v_level == i)
+                        trf->processImage(z_level < z_level_m ? TOP : SAME);
                 }
                 ++it2;
             }
@@ -234,30 +224,20 @@ void MapMaster::Draw()
         auto it2 = GetVisible()->begin();
         while(it2 != GetVisible()->end())
         {   
-            if(checkOutBorder(it2->posx, it2->posy))
+            if (it2->posz == z_level)
             {
-                if (it2->posz == z_level)
+                auto sq = squares[it2->posx][it2->posy][it2->posz];
+                auto& in_list = sq->GetInsideList();
+
+                for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
                 {
-                    /*squares[it2->posx][it2->posy][it2->posz]->ForEach([&](id_ptr_on<IOnMapBase> item)
-                    {
-                        auto item_n = castTo<IOnMapObject>(item.ret_item());
-                        if (item_n->v_level >= MAX_LEVEL)
-                            item_n->processImage(z_level < z_level_m ? TOP : SAME);//screen
-                    });*/
-
-                    auto sq = squares[it2->posx][it2->posy][it2->posz];
-                    auto& in_list = sq->GetInsideList();
-
-                    for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
-                    {
-                        if ((*list_it)->v_level >= MAX_LEVEL)
-                            (*list_it)->processImage(z_level < z_level_m ? TOP : SAME);//screen
-                    }
-
-                    auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
-                    if (trf.valid() && trf->v_level >= MAX_LEVEL)
-                        trf->processImage(z_level < z_level_m ? TOP : SAME);
+                    if ((*list_it)->v_level >= MAX_LEVEL)
+                        (*list_it)->processImage(z_level < z_level_m ? TOP : SAME);//screen
                 }
+
+                auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+                if (trf.valid() && trf->v_level >= MAX_LEVEL)
+                    trf->processImage(z_level < z_level_m ? TOP : SAME);
             }
             ++it2;
         }
@@ -343,34 +323,18 @@ void MapMaster::switchDir(int& posx, int& posy, Dir direct, int num, bool back)/
             return;
         }
     }
-};
-
-bool MapMaster::checkOutBorder(int posx, int posy)
-{
-    if(    posy < 0 || posy > (GetMapMaster()->GetMapH() - 1) 
-        || posx < 0 || posx > (GetMapMaster()->GetMapW() - 1)) 
-        return false;
-    return true;
-}
-
-bool MapMaster::checkOutBorder(int posx, int posy, Dir direct)
-{
-    if(    (direct == D_UP    && posy <= 0) 
-        || (direct == D_DOWN  && posy >= (GetMapMaster()->GetMapH() - 1)) 
-        || (direct == D_LEFT  && posx <= 0) 
-        || (direct == D_RIGHT && posx >= (GetMapMaster()->GetMapW() - 1))) 
-        return false;
-    return true;
 }
 
 bool MapMaster::IsTransparent(int posx, int posy, int posz)
 {
-    if(!checkOutBorder(posx, posy/*TODO: posz*/))
+    if (!helpers::check_borders(&posx, &posy, &posz))
+    {
         return false;
+    }
     return squares[posx][posy][posz]->IsTransparent();
 }
 
-id_ptr_on<IOnMapObject> MapMaster::click(int x, int y)
+id_ptr_on<IOnMapObject> MapMaster::Click(int x, int y)
 {
     if(!GetVisible()) 
         return 0;

@@ -59,7 +59,7 @@ namespace helpers
                 *z = 0;
         }
     }
-    inline bool check_borders(int* x, int* y, int* z)
+    inline bool check_borders(const int* x, const int* y, const int* z)
     {
         if (x)
         {

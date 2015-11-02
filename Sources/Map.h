@@ -57,11 +57,8 @@ public:
     PassableLevel GetPassable(int posx, int posy, int posz = 0, Dir direct = D_ALL);
 
     static void switchDir(int& posx, int& posy, Dir direct, int num = 1, bool back = false);
-    static bool checkOutBorder(int posx, int posy);
-    //
-    static bool checkOutBorder(int posx, int posy, Dir direct);
     
-    id_ptr_on<IOnMapObject> click(int x, int y);
+    id_ptr_on<IOnMapObject> Click(int x, int y);
     
     LOSfinder losf;
 };
