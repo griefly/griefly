@@ -128,7 +128,7 @@ void Manager::Process()
 
             process_timer.Start();
             begin_of_process = SDL_GetTicks();
-            GetItemFabric().ForeachProcess();
+            GetFactory().ForeachProcess();
             force_timer.Start();
             ForceManager::Get().Process();
             unsigned int fm = force_timer.Get();
@@ -138,7 +138,7 @@ void Manager::Process()
             if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
                 GetMapMaster()->atmosphere.ProcessMove();
             unsigned int amt = atmos_move_timer.Get();
-            GetItemFabric().Sync();
+            GetFactory().Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
  
             //////////////////////////////
@@ -386,7 +386,7 @@ void Manager::InitWorld(int id, std::string map_name)
     std::cout << "Begin set manager" << std::endl;
     SetManager(this);
 
-    SetItemFabric(new ItemFabric);
+    SetFactory(new ObjectFactory);
     SetMapMaster(new MapMaster);
     std::cout << "Screen set" << std::endl;
 
@@ -420,10 +420,10 @@ void Manager::InitWorld(int id, std::string map_name)
 
             GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
-            GetItemFabric().newItem<Lobby>(Lobby::T_ITEM_S());
+            GetFactory().newItem<Lobby>(Lobby::T_ITEM_S());
 
-            for (auto it = GetItemFabric().GetIdTable().begin();
-                      it != GetItemFabric().GetIdTable().end();
+            for (auto it = GetFactory().GetIdTable().begin();
+                      it != GetFactory().GetIdTable().end();
                       ++it)
             {
                 if ((*it) && ((*it)->RT_ITEM() == SpawnPoint::REAL_TYPE_ITEM))
@@ -432,11 +432,11 @@ void Manager::InitWorld(int id, std::string map_name)
                 }
             }
 
-            auto newmob = GetItemFabric().newItem<IMob>(LoginMob::T_ITEM_S());
+            auto newmob = GetFactory().newItem<IMob>(LoginMob::T_ITEM_S());
 
 
             ChangeMob(newmob);
-            GetItemFabric().SetPlayerId(id, newmob.ret_id());
+            GetFactory().SetPlayerId(id, newmob.ret_id());
 
             GetMapMaster()->FillAtmosphere();
 
@@ -457,7 +457,7 @@ void Manager::InitWorld(int id, std::string map_name)
         ss.write(map_data.data(), map_data.length());
         ss.seekg(0, std::ios::beg);
 
-        GetItemFabric().loadMap(ss, false, id);
+        GetFactory().LoadMap(ss, false, id);
     }
 
     GetChat().PostText(ON_LOGIN_MESSAGE);
@@ -474,7 +474,7 @@ void Manager::InitWorld(int id, std::string map_name)
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << "Hash: " << GetItemFabric().GetLastHash();
+        ss << "Hash: " << GetFactory().GetLastHash();
         *str = ss.str();
     }).SetSize(15).SetPlace(0, 30);//, 200, 50);
 
@@ -549,7 +549,7 @@ void Manager::ProcessInputMessages()
             QJsonValue new_id_v = obj["id"];
             int new_id = new_id_v.toVariant().toInt();
 
-            size_t game_id = GetItemFabric().GetPlayerId(new_id);
+            size_t game_id = GetFactory().GetPlayerId(new_id);
 
             if (game_id != 0)
             {
@@ -557,11 +557,11 @@ void Manager::ProcessInputMessages()
                 continue;
             }
 
-            auto newmob = GetItemFabric().newItem<IMob>(LoginMob::T_ITEM_S());
+            auto newmob = GetFactory().newItem<IMob>(LoginMob::T_ITEM_S());
 
             qDebug() << "New client " << newmob.ret_id();
 
-            GetItemFabric().SetPlayerId(new_id, newmob.ret_id());
+            GetFactory().SetPlayerId(new_id, newmob.ret_id());
             continue;
         }
         if (msg.type == MessageType::MAP_UPLOAD)
@@ -572,7 +572,7 @@ void Manager::ProcessInputMessages()
             qDebug() << "Map upload to " << map_url;
 
             std::stringstream ss;
-            GetItemFabric().saveMap(ss, false);
+            GetFactory().SaveMap(ss, false);
             std::string string_data = ss.str();
 
             QByteArray data(string_data.c_str(), string_data.size());
@@ -619,7 +619,7 @@ void Manager::ProcessInputMessages()
             QJsonObject obj = Network2::ParseJson(msg);
             QJsonValue v = obj["id"];
             int net_id = v.toVariant().toInt();
-            size_t game_id = GetItemFabric().GetPlayerId(net_id);
+            size_t game_id = GetFactory().GetPlayerId(net_id);
             id_ptr_on<IMessageReceiver> game_object = game_id;
             game_object->processGUImsg(msg);
         }

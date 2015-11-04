@@ -42,5 +42,5 @@ std::unordered_map<std::string, item_creator_saved>* itemListSaved()
 
 IMainObject* GetFromIdTable(size_t id)
 {
-    return GetItemFabric().GetIdTable()[id];
+    return GetFactory().GetIdTable()[id];
 }

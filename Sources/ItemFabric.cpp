@@ -14,14 +14,14 @@
 #include "Debug.h"
 
 
-ItemFabric::ItemFabric()
+ObjectFactory::ObjectFactory()
 {
     idTable_.resize(100);
     id_ = 1;
     is_world_generating_ = true;
 }
 
-void ItemFabric::Sync()
+void ObjectFactory::Sync()
 {
     if (MAIN_TICK % HASH_OFTEN == 1)
     {
@@ -46,7 +46,7 @@ void ItemFabric::Sync()
     }
 }
 
-void ItemFabric::UpdateProcessingItems()
+void ObjectFactory::UpdateProcessingItems()
 {   
     if (!add_to_process_.size())
     {
@@ -76,7 +76,7 @@ void ItemFabric::UpdateProcessingItems()
     add_to_process_.clear();
 }
 
-void ItemFabric::ForeachProcess()
+void ObjectFactory::ForeachProcess()
 {
     UpdateProcessingItems();
 
@@ -95,7 +95,7 @@ void ItemFabric::ForeachProcess()
     }
 }
 
-void ItemFabric::saveMapHeader(std::stringstream& savefile)
+void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
 {
     savefile << MAIN_TICK << std::endl;
     savefile << id_ << std::endl;
@@ -121,7 +121,7 @@ void ItemFabric::saveMapHeader(std::stringstream& savefile)
     savefile << std::endl;
 }
 
-void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob)
+void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_mob)
 {
     savefile >> MAIN_TICK;
     SYSTEM_STREAM << "MAIN_TICK: " << MAIN_TICK << std::endl;
@@ -176,7 +176,7 @@ void ItemFabric::loadMapHeader(std::stringstream& savefile, size_t real_this_mob
         SetMob(GetPlayerId(real_this_mob));
 }
 
-void ItemFabric::saveMap(const char* path)
+void ObjectFactory::SaveMap(const char* path)
 {
     std::fstream rfile;
     rfile.open(path, std::ios_base::out | std::ios_base::trunc);
@@ -186,13 +186,13 @@ void ItemFabric::saveMap(const char* path)
         return;
     }
     std::stringstream savefile;
-    saveMap(savefile, false);
+    SaveMap(savefile, false);
     rfile << savefile.str();
     rfile.close();
 }
-void ItemFabric::saveMap(std::stringstream& savefile, bool zip)
+void ObjectFactory::SaveMap(std::stringstream& savefile, bool zip)
 {
-    saveMapHeader(savefile);
+    SaveMapHeader(savefile);
     auto it = ++idTable_.begin();
     while(it != idTable_.end())
         if(*it) 
@@ -239,7 +239,7 @@ void ItemFabric::saveMap(std::stringstream& savefile, bool zip)
     }
 }
 
-void ItemFabric::loadMap(const char* path)
+void ObjectFactory::LoadMap(const char* path)
 {
     SYSTEM_STREAM << path << std::endl;
     std::stringstream savefile;
@@ -258,15 +258,15 @@ void ItemFabric::loadMap(const char* path)
     savefile.write(buff, length);
     delete[] buff;
     SYSTEM_STREAM << "End map load" << std::endl;
-    loadMap(savefile, false);
+    LoadMap(savefile, false);
 }
 
 const int AVERAGE_BYTE_PER_TILE = 129 * 2;
 const long int UNCOMPRESS_LEN_DEFAULT = 50 * 50 * 5 * AVERAGE_BYTE_PER_TILE;
-void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this_mob)
+void ObjectFactory::LoadMap(std::stringstream& savefile, bool zip, size_t real_this_mob)
 {
 
-    clearMap();
+    ClearMap();
 
     if (zip)
     {
@@ -319,7 +319,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
 
     std::cout << std::endl << str_t.substr(str_t.size() - 500) << std::endl;
 
-    loadMapHeader(savefile, real_this_mob);
+    LoadMapHeader(savefile, real_this_mob);
     int j = 0;
     while(!savefile.eof())
     {
@@ -351,7 +351,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
     is_world_generating_ = false;
 }
 
-IMainObject* ItemFabric::NewVoidItem(const std::string& type, size_t id)
+IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)
 {
     //static Initer init;
     auto il = (*itemList());
@@ -359,13 +359,13 @@ IMainObject* ItemFabric::NewVoidItem(const std::string& type, size_t id)
     return f(id);
 };
 
-IMainObject* ItemFabric::NewVoidItemSaved(const std::string& type)
+IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
 {
     //static Initer init;
     return (*itemListSaved())[type]();
 };
 
-void ItemFabric::clearMap()
+void ObjectFactory::ClearMap()
 {
     size_t table_size = idTable_.size();
     for (size_t i = 1; i < table_size; ++i)
@@ -381,12 +381,12 @@ void ItemFabric::clearMap()
     id_ = 1;
 }
 
-void ItemFabric::BeginWorldCreation()
+void ObjectFactory::BeginWorldCreation()
 {
     is_world_generating_ = true;
 }
 
-void ItemFabric::FinishWorldCreation()
+void ObjectFactory::FinishWorldCreation()
 {
     is_world_generating_ = false;
     size_t table_size = idTable_.size();
@@ -399,7 +399,7 @@ void ItemFabric::FinishWorldCreation()
     }
 }
 
-unsigned int ItemFabric::Hash()
+unsigned int ObjectFactory::Hash()
 {
     unsigned int h = 0;
     size_t table_size = idTable_.size();
@@ -426,11 +426,11 @@ unsigned int ItemFabric::Hash()
     return h;
 }
 
-void ItemFabric::SetPlayerId(size_t net_id, size_t real_id)
+void ObjectFactory::SetPlayerId(size_t net_id, size_t real_id)
 {
     players_table_[net_id] = real_id;
 }
-size_t ItemFabric::GetPlayerId(size_t net_id)
+size_t ObjectFactory::GetPlayerId(size_t net_id)
 {
     auto it = players_table_.find(net_id);
     if (it != players_table_.end())
@@ -440,7 +440,7 @@ size_t ItemFabric::GetPlayerId(size_t net_id)
     return 0;
 }
 
-size_t ItemFabric::GetNetId(size_t real_id)
+size_t ObjectFactory::GetNetId(size_t real_id)
 {
     for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
         if (it->second == real_id)
@@ -448,12 +448,12 @@ size_t ItemFabric::GetNetId(size_t real_id)
     return 0;
 }
 
-void ItemFabric::AddProcessingItem(id_ptr_on<IMainObject> item)
+void ObjectFactory::AddProcessingItem(id_ptr_on<IMainObject> item)
 {
     add_to_process_.push_back(item);
 }
 
-void ItemFabric::ClearProcessing()
+void ObjectFactory::ClearProcessing()
 {
     std::vector<id_ptr_on<IMainObject>> remove_from_process;
     size_t table_size = process_table_.size();
@@ -472,12 +472,12 @@ void ItemFabric::ClearProcessing()
     }
 }
 
-ItemFabric* item_fabric_ = 0;
-ItemFabric& GetItemFabric()
+ObjectFactory* item_fabric_ = 0;
+ObjectFactory& GetFactory()
 {
     return *item_fabric_;
 }
-void SetItemFabric(ItemFabric* item_fabric)
+void SetFactory(ObjectFactory* item_fabric)
 {
     item_fabric_ = item_fabric;
 }

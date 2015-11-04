@@ -4,7 +4,7 @@
 
 void IMainObject::delThis()
 {
-    GetItemFabric().GetIdTable()[id_] = 0;
+    GetFactory().GetIdTable()[id_] = 0;
     delete this;
 }
 
@@ -37,7 +37,7 @@ void IMainObject::SetFreq(int freq)
 
     if (how_often_ != 0)
     {
-        GetItemFabric().AddProcessingItem(GetId());
+        GetFactory().AddProcessingItem(GetId());
     }
 }
 

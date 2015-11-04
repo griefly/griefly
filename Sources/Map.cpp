@@ -95,7 +95,7 @@ void MapMaster::SaveToMapGen(const std::string& name)
 
 void MapMaster::LoadFromMapGen(const std::string& name)
 {
-    GetItemFabric().clearMap();
+    GetFactory().ClearMap();
 
     std::fstream sfile;
     sfile.open(name, std::ios_base::in);
@@ -117,7 +117,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
     ss.write(buff, length);
     delete[] buff;
 
-    GetItemFabric().BeginWorldCreation();
+    GetFactory().BeginWorldCreation();
 
     int x, y, z;
     ss >> x;
@@ -155,7 +155,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             continue;
         }
 
-        auto i = GetItemFabric().newItem<IOnMapObject>(t_item);
+        auto i = GetFactory().newItem<IOnMapObject>(t_item);
 
         std::map<std::string, std::string> variables;
         WrapReadMessage(ss, variables);
@@ -187,7 +187,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             squares[x][y][z]->AddItem(i);
         }
     }
-   GetItemFabric().FinishWorldCreation();
+   GetFactory().FinishWorldCreation();
 }
 
 void MapMaster::Draw()
@@ -253,7 +253,7 @@ void MapMaster::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMapD(); z++)
             {
-                auto loc = GetItemFabric().newItem<CubeTile>(CubeTile::T_ITEM_S());
+                auto loc = GetFactory().newItem<CubeTile>(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 squares[x][y][z] = loc;
             }

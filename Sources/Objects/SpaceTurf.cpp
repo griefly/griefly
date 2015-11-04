@@ -29,6 +29,6 @@ void Space::AttackBy(id_ptr_on<Item> item)
     if (id_ptr_on<Rod> rod = item)
     {
         rod->delThis();
-        GetItemFabric().newItemOnMap<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());
+        GetFactory().newItemOnMap<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());
     }
 }
