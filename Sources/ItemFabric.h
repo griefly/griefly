@@ -11,32 +11,28 @@ class ItemFabric
 {
 public:
     ItemFabric();
-    size_t get_id() 
-    { 
-        return id_;
-    }
 
-    unsigned int get_hash_last()
+    unsigned int GetLastHash()
     {
         return hash_last_;
     }
-    unsigned int get_hash_last_tick()
+    unsigned int GetLastHashTick()
     {
         return hash_last_tick_;
     }
 
-    std::vector<IMainObject*>& idTable()
+    std::vector<IMainObject*>& GetIdTable()
     {
         return idTable_;
     }
 
     void Sync();
-    void foreachProcess();
+    void ForeachProcess();
 
-    static IMainObject* newVoidItem(const std::string& type, size_t id);
-    static IMainObject* newVoidItemSaved(const std::string& type);
+    static IMainObject* NewVoidItem(const std::string& type, size_t id);
+    static IMainObject* NewVoidItemSaved(const std::string& type);
 
-    unsigned int hash_all();
+    unsigned int Hash();
 
     void saveMapHeader(std::stringstream& str);
     void saveMap(const char* path);
@@ -69,7 +65,7 @@ public:
             SYSTEM_STREAM << id_new << " " << id_ << "id_ptr_on<T> newItemOn\n";
             id_ = id_new + 1;
         }
-        item = castTo<T>(newVoidItem(hash, id_new));//TODO: FIX IT!(LOOK DOWN)
+        item = castTo<T>(NewVoidItem(hash, id_new));//TODO: FIX IT!(LOOK DOWN)
         if(item == 0)
         {
             SYSTEM_STREAM << "\nERROR! ERROR!\n";
@@ -93,7 +89,7 @@ public:
     id_ptr_on<T> newItemSaved(const std::string& hash, size_t id_new = 0)
     {
         T* item;
-        item = castTo<T>(newVoidItemSaved(hash));
+        item = castTo<T>(NewVoidItemSaved(hash));
         if(std::max(id_new, id_) >= idTable_.size()) 
             idTable_.resize(std::max(id_new, id_) * 2);
         if(id_new == 0)
@@ -118,7 +114,7 @@ public:
             id_new = id_++;
         else if(id_new >= id_)
             id_ = id_new + 1;
-        item = castTo<T>(newVoidItem(hash, id_new));
+        item = castTo<T>(NewVoidItem(hash, id_new));
         idTable_[id_new] = item;
 //        item->SetId(id_new);
 //        item->master = master;

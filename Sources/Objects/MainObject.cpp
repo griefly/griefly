@@ -4,7 +4,7 @@
 
 void IMainObject::delThis()
 {
-    GetItemFabric().idTable()[id_] = 0;
+    GetItemFabric().GetIdTable()[id_] = 0;
     delete this;
 }
 

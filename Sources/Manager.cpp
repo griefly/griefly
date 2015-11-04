@@ -128,7 +128,7 @@ void Manager::Process()
 
             process_timer.Start();
             begin_of_process = SDL_GetTicks();
-            GetItemFabric().foreachProcess();
+            GetItemFabric().ForeachProcess();
             force_timer.Start();
             ForceManager::Get().Process();
             unsigned int fm = force_timer.Get();
@@ -422,8 +422,8 @@ void Manager::InitWorld(int id, std::string map_name)
 
             GetItemFabric().newItem<Lobby>(Lobby::T_ITEM_S());
 
-            for (auto it = GetItemFabric().idTable().begin();
-                      it != GetItemFabric().idTable().end();
+            for (auto it = GetItemFabric().GetIdTable().begin();
+                      it != GetItemFabric().GetIdTable().end();
                       ++it)
             {
                 if ((*it) && ((*it)->RT_ITEM() == SpawnPoint::REAL_TYPE_ITEM))
@@ -474,7 +474,7 @@ void Manager::InitWorld(int id, std::string map_name)
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << "Hash: " << GetItemFabric().get_hash_last();
+        ss << "Hash: " << GetItemFabric().GetLastHash();
         *str = ss.str();
     }).SetSize(15).SetPlace(0, 30);//, 200, 50);
 

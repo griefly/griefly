@@ -25,7 +25,7 @@ void ItemFabric::Sync()
 {
     if (MAIN_TICK % HASH_OFTEN == 1)
     {
-        hash_last_ = hash_all();
+        hash_last_ = Hash();
 
         Debug::UnsyncDebug().AddLocalSyncPair(hash_last_, MAIN_TICK);
 
@@ -76,7 +76,7 @@ void ItemFabric::UpdateProcessingItems()
     add_to_process_.clear();
 }
 
-void ItemFabric::foreachProcess()
+void ItemFabric::ForeachProcess()
 {
     UpdateProcessingItems();
 
@@ -351,7 +351,7 @@ void ItemFabric::loadMap(std::stringstream& savefile, bool zip, size_t real_this
     is_world_generating_ = false;
 }
 
-IMainObject* ItemFabric::newVoidItem(const std::string& type, size_t id)
+IMainObject* ItemFabric::NewVoidItem(const std::string& type, size_t id)
 {
     //static Initer init;
     auto il = (*itemList());
@@ -359,7 +359,7 @@ IMainObject* ItemFabric::newVoidItem(const std::string& type, size_t id)
     return f(id);
 };
 
-IMainObject* ItemFabric::newVoidItemSaved(const std::string& type)
+IMainObject* ItemFabric::NewVoidItemSaved(const std::string& type)
 {
     //static Initer init;
     return (*itemListSaved())[type]();
@@ -399,7 +399,7 @@ void ItemFabric::FinishWorldCreation()
     }
 }
 
-unsigned int ItemFabric::hash_all()
+unsigned int ItemFabric::Hash()
 {
     unsigned int h = 0;
     size_t table_size = idTable_.size();
