@@ -33,7 +33,7 @@ void Girder::AttackBy(id_ptr_on<Item> item)
     else if (id_ptr_on<Wrench> wrench = item)
     {
         PlaySoundIfVisible("Ratchet.ogg", owner.ret_id());
-        GetFactory().newItemOnMap<Item>(Metal::T_ITEM_S(), GetOwner());
+        GetFactory().Create<Item>(Metal::T_ITEM_S(), GetOwner());
         delThis();
     }
 }

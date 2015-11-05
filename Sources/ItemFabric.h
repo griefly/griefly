@@ -48,40 +48,30 @@ public:
     void FinishWorldCreation();
 
     template<typename T>
-    id_ptr_on<T> newItemOnMap(const std::string& hash, id_ptr_on<IOnMapBase> owner, size_t id_new = 0)
+    id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner)
     {
-        
-        static_assert(std::is_same<IOnMapObject, T>::value || std::is_base_of<IOnMapObject, T>::value, "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapObject");
-        T* item;
-        if(std::max(id_new, id_) >= idTable_.size())
+        static_assert(
+            std::is_same<IOnMapObject, T>::value || std::is_base_of<IOnMapObject, T>::value,
+            "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapObject");
+        if (id_ >= idTable_.size())
         {
-            SYSTEM_STREAM << "RESIZE MAIN TABLE\n";
-            idTable_.resize(std::max(id_new, id_) * 2);
-        }
-        if(id_new == 0)
-            id_new = id_++;
-        else if(id_new >= id_)
-        {
-            SYSTEM_STREAM << id_new << " " << id_ << "id_ptr_on<T> newItemOn\n";
-            id_ = id_new + 1;
-        }
-        item = castTo<T>(NewVoidObject(hash, id_new));//TODO: FIX IT!(LOOK DOWN)
-        if(item == 0)
-        {
-            SYSTEM_STREAM << "\nERROR! ERROR!\n";
-            SDL_Delay(1000);
+            idTable_.resize(id_ * 2);
         }
 
-        //item->SetId(id_new);
-        idTable_[id_new] = item;
-
+        T* item = castTo<T>(NewVoidObject(type, id_));
+        if (item == 0)
+        {
+            qDebug() << "Creation type mismatch: " << QString::fromStdString(type);
+            abort();
+        }
+        idTable_[id_] = item;
+        ++id_;
         owner->AddItem(item->GetId());
 
         if (!is_world_generating_)
         {
             item->AfterWorldCreation();
         }
-
         return item->GetId();
     }
     
