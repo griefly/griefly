@@ -343,7 +343,7 @@ void ObjectFactory::LoadMap(std::stringstream& savefile, bool zip, size_t real_t
         savefile >> id_loc;
         
         id_ptr_on<IMainObject> i;
-        i = newItemSaved<IMainObject>(type, id_loc);
+        i = CreateVoid<IMainObject>(type, id_loc);
         i->loadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";

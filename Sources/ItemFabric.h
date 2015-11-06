@@ -53,16 +53,17 @@ public:
         static_assert(
             std::is_same<IOnMapObject, T>::value || std::is_base_of<IOnMapObject, T>::value,
             "Error: MapMaster::newItemOnMap - type isn't derivied from IOnMapObject");
-        if (id_ >= idTable_.size())
-        {
-            idTable_.resize(id_ * 2);
-        }
 
         T* item = castTo<T>(NewVoidObject(type, id_));
         if (item == 0)
         {
             qDebug() << "Creation type mismatch: " << QString::fromStdString(type);
             abort();
+        }
+
+        if (id_ >= idTable_.size())
+        {
+            idTable_.resize(id_ * 2);
         }
         idTable_[id_] = item;
         ++id_;
@@ -76,22 +77,21 @@ public:
     }
     
     template<typename T>
-    id_ptr_on<T> newItemSaved(const std::string& hash, size_t id_new = 0)
+    id_ptr_on<T> CreateVoid(const std::string& hash, size_t id_new)
     {
-        T* item;
-        item = castTo<T>(NewVoidObjectSaved(hash));
-        if(std::max(id_new, id_) >= idTable_.size()) 
-            idTable_.resize(std::max(id_new, id_) * 2);
-        if(id_new == 0)
-            id_new = id_++;
-        else if(id_new >= id_)
+        T* item = castTo<T>(NewVoidObjectSaved(hash));
+        if (id_new >= idTable_.size())
+        {
+            idTable_.resize(id_new * 2);
+        }
+
+        if (id_new >= id_)
+        {
             id_ = id_new + 1;
+        }
         idTable_[id_new] = item;
         item->SetId(id_new);
-//        item->master = master;
-        id_ptr_on<T> ret_val;
-        ret_val = item->GetId();
-        return ret_val;
+        return item->GetId();
     }
     
     template<typename T>
