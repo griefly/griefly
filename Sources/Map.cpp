@@ -155,7 +155,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             continue;
         }
 
-        auto i = GetFactory().newItem<IOnMapObject>(t_item);
+        auto i = GetFactory().Create<IOnMapObject>(t_item);
 
         std::map<std::string, std::string> variables;
         WrapReadMessage(ss, variables);
@@ -253,7 +253,7 @@ void MapMaster::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMapD(); z++)
             {
-                auto loc = GetFactory().newItem<CubeTile>(CubeTile::T_ITEM_S());
+                auto loc = GetFactory().Create<CubeTile>(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 squares[x][y][z] = loc;
             }

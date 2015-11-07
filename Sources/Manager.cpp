@@ -420,7 +420,7 @@ void Manager::InitWorld(int id, std::string map_name)
 
             GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
-            GetFactory().newItem<Lobby>(Lobby::T_ITEM_S());
+            GetFactory().Create<Lobby>(Lobby::T_ITEM_S());
 
             for (auto it = GetFactory().GetIdTable().begin();
                       it != GetFactory().GetIdTable().end();
@@ -432,7 +432,7 @@ void Manager::InitWorld(int id, std::string map_name)
                 }
             }
 
-            auto newmob = GetFactory().newItem<IMob>(LoginMob::T_ITEM_S());
+            auto newmob = GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
 
 
             ChangeMob(newmob);
@@ -557,7 +557,7 @@ void Manager::ProcessInputMessages()
                 continue;
             }
 
-            auto newmob = GetFactory().newItem<IMob>(LoginMob::T_ITEM_S());
+            auto newmob = GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
 
             qDebug() << "New client " << newmob.ret_id();
 

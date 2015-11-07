@@ -26,7 +26,7 @@ void Girder::AttackBy(id_ptr_on<Item> item)
         metal->delThis();
 
         GetTurf()->delThis();
-        SetTurf(GetFactory().newItem<ITurf>(MetalWall::T_ITEM_S()));
+        SetTurf(GetFactory().Create<ITurf>(MetalWall::T_ITEM_S()));
 
         delThis();
     }

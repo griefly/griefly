@@ -109,13 +109,13 @@ void LoginMob::processGUImsg(const Message2& msg)
             std::string text;
             if (net_id % 2)
             {
-                human = GetFactory().newItem<Human>(CaucasianHuman::T_ITEM_S());
+                human = GetFactory().Create<Human>(CaucasianHuman::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("security");
                 text = SECURITY_TEXT;
             }
             else
             {
-                human = GetFactory().newItem<Human>(Human::T_ITEM_S());
+                human = GetFactory().Create<Human>(Human::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("janitor");
                 text = JANITOR_TEXT;
             }
