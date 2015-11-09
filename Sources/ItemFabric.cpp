@@ -16,7 +16,7 @@
 
 ObjectFactory::ObjectFactory()
 {
-    idTable_.resize(100);
+    objects_table_.resize(100);
     id_ = 1;
     is_world_generating_ = true;
 }
@@ -140,7 +140,7 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_
 
     random_helpers::set_rand(new_seed, new_calls_counter);
 
-    idTable_.resize(id_ + 1);
+    objects_table_.resize(id_ + 1);
 
     // Load map size
     int x;
@@ -193,8 +193,8 @@ void ObjectFactory::SaveMap(const char* path)
 void ObjectFactory::SaveMap(std::stringstream& savefile, bool zip)
 {
     SaveMapHeader(savefile);
-    auto it = ++idTable_.begin();
-    while(it != idTable_.end())
+    auto it = ++objects_table_.begin();
+    while(it != objects_table_.end())
         if(*it) 
         {
             (*it++)->saveSelf(savefile);
@@ -367,11 +367,11 @@ IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
 
 void ObjectFactory::ClearMap()
 {
-    size_t table_size = idTable_.size();
+    size_t table_size = objects_table_.size();
     for (size_t i = 1; i < table_size; ++i)
-        if (idTable_[i] != nullptr)
-            idTable_[i]->delThis();
-    if (table_size != idTable_.size())
+        if (objects_table_[i] != nullptr)
+            objects_table_[i]->delThis();
+    if (table_size != objects_table_.size())
         SYSTEM_STREAM << "WARNING: table_size != idTable_.size()!" << std::endl;
 
     process_table_.clear();
@@ -389,12 +389,12 @@ void ObjectFactory::BeginWorldCreation()
 void ObjectFactory::FinishWorldCreation()
 {
     is_world_generating_ = false;
-    size_t table_size = idTable_.size();
+    size_t table_size = objects_table_.size();
     for (size_t i = 1; i < table_size; ++i)
     {
-        if (idTable_[i] != nullptr)
+        if (objects_table_[i] != nullptr)
         {
-            idTable_[i]->AfterWorldCreation();
+            objects_table_[i]->AfterWorldCreation();
         }
     }
 }
@@ -402,12 +402,12 @@ void ObjectFactory::FinishWorldCreation()
 unsigned int ObjectFactory::Hash()
 {
     unsigned int h = 0;
-    size_t table_size = idTable_.size();
+    size_t table_size = objects_table_.size();
     for (size_t i = 1; i < table_size; ++i)
     {
-        if (idTable_[i] != nullptr)
+        if (objects_table_[i] != nullptr)
         {
-            h += idTable_[i]->hashSelf();
+            h += objects_table_[i]->hashSelf();
         }
     }
 

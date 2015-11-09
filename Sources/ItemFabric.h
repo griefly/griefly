@@ -23,7 +23,7 @@ public:
 
     std::vector<IMainObject*>& GetIdTable()
     {
-        return idTable_;
+        return objects_table_;
     }
 
     void Sync();
@@ -57,11 +57,11 @@ public:
             abort();
         }
 
-        if (id_ >= idTable_.size())
+        if (id_ >= objects_table_.size())
         {
-            idTable_.resize(id_ * 2);
+            objects_table_.resize(id_ * 2);
         }
-        idTable_[id_] = item;
+        objects_table_[id_] = item;
         ++id_;
         if (owner.valid() && !owner->AddItem(item->GetId()))
         {
@@ -80,16 +80,16 @@ public:
     id_ptr_on<T> CreateVoid(const std::string& hash, size_t id_new)
     {
         T* item = castTo<T>(NewVoidObjectSaved(hash));
-        if (id_new >= idTable_.size())
+        if (id_new >= objects_table_.size())
         {
-            idTable_.resize(id_new * 2);
+            objects_table_.resize(id_new * 2);
         }
 
         if (id_new >= id_)
         {
             id_ = id_new + 1;
         }
-        idTable_[id_new] = item;
+        objects_table_[id_new] = item;
         item->SetId(id_new);
         return item->GetId();
     }
@@ -106,7 +106,7 @@ private:
 
     void UpdateProcessingItems();
 
-    std::vector<IMainObject*> idTable_;
+    std::vector<IMainObject*> objects_table_;
     std::vector<id_ptr_on<IMainObject>> process_table_;
 
     std::vector<id_ptr_on<IMainObject>> add_to_process_;
