@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "sync_random.h"
+#include "SyncRandom.h"
 #include "Map.h"
 #include "helpers.h"
 

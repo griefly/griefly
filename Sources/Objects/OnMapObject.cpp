@@ -8,7 +8,7 @@
 #include "Tile.h"
 
 #include "Creator.h"
-#include "mob_position.h"
+#include "MobPosition.h"
 #include "helpers.h"
 
 std::list<HashAmount> IOnMapObject::insertLiquid(std::list<HashAmount> r) {return r;};

@@ -4,7 +4,7 @@
 #include "MoveEffect.h"
 #include "helpers.h"
 #include "Mob.h"
-#include "mob_position.h"
+#include "MobPosition.h"
 
 #include "Creator.h"
 #include "Manager.h"

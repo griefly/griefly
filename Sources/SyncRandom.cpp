@@ -1,7 +1,7 @@
 #include <random>
 
-#include "sync_random.h"
-#include "constheader.h"
+#include "SyncRandom.h"
+#include "Constheader.h"
 
 #include <memory>
 

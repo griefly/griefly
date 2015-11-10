@@ -1,6 +1,6 @@
 #include "Shard.h"
 
-#include "sync_random.h"
+#include "SyncRandom.h"
 
 Shard::Shard(size_t id) : Item(id)
 {

@@ -6,7 +6,7 @@
 #include "OnMapObject.h"
 #include "Manager.h"
 #include "Map.h"
-#include "sync_random.h"
+#include "SyncRandom.h"
 #include "Creator.h"
 #include "MagicStrings.h"
 #include "NetworkMessagesTypes.h"

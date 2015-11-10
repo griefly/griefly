@@ -19,7 +19,7 @@ public:
 
     virtual void delThis();
     IMainObject(size_t id){ id_ = id; how_often_ = 0; }
-    IMainObject(NotLoadItem) {id_ = 0; how_often_ = 0;}
+    IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; }
     virtual void AfterWorldCreation() { }
     virtual const std::string& T_ITEM()
     {                                        
@@ -39,7 +39,7 @@ public:
     {                                         
         return REAL_TYPE_ITEM;                
     }       
-    virtual void process(){};
+    virtual void process() { }
 
     void SetId(size_t id);
     size_t GetId() const { return id_; }

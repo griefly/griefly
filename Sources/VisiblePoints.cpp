@@ -1,4 +1,4 @@
-#include "visible_points.h"
+#include "VisiblePoints.h"
 
 #include "Manager.h"
 #include "Tile.h"

@@ -3,7 +3,7 @@
 #include <vector>
 #include <fstream>
 
-#include "sync_random.h"
+#include "SyncRandom.h"
 
 std::vector<std::string> male_names;
 std::vector<std::string> last;

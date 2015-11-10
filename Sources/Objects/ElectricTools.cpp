@@ -10,7 +10,6 @@ AtmosTool::AtmosTool(size_t id) : Item(id)
 {
     SetSprite("icons/device.dmi");
     SetState("atmos");
-    //SetState("cutters");
     name = "Atmos tool";
 }
 

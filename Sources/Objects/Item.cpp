@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-#include "sync_random.h"
+#include "SyncRandom.h"
 #include "Slot.h"
 
 Item::Item(size_t id) : IMovable(id)

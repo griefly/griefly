@@ -5,11 +5,11 @@
 #include "Map.h"
 #include "Text.h"
 
-#include "mob_position.h"
+#include "MobPosition.h"
 
 #include "EffectSystem.h"
 #include "MoveEffect.h"
-#include "sync_random.h"
+#include "SyncRandom.h"
 #include "ItemFabric.h"
 #include "MagicStrings.h"
 #include "Tile.h"

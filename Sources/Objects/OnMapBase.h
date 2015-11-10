@@ -30,7 +30,7 @@ class IOnMapBase: public IDraw
 public:
     DECLARE_SAVED(IOnMapBase, IDraw);
     DECLARE_GET_TYPE_ITEM(IOnMapBase);
-    IOnMapBase(size_t id) : IDraw(id) {owner = 0; is_strong_owner = false;};
+    IOnMapBase(size_t id) : IDraw(id) {owner = 0; is_strong_owner = false;}
     virtual bool IsVisibleByPlayer() const
     {
         return true;
@@ -61,7 +61,7 @@ public:
 
     virtual void AttackBy(id_ptr_on<Item> item);
 
-    virtual void ApplyForce(VDir force) {};
+    virtual void ApplyForce(VDir force) {}
 
     virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const
     {

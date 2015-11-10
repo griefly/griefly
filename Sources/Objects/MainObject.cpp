@@ -12,10 +12,9 @@ bool IMainObject::saveSelf(std::stringstream& file)
 {
     file << " " << T_ITEM() << " ";
     file << " " << id_ << " ";
-//    file << " " << master.ret_id() << " ";
     file << " " << how_often_ << " ";
     return true;
-};
+}
 
 bool IMainObject::loadSelf(std::stringstream& file)
 {
@@ -25,7 +24,7 @@ bool IMainObject::loadSelf(std::stringstream& file)
 
     // It empty becouse all data load main outer function
     return true;
-};
+}
 
 void IMainObject::SetFreq(int freq)
 {
