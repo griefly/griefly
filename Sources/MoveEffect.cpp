@@ -50,7 +50,7 @@ void Move::end()
 
 void Move::release()
 {
-    if (!(master.valid() || way == 0))
+    if (master.valid() && way != 0)
     {
         int x = master->GetView()->GetStepX();
         int y = master->GetView()->GetStepY();

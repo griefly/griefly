@@ -632,7 +632,7 @@ void Manager::ProcessInputMessages()
             }
             else
             {
-                qDebug() << "Game object is not valid";
+                qDebug() << "Game object is not valid: " << net_id;
             }
         }
 
