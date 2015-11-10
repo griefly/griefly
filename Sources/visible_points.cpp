@@ -16,11 +16,11 @@ bool IsTileVisible(size_t tile_id)
     auto l = GetVisible();
     if (!l)
         return false;
-    if (!GetMapMaster())
+    if (!IsMapValid())
         return false;
     for (auto it = l->begin(); it != l->end(); ++it)
     {
-        if (tile_id == GetMapMaster()->squares[it->posx][it->posy][it->posz].ret_id())
+        if (tile_id == GetMap().squares[it->posx][it->posy][it->posz].ret_id())
             return true;
     }
     return false;

@@ -107,9 +107,9 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
 
     // Save Map Size
 
-    savefile << GetMapMaster()->GetMapW() << std::endl;
-    savefile << GetMapMaster()->GetMapH() << std::endl;
-    savefile << GetMapMaster()->GetMapD() << std::endl;
+    savefile << GetMap().GetMapW() << std::endl;
+    savefile << GetMap().GetMapH() << std::endl;
+    savefile << GetMap().GetMapD() << std::endl;
 
     // Save player table
     savefile << players_table_.size() << " ";
@@ -151,7 +151,7 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_
     savefile >> y;
     savefile >> z;
 
-    GetMapMaster()->ResizeMap(x, y, z);
+    GetMap().ResizeMap(x, y, z);
 
     // Load player table
     size_t s;

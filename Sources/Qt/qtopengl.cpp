@@ -76,9 +76,9 @@ void QtOpenGL::paintGL()
 
 void QtOpenGL::resizeGL(int width, int height)
 {
-    if (GetScreen())
+    if (IsScreenValid())
     {
-        GetScreen()->PerformSizeUpdate();
+        GetScreen().PerformSizeUpdate();
     }
 }
 

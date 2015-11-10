@@ -413,15 +413,20 @@ id_ptr_on<IOnMapObject> MapMaster::Click(int x, int y)
 }
 
 MapMaster* map_master_ = 0;
-MapMaster* GetMapMaster()
+MapMaster& GetMap()
 {
-    return map_master_;
+    return *map_master_;
 }
 
 void SetMapMaster(MapMaster* map_master)
 {
     map_master_ = map_master;
 }
+
+bool IsMapValid()
+{
+    return map_master_ != nullptr;
+}\
 
 std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
 {
@@ -514,7 +519,7 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     auto itr = worklist.begin();
     while(itr != worklist.end())
     {
-        if(GetMapMaster()->IsTransparent(itr->posx, itr->posy, itr->posz)
+        if(GetMap().IsTransparent(itr->posx, itr->posy, itr->posz)
             && itr->posx != posx - sizeHsq && itr->posx != posx + sizeHsq
             && itr->posy != posy - sizeWsq && itr->posy != posy + sizeWsq
             && 
@@ -697,9 +702,9 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     retlist->splice(retlist->begin(), z_list);
 
     return retlist;
-};
+}
 
 void LOSfinder::clearLOS()
 {
     worklist.clear();
-};
+}

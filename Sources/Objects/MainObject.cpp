@@ -4,7 +4,7 @@
 
 void IMainObject::delThis()
 {
-    GetFactory().GetIdTable()[id_] = 0;
+    GetFactory().GetIdTable()[id_] = nullptr;
     delete this;
 }
 

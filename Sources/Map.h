@@ -63,5 +63,6 @@ public:
     LOSfinder losf;
 };
 
-MapMaster* GetMapMaster();
+bool IsMapValid();
+MapMaster& GetMap();
 void SetMapMaster(MapMaster* map_master);

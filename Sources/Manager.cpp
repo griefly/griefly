@@ -48,20 +48,20 @@ int ping_send;
 void Manager::CheckMove(Dir direct)
 {
     //TODO
-    for (int z = 0; z < GetMapMaster()->GetMapD(); ++z)
+    for (int z = 0; z < GetMap().GetMapD(); ++z)
         for(int x = std::max(0, GetMob()->GetX() - sizeHsq);
-            x <= std::min(GetMob()->GetX() + sizeHsq, GetMapMaster()->GetMapH() - 1); x++)
+            x <= std::min(GetMob()->GetX() + sizeHsq, GetMap().GetMapH() - 1); x++)
         {
             for(int y = std::max(0, GetMob()->GetY() - sizeWsq);
-                y <= std::min(GetMob()->GetY() + sizeWsq, GetMapMaster()->GetMapW() - 1); y++)
+                y <= std::min(GetMob()->GetY() + sizeWsq, GetMap().GetMapW() - 1); y++)
             {
-                GetMapMaster()->squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
+                GetMap().squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
                 {
                     Move* eff = EffectFabricOf<Move>::getEffectOf();
                     eff->Init(TITLE_SIZE, direct, GetMob()->pixSpeed, item);
                     eff->Start();
                 });
-                auto trf = GetMapMaster()->squares[x][y][z]->GetTurf();
+                auto trf = GetMap().squares[x][y][z]->GetTurf();
                 if (trf.valid())
                 {
                     Move* eff = EffectFabricOf<Move>::getEffectOf();
@@ -133,10 +133,10 @@ void Manager::Process()
             ForceManager::Get().Process();
             unsigned int fm = force_timer.Get();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
-                GetMapMaster()->atmosphere.Process();
+                GetMap().atmosphere.Process();
             atmos_move_timer.Start();
             if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
-                GetMapMaster()->atmosphere.ProcessMove();
+                GetMap().atmosphere.ProcessMove();
             unsigned int amt = atmos_move_timer.Get();
             GetFactory().Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
@@ -162,8 +162,8 @@ void Manager::Process()
         {   
             draw_timer.Start();
             MakeCurrentGLContext();
-            GetScreen()->Clear();
-            GetMapMaster()->Draw();
+            GetScreen().Clear();
+            GetMap().Draw();
             if ((SDL_GetTicks() - last_effect_process) > (1000 / 60))
             {
                 last_effect_process = SDL_GetTicks();
@@ -178,7 +178,7 @@ void Manager::Process()
             GetTexts().Process();
             
             //glFinish();
-            GetScreen()->Swap();
+            GetScreen().Swap();
             draw_time_per_tick += draw_timer.Get();
         }
 
@@ -252,7 +252,7 @@ void Manager::ProcessClick(int mouse_x, int mouse_y)
     }
 
     id_ptr_on<IOnMapObject> item;
-    item = GetMapMaster()->Click(mouse_x, mouse_y);
+    item = GetMap().Click(mouse_x, mouse_y);
     if (item)
     {
         Message2 msg;
@@ -408,7 +408,7 @@ void Manager::InitWorld(int id, std::string map_name)
     int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
     int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
     int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 1;
-    GetMapMaster()->MakeTiles(x, y, z);
+    GetMap().MakeTiles(x, y, z);
 
     std::cout << "Begin choose map" << std::endl;
     if (map_name == "no_map")
@@ -418,7 +418,7 @@ void Manager::InitWorld(int id, std::string map_name)
         {
             srand(SDL_GetTicks());
 
-            GetMapMaster()->LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
+            GetMap().LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
             GetFactory().Create<Lobby>(Lobby::T_ITEM_S());
 
@@ -438,7 +438,7 @@ void Manager::InitWorld(int id, std::string map_name)
             ChangeMob(newmob);
             GetFactory().SetPlayerId(id, newmob.ret_id());
 
-            GetMapMaster()->FillAtmosphere();
+            GetMap().FillAtmosphere();
 
         }
         else
@@ -620,8 +620,20 @@ void Manager::ProcessInputMessages()
             QJsonValue v = obj["id"];
             int net_id = v.toVariant().toInt();
             size_t game_id = GetFactory().GetPlayerId(net_id);
+            if (game_id == 0)
+            {
+                qDebug() << "Game id is 0";
+            }
             id_ptr_on<IMessageReceiver> game_object = game_id;
-            game_object->processGUImsg(msg);
+
+            if (game_object.valid())
+            {
+                game_object->processGUImsg(msg);
+            }
+            else
+            {
+                qDebug() << "Game object is not valid";
+            }
         }
 
         // TODO: other stuff

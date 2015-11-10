@@ -134,7 +134,13 @@ void SetScreen(Screen* scr)
 {
     screen = scr;
 }
-Screen* GetScreen()
+Screen& GetScreen()
 {
-    return screen;
+    return *screen;
+}
+
+
+bool IsScreenValid()
+{
+    return screen != nullptr;
 }

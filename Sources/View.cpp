@@ -98,7 +98,7 @@ void View::Frameset::Draw(int shift, int x, int y, int angle)
     int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
     int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
 
-    GetScreen()->Draw(GetSprite(), 
+    GetScreen().Draw(GetSprite(), 
                       x, y, 
                       image_state_w_, image_state_h_,
                       static_cast<float>(angle + angle_));

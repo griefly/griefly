@@ -41,11 +41,11 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
         y_begin = 0;
     
     int x_end = posx_ + range;
-    if (x_end >= GetMapMaster()->GetMapW())
-        x_end = GetMapMaster()->GetMapW() - 1;
+    if (x_end >= GetMap().GetMapW())
+        x_end = GetMap().GetMapW() - 1;
     int y_end = posy_ + range;
-    if (y_end >= GetMapMaster()->GetMapH())
-        y_end = GetMapMaster()->GetMapH() - 1;
+    if (y_end >= GetMap().GetMapH())
+        y_end = GetMap().GetMapH() - 1;
 
     // TODO
     // check something like 
@@ -201,7 +201,7 @@ id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct)
     int new_y = posy_;
     int new_z = posz_;
     helpers::move_to_dir(direct, &new_x, &new_y, &new_z);
-    return GetMapMaster()->squares[new_x][new_y][new_z];
+    return GetMap().squares[new_x][new_y][new_z];
 }
 
 PassableLevel CubeTile::GetPassable(Dir direct) const
@@ -271,5 +271,5 @@ void CubeTile::ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
 
 void CubeTile::LoadInMap()
 {
-    GetMapMaster()->squares[posx_][posy_][posz_] = GetId();
+    GetMap().squares[posx_][posy_][posz_] = GetId();
 }

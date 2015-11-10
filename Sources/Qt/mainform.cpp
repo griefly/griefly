@@ -197,11 +197,11 @@ void MainForm::on_splitter_splitterMoved(int pos, int index)
 
     ui->textBrowser->resize(ui->textBrowser->width(), ui->rightColumn->height());
 
-    if (GetScreen())
+    if (IsScreenValid())
     {
-        GetScreen()->PerformSizeUpdate();
-        GetScreen()->Clear();
-        GetScreen()->Swap();
+        GetScreen().PerformSizeUpdate();
+        GetScreen().Clear();
+        GetScreen().Swap();
     }
 
     int x_pos = (ui->leftColumn->width() - min_size) / 2;

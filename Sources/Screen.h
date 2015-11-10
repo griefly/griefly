@@ -23,5 +23,6 @@ private:
     SDL_Surface* screen_;
 };
 
-Screen* GetScreen();
+bool IsScreenValid();
+Screen& GetScreen();
 void SetScreen(Screen* scr);

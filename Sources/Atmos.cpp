@@ -8,7 +8,7 @@
 
 void Atmosphere::Process()
 {
-    for (size_t z_counter = 0; z_counter < static_cast<size_t>(GetMapMaster()->GetMapD()); ++z_counter)
+    for (size_t z_counter = 0; z_counter < static_cast<size_t>(GetMap().GetMapD()); ++z_counter)
     {
         ShuffleX();
         ShuffleY();
@@ -28,7 +28,7 @@ void Atmosphere::Process()
 
 void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
 {
-    auto tile = GetMapMaster()->squares[x][y][z];
+    auto tile = GetMap().squares[x][y][z];
     
     if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
         return;
@@ -66,7 +66,7 @@ void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
 
 void Atmosphere::ProcessMove()
 {
-    for (size_t z_counter = 0; z_counter < static_cast<size_t>(GetMapMaster()->GetMapD()); ++z_counter)
+    for (size_t z_counter = 0; z_counter < static_cast<size_t>(GetMap().GetMapD()); ++z_counter)
     {
         ShuffleX();
         ShuffleY();
@@ -88,7 +88,7 @@ const unsigned int PRESSURE_MOVE_BORDER = 1000;
 
 void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 {
-    auto tile = GetMapMaster()->squares[x][y][z];
+    auto tile = GetMap().squares[x][y][z];
     
     if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
         return;

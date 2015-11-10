@@ -360,7 +360,7 @@ void Human::CalculateVisible(std::list<point>* visible_list)
     if (health_ >= 0)
     {
         visible_list = 
-            GetMapMaster()->losf.calculateVisisble(visible_list, 
+            GetMap().losf.calculateVisisble(visible_list, 
                  GetX(),
                  GetY(),
                  GetZ());
