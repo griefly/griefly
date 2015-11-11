@@ -518,17 +518,6 @@ void Manager::InitWorld(int id, std::string map_name)
     {
         *str = last_touch_;
     }).SetFreq(20).SetPlace(0, 485).SetSize(22);
-
-   /* GetTexts()["Connection"].SetUpdater
-    ([this](std::string* str)
-    {
-        if (NetClient::GetNetClient()->IsFail())
-            *str = "Connection lost";
-        else
-            *str = "";
-    }).SetFreq(100).SetPlace(60, 0).SetSize(20).SetColor(250, 0, 0);*/
-
-
 }
 
 void Manager::ProcessInputMessages()
@@ -633,6 +622,7 @@ void Manager::ProcessInputMessages()
             else
             {
                 qDebug() << "Game object is not valid: " << net_id;
+                abort();
             }
         }
 
