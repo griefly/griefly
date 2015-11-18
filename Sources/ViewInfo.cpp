@@ -78,3 +78,23 @@ ViewInfo::FramesetInfo::FramesetInfo()
     state_ = "";
     angle_ = 0;
 }
+
+void ViewInfo::FramesetInfo::SetAngle(int angle)
+{
+    angle_ = angle;
+}
+
+void ViewInfo::FramesetInfo::SetSprite(const std::string& name)
+{
+    sprite_name_ = name;
+}
+
+std::string ViewInfo::FramesetInfo::GetState()
+{
+    return state_;
+}
+
+void ViewInfo::FramesetInfo::SetState(const std::string& name)
+{
+    state_ = name;
+}
