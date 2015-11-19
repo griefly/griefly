@@ -2,7 +2,7 @@
 
 std::ostream& operator<<(std::stringstream& file, ViewInfo& view_info)
 {
-    WrapWriteMessage(file, *view_info.GetBaseFrameset());
+    WrapWriteMessage(file, view_info.base_frameset_);
     file << " ";
 
     file << view_info.underlays_.size();
@@ -27,7 +27,7 @@ std::ostream& operator<<(std::stringstream& file, ViewInfo& view_info)
 }
 std::istream& operator>>(std::stringstream& file, ViewInfo& view_info)
 {
-    WrapReadMessage(file, *view_info.GetBaseFrameset());
+    WrapReadMessage(file, view_info.base_frameset_);
 
     size_t u_size;
     file >> u_size;
@@ -89,12 +89,41 @@ void ViewInfo::FramesetInfo::SetSprite(const std::string& name)
     sprite_name_ = name;
 }
 
-std::string ViewInfo::FramesetInfo::GetState()
-{
-    return state_;
-}
-
 void ViewInfo::FramesetInfo::SetState(const std::string& name)
 {
     state_ = name;
+}
+
+ViewInfo::ViewInfo()
+{
+    angle_ = 0;
+}
+
+void ViewInfo::SetAngle(int angle)
+{
+    angle_ = angle;
+}
+
+void ViewInfo::AddOverlay(const std::string& sprite, const std::string& state)
+{
+    FramesetInfo f;
+    f.SetSprite(sprite);
+    f.SetState(state);
+    overlays_.push_back(f);
+}
+void ViewInfo::AddUnderlay(const std::string& sprite, const std::string& state)
+{
+    FramesetInfo f;
+    f.SetSprite(sprite);
+    f.SetState(state);
+    underlays_.push_back(f);
+}
+
+void ViewInfo::RemoveOverlays()
+{
+    overlays_.clear();
+}
+void ViewInfo::RemoveUnderlays()
+{
+    underlays_.clear();
 }

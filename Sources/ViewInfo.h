@@ -32,17 +32,19 @@ public:
         friend unsigned int hash(const ViewInfo::FramesetInfo& frameset);
     public:
         FramesetInfo();
-        bool IsTransp(int x, int y, int shift, int angle);
 
         void SetSprite(const std::string& name);
         void SetState(const std::string& state);
-        std::string GetState();
         void SetAngle(int angle);
+        const std::string& GetState() const { return state_; }
+        const std::string& GetSprite() const { return sprite_name_; }
+        int GetAngle() const { return angle_; }
     private:
         std::string sprite_name_;
         int angle_;
         std::string state_;
     };
+
     ViewInfo();
 
     void AddOverlay(const std::string& sprite, const std::string& state);
@@ -51,16 +53,17 @@ public:
     void RemoveOverlays();
     void RemoveUnderlays();
 
-    void SetSprite(const std::string& sprite) { GetBaseFrameset()->SetSprite(sprite); }
-    void SetState(const std::string& sprite) { GetBaseFrameset()->SetState(sprite); }
+    void SetSprite(const std::string& sprite) { base_frameset_.SetSprite(sprite); }
+    void SetState(const std::string& sprite) { base_frameset_.SetState(sprite); }
     void SetAngle(int angle);
-    FramesetInfo* GetBaseFrameset() { return &base_frameset_; }
+
+    const FramesetInfo& GetBaseFrameset() const { return base_frameset_; }
+    int GetAngle() const { return angle_; }
 private:
     std::vector<FramesetInfo> overlays_;
     std::vector<FramesetInfo> underlays_;
 
     int angle_;
-
     FramesetInfo base_frameset_;
 };
 
