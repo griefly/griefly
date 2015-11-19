@@ -72,6 +72,21 @@ std::istream& operator>>(std::stringstream& file, ViewInfo::FramesetInfo& frames
     return file;
 }
 
+bool ViewInfo::FramesetInfo::IsSameSprites(
+    const ViewInfo::FramesetInfo &left,
+    const ViewInfo::FramesetInfo &right)
+{
+    if (left.sprite_name_ != right.sprite_name_)
+    {
+        return false;
+    }
+    if (left.state_ != right.sprite_name_)
+    {
+        return false;
+    }
+    return true;
+}
+
 ViewInfo::FramesetInfo::FramesetInfo()
 {
     sprite_name_ = "";
@@ -92,6 +107,40 @@ void ViewInfo::FramesetInfo::SetSprite(const std::string& name)
 void ViewInfo::FramesetInfo::SetState(const std::string& name)
 {
     state_ = name;
+}
+
+bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
+{
+    if (left.underlays_.size() != right.underlays_.size())
+    {
+        return false;
+    }
+    if (left.overlays_.size() != right.overlays_.size())
+    {
+        return false;
+    }
+
+    if (!FramesetInfo::IsSameSprites(left.base_frameset_, right.base_frameset_))
+    {
+        return false;
+    }
+
+    for (int i = 0; i < left.underlays_.size(); ++i)
+    {
+        if (!FramesetInfo::IsSameSprites(left.underlays_[i], right.underlays_[i]))
+        {
+            return false;
+        }
+    }
+    for (int i = 0; i < left.overlays_.size(); ++i)
+    {
+        if (!FramesetInfo::IsSameSprites(left.overlays_[i], right.overlays_[i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 ViewInfo::ViewInfo()

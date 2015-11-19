@@ -20,6 +20,9 @@ class ViewInfo
 
     friend unsigned int hash(const ViewInfo& view_info);
 public:
+    // Check if framesets are same (except angles)
+    static bool IsSameFramesets(const ViewInfo& left, const ViewInfo& right);
+
     class FramesetInfo
     {
         friend std::ostream& operator<< (
@@ -31,6 +34,9 @@ public:
 
         friend unsigned int hash(const ViewInfo::FramesetInfo& frameset);
     public:
+        // Check if framesets are basically same (except angle)
+        static bool IsSameSprites(const FramesetInfo& left, const FramesetInfo& right);
+
         FramesetInfo();
 
         void SetSprite(const std::string& name);
