@@ -9,8 +9,6 @@
 
 View::Frameset::Frameset()
 {
-    step_x_ = 0;
-    step_y_ = 0;
     sprite_name_ = "";
     sprite_ = nullptr;
 
@@ -88,10 +86,6 @@ void View::Frameset::Draw(int shift, int x, int y, int angle)
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
         return;
 
-    x += step_x_;
-    y += step_y_;
-
-
     int current_frame = GetMetadata()->frames_sequence[image_state_];
     int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
 
@@ -136,9 +130,6 @@ bool View::Frameset::IsTransp(int x, int y, int shift, int angle)
         return true;
     if (!GetMetadata())
         return true;
-
-    x += step_x_;
-    y += step_y_;
 
     float true_angle = ((angle + angle_) * 3.14f) / 180;
 
@@ -305,8 +296,6 @@ std::ostream& operator<<(std::stringstream& file, View::Frameset& frameset)
 }
 std::istream& operator>>(std::stringstream& file, View::Frameset& frameset)
 {
-    frameset.step_x_ = 0;
-    frameset.step_y_ = 0;
     frameset.sprite_ = nullptr;
 
     frameset.metadata_ = nullptr;

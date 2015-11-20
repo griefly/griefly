@@ -30,16 +30,6 @@ public:
         friend unsigned int hash(const View::Frameset& frameset);
     public:
         Frameset();
-        void SetStepX(int new_step_x)
-        {
-            step_x_ = new_step_x;
-        }
-        void SetStepY(int new_step_y)
-        {
-            step_y_ = new_step_y;
-        }
-        int GetStepX() const { return step_x_; }
-        int GetStepY() const { return step_y_; }
 
         bool IsTransp(int x, int y, int shift, int angle);
 
@@ -51,8 +41,6 @@ public:
         const ImageMetadata::SpriteMetadata* GetMetadata();
         void Draw(int shift, int x, int y, int angle = 0);
     private:
-        int step_x_;
-        int step_y_;
         std::string sprite_name_;
         const GLSprite* sprite_;
 
