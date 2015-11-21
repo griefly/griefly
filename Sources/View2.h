@@ -14,11 +14,15 @@ public:
     public:
         FramesetState();
 
+        void LoadFramesetInfo(const ViewInfo::FramesetInfo& frameset_info);
+
         bool IsTransp(int x, int y, int shift, int angle);
         const GLSprite* GetSprite();
         const ImageMetadata::SpriteMetadata* GetMetadata();
         void Draw(int shift, int x, int y, int angle = 0);
     private:
+        void Reset();
+
         const GLSprite* sprite_;
         const ImageMetadata::SpriteMetadata* metadata_;
         int image_state_;

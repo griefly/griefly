@@ -1,6 +1,6 @@
 #include "SpriteHolder.h"
 
-GLSprite* SpriteHolder::returnSpr(const std::string& type)
+GLSprite* SpriteHolder::GetSprite(const std::string& type)
 {
     if (NODRAW)
         return nullptr;

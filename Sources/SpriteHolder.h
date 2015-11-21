@@ -11,7 +11,7 @@ class SpriteHolder
 {
 public:
     SpriteHolder();
-    GLSprite* returnSpr(const std::string& type);//use it for ptr to sprite(try load sprite if isnt exist)
+    GLSprite* GetSprite(const std::string& type);
     TTF_Font* font;
     void LoadImage(const std::string& image);
 private:

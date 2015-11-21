@@ -29,7 +29,7 @@ void View::Frameset::SetSprite(const std::string& name)
     sprite_name_ = name;
     if (!IsSpriterValid())
         return;
-    sprite_ = GetSpriter().returnSpr(name);
+    sprite_ = GetSpriter().GetSprite(name);
     SetState(state_);
 }
 
