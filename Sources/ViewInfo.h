@@ -65,6 +65,9 @@ public:
 
     const FramesetInfo& GetBaseFrameset() const { return base_frameset_; }
     int GetAngle() const { return angle_; }
+
+    const std::vector<FramesetInfo>& GetOverlays() const { return overlays_; }
+    const std::vector<FramesetInfo>& GetUnderlays() const { return underlays_; }
 private:
     std::vector<FramesetInfo> overlays_;
     std::vector<FramesetInfo> underlays_;

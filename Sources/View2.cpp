@@ -44,3 +44,23 @@ View2::View2()
     step_x_ = 0;
     step_y_ = 0;
 }
+
+void View2::LoadViewInfo(const ViewInfo& view_info)
+{
+    if (ViewInfo::IsSameFramesets(view_info, info_))
+    {
+        return;
+    }
+
+    if (!ViewInfo::FramesetInfo::IsSameSprites(
+            view_info.GetBaseFrameset(),
+            info_.GetBaseFrameset()))
+    {
+        base_frameset_.LoadFramesetInfo(view_info.GetBaseFrameset());
+    }
+
+    const auto& new_overlays = view_info.GetOverlays();
+
+
+    info_ = view_info;
+}
