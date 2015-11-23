@@ -59,8 +59,43 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
         base_frameset_.LoadFramesetInfo(view_info.GetBaseFrameset());
     }
 
-    const auto& new_overlays = view_info.GetOverlays();
+    {
+        const auto& new_overlays = view_info.GetOverlays();
+        overlays_.resize(new_overlays.size());
+        size_t counter = 0;
+        for (; counter < info_.GetOverlays().size(); ++counter)
+        {
+            if (!ViewInfo::FramesetInfo::IsSameSprites(
+                    new_overlays[counter],
+                    info_.GetOverlays()[counter]))
+            {
+                overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
+            }
+        }
+        for (; counter < new_overlays.size(); ++counter)
+        {
+            overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
+        }
+    }
 
+    {
+        const auto& new_underlays = view_info.GetUnderlays();
+        underlays_.resize(new_underlays.size());
+        size_t counter = 0;
+        for (; counter < info_.GetUnderlays().size(); ++counter)
+        {
+            if (!ViewInfo::FramesetInfo::IsSameSprites(
+                    new_underlays[counter],
+                    info_.GetUnderlays()[counter]))
+            {
+                underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
+            }
+        }
+        for (; counter < new_underlays.size(); ++counter)
+        {
+            underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
+        }
+    }
 
     info_ = view_info;
 }
