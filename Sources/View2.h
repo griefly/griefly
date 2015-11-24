@@ -16,9 +16,10 @@ public:
 
         void LoadFramesetInfo(const ViewInfo::FramesetInfo& frameset_info);
 
-        bool IsTransp(int x, int y, int shift, int angle);
         const GLSprite* GetSprite();
         const ImageMetadata::SpriteMetadata* GetMetadata();
+
+        bool IsTransp(int x, int y, int shift, int angle);
         void Draw(int shift, int x, int y, int angle = 0);
     private:
         void Reset();
@@ -29,6 +30,20 @@ public:
         int last_frame_tick_;
     };
     View2();
+
+    void SetStepX(int new_step_x)
+    {
+        step_x_ = new_step_x;
+    }
+    void SetStepY(int new_step_y)
+    {
+        step_y_ = new_step_y;
+    }
+    int GetStepX() const { return step_x_; }
+    int GetStepY() const { return step_y_; }
+
+    bool IsTransp(int x, int y, int shift);
+    void Draw(int shift, int x, int y);
 
     void LoadViewInfo(const ViewInfo& view_info);
 private:

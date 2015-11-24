@@ -31,6 +31,17 @@ void View2::FramesetState::LoadFramesetInfo(const ViewInfo::FramesetInfo& frames
     metadata_ = &sprite_->GetSDLSprite()->metadata.GetSpriteMetadata(frameset_info.GetState());
 }
 
+bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
+{
+    // TODO
+    return false;
+}
+
+void View2::FramesetState::Draw(int shift, int x, int y, int angle)
+{
+
+}
+
 void View2::FramesetState::Reset()
 {
     sprite_ = nullptr;
@@ -43,6 +54,43 @@ View2::View2()
 {
     step_x_ = 0;
     step_y_ = 0;
+}
+
+bool View2::IsTransp(int x, int y, int shift)
+{
+    // TODO: add angle for each frameset (from info_)
+    for (auto it = overlays_.rbegin(); it != overlays_.rend(); ++it)
+    {
+        if (!it->IsTransp(x + GetStepX(), y + GetStepY(), shift, info_.GetAngle()))
+        {
+            return false;
+        }
+    }
+    if (!base_frameset_.IsTransp(x + GetStepX(), y + GetStepY(), shift, info_.GetAngle()))
+    {
+        return false;
+    }
+    for (auto it = underlays_.begin(); it != underlays_.end(); ++it)
+    {
+        if (!it->IsTransp(x + GetStepX(), y + GetStepY(), shift, info_.GetAngle()))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void View2::Draw(int shift, int x, int y)
+{
+    for (auto it = underlays_.rbegin(); it != underlays_.rend(); ++it)
+    {
+        it->Draw(shift, x + GetStepX(), y + GetStepY(), info_.GetAngle());
+    }
+    base_frameset_.Draw(shift, x + GetStepX(), y + GetStepY(), info_.GetAngle());
+    for (auto it = overlays_.begin(); it != overlays_.end(); ++it)
+    {
+        it->Draw(shift, x + GetStepX(), y + GetStepY(), info_.GetAngle());
+    }
 }
 
 void View2::LoadViewInfo(const ViewInfo& view_info)
