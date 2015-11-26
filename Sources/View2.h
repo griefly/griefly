@@ -16,8 +16,8 @@ public:
 
         void LoadFramesetInfo(const ViewInfo::FramesetInfo& frameset_info);
 
-        const GLSprite* GetSprite();
-        const ImageMetadata::SpriteMetadata* GetMetadata();
+        const GLSprite* GetSprite() { return sprite_; }
+        const ImageMetadata::SpriteMetadata* GetMetadata() { return metadata_; }
 
         bool IsTransp(int x, int y, int shift, int angle);
         void Draw(int shift, int x, int y, int angle = 0);

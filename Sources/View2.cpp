@@ -33,13 +33,106 @@ void View2::FramesetState::LoadFramesetInfo(const ViewInfo::FramesetInfo& frames
 
 bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
 {
-    // TODO
-    return false;
+    if (NODRAW)
+    {
+        return true;
+    }
+    if (!GetMetadata())
+    {
+        return true;
+    }
+
+    float true_angle = (angle * 3.14f) / 180;
+
+    float sin_a = sin(static_cast<float>(1 * true_angle));
+    float cos_a = cos(static_cast<float>(1 * true_angle));
+
+    x -= GetSprite()->W() / 2;
+    y -= GetSprite()->H() / 2;
+
+    int new_x = static_cast<int>(     cos_a * x + sin_a * y);
+    int new_y = static_cast<int>(-1 * sin_a * x + cos_a * y);
+
+    x = new_x + GetSprite()->W() / 2;
+    y = new_y + GetSprite()->H() / 2;
+
+    const CSprite* loc = GetSprite()->GetSDLSprite();
+    if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
+        return true;
+
+    int current_frame = GetMetadata()->frames_sequence[image_state_];
+    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
+
+    int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
+    int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
+
+    SDL_Surface* surf = loc->frames[image_state_w_ * loc->numFrameH + image_state_h_];
+
+    auto bpp = surf->format->BytesPerPixel;
+
+    Uint8 un1, un2, un3, alpha;
+
+    SDL_GetRGBA(static_cast<Uint32*>(surf->pixels)[y * surf->pitch / bpp + x], surf->format, &un1, &un2, &un3, &alpha);
+
+    return alpha < 1;
 }
+
+const int ANIMATION_MUL = 100;
 
 void View2::FramesetState::Draw(int shift, int x, int y, int angle)
 {
+    if (NODRAW)
+    {
+        return;
+    }
 
+    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
+    {
+        return;
+    }
+
+    int current_frame = GetMetadata()->frames_sequence[image_state_];
+    int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
+
+    int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
+    int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
+
+    GetScreen().Draw(GetSprite(),
+                      x, y,
+                      image_state_w_, image_state_h_,
+                      static_cast<float>(angle));
+
+    if (GetMetadata()->frames_sequence.size() == 1)
+    {
+        return;
+    }
+    if (GetMetadata()->frames_sequence
+            [(image_state_ + 1) % GetMetadata()->frames_sequence.size()]
+                == -1)
+    {
+        return;
+    }
+
+    int time_diff = SDL_GetTicks() - last_frame_tick_;
+
+    int next_state = image_state_;
+    while (true)
+    {
+        // TODO: lags when time_diff very big
+        int frame = GetMetadata()->frames_sequence[next_state];
+        time_diff -= GetMetadata()->frames_data[frame].delay * ANIMATION_MUL;
+        if (time_diff <= 0)
+        {
+            if (image_state_ == next_state)
+            {
+                break;
+            }
+            image_state_ = next_state;
+            last_frame_tick_ = SDL_GetTicks();
+            break;
+        }
+        next_state = (next_state + 1) % GetMetadata()->frames_sequence.size();
+    }
 }
 
 void View2::FramesetState::Reset()
