@@ -14,6 +14,7 @@ public:
         current_frame_ = &first_data_;
         new_frame_ = &second_data_;
         is_updated_ = false;
+        current_frame_id_ = 0;
     }
 
     struct Entity
@@ -37,9 +38,11 @@ public:
         is_updated_ = true;
         new_frame_->clear();
     }
-    void Process();
-    void LoadViewsFromFrame();
+    void Draw();
+    void SynchronizeViews();
 private:
+    size_t current_frame_id_;
+
     bool is_updated_;
 
     typedef std::vector<Entity> DataType;
@@ -50,5 +53,11 @@ private:
     DataType first_data_;
     DataType second_data_;
 
-    std::unordered_map<size_t, View2> views_;
+    struct ViewWithFrameId
+    {
+        View2 view;
+        size_t frame_id;
+    };
+
+    std::unordered_map<size_t, ViewWithFrameId> views_;
 };

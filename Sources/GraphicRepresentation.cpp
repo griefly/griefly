@@ -1,20 +1,28 @@
 #include "GraphicRepresentation.h"
 
 
-void GraphicRepresentation::Process()
+void GraphicRepresentation::Draw()
 {
     // TODO: mutex
     // Lock(mutex_);
-    if (is_updated_)
-    {
 
-    }
+    SynchronizeViews();
+
 }
 
-void GraphicRepresentation::LoadViewsFromFrame()
+void GraphicRepresentation::SynchronizeViews()
 {
-    for (auto it = current_frame_->begin(); it != current_frame_->end(); ++it)
+    if (is_updated_)
     {
-        views_[it->id].LoadViewInfo(it->view);
+        for (auto it = current_frame_->begin(); it != current_frame_->end(); ++it)
+        {
+            auto& view_with_frame_id = views_[it->id];
+            view_with_frame_id.view.LoadViewInfo(it->view);
+            if (view_with_frame_id.frame_id == current_frame_id_)
+            {
+                // TODO: check for pixel movement
+            }
+        } 
+        ++current_frame_id_;
     }
 }
