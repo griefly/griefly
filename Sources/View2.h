@@ -31,19 +31,19 @@ public:
     };
     View2();
 
-    void SetStepX(int new_step_x)
+    void SetX(int new_pixel_x)
     {
-        step_x_ = new_step_x;
+        pixel_x_ = new_pixel_x;
     }
-    void SetStepY(int new_step_y)
+    void SetY(int new_pixel_y)
     {
-        step_y_ = new_step_y;
+        pixel_y_ = new_pixel_y;
     }
-    int GetStepX() const { return step_x_; }
-    int GetStepY() const { return step_y_; }
+    int GetX() const { return pixel_x_; }
+    int GetY() const { return pixel_y_; }
 
     bool IsTransp(int x, int y, int shift);
-    void Draw(int shift, int x, int y);
+    void Draw(int shift);
 
     void LoadViewInfo(const ViewInfo& view_info);
 private:
@@ -51,8 +51,8 @@ private:
     std::vector<FramesetState> underlays_;
     std::vector<FramesetState> overlays_;
 
-    int step_x_;
-    int step_y_;
+    int pixel_x_;
+    int pixel_y_;
 
     ViewInfo info_;
 };

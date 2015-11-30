@@ -21,8 +21,8 @@ public:
     {
         ViewInfo view;
         size_t id;
-        int pos_x;
-        int pos_y;
+        int pixel_x;
+        int pixel_y;
         int vlevel;
         int dir;
     };
@@ -38,9 +38,11 @@ public:
         is_updated_ = true;
         new_frame_->clear();
     }
-    void Draw();
-    void SynchronizeViews();
+    void Process();
 private:
+    void SynchronizeViews();
+    void PerformPixelMovement();
+
     size_t current_frame_id_;
 
     bool is_updated_;

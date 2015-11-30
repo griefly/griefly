@@ -145,8 +145,8 @@ void View2::FramesetState::Reset()
 
 View2::View2()
 {
-    step_x_ = 0;
-    step_y_ = 0;
+    pixel_x_ = 0;
+    pixel_y_ = 0;
 }
 
 bool View2::IsTransp(int x, int y, int shift)
@@ -154,14 +154,14 @@ bool View2::IsTransp(int x, int y, int shift)
     for (int i = overlays_.size() - 1; i >= 0; --i)
     {
         int sum_angle = info_.GetAngle() + info_.GetOverlays()[i].GetAngle();
-        if (!overlays_[i].IsTransp(x + GetStepX(), y + GetStepY(), shift, sum_angle))
+        if (!overlays_[i].IsTransp(x, y, shift, sum_angle))
         {
             return false;
         }
     }
     {
         int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
-        if (!base_frameset_.IsTransp(x + GetStepX(), y + GetStepY(), shift, sum_angle))
+        if (!base_frameset_.IsTransp(x, y, shift, sum_angle))
         {
             return false;
         }
@@ -169,7 +169,7 @@ bool View2::IsTransp(int x, int y, int shift)
     for (int i = 0; i < static_cast<int>(underlays_.size()); ++i)
     {
         int sum_angle = info_.GetAngle() + info_.GetUnderlays()[i].GetAngle();
-        if (!underlays_[i].IsTransp(x + GetStepX(), y + GetStepY(), shift, sum_angle))
+        if (!underlays_[i].IsTransp(x, y, shift, sum_angle))
         {
             return false;
         }
@@ -177,21 +177,21 @@ bool View2::IsTransp(int x, int y, int shift)
     return true;
 }
 
-void View2::Draw(int shift, int x, int y)
+void View2::Draw(int shift)
 {
     for (int i = underlays_.size() - 1; i >= 0; --i)
     {
         int sum_angle = info_.GetAngle() + info_.GetUnderlays()[i].GetAngle();
-        underlays_[i].Draw(shift, x + GetStepX(), y + GetStepY(), sum_angle);
+        underlays_[i].Draw(shift, GetX(), GetY(), sum_angle);
     }
     {
         int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
-        base_frameset_.Draw(shift, x + GetStepX(), y + GetStepY(), sum_angle);
+        base_frameset_.Draw(shift, GetX(), GetY(), sum_angle);
     }
     for (int i = 0; i < static_cast<int>(overlays_.size()); ++i)
     {
         int sum_angle = info_.GetAngle() + info_.GetOverlays()[i].GetAngle();
-        overlays_[i].Draw(shift, x + GetStepX(), y + GetStepY(), sum_angle);
+        overlays_[i].Draw(shift, GetX(), GetY(), sum_angle);
     }
 }
 
