@@ -79,7 +79,7 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
 
 const int ANIMATION_MUL = 100;
 
-void View2::FramesetState::Draw(int shift, int x, int y, int angle)
+void View2::FramesetState::Draw(size_t shift, int x, int y, int angle)
 {
     if (NODRAW)
     {
@@ -89,6 +89,11 @@ void View2::FramesetState::Draw(int shift, int x, int y, int angle)
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
     {
         return;
+    }
+
+    if (GetMetadata()->dirs > shift)
+    {
+        shift = 0;
     }
 
     int current_frame = GetMetadata()->frames_sequence[image_state_];
@@ -149,7 +154,7 @@ View2::View2()
     pixel_y_ = 0;
 }
 
-bool View2::IsTransp(int x, int y, int shift)
+bool View2::IsTransp(int x, int y, size_t shift)
 {
     for (int i = overlays_.size() - 1; i >= 0; --i)
     {
@@ -177,7 +182,7 @@ bool View2::IsTransp(int x, int y, int shift)
     return true;
 }
 
-void View2::Draw(int shift)
+void View2::Draw(size_t shift)
 {
     for (int i = underlays_.size() - 1; i >= 0; --i)
     {

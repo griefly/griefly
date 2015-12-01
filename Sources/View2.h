@@ -20,7 +20,7 @@ public:
         const ImageMetadata::SpriteMetadata* GetMetadata() { return metadata_; }
 
         bool IsTransp(int x, int y, int shift, int angle);
-        void Draw(int shift, int x, int y, int angle = 0);
+        void Draw(size_t shift, int x, int y, int angle = 0);
     private:
         void Reset();
 
@@ -42,8 +42,8 @@ public:
     int GetX() const { return pixel_x_; }
     int GetY() const { return pixel_y_; }
 
-    bool IsTransp(int x, int y, int shift);
-    void Draw(int shift);
+    bool IsTransp(int x, int y, size_t shift);
+    void Draw(size_t shift);
 
     void LoadViewInfo(const ViewInfo& view_info);
 private:

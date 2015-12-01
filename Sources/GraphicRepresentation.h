@@ -42,6 +42,7 @@ public:
 private:
     void SynchronizeViews();
     void PerformPixelMovement();
+    void Draw();
 
     size_t current_frame_id_;
 

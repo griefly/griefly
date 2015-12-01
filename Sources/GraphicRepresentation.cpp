@@ -1,11 +1,18 @@
 #include "GraphicRepresentation.h"
 
+#include "constheader.h"
+#include "helpers.h"
+
 void GraphicRepresentation::Process()
 {
     // TODO: mutex
     // Lock(mutex_);
 
     SynchronizeViews();
+
+    Draw();
+
+    // TODO: some time check
     PerformPixelMovement();
 }
 
@@ -73,5 +80,26 @@ void GraphicRepresentation::PerformPixelMovement()
 
         view_with_frame_id.view.SetX(old_x + diff_x);
         view_with_frame_id.view.SetY(old_y + diff_y);
+    }
+}
+
+void GraphicRepresentation::Draw()
+{
+    for (int vlevel = 0; vlevel < MAX_LEVEL; ++vlevel)
+    {
+        for (auto it = current_frame_->begin(); it != current_frame_->end(); ++it)
+        {
+            if (it->vlevel == vlevel)
+            {
+                views_[it->id].view.Draw(helpers::dir_to_byond(it->dir));
+            }
+        }
+    }
+    for (auto it = current_frame_->begin(); it != current_frame_->end(); ++it)
+    {
+        if (it->vlevel >= MAX_LEVEL)
+        {
+            views_[it->id].view.Draw(helpers::dir_to_byond(it->dir));
+        }
     }
 }
