@@ -37,6 +37,7 @@
 
 #include "Network2.h"
 #include "NetworkMessagesTypes.h"
+#include "GraphicRepresentation.h"
 
 #include <QCoreApplication>
 #include <QJsonObject>
@@ -385,6 +386,8 @@ void Manager::InitWorld(int id, std::string map_name)
 
     std::cout << "Begin set manager" << std::endl;
     SetManager(this);
+
+    SetGraphicRepresentation(new GraphicRepresentation);
 
     SetFactory(new ObjectFactory);
     SetMapMaster(new MapMaster);

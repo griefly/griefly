@@ -64,3 +64,6 @@ private:
 
     std::unordered_map<size_t, ViewWithFrameId> views_;
 };
+
+GraphicRepresentation &GetGraphicRepresentation();
+void SetGraphicRepresentation(GraphicRepresentation* g_r);

@@ -103,3 +103,14 @@ void GraphicRepresentation::Draw()
         }
     }
 }
+
+GraphicRepresentation* g_r = nullptr;
+GraphicRepresentation& GetGraphicRepresentation()
+{
+    return *g_r;
+}
+
+void SetGraphicRepresentation(GraphicRepresentation* new_g_r)
+{
+    g_r = new_g_r;
+}
