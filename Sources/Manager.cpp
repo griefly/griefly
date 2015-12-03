@@ -113,6 +113,9 @@ void Manager::Process()
     unsigned int last_effect_process = 0;
 
     unsigned int ping_send_time = 0;
+
+    GetMap().GenerateFrame();
+
     while (true)
     { 
 
@@ -157,6 +160,7 @@ void Manager::Process()
             draw_time_per_tick = 0;
         
           //  Debug::UnsyncDebug().CheckSaves();
+            GetMap().GenerateFrame();
         }
          
         if (!NODRAW)
@@ -164,7 +168,8 @@ void Manager::Process()
             draw_timer.Start();
             MakeCurrentGLContext();
             GetScreen().Clear();
-            GetMap().Draw();
+            //GetMap().Draw();
+            GetGraphicRepresentation().Process();
             if ((SDL_GetTicks() - last_effect_process) > (1000 / 60))
             {
                 last_effect_process = SDL_GetTicks();

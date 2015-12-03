@@ -24,7 +24,7 @@ void View2::FramesetState::LoadFramesetInfo(const ViewInfo::FramesetInfo& frames
     {
         return;
     }
-    if (sprite_->GetSDLSprite()->metadata.IsValidState(frameset_info.GetState()))
+    if (!sprite_->GetSDLSprite()->metadata.IsValidState(frameset_info.GetState()))
     {
         return;
     }
@@ -91,7 +91,7 @@ void View2::FramesetState::Draw(size_t shift, int x, int y, int angle)
         return;
     }
 
-    if (GetMetadata()->dirs > shift)
+    if (GetMetadata()->dirs >= shift)
     {
         shift = 0;
     }
@@ -206,6 +206,9 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
     {
         return;
     }
+
+    //qDebug() << "Not same framesets "
+    //         << QString::fromStdString(view_info.GetBaseFrameset().GetSprite());
 
     if (!ViewInfo::FramesetInfo::IsSameSprites(
             view_info.GetBaseFrameset(),

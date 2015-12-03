@@ -32,6 +32,8 @@ void GraphicRepresentation::SynchronizeViews()
             view_with_frame_id.frame_id = current_frame_id_ + 1;
         } 
         ++current_frame_id_;
+
+        is_updated_ = false;
     }
 }
 

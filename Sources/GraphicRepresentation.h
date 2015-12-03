@@ -19,6 +19,15 @@ public:
 
     struct Entity
     {
+        Entity()
+        {
+            id = 0;
+            pixel_x = 0;
+            pixel_y = 0;
+            vlevel = 0;
+            dir = D_DOWN;
+        }
+
         ViewInfo view;
         size_t id;
         int pixel_x;

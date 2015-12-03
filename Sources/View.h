@@ -35,9 +35,11 @@ public:
 
         void SetSprite(const std::string& name);
         const GLSprite* GetSprite();
+        const std::string& GetSpriteName() const { return sprite_name_; }
         void SetState(const std::string& state);
         std::string GetState();
         void SetAngle(int angle);
+        int GetAngle() const { return angle_; }
         const ImageMetadata::SpriteMetadata* GetMetadata();
         void Draw(int shift, int x, int y, int angle = 0);
     private:

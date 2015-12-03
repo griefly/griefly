@@ -30,6 +30,7 @@
 #include "helpers.h"
 #include "Creator.h"
 #include "AutogenMetadata.h"
+#include "GraphicRepresentation.h"
 
 void MapMaster::FillAtmosphere()
 {
@@ -242,6 +243,46 @@ void MapMaster::Draw()
             ++it2;
         }
     }
+}
+
+void MapMaster::GenerateFrame()
+{
+    if(!GetVisible())
+    {
+        return;
+    }
+    for (auto it = GetVisible()->begin(); it != GetVisible()->end(); ++it)
+    {
+        auto sq = squares[it->posx][it->posy][it->posz];
+        auto& in_list = sq->GetInsideList();
+
+        for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
+        {
+            GraphicRepresentation::Entity ent;
+            ent.id = list_it->ret_id();
+            ent.pixel_x = it->posx * 32 + mob_position::get_shift_x();
+            ent.pixel_y = it->posy * 32 + mob_position::get_shift_y();
+            ent.vlevel = (*list_it)->v_level;
+            //ent.dir = (*list_it)->GetDir();
+            ent.view.SetSprite((*list_it)->GetView()->GetBaseFrameset()->GetSpriteName());
+            ent.view.SetState((*list_it)->GetView()->GetBaseFrameset()->GetState());
+            ent.view.SetAngle((*list_it)->GetView()->GetBaseFrameset()->GetAngle());
+            GetGraphicRepresentation().AddToNewFrame(ent);
+        }
+
+        auto trf = squares[it->posx][it->posy][it->posz]->GetTurf();
+        GraphicRepresentation::Entity ent;
+        ent.id = trf.ret_id();
+        ent.pixel_x = it->posx * 32 + mob_position::get_shift_x();
+        ent.pixel_y = it->posy * 32 + mob_position::get_shift_y();
+        ent.vlevel = trf->v_level;
+        //ent.dir = (*list_it)->GetDir();
+        ent.view.SetSprite(trf->GetView()->GetBaseFrameset()->GetSpriteName());
+        ent.view.SetState(trf->GetView()->GetBaseFrameset()->GetState());
+        ent.view.SetAngle(trf->GetView()->GetBaseFrameset()->GetAngle());
+        GetGraphicRepresentation().AddToNewFrame(ent);
+    }
+    GetGraphicRepresentation().Swap();
 }
 
 void MapMaster::MakeTiles(int new_map_x, int new_map_y, int new_map_z)

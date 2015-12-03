@@ -80,7 +80,7 @@ bool ViewInfo::FramesetInfo::IsSameSprites(
     {
         return false;
     }
-    if (left.state_ != right.sprite_name_)
+    if (left.state_ != right.state_)
     {
         return false;
     }
@@ -140,6 +140,7 @@ bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
         }
     }
 
+    qDebug() << "Same sprites";
     return true;
 }
 
