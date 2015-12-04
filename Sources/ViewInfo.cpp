@@ -139,8 +139,6 @@ bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
             return false;
         }
     }
-
-    qDebug() << "Same sprites";
     return true;
 }
 

@@ -15,6 +15,7 @@ public:
         new_frame_ = &second_data_;
         is_updated_ = false;
         current_frame_id_ = 0;
+        pixel_movement_tick_ = SDL_GetTicks();
     }
 
     struct Entity
@@ -52,6 +53,8 @@ private:
     void SynchronizeViews();
     void PerformPixelMovement();
     void Draw();
+
+    int pixel_movement_tick_;
 
     size_t current_frame_id_;
 
