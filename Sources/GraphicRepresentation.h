@@ -14,7 +14,7 @@ public:
         current_frame_ = &first_data_;
         new_frame_ = &second_data_;
         is_updated_ = false;
-        current_frame_id_ = 0;
+        current_frame_id_ = 1;
         pixel_movement_tick_ = SDL_GetTicks();
     }
 
@@ -23,16 +23,16 @@ public:
         Entity()
         {
             id = 0;
-            pixel_x = 0;
-            pixel_y = 0;
+            pos_x = 0;
+            pos_y = 0;
             vlevel = 0;
             dir = D_DOWN;
         }
 
         ViewInfo view;
         size_t id;
-        int pixel_x;
-        int pixel_y;
+        int pos_x;
+        int pos_y;
         int vlevel;
         int dir;
     };
@@ -40,10 +40,10 @@ public:
     {
         new_frame_->entities.push_back(ent);
     }
-    void SetShiftsForNewFrame(int shift_x, int shift_y)
+    void SetCameraForFrame(int pos_x, int pos_y)
     {
-        new_frame_->shift_x = shift_x;
-        new_frame_->shift_y = shift_y;
+        new_frame_->camera_pos_x = pos_x;
+        new_frame_->camera_pos_y = pos_y;
     }
 
     void Swap()
@@ -69,8 +69,8 @@ private:
     struct FrameData
     {
         std::vector<Entity> entities;
-        int shift_x;
-        int shift_y;
+        int camera_pos_x;
+        int camera_pos_y;
     };
 
     typedef FrameData DataType;
@@ -88,6 +88,23 @@ private:
     };
 
     std::unordered_map<size_t, ViewWithFrameId> views_;
+
+    struct CameraData
+    {
+        CameraData()
+        {
+            pos_x = 0;
+            pos_y = 0;
+            pixel_shift_x_ = 0;
+            pixel_shift_y_ = 0;
+        }
+
+        int pos_x;
+        int pos_y;
+
+        int pixel_shift_x_;
+        int pixel_shift_y_;
+    } camera_;
 };
 
 GraphicRepresentation &GetGraphicRepresentation();

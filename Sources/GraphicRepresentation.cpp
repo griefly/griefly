@@ -25,14 +25,18 @@ void GraphicRepresentation::SynchronizeViews()
 {
     if (is_updated_)
     {
+        // TODO: pixel shift in camera
+        camera_.pos_x = current_frame_->camera_pos_x;
+        camera_.pos_y = current_frame_->camera_pos_y;
+
         for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
         {
             auto& view_with_frame_id = views_[it->id];
             view_with_frame_id.view.LoadViewInfo(it->view);
             if (view_with_frame_id.frame_id != current_frame_id_)
             {
-                view_with_frame_id.view.SetX(it->pixel_x + current_frame_->shift_x);
-                view_with_frame_id.view.SetY(it->pixel_y + current_frame_->shift_y);
+                view_with_frame_id.view.SetX((it->pos_x - camera_.pos_x) * 32);
+                view_with_frame_id.view.SetY((it->pos_y - camera_.pos_y) * 32);
             }
             view_with_frame_id.frame_id = current_frame_id_ + 1;
         } 
@@ -68,22 +72,24 @@ const int MAXIMUM_PIXEL_SPEED = 6;
 
 void GraphicRepresentation::PerformPixelMovement()
 {
-    // TODO: from PIXEL to POS -> mob movement is bad now
     for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
     {
+        int pixel_x = (it->pos_x - camera_.pos_x) * 32;
+        int pixel_y = (it->pos_y - camera_.pos_y) * 32;
+
         auto& view_with_frame_id = views_[it->id];
         int old_x = view_with_frame_id.view.GetX();
         int old_y = view_with_frame_id.view.GetY();
-        if (   old_x == it->pixel_x
-            && old_y == it->pixel_y)
+        if (   old_x == pixel_x
+            && old_y == pixel_y)
         {
             continue;
         }
 
-        int diff_x = it->pixel_x - old_x;
+        int diff_x = pixel_x - old_x;
         diff_x = limit_by_min_max_module(diff_x, MINIMUM_PIXEL_SPEED, MAXIMUM_PIXEL_SPEED);
 
-        int diff_y = it->pixel_y - old_y;
+        int diff_y = pixel_y - old_y;
         diff_y = limit_by_min_max_module(diff_y, MINIMUM_PIXEL_SPEED, MAXIMUM_PIXEL_SPEED);
 
         view_with_frame_id.view.SetX(old_x + diff_x);

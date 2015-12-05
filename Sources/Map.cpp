@@ -260,8 +260,8 @@ void MapMaster::GenerateFrame()
         {
             GraphicRepresentation::Entity ent;
             ent.id = list_it->ret_id();
-            ent.pixel_x = it->posx * 32 + mob_position::get_shift_x();
-            ent.pixel_y = it->posy * 32 + mob_position::get_shift_y();
+            ent.pos_x = it->posx;
+            ent.pos_y = it->posy;
             ent.vlevel = (*list_it)->v_level;
             //ent.dir = (*list_it)->GetDir();
             ent.view.SetSprite((*list_it)->GetView()->GetBaseFrameset()->GetSpriteName());
@@ -273,8 +273,8 @@ void MapMaster::GenerateFrame()
         auto trf = squares[it->posx][it->posy][it->posz]->GetTurf();
         GraphicRepresentation::Entity ent;
         ent.id = trf.ret_id();
-        ent.pixel_x = it->posx * 32 + mob_position::get_shift_x();
-        ent.pixel_y = it->posy * 32 + mob_position::get_shift_y();
+        ent.pos_x = it->posx;
+        ent.pos_y = it->posy;
         ent.vlevel = trf->v_level;
         //ent.dir = (*list_it)->GetDir();
         ent.view.SetSprite(trf->GetView()->GetBaseFrameset()->GetSpriteName());
@@ -283,11 +283,7 @@ void MapMaster::GenerateFrame()
         GetGraphicRepresentation().AddToNewFrame(ent);
     }
     // TODO: reset all shifts
-    GetGraphicRepresentation().SetShiftsForNewFrame(
-                (GetMob()->GetX() - previous_mob_x_) * 32,
-                (GetMob()->GetY() - previous_mob_y_) * 32);
-    previous_mob_x_ = GetMob()->GetX();
-    previous_mob_y_ = GetMob()->GetY();
+    GetGraphicRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
     GetGraphicRepresentation().Swap();
 }
 
@@ -324,8 +320,7 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 
 MapMaster::MapMaster()
 {
-    previous_mob_x_ = 0;
-    previous_mob_y_ = 0;
+
 }
 
 PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)
