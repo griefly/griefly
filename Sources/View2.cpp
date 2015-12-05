@@ -182,21 +182,21 @@ bool View2::IsTransp(int x, int y, size_t shift)
     return true;
 }
 
-void View2::Draw(size_t shift)
+void View2::Draw(int x_shift, int y_shift, size_t shift)
 {
     for (int i = underlays_.size() - 1; i >= 0; --i)
     {
         int sum_angle = info_.GetAngle() + info_.GetUnderlays()[i].GetAngle();
-        underlays_[i].Draw(shift, GetX(), GetY(), sum_angle);
+        underlays_[i].Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle);
     }
     {
         int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
-        base_frameset_.Draw(shift, GetX(), GetY(), sum_angle);
+        base_frameset_.Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle);
     }
     for (int i = 0; i < static_cast<int>(overlays_.size()); ++i)
     {
         int sum_angle = info_.GetAngle() + info_.GetOverlays()[i].GetAngle();
-        overlays_[i].Draw(shift, GetX(), GetY(), sum_angle);
+        overlays_[i].Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle);
     }
 }
 

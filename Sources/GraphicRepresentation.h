@@ -99,6 +99,9 @@ private:
             pixel_shift_y_ = 0;
         }
 
+        int GetFullShiftX();
+        int GetFullShiftY();
+
         int pos_x;
         int pos_y;
 

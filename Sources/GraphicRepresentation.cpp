@@ -35,8 +35,8 @@ void GraphicRepresentation::SynchronizeViews()
             view_with_frame_id.view.LoadViewInfo(it->view);
             if (view_with_frame_id.frame_id != current_frame_id_)
             {
-                view_with_frame_id.view.SetX((it->pos_x - camera_.pos_x) * 32);
-                view_with_frame_id.view.SetY((it->pos_y - camera_.pos_y) * 32);
+                view_with_frame_id.view.SetX(it->pos_x * 32);
+                view_with_frame_id.view.SetY(it->pos_y * 32);
             }
             view_with_frame_id.frame_id = current_frame_id_ + 1;
         } 
@@ -74,8 +74,8 @@ void GraphicRepresentation::PerformPixelMovement()
 {
     for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
     {
-        int pixel_x = (it->pos_x - camera_.pos_x) * 32;
-        int pixel_y = (it->pos_y - camera_.pos_y) * 32;
+        int pixel_x = it->pos_x * 32;
+        int pixel_y = it->pos_y * 32;
 
         auto& view_with_frame_id = views_[it->id];
         int old_x = view_with_frame_id.view.GetX();
@@ -105,7 +105,10 @@ void GraphicRepresentation::Draw()
         {
             if (it->vlevel == vlevel)
             {
-                views_[it->id].view.Draw(helpers::dir_to_byond(it->dir));
+                views_[it->id].view.Draw(
+                    camera_.GetFullShiftX(),
+                    camera_.GetFullShiftY(),
+                    helpers::dir_to_byond(it->dir));
             }
         }
     }
@@ -113,9 +116,23 @@ void GraphicRepresentation::Draw()
     {
         if (it->vlevel >= MAX_LEVEL)
         {
-            views_[it->id].view.Draw(helpers::dir_to_byond(it->dir));
+            views_[it->id].view.Draw(
+                camera_.GetFullShiftX(),
+                camera_.GetFullShiftY(),
+                helpers::dir_to_byond(it->dir));
         }
     }
+}
+
+
+int GraphicRepresentation::CameraData::GetFullShiftX()
+{
+    return -1 * (pos_x * 32 + pixel_shift_x_) + (sizeW / 2);
+}
+
+int GraphicRepresentation::CameraData::GetFullShiftY()
+{
+    return -1 * (pos_y * 32 + pixel_shift_y_) + (sizeH / 2);
 }
 
 GraphicRepresentation* g_r = nullptr;

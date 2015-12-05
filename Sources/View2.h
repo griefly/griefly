@@ -43,7 +43,7 @@ public:
     int GetY() const { return pixel_y_; }
 
     bool IsTransp(int x, int y, size_t shift);
-    void Draw(size_t shift);
+    void Draw(int x_shift, int y_shift, size_t shift);
 
     void LoadViewInfo(const ViewInfo& view_info);
 private:
