@@ -25,19 +25,19 @@ void GraphicRepresentation::SynchronizeViews()
 {
     if (is_updated_)
     {
-        for (auto it = current_frame_->begin(); it != current_frame_->end(); ++it)
+        for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
         {
             auto& view_with_frame_id = views_[it->id];
             view_with_frame_id.view.LoadViewInfo(it->view);
-            /*if (view_with_frame_id.frame_id != current_frame_id_)
+            if (view_with_frame_id.frame_id != current_frame_id_)
             {
-                view_with_frame_id.view.SetX(it->pixel_x);
-                view_with_frame_id.view.SetY(it->pixel_y);
-            }*/
+                view_with_frame_id.view.SetX(it->pixel_x + current_frame_->shift_x);
+                view_with_frame_id.view.SetY(it->pixel_y + current_frame_->shift_y);
+            }
             view_with_frame_id.frame_id = current_frame_id_ + 1;
         } 
-        ++current_frame_id_;
 
+        ++current_frame_id_;
         is_updated_ = false;
     }
 }
@@ -68,7 +68,8 @@ const int MAXIMUM_PIXEL_SPEED = 6;
 
 void GraphicRepresentation::PerformPixelMovement()
 {
-    for (auto it = current_frame_->begin(); it != current_frame_->end(); ++it)
+    // TODO: from PIXEL to POS -> mob movement is bad now
+    for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
     {
         auto& view_with_frame_id = views_[it->id];
         int old_x = view_with_frame_id.view.GetX();
@@ -94,7 +95,7 @@ void GraphicRepresentation::Draw()
 {
     for (int vlevel = 0; vlevel < MAX_LEVEL; ++vlevel)
     {
-        for (auto it = current_frame_->begin(); it != current_frame_->end(); ++it)
+        for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
         {
             if (it->vlevel == vlevel)
             {
@@ -102,7 +103,7 @@ void GraphicRepresentation::Draw()
             }
         }
     }
-    for (auto it = current_frame_->begin(); it != current_frame_->end(); ++it)
+    for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
     {
         if (it->vlevel >= MAX_LEVEL)
         {

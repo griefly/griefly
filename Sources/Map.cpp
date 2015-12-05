@@ -282,6 +282,12 @@ void MapMaster::GenerateFrame()
         ent.view.SetAngle(trf->GetView()->GetBaseFrameset()->GetAngle());
         GetGraphicRepresentation().AddToNewFrame(ent);
     }
+    // TODO: reset all shifts
+    GetGraphicRepresentation().SetShiftsForNewFrame(
+                (GetMob()->GetX() - previous_mob_x_) * 32,
+                (GetMob()->GetY() - previous_mob_y_) * 32);
+    previous_mob_x_ = GetMob()->GetX();
+    previous_mob_y_ = GetMob()->GetY();
     GetGraphicRepresentation().Swap();
 }
 
@@ -318,7 +324,8 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 
 MapMaster::MapMaster()
 {
-
+    previous_mob_x_ = 0;
+    previous_mob_y_ = 0;
 }
 
 PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)

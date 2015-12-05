@@ -63,6 +63,9 @@ public:
     id_ptr_on<IOnMapObject> Click(int x, int y);
     
     LOSfinder losf;
+private:
+    int previous_mob_x_;
+    int previous_mob_y_;
 };
 
 bool IsMapValid();

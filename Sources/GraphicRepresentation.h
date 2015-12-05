@@ -38,15 +38,21 @@ public:
     };
     void AddToNewFrame(const Entity& ent)
     {
-        new_frame_->push_back(ent);
+        new_frame_->entities.push_back(ent);
     }
+    void SetShiftsForNewFrame(int shift_x, int shift_y)
+    {
+        new_frame_->shift_x = shift_x;
+        new_frame_->shift_y = shift_y;
+    }
+
     void Swap()
     {
         // TODO: mutex
         // Lock(frames_mutex_);
         std::swap(current_frame_, new_frame_);
         is_updated_ = true;
-        new_frame_->clear();
+        new_frame_->entities.clear();
     }
     void Process();
 private:
@@ -60,7 +66,14 @@ private:
 
     bool is_updated_;
 
-    typedef std::vector<Entity> DataType;
+    struct FrameData
+    {
+        std::vector<Entity> entities;
+        int shift_x;
+        int shift_y;
+    };
+
+    typedef FrameData DataType;
 
     DataType* current_frame_;
     DataType* new_frame_;
