@@ -12,11 +12,12 @@ void GraphicRepresentation::Process()
 
     Draw();
 
-    const int PIXEL_MOVEMENT_SPEED = 20;
+    const int PIXEL_MOVEMENT_SPEED = 16;
 
     if ((SDL_GetTicks() - pixel_movement_tick_) > PIXEL_MOVEMENT_SPEED)
     {
         PerformPixelMovement();
+        camera_.PerformPixelMovement();
         pixel_movement_tick_ = SDL_GetTicks();
     }
 }
@@ -26,6 +27,10 @@ void GraphicRepresentation::SynchronizeViews()
     if (is_updated_)
     {
         // TODO: pixel shift in camera
+
+        camera_.pixel_shift_x_ += (camera_.pos_x - current_frame_->camera_pos_x) * 32;
+        camera_.pixel_shift_y_ += (camera_.pos_y - current_frame_->camera_pos_y) * 32;
+
         camera_.pos_x = current_frame_->camera_pos_x;
         camera_.pos_y = current_frame_->camera_pos_y;
 
@@ -68,7 +73,29 @@ int limit_by_min_max_module(int value, int min, int max)
 }
 
 const int MINIMUM_PIXEL_SPEED = 1;
-const int MAXIMUM_PIXEL_SPEED = 6;
+const int MAXIMUM_PIXEL_SPEED = 2;
+
+int get_pixel_speed_for_distance(int distance)
+{
+    int sign = 0;
+    if (distance > 0)
+    {
+        sign = 1;
+    }
+    if (distance < 0)
+    {
+        sign = -1;
+    }
+
+    if (sign == 0)
+    {
+        return 0;
+    }
+
+    distance = std::abs(distance);
+
+    return sign * (((distance - 1) / 16) + 1);
+}
 
 void GraphicRepresentation::PerformPixelMovement()
 {
@@ -80,20 +107,18 @@ void GraphicRepresentation::PerformPixelMovement()
         auto& view_with_frame_id = views_[it->id];
         int old_x = view_with_frame_id.view.GetX();
         int old_y = view_with_frame_id.view.GetY();
-        if (   old_x == pixel_x
-            && old_y == pixel_y)
+        if (old_x != pixel_x)
         {
-            continue;
+            int diff_x = pixel_x - old_x;
+            diff_x = get_pixel_speed_for_distance(diff_x);
+            view_with_frame_id.view.SetX(old_x + diff_x);
         }
-
-        int diff_x = pixel_x - old_x;
-        diff_x = limit_by_min_max_module(diff_x, MINIMUM_PIXEL_SPEED, MAXIMUM_PIXEL_SPEED);
-
-        int diff_y = pixel_y - old_y;
-        diff_y = limit_by_min_max_module(diff_y, MINIMUM_PIXEL_SPEED, MAXIMUM_PIXEL_SPEED);
-
-        view_with_frame_id.view.SetX(old_x + diff_x);
-        view_with_frame_id.view.SetY(old_y + diff_y);
+        if (old_y != pixel_y)
+        {
+            int diff_y = pixel_y - old_y;
+            diff_y = get_pixel_speed_for_distance(diff_y);
+            view_with_frame_id.view.SetY(old_y + diff_y);
+        }
     }
 }
 
@@ -125,14 +150,28 @@ void GraphicRepresentation::Draw()
 }
 
 
+void GraphicRepresentation::CameraData::PerformPixelMovement()
+{
+    if (pixel_shift_x_ != 0)
+    {
+        int diff_x = get_pixel_speed_for_distance(pixel_shift_x_);
+        pixel_shift_x_ -= diff_x;
+    }
+    if (pixel_shift_y_ != 0)
+    {
+        int diff_y = get_pixel_speed_for_distance(pixel_shift_y_);
+        pixel_shift_y_ -= diff_y;
+    }
+}
+
 int GraphicRepresentation::CameraData::GetFullShiftX()
 {
-    return -1 * (pos_x * 32 + pixel_shift_x_) + (sizeW / 2);
+    return -1 * (pos_x * 32 + pixel_shift_x_) + (sizeW / 2) - 16;
 }
 
 int GraphicRepresentation::CameraData::GetFullShiftY()
 {
-    return -1 * (pos_y * 32 + pixel_shift_y_) + (sizeH / 2);
+    return -1 * (pos_y * 32 + pixel_shift_y_) + (sizeH / 2) - 16;
 }
 
 GraphicRepresentation* g_r = nullptr;

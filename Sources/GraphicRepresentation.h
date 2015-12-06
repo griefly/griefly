@@ -99,6 +99,8 @@ private:
             pixel_shift_y_ = 0;
         }
 
+        void PerformPixelMovement();
+
         int GetFullShiftX();
         int GetFullShiftY();
 
