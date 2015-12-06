@@ -26,13 +26,7 @@ void GraphicRepresentation::SynchronizeViews()
 {
     if (is_updated_)
     {
-        // TODO: pixel shift in camera
-
-        camera_.pixel_shift_x_ += (camera_.pos_x - current_frame_->camera_pos_x) * 32;
-        camera_.pixel_shift_y_ += (camera_.pos_y - current_frame_->camera_pos_y) * 32;
-
-        camera_.pos_x = current_frame_->camera_pos_x;
-        camera_.pos_y = current_frame_->camera_pos_y;
+        camera_.SetPos(current_frame_->camera_pos_x, current_frame_->camera_pos_y);
 
         for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
         {
@@ -50,30 +44,6 @@ void GraphicRepresentation::SynchronizeViews()
         is_updated_ = false;
     }
 }
-
-int limit_by_min_max_module(int value, int min, int max)
-{
-    if (value > max)
-    {
-        value = max;
-    }
-    if ((value > 0) && (value < min))
-    {
-        value = min;
-    }
-    if ((value < 0) && (value > -1 * min))
-    {
-        value = -1 * min;
-    }
-    if (value < -1 * max)
-    {
-        value = -1 * max;
-    }
-    return value;
-}
-
-const int MINIMUM_PIXEL_SPEED = 1;
-const int MAXIMUM_PIXEL_SPEED = 2;
 
 int get_pixel_speed_for_distance(int distance)
 {
@@ -94,7 +64,7 @@ int get_pixel_speed_for_distance(int distance)
 
     distance = std::abs(distance);
 
-    return sign * (((distance - 1) / 16) + 1);
+    return sign * (((distance - 1) / 8) + 1);
 }
 
 void GraphicRepresentation::PerformPixelMovement()
@@ -150,7 +120,25 @@ void GraphicRepresentation::Draw()
 }
 
 
-void GraphicRepresentation::CameraData::PerformPixelMovement()
+
+GraphicRepresentation::Camera::Camera()
+{
+    pos_x = 0;
+    pos_y = 0;
+    pixel_shift_x_ = 0;
+    pixel_shift_y_ = 0;
+}
+
+void GraphicRepresentation::Camera::SetPos(int new_pos_x, int new_pos_y)
+{
+    pixel_shift_x_ += (pos_x - new_pos_x) * 32;
+    pixel_shift_y_ += (pos_y - new_pos_y) * 32;
+
+    pos_x = new_pos_x;
+    pos_y = new_pos_y;
+}
+
+void GraphicRepresentation::Camera::PerformPixelMovement()
 {
     if (pixel_shift_x_ != 0)
     {
@@ -164,12 +152,12 @@ void GraphicRepresentation::CameraData::PerformPixelMovement()
     }
 }
 
-int GraphicRepresentation::CameraData::GetFullShiftX()
+int GraphicRepresentation::Camera::GetFullShiftX()
 {
     return -1 * (pos_x * 32 + pixel_shift_x_) + (sizeW / 2) - 16;
 }
 
-int GraphicRepresentation::CameraData::GetFullShiftY()
+int GraphicRepresentation::Camera::GetFullShiftY()
 {
     return -1 * (pos_y * 32 + pixel_shift_y_) + (sizeH / 2) - 16;
 }

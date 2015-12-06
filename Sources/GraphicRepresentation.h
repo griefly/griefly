@@ -89,21 +89,18 @@ private:
 
     std::unordered_map<size_t, ViewWithFrameId> views_;
 
-    struct CameraData
+    class Camera
     {
-        CameraData()
-        {
-            pos_x = 0;
-            pos_y = 0;
-            pixel_shift_x_ = 0;
-            pixel_shift_y_ = 0;
-        }
+    public:
+        Camera();
+
+        void SetPos(int new_pos_x, int new_pos_y);
 
         void PerformPixelMovement();
 
         int GetFullShiftX();
         int GetFullShiftY();
-
+    private:
         int pos_x;
         int pos_y;
 
