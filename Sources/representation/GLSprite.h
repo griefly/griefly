@@ -7,7 +7,7 @@
 
 #include "platform/gl.h"
 
-#include "sprite.h"
+#include "Sprite.h"
 
 class GLSprite
 {
