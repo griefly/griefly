@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sprite.h"
+#include "Sprite.h"
 #include <map>
 #include <string>
 

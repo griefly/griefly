@@ -5,7 +5,7 @@
 #include <SDL_ttf.h>
 
 #include "constheader.h"
-#include "sprite.h"
+#include "Sprite.h"
 
 bool InitSDL()
 {

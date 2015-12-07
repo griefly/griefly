@@ -1,4 +1,4 @@
-#include "sprite.h"
+#include "Sprite.h"
 
 void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask)
 {
