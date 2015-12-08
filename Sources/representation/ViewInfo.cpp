@@ -125,14 +125,14 @@ bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
         return false;
     }
 
-    for (int i = 0; i < left.underlays_.size(); ++i)
+    for (int i = 0; i < static_cast<int>(left.underlays_.size()); ++i)
     {
         if (!FramesetInfo::IsSameSprites(left.underlays_[i], right.underlays_[i]))
         {
             return false;
         }
     }
-    for (int i = 0; i < left.overlays_.size(); ++i)
+    for (int i = 0; i < static_cast<int>(left.overlays_.size()); ++i)
     {
         if (!FramesetInfo::IsSameSprites(left.overlays_[i], right.overlays_[i]))
         {

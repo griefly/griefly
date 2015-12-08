@@ -6,7 +6,6 @@
 
 #include "HelperStructers.h"
 
-#include "TextInput.h"
 #include <QApplication>
 #include <QKeyEvent>
 #include <QString>

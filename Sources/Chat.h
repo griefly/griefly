@@ -5,7 +5,6 @@
 
 #include <SDL_ttf.h>
 
-#include "TextInput.h"
 #include "Mob.h"
 
 #include <QTextBrowser>
