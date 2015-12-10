@@ -91,7 +91,7 @@ void View2::FramesetState::Draw(size_t shift, int x, int y, int angle)
         return;
     }
 
-    if (GetMetadata()->dirs >= shift)
+    if (shift >= GetMetadata()->dirs)
     {
         shift = 0;
     }

@@ -263,7 +263,10 @@ void MapMaster::GenerateFrame()
             ent.pos_x = it->posx;
             ent.pos_y = it->posy;
             ent.vlevel = (*list_it)->v_level;
-            //ent.dir = (*list_it)->GetDir();
+            if (id_ptr_on<IMovable> mov = *list_it)
+            {
+                ent.dir = mov->GetDir();
+            }
             ent.view.SetSprite((*list_it)->GetView()->GetBaseFrameset()->GetSpriteName());
             ent.view.SetState((*list_it)->GetView()->GetBaseFrameset()->GetState());
             ent.view.SetAngle((*list_it)->GetView()->GetBaseFrameset()->GetAngle());
