@@ -270,6 +270,12 @@ void MapMaster::GenerateFrame()
             ent.view.SetSprite((*list_it)->GetView()->GetBaseFrameset()->GetSpriteName());
             ent.view.SetState((*list_it)->GetView()->GetBaseFrameset()->GetState());
             ent.view.SetAngle((*list_it)->GetView()->GetBaseFrameset()->GetAngle());
+            for (auto it = (*list_it)->GetView()->overlays_.begin();
+                      it != (*list_it)->GetView()->overlays_.end();
+                    ++it)
+            {
+                ent.view.AddOverlay(it->GetSpriteName(), it->GetState());
+            }
             GetGraphicRepresentation().AddToNewFrame(ent);
         }
 

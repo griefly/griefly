@@ -82,7 +82,8 @@ public:
     bool IsTransp(int x, int y, int shift);
     void Draw(int shift, int x, int y);
     Frameset* GetBaseFrameset() { return &base_frameset_; }
-private:
+// Public for test, anyway it View class be deleted soon
+public:
     std::vector<Frameset> overlays_;
     std::vector<Frameset> underlays_;
 
