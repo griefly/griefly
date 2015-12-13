@@ -1,6 +1,6 @@
 #include "Door.h"
 
-#include "sound.h"
+#include "Sound.h"
 #include "Movable.h"
 #include "Mob.h"
 #include "Item.h"

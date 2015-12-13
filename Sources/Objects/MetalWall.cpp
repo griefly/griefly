@@ -5,7 +5,7 @@
 #include "Floor.h"
 #include "Materials.h"
 
-#include "sound.h"
+#include "Sound.h"
 
 #include "ItemFabric.h"
 

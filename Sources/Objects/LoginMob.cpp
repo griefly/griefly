@@ -1,7 +1,7 @@
 #include "LoginMob.h"
 
 #include "Text.h"
-#include "sound.h"
+#include "Sound.h"
 #include "Human.h"
 #include "ItemFabric.h"
 #include "Map.h"

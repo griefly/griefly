@@ -16,7 +16,7 @@
 #include "Debug.h"
 #include "Params.h"
 
-#include "sound.h"
+#include "Sound.h"
 #include "Creator.h"
 #include "SdlInit.h"
 #include "Mob.h"

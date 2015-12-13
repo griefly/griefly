@@ -1,7 +1,7 @@
 #include "Tanks.h"
 
 #include "Weldingtool.h"
-#include "sound.h"
+#include "Sound.h"
 
 FuelTank::FuelTank(size_t id)
     : Tank(id)

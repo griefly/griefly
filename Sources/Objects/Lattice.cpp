@@ -5,7 +5,7 @@
 #include "Floor.h"
 
 #include "ItemFabric.h"
-#include "sound.h"
+#include "Sound.h"
 
 Lattice::Lattice(size_t id) : Structure(id)
 {

@@ -6,7 +6,7 @@
 
 #include "ItemFabric.h"
 
-#include "sound.h"
+#include "Sound.h"
 
 Girder::Girder(size_t id) : Structure(id)
 {

@@ -1,5 +1,5 @@
 #include "SoundLoader.h"
-#include "sound.h"
+#include "Sound.h"
 
 void LoadSounds()
 {

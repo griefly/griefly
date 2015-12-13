@@ -3,7 +3,7 @@
 #include "Text.h"
 #include "ItemFabric.h"
 #include "Names.h"
-#include "sound.h"
+#include "Sound.h"
 #include "Shard.h"
 #include "MagicStrings.h"
 #include "Chat.h"

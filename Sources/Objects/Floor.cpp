@@ -1,6 +1,6 @@
 #include "Floor.h"
 
-#include "sound.h"
+#include "Sound.h"
 
 #include "Item.h"
 #include "FloorTile.h"

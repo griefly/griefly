@@ -1,7 +1,7 @@
 #include "Structure.h"
 
 #include "Item.h"
-#include "sound.h"
+#include "Sound.h"
 
 void Structure::AttackBy(id_ptr_on<Item> item)
 {
