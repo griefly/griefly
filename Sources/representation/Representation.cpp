@@ -1,9 +1,9 @@
-#include "GraphicRepresentation.h"
+#include "Representation.h"
 
 #include "constheader.h"
 #include "helpers.h"
 
-void GraphicRepresentation::Process()
+void Representation::Process()
 {
     // TODO: mutex
     // Lock(mutex_);
@@ -22,7 +22,7 @@ void GraphicRepresentation::Process()
     }
 }
 
-void GraphicRepresentation::SynchronizeViews()
+void Representation::SynchronizeViews()
 {
     if (is_updated_)
     {
@@ -67,7 +67,7 @@ int get_pixel_speed_for_distance(int distance)
     return sign * (((distance - 1) / 8) + 1);
 }
 
-void GraphicRepresentation::PerformPixelMovement()
+void Representation::PerformPixelMovement()
 {
     for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
     {
@@ -92,7 +92,7 @@ void GraphicRepresentation::PerformPixelMovement()
     }
 }
 
-void GraphicRepresentation::Draw()
+void Representation::Draw()
 {
     for (int vlevel = 0; vlevel < MAX_LEVEL; ++vlevel)
     {
@@ -121,7 +121,7 @@ void GraphicRepresentation::Draw()
 
 
 
-GraphicRepresentation::Camera::Camera()
+Representation::Camera::Camera()
 {
     pos_x = 0;
     pos_y = 0;
@@ -129,7 +129,7 @@ GraphicRepresentation::Camera::Camera()
     pixel_shift_y_ = 0;
 }
 
-void GraphicRepresentation::Camera::SetPos(int new_pos_x, int new_pos_y)
+void Representation::Camera::SetPos(int new_pos_x, int new_pos_y)
 {
     pixel_shift_x_ += (pos_x - new_pos_x) * 32;
     pixel_shift_y_ += (pos_y - new_pos_y) * 32;
@@ -138,7 +138,7 @@ void GraphicRepresentation::Camera::SetPos(int new_pos_x, int new_pos_y)
     pos_y = new_pos_y;
 }
 
-void GraphicRepresentation::Camera::PerformPixelMovement()
+void Representation::Camera::PerformPixelMovement()
 {
     if (pixel_shift_x_ != 0)
     {
@@ -152,23 +152,23 @@ void GraphicRepresentation::Camera::PerformPixelMovement()
     }
 }
 
-int GraphicRepresentation::Camera::GetFullShiftX()
+int Representation::Camera::GetFullShiftX()
 {
     return -1 * (pos_x * 32 + pixel_shift_x_) + (sizeW / 2) - 16;
 }
 
-int GraphicRepresentation::Camera::GetFullShiftY()
+int Representation::Camera::GetFullShiftY()
 {
     return -1 * (pos_y * 32 + pixel_shift_y_) + (sizeH / 2) - 16;
 }
 
-GraphicRepresentation* g_r = nullptr;
-GraphicRepresentation& GetGraphicRepresentation()
+Representation* g_r = nullptr;
+Representation& GetGraphicRepresentation()
 {
     return *g_r;
 }
 
-void SetGraphicRepresentation(GraphicRepresentation* new_g_r)
+void SetGraphicRepresentation(Representation* new_g_r)
 {
     g_r = new_g_r;
 }

@@ -30,7 +30,7 @@
 #include "helpers.h"
 #include "Creator.h"
 #include "AutogenMetadata.h"
-#include "GraphicRepresentation.h"
+#include "Representation.h"
 
 void MapMaster::FillAtmosphere()
 {
@@ -258,7 +258,7 @@ void MapMaster::GenerateFrame()
 
         for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
         {
-            GraphicRepresentation::Entity ent;
+            Representation::Entity ent;
             ent.id = list_it->ret_id();
             ent.pos_x = it->posx;
             ent.pos_y = it->posy;
@@ -280,7 +280,7 @@ void MapMaster::GenerateFrame()
         }
 
         auto trf = squares[it->posx][it->posy][it->posz]->GetTurf();
-        GraphicRepresentation::Entity ent;
+        Representation::Entity ent;
         ent.id = trf.ret_id();
         ent.pos_x = it->posx;
         ent.pos_y = it->posy;

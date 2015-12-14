@@ -6,10 +6,10 @@
 #include "View2.h"
 #include "ViewInfo.h"
 
-class GraphicRepresentation
+class Representation
 {
 public:
-    GraphicRepresentation()
+    Representation()
     {
         current_frame_ = &first_data_;
         new_frame_ = &second_data_;
@@ -109,5 +109,5 @@ private:
     } camera_;
 };
 
-GraphicRepresentation &GetGraphicRepresentation();
-void SetGraphicRepresentation(GraphicRepresentation* g_r);
+Representation &GetGraphicRepresentation();
+void SetGraphicRepresentation(Representation* g_r);
