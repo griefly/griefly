@@ -109,5 +109,5 @@ private:
     } camera_;
 };
 
-Representation &GetGraphicRepresentation();
-void SetGraphicRepresentation(Representation* g_r);
+Representation &GetRepresentation();
+void SetRepresentation(Representation* g_r);

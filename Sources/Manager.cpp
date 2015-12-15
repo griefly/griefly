@@ -169,7 +169,7 @@ void Manager::Process()
             MakeCurrentGLContext();
             GetScreen().Clear();
             //GetMap().Draw();
-            GetGraphicRepresentation().Process();
+            GetRepresentation().Process();
             if ((SDL_GetTicks() - last_effect_process) > (1000 / 60))
             {
                 last_effect_process = SDL_GetTicks();
@@ -392,7 +392,7 @@ void Manager::InitWorld(int id, std::string map_name)
     std::cout << "Begin set manager" << std::endl;
     SetManager(this);
 
-    SetGraphicRepresentation(new Representation);
+    SetRepresentation(new Representation);
 
     SetFactory(new ObjectFactory);
     SetMapMaster(new MapMaster);

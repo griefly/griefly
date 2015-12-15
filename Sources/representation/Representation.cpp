@@ -163,12 +163,12 @@ int Representation::Camera::GetFullShiftY()
 }
 
 Representation* g_r = nullptr;
-Representation& GetGraphicRepresentation()
+Representation& GetRepresentation()
 {
     return *g_r;
 }
 
-void SetGraphicRepresentation(Representation* new_g_r)
+void SetRepresentation(Representation* new_g_r)
 {
     g_r = new_g_r;
 }

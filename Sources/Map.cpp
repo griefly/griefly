@@ -276,7 +276,7 @@ void MapMaster::GenerateFrame()
             {
                 ent.view.AddOverlay(it->GetSpriteName(), it->GetState());
             }
-            GetGraphicRepresentation().AddToNewFrame(ent);
+            GetRepresentation().AddToNewFrame(ent);
         }
 
         auto trf = squares[it->posx][it->posy][it->posz]->GetTurf();
@@ -289,11 +289,11 @@ void MapMaster::GenerateFrame()
         ent.view.SetSprite(trf->GetView()->GetBaseFrameset()->GetSpriteName());
         ent.view.SetState(trf->GetView()->GetBaseFrameset()->GetState());
         ent.view.SetAngle(trf->GetView()->GetBaseFrameset()->GetAngle());
-        GetGraphicRepresentation().AddToNewFrame(ent);
+        GetRepresentation().AddToNewFrame(ent);
     }
     // TODO: reset all shifts
-    GetGraphicRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
-    GetGraphicRepresentation().Swap();
+    GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
+    GetRepresentation().Swap();
 }
 
 void MapMaster::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
