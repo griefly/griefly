@@ -40,6 +40,16 @@ public:
     {
         new_frame_->entities.push_back(ent);
     }
+    void AddSoundToNewFrame(const std::string& sound)
+    {
+        new_frame_->sounds.push_back(sound);
+    }
+
+    void SetMusicForNewFrame(const std::string& music)
+    {
+        new_frame_->music = music;
+    }
+
     void SetCameraForFrame(int pos_x, int pos_y)
     {
         new_frame_->camera_pos_x = pos_x;
@@ -69,6 +79,8 @@ private:
     struct FrameData
     {
         std::vector<Entity> entities;
+        std::vector<std::string> sounds;
+        std::string music;
         int camera_pos_x;
         int camera_pos_y;
     };
