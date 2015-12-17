@@ -28,7 +28,7 @@ void LoginMob::DeinitGUI()
 {
     GetTexts().Delete("LoginScreen");
     GetTexts().Delete("LoginScreenCount");
-    GetSoundPlayer().StopMusic();
+    PlayMusic("");
 }
 
 
@@ -72,7 +72,7 @@ void LoginMob::InitGUI()
       .SetSize(26)
       .SetPlace(sizeW / 2 - 26 - 13, sizeH / 2 + 30 + 13);
 
-    GetSoundPlayer().PlayMusic("lobby.ogg", 10.0f);
+    PlayMusic("lobby.ogg", 10.0f);
 }
 
 
