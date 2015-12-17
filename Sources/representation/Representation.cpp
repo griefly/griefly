@@ -5,6 +5,25 @@
 
 #include "Sound.h"
 
+Representation::Representation()
+{
+    current_frame_ = &first_data_;
+    new_frame_ = &second_data_;
+    is_updated_ = false;
+    current_frame_id_ = 1;
+    pixel_movement_tick_ = SDL_GetTicks();
+}
+
+void Representation::AddToNewFrame(const Representation::Entity& ent)
+{
+    new_frame_->entities.push_back(ent);
+}
+
+void Representation::AddSoundToNewFrame(const std::string& sound)
+{
+    new_frame_->sounds.push_back(sound);
+}
+
 void Representation::SetMusicForNewFrame(const std::string& music, float volume)
 {
     new_frame_->music = music;
@@ -17,23 +36,51 @@ void Representation::SetMusicForNewFrame(const std::string& music, float volume)
     qDebug() << QString::fromStdString(music) << " " << volume;
 }
 
+void Representation::SetCameraForFrame(int pos_x, int pos_y)
+{
+    new_frame_->camera_pos_x = pos_x;
+    new_frame_->camera_pos_y = pos_y;
+}
+
+void Representation::Swap()
+{
+    // TODO: mutex
+    // Lock(frames_mutex_);
+    std::swap(current_frame_, new_frame_);
+    is_updated_ = true;
+    new_frame_->entities.clear();
+    new_frame_->sounds.clear();
+}
+
+Representation::Entity::Entity()
+{
+    id = 0;
+    pos_x = 0;
+    pos_y = 0;
+    vlevel = 0;
+    dir = D_DOWN;
+}
+
 void Representation::Process()
 {
     // TODO: mutex
     // Lock(mutex_);
-
     SynchronizeViews();
 
     Draw();
 
     const int PIXEL_MOVEMENT_SPEED = 16;
-
     if ((SDL_GetTicks() - pixel_movement_tick_) > PIXEL_MOVEMENT_SPEED)
     {
         PerformPixelMovement();
         camera_.PerformPixelMovement();
         pixel_movement_tick_ = SDL_GetTicks();
     }
+}
+
+void Representation::Click(int x, int y)
+{
+
 }
 
 void Representation::SynchronizeViews()
@@ -59,6 +106,7 @@ void Representation::SynchronizeViews()
             GetSoundPlayer().PlaySound(*it);
         }
 
+        // TODO: when frame is dropped there is possibility that music will not be played
         if (current_frame_->music == STOP_MUSIC)
         {
             GetSoundPlayer().StopMusic();

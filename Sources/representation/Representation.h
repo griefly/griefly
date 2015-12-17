@@ -11,25 +11,11 @@ const char* const STOP_MUSIC = "^";
 class Representation
 {
 public:
-    Representation()
-    {
-        current_frame_ = &first_data_;
-        new_frame_ = &second_data_;
-        is_updated_ = false;
-        current_frame_id_ = 1;
-        pixel_movement_tick_ = SDL_GetTicks();
-    }
+    Representation();
 
     struct Entity
     {
-        Entity()
-        {
-            id = 0;
-            pos_x = 0;
-            pos_y = 0;
-            vlevel = 0;
-            dir = D_DOWN;
-        }
+        Entity();
 
         ViewInfo view;
         size_t id;
@@ -38,33 +24,15 @@ public:
         int vlevel;
         int dir;
     };
-    void AddToNewFrame(const Entity& ent)
-    {
-        new_frame_->entities.push_back(ent);
-    }
-    void AddSoundToNewFrame(const std::string& sound)
-    {
-        new_frame_->sounds.push_back(sound);
-    }
+    void AddToNewFrame(const Entity& ent);
+    void AddSoundToNewFrame(const std::string& sound);
 
     void SetMusicForNewFrame(const std::string& music, float volume);
+    void SetCameraForFrame(int pos_x, int pos_y);
 
-    void SetCameraForFrame(int pos_x, int pos_y)
-    {
-        new_frame_->camera_pos_x = pos_x;
-        new_frame_->camera_pos_y = pos_y;
-    }
-
-    void Swap()
-    {
-        // TODO: mutex
-        // Lock(frames_mutex_);
-        std::swap(current_frame_, new_frame_);
-        is_updated_ = true;
-        new_frame_->entities.clear();
-        new_frame_->sounds.clear();
-    }
+    void Swap();
     void Process();
+    void Click(int x, int y);
 private:
     void SynchronizeViews();
     void PerformPixelMovement();
