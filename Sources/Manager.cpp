@@ -117,7 +117,7 @@ void Manager::Process()
     GetMap().GenerateFrame();
 
     while (true)
-    { 
+    {
 
         HandleInput();
 
@@ -162,9 +162,9 @@ void Manager::Process()
           //  Debug::UnsyncDebug().CheckSaves();
             GetMap().GenerateFrame();
         }
-         
+
         if (!NODRAW)
-        {   
+        {
             draw_timer.Start();
             MakeCurrentGLContext();
             GetScreen().Clear();
@@ -180,9 +180,9 @@ void Manager::Process()
             GetChat().Process();
 
             GetMob()->processGUI();
-            
+
             GetTexts().Process();
-            
+
             //glFinish();
             GetScreen().Swap();
             draw_time_per_tick += draw_timer.Get();

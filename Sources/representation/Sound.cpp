@@ -2,6 +2,7 @@
 
 #include "MobPosition.h"
 #include "VisiblePoints.h"
+#include "Representation.h"
 
 SoundManager& GetSoundManager()
 {
@@ -62,7 +63,6 @@ SoundPlayer::SoundPlayer()
 
 sf::Sound* SoundPlayer::PlaySound(const std::string& name)
 {
-    // TODO: 256 limit in sfml
     size_t i;
     for (i = 0; i < sounds_.size(); ++i)
     {
@@ -73,7 +73,8 @@ sf::Sound* SoundPlayer::PlaySound(const std::string& name)
     }
     if (i == sounds_.size())
     {
-        sounds_.resize(sounds_.size() * 2);
+        SYSTEM_STREAM << "Unable to play sound '" + name + "', the sound limit is reached "
+                      << i;
     }
     GetSoundManager().InitSound(&sounds_[i], name);
     // TODO: volume
@@ -89,6 +90,7 @@ void SoundPlayer::PlayMusic(const std::string &name, float volume)
     if (!music_.openFromFile("music/" + name))
     {
         SYSTEM_STREAM << "Cannot open music file " << "music/" << name << std::endl;
+        return;
     }
     music_.setLoop(true);
     music_.setVolume(volume);
@@ -103,6 +105,11 @@ void SoundPlayer::StopMusic()
     }
 }
 
+bool SoundPlayer::IsMusicPlaying()
+{
+    return music_.getStatus() == sf::Music::Status::Playing;
+}
+
 sf::Sound* PlaySound(const std::string& name)
 {
     sf::Sound* s = GetSoundPlayer().PlaySound(name);
@@ -114,17 +121,20 @@ void PlaySoundIfVisible(const std::string& name, size_t tile_id)
 {
     if (IsTileVisible(tile_id))
     {
-        PlaySound(name);
+        //PlaySound(name);
+        GetRepresentation().AddSoundToNewFrame(name);
     }
 }
 
 
 void PlayMusic(const std::string& name, float volume)
 {
-    if (name == "")
+    GetRepresentation().SetMusicForNewFrame(name, volume);
+
+    /*if (name == "")
     {
         GetSoundPlayer().StopMusic();
         return;
     }
-    GetSoundPlayer().PlayMusic(name, volume);
+    GetSoundPlayer().PlayMusic(name, volume);*/
 }

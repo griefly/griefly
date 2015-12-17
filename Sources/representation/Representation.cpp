@@ -3,6 +3,20 @@
 #include "constheader.h"
 #include "helpers.h"
 
+#include "Sound.h"
+
+void Representation::SetMusicForNewFrame(const std::string& music, float volume)
+{
+    new_frame_->music = music;
+    new_frame_->volume = volume;
+    if (new_frame_->music == "")
+    {
+        new_frame_->music = STOP_MUSIC;
+    }
+
+    qDebug() << QString::fromStdString(music) << " " << volume;
+}
+
 void Representation::Process()
 {
     // TODO: mutex
@@ -40,6 +54,20 @@ void Representation::SynchronizeViews()
             view_with_frame_id.frame_id = current_frame_id_ + 1;
         } 
 
+        for (auto it = current_frame_->sounds.begin(); it != current_frame_->sounds.end(); ++it)
+        {
+            GetSoundPlayer().PlaySound(*it);
+        }
+
+        if (current_frame_->music == STOP_MUSIC)
+        {
+            GetSoundPlayer().StopMusic();
+        }
+        else if (current_frame_->music != current_music_ && current_frame_->music != "")
+        {
+            GetSoundPlayer().PlayMusic(current_frame_->music, current_frame_->volume);
+            current_music_ = current_frame_->music;
+        }
         ++current_frame_id_;
         is_updated_ = false;
     }

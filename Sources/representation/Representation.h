@@ -6,6 +6,8 @@
 #include "View2.h"
 #include "ViewInfo.h"
 
+const char* const STOP_MUSIC = "^";
+
 class Representation
 {
 public:
@@ -45,10 +47,7 @@ public:
         new_frame_->sounds.push_back(sound);
     }
 
-    void SetMusicForNewFrame(const std::string& music)
-    {
-        new_frame_->music = music;
-    }
+    void SetMusicForNewFrame(const std::string& music, float volume);
 
     void SetCameraForFrame(int pos_x, int pos_y)
     {
@@ -63,6 +62,7 @@ public:
         std::swap(current_frame_, new_frame_);
         is_updated_ = true;
         new_frame_->entities.clear();
+        new_frame_->sounds.clear();
     }
     void Process();
 private:
@@ -81,11 +81,14 @@ private:
         std::vector<Entity> entities;
         std::vector<std::string> sounds;
         std::string music;
+        float volume;
         int camera_pos_x;
         int camera_pos_y;
     };
 
     typedef FrameData DataType;
+
+    std::string current_music_;
 
     DataType* current_frame_;
     DataType* new_frame_;
