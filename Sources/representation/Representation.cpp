@@ -80,7 +80,34 @@ void Representation::Process()
 
 void Representation::Click(int x, int y)
 {
+    helpers::normalize_pixels(&x, &y);
 
+    for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
+    {
+        if (it->vlevel >= MAX_LEVEL)
+        {
+            // TODO: IsTransp
+            views_[it->id].view.IsTransp(
+                x - camera_.GetFullShiftX(),
+                y - camera_.GetFullShiftY(),
+                helpers::dir_to_byond(it->dir));
+        }
+    }
+
+    for (int vlevel = MAX_LEVEL - 1; vlevel >= 0; --vlevel)
+    {
+        for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
+        {
+            if (it->vlevel == vlevel)
+            {
+                // TODO: IsTransp
+                views_[it->id].view.IsTransp(
+                    x - camera_.GetFullShiftX(),
+                    y - camera_.GetFullShiftY(),
+                    helpers::dir_to_byond(it->dir));
+            }
+        }
+    }
 }
 
 void Representation::SynchronizeViews()
