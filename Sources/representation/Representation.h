@@ -24,6 +24,18 @@ public:
         int vlevel;
         int dir;
     };
+
+    struct InterfaceUnit
+    {
+        ViewInfo view;
+        std::string name;
+
+        int pixel_x;
+        int pixel_y;
+
+        int shift;
+    };
+
     void AddToNewFrame(const Entity& ent);
     void AddSoundToNewFrame(const std::string& sound);
 

@@ -82,6 +82,8 @@ void Representation::Click(int x, int y)
 {
     helpers::normalize_pixels(&x, &y);
 
+    // TODO: interface
+
     for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
     {
         if (it->vlevel >= MAX_LEVEL)
