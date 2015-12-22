@@ -36,8 +36,15 @@ public:
         int shift;
     };
 
+    struct Sound
+    {
+        Sound(const std::string& name) : name(name) {}
+        std::string name;
+    };
+
+    void AddToNewFrame(const InterfaceUnit& unit);
     void AddToNewFrame(const Entity& ent);
-    void AddSoundToNewFrame(const std::string& sound);
+    void AddToNewFrame(const Sound& sound);
 
     void SetMusicForNewFrame(const std::string& music, float volume);
     void SetCameraForFrame(int pos_x, int pos_y);

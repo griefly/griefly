@@ -122,7 +122,7 @@ void PlaySoundIfVisible(const std::string& name, size_t tile_id)
     if (IsTileVisible(tile_id))
     {
         //PlaySound(name);
-        GetRepresentation().AddSoundToNewFrame(name);
+        GetRepresentation().AddToNewFrame(name);
     }
 }
 

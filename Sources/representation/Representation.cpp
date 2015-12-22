@@ -19,9 +19,9 @@ void Representation::AddToNewFrame(const Representation::Entity& ent)
     new_frame_->entities.push_back(ent);
 }
 
-void Representation::AddSoundToNewFrame(const std::string& sound)
+void Representation::AddToNewFrame(const Sound &sound)
 {
-    new_frame_->sounds.push_back(sound);
+    new_frame_->sounds.push_back(sound.name);
 }
 
 void Representation::SetMusicForNewFrame(const std::string& music, float volume)
