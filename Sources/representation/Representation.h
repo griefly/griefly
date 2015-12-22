@@ -27,6 +27,7 @@ public:
 
     struct InterfaceUnit
     {
+        InterfaceUnit();
         ViewInfo view;
         std::string name;
 
@@ -56,6 +57,7 @@ private:
     void SynchronizeViews();
     void PerformPixelMovement();
     void Draw();
+    void DrawInterface();
 
     int pixel_movement_tick_;
 
@@ -67,6 +69,7 @@ private:
     {
         std::vector<Entity> entities;
         std::vector<std::string> sounds;
+        std::vector<InterfaceUnit> units;
         std::string music;
         float volume;
         int camera_pos_x;
@@ -90,6 +93,7 @@ private:
     };
 
     std::unordered_map<size_t, ViewWithFrameId> views_;
+    std::vector<View2> interface_views_;
 
     class Camera
     {

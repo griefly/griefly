@@ -14,6 +14,11 @@ Representation::Representation()
     pixel_movement_tick_ = SDL_GetTicks();
 }
 
+void Representation::AddToNewFrame(const Representation::InterfaceUnit &unit)
+{
+    new_frame_->units.push_back(unit);
+}
+
 void Representation::AddToNewFrame(const Representation::Entity& ent)
 {
     new_frame_->entities.push_back(ent);
@@ -61,6 +66,13 @@ Representation::Entity::Entity()
     dir = D_DOWN;
 }
 
+Representation::InterfaceUnit::InterfaceUnit()
+{
+    pixel_x = 0;
+    pixel_y = 0;
+    shift = 0;
+}
+
 void Representation::Process()
 {
     // TODO: mutex
@@ -68,6 +80,7 @@ void Representation::Process()
     SynchronizeViews();
 
     Draw();
+    DrawInterface();
 
     const int PIXEL_MOVEMENT_SPEED = 16;
     if ((SDL_GetTicks() - pixel_movement_tick_) > PIXEL_MOVEMENT_SPEED)
@@ -129,6 +142,14 @@ void Representation::SynchronizeViews()
             }
             view_with_frame_id.frame_id = current_frame_id_ + 1;
         } 
+
+        interface_views_.resize(current_frame_->units.size());
+        for (int i = 0; i < static_cast<int>(interface_views_.size()); ++i)
+        {
+            interface_views_[i].LoadViewInfo(current_frame_->units[i].view);
+            interface_views_[i].SetX(current_frame_->units[i].pixel_x);
+            interface_views_[i].SetY(current_frame_->units[i].pixel_y);
+        }
 
         for (auto it = current_frame_->sounds.begin(); it != current_frame_->sounds.end(); ++it)
         {
@@ -224,7 +245,13 @@ void Representation::Draw()
     }
 }
 
-
+void Representation::DrawInterface()
+{
+    for (int i = 0; i < static_cast<int>(interface_views_.size()); ++i)
+    {
+        interface_views_[i].Draw(0, 0, current_frame_->units[i].shift);
+    }
+}
 
 Representation::Camera::Camera()
 {
