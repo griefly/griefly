@@ -55,6 +55,7 @@ void Representation::Swap()
     is_updated_ = true;
     new_frame_->entities.clear();
     new_frame_->sounds.clear();
+    new_frame_->units.clear();
 }
 
 Representation::Entity::Entity()

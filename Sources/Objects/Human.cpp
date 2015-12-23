@@ -64,10 +64,10 @@ void Human::DeinitGUI()
 {
     //GetTexts().Delete("Sync");
 }
-void Human::processGUI()
+void Human::GenerateInterfaceForFrame()
 {
     ////
-    IMob::processGUI();
+    IMob::GenerateInterfaceForFrame();
     //////
 
     interface_.Draw();

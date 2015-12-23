@@ -179,7 +179,7 @@ void Manager::Process()
 
             GetChat().Process();
 
-            GetMob()->processGUI();
+            //GetMob()->processGUI();
 
             GetTexts().Process();
 

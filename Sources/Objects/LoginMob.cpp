@@ -10,6 +10,7 @@
 #include "MagicStrings.h"
 #include "Chat.h"
 #include "helpers.h"
+#include "Representation.h"
 
 #include <QDebug>
 
@@ -76,7 +77,7 @@ void LoginMob::InitGUI()
 }
 
 
-void LoginMob::processGUI()
+void LoginMob::GenerateInterfaceForFrame()
 {
     interface_.Draw();
 }
@@ -183,7 +184,15 @@ bool LoginInterface::Click(int x, int y)
 
 void LoginInterface::Draw()
 {
-    view_.Draw(0, 0, 0);
+    //view_.Draw(0, 0, 0);
+    Representation::InterfaceUnit unit;
+    unit.name = LOGIN_CLICK;
+    unit.pixel_x = 0;
+    unit.pixel_y = 0;
+    unit.view.SetSprite(view_.GetBaseFrameset()->GetSpriteName());
+    unit.view.SetState(view_.GetBaseFrameset()->GetState());
+    GetRepresentation().AddToNewFrame(unit);
+    //qDebug() << "Login interface";
 }
 
 unsigned int LoginInterface::hash() const

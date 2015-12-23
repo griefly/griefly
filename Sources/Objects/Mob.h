@@ -13,14 +13,14 @@ public:
     virtual void delThis();
     virtual void cautOverMind();
 
-    virtual void InitGUI(){};
-    virtual void DeinitGUI(){};
-    virtual void processGUI();//draw
+    virtual void InitGUI(){}
+    virtual void DeinitGUI(){}
+    virtual void GenerateInterfaceForFrame();
     virtual void processGUImsg(const Message2& msg) override;
     
     virtual void processPhysics() override;
 
-    virtual InterfaceBase* GetInterface() { return nullptr; };
+    virtual InterfaceBase* GetInterface() { return nullptr; }
 
     virtual void CalculateVisible(std::list<point>* visible_list) { ; }
 };

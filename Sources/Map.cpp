@@ -291,6 +291,10 @@ void MapMaster::GenerateFrame()
         ent.view.SetAngle(trf->GetView()->GetBaseFrameset()->GetAngle());
         GetRepresentation().AddToNewFrame(ent);
     }
+
+    GetMob()->GenerateInterfaceForFrame();
+
+
     // TODO: reset all shifts
     GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
     GetRepresentation().Swap();

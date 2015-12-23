@@ -18,7 +18,7 @@ void IMob::cautOverMind()
 {
 }
 
-void IMob::processGUI()
+void IMob::GenerateInterfaceForFrame()
 {
 }
 
