@@ -78,6 +78,7 @@ public:
 
     void SetState(const std::string& sprite) { GetBaseFrameset()->SetState(sprite); }
     void SetAngle(int angle);
+    int GetAngle() const { return angle_; }
 
     bool IsTransp(int x, int y, int shift);
     void Draw(int shift, int x, int y);

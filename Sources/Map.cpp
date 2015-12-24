@@ -269,7 +269,7 @@ void MapMaster::GenerateFrame()
             }
             ent.view.SetSprite((*list_it)->GetView()->GetBaseFrameset()->GetSpriteName());
             ent.view.SetState((*list_it)->GetView()->GetBaseFrameset()->GetState());
-            ent.view.SetAngle((*list_it)->GetView()->GetBaseFrameset()->GetAngle());
+            ent.view.SetAngle((*list_it)->GetView()->GetAngle());
             for (auto it = (*list_it)->GetView()->overlays_.begin();
                       it != (*list_it)->GetView()->overlays_.end();
                     ++it)

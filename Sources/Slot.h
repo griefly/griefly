@@ -5,6 +5,7 @@
 #include "View.h"
 
 #include "hashes.h"
+#include "Representation.h"
 
 namespace Slots
 {
@@ -82,9 +83,19 @@ public:
     }
     virtual void Draw(int shift)
     {
-        view_.Draw(shift, 32 * posx_, 32 * posy_);
-        if (item_)
-            item_->DrawMain(0, 32 * posx_, 32 * posy_);
+        //view_.Draw(shift, 32 * posx_, 32 * posy_);
+        //if (item_)
+        //    item_->DrawMain(0, 32 * posx_, 32 * posy_);
+        //view_.Draw(0, 0, 0);
+        Representation::InterfaceUnit unit;
+        unit.name = "TODO_CHANGE_IT";
+        unit.pixel_x = 32 * posx_;
+        unit.pixel_y = 32 * posy_;
+        unit.shift = shift;
+        unit.view.SetSprite(view_.GetBaseFrameset()->GetSpriteName());
+        unit.view.SetState(view_.GetBaseFrameset()->GetState());
+        GetRepresentation().AddToNewFrame(unit);
+        //qDebug() << "Login interface";
     }
     View* GetView()
     {

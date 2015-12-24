@@ -20,7 +20,7 @@ class ViewInfo
 
     friend unsigned int hash(const ViewInfo& view_info);
 public:
-    // Check if framesets are same (except angles)
+    // Check if framesets are same
     static bool IsSameFramesets(const ViewInfo& left, const ViewInfo& right);
 
     class FramesetInfo
@@ -34,7 +34,7 @@ public:
 
         friend unsigned int hash(const ViewInfo::FramesetInfo& frameset);
     public:
-        // Check if framesets are basically same (except angle)
+        // Check if framesets are basically same
         static bool IsSameSprites(const FramesetInfo& left, const FramesetInfo& right);
 
         FramesetInfo();

@@ -84,6 +84,10 @@ bool ViewInfo::FramesetInfo::IsSameSprites(
     {
         return false;
     }
+    if (left.angle_ != right.angle_)
+    {
+        return false;
+    }
     return true;
 }
 
@@ -116,6 +120,11 @@ bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
         return false;
     }
     if (left.overlays_.size() != right.overlays_.size())
+    {
+        return false;
+    }
+
+    if (left.angle_ != right.angle_)
     {
         return false;
     }
