@@ -56,6 +56,7 @@ void Representation::Swap()
     new_frame_->entities.clear();
     new_frame_->sounds.clear();
     new_frame_->units.clear();
+    new_frame_->music.clear();
 }
 
 Representation::Entity::Entity()
@@ -161,9 +162,12 @@ void Representation::SynchronizeViews()
         if (current_frame_->music == STOP_MUSIC)
         {
             GetSoundPlayer().StopMusic();
+            current_music_ = "";
+            qDebug() << "Music stopped";
         }
         else if (current_frame_->music != current_music_ && current_frame_->music != "")
         {
+            qDebug() << "Music started";
             GetSoundPlayer().PlayMusic(current_frame_->music, current_frame_->volume);
             current_music_ = current_frame_->music;
         }

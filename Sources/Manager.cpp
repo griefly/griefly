@@ -114,7 +114,7 @@ void Manager::Process()
 
     unsigned int ping_send_time = 0;
 
-    GetMap().GenerateFrame();
+    //GetMap().GenerateFrame();
 
     while (true)
     {
