@@ -121,7 +121,9 @@ void Manager::Process()
 
         HandleInput();
 
+        qDebug() << "Process input messages";
         ProcessInputMessages();
+        qDebug() << "End process input messages";
 
         const int ATMOS_OFTEN = 1;
         const int ATMOS_MOVE_OFTEN = 1;
