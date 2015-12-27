@@ -96,32 +96,46 @@ void Representation::Process()
 void Representation::Click(int x, int y)
 {
     helpers::normalize_pixels(&x, &y);
+    int s_x = x - camera_.GetFullShiftX();
+    int s_y = y - camera_.GetFullShiftY();
 
-    // TODO: interface
+    auto& units = current_frame_->units;
 
-    for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
+
+    for (int i = 0; i < (int)units.size(); ++i)
+    {
+        int bdir = units[i].shift;
+        if (!interface_views_[i].IsTransp(s_x, s_y, bdir))
+        {
+            // TODO: send smth
+            return;
+        }
+    }
+
+    auto& ents = current_frame_->entities;
+
+    for (auto it = ents.begin(); it != ents.end(); ++it)
     {
         if (it->vlevel >= MAX_LEVEL)
         {
-            // TODO: IsTransp
-            views_[it->id].view.IsTransp(
-                x - camera_.GetFullShiftX(),
-                y - camera_.GetFullShiftY(),
-                helpers::dir_to_byond(it->dir));
+            int bdir = helpers::dir_to_byond(it->dir);
+            if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
+            {
+                // TODO: do smth
+                return;
+            }
         }
     }
 
     for (int vlevel = MAX_LEVEL - 1; vlevel >= 0; --vlevel)
     {
-        for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
+        for (auto it = ents.begin(); it != ents.end(); ++it)
         {
-            if (it->vlevel == vlevel)
+            int bdir = helpers::dir_to_byond(it->dir);
+            if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                // TODO: IsTransp
-                views_[it->id].view.IsTransp(
-                    x - camera_.GetFullShiftX(),
-                    y - camera_.GetFullShiftY(),
-                    helpers::dir_to_byond(it->dir));
+                // TODO: do smth
+                return;
             }
         }
     }

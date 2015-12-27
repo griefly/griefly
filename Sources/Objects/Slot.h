@@ -83,10 +83,6 @@ public:
     }
     virtual void Draw(int shift)
     {
-        //view_.Draw(shift, 32 * posx_, 32 * posy_);
-        //if (item_)
-        //    item_->DrawMain(0, 32 * posx_, 32 * posy_);
-        //view_.Draw(0, 0, 0);
         Representation::InterfaceUnit unit;
         unit.name = "TODO_CHANGE_IT";
         unit.pixel_x = 32 * posx_;
@@ -107,7 +103,6 @@ public:
             unit.view.SetState(item_->GetView()->GetBaseFrameset()->GetState());
             GetRepresentation().AddToNewFrame(unit);
         }
-        //qDebug() << "Login interface";
     }
     View* GetView()
     {
