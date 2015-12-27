@@ -217,11 +217,13 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
         base_frameset_.LoadFramesetInfo(view_info.GetBaseFrameset());
     }
 
+    // TODO: OVERLAYS NUMBER DECREASE
     {
         const auto& new_overlays = view_info.GetOverlays();
         overlays_.resize(new_overlays.size());
         size_t counter = 0;
-        for (; counter < info_.GetOverlays().size(); ++counter)
+        int intermediate_size = std::min(info_.GetOverlays().size(), new_overlays.size());
+        for (; counter < intermediate_size; ++counter)
         {
             if (!ViewInfo::FramesetInfo::IsSameSprites(
                     new_overlays[counter],
@@ -240,7 +242,8 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
         const auto& new_underlays = view_info.GetUnderlays();
         underlays_.resize(new_underlays.size());
         size_t counter = 0;
-        for (; counter < info_.GetUnderlays().size(); ++counter)
+        int intermediate_size = std::min(info_.GetUnderlays().size(), new_underlays.size());
+        for (; counter < intermediate_size; ++counter)
         {
             if (!ViewInfo::FramesetInfo::IsSameSprites(
                     new_underlays[counter],

@@ -241,7 +241,6 @@ void HumanInterface::AddOverlays()
 
 void HumanInterface::HandleClick(const std::string& place)
 {
-    qDebug() << "Handle click";
     if (place == HumanInterfacePlaces::RIGHT_HAND)
     {
         ApplyActiveHandOnSlot(&r_hand_);

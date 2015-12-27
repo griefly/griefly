@@ -95,7 +95,7 @@ public:
         unit.view.SetSprite(view_.GetBaseFrameset()->GetSpriteName());
         unit.view.SetState(view_.GetBaseFrameset()->GetState());
         GetRepresentation().AddToNewFrame(unit);
-       /* if (item_)
+        if (item_)
         {
             Representation::InterfaceUnit unit;
             unit.name = "TODO_CHANGE_IT";
@@ -106,7 +106,7 @@ public:
             unit.view.SetSprite(item_->GetView()->GetBaseFrameset()->GetSpriteName());
             unit.view.SetState(item_->GetView()->GetBaseFrameset()->GetState());
             GetRepresentation().AddToNewFrame(unit);
-        }*/
+        }
         //qDebug() << "Login interface";
     }
     View* GetView()
