@@ -107,7 +107,7 @@ void Representation::Click(int x, int y)
     for (int i = 0; i < (int)units.size(); ++i)
     {
         int bdir = units[i].shift;
-        if (!interface_views_[i].IsTransp(-1 * x, -1 * y, bdir))
+        if (!interface_views_[i].IsTransp(x, y, bdir))
         {
             qDebug() << "Clicked " << QString::fromStdString(units[i].name);
             return;

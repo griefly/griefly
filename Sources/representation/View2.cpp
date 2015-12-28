@@ -63,7 +63,11 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
 
     const CSprite* loc = GetSprite()->GetSDLSprite();
     if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
+    {
         return true;
+    }
+
+    qDebug() << "Frameset: " << x << ", " << y;
 
     int current_frame = GetMetadata()->frames_sequence[image_state_];
     int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;
@@ -165,14 +169,14 @@ bool View2::IsTransp(int x, int y, size_t shift)
     for (int i = overlays_.size() - 1; i >= 0; --i)
     {
         int sum_angle = info_.GetAngle() + info_.GetOverlays()[i].GetAngle();
-        if (!overlays_[i].IsTransp(GetX() + x, GetY() + y, shift, sum_angle))
+        if (!overlays_[i].IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
         }
     }
     {
         int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
-        if (!base_frameset_.IsTransp(GetX() + x, GetY() + y, shift, sum_angle))
+        if (!base_frameset_.IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
         }
@@ -180,7 +184,7 @@ bool View2::IsTransp(int x, int y, size_t shift)
     for (int i = 0; i < static_cast<int>(underlays_.size()); ++i)
     {
         int sum_angle = info_.GetAngle() + info_.GetUnderlays()[i].GetAngle();
-        if (!underlays_[i].IsTransp(GetX() + x, GetY() + y, shift, sum_angle))
+        if (!underlays_[i].IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
         }
