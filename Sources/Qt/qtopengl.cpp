@@ -27,6 +27,7 @@ void QtOpenGL::mousePressEvent(QMouseEvent* event)
     if ((event->button() == Qt::LeftButton) && IsManagerValid())
     {
         GetManager().ProcessClick(event->x(), event->y());
+        GetRepresentation().Click(event->x(), event->y());
     }
 }
 

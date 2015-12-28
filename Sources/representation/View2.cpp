@@ -42,6 +42,11 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
         return true;
     }
 
+    if (shift >= (int)GetMetadata()->dirs)
+    {
+        shift = 0;
+    }
+
     float true_angle = (angle * 3.14f) / 180;
 
     float sin_a = sin(static_cast<float>(1 * true_angle));
@@ -156,17 +161,18 @@ View2::View2()
 
 bool View2::IsTransp(int x, int y, size_t shift)
 {
+    qDebug() << GetX() << "," << GetY();
     for (int i = overlays_.size() - 1; i >= 0; --i)
     {
         int sum_angle = info_.GetAngle() + info_.GetOverlays()[i].GetAngle();
-        if (!overlays_[i].IsTransp(x, y, shift, sum_angle))
+        if (!overlays_[i].IsTransp(GetX() + x, GetY() + y, shift, sum_angle))
         {
             return false;
         }
     }
     {
         int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
-        if (!base_frameset_.IsTransp(x, y, shift, sum_angle))
+        if (!base_frameset_.IsTransp(GetX() + x, GetY() + y, shift, sum_angle))
         {
             return false;
         }
@@ -174,7 +180,7 @@ bool View2::IsTransp(int x, int y, size_t shift)
     for (int i = 0; i < static_cast<int>(underlays_.size()); ++i)
     {
         int sum_angle = info_.GetAngle() + info_.GetUnderlays()[i].GetAngle();
-        if (!underlays_[i].IsTransp(x, y, shift, sum_angle))
+        if (!underlays_[i].IsTransp(GetX() + x, GetY() + y, shift, sum_angle))
         {
             return false;
         }
@@ -217,11 +223,10 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
         base_frameset_.LoadFramesetInfo(view_info.GetBaseFrameset());
     }
 
-    // TODO: OVERLAYS NUMBER DECREASE
     {
         const auto& new_overlays = view_info.GetOverlays();
         overlays_.resize(new_overlays.size());
-        size_t counter = 0;
+        int counter = 0;
         int intermediate_size = std::min(info_.GetOverlays().size(), new_overlays.size());
         for (; counter < intermediate_size; ++counter)
         {
@@ -232,7 +237,7 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
                 overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
             }
         }
-        for (; counter < new_overlays.size(); ++counter)
+        for (; counter < (int)new_overlays.size(); ++counter)
         {
             overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
         }
@@ -241,7 +246,7 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
     {
         const auto& new_underlays = view_info.GetUnderlays();
         underlays_.resize(new_underlays.size());
-        size_t counter = 0;
+        int counter = 0;
         int intermediate_size = std::min(info_.GetUnderlays().size(), new_underlays.size());
         for (; counter < intermediate_size; ++counter)
         {
@@ -252,7 +257,7 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
                 underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
             }
         }
-        for (; counter < new_underlays.size(); ++counter)
+        for (; counter < (int)new_underlays.size(); ++counter)
         {
             underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
         }

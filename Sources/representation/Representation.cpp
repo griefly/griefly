@@ -96,8 +96,10 @@ void Representation::Process()
 void Representation::Click(int x, int y)
 {
     helpers::normalize_pixels(&x, &y);
-    int s_x = x - camera_.GetFullShiftX();
-    int s_y = y - camera_.GetFullShiftY();
+    int s_x = -1 * (x - camera_.GetFullShiftX());
+    int s_y = -1 * (y - camera_.GetFullShiftY());
+    qDebug() << "S_X: " << s_x << ", S_Y: " <<  s_y;
+    qDebug() << "X: " << x << ", Y: " <<  y;
 
     auto& units = current_frame_->units;
 
@@ -105,14 +107,14 @@ void Representation::Click(int x, int y)
     for (int i = 0; i < (int)units.size(); ++i)
     {
         int bdir = units[i].shift;
-        if (!interface_views_[i].IsTransp(s_x, s_y, bdir))
+        if (!interface_views_[i].IsTransp(-1 * x, -1 * y, bdir))
         {
-            // TODO: send smth
+            qDebug() << "Clicked " << QString::fromStdString(units[i].name);
             return;
         }
     }
 
-    auto& ents = current_frame_->entities;
+   /* auto& ents = current_frame_->entities;
 
     for (auto it = ents.begin(); it != ents.end(); ++it)
     {
@@ -122,6 +124,7 @@ void Representation::Click(int x, int y)
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
                 // TODO: do smth
+                qDebug() << "Clicked " << it->id;
                 return;
             }
         }
@@ -135,10 +138,11 @@ void Representation::Click(int x, int y)
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
                 // TODO: do smth
+                qDebug() << "Clicked " << it->id;
                 return;
             }
         }
-    }
+    }*/
 }
 
 void Representation::SynchronizeViews()
