@@ -17,6 +17,7 @@ public:
 
 namespace HumanInterfacePlaces
 {
+    const std::string UNCLICKABLE = "UNCLICKABLE";
     const std::string RIGHT_HAND = "INT_RHAND";
     const std::string LEFT_HAND = "INT_LHAND";
     const std::string HEAD = "HEAD";

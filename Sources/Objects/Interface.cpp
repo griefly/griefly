@@ -9,42 +9,52 @@ void HumanInterface::InitSlots()
 {
     r_hand_.SetPos(0, 14);
     r_hand_.GetView()->SetState("hand_r_active");
+    r_hand_.SetName(HumanInterfacePlaces::RIGHT_HAND);
 
     l_hand_.SetPos(2, 14);
     l_hand_.GetView()->SetState("hand_l_inactive");
+    l_hand_.SetName(HumanInterfacePlaces::LEFT_HAND);
 
     head_.SetPos(1, 13);
     head_.GetView()->SetState("head");
     head_.SetType(Slots::HEAD);
+    head_.SetName(HumanInterfacePlaces::HEAD);
 
     suit_.SetPos(1, 14);
     suit_.GetView()->SetState("suit");
     suit_.SetType(Slots::SUIT);
+    suit_.SetName(HumanInterfacePlaces::SUIT);
 
     uniform_.SetPos(1, 15);
     uniform_.GetView()->SetState("uniform");
     uniform_.SetType(Slots::UNIFORM);
+    uniform_.SetName(HumanInterfacePlaces::UNIFORM);
 
     feet_.SetPos(3, 14);
     feet_.GetView()->SetState("shoes");
     feet_.SetType(Slots::FEET);
+    feet_.SetName(HumanInterfacePlaces::FEET);
 
     active_hand_ = true;
 
     drop_.SetPos(7, 15);
     drop_.GetView()->SetState("act_drop");
+    drop_.SetName(HumanInterfacePlaces::DROP);
 
     swap_.SetPos(6, 15);
     swap_.GetView()->SetSprite("icons/screen1_old.dmi");
     swap_.GetView()->SetState("hand");
+    swap_.SetName(HumanInterfacePlaces::SWAP);
 
     health_.SetPos(15, 10);
     health_.GetView()->SetSprite("icons/screen1_old.dmi");
     health_.GetView()->SetState("health0");
+    health_.SetName(HumanInterfacePlaces::UNCLICKABLE);
 
     lay_.SetPos(15, 11);
     lay_.GetView()->SetSprite("icons/screen1_old.dmi");
     lay_.GetView()->SetState("rest0");
+    lay_.SetName(HumanInterfacePlaces::LAY);
 
     if (id_ptr_on<Human> owner = owner_)
     {

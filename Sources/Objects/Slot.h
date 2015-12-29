@@ -38,6 +38,7 @@ public:
         view_.SetSprite("icons/screen_retro.dmi");
         item_ = 0;
         type_ = Slots::ANYTHING;
+        name_ = "noname";
     }
     virtual bool Set(id_ptr_on<Item> ptr) override
     {
@@ -61,6 +62,11 @@ public:
         posx_ = x;
         posy_ = y;
     }
+    void SetName(const std::string& name)
+    {
+        name_ = name;
+    }
+
     void SetType(const std::string& type)
     {
         type_ = type;
@@ -84,7 +90,7 @@ public:
     virtual void Draw(int shift)
     {
         Representation::InterfaceUnit unit;
-        unit.name = "TODO_CHANGE_IT";
+        unit.name = name_;
         unit.pixel_x = 32 * posx_;
         unit.pixel_y = 32 * posy_;
         unit.shift = shift;
@@ -94,7 +100,7 @@ public:
         if (item_)
         {
             Representation::InterfaceUnit unit;
-            unit.name = "TODO_CHANGE_IT";
+            unit.name = name_;
             unit.pixel_x = 32 * posx_;
             unit.pixel_y = 32 * posy_;
             unit.shift = 0;
@@ -144,6 +150,7 @@ private:
     int posx_;
     int posy_;
     std::string type_;
+    std::string name_;
 };
 
 template <class T>
