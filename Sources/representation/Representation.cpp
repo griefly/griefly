@@ -96,8 +96,8 @@ void Representation::Process()
 void Representation::Click(int x, int y)
 {
     helpers::normalize_pixels(&x, &y);
-    int s_x = -1 * (x - camera_.GetFullShiftX());
-    int s_y = -1 * (y - camera_.GetFullShiftY());
+    int s_x = x - camera_.GetFullShiftX();
+    int s_y = y - camera_.GetFullShiftY();
     qDebug() << "S_X: " << s_x << ", S_Y: " <<  s_y;
     qDebug() << "X: " << x << ", Y: " <<  y;
 
@@ -114,7 +114,7 @@ void Representation::Click(int x, int y)
         }
     }
 
-   /* auto& ents = current_frame_->entities;
+    auto& ents = current_frame_->entities;
 
     for (auto it = ents.begin(); it != ents.end(); ++it)
     {
@@ -142,7 +142,7 @@ void Representation::Click(int x, int y)
                 return;
             }
         }
-    }*/
+    }
 }
 
 void Representation::SynchronizeViews()

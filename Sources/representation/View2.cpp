@@ -165,7 +165,7 @@ View2::View2()
 
 bool View2::IsTransp(int x, int y, size_t shift)
 {
-    qDebug() << GetX() << "," << GetY();
+    //qDebug() << GetX() << "," << GetY();
     for (int i = overlays_.size() - 1; i >= 0; --i)
     {
         int sum_angle = info_.GetAngle() + info_.GetOverlays()[i].GetAngle();
