@@ -4,6 +4,7 @@
 #include "helpers.h"
 
 #include "Sound.h"
+#include "Network2.h"
 
 Representation::Representation()
 {
@@ -110,11 +111,14 @@ void Representation::Click(int x, int y)
         if (!interface_views_[i].IsTransp(x, y, bdir))
         {
             qDebug() << "Clicked " << QString::fromStdString(units[i].name);
+            Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(units[i].name));
             return;
         }
     }
 
     auto& ents = current_frame_->entities;
+
+    int id_to_send = -1;
 
     for (auto it = ents.begin(); it != ents.end(); ++it)
     {
@@ -125,12 +129,13 @@ void Representation::Click(int x, int y)
             {
                 // TODO: do smth
                 qDebug() << "Clicked " << it->id;
-                return;
+                id_to_send = it->id;
+                break;
             }
         }
     }
 
-    for (int vlevel = MAX_LEVEL - 1; vlevel >= 0; --vlevel)
+    for (int vlevel = MAX_LEVEL - 1; vlevel >= 0 && (id_to_send == -1); --vlevel)
     {
         for (auto it = ents.begin(); it != ents.end(); ++it)
         {
@@ -139,9 +144,19 @@ void Representation::Click(int x, int y)
             {
                 // TODO: do smth
                 qDebug() << "Clicked " << it->id;
-                return;
+                id_to_send = it->id;
+                break;
             }
         }
+    }
+
+    if (id_to_send != -1)
+    {
+        Message2 msg;
+        msg.type = MessageType::MOUSE_CLICK;
+        msg.json = "{\"obj\":" + QString::number(id_to_send) + "}";
+
+        Network2::GetInstance().SendMsg(msg);
     }
 }
 
