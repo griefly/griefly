@@ -5,7 +5,7 @@
 
 #include "Manager.h"
 
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 
 #include "Params.h"
 

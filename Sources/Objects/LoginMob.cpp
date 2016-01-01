@@ -3,7 +3,7 @@
 #include "Text.h"
 #include "Sound.h"
 #include "Human.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "Map.h"
 #include "Creator.h"
 #include "Lobby.h"

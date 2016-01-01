@@ -1,6 +1,6 @@
 #include "MainObject.h"
 #include "Map.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 
 void IMainObject::delThis()
 {

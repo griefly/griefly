@@ -5,7 +5,7 @@
 
 #include "MagicStrings.h"
 #include "Chat.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "Lobby.h"
 #include "Text.h"
 #include "LoginMob.h"

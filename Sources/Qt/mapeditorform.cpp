@@ -1,7 +1,7 @@
 #include "mapeditorform.h"
 #include "ui_mapeditorform.h"
 
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "Map.h"
 #include "Text.h"
 

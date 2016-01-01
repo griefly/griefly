@@ -4,7 +4,7 @@
 #include "Turf.h"
 #include "Floor.h"
 
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "Sound.h"
 
 Lattice::Lattice(size_t id) : Structure(id)

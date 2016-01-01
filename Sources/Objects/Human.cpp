@@ -1,7 +1,7 @@
 #include "Human.h"
 
 #include "Text.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "Names.h"
 #include "Sound.h"
 #include "Shard.h"

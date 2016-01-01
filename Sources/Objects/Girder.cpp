@@ -4,7 +4,7 @@
 #include "MetalWall.h"
 #include "Item.h"
 
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 
 #include "Sound.h"
 

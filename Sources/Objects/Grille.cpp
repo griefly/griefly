@@ -4,7 +4,7 @@
 #include "Item.h"
 #include "Sound.h"
 
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "Materials.h"
 
 Grille::Grille(size_t id) : Structure(id)

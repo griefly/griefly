@@ -7,7 +7,7 @@
 
 #include "Sound.h"
 
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 
 MetalWall::MetalWall(size_t id) : ITurf(id)
 {

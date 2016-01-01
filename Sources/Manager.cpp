@@ -10,7 +10,7 @@
 #include "EffectSystem.h"
 #include "MoveEffect.h"
 #include "SyncRandom.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "MagicStrings.h"
 #include "Tile.h"
 #include "Debug.h"

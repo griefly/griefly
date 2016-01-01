@@ -1,6 +1,6 @@
 #include "DrawInt.h"
 #include "Map.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 
 IDraw::IDraw(size_t id) : IMainObject(id)
 {

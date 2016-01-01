@@ -1,7 +1,7 @@
 #include "Materials.h"
 
 #include "Girder.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "Floor.h"
 #include "Grille.h"
 

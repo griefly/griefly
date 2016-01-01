@@ -5,7 +5,7 @@
 #include "Item.h"
 #include "Materials.h"
 #include "Lattice.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 
 Space::Space(size_t id) : ITurf(id)
 {

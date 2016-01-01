@@ -1,7 +1,7 @@
 #include "Idptr.h"
 
 #include "MainObject.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "OnMapBase.h"
 #include "AutogenMetadata.h"
 

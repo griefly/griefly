@@ -5,7 +5,7 @@
 #include "Item.h"
 #include "FloorTile.h"
 
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 
 Floor::Floor(size_t id) : ITurf(id)
 {

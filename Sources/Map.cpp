@@ -10,7 +10,7 @@
 #include "Tile.h"
 #include "Manager.h"
 #include "MobPosition.h"
-#include "ItemFabric.h"
+#include "ObjectFactory.h"
 #include "VisiblePoints.h"
 #include "SpaceTurf.h"
 #include "MetalWall.h"
