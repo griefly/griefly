@@ -120,7 +120,7 @@ void Representation::Click(int x, int y)
 
     int id_to_send = -1;
 
-    for (auto it = ents.begin(); it != ents.end(); ++it)
+    for (auto it = ents.rbegin(); it != ents.rend(); ++it)
     {
         if (it->vlevel >= MAX_LEVEL)
         {
@@ -137,8 +137,12 @@ void Representation::Click(int x, int y)
 
     for (int vlevel = MAX_LEVEL - 1; vlevel >= 0 && (id_to_send == -1); --vlevel)
     {
-        for (auto it = ents.begin(); it != ents.end(); ++it)
+        for (auto it = ents.rbegin(); it != ents.rend(); ++it)
         {
+            if (it->vlevel != vlevel)
+            {
+                continue;
+            }
             int bdir = helpers::dir_to_byond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
