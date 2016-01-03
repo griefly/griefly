@@ -15,8 +15,6 @@ public:
     IOnMapObject(size_t id);
     DECLARE_SAVED(IOnMapObject, IOnMapBase);
     DECLARE_GET_TYPE_ITEM(ionmapitem);
-    void checkSelfLevel();
-
     virtual bool IsVisibleByPlayer() const override
     {
         return owner.valid() && owner->IsVisibleByPlayer();
@@ -60,7 +58,6 @@ public:
     virtual void processPhysics();
     
     virtual void delThis() override;
-    virtual std::list<HashAmount> insertLiquid(std::list<HashAmount>);
     virtual void Represent() override;
     void SetSprite(const std::string& T_SPR);
     void SetState(const std::string& name);

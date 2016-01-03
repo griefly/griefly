@@ -10,8 +10,6 @@
 #include "MobPosition.h"
 #include "helpers.h"
 
-std::list<HashAmount> IOnMapObject::insertLiquid(std::list<HashAmount> r) {return r;}
-
 void IOnMapObject::SetSprite(const std::string& name)
 {
     view_.SetSprite(name);
@@ -27,7 +25,7 @@ void IOnMapObject::Represent()
     /*DrawMain(0,
             GetDrawX() + mob_position::get_shift_x(),
             GetDrawY() + mob_position::get_shift_y());*/
-};
+}
 
 void IOnMapObject::processPhysics()
 {
