@@ -13,14 +13,11 @@
 class Manager
 {
 public:
-    void CheckMove(Dir direct);
     void InitWorld(int id, std::string map_name);
     void Process();
     void HandleInput();
 
     bool IsMobVisible(int posx, int posy);
-
-    void ProcessClick(int mouse_x, int mouse_y);
 
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);

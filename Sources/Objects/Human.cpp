@@ -334,14 +334,9 @@ void Human::AttackBy(id_ptr_on<Item> item)
     }
 }
 
-void Human::processImage(DrawType type)
+void Human::Represent()
 {
-    if (NODRAW)
-        return;
-    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
-        return;
-
-    if (GetMetadata()->dirs >= 4 && !lying_)
+    /*if (GetMetadata()->dirs >= 4 && !lying_)
     {
         DrawMain(helpers::dir_to_byond(GetDir()),
             GetDrawX() + mob_position::get_shift_x(),
@@ -352,7 +347,7 @@ void Human::processImage(DrawType type)
         DrawMain(0,            
             GetDrawX() + mob_position::get_shift_x(),
             GetDrawY() + mob_position::get_shift_y());
-    }
+    }*/
 }
 
 void Human::CalculateVisible(std::list<point>* visible_list)

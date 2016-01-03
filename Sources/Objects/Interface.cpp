@@ -137,60 +137,6 @@ void HumanInterface::UpdateHealth()
     }
 }
 
-bool HumanInterface::Click(int x, int y)
-{
-    helpers::normalize_pixels(&x, &y);
-    std::string msg;
-    if (r_hand_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::RIGHT_HAND;
-    }
-    else if (l_hand_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::LEFT_HAND;
-    }
-    else if (head_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::HEAD;
-    }
-    else if (suit_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::SUIT;
-    }
-    else if (feet_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::FEET;
-    }
-    else if (uniform_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::UNIFORM;
-    }
-    else if (drop_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::DROP;
-    }
-    else if (swap_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::SWAP;
-    }
-    else if (lay_.Click(x, y))
-    {
-        msg = HumanInterfacePlaces::LAY;
-    }
-    else if (health_.Click(x, y))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-
-    Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(msg));
-
-    return true;
-}
-
 void HumanInterface::ApplyActiveHandOnSlot(Slot<Item>* slot)
 {
     if (GetActiveHand().Get() && !slot->Get())
@@ -217,34 +163,34 @@ void HumanInterface::AddOverlays()
 {
     if (uniform_.Get())
     {
-        std::string state_name = uniform_.Get()->GetView()->GetBaseFrameset()->GetState();
+        std::string state_name = uniform_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/uniform.dmi", state_name + "_s");
     }
     if (feet_.Get())
     {
-        std::string state_name = feet_.Get()->GetView()->GetBaseFrameset()->GetState();
+        std::string state_name = feet_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/feet.dmi", state_name);
     }
     if (head_.Get())
     {
-        std::string state_name = head_.Get()->GetView()->GetBaseFrameset()->GetState();
+        std::string state_name = head_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/head.dmi", state_name);
     }
     if (suit_.Get())
     {
-        std::string state_name = suit_.Get()->GetView()->GetBaseFrameset()->GetState();
+        std::string state_name = suit_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/suit.dmi", state_name);
     }
 
     if (r_hand_.Get())
     {
-        std::string state_name = r_hand_.Get()->GetView()->GetBaseFrameset()->GetState();
+        std::string state_name = r_hand_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/items_righthand.dmi", state_name);
     }
 
     if (l_hand_.Get())
     {
-        std::string state_name = l_hand_.Get()->GetView()->GetBaseFrameset()->GetState();
+        std::string state_name = l_hand_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/items_lefthand.dmi", state_name);
     }
 }

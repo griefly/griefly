@@ -212,12 +212,16 @@ void MapMaster::Draw()
                     for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
                     {
                         if ((*list_it)->v_level == i)
-                            (*list_it)->processImage(z_level < z_level_m ? TOP : SAME);//screen
+                        {
+                            (*list_it)->Represent();
+                        }
                     }
 
                     auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
                     if (trf.valid() && trf->v_level == i)
-                        trf->processImage(z_level < z_level_m ? TOP : SAME);
+                    {
+                        trf->Represent();
+                    }
                 }
                 ++it2;
             }
@@ -233,12 +237,16 @@ void MapMaster::Draw()
                 for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
                 {
                     if ((*list_it)->v_level >= MAX_LEVEL)
-                        (*list_it)->processImage(z_level < z_level_m ? TOP : SAME);//screen
+                    {
+                        (*list_it)->Represent();
+                    }
                 }
 
                 auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
                 if (trf.valid() && trf->v_level >= MAX_LEVEL)
-                    trf->processImage(z_level < z_level_m ? TOP : SAME);
+                {
+                    trf->Represent();
+                }
             }
             ++it2;
         }
@@ -267,15 +275,7 @@ void MapMaster::GenerateFrame()
             {
                 ent.dir = mov->GetDir();
             }
-            ent.view.SetSprite((*list_it)->GetView()->GetBaseFrameset()->GetSpriteName());
-            ent.view.SetState((*list_it)->GetView()->GetBaseFrameset()->GetState());
-            ent.view.SetAngle((*list_it)->GetView()->GetAngle());
-            for (auto it = (*list_it)->GetView()->overlays_.begin();
-                      it != (*list_it)->GetView()->overlays_.end();
-                    ++it)
-            {
-                ent.view.AddOverlay(it->GetSpriteName(), it->GetState());
-            }
+            ent.view = *((*list_it)->GetView());
             GetRepresentation().AddToNewFrame(ent);
         }
 
@@ -286,9 +286,7 @@ void MapMaster::GenerateFrame()
         ent.pos_y = it->posy;
         ent.vlevel = trf->v_level;
         //ent.dir = (*list_it)->GetDir();
-        ent.view.SetSprite(trf->GetView()->GetBaseFrameset()->GetSpriteName());
-        ent.view.SetState(trf->GetView()->GetBaseFrameset()->GetState());
-        ent.view.SetAngle(trf->GetView()->GetBaseFrameset()->GetAngle());
+        ent.view = *(trf->GetView());
         GetRepresentation().AddToNewFrame(ent);
     }
 
@@ -388,84 +386,6 @@ bool MapMaster::IsTransparent(int posx, int posy, int posz)
         return false;
     }
     return squares[posx][posy][posz]->IsTransparent();
-}
-
-id_ptr_on<IOnMapObject> MapMaster::Click(int x, int y)
-{
-    if(!GetVisible()) 
-        return 0;
-
-    helpers::normalize_pixels(&x, &y);
-
-    id_ptr_on<IOnMapObject> retval = 0;
-
-    int z_level_m = mob_position::get_mob_z();
-    for (int z = z_level_m; z >= 0; --z)
-    {
-        auto it2 = GetVisible()->begin();  
-        while(it2 != GetVisible()->end())
-        {
-            if (it2->posz == z)
-            {
-                auto il = squares[it2->posx][it2->posy][it2->posz]->GetInsideList();
-                for (auto it = il.rbegin(); it != il.rend(); ++it)
-                {
-                    auto item = *it;
-                    if (retval.ret_id() == 0)
-                        if(item->v_level >= MAX_LEVEL)
-                            if(!item->IsTransp(
-                                x - (item->GetDrawX() + mob_position::get_shift_x()),
-                                y - (item->GetDrawY() + mob_position::get_shift_y())))
-                                retval = item;
-                }
-                auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
-                if (trf.valid())
-                    if (retval.ret_id() == 0)
-                        if(trf->v_level >= MAX_LEVEL)
-                            if(!trf->IsTransp(
-                                x - (trf->GetDrawX() + mob_position::get_shift_x()),
-                                y - (trf->GetDrawY() + mob_position::get_shift_y())))
-                                retval = trf;
-            }
-            if (retval.valid())
-                return retval;
-            ++it2;
-        }
-        it2 = GetVisible()->begin();  
-        for(int i = MAX_LEVEL - 1; i >= 0; --i)
-        {
-            auto it2 = GetVisible()->begin();  
-            while(it2 != GetVisible()->end())
-            {
-                if (it2->posz == z)
-                {
-                    auto il = squares[it2->posx][it2->posy][it2->posz]->GetInsideList();
-                    for (auto it = il.rbegin(); it != il.rend(); ++it)
-                    {
-                        auto item = *it;
-                        if (retval.ret_id() == 0)
-                            if(item->v_level == i)
-                                if(!item->IsTransp(
-                                    x - (item->GetDrawX() + mob_position::get_shift_x()),
-                                    y - (item->GetDrawY() + mob_position::get_shift_y())))
-                                    retval = item;
-                    }
-                    auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
-                    if (trf.valid())
-                        if (retval.ret_id() == 0)
-                            if(trf->v_level == i)
-                                if(!trf->IsTransp(
-                                    x - (trf->GetDrawX() + mob_position::get_shift_x()),
-                                    y - (trf->GetDrawY() + mob_position::get_shift_y())))
-                                    retval = trf;
-                }
-                if (retval.ret_id())
-                    return retval;
-                ++it2;
-            }
-        }
-    }
-    return 0;
 }
 
 MapMaster* map_master_ = 0;

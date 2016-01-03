@@ -77,15 +77,6 @@ public:
     {
         return posz_;
     }
-    virtual int GetDrawX() const override
-    {
-        return posx_ * 32;
-    }
-
-    virtual int GetDrawY() const override
-    {
-        return posy_ * 32;
-    }
     virtual int GetX() const override
     {
         return posx();

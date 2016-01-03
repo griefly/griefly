@@ -2,7 +2,7 @@
 
 #include "Mob.h"
 #include "Interface.h"
-#include "View.h"
+#include "ViewInfo.h"
 
 class LoginInterface: public InterfaceBase
 {
@@ -11,12 +11,11 @@ class LoginInterface: public InterfaceBase
 public:
     void Init();
 
-    virtual bool Click(int x, int y) override;
     virtual void HandleClick(const std::string& place) override {}
     virtual void Draw() override;
     virtual unsigned int hash() const override;
 private:
-    View view_;
+    ViewInfo view_;
 };
 
 std::ostream& operator<<(std::stringstream& file, LoginInterface& interf);
@@ -39,16 +38,6 @@ public:
     virtual void processGUImsg(const Message2& msg) override;
 
     virtual void process() override;
-
-    virtual int GetDrawX() const override
-    {
-        return 0;
-    }
-
-    virtual int GetDrawY() const override
-    {
-        return 0;
-    }
 
     virtual int GetX() const override
     {

@@ -43,11 +43,9 @@ public:
     virtual void ProcessForce();
     virtual void ApplyForce(VDir force) override;
 
-    virtual bool IsTransp(int x, int y) override;
-
     virtual void delThis() override { IOnMapObject::delThis(); }
 
-    virtual void processImage(DrawType type);
+    virtual void Represent() override;
     virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 public:

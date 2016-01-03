@@ -7,7 +7,7 @@
 #include "SpriteHolder.h"
 #include "HelperStructers.h"
 #include "Metadata.h"
-#include "View.h"
+#include "ViewInfo.h"
 
 class IOnMapObject: public IOnMapBase
 {
@@ -53,16 +53,6 @@ public:
     {
         return transparent;
     }
-    virtual int GetDrawX() const override
-    {
-        int temp = owner->GetDrawX();
-        return temp;
-    }
-    virtual int GetDrawY() const override
-    {
-        int temp = owner->GetDrawY();
-        return temp;
-    }
     virtual void process() override
     {
         processPhysics();
@@ -71,15 +61,10 @@ public:
     
     virtual void delThis() override;
     virtual std::list<HashAmount> insertLiquid(std::list<HashAmount>);
-    virtual void processImage(DrawType type) override;//draw this item
-    void DrawMain(int frame_shift, int x, int y);
-    virtual bool IsTransp(int x, int y) override;
+    virtual void Represent() override;
     void SetSprite(const std::string& T_SPR);
-    const GLSprite* GetSprite();
-
     void SetState(const std::string& name);
-    const ImageMetadata::SpriteMetadata* GetMetadata();
-    View* GetView() { return &view_; }
+    ViewInfo* GetView() { return &view_; }
 public:
     int KV_SAVEBLE(v_level);
     PassableLevel KV_SAVEBLE(passable_down);
@@ -93,7 +78,7 @@ public:
     bool KV_SAVEBLE(transparent);
     std::string KV_SAVEBLE(name);
 protected:
-    View KV_SAVEBLE(view_);
+    ViewInfo KV_SAVEBLE(view_);
 };
 
 ADD_TO_TYPELIST(IOnMapObject);

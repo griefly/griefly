@@ -16,8 +16,8 @@ public:
 
         void LoadFramesetInfo(const ViewInfo::FramesetInfo& frameset_info);
 
-        const GLSprite* GetSprite() { return sprite_; }
-        const ImageMetadata::SpriteMetadata* GetMetadata() { return metadata_; }
+        const GLSprite* GetSprite() const { return sprite_; }
+        const ImageMetadata::SpriteMetadata* GetMetadata() const { return metadata_; }
 
         bool IsTransp(int x, int y, int shift, int angle);
         void Draw(size_t shift, int x, int y, int angle = 0);
@@ -46,6 +46,8 @@ public:
     void Draw(int x_shift, int y_shift, size_t shift);
 
     void LoadViewInfo(const ViewInfo& view_info);
+
+    const FramesetState& GetBaseFrameset() const { return base_frameset_; }
 private:
     FramesetState base_frameset_;
     std::vector<FramesetState> underlays_;

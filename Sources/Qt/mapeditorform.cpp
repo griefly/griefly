@@ -5,6 +5,8 @@
 #include "Map.h"
 #include "Text.h"
 
+#include "View2.h"
+
 #include <map>
 #include <set>
 
@@ -79,22 +81,27 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
             is_turf = true;
         }
 
-        if (bloc->GetMetadata() == nullptr)
+        ViewInfo* view_info = bloc->GetView();
+
+        if (view_info->GetBaseFrameset().GetSprite() == "")
         {
             continue;
         }
 
         QVector<QPixmap> images;
 
-        for (size_t dir = 0; dir < bloc->GetMetadata()->dirs; ++dir)
+        View2 view;
+        view.LoadViewInfo(*view_info);
+
+        for (size_t dir = 0; dir < view.GetBaseFrameset().GetMetadata()->dirs; ++dir)
         {
-            int current_frame_pos = bloc->GetMetadata()->first_frame_pos + dir;
+            int current_frame_pos = view.GetBaseFrameset().GetMetadata()->first_frame_pos + dir;
 
-            int image_state_h_ = current_frame_pos / bloc->GetSprite()->FrameW();
-            int image_state_w_ = current_frame_pos % bloc->GetSprite()->FrameW();
+            int image_state_h_ = current_frame_pos / view.GetBaseFrameset().GetSprite()->FrameW();
+            int image_state_w_ = current_frame_pos % view.GetBaseFrameset().GetSprite()->FrameW();
 
-            SDL_Surface* s = bloc->GetSprite()->GetSDLSprite()->frames
-                    [image_state_w_ * bloc->GetSprite()->FrameH() + image_state_h_];
+            SDL_Surface* s = view.GetBaseFrameset().GetSprite()->GetSDLSprite()->frames
+                    [image_state_w_ * view.GetBaseFrameset().GetSprite()->FrameH() + image_state_h_];
             QImage img(static_cast<uchar*>(s->pixels),
                                    s->w, s->h, QImage::Format_ARGB32);
 

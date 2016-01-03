@@ -7,8 +7,6 @@
 
 #include "MobPosition.h"
 
-#include "EffectSystem.h"
-#include "MoveEffect.h"
 #include "SyncRandom.h"
 #include "ObjectFactory.h"
 #include "MagicStrings.h"
@@ -45,33 +43,6 @@
 #include <QUuid>
 
 int ping_send;
-
-void Manager::CheckMove(Dir direct)
-{
-    //TODO
-    for (int z = 0; z < GetMap().GetMapD(); ++z)
-        for(int x = std::max(0, GetMob()->GetX() - sizeHsq);
-            x <= std::min(GetMob()->GetX() + sizeHsq, GetMap().GetMapH() - 1); x++)
-        {
-            for(int y = std::max(0, GetMob()->GetY() - sizeWsq);
-                y <= std::min(GetMob()->GetY() + sizeWsq, GetMap().GetMapW() - 1); y++)
-            {
-                GetMap().squares[x][y][z]->ForEach([&](id_ptr_on<IOnMapBase> item)
-                {
-                    Move* eff = EffectFabricOf<Move>::getEffectOf();
-                    eff->Init(TITLE_SIZE, direct, GetMob()->pixSpeed, item);
-                    eff->Start();
-                });
-                auto trf = GetMap().squares[x][y][z]->GetTurf();
-                if (trf.valid())
-                {
-                    Move* eff = EffectFabricOf<Move>::getEffectOf();
-                    eff->Init(TITLE_SIZE, direct, GetMob()->pixSpeed, trf);
-                    eff->Start();
-                }
-            }
-        }
-}
 
 Manager::Manager()
 {
@@ -170,11 +141,6 @@ void Manager::Process()
             GetScreen().Clear();
             //GetMap().Draw();
             GetRepresentation().Process();
-            if ((SDL_GetTicks() - last_effect_process) > (1000 / 60))
-            {
-                last_effect_process = SDL_GetTicks();
-                FabricProcesser::Get()->process();
-            }
             //ClearGUIZone();
 
             GetChat().Process();
@@ -234,40 +200,11 @@ void Manager::HandleInput()
 
     if (rand() % 5 == 1)
     {
-        ProcessClick(rand() % w, rand() % h);
+    //    ProcessClick(rand() % w, rand() % h);
     }
     if (rand() % 10 == 1)
     {
         HandleKeyboardDown(nullptr);
-    }
-}
-
-void Manager::ProcessClick(int mouse_x, int mouse_y)
-{
-    if (GetMob()->GetInterface() && GetMob()->GetInterface()->Click(mouse_x, mouse_y))
-    {
-        last_touch_ = "Interface";
-        return;
-    }
-
-    // TODO: Remake, huge exploit
-    if (id_ptr_on<Human> h = GetMob())
-    {
-        if (h->GetLying() == true)
-            return;
-    }
-
-    id_ptr_on<IOnMapObject> item;
-    item = GetMap().Click(mouse_x, mouse_y);
-    if (item)
-    {
-        Message2 msg;
-        msg.type = MessageType::MOUSE_CLICK;
-        msg.json = "{\"obj\":" + QString::number(item.ret_id()) + "}";
-
-        Network2::GetInstance().SendMsg(msg);
-
-        last_touch_ = item->name;
     }
 }
 

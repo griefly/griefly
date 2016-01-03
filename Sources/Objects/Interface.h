@@ -8,7 +8,6 @@
 class InterfaceBase
 {
 public:
-    virtual bool Click(int x, int y) = 0;
     virtual void HandleClick(const std::string& place) = 0;
     virtual void Draw() = 0;
     virtual unsigned int hash() const = 0;
@@ -37,7 +36,6 @@ public:
         owner_ = owner;
     }
 
-    virtual bool Click(int x, int y) override;
     virtual void HandleClick(const std::string& place) override;
     virtual void Draw() override;
     void InitSlots();

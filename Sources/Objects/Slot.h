@@ -2,7 +2,7 @@
 
 #include "Item.h"
 
-#include "View.h"
+#include "ViewInfo.h"
 
 #include "hashes.h"
 #include "Representation.h"
@@ -94,8 +94,7 @@ public:
         unit.pixel_x = 32 * posx_;
         unit.pixel_y = 32 * posy_;
         unit.shift = shift;
-        unit.view.SetSprite(view_.GetBaseFrameset()->GetSpriteName());
-        unit.view.SetState(view_.GetBaseFrameset()->GetState());
+        unit.view = view_;
         GetRepresentation().AddToNewFrame(unit);
         if (item_)
         {
@@ -104,13 +103,11 @@ public:
             unit.pixel_x = 32 * posx_;
             unit.pixel_y = 32 * posy_;
             unit.shift = 0;
-
-            unit.view.SetSprite(item_->GetView()->GetBaseFrameset()->GetSpriteName());
-            unit.view.SetState(item_->GetView()->GetBaseFrameset()->GetState());
+            unit.view = *(item_->GetView());
             GetRepresentation().AddToNewFrame(unit);
         }
     }
-    View* GetView()
+    ViewInfo* GetView()
     {
         return &view_;
     }
@@ -145,7 +142,7 @@ public:
                + hash(type_);
     }
 private:
-    View view_;
+    ViewInfo view_;
     id_ptr_on<T> item_;
     int posx_;
     int posy_;

@@ -48,17 +48,10 @@ bool Ghost::IsMobGhost()
     return draw;
 }
 
-void Ghost::processImage(DrawType type)
+void Ghost::Represent()
 {
     if (IsMobGhost())
-        IMob::processImage(type);
-}
-
-bool Ghost::IsTransp(int x, int y)
-{
-    if (IsMobGhost())
-        return IMob::IsTransp(x, y);
-    return true;
+        IMob::Represent();
 }
 
 void Ghost::CalculateVisible(std::list<point>* visible_list)

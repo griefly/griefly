@@ -27,7 +27,7 @@ public:
 
     virtual void AttackBy(id_ptr_on<Item> item) override;
 
-    virtual void processImage(DrawType type) override;
+    virtual void Represent() override;
 
     virtual bool checkMove(Dir direct) override;
     virtual InterfaceBase* GetInterface() override { return &interface_; }

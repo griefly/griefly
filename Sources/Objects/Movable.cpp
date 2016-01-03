@@ -1,7 +1,5 @@
 ﻿#include "Movable.h"
 
-#include "EffectSystem.h"
-#include "MoveEffect.h"
 #include "helpers.h"
 #include "Mob.h"
 #include "MobPosition.h"
@@ -137,27 +135,19 @@ bool IMovable::mainMove()
     owner->RemoveItem(GetId());
     new_owner->AddItem(GetId());
 
-    if(new_owner->IsVisibleByPlayer())
-    {
-        Move* eff = EffectFabricOf<Move>::getEffectOf();
-        eff->Init(TITLE_SIZE, dMove, pixSpeed, GetId(), true);
-        eff->Start();
-    }
-
     if (   GetMob().ret_id() == GetId()
         || Contains(GetMob()))
     {
-        GetManager().CheckMove(dMove);
         GetManager().UpdateVisible();
     }
 
     lastMove = static_cast<int>(MAIN_TICK);
     return true;
-};
+}
 
-void IMovable::processImage(DrawType type)
+void IMovable::Represent()
 {
-    if (NODRAW)
+    /*if (NODRAW)
         return;
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
         return;
@@ -173,7 +163,7 @@ void IMovable::processImage(DrawType type)
         DrawMain(0,            
             GetDrawX() + mob_position::get_shift_x(),
             GetDrawY() + mob_position::get_shift_y());
-    }
+    }*/
 }
 
 void IMovable::Bump(id_ptr_on<IMovable> item)
@@ -188,20 +178,6 @@ void IMovable::BumpByGas(Dir dir, bool inside)
 {
     //checkMove(dir);
     ApplyForce(DirToVDir[dir]);
-}
-
-bool IMovable::IsTransp(int x, int y)
-{
-    if (NODRAW)
-        return true;
-    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
-        return true;
-
-    int shift = 0;
-    if (GetMetadata()->dirs >= 4)
-        shift = helpers::dir_to_byond(dMove);
-
-    return view_.IsTransp(x, y, shift);
 }
 
 ForceManager& ForceManager::Get()

@@ -4,24 +4,17 @@
 #include "Map.h"
 #include "Mob.h"
 #include "Manager.h"
-#include "MoveEffect.h"
 #include "Tile.h"
 
 #include "Creator.h"
 #include "MobPosition.h"
 #include "helpers.h"
 
-std::list<HashAmount> IOnMapObject::insertLiquid(std::list<HashAmount> r) {return r;};
+std::list<HashAmount> IOnMapObject::insertLiquid(std::list<HashAmount> r) {return r;}
 
 void IOnMapObject::SetSprite(const std::string& name)
 {
     view_.SetSprite(name);
-};
-
-
-const GLSprite* IOnMapObject::GetSprite()
-{
-    return view_.GetSprite();
 }
 
 void IOnMapObject::SetState(const std::string& name)
@@ -29,21 +22,11 @@ void IOnMapObject::SetState(const std::string& name)
     view_.SetState(name);
 }
 
-const ImageMetadata::SpriteMetadata* IOnMapObject::GetMetadata()
-{  
-    return view_.GetMetadata();
-}
-
-void IOnMapObject::DrawMain(int shift, int x, int y)
-{
-    view_.Draw(shift, x, y);
-}
-
-void IOnMapObject::processImage(DrawType type)
+void IOnMapObject::Represent()
 { 
-    DrawMain(0, 
+    /*DrawMain(0,
             GetDrawX() + mob_position::get_shift_x(),
-            GetDrawY() + mob_position::get_shift_y());
+            GetDrawY() + mob_position::get_shift_y());*/
 };
 
 void IOnMapObject::processPhysics()
@@ -59,12 +42,6 @@ void IOnMapObject::processPhysics()
         down->AddItem(GetId());
     }
 }
-
-bool IOnMapObject::IsTransp(int x, int y)
-{
-    return view_.IsTransp(x, y, 0);
-}
-
 void IOnMapObject::delThis()
 {
     IOnMapBase::delThis();

@@ -168,20 +168,6 @@ void LoginInterface::Init()
     view_.SetSprite("icons/login_screen.jpg");
 }
 
-bool LoginInterface::Click(int x, int y)
-{
-    helpers::normalize_pixels(&x, &y);
-
-    bool is_tr = !view_.IsTransp(x, y, 0);
-
-    if (is_tr)
-    {
-        Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(LOGIN_CLICK));
-    }
-
-    return is_tr;
-}
-
 void LoginInterface::Draw()
 {
     //view_.Draw(0, 0, 0);
@@ -189,8 +175,7 @@ void LoginInterface::Draw()
     unit.name = LOGIN_CLICK;
     unit.pixel_x = 0;
     unit.pixel_y = 0;
-    unit.view.SetSprite(view_.GetBaseFrameset()->GetSpriteName());
-    unit.view.SetState(view_.GetBaseFrameset()->GetState());
+    unit.view = view_;
     GetRepresentation().AddToNewFrame(unit);
     //qDebug() << "Login interface";
 }
