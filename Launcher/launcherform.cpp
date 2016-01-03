@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QMessageBox>
+#include <QFileInfo>
 
 LauncherForm::LauncherForm(QWidget *parent) :
     QWidget(parent),
@@ -143,7 +144,20 @@ void LauncherForm::on_connectPushButton_clicked()
 
     hide();
     ui->connectPushButton->setEnabled(false);
-    kv_process_.start("KVEngine.exe", args);
+
+    QString TARGET_NAME = "KVEngine";
+
+    // The binary does not have .exe extension on Linux
+
+    QFileInfo file_info(TARGET_NAME + ".exe");
+    if (file_info.exists())
+    {
+        kv_process_.start(TARGET_NAME + ".exe", args);
+    }
+    else
+    {
+        kv_process_.start(TARGET_NAME, args);
+    }
 }
 
 void LauncherForm::on_hidePushButton_clicked()
