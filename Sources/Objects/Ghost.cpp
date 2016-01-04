@@ -51,7 +51,9 @@ bool Ghost::IsMobGhost()
 void Ghost::Represent()
 {
     if (IsMobGhost())
+    {
         IMob::Represent();
+    }
 }
 
 void Ghost::CalculateVisible(std::list<point>* visible_list)

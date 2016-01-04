@@ -22,9 +22,14 @@ void IOnMapObject::SetState(const std::string& name)
 
 void IOnMapObject::Represent()
 { 
-    /*DrawMain(0,
-            GetDrawX() + mob_position::get_shift_x(),
-            GetDrawY() + mob_position::get_shift_y());*/
+    Representation::Entity ent;
+    ent.id = GetId();
+    ent.pos_x = GetX();
+    ent.pos_y = GetY();
+    ent.vlevel = v_level;
+    ent.view = *GetView();
+    ent.dir = D_DOWN;
+    GetRepresentation().AddToNewFrame(ent);
 }
 
 void IOnMapObject::processPhysics()

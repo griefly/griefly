@@ -76,7 +76,9 @@ bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
 void CubeTile::Bump(id_ptr_on<IMovable> item)
 {
     if (GetTurf())
+    {
         GetTurf()->Bump(item);
+    }
 
     if (item->GetOwner().ret_id() == GetId())
     {
@@ -137,8 +139,11 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
 {
     id_ptr_on<IOnMapObject> item = item_raw;
     if (!item.valid())
+    {
         return false;
-    auto itr = inside_list_.begin();
+    }
+    // TODO: why this code? It seems pointless
+    /*auto itr = inside_list_.begin();
     while(itr != inside_list_.end())
     {
         if (itr->ret_id() == item.ret_id())
@@ -151,7 +156,9 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
         ++itr;
     }
     InsideType::iterator locit = itr;
-    inside_list_.insert(locit, item);
+    inside_list_.insert(locit, item);*/
+
+    inside_list_.push_back(item);
     item->SetOwner(GetId());
 
     sum_passable_all_ = std::min(sum_passable_all_, item->GetPassable(D_ALL));
@@ -166,7 +173,9 @@ bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
 {
     id_ptr_on<IOnMapObject> item = item_raw;
     if (!item.valid())
+    {
         return false;
+    }
 
     if (item == GetTurf())
     {

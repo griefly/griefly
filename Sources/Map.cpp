@@ -191,65 +191,57 @@ void MapMaster::LoadFromMapGen(const std::string& name)
    GetFactory().FinishWorldCreation();
 }
 
-void MapMaster::Draw()
+void MapMaster::Represent()
 {
-    if(!GetVisible()) 
-        return;
-    //glClear(GL_COLOR_BUFFER_BIT);
-    int z_level_m = mob_position::get_mob_z();
-    for (int z_level = 0; z_level < GetMapD(); z_level++) 
+    if(!GetVisible())
     {
-        for(int i = 0; i < MAX_LEVEL; ++i)
-        {
-            auto it2 = GetVisible()->begin();
-            while(it2 != GetVisible()->end())
-            {   
-                if (it2->posz == z_level)
-                {
-                    auto sq = squares[it2->posx][it2->posy][it2->posz];
-                    auto& in_list = sq->GetInsideList();
+        return;
+    }
 
-                    for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
-                    {
-                        if ((*list_it)->v_level == i)
-                        {
-                            (*list_it)->Represent();
-                        }
-                    }
-
-                    auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
-                    if (trf.valid() && trf->v_level == i)
-                    {
-                        trf->Represent();
-                    }
-                }
-                ++it2;
-            }
-        } 
+    for(int i = 0; i < MAX_LEVEL; ++i)
+    {
         auto it2 = GetVisible()->begin();
         while(it2 != GetVisible()->end())
-        {   
-            if (it2->posz == z_level)
+        {
+            auto sq = squares[it2->posx][it2->posy][it2->posz];
+            auto& in_list = sq->GetInsideList();
+
+            for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
             {
-                auto sq = squares[it2->posx][it2->posy][it2->posz];
-                auto& in_list = sq->GetInsideList();
-
-                for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
+                if ((*list_it)->v_level == i)
                 {
-                    if ((*list_it)->v_level >= MAX_LEVEL)
-                    {
-                        (*list_it)->Represent();
-                    }
+                    (*list_it)->Represent();
                 }
+            }
 
-                auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
-                if (trf.valid() && trf->v_level >= MAX_LEVEL)
-                {
-                    trf->Represent();
-                }
+            auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+            if (trf.valid() && trf->v_level == i)
+            {
+                trf->Represent();
             }
             ++it2;
         }
+    }
+    auto it2 = GetVisible()->begin();
+    while(it2 != GetVisible()->end())
+    {
+        auto sq = squares[it2->posx][it2->posy][it2->posz];
+        auto& in_list = sq->GetInsideList();
+
+        for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
+        {
+            if ((*list_it)->v_level >= MAX_LEVEL)
+            {
+                (*list_it)->Represent();
+            }
+        }
+
+        auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+        if (trf.valid() && trf->v_level >= MAX_LEVEL)
+        {
+            trf->Represent();
+        }
+        ++it2;
     }
 }
 
@@ -259,7 +251,10 @@ void MapMaster::GenerateFrame()
     {
         return;
     }
-    for (auto it = GetVisible()->begin(); it != GetVisible()->end(); ++it)
+
+    Represent();
+
+    /*for (auto it = GetVisible()->begin(); it != GetVisible()->end(); ++it)
     {
         auto sq = squares[it->posx][it->posy][it->posz];
         auto& in_list = sq->GetInsideList();
@@ -288,7 +283,7 @@ void MapMaster::GenerateFrame()
         //ent.dir = (*list_it)->GetDir();
         ent.view = *(trf->GetView());
         GetRepresentation().AddToNewFrame(ent);
-    }
+    }*/
 
     GetMob()->GenerateInterfaceForFrame();
 

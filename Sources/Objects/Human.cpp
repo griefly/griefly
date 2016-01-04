@@ -336,18 +336,21 @@ void Human::AttackBy(id_ptr_on<Item> item)
 
 void Human::Represent()
 {
-    /*if (GetMetadata()->dirs >= 4 && !lying_)
+    Representation::Entity ent;
+    ent.id = GetId();
+    ent.pos_x = GetX();
+    ent.pos_y = GetY();
+    ent.vlevel = v_level;
+    ent.view = *GetView();
+    if (!lying_)
     {
-        DrawMain(helpers::dir_to_byond(GetDir()),
-            GetDrawX() + mob_position::get_shift_x(),
-            GetDrawY() + mob_position::get_shift_y());
+        ent.dir = GetDir();
     }
     else
     {
-        DrawMain(0,            
-            GetDrawX() + mob_position::get_shift_x(),
-            GetDrawY() + mob_position::get_shift_y());
-    }*/
+        ent.dir = D_DOWN;
+    }
+    GetRepresentation().AddToNewFrame(ent);
 }
 
 void Human::CalculateVisible(std::list<point>* visible_list)

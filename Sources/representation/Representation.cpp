@@ -127,7 +127,6 @@ void Representation::Click(int x, int y)
             int bdir = helpers::dir_to_byond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                // TODO: do smth
                 qDebug() << "Clicked " << it->id;
                 id_to_send = it->id;
                 break;
@@ -146,7 +145,6 @@ void Representation::Click(int x, int y)
             int bdir = helpers::dir_to_byond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                // TODO: do smth
                 qDebug() << "Clicked " << it->id;
                 id_to_send = it->id;
                 break;

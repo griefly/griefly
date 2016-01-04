@@ -118,7 +118,7 @@ bool IMovable::checkPassable()
     }
     
     return true;
-};
+}
 
 bool IMovable::Rotate(Dir dir)
 {
@@ -147,23 +147,14 @@ bool IMovable::mainMove()
 
 void IMovable::Represent()
 {
-    /*if (NODRAW)
-        return;
-    if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
-        return;
-
-    if (GetMetadata()->dirs >= 4)
-    {
-        DrawMain(helpers::dir_to_byond(dMove),            
-            GetDrawX() + mob_position::get_shift_x(),
-            GetDrawY() + mob_position::get_shift_y());
-    }
-    else
-    {
-        DrawMain(0,            
-            GetDrawX() + mob_position::get_shift_x(),
-            GetDrawY() + mob_position::get_shift_y());
-    }*/
+    Representation::Entity ent;
+    ent.id = GetId();
+    ent.pos_x = GetX();
+    ent.pos_y = GetY();
+    ent.vlevel = v_level;
+    ent.view = *GetView();
+    ent.dir = GetDir();
+    GetRepresentation().AddToNewFrame(ent);
 }
 
 void IMovable::Bump(id_ptr_on<IMovable> item)
