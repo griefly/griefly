@@ -27,7 +27,7 @@ int Lobby::GetSecondUntilStart()
     return seconds_;
 }
 
-void Lobby::process()
+void Lobby::Process()
 {
     --seconds_;
 }

@@ -11,7 +11,7 @@ public:
     DECLARE_GET_TYPE_ITEM(Lobby)
     Lobby(size_t id);
     int GetSecondUntilStart();
-    virtual void process() override;
+    virtual void Process() override;
 
     void AddSpawnPoint(id_ptr_on<SpawnPoint> point);
     std::vector<id_ptr_on<CubeTile>> GetTilesFor(const std::string& type);

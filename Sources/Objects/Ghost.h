@@ -15,7 +15,7 @@ public:
     virtual void InitGUI() override;
     virtual void DeinitGUI() override;
 
-    virtual void process() override;
+    virtual void Process() override;
 private:
     int KV_SAVEBLE(seconds_until_respawn_);
     bool IsMobGhost();

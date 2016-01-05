@@ -13,7 +13,7 @@ public:
     GasTank(size_t id);
 
     virtual void AttackBy(id_ptr_on<Item> item) override;
-    virtual void process() override;
+    virtual void Process() override;
 private:
     void Open();
     void Close();

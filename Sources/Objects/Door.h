@@ -12,7 +12,7 @@ public:
     
     virtual void Open();
     virtual void Close();
-    virtual void process() override;
+    virtual void Process() override;
     virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual void AttackBy(id_ptr_on<Item> item) override;
     bool IsOpen() const { return door_state_ == OPEN; }
@@ -78,7 +78,7 @@ public:
 
     virtual void Open();
     virtual void Close();
-    virtual void process() override;
+    virtual void Process() override;
     virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual void AttackBy(id_ptr_on<Item> item) override;
     bool IsOpen() const { return door_state_ == OPEN; }

@@ -18,7 +18,7 @@ public:
     virtual void GenerateInterfaceForFrame();
     virtual void processGUImsg(const Message2& msg) override;
     
-    virtual void processPhysics() override;
+    virtual void ProcessPhysics() override;
 
     virtual InterfaceBase* GetInterface() { return nullptr; }
 

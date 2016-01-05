@@ -15,7 +15,7 @@ public:
     virtual void InitGUI() override;
     virtual void GenerateInterfaceForFrame() override;
     virtual void processGUImsg(const Message2& msg) override;
-    virtual void process() override;
+    virtual void Process() override;
     virtual void Live();
 
     virtual void OnDeath();

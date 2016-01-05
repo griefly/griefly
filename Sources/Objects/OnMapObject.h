@@ -51,11 +51,11 @@ public:
     {
         return transparent;
     }
-    virtual void process() override
+    virtual void Process() override
     {
-        processPhysics();
+        ProcessPhysics();
     }
-    virtual void processPhysics();
+    virtual void ProcessPhysics();
     
     virtual void delThis() override;
     virtual void Represent() override;

@@ -142,21 +142,6 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
     {
         return false;
     }
-    // TODO: why this code? It seems pointless
-    /*auto itr = inside_list_.begin();
-    while(itr != inside_list_.end())
-    {
-        if (itr->ret_id() == item.ret_id())
-        {
-            SYSTEM_STREAM << "ALERT! " << item.ret_id() << " double added!\n";
-            SDL_Delay(5000);
-        }
-        if (itr->ret_id() > item.ret_id())
-            break;
-        ++itr;
-    }
-    InsideType::iterator locit = itr;
-    inside_list_.insert(locit, item);*/
 
     inside_list_.push_back(item);
     item->SetOwner(GetId());

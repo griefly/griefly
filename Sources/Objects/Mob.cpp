@@ -32,23 +32,35 @@ void IMob::delThis()
 void IMob::processGUImsg(const Message2 &msg)
 {
     if (msg.type != MessageType::ORDINARY)
+    {
         return;
+    }
 
     QJsonObject obj = Network2::ParseJson(msg);
 
     if (Network2::IsKey(obj, Input::MOVE_UP))
+    {
         checkMove(D_UP);
+    }
     else if (Network2::IsKey(obj, Input::MOVE_DOWN))
+    {
         checkMove(D_DOWN);
+    }
     else if (Network2::IsKey(obj, Input::MOVE_LEFT))
+    {
         checkMove(D_LEFT);
+    }
     else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
+    {
         checkMove(D_RIGHT);
+    }
 }
 
-void IMob::processPhysics()
+void IMob::ProcessPhysics()
 {
-    IMessageReceiver::processPhysics();
+    IMessageReceiver::ProcessPhysics();
     if(GetId() == GetMob().ret_id())
+    {
         GetManager().UpdateVisible();
+    }
 }

@@ -39,7 +39,7 @@ public:
     {                                         
         return REAL_TYPE_ITEM;                
     }       
-    virtual void process() { }
+    virtual void Process() { }
 
     void SetId(size_t id);
     size_t GetId() const { return id_; }

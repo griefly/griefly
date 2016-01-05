@@ -108,7 +108,7 @@ void Ghost::DeinitGUI()
     GetTexts().Delete("RespawnCount");
 }
 
-void Ghost::process()
+void Ghost::Process()
 {
     --seconds_until_respawn_;
     if (seconds_until_respawn_ < 0)

@@ -43,7 +43,7 @@ void Door::Close()
     last_tick_ = MAIN_TICK;
 }
 
-void Door::process()
+void Door::Process()
 {
     if (door_state_ == OPENING)
     {
@@ -207,7 +207,7 @@ void GlassDoor::Close()
     last_tick_ = MAIN_TICK;
 }
 
-void GlassDoor::process()
+void GlassDoor::Process()
 {
     if (door_state_ == OPENING)
     {

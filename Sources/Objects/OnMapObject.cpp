@@ -32,10 +32,12 @@ void IOnMapObject::Represent()
     GetRepresentation().AddToNewFrame(ent);
 }
 
-void IOnMapObject::processPhysics()
+void IOnMapObject::ProcessPhysics()
 {
     if (owner->IsStrongOwner())
+    {
         return;
+    }
     auto down = owner->GetNeighbour(D_ZDOWN);
     if (    down.valid() 
         && (CanPass(down->GetPassable(D_ZUP), passable_level)) 

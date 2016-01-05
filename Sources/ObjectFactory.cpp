@@ -90,7 +90,7 @@ void ObjectFactory::ForeachProcess()
         }
         else if ((MAIN_TICK % process_table_[i]->GetFreq()) == 0)
         {
-            process_table_[i]->process();
+            process_table_[i]->Process();
         }
     }
 }

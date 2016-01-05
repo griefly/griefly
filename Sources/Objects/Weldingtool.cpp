@@ -10,7 +10,7 @@ Weldingtool::Weldingtool(size_t id) : Item(id)
     fuel_ = 50;
 }
 
-void Weldingtool::process()
+void Weldingtool::Process()
 {
     --fuel_;
     if (fuel_ <= 0)

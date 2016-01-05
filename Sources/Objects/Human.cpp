@@ -171,9 +171,9 @@ void Human::UpdateOverlays()
     interface_.AddOverlays();
 }
 
-void Human::process()
+void Human::Process()
 {
-    IMob::process();
+    IMob::Process();
     Live();
 }
 

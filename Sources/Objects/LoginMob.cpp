@@ -142,7 +142,7 @@ void LoginMob::processGUImsg(const Message2& msg)
     }
 }
 
-void LoginMob::process()
+void LoginMob::Process()
 {
 
 }

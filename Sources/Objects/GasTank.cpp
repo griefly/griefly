@@ -63,7 +63,7 @@ void GasTank::Close()
     SetFreq(0);
 }
 
-void GasTank::process()
+void GasTank::Process()
 {
     if (id_ptr_on<CubeTile> ct = owner)
     {

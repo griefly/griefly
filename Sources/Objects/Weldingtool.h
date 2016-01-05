@@ -8,7 +8,7 @@ public:
     DECLARE_SAVED(Weldingtool, Item);
     DECLARE_GET_TYPE_ITEM(Weldingtool);
     Weldingtool(size_t id);
-    virtual void process() override;
+    virtual void Process() override;
     virtual void AttackBy(id_ptr_on<Item> item) override;
     void TurnOn();
     void TurnOff();
