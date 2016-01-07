@@ -9,9 +9,9 @@
 
 #include <fstream>
 
-#include "constheader.h"
-#include "StreamWrapper.h"
-#include "helpers.h"
+#include "core/constheader.h"
+#include "core/StreamWrapper.h"
+#include "core/helpers.h"
 
 MapEditor::EditorEntry::EditorEntry()
 {

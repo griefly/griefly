@@ -1,12 +1,12 @@
 #include <assert.h>
 
 #include "GLSprite.h"
-#include "constheader.h"
+#include "core/constheader.h"
 
-#include "Manager.h"
-#include "MainObject.h"
+#include "core/Manager.h"
+#include "core/objects/MainObject.h"
 
-#include "qtopengl.h"
+#include "qt/qtopengl.h"
 
 unsigned int GLSprite::FrameW() const
 {

@@ -1,10 +1,10 @@
 #include "Representation.h"
 
-#include "constheader.h"
-#include "helpers.h"
+#include "core/constheader.h"
+#include "core/helpers.h"
 
 #include "Sound.h"
-#include "Network2.h"
+#include "net/Network2.h"
 
 Representation::Representation()
 {

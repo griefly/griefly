@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-#include "hashes.h"
+#include "core/hashes.h"
 
 class ViewInfo;
 

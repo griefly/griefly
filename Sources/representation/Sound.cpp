@@ -1,7 +1,7 @@
 #include "Sound.h"
 
-#include "MobPosition.h"
-#include "VisiblePoints.h"
+#include "core/MobPosition.h"
+#include "core/VisiblePoints.h"
 #include "Representation.h"
 
 SoundManager& GetSoundManager()

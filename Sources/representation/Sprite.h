@@ -5,7 +5,7 @@
 
 #include "Metadata.h"
 
-#include "constheader.h"
+#include "core/constheader.h"
 
 void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask);
 

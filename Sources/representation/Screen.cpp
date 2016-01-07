@@ -6,7 +6,7 @@
 #include <SDL_opengl.h>
 
 #include "Params.h"
-#include "qtopengl.h"
+#include "qt/qtopengl.h"
 
 Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
 {

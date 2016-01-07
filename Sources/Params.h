@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-#include "constheader.h"
+#include "core/constheader.h"
 
 class ParamsHolder
 {

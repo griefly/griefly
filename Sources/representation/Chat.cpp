@@ -5,14 +5,14 @@
 #include <SDL_ttf.h>
 
 #include "Text.h"
-#include "constheader.h"
+#include "core/constheader.h"
 #include "Screen.h"
-#include "Creator.h"
-#include "helpers.h"
+#include "core/objects/Creator.h"
+#include "core/helpers.h"
 
 
 
-#include "VisiblePoints.h"
+#include "core/VisiblePoints.h"
 
 #include <QUuid>
 #include <QTextCursor>

@@ -4,10 +4,10 @@
 #include <QDesktopWidget>
 #include <QStyleFactory>
 
-#include "mainform.h"
-#include "mapeditorform.h"
+#include "representation/qt/mainform.h"
+#include "representation/qt/mapeditorform.h"
 
-#include "Manager.h"
+#include "core/Manager.h"
 #include "Params.h"
 
 int main(int argc, char *argv[])

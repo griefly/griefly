@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 #include "Debug.h"
-#include "MainObject.h"
+#include "core/objects/MainObject.h"
 
-#include "Manager.h"
+#include "core/Manager.h"
 
-#include "ObjectFactory.h"
+#include "core/ObjectFactory.h"
 
 #include "Params.h"
 
