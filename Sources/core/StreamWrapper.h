@@ -7,7 +7,7 @@
 
 #include <QDebug>
 
-#include "constheader.h"
+#include "Constheader.h"
 #include "Idptr.h"
 
 template<class T>
