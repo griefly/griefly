@@ -54,6 +54,8 @@ public:
     void Process();
     void Click(int x, int y);
 private:
+    void HandleInput();
+
     void SynchronizeViews();
     void PerformPixelMovement();
     void Draw();

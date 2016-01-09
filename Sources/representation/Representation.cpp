@@ -6,6 +6,10 @@
 #include "Sound.h"
 #include "net/Network2.h"
 
+#include "qt/qtopengl.h"
+
+#include <QCoreApplication>
+
 Representation::Representation()
 {
     current_frame_ = &first_data_;
@@ -13,6 +17,15 @@ Representation::Representation()
     is_updated_ = false;
     current_frame_id_ = 1;
     pixel_movement_tick_ = SDL_GetTicks();
+
+    int old_size_w = GetGLWidget()->width();
+    int old_size_h = GetGLWidget()->height();
+    if (!NODRAW)
+    {
+        SetScreen(new Screen(sizeW, sizeH));
+    }
+    GetGLWidget()->resize(old_size_w, old_size_h);
+    std::cout << "Screen has been set" << std::endl;
 }
 
 void Representation::AddToNewFrame(const Representation::InterfaceUnit &unit)
@@ -60,6 +73,28 @@ void Representation::Swap()
     new_frame_->music.clear();
 }
 
+void Representation::HandleInput()
+{
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
+
+    if (true/*TODO!auto_player_*/)
+    {
+        return;
+    }
+
+    int w = GetGLWidget()->width();
+    int h = GetGLWidget()->height();
+
+    if (rand() % 5 == 1)
+    {
+    //    ProcessClick(rand() % w, rand() % h);
+    }
+    if (rand() % 10 == 1)
+    {
+        //HandleKeyboardDown(nullptr);
+    }
+}
+
 Representation::Entity::Entity()
 {
     id = 0;
@@ -81,6 +116,11 @@ void Representation::Process()
     // TODO: mutex
     // Lock(mutex_);
     SynchronizeViews();
+
+    HandleInput();
+
+    MakeCurrentGLContext();
+    GetScreen().Clear();
 
     Draw();
     DrawInterface();

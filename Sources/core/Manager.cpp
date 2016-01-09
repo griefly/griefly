@@ -32,7 +32,6 @@
 
 #include "AutogenMetadata.h"
 
-#include "representation/qt/qtopengl.h"
 
 #include "net/Network2.h"
 #include "net/NetworkMessagesTypes.h"
@@ -92,9 +91,6 @@ void Manager::Process()
 
     while (true)
     {
-
-        HandleInput();
-
         ProcessInputMessages();
 
         const int ATMOS_OFTEN = 1;
@@ -140,8 +136,6 @@ void Manager::Process()
         if (!NODRAW)
         {
             draw_timer.Start();
-            MakeCurrentGLContext();
-            GetScreen().Clear();
             //GetMap().Draw();
             GetRepresentation().Process();
             //ClearGUIZone();
@@ -188,26 +182,6 @@ void Manager::Process()
         {
             break;
         }
-    }
-}
-
-void Manager::HandleInput()
-{
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
-
-    if (!auto_player_)
-        return;
-
-    int w = GetGLWidget()->width();
-    int h = GetGLWidget()->height();
-
-    if (rand() % 5 == 1)
-    {
-    //    ProcessClick(rand() % w, rand() % h);
-    }
-    if (rand() % 10 == 1)
-    {
-        HandleKeyboardDown(nullptr);
     }
 }
 
@@ -338,12 +312,6 @@ void Manager::InitWorld(int id, std::string map_name)
     SetMapMaster(new MapMaster);
     std::cout << "Screen set" << std::endl;
 
-    int old_size_w = GetGLWidget()->width();
-    int old_size_h = GetGLWidget()->height();
-    if (!NODRAW)
-        SetScreen(new Screen(sizeW, sizeH));
-    GetGLWidget()->resize(old_size_w, old_size_h);
-    std::cout << "Screen has been set" << std::endl;
     SetTexts(new TextPainter);
     SetSpriter(new SpriteHolder);
 

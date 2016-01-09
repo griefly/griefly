@@ -15,7 +15,6 @@ class Manager
 public:
     void InitWorld(int id, std::string map_name);
     void Process();
-    void HandleInput();
 
     bool IsMobVisible(int posx, int posy);
 
