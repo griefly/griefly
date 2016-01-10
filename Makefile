@@ -22,7 +22,7 @@ clean:
 
 .PHONY: partial-build
 partial-build: build/Makefile
-	cd build && make CXX=$(CXX) CC=$(CC)
+	$(MAKE) -C build
 
 build/Makefile:
 	mkdir -p build
