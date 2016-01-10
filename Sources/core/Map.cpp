@@ -14,7 +14,7 @@
 #include "VisiblePoints.h"
 //#include "SpaceTurf.h"
 //#include "MetalWall.h"
-#include "helpers.h"
+#include "Helpers.h"
 //#include "Floor.h"
 //#include "Door.h"
 //#include "Grille.h"
@@ -27,7 +27,7 @@
 //#include "Materials.h"
 //#include "ElectricTools.h"
 
-#include "helpers.h"
+#include "Helpers.h"
 #include "objects/Creator.h"
 #include "AutogenMetadata.h"
 #include "representation/Representation.h"

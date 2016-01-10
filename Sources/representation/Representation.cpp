@@ -1,7 +1,7 @@
 #include "Representation.h"
 
 #include "core/Constheader.h"
-#include "core/helpers.h"
+#include "core/Helpers.h"
 
 #include "Sound.h"
 #include "net/Network2.h"

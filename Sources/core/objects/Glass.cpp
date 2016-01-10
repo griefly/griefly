@@ -1,7 +1,7 @@
 #include "Glass.h"
 
 #include "../SyncRandom.h"
-#include "../helpers.h"
+#include "../Helpers.h"
 #include "Mob.h"
 
 FlatGlass::FlatGlass(size_t id) : Structure(id)

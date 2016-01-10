@@ -1,7 +1,7 @@
 #include "Interface.h"
 
 #include "Item.h"
-#include "../helpers.h"
+#include "../Helpers.h"
 
 #include "Human.h"
 

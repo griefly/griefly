@@ -9,7 +9,7 @@
 #include "Lobby.h"
 #include "net/MagicStrings.h"
 #include "representation/Chat.h"
-#include "../helpers.h"
+#include "../Helpers.h"
 #include "representation/Representation.h"
 
 #include <QDebug>

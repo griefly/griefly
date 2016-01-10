@@ -8,7 +8,7 @@
 
 #include "Creator.h"
 #include "../MobPosition.h"
-#include "../helpers.h"
+#include "../Helpers.h"
 
 void IOnMapObject::SetSprite(const std::string& name)
 {

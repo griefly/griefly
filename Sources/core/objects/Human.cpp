@@ -9,7 +9,7 @@
 #include "representation/Chat.h"
 #include "../AtmosHolder.h"
 #include "Tile.h"
-#include "../helpers.h"
+#include "../Helpers.h"
 #include "../MobPosition.h"
 #include "../SyncRandom.h"
 #include "Ghost.h"

@@ -4,7 +4,7 @@
 
 #include "SyncRandom.h"
 #include "Map.h"
-#include "helpers.h"
+#include "Helpers.h"
 
 void Atmosphere::Process()
 {

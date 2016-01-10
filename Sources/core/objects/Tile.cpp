@@ -1,6 +1,6 @@
 #include <assert.h>
 
-#include "../helpers.h"
+#include "../Helpers.h"
 #include "../Map.h"
 #include "OnMapObject.h"
 #include "Tile.h"
