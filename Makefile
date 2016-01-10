@@ -20,7 +20,16 @@ clean:
 	rm -rf build
 	rm -f Exec/KVEngine
 
-Exec/KVEngine:
+.PHONY: partial-build
+partial-build: build/Makefile
+	cd build && make CXX=$(CXX) CC=$(CC)
+
+build/Makefile:
 	mkdir -p build
-	cd build && cmake ../ && make CXX=$(CXX) CC=$(CC)
+	cd build && cmake ../
+
+Exec/KVEngine: install
+
+.PHONY: install
+install: partial-build
 	cp build/KVEngine Exec
