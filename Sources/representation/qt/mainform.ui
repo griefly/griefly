@@ -97,7 +97,7 @@ stop:0.6 rgba(255, 255, 255, 0));
   <customwidget>
    <class>GamingLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>Gaminglineedit.h</header>
+   <header>gaminglineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

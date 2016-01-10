@@ -1,4 +1,4 @@
-#include "Gaminglineedit.h"
+#include "representation/qt/gaminglineedit.h"
 
 
 
