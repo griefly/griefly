@@ -19,7 +19,7 @@
 #include "representation/SdlInit.h"
 #include "representation/SpriteHolder.h"
 #include "objects/Mob.h"
-#include "representation/utils.h"
+#include "representation/Utils.h"
 #include "representation/ImageLoader.h"
 #include "representation/SoundLoader.h"
 #include "representation/Chat.h"
