@@ -91,13 +91,13 @@ stop:0.6 rgba(255, 255, 255, 0));
   <customwidget>
    <class>QtOpenGL</class>
    <extends>QWidget</extends>
-   <header>qtopengl.h</header>
+   <header>representation/qt/qtopengl.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>GamingLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>gaminglineedit.h</header>
+   <header>representation/qt/gaminglineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
