@@ -5,8 +5,11 @@
 
 #include "Sound.h"
 #include "net/Network2.h"
+#include "net/MagicStrings.h"
 
 #include "qt/qtopengl.h"
+
+#include "Debug.h"
 
 #include <QCoreApplication>
 
@@ -71,6 +74,101 @@ void Representation::Swap()
     new_frame_->sounds.clear();
     new_frame_->units.clear();
     new_frame_->music.clear();
+}
+
+void Representation::HandleKeyboardDown(QKeyEvent* event)
+{
+    std::string text;
+
+    int val = rand();
+
+    if ((!event && (val % 100 == 1)) || (event && event->key() == Qt::Key_8) && (event->modifiers() == Qt::KeypadModifier))
+    {
+        text = Input::MOVE_UP;
+    }
+    else if ((!event && (val % 100 == 2)) || (event && event->key() == Qt::Key_2) && (event->modifiers() == Qt::KeypadModifier))
+    {
+        text = Input::MOVE_DOWN;
+    }
+    else if ((!event && (val % 100 == 3)) || (event && event->key() == Qt::Key_6) && (event->modifiers() == Qt::KeypadModifier))
+    {
+        text = Input::MOVE_RIGHT;
+    }
+    else if ((!event && (val % 100 == 4)) || (event && event->key() == Qt::Key_4) && (event->modifiers() == Qt::KeypadModifier))
+    {
+        text = Input::MOVE_LEFT;
+    }
+    else if ((!event && (val % 100 == 5)) || (event && event->key() == Qt::Key_Up))
+    {
+        text = Input::MOVE_UP;
+    }
+    else if ((!event && (val % 100 == 6)) || (event && event->key() == Qt::Key_Down))
+    {
+        text = Input::MOVE_DOWN;
+    }
+    else if ((!event && (val % 100 == 7)) || (event && event->key() == Qt::Key_Right))
+    {
+        text = Input::MOVE_RIGHT;
+    }
+    else if ((!event&& (val % 100 == 8)) || (event && event->key() == Qt::Key_Left))
+    {
+        text = Input::MOVE_LEFT;
+    }
+    else if ((!event && (val % 100 == 9)) || (event && event->key() == Qt::Key_Q))
+    {
+        text = Input::KEY_Q;
+    }
+    else if ((!event && (val % 100 == 10)) || (event && event->key() == Qt::Key_W))
+    {
+        text = Input::KEY_W;
+    }
+    else if ((!event && (val % 100 == 11)) || (event && event->key() == Qt::Key_E))
+    {
+        text = Input::KEY_E;
+    }
+    else if ((!event && (val % 100 == 12)) || (event && event->key() == Qt::Key_R))
+    {
+        text = Input::KEY_R;
+    }
+    else if (/* NO! */ (event && event->key() == Qt::Key_F3))
+    {
+        Debug::UnsyncDebug().GenerateAndSaveReport();
+        return;
+    }
+    else if (event && event->key() == Qt::Key_QuoteLeft)
+    {
+       /* GetTexts()["SecScore"].SetUpdater
+        ([&](std::string* str)
+        {
+            std::stringstream ss;
+            ss << "Security: " << GetLobby().security_score_;
+            *str = ss.str();
+        }).SetSize(15).SetPlace(10, 50).SetColor(140, 140, 240);
+        GetTexts()["JanScore"].SetUpdater
+        ([&](std::string* str)
+        {
+            std::stringstream ss;
+            ss << "Janitors: " << GetLobby().janitors_score_;
+            *str = ss.str();
+        }).SetSize(15).SetPlace(10, 70).SetColor(140, 140, 240);*/
+        return;
+    }
+    else
+    {
+        return;
+    }
+
+    Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(text));
+}
+
+void Representation::HandleKeyboardUp(QKeyEvent *event)
+{
+    if (event && event->key() == Qt::Key_QuoteLeft)
+    {
+        /*GetTexts().Delete("SecScore");
+        GetTexts().Delete("JanScore");*/
+        return;
+    }
 }
 
 void Representation::HandleInput()
@@ -383,4 +481,10 @@ Representation& GetRepresentation()
 void SetRepresentation(Representation* new_g_r)
 {
     g_r = new_g_r;
+}
+
+
+bool IsRepresentationValid()
+{
+    return g_r != nullptr;
 }

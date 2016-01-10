@@ -1,7 +1,7 @@
 #include "qtopengl.h"
 
 #include "../Screen.h"
-#include "core/Manager.h"
+#include "representation/Representation.h"
 
 #include <QMouseEvent>
 #include <QKeyEvent>
@@ -24,9 +24,8 @@ void QtOpenGL::handlePassedKey(QKeyEvent* event)
 
 void QtOpenGL::mousePressEvent(QMouseEvent* event)
 {
-    if ((event->button() == Qt::LeftButton) && IsManagerValid())
+    if ((event->button() == Qt::LeftButton) && IsRepresentationValid())
     {
-        //GetManager().ProcessClick(event->x(), event->y());
         GetRepresentation().Click(event->x(), event->y());
     }
 }
@@ -38,17 +37,17 @@ void QtOpenGL::keyPressEvent(QKeyEvent* event)
         emit enterPressed();
         return;
     }
-    if (IsManagerValid())
+    if (IsRepresentationValid())
     {
-        GetManager().HandleKeyboardDown(event);
+        GetRepresentation().HandleKeyboardDown(event);
     }
 }
 
 void QtOpenGL::keyReleaseEvent(QKeyEvent *event)
 {
-    if (IsManagerValid())
+    if (IsRepresentationValid())
     {
-        GetManager().HandleKeyboardUp(event);
+        GetRepresentation().HandleKeyboardUp(event);
     }
 }
 

@@ -6,6 +6,8 @@
 #include "View2.h"
 #include "ViewInfo.h"
 
+#include <QKeyEvent>
+
 const char* const STOP_MUSIC = "^";
 
 class Representation
@@ -53,6 +55,9 @@ public:
     void Swap();
     void Process();
     void Click(int x, int y);
+
+    void HandleKeyboardDown(QKeyEvent* event);
+    void HandleKeyboardUp(QKeyEvent* event);
 private:
     void HandleInput();
 
@@ -118,4 +123,5 @@ private:
 };
 
 Representation &GetRepresentation();
+bool IsRepresentationValid();
 void SetRepresentation(Representation* g_r);

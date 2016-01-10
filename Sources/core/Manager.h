@@ -18,9 +18,6 @@ public:
 
     bool IsMobVisible(int posx, int posy);
 
-    void HandleKeyboardDown(QKeyEvent* event);
-    void HandleKeyboardUp(QKeyEvent* event);
-
     Manager();
 
     void UpdateVisible();
