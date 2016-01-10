@@ -1,4 +1,4 @@
-#include "gaminglineedit.h"
+#include "Gaminglineedit.h"
 
 
 
