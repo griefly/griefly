@@ -4,7 +4,7 @@
 
 #include <png.h>
 
-#include "core/constheader.h"
+#include "core/Constheader.h"
 
 const ImageMetadata::SpriteMetadata& 
     ImageMetadata::GetSpriteMetadata(const std::string& name)

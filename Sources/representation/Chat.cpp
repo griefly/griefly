@@ -5,7 +5,7 @@
 #include <SDL_ttf.h>
 
 #include "Text.h"
-#include "core/constheader.h"
+#include "core/Constheader.h"
 #include "Screen.h"
 #include "core/objects/Creator.h"
 #include "core/helpers.h"

@@ -1,6 +1,6 @@
 #include "ApproxGLImage.h"
 
-#include "core/constheader.h"
+#include "core/Constheader.h"
 #include "Sprite.h"
 
 int ApproxGLImage::GetNext2Power(int value)

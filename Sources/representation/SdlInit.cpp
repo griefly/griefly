@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "core/constheader.h"
+#include "core/Constheader.h"
 #include "Sprite.h"
 
 bool InitSDL()
