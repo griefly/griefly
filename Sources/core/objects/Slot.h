@@ -4,7 +4,7 @@
 
 #include "representation/ViewInfo.h"
 
-#include "../hashes.h"
+#include "../Hashes.h"
 #include "representation/Representation.h"
 
 namespace Slots

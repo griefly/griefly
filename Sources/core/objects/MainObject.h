@@ -3,7 +3,7 @@
 #include "../FastIsType.h"
 #include "../Constheader.h"
 #include "../Idptr.h"
-#include "../hashes.h"
+#include "../Hashes.h"
 
 class IMainObject
 {
