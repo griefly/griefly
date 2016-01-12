@@ -96,15 +96,23 @@ void MainForm::startGameLoop(int id, QString map)
     on_splitter_splitterMoved(0, 0);
 
     if (GetParamsHolder().GetParamBool("-nodraw"))
+    {
         NODRAW = true;
+    }
 
     if (GetParamsHolder().GetParamBool("name"))
+    {
         Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
+    }
+
+    SetRepresentation(new Representation);
 
     Manager man;
     man.InitWorld(id, map.toStdString());
     if (GetParamsHolder().GetParamBool("-auto"))
+    {
         man.ToogleAutoplay();
+    }
     man.Process();
     return;
 }

@@ -7,6 +7,12 @@
 #include "net/Network2.h"
 #include "net/MagicStrings.h"
 
+#include "Text.h"
+#include "SpriteHolder.h"
+#include "SoundLoader.h"
+#include "ImageLoader.h"
+#include "SdlInit.h"
+
 #include "qt/qtopengl.h"
 
 #include "Debug.h"
@@ -21,6 +27,11 @@ Representation::Representation()
     current_frame_id_ = 1;
     pixel_movement_tick_ = SDL_GetTicks();
 
+    if (!InitSDL())
+    {
+        SYSTEM_STREAM << "Fail SDL load" << std::endl;
+    }
+
     int old_size_w = GetGLWidget()->width();
     int old_size_h = GetGLWidget()->height();
     if (!NODRAW)
@@ -28,7 +39,14 @@ Representation::Representation()
         SetScreen(new Screen(sizeW, sizeH));
     }
     GetGLWidget()->resize(old_size_w, old_size_h);
-    std::cout << "Screen has been set" << std::endl;
+    std::cout << "Screen set" << std::endl;
+
+    SetTexts(new TextPainter);
+    SetSpriter(new SpriteHolder);
+
+    std::cout << "Begin load resources" << std::endl;
+    LoadImages();
+    LoadSounds();
 }
 
 void Representation::AddToNewFrame(const Representation::InterfaceUnit &unit)

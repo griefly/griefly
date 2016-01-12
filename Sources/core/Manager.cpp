@@ -14,14 +14,9 @@
 #include "Debug.h"
 #include "Params.h"
 
-#include "representation/Sound.h"
 #include "objects/Creator.h"
-#include "representation/SdlInit.h"
-#include "representation/SpriteHolder.h"
 #include "objects/Mob.h"
 #include "representation/Utils.h"
-#include "representation/ImageLoader.h"
-#include "representation/SoundLoader.h"
 #include "representation/Chat.h"
 #include "Names.h"
 #include "objects/Movable.h"
@@ -87,8 +82,6 @@ void Manager::Process()
 
     unsigned int ping_send_time = 0;
 
-    //GetMap().GenerateFrame();
-
     while (true)
     {
         ProcessInputMessages();
@@ -107,10 +100,14 @@ void Manager::Process()
             ForceManager::Get().Process();
             unsigned int fm = force_timer.Get();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
+            {
                 GetMap().atmosphere.Process();
+            }
             atmos_move_timer.Start();
             if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
+            {
                 GetMap().atmosphere.ProcessMove();
+            }
             unsigned int amt = atmos_move_timer.Get();
             GetFactory().Sync();
             //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
@@ -135,18 +132,10 @@ void Manager::Process()
 
         if (!NODRAW)
         {
-            draw_timer.Start();
-            //GetMap().Draw();
             GetRepresentation().Process();
-            //ClearGUIZone();
-
             GetChat().Process();
-
-            //GetMob()->processGUI();
-
             GetTexts().Process();
 
-            //glFinish();
             GetScreen().Swap();
             draw_time_per_tick += draw_timer.Get();
         }
@@ -202,27 +191,13 @@ void Manager::InitWorld(int id, std::string map_name)
     InitSettersForTypes();
 
     std::cout << "Begin init world" << std::endl;
-    if (!InitSDL())
-    {
-        SYSTEM_STREAM << "Fail SDL load" << std::endl;
-    }
-    //SDL_WM_SetCaption(Debug::GetUniqueName().c_str(), Debug::GetUniqueName().c_str());
 
     std::cout << "Begin set manager" << std::endl;
     SetManager(this);
 
-    SetRepresentation(new Representation);
-
     SetFactory(new ObjectFactory);
     SetMapMaster(new MapMaster);
-    std::cout << "Screen set" << std::endl;
 
-    SetTexts(new TextPainter);
-    SetSpriter(new SpriteHolder);
-
-    std::cout << "Begin load resources" << std::endl;
-    LoadImages();
-    LoadSounds();
     LoadNames();
 
     std::cout << "Create tiles" << std::endl;
