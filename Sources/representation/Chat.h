@@ -14,8 +14,6 @@ class Chat
 public:
     static bool IsOOCMessage(const std::string& text);
     Chat(QTextBrowser* tb);
-
-    void Process();
     void DrawScroll();
     void ScrollUp();
     void ScrollDown();

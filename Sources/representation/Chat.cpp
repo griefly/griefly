@@ -168,17 +168,6 @@ void Chat::PostOOCText(const std::string &who, const std::string& text)
     SetCursorAtEnd();
 }
 
-void Chat::Process()
-{   
-    std::string str = ss.str();
-    ss.str("");
-
-    if (str == "")
-        return;
-    
-    PostText(str);
-}
-
 void Chat::AddLines(const std::string& str)
 {
     QString loc = QString::fromStdString(str).toHtmlEscaped();

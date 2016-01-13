@@ -133,7 +133,6 @@ void Manager::Process()
         if (!NODRAW)
         {
             GetRepresentation().Process();
-            GetChat().Process();
             GetTexts().Process();
 
             GetScreen().Swap();
