@@ -30,38 +30,6 @@ public:
     void PostWords(const std::string& who, const std::string& text, size_t tile_id);
 private:
     void SetCursorAtEnd();
-
-    void ClearZone();
-
-    void AddLines(const std::string& str);
-
-    int CalculateAmount(const std::string& str, int from);
-
-    struct Line
-    {
-        std::string text;
-    };
-
-    bool block_down_;
-
-    int current_pos_;
-    int visible_lines_;
-
-    int scroll_speed_;
-
-    int from_x_;
-    int from_y_;
-    int to_x_;
-    int to_y_;
-
-    int font_size_;
-    int per_line_;
-
-    std::vector<Line> lines_;
-
-    char* text_;
-
-    TTF_Font* deja_;
     QTextBrowser* tb_;
 };
 
