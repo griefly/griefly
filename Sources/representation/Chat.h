@@ -14,11 +14,6 @@ class Chat
 public:
     static bool IsOOCMessage(const std::string& text);
     Chat(QTextBrowser* tb);
-    void DrawScroll();
-    void ScrollUp();
-    void ScrollDown();
-    bool IsArea(int x, int y);
-
     void PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner);
 
     void PostText(const std::string& str);
