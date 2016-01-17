@@ -20,6 +20,8 @@ public:
 public slots:
     void startGameLoop(int id, QString map);
     void connectionFailed(QString reason);
+
+    void insertHtmlIntoChat(QString html);
 protected:
     void resizeEvent(QResizeEvent* event);
 private slots:

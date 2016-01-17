@@ -15,7 +15,7 @@ class Chat: public QObject
     Q_OBJECT
 public:
     static bool IsOOCMessage(const std::string& text);
-    Chat(QTextBrowser* tb);
+    Chat();
     void PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner);
 
     void PostText(const std::string& str);
@@ -27,15 +27,12 @@ public:
     void PostWords(const std::string& who, const std::string& text, size_t tile_id);
 signals:
     void insertHtmlIntoChat(QString html);
-private:
-    void SetCursorAtEnd();
-    QTextBrowser* tb_;
 };
 
 void SetLogToFile();
 
 Chat& GetChat();
-void InitChat(QTextBrowser* tb);
+void SetChat(Chat* chat);
 
 /*void SetTextBrowser(QTextBrowser* tb);
 QTextBrowser& GetTextBrowser();*/

@@ -28,7 +28,13 @@ MainForm::MainForm(QWidget *parent) :
     ui(new Ui::MainForm)
 {
     ui->setupUi(this);
-    InitChat(ui->textBrowser);
+
+    SetChat(new Chat);
+    if (!GetParamsHolder().GetParamBool("-debug_to_chat"))
+    {
+        SetLogToFile();
+    }
+
     QList<int> sizes;
     sizes.push_back(512);
     sizes.push_back(256);
@@ -42,6 +48,8 @@ MainForm::MainForm(QWidget *parent) :
     ui->widget->hide();
 
     SetMainWidget(this);
+
+    connect(&GetChat(), &Chat::insertHtmlIntoChat, this, &MainForm::insertHtmlIntoChat);
 
     connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
     connect(&Network2::GetInstance(), &Network2::connectionFailed, this, &MainForm::connectionFailed);
@@ -122,6 +130,19 @@ void MainForm::connectionFailed(QString reason)
     ui->textBrowser->insertHtml("<b>Connection failed!</b>");
     ui->textBrowser->append(reason);
     ui->textBrowser->insertHtml("<br>If you would like to reconnect then do it manually<br>");
+}
+
+void MainForm::insertHtmlIntoChat(QString html)
+{
+    QTextCursor cursor = ui->textBrowser->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    ui->textBrowser->setTextCursor(cursor);
+
+    ui->textBrowser->insertHtml(html);
+
+    cursor = ui->textBrowser->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    ui->textBrowser->setTextCursor(cursor);
 }
 
 void MainForm::connectToHost()

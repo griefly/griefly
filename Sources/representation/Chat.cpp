@@ -43,12 +43,9 @@ Chat& GetChat()
     return *chat;
 }
 
-const size_t MAX_LINE_SIZE = 1024;
-const int SCROLL_SIZE = 10;
-
-void InitChat(QTextBrowser* tb)
+void SetChat(Chat* new_chat)
 {
-    chat = new Chat(tb);
+    chat = new_chat;
 }
 
 bool Chat::IsOOCMessage(const std::string &text)
@@ -63,42 +60,33 @@ bool Chat::IsOOCMessage(const std::string &text)
     return false;
 }
 
-Chat::Chat(QTextBrowser* tb) : tb_(tb)
+Chat::Chat()
 {
 
-}
-
-void Chat::SetCursorAtEnd()
-{
-    QTextCursor cursor = tb_->textCursor();
-    cursor.movePosition(QTextCursor::End);
-    tb_->setTextCursor(cursor);
 }
 
 void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 {
     if (!IsTileVisible(tile_id))
+    {
         return;
+    }
 
-    SetCursorAtEnd();
-
-    tb_->insertHtml(QString::fromStdString(str + "<br>"));
-
-    SetCursorAtEnd();
+    emit insertHtmlIntoChat(QString::fromStdString(str + "<br>"));
 }
 
 void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id)
 {
     if (!IsTileVisible(tile_id))
+    {
         return;
-
-    SetCursorAtEnd();
+    }
 
     QString q_by = QString::fromStdString(by).toHtmlEscaped();
     QString q_who = QString::fromStdString(who).toHtmlEscaped();
     QString q_object = QString::fromStdString(object).toHtmlEscaped();
 
-    tb_->insertHtml
+    emit insertHtmlIntoChat
         (
            "<font color=\"red\">"
          + q_who
@@ -107,21 +95,19 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
          + " with "
          + q_object
          + "</font><br>");
-
-    SetCursorAtEnd();
 }
 
 void Chat::PostWords(const std::string& who, const std::string& text, size_t tile_id)
 {
     if (!IsTileVisible(tile_id))
+    {
         return;
-
-    SetCursorAtEnd();
+    }
 
     QString q_who = QString::fromStdString(who).toHtmlEscaped();
     QString q_text = QString::fromStdString(text).toHtmlEscaped();
 
-    tb_->insertHtml
+    emit insertHtmlIntoChat
         (
            "<b>"
          + q_who
@@ -129,34 +115,28 @@ void Chat::PostWords(const std::string& who, const std::string& text, size_t til
          + "<span>"
          + q_text
          + "</span><br>");
-
-    SetCursorAtEnd();
 }
 
 void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
 {
     if (GetMob() == owner)
+    {
         PostText(str);
+    }
 }
 
 void Chat::PostText(const std::string& str_)
 {
-    SetCursorAtEnd();
-
     QString loc = QString::fromStdString(str_).toHtmlEscaped();
-    tb_->insertHtml(loc.replace('\n', "<br>"));
-
-    SetCursorAtEnd();
+    emit insertHtmlIntoChat(loc.replace('\n', "<br>"));
 }
 
 void Chat::PostOOCText(const std::string &who, const std::string& text)
 {
-    SetCursorAtEnd();
-
     QString q_who = QString::fromStdString(who).toHtmlEscaped();
     QString q_text = QString::fromStdString(text).toHtmlEscaped();
 
-    tb_->insertHtml
+    emit insertHtmlIntoChat
         (
            "<font color=\"blue\"><b>"
          + q_who
@@ -164,17 +144,4 @@ void Chat::PostOOCText(const std::string &who, const std::string& text)
          + "<span>"
          + q_text
          + "</span></font><br>");
-
-    SetCursorAtEnd();
-}
-
-QTextBrowser* text_browser = nullptr;
-void SetTextBrowser(QTextBrowser* tb)
-{
-    text_browser = tb;
-}
-
-QTextBrowser& GetTextBrowser()
-{
-    return *text_browser;
 }

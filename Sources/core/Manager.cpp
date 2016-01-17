@@ -181,12 +181,6 @@ const std::string ON_LOGIN_MESSAGE =
 
 void Manager::InitWorld(int id, std::string map_name)
 {
-    if (!GetParamsHolder().GetParamBool("-debug_to_chat"))
-    {
-        SetLogToFile();
-    }
-
-
     InitSettersForTypes();
 
     std::cout << "Begin init world" << std::endl;
