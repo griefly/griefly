@@ -17,6 +17,7 @@
 
 #include "Debug.h"
 
+#include <QMutexLocker>
 #include <QCoreApplication>
 
 Representation::Representation()
@@ -84,8 +85,8 @@ void Representation::SetCameraForFrame(int pos_x, int pos_y)
 
 void Representation::Swap()
 {
-    // TODO: mutex
-    // Lock(frames_mutex_);
+    QMutexLocker lock(&mutex_);
+
     std::swap(current_frame_, new_frame_);
     is_updated_ = true;
     new_frame_->entities.clear();
@@ -229,8 +230,8 @@ Representation::InterfaceUnit::InterfaceUnit()
 
 void Representation::Process()
 {
-    // TODO: mutex
-    // Lock(mutex_);
+    QMutexLocker lock(&mutex_);
+
     SynchronizeViews();
 
     HandleInput();

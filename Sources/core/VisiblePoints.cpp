@@ -7,7 +7,9 @@
 const std::list<point>* GetVisible()
 {
     if (!IsManagerValid())
+    {
         return nullptr;
+    }
     return GetManager().GetVisiblePoints();
 }
 

@@ -53,6 +53,10 @@ Manager::Manager()
     current_ping_ = 0;
 
     ping_send_is_requested_ = true;
+
+
+    this->moveToThread(&thread_);
+    connect(&thread_, &QThread::started, this, &Manager::process);
 }
 
 void Manager::UpdateVisible() 
@@ -84,6 +88,7 @@ void Manager::Process()
 
     while (true)
     {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
         ProcessInputMessages();
 
         const int ATMOS_OFTEN = 1;
@@ -130,15 +135,6 @@ void Manager::Process()
             GetMap().GenerateFrame();
         }
 
-        if (!NODRAW)
-        {
-            GetRepresentation().Process();
-            GetTexts().Process();
-
-            GetScreen().Swap();
-            draw_time_per_tick += draw_timer.Get();
-        }
-
         if((SDL_GetTicks() - lastTimeFps) >= 1000)
         {
             UpdateVisible();
@@ -159,7 +155,9 @@ void Manager::Process()
 
         ++fps_;
         process_in_ = false;
-        if (Network2::GetInstance().IsGood() == false)
+        // TODO: make it working in multithread
+
+        /*if (Network2::GetInstance().IsGood() == false)
         {
 
         }
@@ -169,7 +167,7 @@ void Manager::Process()
         if (GetMainWidget().isHidden())
         {
             break;
-        }
+        }*/
     }
 }
 
@@ -307,6 +305,9 @@ void Manager::InitWorld(int id, std::string map_name)
     {
         *str = last_touch_;
     }).SetFreq(20).SetPlace(0, 485).SetSize(22);
+
+
+    thread_.start();
 }
 
 void Manager::ProcessInputMessages()
@@ -419,6 +420,10 @@ void Manager::ProcessInputMessages()
     }
 }
 
+void Manager::process()
+{
+    Process();
+}
 
 bool Manager::IsMobVisible(int posx, int posy)
 {

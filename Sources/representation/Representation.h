@@ -6,6 +6,7 @@
 #include "View2.h"
 #include "ViewInfo.h"
 
+#include <QMutex>
 #include <QKeyEvent>
 
 const char* const STOP_MUSIC = "^";
@@ -59,6 +60,8 @@ public:
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);
 private:
+    QMutex mutex_;
+
     void HandleInput();
 
     void SynchronizeViews();

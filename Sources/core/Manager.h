@@ -9,9 +9,12 @@
 #include <QApplication>
 #include <QKeyEvent>
 #include <QString>
+#include <QObject>
+#include <QThread>
 
-class Manager
+class Manager: public QObject
 {
+    Q_OBJECT
 public:
     void InitWorld(int id, std::string map_name);
     void Process();
@@ -25,6 +28,8 @@ public:
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 
     std::list<point>* GetVisiblePoints() { return visible_points_; }
+public slots:
+    void process();
 private:
     std::list<point>* visible_points_;
     int fps_;
@@ -39,6 +44,8 @@ private:
     std::string adrs_;
     size_t creator_;
     bool auto_player_;
+
+    QThread thread_;
 };
 
 QWidget& GetMainWidget();

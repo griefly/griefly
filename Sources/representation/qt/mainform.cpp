@@ -117,11 +117,28 @@ void MainForm::startGameLoop(int id, QString map)
 
     Manager man;
     man.InitWorld(id, map.toStdString());
-    if (GetParamsHolder().GetParamBool("-auto"))
+    /*if (GetParamsHolder().GetParamBool("-auto"))
     {
         man.ToogleAutoplay();
+    }*/
+
+    while (true)
+    {
+        if (!NODRAW)
+        {
+            GetRepresentation().Process();
+            // GetTexts().Process();
+
+            GetScreen().Swap();
+            //draw_time_per_tick += draw_timer.Get();
+        }
+        if (isHidden())
+        {
+            break;
+        }
     }
-    man.Process();
+
+    //man.Process();
     return;
 }
 
