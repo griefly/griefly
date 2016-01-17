@@ -8,9 +8,11 @@
 #include "core/objects/Mob.h"
 
 #include <QTextBrowser>
+#include <QObject>
 
-class Chat
+class Chat: public QObject
 {
+    Q_OBJECT
 public:
     static bool IsOOCMessage(const std::string& text);
     Chat(QTextBrowser* tb);
@@ -23,6 +25,8 @@ public:
     void PostSimpleText(const std::string& str, size_t tile_id);
     void PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id);
     void PostWords(const std::string& who, const std::string& text, size_t tile_id);
+signals:
+    void insertHtmlIntoChat(QString html);
 private:
     void SetCursorAtEnd();
     QTextBrowser* tb_;
