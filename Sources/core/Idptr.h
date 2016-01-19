@@ -13,7 +13,7 @@
 
 class IMainObject;
 class MapMaster;
-class Manager;
+class Game;
 
 
 

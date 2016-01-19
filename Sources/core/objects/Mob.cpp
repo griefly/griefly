@@ -61,6 +61,6 @@ void IMob::ProcessPhysics()
     IMessageReceiver::ProcessPhysics();
     if(GetId() == GetMob().ret_id())
     {
-        GetManager().UpdateVisible();
+        GetGame().UpdateVisible();
     }
 }

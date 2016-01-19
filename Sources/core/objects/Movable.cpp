@@ -137,7 +137,7 @@ bool IMovable::mainMove()
     if (   GetMob().ret_id() == GetId()
         || Contains(GetMob()))
     {
-        GetManager().UpdateVisible();
+        GetGame().UpdateVisible();
     }
 
     lastMove = static_cast<int>(MAIN_TICK);

@@ -39,7 +39,7 @@
 
 int ping_send;
 
-Manager::Manager()
+Game::Game()
 {
     auto_player_ = false;
     visible_points_ = new std::list<point>;
@@ -54,17 +54,17 @@ Manager::Manager()
 
 
     this->moveToThread(&thread_);
-    connect(&thread_, &QThread::started, this, &Manager::process);
+    connect(&thread_, &QThread::started, this, &Game::process);
 }
 
-void Manager::UpdateVisible() 
+void Game::UpdateVisible() 
 {
     visible_points_->clear();
 
     GetMob()->CalculateVisible(visible_points_);
 }
 
-void Manager::Process()
+void Game::Process()
 {
     int begin_of_process;
 
@@ -175,14 +175,14 @@ const std::string ON_LOGIN_MESSAGE =
         " Use prefix ooc in the chat if you would like to use the ooc channel (it is a global channel)."
         " The special button is '`' (tilde button) - it shows the current scoreboard.\n\n";
 
-void Manager::InitWorld(int id, std::string map_name)
+void Game::InitWorld(int id, std::string map_name)
 {
     InitSettersForTypes();
 
     std::cout << "Begin init world" << std::endl;
 
     std::cout << "Begin set manager" << std::endl;
-    SetManager(this);
+    SetGame(this);
 
     SetFactory(new ObjectFactory);
     SetMapMaster(new MapMaster);
@@ -308,7 +308,7 @@ void Manager::InitWorld(int id, std::string map_name)
     thread_.start();
 }
 
-void Manager::ProcessInputMessages()
+void Game::ProcessInputMessages()
 {
     while (Network2::GetInstance().IsMessageAvailable())
     {
@@ -418,12 +418,12 @@ void Manager::ProcessInputMessages()
     }
 }
 
-void Manager::process()
+void Game::process()
 {
     Process();
 }
 
-bool Manager::IsMobVisible(int posx, int posy)
+bool Game::IsMobVisible(int posx, int posy)
 {
     // TODO: matrix for fast check
     if (visible_points_ == nullptr)
@@ -434,29 +434,18 @@ bool Manager::IsMobVisible(int posx, int posy)
     return false;
 }
 
-QWidget* main_widget = nullptr;
-QWidget& GetMainWidget()
+Game* game_ = nullptr;
+Game& GetGame()
 {
-    return *main_widget;
+    return *game_;
 }
 
-void SetMainWidget(QWidget* widget)
+void SetGame(Game* game)
 {
-    main_widget = widget;
+    game_ = game;
 }
 
-Manager* manager_ = nullptr;
-Manager& GetManager()
+bool IsGameValid()
 {
-    return *manager_;
-}
-
-void SetManager(Manager* manager)
-{
-    manager_ = manager;
-}
-
-bool IsManagerValid()
-{
-    return manager_ != nullptr;
+    return game_ != nullptr;
 }

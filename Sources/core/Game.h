@@ -12,7 +12,7 @@
 #include <QObject>
 #include <QThread>
 
-class Manager: public QObject
+class Game: public QObject
 {
     Q_OBJECT
 public:
@@ -21,7 +21,7 @@ public:
 
     bool IsMobVisible(int posx, int posy);
 
-    Manager();
+    Game();
 
     void UpdateVisible();
     void ProcessInputMessages();
@@ -48,9 +48,6 @@ private:
     QThread thread_;
 };
 
-QWidget& GetMainWidget();
-void SetMainWidget(QWidget* widget);
-
-Manager& GetManager();
-bool IsManagerValid();
-void SetManager(Manager* manager);
+Game& GetGame();
+bool IsGameValid();
+void SetGame(Game* manager);

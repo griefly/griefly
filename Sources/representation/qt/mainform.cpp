@@ -47,8 +47,6 @@ MainForm::MainForm(QWidget *parent) :
 
     ui->widget->hide();
 
-    SetMainWidget(this);
-
     connect(&GetChat(), &Chat::insertHtmlIntoChat, this, &MainForm::insertHtmlIntoChat);
 
     connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
@@ -115,7 +113,7 @@ void MainForm::startGameLoop(int id, QString map)
 
     SetRepresentation(new Representation);
 
-    Manager man;
+    Game man;
     man.InitWorld(id, map.toStdString());
     /*if (GetParamsHolder().GetParamBool("-auto"))
     {
