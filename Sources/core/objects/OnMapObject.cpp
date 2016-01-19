@@ -3,11 +3,10 @@
 #include "OnMapObject.h"
 #include "../Map.h"
 #include "Mob.h"
-#include "../Manager.h"
+#include "../Game.h"
 #include "Tile.h"
 
 #include "Creator.h"
-#include "../MobPosition.h"
 #include "../Helpers.h"
 
 void IOnMapObject::SetSprite(const std::string& name)

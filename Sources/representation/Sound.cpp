@@ -1,6 +1,5 @@
 #include "Sound.h"
 
-#include "core/MobPosition.h"
 #include "core/VisiblePoints.h"
 #include "Representation.h"
 

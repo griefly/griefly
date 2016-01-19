@@ -1,11 +1,9 @@
-#include "Manager.h"
+#include "Game.h"
 
 #include <memory>
 
 #include "Map.h"
 #include "representation/Text.h"
-
-#include "MobPosition.h"
 
 #include "SyncRandom.h"
 #include "ObjectFactory.h"

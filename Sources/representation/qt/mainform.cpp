@@ -6,7 +6,7 @@
 #include "core/Map.h"
 #include "Debug.h"
 #include "Params.h"
-#include "core/Manager.h"
+#include "core/Game.h"
 #include "net/MagicStrings.h"
 
 #include "representation/Screen.h"

@@ -3,7 +3,7 @@
 #include "Debug.h"
 #include "core/objects/MainObject.h"
 
-#include "core/Manager.h"
+#include "core/Game.h"
 
 #include "core/ObjectFactory.h"
 

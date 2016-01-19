@@ -2,10 +2,9 @@
 
 #include "../Helpers.h"
 #include "Mob.h"
-#include "../MobPosition.h"
 
 #include "Creator.h"
-#include "../Manager.h"
+#include "../Game.h"
 
 #include <assert.h>
 

@@ -4,7 +4,7 @@
 
 #include "objects/MainObject.h"
 #include "objects/OnMapObject.h"
-#include "Manager.h"
+#include "Game.h"
 #include "Map.h"
 #include "SyncRandom.h"
 #include "objects/Creator.h"

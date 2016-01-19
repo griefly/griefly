@@ -1,5 +1,5 @@
 #include "Mob.h"
-#include "../Manager.h"
+#include "../Game.h"
 #include "../Map.h"
 
 #include "net/MagicStrings.h"
