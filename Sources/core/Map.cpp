@@ -178,15 +178,15 @@ void MapMaster::LoadFromMapGen(const std::string& name)
 
 void MapMaster::Represent()
 {
-    if(!GetVisible())
+    if(!GetGame().GetVisiblePoints())
     {
         return;
     }
 
     for(int i = 0; i < MAX_LEVEL; ++i)
     {
-        auto it2 = GetVisible()->begin();
-        while(it2 != GetVisible()->end())
+        auto it2 = GetGame().GetVisiblePoints()->begin();
+        while(it2 != GetGame().GetVisiblePoints()->end())
         {
             auto sq = squares[it2->posx][it2->posy][it2->posz];
             auto& in_list = sq->GetInsideList();
@@ -207,8 +207,8 @@ void MapMaster::Represent()
             ++it2;
         }
     }
-    auto it2 = GetVisible()->begin();
-    while(it2 != GetVisible()->end())
+    auto it2 = GetGame().GetVisiblePoints()->begin();
+    while(it2 != GetGame().GetVisiblePoints()->end())
     {
         auto sq = squares[it2->posx][it2->posy][it2->posz];
         auto& in_list = sq->GetInsideList();
@@ -232,44 +232,12 @@ void MapMaster::Represent()
 
 void MapMaster::GenerateFrame()
 {
-    if(!GetVisible())
+    if(!GetGame().GetVisiblePoints())
     {
         return;
     }
 
     Represent();
-
-    /*for (auto it = GetVisible()->begin(); it != GetVisible()->end(); ++it)
-    {
-        auto sq = squares[it->posx][it->posy][it->posz];
-        auto& in_list = sq->GetInsideList();
-
-        for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
-        {
-            Representation::Entity ent;
-            ent.id = list_it->ret_id();
-            ent.pos_x = it->posx;
-            ent.pos_y = it->posy;
-            ent.vlevel = (*list_it)->v_level;
-            if (id_ptr_on<IMovable> mov = *list_it)
-            {
-                ent.dir = mov->GetDir();
-            }
-            ent.view = *((*list_it)->GetView());
-            GetRepresentation().AddToNewFrame(ent);
-        }
-
-        auto trf = squares[it->posx][it->posy][it->posz]->GetTurf();
-        Representation::Entity ent;
-        ent.id = trf.ret_id();
-        ent.pos_x = it->posx;
-        ent.pos_y = it->posy;
-        ent.vlevel = trf->v_level;
-        //ent.dir = (*list_it)->GetDir();
-        ent.view = *(trf->GetView());
-        GetRepresentation().AddToNewFrame(ent);
-    }*/
-
     GetMob()->GenerateInterfaceForFrame();
 
 

@@ -4,18 +4,9 @@
 #include "objects/Tile.h"
 #include "Map.h"
 
-const std::list<point>* GetVisible()
-{
-    if (!IsGameValid())
-    {
-        return nullptr;
-    }
-    return GetGame().GetVisiblePoints();
-}
-
 bool IsTileVisible(size_t tile_id)
 {
-    auto l = GetVisible();
+    auto l = GetGame().GetVisiblePoints();
     if (!l)
     {
         return false;
