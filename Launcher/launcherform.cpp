@@ -14,10 +14,12 @@ LauncherForm::LauncherForm(QWidget *parent) :
 
     pop_up_needed_.setKey("4668074d-98a4-4052-b8fb-0a3a7a84905c");
 
-    auto sharedMemoryCreated = pop_up_needed_.create(1);
-    if (!sharedMemoryCreated
-            && pop_up_needed_.error() == QSharedMemory::SharedMemoryError::AlreadyExists)
+    bool is_shared_memory_created = pop_up_needed_.create(1);
+    if (   !is_shared_memory_created
+        && (pop_up_needed_.error() == QSharedMemory::SharedMemoryError::AlreadyExists))
+    {
         pop_up_needed_.attach();
+    }
 
     connect(&kv_process_, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
             this, &LauncherForm::onProcessEnd);
