@@ -230,17 +230,13 @@ void MainForm::on_lineEdit_returnPressed()
 
 void MainForm::on_splitter_splitterMoved(int pos, int index)
 {
-    ui->textBrowser->resize(
-                ui->rightColumn->width(),
-                ui->textBrowser->height());
-
     left_column = ui->leftColumn->width();
     right_column = ui->rightColumn->width();
 
     int min_size = std::min(ui->leftColumn->width(), ui->leftColumn->height());
     ui->widget->resize(min_size, min_size);
 
-    ui->textBrowser->resize(ui->textBrowser->width(), ui->rightColumn->height());
+    ui->splitterRight->resize(ui->rightColumn->width(), ui->rightColumn->height());
 
     if (IsScreenValid())
     {

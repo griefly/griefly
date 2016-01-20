@@ -63,26 +63,52 @@ stop:0.6 rgba(255, 255, 255, 0));
     </widget>
    </widget>
    <widget class="QWidget" name="rightColumn" native="true">
-    <widget class="QTextBrowser" name="textBrowser">
+    <widget class="QSplitter" name="splitterRight">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>249</width>
+       <width>381</width>
        <height>511</height>
       </rect>
      </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+     <property name="styleSheet">
+      <string notr="true">QSplitter::handle {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+stop:0 rgba(255, 255, 255, 0), 
+stop:0.407273 rgba(200, 200, 200, 255), 
+stop:0.4825 rgba(101, 104, 113, 235), 
+stop:0.6 rgba(255, 255, 255, 0));
+}</string>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>13</pointsize>
-      </font>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
+     <widget class="QTabWidget" name="tabWidget">
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+      </widget>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
