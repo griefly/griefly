@@ -13,7 +13,11 @@ LauncherForm::LauncherForm(QWidget *parent) :
     ui->setupUi(this);
 
     pop_up_needed_.setKey("4668074d-98a4-4052-b8fb-0a3a7a84905c");
-    pop_up_needed_.create(1);
+
+    auto sharedMemoryCreated = pop_up_needed_.create(1);
+    if (!sharedMemoryCreated
+            && pop_up_needed_.error() == QSharedMemory::SharedMemoryError::AlreadyExists)
+        pop_up_needed_.attach();
 
     connect(&kv_process_, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
             this, &LauncherForm::onProcessEnd);
@@ -66,7 +70,7 @@ void LauncherForm::checkSharedMemory()
 
     bool* is_needed = static_cast<bool*>(pop_up_needed_.data());
 
-    if (*is_needed)
+    if (is_needed && *is_needed)
     {
         Popup();
         *is_needed = false;
