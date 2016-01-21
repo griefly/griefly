@@ -113,8 +113,12 @@ void MainForm::startGameLoop(int id, QString map)
 
     SetRepresentation(new Representation);
 
-    Game man;
-    man.InitWorld(id, map.toStdString());
+    Game* game = new Game;
+    SetGame(game);
+    game->InitWorld(id, map.toStdString());
+
+    connect(this, &MainForm::closing, game, &Game::endProcess);
+
     /*if (GetParamsHolder().GetParamBool("-auto"))
     {
         man.ToogleAutoplay();
@@ -134,6 +138,13 @@ void MainForm::startGameLoop(int id, QString map)
         {
             break;
         }
+    }
+
+    emit closing();
+    QCoreApplication::processEvents(QEventLoop::AllEvents);
+    if (IsGameValid())
+    {
+        GetGame().WaitForExit();
     }
 
     //man.Process();
@@ -213,7 +224,9 @@ void MainForm::on_lineEdit_returnPressed()
     Message2 msg;
     msg.type = MessageType::MESSAGE;
     if (ui->lineEdit->text().length() == 0)
+    {
         return;
+    }
 
     QJsonObject object;
     object["text"] = ui->lineEdit->text();

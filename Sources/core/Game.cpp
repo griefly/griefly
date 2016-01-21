@@ -52,6 +52,7 @@ Game::Game()
 
     ping_send_is_requested_ = true;
 
+    is_end_process_ = false;
 
     this->moveToThread(&thread_);
     connect(&thread_, &QThread::started, this, &Game::process);
@@ -66,9 +67,6 @@ void Game::UpdateVisible()
 
 void Game::Process()
 {
-    int begin_of_process;
-
-    int delay = 0;
     int lastTimeFps = SDL_GetTicks();
     fps_ = 0;
     process_in_ = false;
@@ -80,13 +78,16 @@ void Game::Process()
     force_timer.Start();
     unsigned int draw_time_per_tick = 0;
 
-    unsigned int last_effect_process = 0;
-
     unsigned int ping_send_time = 0;
 
     while (true)
     {
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 40);       
+        if (is_end_process_)
+        {
+            break;
+        }
+
         ProcessInputMessages();
 
         const int ATMOS_OFTEN = 1;
@@ -97,7 +98,6 @@ void Game::Process()
             ++MAIN_TICK;
 
             process_timer.Start();
-            begin_of_process = SDL_GetTicks();
             GetFactory().ForeachProcess();
             force_timer.Start();
             ForceManager::Get().Process();
@@ -167,6 +167,7 @@ void Game::Process()
             break;
         }*/
     }
+    thread_.exit();
 }
 
 const std::string ON_LOGIN_MESSAGE =
@@ -175,14 +176,16 @@ const std::string ON_LOGIN_MESSAGE =
         " Use prefix ooc in the chat if you would like to use the ooc channel (it is a global channel)."
         " The special button is '`' (tilde button) - it shows the current scoreboard.\n\n";
 
+void Game::WaitForExit()
+{
+    thread_.wait();
+}
+
 void Game::InitWorld(int id, std::string map_name)
 {
     InitSettersForTypes();
 
     std::cout << "Begin init world" << std::endl;
-
-    std::cout << "Begin set manager" << std::endl;
-    SetGame(this);
 
     SetFactory(new ObjectFactory);
     SetMapMaster(new MapMaster);
@@ -421,6 +424,12 @@ void Game::ProcessInputMessages()
 void Game::process()
 {
     Process();
+}
+
+void Game::endProcess()
+{
+    is_end_process_ = true;
+    qDebug() << "void Game::endProcess()";
 }
 
 bool Game::IsMobVisible(int posx, int posy)

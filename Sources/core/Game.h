@@ -16,6 +16,8 @@ class Game: public QObject
 {
     Q_OBJECT
 public:
+    void WaitForExit();
+
     void InitWorld(int id, std::string map_name);
     void Process();
 
@@ -30,7 +32,10 @@ public:
     std::list<point>* GetVisiblePoints() { return visible_points_; }
 public slots:
     void process();
+    void endProcess();
 private:
+    bool is_end_process_;
+
     std::list<point>* visible_points_;
     int fps_;
     int last_fps_;

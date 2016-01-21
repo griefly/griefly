@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QCloseEvent>
 
 namespace Ui {
 class MainForm;
@@ -13,7 +14,6 @@ class MainForm;
 class MainForm : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit MainForm(QWidget *parent = 0);
     ~MainForm();
@@ -33,7 +33,7 @@ private slots:
     void on_splitter_splitterMoved(int pos, int index);
 signals:
     void autoConnect();
-
+    void closing();
 private:
 
     void connectToHost();
