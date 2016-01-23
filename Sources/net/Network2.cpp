@@ -72,6 +72,7 @@ Network2::Network2()
     connect(&handler_, &SocketHandler::readyToStart, this, &Network2::downloadMap);
     connect(this, &Network2::sendMessage, &handler_, &SocketHandler::sendMessage);
     connect(&handler_, &SocketHandler::connectionEnd, this, &Network2::onConnectionEnd);
+    connect(this, &Network2::disconnectRequested, &handler_, &SocketHandler::disconnectSocket);
 }
 
 void Network2::TryConnect(QString host, int port, QString login, QString password)
@@ -101,6 +102,12 @@ void Network2::SendPing(QString ping_id)
     msg.json = "{\"ping_id\":\"" + ping_id + "\"}";
 
     SendMsg(msg);
+}
+
+void Network2::Disconnect()
+{
+    emit disconnectRequested();
+    thread_.wait();
 }
 
 bool Network2::IsMessageAvailable()
@@ -344,14 +351,14 @@ void SocketHandler::sendMessage(Message2 message)
 
 void SocketHandler::disconnectSocket()
 {
-
+    socket_.close();
+    network_->thread_.exit(-1);
 }
 
 void SocketHandler::errorSocket(QAbstractSocket::SocketError error)
 {
     qDebug() << "socketError()";
     qDebug() << error;
-    //thread_.wait();
     state_ = NetworkState::NOT_CONNECTED;
     network_->thread_.exit(-1);
     emit connectionEnd(

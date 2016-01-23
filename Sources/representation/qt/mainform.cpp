@@ -142,12 +142,11 @@ void MainForm::startGameLoop(int id, QString map)
 
     emit closing();
     QCoreApplication::processEvents(QEventLoop::AllEvents);
-    if (IsGameValid())
-    {
-        GetGame().WaitForExit();
-    }
 
-    //man.Process();
+    GetGame().WaitForExit();
+
+    Network2::GetInstance().Disconnect();
+
     return;
 }
 
