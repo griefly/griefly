@@ -35,10 +35,19 @@ MainForm::MainForm(QWidget *parent) :
         SetLogToFile();
     }
 
-    QList<int> sizes;
-    sizes.push_back(512);
-    sizes.push_back(256);
-    ui->splitter->setSizes(sizes);
+    {
+        QList<int> sizes;
+        sizes.push_back(512);
+        sizes.push_back(256);
+        ui->splitter->setSizes(sizes);
+    }
+    {
+        QList<int> sizes;
+        sizes.push_back(100);
+        sizes.push_back(256);
+        ui->splitterRight->setSizes(sizes);
+    }
+
 
     setWindowTitle("Griefly");
 
