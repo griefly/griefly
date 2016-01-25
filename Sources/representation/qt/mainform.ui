@@ -83,6 +83,11 @@ stop:0.6 rgba(255, 255, 255, 0));
        <attribute name="title">
         <string>Main</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QTextBrowser" name="mainTabTextBrowser"/>
+        </item>
+       </layout>
       </widget>
      </widget>
      <widget class="QTextBrowser" name="textBrowser">
