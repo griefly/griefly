@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QKeyEvent>
 #include <QCloseEvent>
+#include <QMap>
 
 namespace Ui {
 class MainForm;
@@ -18,6 +19,8 @@ public:
     explicit MainForm(QWidget *parent = 0);
     ~MainForm();
 public slots:
+    void addSystemText(QString key, QString text);
+
     void startGameLoop(int id, QString map);
     void connectionFailed(QString reason);
 
@@ -46,6 +49,8 @@ private:
     int argc_;
     char** argv_;
     Ui::MainForm *ui;
+
+    QMap<QString, QString> texts_;
 };
 
 #endif // MAINFORM_H

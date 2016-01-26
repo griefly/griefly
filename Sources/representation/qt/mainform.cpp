@@ -74,6 +74,8 @@ MainForm::MainForm(QWidget *parent) :
         connect(activeTimer, &QTimer::timeout, this, &MainForm::helperAutoConnect);
         activeTimer->start();
     }
+
+    addSystemText("Welcome", "Welcome to the Griefly!");
 }
 
 void MainForm::setFocusOnLineEdit()
@@ -91,6 +93,17 @@ void MainForm::helperAutoConnect()
 MainForm::~MainForm()
 {
     delete ui;
+}
+
+void MainForm::addSystemText(QString key, QString text)
+{
+    texts_[key] = text;
+
+    ui->mainTabTextBrowser->clear();
+    for (auto it = texts_.begin(); it != texts_.end(); ++it)
+    {
+        ui->mainTabTextBrowser->insertHtml("<p>" + *it + "</p><br>");
+    }
 }
 
 void MainForm::resizeEvent(QResizeEvent* event) {
