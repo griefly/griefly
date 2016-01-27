@@ -11,6 +11,8 @@
 #include "core/Constheader.h"
 #include "ApproxGLImage.h"
 
+#include <QObject>
+
 struct NameSize
 {
     std::string name;
@@ -23,8 +25,9 @@ public:
     bool operator() (const NameSize& left, const NameSize& right);
 };
 
-class TextPainter
+class TextPainter: public QObject
 {
+    Q_OBJECT
 public:
     class Text
     {
@@ -64,6 +67,8 @@ public:
     void Process();
     bool Delete(const std::string& name);
     Text& operator[](const std::string& name);
+signals:
+    void addSystemText(QString key, QString text);
 private:
     std::map<std::string, Text*> texts_;
     std::map<NameSize, TTF_Font*, LessNameSize> fonts_;

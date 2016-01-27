@@ -17,6 +17,7 @@
 #include "representation/Chat.h"
 #include "net/Network2.h"
 #include "net/NetworkMessagesTypes.h"
+#include "representation/Text.h"
 
 #include <QDebug>
 #include <QString>
@@ -75,7 +76,7 @@ MainForm::MainForm(QWidget *parent) :
         activeTimer->start();
     }
 
-    addSystemText("Welcome", "Welcome to the Griefly!");
+    //addSystemText("Welcome", "Welcome to the Griefly!");
 }
 
 void MainForm::setFocusOnLineEdit()
@@ -134,6 +135,7 @@ void MainForm::startGameLoop(int id, QString map)
     }
 
     SetRepresentation(new Representation);
+    connect(&GetTexts(), &TextPainter::addSystemText, this, &MainForm::addSystemText);
 
     Game* game = new Game;
     SetGame(game);
