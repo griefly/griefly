@@ -41,8 +41,6 @@ Representation::Representation()
     }
     GetGLWidget()->resize(old_size_w, old_size_h);
     std::cout << "Screen set" << std::endl;
-
-    SetTexts(new TextPainter);
     SetSpriter(new SpriteHolder);
 
     std::cout << "Begin load resources" << std::endl;

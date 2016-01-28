@@ -33,6 +33,9 @@ public:
 public slots:
     void process();
     void endProcess();
+signals:
+    void addSystemText(QString key, QString text);
+    void insertHtmlIntoChat(QString html);
 private:
     bool is_end_process_;
 

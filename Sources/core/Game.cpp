@@ -131,6 +131,7 @@ void Game::Process()
         
           //  Debug::UnsyncDebug().CheckSaves();
             GetMap().GenerateFrame();
+            GetTexts().Process();
         }
 
         if((SDL_GetTicks() - lastTimeFps) >= 1000)
@@ -189,6 +190,15 @@ void Game::InitWorld(int id, std::string map_name)
 
     SetFactory(new ObjectFactory);
     SetMapMaster(new MapMaster);
+
+    SetChat(new Chat);
+    SetTexts(new TextPainter);
+
+    GetChat().moveToThread(&thread_);
+    GetTexts().moveToThread(&thread_);
+
+    connect(&GetChat(), &Chat::insertHtmlIntoChat, this, &Game::insertHtmlIntoChat);
+    connect(&GetTexts(), &TextPainter::addSystemText, this, &Game::addSystemText);
 
     LoadNames();
 
@@ -256,7 +266,7 @@ void Game::InitWorld(int id, std::string map_name)
         std::stringstream ss; 
         ss << last_fps_ - 1;
         *str = ss.str();
-    }).SetFreq(1000).SetSize(20);
+    }).SetFreq(1000);
 
     GetTexts()["Sync"].SetUpdater
     ([&](std::string* str)
@@ -264,7 +274,7 @@ void Game::InitWorld(int id, std::string map_name)
         std::stringstream ss;
         ss << "Hash: " << GetFactory().GetLastHash();
         *str = ss.str();
-    }).SetSize(15).SetPlace(0, 30);//, 200, 50);
+    });
 
     GetTexts()["MorePreciseSync"].SetUpdater
     ([&](std::string* str)
@@ -275,7 +285,7 @@ void Game::InitWorld(int id, std::string map_name)
             ss << "!!REPORT!!";
         }
         *str = ss.str();
-    }).SetSize(15).SetPlace(200, 30).SetColor(200, 0, 0);
+    });
 
    /* GetTexts()["SyncTick"].SetUpdater
     ([&](std::string* str)
@@ -291,7 +301,7 @@ void Game::InitWorld(int id, std::string map_name)
         std::stringstream ss;
         ss << MAIN_TICK;
         *str = ss.str();
-    }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);
+    });
 
     GetTexts()["PingTimer"].SetUpdater
     ([&](std::string* str)
@@ -299,13 +309,13 @@ void Game::InitWorld(int id, std::string map_name)
         std::stringstream ss;
         ss << "Ping: " << current_ping_ << "ms";
         *str = ss.str();
-    }).SetSize(15).SetPlace(300, 0).SetColor(0, 140, 0);
+    });
 
     GetTexts()["LastTouch"].SetUpdater
     ([this](std::string* str)
     {
         *str = last_touch_;
-    }).SetFreq(20).SetPlace(0, 485).SetSize(22);
+    });
 
 
     thread_.start();

@@ -97,10 +97,7 @@ void Ghost::InitGUI()
         std::stringstream conv;
         conv << "Until respawn: " << seconds_until_respawn_;
         *str = conv.str();
-    }).SetFreq(250)
-      .SetSize(17)
-      .SetPlace(sizeW / 2 - 140, sizeH / 2 - 200)
-      .SetColor(250, 140, 140);
+    }).SetFreq(250);
 }
 
 void Ghost::DeinitGUI()

@@ -46,9 +46,7 @@ void LoginMob::InitGUI()
         {
             *str = "";
         }
-    }).SetFreq(1000)
-      .SetSize(26)
-      .SetPlace(sizeW / 2 - 144 + 16, sizeH / 2 - 13);
+    });
 
     GetTexts()["LoginScreenCount"].SetUpdater
     ([this](std::string* str)
@@ -69,9 +67,7 @@ void LoginMob::InitGUI()
         {
             *str = "00" + *str;
         }
-    }).SetFreq(250)
-      .SetSize(26)
-      .SetPlace(sizeW / 2 - 26 - 13, sizeH / 2 + 30 + 13);
+    });
 
     PlayMusic("lobby.ogg", 10.0f);
 }

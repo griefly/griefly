@@ -30,7 +30,6 @@ MainForm::MainForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    SetChat(new Chat);
     if (!GetParamsHolder().GetParamBool("-debug_to_chat"))
     {
         SetLogToFile();
@@ -56,8 +55,6 @@ MainForm::MainForm(QWidget *parent) :
     right_column = ui->rightColumn->width();
 
     ui->widget->hide();
-
-    connect(&GetChat(), &Chat::insertHtmlIntoChat, this, &MainForm::insertHtmlIntoChat);
 
     connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
     connect(&Network2::GetInstance(), &Network2::connectionFailed, this, &MainForm::connectionFailed);
@@ -135,11 +132,13 @@ void MainForm::startGameLoop(int id, QString map)
     }
 
     SetRepresentation(new Representation);
-    connect(&GetTexts(), &TextPainter::addSystemText, this, &MainForm::addSystemText);
 
     Game* game = new Game;
     SetGame(game);
     game->InitWorld(id, map.toStdString());
+
+    connect(game, &Game::insertHtmlIntoChat, this, &MainForm::insertHtmlIntoChat);
+    connect(game, &Game::addSystemText, this, &MainForm::addSystemText);
 
     connect(this, &MainForm::closing, game, &Game::endProcess);
 
