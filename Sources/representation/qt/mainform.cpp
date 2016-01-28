@@ -23,6 +23,7 @@
 #include <QString>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QTime>
 
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
@@ -95,7 +96,6 @@ MainForm::~MainForm()
 
 void MainForm::addSystemText(QString key, QString text)
 {
-    qDebug() << key << " " << text;
     texts_[key] = text;
     if (text == "")
     {
@@ -107,8 +107,6 @@ void MainForm::addSystemText(QString key, QString text)
     {
         ui->mainTabTextBrowser->insertHtml(*it + "<br>");
     }
-
-    qDebug() << texts_.size();
 }
 
 void MainForm::resizeEvent(QResizeEvent* event) {
@@ -154,19 +152,29 @@ void MainForm::startGameLoop(int id, QString map)
         man.ToogleAutoplay();
     }*/
 
+    QTime fps_timer;
+    fps_timer.start();
+    int fps_counter = 0;
     while (true)
     {
+        ++fps_counter;
+
         if (!NODRAW)
         {
             GetRepresentation().Process();
-            // GetTexts().Process();
 
             GetScreen().Swap();
-            //draw_time_per_tick += draw_timer.Get();
         }
         if (isHidden())
         {
             break;
+        }
+
+        if (fps_timer.elapsed() > 1000)
+        {
+            addSystemText("FPS", "FPS: " + QString::number(fps_counter));
+            fps_timer.restart();
+            fps_counter = 0;
         }
     }
 
