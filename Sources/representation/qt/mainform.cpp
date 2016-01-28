@@ -95,13 +95,20 @@ MainForm::~MainForm()
 
 void MainForm::addSystemText(QString key, QString text)
 {
+    qDebug() << key << " " << text;
     texts_[key] = text;
+    if (text == "")
+    {
+        texts_.remove(key);
+    }
 
     ui->mainTabTextBrowser->clear();
     for (auto it = texts_.begin(); it != texts_.end(); ++it)
     {
-        ui->mainTabTextBrowser->insertHtml("<p>" + *it + "</p><br>");
+        ui->mainTabTextBrowser->insertHtml(*it + "<br>");
     }
+
+    qDebug() << texts_.size();
 }
 
 void MainForm::resizeEvent(QResizeEvent* event) {

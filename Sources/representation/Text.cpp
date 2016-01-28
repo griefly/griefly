@@ -65,17 +65,16 @@ void TextPainter::Process()
 
 bool TextPainter::Delete(const std::string& name)
 {
-    // TODO
-   /* auto itr = texts_.find(name);
+    auto itr = texts_.find(name);
     if (itr == texts_.end())
     {
         return false;
     }
     
+    emit addSystemText(QString::fromStdString(name), "");
+
     delete itr->second;
     texts_.erase(itr);
-
-    return true;*/
     return true;
 }
 

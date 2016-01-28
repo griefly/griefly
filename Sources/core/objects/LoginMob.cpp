@@ -67,6 +67,7 @@ void LoginMob::InitGUI()
         {
             *str = "00" + *str;
         }
+        *str = "Until start: " + *str;
     });
 
     PlayMusic("lobby.ogg", 10.0f);

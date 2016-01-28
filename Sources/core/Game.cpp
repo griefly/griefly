@@ -260,11 +260,11 @@ void Game::InitWorld(int id, std::string map_name)
 
     GetChat().PostText(ON_LOGIN_MESSAGE);
 
-    GetTexts()["FPS"].SetUpdater
+    GetTexts()["GameCycles"].SetUpdater
     ([this](std::string* str)
     {
         std::stringstream ss; 
-        ss << last_fps_ - 1;
+        ss << "Game cycles: " << last_fps_ - 1;
         *str = ss.str();
     }).SetFreq(1000);
 
@@ -276,7 +276,7 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     });
 
-    GetTexts()["MorePreciseSync"].SetUpdater
+    /*GetTexts()["MorePreciseSync"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -285,7 +285,7 @@ void Game::InitWorld(int id, std::string map_name)
             ss << "!!REPORT!!";
         }
         *str = ss.str();
-    });
+    });*/
 
    /* GetTexts()["SyncTick"].SetUpdater
     ([&](std::string* str)
@@ -299,7 +299,7 @@ void Game::InitWorld(int id, std::string map_name)
     ([&](std::string* str)
     {
         std::stringstream ss;
-        ss << MAIN_TICK;
+        ss << "Main tick: " << MAIN_TICK;
         *str = ss.str();
     });
 
@@ -310,13 +310,6 @@ void Game::InitWorld(int id, std::string map_name)
         ss << "Ping: " << current_ping_ << "ms";
         *str = ss.str();
     });
-
-    GetTexts()["LastTouch"].SetUpdater
-    ([this](std::string* str)
-    {
-        *str = last_touch_;
-    });
-
 
     thread_.start();
 }
