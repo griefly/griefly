@@ -12,7 +12,6 @@ class SpriteHolder
 public:
     SpriteHolder();
     GLSprite* GetSprite(const std::string& type);
-    TTF_Font* font;
     void LoadImage(const std::string& image);
 private:
     std::map<std::string, GLSprite*> sprites;

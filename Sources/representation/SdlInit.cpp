@@ -1,7 +1,6 @@
 #include "SdlInit.h"
 
 #include <SDL.h>
-#include <SDL_ttf.h>
 
 #include "core/Constheader.h"
 #include "Sprite.h"
@@ -19,13 +18,5 @@ bool InitSDL()
     }
     atexit(SDL_Quit);
 
-    int result = TTF_Init();
-    if (result < 0)
-    {
-        SYSTEM_STREAM << "Unable to init TTF: " << result << std::endl;
-        SDL_Delay(10000);
-        return false;
-    }
-    atexit(TTF_Quit);
     return true;
 }

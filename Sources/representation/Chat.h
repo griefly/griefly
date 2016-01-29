@@ -3,8 +3,6 @@
 #include <vector>
 #include <string>
 
-#include <SDL_ttf.h>
-
 #include "core/objects/Mob.h"
 
 #include <QTextBrowser>

@@ -6,7 +6,6 @@
 #include <functional>
 
 #include <SDL.h>
-#include <SDL_ttf.h>
 
 #include "core/Constheader.h"
 #include "ApproxGLImage.h"

@@ -3,11 +3,11 @@
 #include <map>
 #include <stdio.h>
 #include <vector>
-#include <SDL_ttf.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <SDL.h>
 
 extern int DELAY_MAIN;//How often do process()
 

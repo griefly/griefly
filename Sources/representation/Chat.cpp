@@ -2,8 +2,6 @@
 
 #include <sstream>
 
-#include <SDL_ttf.h>
-
 #include "Text.h"
 #include "core/Constheader.h"
 #include "Screen.h"
