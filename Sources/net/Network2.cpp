@@ -114,6 +114,11 @@ bool Network2::IsMessageAvailable()
 {
     QMutexLocker locker(&queue_mutex_);
 
+    const int MAX_WAIT_ON_QUEUE = 10;
+    if (received_messages_.size() == 0)
+    {
+        queue_wait_.wait(&queue_mutex_, MAX_WAIT_ON_QUEUE);
+    }
     return received_messages_.size() > 0;
 }
 
@@ -122,6 +127,7 @@ void Network2::PushMessage(Message2 message)
     QMutexLocker locker(&queue_mutex_);
 
     received_messages_.enqueue(message);
+    queue_wait_.wakeOne();
 }
 
 Message2 Network2::PopMessage()

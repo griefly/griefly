@@ -6,6 +6,7 @@
 #include <QThread>
 #include <QQueue>
 #include <QMutex>
+#include <QWaitCondition>
 #include <QTextCodec>
 #include <QJsonObject>
 #include <QByteArray>
@@ -137,6 +138,7 @@ private:
     void PushMessage(Message2 message);
 
     QMutex queue_mutex_;
+    QWaitCondition queue_wait_;
     QQueue<Message2> received_messages_;
 
     Network2();

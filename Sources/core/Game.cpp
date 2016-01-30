@@ -61,22 +61,14 @@ Game::Game()
 void Game::UpdateVisible() 
 {
     visible_points_->clear();
-
     GetMob()->CalculateVisible(visible_points_);
 }
 
 void Game::Process()
 {
-    int lastTimeFps = SDL_GetTicks();
+    int last_time_fps = SDL_GetTicks();
     fps_ = 0;
     process_in_ = false;
-    Timer tick_timer, draw_timer, process_timer, atmos_move_timer, force_timer;
-    tick_timer.Start();
-    draw_timer.Start();
-    process_timer.Start();
-    atmos_move_timer.Start();
-    force_timer.Start();
-    unsigned int draw_time_per_tick = 0;
 
     unsigned int ping_send_time = 0;
 
@@ -96,49 +88,28 @@ void Game::Process()
         if(process_in_)
         {
             ++MAIN_TICK;
-
-            process_timer.Start();
             GetFactory().ForeachProcess();
-            force_timer.Start();
             ForceManager::Get().Process();
-            unsigned int fm = force_timer.Get();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
             {
                 GetMap().atmosphere.Process();
             }
-            atmos_move_timer.Start();
             if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
             {
                 GetMap().atmosphere.ProcessMove();
             }
-            unsigned int amt = atmos_move_timer.Get();
-            GetFactory().Sync();
-            //SYSTEM_STREAM << "Processing take: " << (SDL_GetTicks() - begin_of_process) / 1000.0 << "s" << std::endl;
- 
-            //////////////////////////////
-            //SYSTEM_STREAM << tick_timer.Get() / 1000.0 << std::endl;
-            //SYSTEM_STREAM << draw_time_per_tick / 1000.0 << std::endl;
 
-            if (MAIN_TICK % 10 == 0)
-            {
-               // SYSTEM_STREAM << "Draw take: " << (draw_time_per_tick * 1.0 / tick_timer.Get()) * 100.0 << "%" << std::endl;
-              //  SYSTEM_STREAM << "Process take: " << (process_timer.Get() * 1.0 / tick_timer.Get()) * 100.0 << "%" << std::endl;
-              //  SYSTEM_STREAM << "Atmos move take: " << (amt * 1.0 / tick_timer.Get()) * 100.0 << "%" << std::endl;
-              //  SYSTEM_STREAM << "Force take: " << (fm * 1.0 / tick_timer.Get()) * 100.0 << "%" << std::endl;
-            }
-            tick_timer.Start();
-            draw_time_per_tick = 0;
+            GetFactory().Sync();
         
-          //  Debug::UnsyncDebug().CheckSaves();
+            UpdateVisible();
+
             GetMap().GenerateFrame();
             GetTexts().Process();
         }
 
-        if((SDL_GetTicks() - lastTimeFps) >= 1000)
+        if((SDL_GetTicks() - last_time_fps) >= 1000)
         {
-            UpdateVisible();
-
-            lastTimeFps = SDL_GetTicks();
+            last_time_fps = SDL_GetTicks();
             last_fps_ = fps_;
             fps_ = 0;
         }
@@ -154,19 +125,6 @@ void Game::Process()
 
         ++fps_;
         process_in_ = false;
-        // TODO: make it working in multithread
-
-        /*if (Network2::GetInstance().IsGood() == false)
-        {
-
-        }
-
-        Debug::UnsyncDebug().ProcessDebug();
-
-        if (GetMainWidget().isHidden())
-        {
-            break;
-        }*/
     }
     thread_.exit();
 }
