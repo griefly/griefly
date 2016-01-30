@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"time"
@@ -14,6 +15,8 @@ var tickInterval = flag.Int("tick-interval", 100, "tick interval in ms")
 
 func main() {
 	flag.Parse()
+
+	rand.Seed(time.Now().Unix())
 
 	TickInterval = time.Duration(*tickInterval) * time.Millisecond
 
