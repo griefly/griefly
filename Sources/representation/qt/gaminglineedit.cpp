@@ -26,5 +26,10 @@ void GamingLineEdit::keyPressEvent(QKeyEvent *event)
             return;
         }
     }
+    if (event->key() == Qt::Key_F2)
+    {
+        setText("OOC ");
+        return;
+    }
     QLineEdit::keyPressEvent(event);
 }

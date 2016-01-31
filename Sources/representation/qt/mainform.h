@@ -26,6 +26,8 @@ public slots:
 
     void insertHtmlIntoChat(QString html);
     void playMusic(QString name, float volume);
+
+    void oocPrefixToLineEdit();
 protected:
     void resizeEvent(QResizeEvent* event);
 private slots:

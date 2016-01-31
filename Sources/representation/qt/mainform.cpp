@@ -64,6 +64,7 @@ MainForm::MainForm(QWidget *parent) :
 
     connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
     connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);
+    connect(ui->widget, &QtOpenGL::f2Pressed, this, &MainForm::oocPrefixToLineEdit);
 
     connect(ui->lineEdit, &GamingLineEdit::keyToPass, ui->widget, &QtOpenGL::handlePassedKey);
 
@@ -223,6 +224,11 @@ void MainForm::playMusic(QString name, float volume)
     {
         GetSoundPlayer().StopMusic();
     }
+}
+
+void MainForm::oocPrefixToLineEdit()
+{
+    ui->lineEdit->setText("OOC ");
 }
 
 void MainForm::connectToHost()

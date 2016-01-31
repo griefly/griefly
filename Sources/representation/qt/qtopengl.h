@@ -12,6 +12,7 @@ public:
 
 signals:
     void enterPressed();
+    void f2Pressed();
 public slots:
     void handlePassedKey(QKeyEvent* event);
 protected:

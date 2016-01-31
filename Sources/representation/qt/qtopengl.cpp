@@ -37,6 +37,12 @@ void QtOpenGL::keyPressEvent(QKeyEvent* event)
         emit enterPressed();
         return;
     }
+    if (event->key() == Qt::Key_F2)
+    {
+        emit f2Pressed();
+        emit enterPressed();
+        return;
+    }
     if (IsRepresentationValid())
     {
         GetRepresentation().HandleKeyboardDown(event);
