@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include <memory>
+#include <iomanip>
 
 #include "Map.h"
 #include "representation/Text.h"
@@ -43,7 +43,7 @@ Game::Game()
 {
     auto_player_ = false;
     visible_points_ = new std::list<point>;
-    last_fps_ = FPS_MAX;
+    cpu_load_ = 0.0f;
 
     ping_id_ = "";
     ping_send_time_ = 0;
@@ -67,7 +67,7 @@ void Game::UpdateVisible()
 void Game::Process()
 {
     int last_time_fps = SDL_GetTicks();
-    fps_ = 0;
+    lps_ = 0;
     process_in_ = false;
 
     unsigned int ping_send_time = 0;
@@ -110,8 +110,8 @@ void Game::Process()
         if((SDL_GetTicks() - last_time_fps) >= 1000)
         {
             last_time_fps = SDL_GetTicks();
-            last_fps_ = fps_;
-            fps_ = 0;
+            cpu_load_ = ((1000.0f / MAX_WAIT_ON_QUEUE) - lps_) / (1000.0f / MAX_WAIT_ON_QUEUE) * 100;
+            lps_ = 0;
         }
 
         if (   (SDL_GetTicks() - ping_send_time) > 1000
@@ -123,7 +123,7 @@ void Game::Process()
             ping_send_is_requested_ = false;
         }
 
-        ++fps_;
+        ++lps_;
         process_in_ = false;
     }
     thread_.exit();
@@ -218,11 +218,11 @@ void Game::InitWorld(int id, std::string map_name)
 
     GetChat().PostText(ON_LOGIN_MESSAGE);
 
-    GetTexts()["GameCycles"].SetUpdater
+    GetTexts()["CpuLoad"].SetUpdater
     ([this](std::string* str)
     {
         std::stringstream ss; 
-        ss << "Game cycles: " << last_fps_ - 1;
+        ss << "CPU load: " << cpu_load_ << "%";
         *str = ss.str();
     }).SetFreq(1000);
 
@@ -233,25 +233,6 @@ void Game::InitWorld(int id, std::string map_name)
         ss << "Hash: " << GetFactory().GetLastHash();
         *str = ss.str();
     });
-
-    /*GetTexts()["MorePreciseSync"].SetUpdater
-    ([&](std::string* str)
-    {
-        std::stringstream ss;
-        if (Debug::UnsyncDebug().IsReportGenerated())
-        {
-            ss << "!!REPORT!!";
-        }
-        *str = ss.str();
-    });*/
-
-   /* GetTexts()["SyncTick"].SetUpdater
-    ([&](std::string* str)
-    {
-        std::stringstream ss;
-        ss << NetClient::GetNetClient()->HashTick();
-        ss >> *str;
-    }).SetSize(15).SetPlace(120, 0).SetColor(150, 0, 0);*/
 
     GetTexts()["Tick"].SetUpdater
     ([&](std::string* str)

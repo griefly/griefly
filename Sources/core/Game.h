@@ -40,8 +40,8 @@ private:
     bool is_end_process_;
 
     std::list<point>* visible_points_;
-    int fps_;
-    int last_fps_;
+    int lps_;
+    float cpu_load_;
     std::string last_touch_;
 
     QString ping_id_;

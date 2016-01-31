@@ -27,7 +27,6 @@ LoginMob::LoginMob(size_t id) : IMob(id)
 
 void LoginMob::DeinitGUI()
 {
-    GetTexts().Delete("LoginScreen");
     GetTexts().Delete("LoginScreenCount");
     PlayMusic("");
 }
@@ -35,37 +34,19 @@ void LoginMob::DeinitGUI()
 
 void LoginMob::InitGUI()
 {
-    GetTexts()["LoginScreen"].SetUpdater
-    ([this](std::string* str)
-    {
-        if (GetLobby().GetSecondUntilStart() <= 0)
-        {
-            *str = "CLICK ME";
-        }
-        else
-        {
-            *str = "";
-        }
-    });
-
     GetTexts()["LoginScreenCount"].SetUpdater
     ([this](std::string* str)
     {
-        std::stringstream conv;
         if (GetLobby().GetSecondUntilStart() < 0)
         {
-            *str = "000";
+            *str = "Round is in process, click on the screen";
             return;
         }
-        conv << GetLobby().GetSecondUntilStart();
-        *str = conv.str();
-        if (str->length() == 2)
+        else
         {
-            *str = "0" + *str;
-        }
-        else if (str->length() == 1)
-        {
-            *str = "00" + *str;
+            std::stringstream conv;
+            conv << GetLobby().GetSecondUntilStart();
+            *str = conv.str();
         }
         *str = "Until start: " + *str;
     });

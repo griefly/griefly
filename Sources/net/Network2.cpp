@@ -114,7 +114,6 @@ bool Network2::IsMessageAvailable()
 {
     QMutexLocker locker(&queue_mutex_);
 
-    const int MAX_WAIT_ON_QUEUE = 10;
     if (received_messages_.size() == 0)
     {
         queue_wait_.wait(&queue_mutex_, MAX_WAIT_ON_QUEUE);
