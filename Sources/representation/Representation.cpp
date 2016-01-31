@@ -63,18 +63,6 @@ void Representation::AddToNewFrame(const Sound &sound)
     new_frame_->sounds.push_back(sound.name);
 }
 
-void Representation::SetMusicForNewFrame(const std::string& music, float volume)
-{
-    new_frame_->music = music;
-    new_frame_->volume = volume;
-    if (new_frame_->music == "")
-    {
-        new_frame_->music = STOP_MUSIC;
-    }
-
-    qDebug() << QString::fromStdString(music) << " " << volume;
-}
-
 void Representation::SetCameraForFrame(int pos_x, int pos_y)
 {
     new_frame_->camera_pos_x = pos_x;
@@ -90,7 +78,6 @@ void Representation::Swap()
     new_frame_->entities.clear();
     new_frame_->sounds.clear();
     new_frame_->units.clear();
-    new_frame_->music.clear();
 }
 
 void Representation::HandleKeyboardDown(QKeyEvent* event)
@@ -348,19 +335,6 @@ void Representation::SynchronizeViews()
             GetSoundPlayer().PlaySound(*it);
         }
 
-        // TODO: when frame is dropped there is possibility that music will not be played
-        if (current_frame_->music == STOP_MUSIC)
-        {
-            GetSoundPlayer().StopMusic();
-            current_music_ = "";
-            qDebug() << "Music stopped";
-        }
-        else if (current_frame_->music != current_music_ && current_frame_->music != "")
-        {
-            qDebug() << "Music started";
-            GetSoundPlayer().PlayMusic(current_frame_->music, current_frame_->volume);
-            current_music_ = current_frame_->music;
-        }
         ++current_frame_id_;
         is_updated_ = false;
     }

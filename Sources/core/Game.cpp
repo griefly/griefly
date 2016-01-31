@@ -363,6 +363,12 @@ void Game::ProcessInputMessages()
     }
 }
 
+void Game::PlayMusic(std::string name, float volume)
+{
+    qDebug() << QString::fromStdString(name);
+    emit playMusic(QString::fromStdString(name), volume);
+}
+
 void Game::process()
 {
     Process();

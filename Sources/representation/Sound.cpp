@@ -2,6 +2,9 @@
 
 #include "core/VisiblePoints.h"
 #include "Representation.h"
+#include "core/Game.h"
+
+#include <QDebug>
 
 SoundManager& GetSoundManager()
 {
@@ -104,11 +107,6 @@ void SoundPlayer::StopMusic()
     }
 }
 
-bool SoundPlayer::IsMusicPlaying()
-{
-    return music_.getStatus() == sf::Music::Status::Playing;
-}
-
 sf::Sound* PlaySound(const std::string& name)
 {
     sf::Sound* s = GetSoundPlayer().PlaySound(name);
@@ -120,7 +118,6 @@ void PlaySoundIfVisible(const std::string& name, size_t tile_id)
 {
     if (IsTileVisible(tile_id))
     {
-        //PlaySound(name);
         GetRepresentation().AddToNewFrame(name);
     }
 }
@@ -128,12 +125,8 @@ void PlaySoundIfVisible(const std::string& name, size_t tile_id)
 
 void PlayMusic(const std::string& name, float volume)
 {
-    GetRepresentation().SetMusicForNewFrame(name, volume);
-
-    /*if (name == "")
+    if (IsGameValid())
     {
-        GetSoundPlayer().StopMusic();
-        return;
+        GetGame().PlayMusic(name, volume);
     }
-    GetSoundPlayer().PlayMusic(name, volume);*/
 }

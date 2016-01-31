@@ -9,6 +9,8 @@
 #include "core/Game.h"
 #include "net/MagicStrings.h"
 
+#include "representation/Sound.h"
+
 #include "representation/Screen.h"
 #include "representation/Metadata.h"
 
@@ -140,10 +142,12 @@ void MainForm::startGameLoop(int id, QString map)
 
     Game* game = new Game;
     SetGame(game);
-    game->InitWorld(id, map.toStdString());
 
     connect(game, &Game::insertHtmlIntoChat, this, &MainForm::insertHtmlIntoChat);
     connect(game, &Game::addSystemText, this, &MainForm::addSystemText);
+    connect(game, &Game::playMusic, this, &MainForm::playMusic);
+
+    game->InitWorld(id, map.toStdString());
 
     connect(this, &MainForm::closing, game, &Game::endProcess);
 
@@ -206,6 +210,19 @@ void MainForm::insertHtmlIntoChat(QString html)
     cursor = ui->textBrowser->textCursor();
     cursor.movePosition(QTextCursor::End);
     ui->textBrowser->setTextCursor(cursor);
+}
+
+void MainForm::playMusic(QString name, float volume)
+{
+    qDebug() << name << " " << volume;
+    if (name != "")
+    {
+        GetSoundPlayer().PlayMusic(name.toStdString(), volume);
+    }
+    else
+    {
+        GetSoundPlayer().StopMusic();
+    }
 }
 
 void MainForm::connectToHost()

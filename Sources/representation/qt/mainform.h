@@ -25,6 +25,7 @@ public slots:
     void connectionFailed(QString reason);
 
     void insertHtmlIntoChat(QString html);
+    void playMusic(QString name, float volume);
 protected:
     void resizeEvent(QResizeEvent* event);
 private slots:

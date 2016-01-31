@@ -50,7 +50,6 @@ public:
     void AddToNewFrame(const Entity& ent);
     void AddToNewFrame(const Sound& sound);
 
-    void SetMusicForNewFrame(const std::string& music, float volume);
     void SetCameraForFrame(int pos_x, int pos_y);
 
     void Swap();
@@ -80,15 +79,11 @@ private:
         std::vector<Entity> entities;
         std::vector<std::string> sounds;
         std::vector<InterfaceUnit> units;
-        std::string music;
-        float volume;
         int camera_pos_x;
         int camera_pos_y;
     };
 
     typedef FrameData DataType;
-
-    std::string current_music_;
 
     DataType* current_frame_;
     DataType* new_frame_;

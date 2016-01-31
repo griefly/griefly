@@ -28,7 +28,6 @@ public:
     sf::Sound* PlaySound(const std::string& name);
     void PlayMusic(const std::string& name, float volume = 100.0f);
     void StopMusic();
-    bool IsMusicPlaying();
 private:
     sf::Music music_;
     std::vector<sf::Sound> sounds_;

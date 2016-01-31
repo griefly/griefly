@@ -30,12 +30,14 @@ public:
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 
     std::list<point>* GetVisiblePoints() { return visible_points_; }
+    void PlayMusic(std::string name, float volume);
 public slots:
     void process();
     void endProcess();
 signals:
     void addSystemText(QString key, QString text);
     void insertHtmlIntoChat(QString html);
+    void playMusic(QString name, float volume);
 private:
     bool is_end_process_;
 
@@ -58,4 +60,4 @@ private:
 
 Game& GetGame();
 bool IsGameValid();
-void SetGame(Game* manager);
+void SetGame(Game* game);
