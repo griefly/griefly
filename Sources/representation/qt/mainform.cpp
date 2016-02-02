@@ -26,12 +26,19 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QTime>
+#include <QTextBlock>
 
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainForm)
 {
     ui->setupUi(this);
+
+    ui->textBrowser->setAcceptRichText(false);
+    ui->textBrowser->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->textBrowser->setOpenLinks(false);
+    ui->textBrowser->setReadOnly(true);
+    ui->textBrowser->setUndoRedoEnabled(false);
 
     if (!GetParamsHolder().GetParamBool("-debug_to_chat"))
     {
@@ -195,22 +202,39 @@ void MainForm::startGameLoop(int id, QString map)
 
 void MainForm::connectionFailed(QString reason)
 {
-    ui->textBrowser->insertHtml("<b>Connection failed!</b>");
-    ui->textBrowser->append(reason);
-    ui->textBrowser->insertHtml("<br>If you would like to reconnect then do it manually<br>");
+    insertHtmlIntoChat("<b>Connection failed!</b>");
+    insertHtmlIntoChat(reason);
+    insertHtmlIntoChat("<br>If you would like to reconnect then do it manually<br>");
 }
 
 void MainForm::insertHtmlIntoChat(QString html)
 {
+    chat_messages_.append(html);
+    ui->textBrowser->setUpdatesEnabled(false);
+
+    ui->textBrowser->clear();
+
     QTextCursor cursor = ui->textBrowser->textCursor();
     cursor.movePosition(QTextCursor::End);
     ui->textBrowser->setTextCursor(cursor);
 
-    ui->textBrowser->insertHtml(html);
+    const int MAX_MESSAGES = 25;
+
+    int i = chat_messages_.size() - MAX_MESSAGES;
+    if (i < 0)
+    {
+        i = 0;
+    }
+    for (; i < chat_messages_.size(); ++i)
+    {
+        ui->textBrowser->insertHtml(chat_messages_[i]);
+    }
 
     cursor = ui->textBrowser->textCursor();
     cursor.movePosition(QTextCursor::End);
     ui->textBrowser->setTextCursor(cursor);
+
+    ui->textBrowser->setUpdatesEnabled(true);
 }
 
 void MainForm::playMusic(QString name, float volume)
@@ -231,7 +255,7 @@ void MainForm::oocPrefixToLineEdit()
     ui->lineEdit->setText("OOC ");
 }
 
-void MainForm::connectToHost()
+void MainForm::ConnectToHost()
 {
     std::string adrs = "127.0.0.1";
     if (GetParamsHolder().GetParamBool("ip"))
@@ -271,7 +295,7 @@ void MainForm::on_lineEdit_returnPressed()
     {
         connected = true;
         ui->lineEdit->clear();
-        connectToHost();
+        ConnectToHost();
         return;
     }
 
@@ -321,4 +345,21 @@ void MainForm::on_splitter_splitterMoved(int pos, int index)
     int x_pos = (ui->leftColumn->width() - min_size) / 2;
     int y_pos = (ui->leftColumn->height() - min_size) / 2;
     ui->widget->move(x_pos, y_pos);
+}
+
+void MainForm::RemoveBlockFromTextEditor()
+{
+    QTextCursor cursor = ui->textBrowser->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    cursor.select(QTextCursor::LineUnderCursor);
+    if (cursor.selectedText().size() == 0)
+    {
+        cursor.movePosition(QTextCursor::NextCharacter);
+        cursor.deletePreviousChar();
+    }
+    else
+    {
+        cursor.removeSelectedText();
+        cursor.deletePreviousChar();
+    }
 }

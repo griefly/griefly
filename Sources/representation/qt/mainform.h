@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <QCloseEvent>
 #include <QMap>
+#include <QVector>
 
 namespace Ui {
 class MainForm;
@@ -41,8 +42,9 @@ signals:
     void autoConnect();
     void closing();
 private:
+    void RemoveBlockFromTextEditor();
 
-    void connectToHost();
+    void ConnectToHost();
 
     QTimer* activeTimer;
 
@@ -54,6 +56,8 @@ private:
     Ui::MainForm *ui;
 
     QMap<QString, QString> texts_;
+
+    QVector<QString> chat_messages_;
 };
 
 #endif // MAINFORM_H
