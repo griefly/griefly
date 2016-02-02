@@ -209,32 +209,39 @@ void MainForm::connectionFailed(QString reason)
 
 void MainForm::insertHtmlIntoChat(QString html)
 {
-    chat_messages_.append(html);
-    ui->textBrowser->setUpdatesEnabled(false);
-
-    ui->textBrowser->clear();
-
     QTextCursor cursor = ui->textBrowser->textCursor();
     cursor.movePosition(QTextCursor::End);
     ui->textBrowser->setTextCursor(cursor);
 
-    const int MAX_MESSAGES = 25;
+    cursor.insertHtml(html);
+    cursor.insertBlock();
 
-    int i = chat_messages_.size() - MAX_MESSAGES;
-    if (i < 0)
+    const int MIN_TEXT_BLOCKS = 3;
+    const int MAX_SIZE_OF_DOCUMENT = 1500.0;
+
+    while (   (ui->textBrowser->document()->blockCount() > MIN_TEXT_BLOCKS)
+           && (ui->textBrowser->document()->size().height() > MAX_SIZE_OF_DOCUMENT))
     {
-        i = 0;
-    }
-    for (; i < chat_messages_.size(); ++i)
-    {
-        ui->textBrowser->insertHtml(chat_messages_[i]);
+        RemoveFirstBlockFromTextEditor();
     }
 
     cursor = ui->textBrowser->textCursor();
     cursor.movePosition(QTextCursor::End);
     ui->textBrowser->setTextCursor(cursor);
+}
 
-    ui->textBrowser->setUpdatesEnabled(true);
+void MainForm::RemoveFirstBlockFromTextEditor()
+{
+    QTextCursor cursor = ui->textBrowser->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    cursor.select(QTextCursor::BlockUnderCursor);
+    cursor.removeSelectedText();
+    cursor.select(QTextCursor::BlockUnderCursor);
+    while (cursor.selectedText().length() == 0)
+    {
+        cursor.deleteChar();
+        cursor.select(QTextCursor::BlockUnderCursor);
+    }
 }
 
 void MainForm::playMusic(QString name, float volume)
@@ -345,21 +352,4 @@ void MainForm::on_splitter_splitterMoved(int pos, int index)
     int x_pos = (ui->leftColumn->width() - min_size) / 2;
     int y_pos = (ui->leftColumn->height() - min_size) / 2;
     ui->widget->move(x_pos, y_pos);
-}
-
-void MainForm::RemoveBlockFromTextEditor()
-{
-    QTextCursor cursor = ui->textBrowser->textCursor();
-    cursor.movePosition(QTextCursor::Start);
-    cursor.select(QTextCursor::LineUnderCursor);
-    if (cursor.selectedText().size() == 0)
-    {
-        cursor.movePosition(QTextCursor::NextCharacter);
-        cursor.deletePreviousChar();
-    }
-    else
-    {
-        cursor.removeSelectedText();
-        cursor.deletePreviousChar();
-    }
 }

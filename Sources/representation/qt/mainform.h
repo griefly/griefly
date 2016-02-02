@@ -42,7 +42,7 @@ signals:
     void autoConnect();
     void closing();
 private:
-    void RemoveBlockFromTextEditor();
+    void RemoveFirstBlockFromTextEditor();
 
     void ConnectToHost();
 

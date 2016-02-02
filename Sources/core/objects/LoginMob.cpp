@@ -63,11 +63,11 @@ void LoginMob::GenerateInterfaceForFrame()
 const std::string SECURITY_TEXT =
         "A space anomaly has moved a piece of your Space Station into an unknown part of space."
         " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all janitors."
-        " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n\n";
+        " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
 const std::string JANITOR_TEXT =
         "A space anomaly has moved a piece of your Space Station into an unknown part of space."
         " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all security."
-        " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n\n";
+        " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
 
 void LoginMob::processGUImsg(const Message2& msg)
 {

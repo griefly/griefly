@@ -92,7 +92,7 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
          + q_by
          + " with "
          + q_object
-         + "</font><br>");
+         + "</font>");
 }
 
 void Chat::PostWords(const std::string& who, const std::string& text, size_t tile_id)
@@ -112,7 +112,7 @@ void Chat::PostWords(const std::string& who, const std::string& text, size_t til
          + "</b>: "
          + "<span>"
          + q_text
-         + "</span><br>");
+         + "</span>");
 }
 
 void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
@@ -141,5 +141,5 @@ void Chat::PostOOCText(const std::string &who, const std::string& text)
          + "</b>: "
          + "<span>"
          + q_text
-         + "</span></font><br>");
+         + "</span></font>");
 }
