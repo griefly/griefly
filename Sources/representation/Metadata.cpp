@@ -15,7 +15,9 @@ const ImageMetadata::SpriteMetadata&
 bool ImageMetadata::IsValidState(const std::string& name)
 {
     if (!Valid())
+    {
         return false;
+    }
     return metadata_.find(name) != metadata_.end();
 }
 

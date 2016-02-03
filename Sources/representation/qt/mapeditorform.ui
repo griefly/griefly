@@ -59,9 +59,9 @@
        <widget class="QPushButton" name="newMap">
         <property name="geometry">
          <rect>
-          <x>300</x>
+          <x>390</x>
           <y>10</y>
-          <width>81</width>
+          <width>75</width>
           <height>23</height>
          </rect>
         </property>
@@ -128,7 +128,7 @@
        <widget class="QPushButton" name="saveMap">
         <property name="geometry">
          <rect>
-          <x>390</x>
+          <x>470</x>
           <y>10</y>
           <width>75</width>
           <height>23</height>
@@ -141,7 +141,7 @@
        <widget class="QPushButton" name="loadMap">
         <property name="geometry">
          <rect>
-          <x>390</x>
+          <x>470</x>
           <y>40</y>
           <width>75</width>
           <height>23</height>
@@ -175,6 +175,19 @@
         </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="resizeMap">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>10</y>
+          <width>81</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Resize Map</string>
         </property>
        </widget>
       </widget>
