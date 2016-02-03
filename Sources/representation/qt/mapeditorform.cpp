@@ -84,7 +84,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         ViewInfo* view_info = bloc->GetView();
 
-        if (view_info->GetBaseFrameset().GetSprite() == "")
+        if (   view_info->GetBaseFrameset().GetSprite() == ""
+            || view_info->GetBaseFrameset().GetState() == "")
         {
             continue;
         }
@@ -93,6 +94,11 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         View2 view;
         view.LoadViewInfo(*view_info);
+
+        if (view.GetBaseFrameset().GetMetadata() == nullptr)
+        {
+            continue;
+        }
 
         for (size_t dir = 0; dir < view.GetBaseFrameset().GetMetadata()->dirs; ++dir)
         {

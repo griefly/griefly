@@ -25,8 +25,10 @@ Screwdriver::Screwdriver(size_t id) : Item(id)
 
     std::stringstream converter;
     converter << "screwdriver";
-    if (value)
+    if (value > 1)
+    {
         converter << value;
+    }
     SetState(converter.str());
     
     name = "Screwdriver";
