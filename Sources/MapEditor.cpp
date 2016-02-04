@@ -122,6 +122,27 @@ void MapEditor::PasteItemsToCurrentTile()
                 second_selection_x_, second_selection_y_);
 }
 
+void MapEditor::CopyToAreaBuffer()
+{
+    area_buffer_.resize(pointer_.second_posx + 1 - pointer_.first_posx);
+    for (int i = 0; i < static_cast<int>(area_buffer_.size()); ++i)
+    {
+        area_buffer_[i].resize(pointer_.second_posy + 1 - pointer_.first_posy);
+    }
+    for (int x = 0; x < static_cast<int>(area_buffer_.size()); ++x)
+    {
+        for (int y = 0; y < static_cast<int>(area_buffer_[0].size()); ++y)
+        {
+            area_buffer_[x][y] = editor_map_[pointer_.first_posx + x][pointer_.first_posy + y][0];
+        }
+    }
+}
+
+void MapEditor::PasteFromAreaBuffer()
+{
+
+}
+
 void MapEditor::SaveMapgen(const std::string &name)
 {
     int size_x = editor_map_.size();

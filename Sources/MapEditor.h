@@ -100,6 +100,12 @@ private:
     void CopyItemsFromCurrentTile();
     void PasteItemsToCurrentTile();
 
+    std::vector<std::vector<EditorTile>> area_buffer_;
+
+    void CopyToAreaBuffer();
+    void PasteFromAreaBuffer();
+
+
     int selection_stage_;
 
     int first_selection_x_;

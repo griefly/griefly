@@ -413,3 +413,8 @@ void MapEditorForm::on_listWidget_clicked(const QModelIndex &index)
 {
     is_turf_selected_ = false;
 }
+
+void MapEditorForm::on_resizeMap_clicked()
+{
+    // TODO:
+}

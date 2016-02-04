@@ -66,6 +66,8 @@ private slots:
 
     void on_listWidget_clicked(const QModelIndex &index);
 
+    void on_resizeMap_clicked();
+
 private:
     bool is_turf_selected_;
 
