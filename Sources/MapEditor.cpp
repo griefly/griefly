@@ -140,7 +140,16 @@ void MapEditor::CopyToAreaBuffer()
 
 void MapEditor::PasteFromAreaBuffer()
 {
+    int end_x = std::min(editor_map_.size() - 1, area_buffer_.size());
+    int end_y = std::min(editor_map_[0].size() - 1, area_buffer_[0].size());
 
+    for (int x = 0; x < end_x; ++x)
+    {
+        for (int y = 0; y < end_y; ++y)
+        {
+            // TODO
+        }
+    }
 }
 
 void MapEditor::SaveMapgen(const std::string &name)
