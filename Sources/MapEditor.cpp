@@ -94,12 +94,14 @@ void MapEditor::keyPressedEvent(QKeyEvent *event)
     if (    (event->key() == Qt::Key_C)
          && (event->modifiers() & Qt::ControlModifier))
     {
-        CopyItemsFromCurrentTile();
+        //CopyItemsFromCurrentTile();
+        CopyToAreaBuffer();
     }
     if (    (event->key() == Qt::Key_V)
          && (event->modifiers() & Qt::ControlModifier))
     {
-        PasteItemsToCurrentTile();
+        //PasteItemsToCurrentTile();
+        PasteFromAreaBuffer();
     }
 }
 
@@ -140,16 +142,45 @@ void MapEditor::CopyToAreaBuffer()
 
 void MapEditor::PasteFromAreaBuffer()
 {
-    int end_x = std::min(editor_map_.size() - 1, area_buffer_.size());
-    int end_y = std::min(editor_map_[0].size() - 1, area_buffer_[0].size());
+    int end_x = std::min(
+                    editor_map_.size(),
+                    pointer_.first_posx + area_buffer_.size());
+    int end_y = std::min(
+                    editor_map_[0].size(),
+                    pointer_.first_posy + area_buffer_[0].size());
 
-    for (int x = 0; x < end_x; ++x)
+    for (int x = 0; x < end_x - pointer_.first_posx; ++x)
     {
-        for (int y = 0; y < end_y; ++y)
+        for (int y = 0; y < end_y - pointer_.first_posy; ++y)
         {
-            // TODO
+            auto& new_item = SetTurf(
+                                area_buffer_[x][y].turf.item_type,
+                                pointer_.first_posx + x,
+                                pointer_.first_posy + y,
+                                0);
+            new_item.variables = area_buffer_[x][y].turf.variables;
+            UpdateDirs(&new_item);
+            for (auto it = area_buffer_[x][y].items.begin();
+                      it != area_buffer_[x][y].items.end();
+                    ++it)
+            {
+                auto& new_item = AddItem(
+                                    it->item_type,
+                                    pointer_.first_posx + x,
+                                    pointer_.first_posy + y,
+                                    0);
+                new_item.variables = it->variables;
+                UpdateDirs(&new_item);
+            }
         }
     }
+
+    SetFirstSelectionPoint(pointer_.first_posx, pointer_.first_posy);
+    SetSecondSelectionPoint(end_x - 1, end_y - 1);
+
+    emit newSelectionSetted(
+                first_selection_x_, first_selection_y_,
+                second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::SaveMapgen(const std::string &name)
