@@ -416,5 +416,22 @@ void MapEditorForm::on_listWidget_clicked(const QModelIndex &index)
 
 void MapEditorForm::on_resizeMap_clicked()
 {
-    // TODO:
+    bool ok = false;
+
+    int size_x = ui->posxEdit->text().toInt(&ok);
+    if (!ok || (size_x <= 0))
+    {
+        return;
+    }
+    int size_y = ui->posyEdit->text().toInt(&ok);
+    if (!ok || (size_y <= 0))
+    {
+        return;
+    }
+    int size_z = ui->poszEdit->text().toInt(&ok);
+    if (!ok || (size_z <= 0))
+    {
+        return;
+    }
+    map_editor_->Resize(size_x, size_y, size_z);
 }
