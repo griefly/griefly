@@ -161,9 +161,9 @@ void Game::InitWorld(int id, std::string map_name)
     LoadNames();
 
     std::cout << "Create tiles" << std::endl;
-    int x = GetParamsHolder().GetParamBool("map_x") ? GetParamsHolder().GetParam<int>("map_x") : 40;
-    int y = GetParamsHolder().GetParamBool("map_y") ? GetParamsHolder().GetParam<int>("map_y") : 40;
-    int z = GetParamsHolder().GetParamBool("map_z") ? GetParamsHolder().GetParam<int>("map_z") : 1;
+    int x = 40;
+    int y = 40;
+    int z = 1;
     GetMap().MakeTiles(x, y, z);
 
     std::cout << "Begin choose map" << std::endl;

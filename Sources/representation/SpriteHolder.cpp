@@ -2,8 +2,6 @@
 
 GLSprite* SpriteHolder::GetSprite(const std::string& type)
 {
-    if (NODRAW)
-        return nullptr;
     if(sprites.find(type) == sprites.end())
         sprites[type] = new GLSprite(type);
     return sprites[type];

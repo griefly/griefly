@@ -171,12 +171,9 @@ void MainForm::startGameLoop(int id, QString map)
     {
         ++fps_counter;
 
-        if (!NODRAW)
-        {
-            GetRepresentation().Process();
+        GetRepresentation().Process();
+        GetScreen().Swap();
 
-            GetScreen().Swap();
-        }
         if (isHidden())
         {
             break;

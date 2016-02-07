@@ -33,10 +33,6 @@ void View2::FramesetState::LoadFramesetInfo(const ViewInfo::FramesetInfo& frames
 
 bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
 {
-    if (NODRAW)
-    {
-        return true;
-    }
     if (!GetMetadata())
     {
         return true;
@@ -90,11 +86,6 @@ const int ANIMATION_MUL = 100;
 
 void View2::FramesetState::Draw(size_t shift, int x, int y, int angle)
 {
-    if (NODRAW)
-    {
-        return;
-    }
-
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
     {
         return;

@@ -35,10 +35,7 @@ Representation::Representation()
 
     int old_size_w = GetGLWidget()->width();
     int old_size_h = GetGLWidget()->height();
-    if (!NODRAW)
-    {
-        SetScreen(new Screen(sizeW, sizeH));
-    }
+    SetScreen(new Screen(sizeW, sizeH));
     GetGLWidget()->resize(old_size_w, old_size_h);
     std::cout << "Screen set" << std::endl;
     SetSpriter(new SpriteHolder);
@@ -221,18 +218,28 @@ void Representation::Process()
 
     HandleInput();
 
-    MakeCurrentGLContext();
-    GetScreen().Clear();
-
-    Draw();
-    DrawInterface();
-
-    const int PIXEL_MOVEMENT_SPEED = 16;
-    if ((SDL_GetTicks() - pixel_movement_tick_) > PIXEL_MOVEMENT_SPEED)
+    if (!NODRAW)
     {
-        PerformPixelMovement();
-        camera_.PerformPixelMovement();
-        pixel_movement_tick_ = SDL_GetTicks();
+        MakeCurrentGLContext();
+        GetScreen().Clear();
+
+        Draw();
+        DrawInterface();
+
+        const int PIXEL_MOVEMENT_SPEED = 16;
+        if ((SDL_GetTicks() - pixel_movement_tick_) > PIXEL_MOVEMENT_SPEED)
+        {
+            PerformPixelMovement();
+            camera_.PerformPixelMovement();
+            pixel_movement_tick_ = SDL_GetTicks();
+        }
+    }
+    else
+    {
+        const int SLEEP_MS = 50;
+        mutex_.unlock();
+        QThread::msleep(SLEEP_MS);
+        mutex_.lock();
     }
 }
 
