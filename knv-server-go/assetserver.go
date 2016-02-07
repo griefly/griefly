@@ -12,7 +12,8 @@ import (
 )
 
 const (
-	PipeQueueLength = 4
+	PipeQueueLength    = 4
+	DefalutContentType = "application/octet-stream"
 )
 
 type AssetServer struct {
@@ -117,8 +118,13 @@ func (as *AssetServer) pipeDownload(rw http.ResponseWriter, req *http.Request, i
 		return
 	}
 
+	contentType := info.ContentType
+	if contentType == "" {
+		contentType = DefalutContentType
+	}
+
 	rw.Header().Set("Content-Length", strconv.Itoa(int(info.Size)))
-	rw.Header().Set("Content-Type", "application/octet-stream")
+	rw.Header().Set("Content-Type", contentType)
 
 	_, err := io.Copy(rw, pipe)
 	if err != nil {
@@ -145,6 +151,7 @@ func (as *AssetServer) pipeUpload(rw http.ResponseWriter, req *http.Request, id 
 	}
 
 	info.Size = int64(length)
+	info.ContentType = req.Header.Get("Content-Type")
 	pipe.info <- info
 
 	_, err = io.Copy(pipe, io.LimitReader(req.Body, int64(length)))
@@ -156,8 +163,9 @@ func (as *AssetServer) pipeUpload(rw http.ResponseWriter, req *http.Request, id 
 }
 
 type PipeInfo struct {
-	Size int64
-	Err  error
+	Size        int64
+	Err         error
+	ContentType string
 }
 
 type Pipe struct {
