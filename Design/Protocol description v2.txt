@@ -238,6 +238,7 @@ END OF END CONNECTION STAGE
 HOW CLIENT UPLOADS MAP TO SERVER:
 POST request to some url ("grief.ly/blah")
 Content-Length as header
+Content-Type: application/octet-stream or application/zip
 Binary map in the body of the POST request.
 Response 200 OK
 Other responses - error.
@@ -246,7 +247,7 @@ HOW CLIENT DOWNLOADS MAP FROM SERVER
 GET request to some url ("grief.ly/blah")
 Response 200 OK
 Content-Length in the response
-Content-Type: application/octet-stream in the response
+Content-Type: <type> - type that was in uploaded map
 Body is the binary map
 Response 200 OK
 Other responses - error.
