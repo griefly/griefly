@@ -55,6 +55,7 @@ ERROR MESSAGES:
 402 - WRONG AUTHENTICATION
 403 - UNDEFINED ERROR
 404 - EXIT_SERVER
+405 - MASTER CLIENT IS NOT CONNECTED
 
 NON ERROR MESSAGES:
 201 - SUCCESS CONNECTION
@@ -113,12 +114,17 @@ type: WRONG AUTHENTICATION
 (empty)
 -> connection closed
 
-c) MASTER CLIENT DOES NOT EXIST
+c) MASTER CLIENT DOES NOT EXIST, AND login IS ADMIN
  from SERVER to CLIENT
 Server creates new client, gives number to him
 type: SUCCESS CONNECTION
 {"map" : "no_map", "your_id" : 42}
 New client now master client
+
+c2) MASTER CLIENT DOES NOT EXIST, AND login IS NOT ADMIN
+type: MASTER CLIENT IS NOT CONNECTED
+(empty)
+-> connection closed
 
 d) MASTER CLIENT EXISTS AND "login" DOES NOT HAVE ID
 Server creates new client, gives number to him
