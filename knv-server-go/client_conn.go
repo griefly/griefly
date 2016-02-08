@@ -126,7 +126,7 @@ func (c *ClientConnection) Run() {
 	var version = make([]byte, 4)
 	_, err = c.bufConn.Read(version)
 	if err != nil {
-		log.Println("client: error on reading version:", err)
+		log.Println("client: error on reading protocol version:", err)
 		return
 	}
 
@@ -148,9 +148,19 @@ func (c *ClientConnection) Run() {
 
 	login := e.Message.(*MessageLogin)
 
-	if login.GameVersion != clientVersionBuild {
-		log.Printf("client: version mismatch. Server version: '%s', client version: '%s'",
+	if login.GameVersion < clientVersionBuild {
+		log.Printf("client is too old. Server version: '%s', client version: '%s'",
 			clientVersionBuild, login.GameVersion)
+		msg := &ErrmsgWrongGameVersion{CorrectVersion: clientVersionBuild}
+		reply := &Envelope{msg, MsgidWrongGameVersion, 0}
+		c.writeMessage(reply)
+		return
+	}
+
+	ok, currentVersion := c.reg.CheckVersion(login.GameVersion)
+	if !ok {
+		log.Printf("client version mismatch. Game version: '%s', client version: '%s'",
+			currentVersion, login.GameVersion)
 		msg := &ErrmsgWrongGameVersion{CorrectVersion: clientVersionBuild}
 		reply := &Envelope{msg, MsgidWrongGameVersion, 0}
 		c.writeMessage(reply)

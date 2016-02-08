@@ -11,6 +11,6 @@ fi
 echo "Start build"
 cd knv-server-go
 gofmt -w .
-go build -ldflags "-X main.clientVersionBuild $version"
+go build -ldflags "-X main.clientVersionBuild=$version"
 cd ..
 echo "End build"

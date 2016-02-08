@@ -33,3 +33,5 @@ Exec/KVEngine: install
 .PHONY: install
 install: partial-build
 	cp build/KVEngine Exec
+	cp build/Launcher Exec
+	cp build/metadata.json Exec
