@@ -162,7 +162,7 @@ void LauncherForm::on_connectPushButton_clicked()
     }
     else
     {
-        kv_process_.start(TARGET_NAME, args);
+        kv_process_.start("./" + TARGET_NAME, args);
     }
 }
 
