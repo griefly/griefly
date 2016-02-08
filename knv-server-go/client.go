@@ -33,14 +33,26 @@ type PlayerInfo struct {
 	login string
 }
 
+type versionCheck struct {
+	version  string
+	response chan versionCheckResponse
+}
+
+type versionCheckResponse struct {
+	ok      bool
+	version string
+}
+
 type Registry struct {
 	nextID  int
 	clients map[int]chan *Envelope
 	players map[string]PlayerInfo
 
-	masterID int
+	masterID      int
+	clientVersion string
 
-	newPlayers chan PlayerEnvelope
+	newPlayers   chan PlayerEnvelope
+	versionCheck chan versionCheck
 
 	droppedPlayers chan int
 
@@ -51,7 +63,7 @@ type Registry struct {
 
 func newRegistry(as *AssetServer) *Registry {
 	return &Registry{1, make(map[int]chan *Envelope, RegistryQueueLength), make(map[string]PlayerInfo),
-		-1, make(chan PlayerEnvelope), make(chan int), make(chan *Envelope), nil, as}
+		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan int), make(chan *Envelope), nil, as}
 }
 
 // async api
@@ -68,6 +80,13 @@ func (r *Registry) RemovePlayer(id int) {
 
 func (r *Registry) RecvMessage(e *Envelope) {
 	r.inbox <- e
+}
+
+func (r *Registry) CheckVersion(version string) (bool, string) {
+	req := versionCheck{version, make(chan versionCheckResponse, 1)}
+	r.versionCheck <- req
+	reply := <-req.response
+	return reply.ok, reply.version
 }
 
 // internals
@@ -118,6 +137,13 @@ func (r *Registry) Run() {
 			r.registerPlayer(newPlayer)
 		case playerID := <-r.droppedPlayers:
 			r.removePlayer(playerID)
+		case req := <-r.versionCheck:
+			if r.clientVersion == "" {
+				r.clientVersion = req.version
+				req.response <- versionCheckResponse{true, req.version}
+			} else {
+				req.response <- versionCheckResponse{req.version == r.clientVersion, r.clientVersion}
+			}
 		}
 	}
 }
@@ -219,6 +245,7 @@ func (r *Registry) removePlayer(id int) {
 func (r *Registry) cleanUp() {
 	r.players = make(map[string]PlayerInfo)
 	r.nextID = 1
+	r.clientVersion = ""
 }
 
 func newGuest(r *Registry, prefix string) string {
