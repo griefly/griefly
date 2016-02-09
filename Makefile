@@ -18,7 +18,7 @@ travis-get-deps:
 .PHONY: clean
 clean:
 	rm -rf build
-	rm -f Exec/KVEngine
+	rm -f Exec/KVEngine Exec/Launcher Exec/metadata.json
 
 .PHONY: partial-build
 partial-build: build/Makefile
