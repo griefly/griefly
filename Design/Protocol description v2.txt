@@ -106,10 +106,15 @@ Size < 512
 {"text":"some text"}
 Size < 2 * 1024
 
-1003 - some complicated gui message
+1003 - some complicated gui message (not used currently)
+
 1004 - mouse click
 {"obj":42}
 Size < 512
+
+1005 - ooc message
+{"login":"login", "text":"some text"}
+Size < 2 * 1024
 
 1102 - ping message
 {"ping_id":"some_unique_string"}
@@ -218,6 +223,10 @@ from SERVER to ALL CLIENTS (even inital client):
 {"id" : 42, some json}
 
 "id" - number of initial client (message sender)
+
+Additionaly,
+If message 1005 - ooc message
+then server places client login in the "login" json field.
 
 2.
 
