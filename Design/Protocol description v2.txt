@@ -47,6 +47,9 @@ MESSAGES TO SERVER FROM CLIENT:
 
 1 - INITAL LOGIN MESSAGE
 2 - EXIT_CLIENT
+3 - HASH MESSAGE
+{"hash":42,"tick":42}
+Size < 512
 
 MESSAGES TO CLIENT FROM SERVER:
 
@@ -56,6 +59,8 @@ ERROR MESSAGES:
 403 - UNDEFINED ERROR
 404 - EXIT_SERVER
 405 - MASTER CLIENT IS NOT CONNECTED
+406 - CLIENT IS OUT OF SYNC
+(empty)
 
 NON ERROR MESSAGES:
 201 - SUCCESS CONNECTION
@@ -79,9 +84,6 @@ Size < 2 * 1024
 {"obj":42}
 Size < 512
 
-1101 - hash message
-{"hash":42,"tick":42}
-Size < 512
 1102 - ping message
 {"ping_id":"some_unique_string"}
 Size < 512
@@ -197,6 +199,33 @@ Each T milliseconds (now T is 100, 10 messages per second)
 from SERVER to CLIENT
  type: NEW_TICK
 (empty)
+
+3. 
+
+from CLIENT to SERVER (unspecified time interval)
+type: HASH MESSAGE
+{"hash":42,"tick":42}
+
+Server saves all hash messages. If some client is out of sync (his hash for some tick does not match
+the hash for same tick for master client) then the server:
+
+ from SERVER to MASTER CLIENT
+ type: MAP UPLOAD
+{"url_to_upload_map" : "grief.ly/blah"}
+
+ from SERVER to THE UNSYNC CLIENT
+ type: MAP UPLOAD
+{"url_to_upload_map" : "grief.ly/blah"}
+
+ from SERVER to THE UNSYNC CLIENT
+type: CLIENT IS OUT OF SYNC
+(empty)
+-> connection closed
+
+Server should keep the data about each unsync incident: the unsync map, the master client map,
+all hash messages up to the unsync moment
+
+1. 
 
 ///////////////
 END OF ACTIVE CONNECTION STAGE
