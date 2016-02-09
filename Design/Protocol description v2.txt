@@ -95,6 +95,10 @@ Size < 512
 {"id" : 42}
 Size < 128
 
+205 - CURRENT CONNECTIONS
+{"amount" : 42}
+Size < 128
+
 GAME (BROADCASTED) TYPES:
 
 They are used only in client (mostly)
@@ -260,6 +264,12 @@ type: CLIENT IS OUT OF SYNC
 
 Server should keep the data about each unsync incident: the unsync map, the master client map,
 all hash messages up to the unsync moment
+
+4.
+205 - CURRENT CONNECTIONS
+
+Sometimes the server sends every client the message with current amount of active connections
+(the amount of active players on server now)
 
 1. 
 
