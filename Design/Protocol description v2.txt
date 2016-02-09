@@ -56,6 +56,9 @@ Size < 512
 {"hash":42,"tick":42}
 Size < 512
 
+4 - RESTART ROUND
+(empty)
+
 MESSAGES TO CLIENT FROM SERVER:
 
 ERROR MESSAGES:
@@ -271,7 +274,14 @@ all hash messages up to the unsync moment
 Sometimes the server sends every client the message with current amount of active connections
 (the amount of active players on server now)
 
-1. 
+5.
+4 - RESTART ROUND
+(empty)
+
+from ADMIN CLIENT to SERVER
+if from non ADMIN client then do nothing
+if from ADMIN CLIENT:
+restart server (basically, break all connections)  
 
 ///////////////
 END OF ACTIVE CONNECTION STAGE
