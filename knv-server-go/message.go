@@ -6,15 +6,44 @@ import (
 )
 
 const (
-	MsgidLogin             = 1
-	MsgidSuccessfulConnect = 201
-	MsgidMapUpload         = 202
-	MsgidNewTick           = 203
-	MsgidNewClient         = 204
+	MsgidLogin              = 1
+	MsgidExit               = 2
+	MsgidHash               = 3
+	MsgidRestart            = 4
+	MsgidSuccessfulConnect  = 201
+	MsgidMapUpload          = 202
+	MsgidNewTick            = 203
+	MsgidNewClient          = 204
+	MsgidCurrentConnections = 205
 
 	MsgidWrongGameVersion = 401
 	MsgidWrongAuth        = 402
+
+	MsgidOrdinary    = 1001
+	MsgidJustMessage = 1002
+	MsgidGUI         = 1003
+	MsgidMouseClick  = 1004
+	MsgidOOCMessage  = 1005
+	MsgidPing        = 1102
 )
+
+var maxMessageLength = map[uint32]int{
+	MsgidLogin: 512,
+	MsgidHash:  512,
+
+	MsgidWrongGameVersion: 512,
+
+	MsgidSuccessfulConnect:  512,
+	MsgidMapUpload:          512,
+	MsgidNewClient:          128,
+	MsgidCurrentConnections: 128,
+
+	MsgidOrdinary:    512,
+	MsgidJustMessage: 2048,
+	MsgidMouseClick:  512,
+	MsgidOOCMessage:  2048,
+	MsgidPing:        512,
+}
 
 type Message interface {
 	TypeName() string

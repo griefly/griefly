@@ -42,7 +42,12 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 	length := int(binary.BigEndian.Uint32(header[:4]))
 	kind := binary.BigEndian.Uint32(header[4:])
 
-	if length > MaxMessageLength {
+	maxLen, ok := maxMessageLength[kind]
+	if !ok {
+		maxLen = MaxMessageLength
+	}
+
+	if length > maxLen {
 		return nil, MessageIsTooLongError(length)
 	}
 
