@@ -112,11 +112,11 @@ func getConcreteMessage(id uint32) Message {
 }
 
 type MessageIDEmbed struct {
-	ID int `json:"id"`
+	ID *int `json:"id" validate:"nonzero"`
 }
 
 func (m *MessageIDEmbed) SetID(id int) {
-	m.ID = id
+	m.ID = &id
 }
 
 type MessageEmpty struct{}
@@ -127,7 +127,7 @@ func (m *MessageEmpty) TypeName() string {
 
 type MessageInput struct {
 	MessageIDEmbed
-	Key string `json:"key"`
+	Key string `json:"key" validate:"nonzero"`
 }
 
 func (m *MessageInput) TypeName() string {
@@ -136,8 +136,8 @@ func (m *MessageInput) TypeName() string {
 
 type MessageChat struct {
 	MessageIDEmbed
-	Type string `json:"type"`
-	Text string `json:"text"`
+	Type string `json:"type" validate:"nonzero"`
+	Text string `json:"text" validate:"nonzero"`
 }
 
 func (m *MessageChat) TypeName() string {
@@ -145,10 +145,10 @@ func (m *MessageChat) TypeName() string {
 }
 
 type MessageLogin struct {
-	Login       string `json:"login"`
-	Password    string `json:"password"`
-	IsGuest     bool   `json:"guest"`
-	GameVersion string `json:"game_version"`
+	Login       string `json:"login" validate:"nonzero"`
+	Password    string `json:"password" validate:"nonzero"`
+	IsGuest     *bool  `json:"guest" validate:"nonzero"`
+	GameVersion string `json:"game_version" validate:"nonzero"`
 }
 
 func (m *MessageLogin) TypeName() string {
@@ -156,8 +156,8 @@ func (m *MessageLogin) TypeName() string {
 }
 
 type MessageHash struct {
-	Hash int `json:"hash"`
-	Tick int `json:"tick"`
+	Hash *int `json:"hash" validate:"nonzero"`
+	Tick *int `json:"tick" validate:"nonzero"`
 }
 
 func (m *MessageHash) TypeName() string {
@@ -165,8 +165,8 @@ func (m *MessageHash) TypeName() string {
 }
 
 type MessageSuccessfulConnect struct {
-	ID     int    `json:"your_id"`
-	MapURL string `json:"map"`
+	ID     *int   `json:"your_id" validate:"nonzero"`
+	MapURL string `json:"map" validate:"nonzero"`
 }
 
 func (m *MessageSuccessfulConnect) TypeName() string {
@@ -174,7 +174,7 @@ func (m *MessageSuccessfulConnect) TypeName() string {
 }
 
 type MessageMapUpload struct {
-	MapURL string `json:"url_to_upload_map"`
+	MapURL string `json:"url_to_upload_map" validate:"nonzero"`
 }
 
 func (m *MessageMapUpload) TypeName() string {
@@ -188,7 +188,7 @@ func (m *MessageNewTick) TypeName() string {
 }
 
 type MessageNewClient struct {
-	ID int `json:"id"`
+	ID *int `json:"id" validate:"nonzero"`
 }
 
 func (m *MessageNewClient) TypeName() string {
@@ -196,7 +196,7 @@ func (m *MessageNewClient) TypeName() string {
 }
 
 type MessageCurrentConnections struct {
-	Amount int `json:"amount"`
+	Amount *int `json:"amount" validate:"nonzero"`
 }
 
 func (m *MessageCurrentConnections) TypeName() string {
@@ -205,7 +205,7 @@ func (m *MessageCurrentConnections) TypeName() string {
 
 // errors
 type ErrmsgWrongGameVersion struct {
-	CorrectVersion string `json:"correct_game_version"`
+	CorrectVersion string `json:"correct_game_version" validate:"nonzero"`
 }
 
 func (m *ErrmsgWrongGameVersion) TypeName() string {
@@ -231,7 +231,7 @@ func (m *OpaqueMessage) SetID(id int) {
 }
 
 type MessageOrdinary struct {
-	Key string `json:"key"`
+	Key string `json:"key" validate:"nonzero"`
 }
 
 func (m *MessageOrdinary) TypeName() string {
@@ -239,7 +239,7 @@ func (m *MessageOrdinary) TypeName() string {
 }
 
 type MessageJustMessage struct {
-	Text string `json:"text"`
+	Text string `json:"text" validate:"nonzero"`
 }
 
 func (m *MessageJustMessage) TypeName() string {
@@ -247,7 +247,7 @@ func (m *MessageJustMessage) TypeName() string {
 }
 
 type MessageMouseClick struct {
-	Object string `json:"obj"`
+	Object string `json:"obj" validate:"nonzero"`
 }
 
 func (m *MessageMouseClick) TypeName() string {
@@ -255,8 +255,8 @@ func (m *MessageMouseClick) TypeName() string {
 }
 
 type MessageOOC struct {
-	Login string `json:"login"`
-	Text  string `json:"text"`
+	Login string `json:"login" validate:"nonzero"`
+	Text  string `json:"text" validate:"nonzero"`
 }
 
 func (m *MessageOOC) TypeName() string {
@@ -264,7 +264,7 @@ func (m *MessageOOC) TypeName() string {
 }
 
 type MessagePing struct {
-	PingID string `json:"ping_id"`
+	PingID string `json:"ping_id" validate:"nonzero"`
 }
 
 func (m *MessagePing) TypeName() string {

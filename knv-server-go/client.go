@@ -152,7 +152,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	m := newPlayer.m.Message.(*MessageLogin)
 	var id int
 
-	if m.IsGuest {
+	if *m.IsGuest {
 		// generate new guest user
 		m.Login = newGuest(r, m.Login)
 	}
@@ -181,7 +181,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		log.Printf("registry: registered new id %d for player '%s'", id, m.Login)
 
 		// create player on maps
-		newm := &MessageNewClient{id}
+		newm := &MessageNewClient{&id}
 		e := &Envelope{newm, MsgidNewClient, 0}
 		r.sendAll(e)
 		log.Printf("registry: creating new unit for client %d, login '%s'", id, m.Login)

@@ -8,6 +8,8 @@ import (
 	"io"
 	"log"
 	"net"
+
+	"./bundled/validator"
 )
 
 const (
@@ -63,15 +65,14 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 		return nil, err
 	}
 
-	// profilactic unmarshal to check message syntax correctness
-	var checker interface{}
-	err = json.Unmarshal(buf, &checker)
+	msg := getConcreteMessage(kind)
+	err = json.Unmarshal(buf, msg)
 	if err != nil {
 		return nil, err
 	}
 
-	msg := getConcreteMessage(kind)
-	err = json.Unmarshal(buf, msg)
+	// validate payload
+	err = validator.Validate(msg)
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +181,7 @@ func (c *ClientConnection) Run() {
 	log.Printf("client: registered as %d, is it master? %t", c.id, master)
 
 	if master {
-		msg := &MessageSuccessfulConnect{MapURL: "no_map", ID: c.id}
+		msg := &MessageSuccessfulConnect{MapURL: "no_map", ID: &c.id}
 		e := &Envelope{msg, MsgidSuccessfulConnect, 0}
 		err = c.writeMessage(e)
 
@@ -190,7 +191,7 @@ func (c *ClientConnection) Run() {
 			return
 		}
 	} else {
-		msg := &MessageSuccessfulConnect{MapURL: mapDownloadURL, ID: c.id}
+		msg := &MessageSuccessfulConnect{MapURL: mapDownloadURL, ID: &c.id}
 		e := &Envelope{msg, MsgidSuccessfulConnect, 0}
 		err = c.writeMessage(e)
 
