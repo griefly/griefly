@@ -67,6 +67,8 @@ func getConcreteMessage(id uint32) Message {
 	switch {
 	case id == MsgidLogin:
 		return &MessageLogin{}
+	case id == MsgidHash:
+		return &MessageHash{}
 		/*
 			case id == 2:
 				return &MessageInput{}
@@ -82,12 +84,26 @@ func getConcreteMessage(id uint32) Message {
 		return &MessageNewTick{}
 	case id == MsgidNewClient:
 		return &MessageNewClient{}
+	case id == MsgidCurrentConnections:
+		return &MessageCurrentConnections{}
 
 		// errors
 	case id == MsgidWrongGameVersion:
 		return &ErrmsgWrongGameVersion{}
 	case id == MsgidWrongAuth:
 		return &ErrmsgWrongAuth{}
+
+	case id == MsgidOrdinary:
+		return &MessageOrdinary{}
+	case id == MsgidJustMessage:
+		return &MessageJustMessage{}
+	case id == MsgidMouseClick:
+		return &MessageMouseClick{}
+	case id == MsgidOOCMessage:
+		return &MessageOOC{}
+	case id == MsgidPing:
+		return &MessagePing{}
+
 	case id >= 1000:
 		m := OpaqueMessage(make(map[string]*json.RawMessage))
 		return &m
@@ -139,6 +155,15 @@ func (m *MessageLogin) TypeName() string {
 	return "MessageLogin"
 }
 
+type MessageHash struct {
+	Hash int `json:"hash"`
+	Tick int `json:"tick"`
+}
+
+func (m *MessageHash) TypeName() string {
+	return "MessageHash"
+}
+
 type MessageSuccessfulConnect struct {
 	ID     int    `json:"your_id"`
 	MapURL string `json:"map"`
@@ -170,6 +195,14 @@ func (m *MessageNewClient) TypeName() string {
 	return "MessageNewClient"
 }
 
+type MessageCurrentConnections struct {
+	Amount int `json:"amount"`
+}
+
+func (m *MessageCurrentConnections) TypeName() string {
+	return "MessageCurrentConnections"
+}
+
 // errors
 type ErrmsgWrongGameVersion struct {
 	CorrectVersion string `json:"correct_game_version"`
@@ -195,4 +228,45 @@ func (m *OpaqueMessage) TypeName() string {
 func (m *OpaqueMessage) SetID(id int) {
 	bytesID := json.RawMessage(strconv.Itoa(id))
 	(*m)["id"] = &bytesID
+}
+
+type MessageOrdinary struct {
+	Key string `json:"key"`
+}
+
+func (m *MessageOrdinary) TypeName() string {
+	return "MessageOrdinary"
+}
+
+type MessageJustMessage struct {
+	Text string `json:"text"`
+}
+
+func (m *MessageJustMessage) TypeName() string {
+	return "MessageJustMessage"
+}
+
+type MessageMouseClick struct {
+	Object string `json:"obj"`
+}
+
+func (m *MessageMouseClick) TypeName() string {
+	return "MessageMouseClick"
+}
+
+type MessageOOC struct {
+	Login string `json:"login"`
+	Text  string `json:"text"`
+}
+
+func (m *MessageOOC) TypeName() string {
+	return "MessageOOC"
+}
+
+type MessagePing struct {
+	PingID string `json:"ping_id"`
+}
+
+func (m *MessagePing) TypeName() string {
+	return "MessagePing"
 }
