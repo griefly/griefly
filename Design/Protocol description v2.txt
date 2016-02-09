@@ -46,7 +46,12 @@ DEFINED TYPES:
 MESSAGES TO SERVER FROM CLIENT:
 
 1 - INITAL LOGIN MESSAGE
+{"login" : "Someone", "password" : "12345", "game_version" : "v0.2.1", "guest" : false}
+Size < 512
+
 2 - EXIT_CLIENT
+(empty)
+
 3 - HASH MESSAGE
 {"hash":42,"tick":42}
 Size < 512
@@ -54,19 +59,41 @@ Size < 512
 MESSAGES TO CLIENT FROM SERVER:
 
 ERROR MESSAGES:
+
 401 - WRONG GAME VERSION
+{"correct_game_version" : "v0.2.2"}
+Size < 512
+
 402 - WRONG AUTHENTICATION
+(empty)
+
 403 - UNDEFINED ERROR
+(empty)
+
 404 - EXIT_SERVER
+(empty)
+
 405 - MASTER CLIENT IS NOT CONNECTED
+(empty)
+
 406 - CLIENT IS OUT OF SYNC
 (empty)
 
 NON ERROR MESSAGES:
 201 - SUCCESS CONNECTION
+{"map" : "no_map", "your_id" : 42}
+Size < 512
+
 202 - MAP UPLOAD
+{"url_to_upload_map" : "grief.ly/blah"}
+Size < 512
+
 203 - NEW TICK
+(empty)
+
 204 - NEW CLIENT
+{"id" : 42}
+Size < 128
 
 GAME (BROADCASTED) TYPES:
 
