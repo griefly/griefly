@@ -152,7 +152,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	m := newPlayer.m.Message.(*MessageLogin)
 	var id int
 
-	if *m.IsGuest {
+	if m.IsGuest {
 		// generate new guest user
 		m.Login = newGuest(r, m.Login)
 	}

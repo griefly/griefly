@@ -73,7 +73,8 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 
 	// validate payload
 	err = validator.Validate(msg)
-	if err != nil {
+	if err != nil && err != validator.ErrUnsupported {
+		log.Println("failed to validate this:", string(buf))
 		return nil, err
 	}
 

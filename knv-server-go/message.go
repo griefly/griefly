@@ -69,12 +69,6 @@ func getConcreteMessage(id uint32) Message {
 		return &MessageLogin{}
 	case id == MsgidHash:
 		return &MessageHash{}
-		/*
-			case id == 2:
-				return &MessageInput{}
-			case id == 3:
-				return &MessageChat{}
-		*/
 
 	case id == MsgidSuccessfulConnect:
 		return &MessageSuccessfulConnect{}
@@ -112,7 +106,7 @@ func getConcreteMessage(id uint32) Message {
 }
 
 type MessageIDEmbed struct {
-	ID *int `json:"id" validate:"nonzero"`
+	ID *int `json:"id"`
 }
 
 func (m *MessageIDEmbed) SetID(id int) {
@@ -146,8 +140,8 @@ func (m *MessageChat) TypeName() string {
 
 type MessageLogin struct {
 	Login       string `json:"login" validate:"nonzero"`
-	Password    string `json:"password" validate:"nonzero"`
-	IsGuest     *bool  `json:"guest" validate:"nonzero"`
+	Password    string `json:"password"`
+	IsGuest     bool   `json:"guest"`
 	GameVersion string `json:"game_version" validate:"nonzero"`
 }
 
@@ -230,7 +224,10 @@ func (m *OpaqueMessage) SetID(id int) {
 	(*m)["id"] = &bytesID
 }
 
+// some game messages
+
 type MessageOrdinary struct {
+	MessageIDEmbed
 	Key string `json:"key" validate:"nonzero"`
 }
 
@@ -239,6 +236,7 @@ func (m *MessageOrdinary) TypeName() string {
 }
 
 type MessageJustMessage struct {
+	MessageIDEmbed
 	Text string `json:"text" validate:"nonzero"`
 }
 
@@ -247,6 +245,7 @@ func (m *MessageJustMessage) TypeName() string {
 }
 
 type MessageMouseClick struct {
+	MessageIDEmbed
 	Object string `json:"obj" validate:"nonzero"`
 }
 
@@ -255,6 +254,7 @@ func (m *MessageMouseClick) TypeName() string {
 }
 
 type MessageOOC struct {
+	MessageIDEmbed
 	Login string `json:"login" validate:"nonzero"`
 	Text  string `json:"text" validate:"nonzero"`
 }
@@ -264,6 +264,7 @@ func (m *MessageOOC) TypeName() string {
 }
 
 type MessagePing struct {
+	MessageIDEmbed
 	PingID string `json:"ping_id" validate:"nonzero"`
 }
 
