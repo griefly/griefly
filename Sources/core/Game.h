@@ -35,6 +35,7 @@ public slots:
     void process();
     void endProcess();
 signals:
+    void sendMap(QString url, QByteArray data);
     void addSystemText(QString key, QString text);
     void insertHtmlIntoChat(QString html);
     void playMusic(QString name, float volume);

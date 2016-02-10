@@ -299,7 +299,7 @@ void Game::ProcessInputMessages()
 
             QByteArray data(string_data.c_str(), string_data.size());
 
-            Network2::GetInstance().SendMap(map_url, data);
+            emit sendMap(map_url, data);
             continue;
         }
 

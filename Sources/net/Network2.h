@@ -104,14 +104,10 @@ public:
 
     bool IsGood();
 
-    void SendMap(QString url, QByteArray data);
-
     void TryConnect(QString host, int port, QString login, QString password);
 
     void SendMsg(Message2 message);
-
     void SendOrdinaryMessage(QString text);
-
     void SendPing(QString ping_id);
 
     void Disconnect();
@@ -121,6 +117,7 @@ public:
 
     QByteArray GetMapData();
 public slots:
+    void sendMap(QString url, QByteArray data);
     void onConnectionEnd(QString reason);
 signals:
     void connectRequested(QString host, int port, QString login, QString password);
@@ -133,6 +130,8 @@ private slots:
     void downloadMap(int your_id, QString map);
 private:
     bool is_good_;
+
+    bool prefer_compress_;
 
     int your_id_;
     QString map_url_;

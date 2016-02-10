@@ -22,7 +22,8 @@ QJsonObject Network2::ParseJson(Message2 message)
 
 bool Network2::IsKey(const QJsonObject& json, const std::string& key)
 {
-    if (json["key"] == QString::fromStdString(key)) {
+    if (json["key"] == QString::fromStdString(key))
+    {
         return true;
     }
     return false;
@@ -46,12 +47,19 @@ bool Network2::IsGood()
     return is_good_;
 }
 
-void Network2::SendMap(QString url, QByteArray data)
+void Network2::sendMap(QString url, QByteArray data)
 {
+    QString type_header = "application/octet-stream";
+    if (prefer_compress_)
+    {
+        type_header = "application/zip";
+        data = qCompress(data);
+    }
+
     QUrl send_url(url);
     QNetworkRequest request(send_url);
     request.setHeader(QNetworkRequest::ContentLengthHeader, data.length());
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/octet-stream");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, type_header);
 
     net_manager_->post(request, data);
 
@@ -61,6 +69,8 @@ void Network2::SendMap(QString url, QByteArray data)
 Network2::Network2()
     : handler_(this)
 {
+    prefer_compress_ = true;
+
     net_manager_ = new QNetworkAccessManager(this);
 
     handler_.moveToThread(&thread_);
@@ -163,6 +173,11 @@ void Network2::mapDownloaded(QNetworkReply* reply)
     }
 
     map_data_ = reply->readAll();
+    if (reply->header(QNetworkRequest::ContentTypeHeader) == "application/zip")
+    {
+        qDebug() << "Compressed map length: " << map_data_.length();
+        map_data_ = qUncompress(map_data_);
+    }
     reply->deleteLater();
 
     qDebug() << "Map length: " << map_data_.length();

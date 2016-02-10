@@ -69,6 +69,8 @@ MainForm::MainForm(QWidget *parent) :
     connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
     connect(&Network2::GetInstance(), &Network2::connectionFailed, this, &MainForm::connectionFailed);
 
+
+
     connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
     connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);
     connect(ui->widget, &QtOpenGL::f2Pressed, this, &MainForm::oocPrefixToLineEdit);
@@ -154,6 +156,8 @@ void MainForm::startGameLoop(int id, QString map)
     connect(game, &Game::insertHtmlIntoChat, this, &MainForm::insertHtmlIntoChat);
     connect(game, &Game::addSystemText, this, &MainForm::addSystemText);
     connect(game, &Game::playMusic, this, &MainForm::playMusic);
+
+    connect(game, &Game::sendMap, &Network2::GetInstance(), &Network2::sendMap);
 
     game->InitWorld(id, map.toStdString());
 
