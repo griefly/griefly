@@ -246,7 +246,7 @@ func (m *MessageJustMessage) TypeName() string {
 
 type MessageMouseClick struct {
 	MessageIDEmbed
-	Object string `json:"obj" validate:"nonzero"`
+	Object *int `json:"obj" validate:"nonzero"`
 }
 
 func (m *MessageMouseClick) TypeName() string {
