@@ -101,7 +101,7 @@ void Debug::Impl::UnsyncDebug::CheckSaves()
 
     std::stringstream ss;
 
-    GetFactory().SaveMap(ss, false);
+    GetFactory().SaveMap(ss);
 
     if (MAIN_TICK > TICK_SAVED)
     {

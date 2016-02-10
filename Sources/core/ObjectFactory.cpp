@@ -1,7 +1,5 @@
 #include "ObjectFactory.h"
 
-#include <zlib.h>
-
 #include "objects/MainObject.h"
 #include "objects/OnMapObject.h"
 #include "Game.h"
@@ -186,57 +184,27 @@ void ObjectFactory::SaveMap(const char* path)
         return;
     }
     std::stringstream savefile;
-    SaveMap(savefile, false);
+    SaveMap(savefile);
     rfile << savefile.str();
     rfile.close();
 }
-void ObjectFactory::SaveMap(std::stringstream& savefile, bool zip)
+void ObjectFactory::SaveMap(std::stringstream& savefile)
 {
     SaveMapHeader(savefile);
     auto it = ++objects_table_.begin();
     while(it != objects_table_.end())
+    {
         if(*it) 
         {
             (*it++)->saveSelf(savefile);
             savefile << std::endl;
         }
-        else 
-            ++it;
-    savefile << "0 ~";
-
-    if (zip)
-    {
-        SYSTEM_STREAM << "Begin zip save" << std::endl;
-
-        std::string str = savefile.str();
-        const unsigned char* raw_uncompressed = reinterpret_cast<const unsigned char*>(str.c_str());
-
-        unsigned long len_compressed = static_cast<unsigned long>(str.length() * 1.1 + 20);
-        unsigned char* raw_compressed = new unsigned char[len_compressed];
-
-        int result = compress(raw_compressed, &len_compressed, raw_uncompressed, str.length());
-        switch(result)
+        else
         {
-        case Z_OK:
-            SYSTEM_STREAM << "Zip is going ok" << std::endl;
-            break;
-        case Z_MEM_ERROR:
-            SYSTEM_STREAM << "ERROR: Out of memory" << std::endl;
-            break;
-        case Z_BUF_ERROR:
-            SYSTEM_STREAM << "ERROR: Buffer too small for data" << std::endl;
-            break;
+            ++it;
         }
-
-        savefile.str("");
-    
-        SYSTEM_STREAM << "Begin load zipped to stream" << std::endl;
-
-        for (size_t i = 0; i < len_compressed; ++i)
-            savefile << raw_compressed[i];
-
-        delete[] raw_compressed;
     }
+    savefile << "0 ~";
 }
 
 void ObjectFactory::LoadMap(const char* path)
@@ -258,66 +226,14 @@ void ObjectFactory::LoadMap(const char* path)
     savefile.write(buff, length);
     delete[] buff;
     SYSTEM_STREAM << "End map load" << std::endl;
-    LoadMap(savefile, false);
+    LoadMap(savefile, 0);
 }
 
 const int AVERAGE_BYTE_PER_TILE = 129 * 2;
 const long int UNCOMPRESS_LEN_DEFAULT = 50 * 50 * 5 * AVERAGE_BYTE_PER_TILE;
-void ObjectFactory::LoadMap(std::stringstream& savefile, bool zip, size_t real_this_mob)
+void ObjectFactory::LoadMap(std::stringstream& savefile, size_t real_this_mob)
 {
-
     ClearMap();
-
-    if (zip)
-    {
-        std::string str = savefile.str();
-        const unsigned char* raw_compressed = reinterpret_cast<const unsigned char*>(str.c_str());
-        unsigned long len_compressed = static_cast<unsigned long>(str.length());
-
-        unsigned long len_uncompressed = UNCOMPRESS_LEN_DEFAULT;
-        unsigned long len_uncompressed_to_use;
-    
-        unsigned char* raw_uncompressed;
-        SYSTEM_STREAM << "Begin cycle unzip map" << std::endl;
-        while (true)
-        {
-            len_uncompressed_to_use = len_uncompressed;
-            raw_uncompressed = new unsigned char[len_uncompressed_to_use];
-            int result = uncompress(raw_uncompressed, &len_uncompressed_to_use, raw_compressed, len_compressed);
-
-            if (result == Z_BUF_ERROR)
-            {
-                delete[] raw_uncompressed;
-                len_uncompressed *= 2;
-                continue;
-            } 
-            else if (result == Z_MEM_ERROR)
-            {
-                SYSTEM_STREAM << "Insufficient memory" << std::endl;
-            } 
-            else if (result == Z_DATA_ERROR)
-            {
-                SYSTEM_STREAM << "The compressed data (referenced by source) was corrupted" << std::endl;
-            }
-            else if (result == Z_OK)
-            {
-                SYSTEM_STREAM << "Unzip ok" << std::endl;
-                break;
-            }
-        }
-
-        savefile.str("");
-
-        for (size_t i = 0; i < len_uncompressed_to_use; ++i)
-            savefile << static_cast<char>(raw_uncompressed[i]);
-
-        delete[] raw_uncompressed;
-    }
-
-    auto str_t = savefile.str();
-    
-
-    std::cout << std::endl << str_t.substr(str_t.size() - 500) << std::endl;
 
     LoadMapHeader(savefile, real_this_mob);
     int j = 0;
@@ -353,7 +269,6 @@ void ObjectFactory::LoadMap(std::stringstream& savefile, bool zip, size_t real_t
 
 IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)
 {
-    //static Initer init;
     auto il = (*itemList());
     auto f = il[type];
     return f(id);
@@ -361,7 +276,6 @@ IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)
 
 IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
 {
-    //static Initer init;
     return (*itemListSaved())[type]();
 };
 

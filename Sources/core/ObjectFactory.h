@@ -36,11 +36,11 @@ public:
 
     void SaveMapHeader(std::stringstream& str);
     void SaveMap(const char* path);
-    void SaveMap(std::stringstream& str, bool zip);
+    void SaveMap(std::stringstream& str);
 
-    void LoadMapHeader(std::stringstream& savefile, size_t real_this_mob = 0);
+    void LoadMapHeader(std::stringstream& savefile, size_t real_this_mob);
     void LoadMap(const char* path);
-    void LoadMap(std::stringstream& str, bool zip, size_t real_this_mob = 0);
+    void LoadMap(std::stringstream& str, size_t real_this_mob);
     
     void ClearMap();
 

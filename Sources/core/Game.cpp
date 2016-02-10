@@ -213,7 +213,7 @@ void Game::InitWorld(int id, std::string map_name)
         ss.write(map_data.data(), map_data.length());
         ss.seekg(0, std::ios::beg);
 
-        GetFactory().LoadMap(ss, false, id);
+        GetFactory().LoadMap(ss, id);
     }
 
     GetChat().PostText(ON_LOGIN_MESSAGE);
@@ -294,7 +294,7 @@ void Game::ProcessInputMessages()
             qDebug() << "Map upload to " << map_url;
 
             std::stringstream ss;
-            GetFactory().SaveMap(ss, false);
+            GetFactory().SaveMap(ss);
             std::string string_data = ss.str();
 
             QByteArray data(string_data.c_str(), string_data.size());
