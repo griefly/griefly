@@ -68,13 +68,14 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 	msg := getConcreteMessage(kind)
 	err = json.Unmarshal(buf, msg)
 	if err != nil {
+		log.Println("failed to unmarshal message:", string(buf), err)
 		return nil, err
 	}
 
 	// validate payload
 	err = validator.Validate(msg)
 	if err != nil && err != validator.ErrUnsupported {
-		log.Println("failed to validate this:", string(buf))
+		log.Println("failed to validate message:", string(buf), err)
 		return nil, err
 	}
 
