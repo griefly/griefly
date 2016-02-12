@@ -85,7 +85,7 @@ void Game::Process()
         const int ATMOS_OFTEN = 3;
         const int ATMOS_MOVE_OFTEN = 1;
 
-        if(process_in_)
+        if (process_in_)
         {
             ++MAIN_TICK;
             GetFactory().ForeachProcess();
@@ -384,10 +384,16 @@ bool Game::IsMobVisible(int posx, int posy)
 {
     // TODO: matrix for fast check
     if (visible_points_ == nullptr)
+    {
         return false;
+    }
     for (auto it = visible_points_->begin(); it != visible_points_->end(); ++it)
+    {
         if(it->posx == posx && it->posy == posy)
+        {
             return true;
+        }
+    }
     return false;
 }
 

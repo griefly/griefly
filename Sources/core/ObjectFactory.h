@@ -102,6 +102,11 @@ public:
     size_t GetPlayerId(size_t net_id);
     size_t GetNetId(size_t real_id);
 private:
+    std::string teststring_;
+    char* test_buffer_;
+
+    std::stringstream last_save_;
+
     bool is_world_generating_;
 
     void UpdateProcessingItems();

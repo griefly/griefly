@@ -12,22 +12,33 @@
 #include "Debug.h"
 
 
+const int TEST_BUF_SIZE = 1024 * 1024 * 32;
+
 ObjectFactory::ObjectFactory()
 {
     objects_table_.resize(100);
     id_ = 1;
     is_world_generating_ = true;
+
+    //teststring_.reserve();
+    test_buffer_ = new char[TEST_BUF_SIZE];
 }
+
+const int HASH_OFTEN = 1;
 
 void ObjectFactory::Sync()
 {
-    if (MAIN_TICK % HASH_OFTEN == 1)
+    if (MAIN_TICK % HASH_OFTEN == 0)
     {
         hash_last_ = Hash();
 
-        Debug::UnsyncDebug().AddLocalSyncPair(hash_last_, MAIN_TICK);
+        //Debug::UnsyncDebug().AddLocalSyncPair(hash_last_, MAIN_TICK);
 
         //Debug::UnsyncDebug().Save();
+
+        last_save_.rdbuf()->pubsetbuf(test_buffer_, TEST_BUF_SIZE);
+        last_save_.seekg(0);
+        SaveMap(last_save_);
 
         Message2 msg;
 

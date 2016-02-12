@@ -33,8 +33,6 @@ std::ostream& get_system_stream();
 #define SYSTEM_STREAM get_system_stream()
 //extern std::ostream& SYSTEM_STREAM;//some system information here
 
-const int HASH_OFTEN = 20;
-
 typedef int Dir;
 const Dir D_ALL = -1;
 const Dir D_LEFT = 0;
