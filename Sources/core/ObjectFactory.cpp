@@ -14,14 +14,12 @@
 
 const int TEST_BUF_SIZE = 1024 * 1024 * 32;
 
-ObjectFactory::ObjectFactory()
+ObjectFactory::ObjectFactory() : stream_(TEST_BUF_SIZE)
 {
     objects_table_.resize(100);
     id_ = 1;
     is_world_generating_ = true;
 
-    //teststring_.reserve();
-    test_buffer_ = new char[TEST_BUF_SIZE];
 }
 
 const int HASH_OFTEN = 1;
@@ -36,9 +34,9 @@ void ObjectFactory::Sync()
 
         //Debug::UnsyncDebug().Save();
 
-        last_save_.rdbuf()->pubsetbuf(test_buffer_, TEST_BUF_SIZE);
-        last_save_.seekg(0);
-        SaveMap(last_save_);
+        stream_.Reset();
+        SaveMap(*stream_.GetStream());
+        saved_map_ = stream_.GetCurrentData();
 
         Message2 msg;
 

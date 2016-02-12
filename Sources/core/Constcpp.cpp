@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-size_t MAIN_TICK = 0;
+size_t MAIN_TICK = 1;
 
 int DELAY_MAIN = 32;
 

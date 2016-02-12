@@ -87,7 +87,6 @@ void Game::Process()
 
         if (process_in_)
         {
-            ++MAIN_TICK;
             GetFactory().ForeachProcess();
             ForceManager::Get().Process();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
@@ -105,6 +104,8 @@ void Game::Process()
 
             GetMap().GenerateFrame();
             GetTexts().Process();
+
+            ++MAIN_TICK;
         }
 
         if((SDL_GetTicks() - last_time_fps) >= 1000)
