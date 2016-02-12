@@ -209,6 +209,23 @@ END OF LOGIN STAGE
 
 II. ACTIVE CONNECTION STAGE
 
+-------------------
+Overall game cycle in the client:
+1. Map generation or map downloading
+2. Broadcasted messages processing 
+(Note: new client message is basically broadcasted message and can be processed here)
+3. New tick message processing (the tick counter increment)
+4. Processing of system messages which depend from worlds state 
+(a request for hash, a request for map upload, etc)
+5. Goto 2 
+
+System messages which don't depend from the world state (pings, for example) can be processed and sended in any moment.
+
+So, all special system messages (from p2) should be sended by the server only right after a tick message and before
+any broadcasted message. 
+-----------------------
+
+
 No specific order
 
 X - NOT DEFINED TYPE (X may be 1000, 2000 etc)
