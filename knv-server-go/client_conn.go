@@ -188,7 +188,7 @@ func (c *ClientConnection) Run() {
 		err = c.writeMessage(e)
 
 		if err != nil {
-			c.reg.RemovePlayer(c.id)
+			c.reg.RemovePlayer(c.id, nil)
 			log.Printf("client[%d]: failed to send hello response: %v", c.id, err)
 			return
 		}
@@ -198,7 +198,7 @@ func (c *ClientConnection) Run() {
 		err = c.writeMessage(e)
 
 		if err != nil {
-			c.reg.RemovePlayer(c.id)
+			c.reg.RemovePlayer(c.id, nil)
 			log.Printf("client[%d]: failed to send hello response: %v", c.id, err)
 			return
 		}
@@ -218,7 +218,7 @@ func (c *ClientConnection) Run() {
 			}
 			err := c.writeMessage(m)
 			if err != nil {
-				go c.reg.RemovePlayer(c.id)
+				go c.reg.RemovePlayer(c.id, nil)
 				log.Printf("client[%d]: sender failed to send message: %s", c.id, err.Error())
 
 				// blackhole all writes for this client to prevent registry deadlock
@@ -231,7 +231,7 @@ func (c *ClientConnection) Run() {
 				return
 			}
 		case err = <-c.readErrs:
-			c.reg.RemovePlayer(c.id)
+			c.reg.RemovePlayer(c.id, nil)
 			log.Printf("client[%d]: reciever failed to read message: %s", c.id, err.Error())
 			return
 		}

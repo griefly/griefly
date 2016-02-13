@@ -23,6 +23,7 @@ const (
 	MsgidServerExit       = 404
 	MsgidNoMaster         = 405
 	MsgidOutOfSync        = 406
+	MsgidTooSlow          = 407
 
 	MsgidOrdinary    = 1001
 	MsgidJustMessage = 1002
@@ -101,6 +102,8 @@ func getConcreteMessage(id uint32) Message {
 		return &ErrmsgNoMaster{}
 	case id == MsgidOutOfSync:
 		return &ErrmsgOutOfSync{}
+	case id == MsgidTooSlow:
+		return &ErrmsgTooSlow{}
 
 	case id == MsgidOrdinary:
 		return &MessageOrdinary{}
@@ -263,6 +266,13 @@ type ErrmsgUndefinedError struct {
 
 func (m *ErrmsgUndefinedError) TypeName() string {
 	return "ErrmsgUndefinedError"
+}
+
+type ErrmsgTooSlow struct {
+}
+
+func (m *ErrmsgTooSlow) TypeName() string {
+	return "ErrmsgTooSlow"
 }
 
 type OpaqueMessage map[string]*json.RawMessage

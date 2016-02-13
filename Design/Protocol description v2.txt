@@ -85,6 +85,9 @@ Size < 512
 406 - CLIENT IS OUT OF SYNC
 (empty)
 
+407 - CLIENT TOO SLOW
+(empty)
+
 NON ERROR MESSAGES:
 201 - SUCCESS CONNECTION
 {"map" : "no_map", "your_id" : 42}

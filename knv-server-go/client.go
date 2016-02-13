@@ -56,6 +56,11 @@ func (hc *hashCheck) add(id int, msg *MessageHash) {
 	hc.waitingClientCount--
 }
 
+type playerDrop struct {
+	id     int
+	reason *Envelope
+}
+
 type RegistryConfig struct {
 	DumpRoot string
 }
@@ -71,7 +76,7 @@ type Registry struct {
 	newPlayers   chan PlayerEnvelope
 	versionCheck chan versionCheck
 
-	droppedPlayers chan int
+	droppedPlayers chan playerDrop
 
 	hashes      map[int]*hashCheck
 	currentTick int
@@ -86,7 +91,7 @@ type Registry struct {
 
 func newRegistry(as *AssetServer, config *RegistryConfig) *Registry {
 	return &Registry{1, make(map[int]chan *Envelope, RegistryQueueLength), make(map[string]PlayerInfo),
-		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan int),
+		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan playerDrop),
 		make(map[int]*hashCheck), 0, make(chan *Envelope), nil, as, nil, config}
 }
 
@@ -98,8 +103,8 @@ func (r *Registry) CreatePlayer(m *Envelope) (inbox chan *Envelope, id int, mast
 	return response.inbox, response.id, response.master, response.mapDownloadURL
 }
 
-func (r *Registry) RemovePlayer(id int) {
-	r.droppedPlayers <- id
+func (r *Registry) RemovePlayer(id int, reason *Envelope) {
+	r.droppedPlayers <- playerDrop{id, reason}
 }
 
 func (r *Registry) RecvMessage(e *Envelope) {
@@ -123,7 +128,7 @@ func (r *Registry) sendAll(m *Envelope) {
 	}
 
 	for _, idx := range deadPlayers {
-		r.removePlayer(idx)
+		r.removePlayer(idx, &Envelope{&ErrmsgTooSlow{}, MsgidTooSlow, 0})
 	}
 }
 
@@ -169,8 +174,8 @@ func (r *Registry) Run() {
 			r.checkForNewGame()
 			r.registerPlayer(newPlayer)
 
-		case playerID := <-r.droppedPlayers:
-			r.removePlayer(playerID)
+		case info := <-r.droppedPlayers:
+			r.removePlayer(info.id, info.reason)
 
 		case req := <-r.versionCheck:
 			r.handleVersionCheck(req)
@@ -205,7 +210,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		id = info.id
 		log.Printf("registry: reusing existing id %d for player '%s'", id, m.Login)
 		// remove player and then add him again
-		r.removePlayer(id)
+		r.removePlayer(id, nil)
 		if _, ok := r.players[m.Login]; !ok {
 			// server was restarted, so restart registration process
 			r.registerPlayer(newPlayer)
@@ -258,11 +263,16 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	newPlayer.response <- response
 }
 
-func (r *Registry) removePlayer(id int) {
+func (r *Registry) removePlayer(id int, reason *Envelope) {
 	inbox, ok := r.clients[id]
 	if !ok {
 		// already deleted
 		return
+	}
+
+	// send reason
+	if reason != nil {
+		r.sendOne(id, reason)
 	}
 
 	close(inbox)
@@ -385,7 +395,7 @@ func (r *Registry) checkHashesOne(tick int, checker *hashCheck) {
 	for _, neud := range unsynced {
 		id := neud
 		callback := func() {
-			r.RemovePlayer(id)
+			r.RemovePlayer(id, &Envelope{&ErrmsgOutOfSync{}, MsgidOutOfSync, 0})
 		}
 
 		r.dumpPlayerMap(id, tick, callback)
@@ -398,7 +408,7 @@ func (r *Registry) dumpPlayerMap(id, tick int, callback func()) {
 	msg := &Envelope{mapreq, MsgidMapUpload, 0}
 	if !r.sendOne(id, msg) {
 		// too slow to live
-		r.removePlayer(id)
+		r.removePlayer(id, &Envelope{&ErrmsgTooSlow{}, MsgidTooSlow, 0})
 	}
 
 	// start dumper
