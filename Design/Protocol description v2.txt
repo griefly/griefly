@@ -59,8 +59,6 @@ Size < 512
 4 - RESTART ROUND
 (empty)
 
-5 - REQUEST HASH
-{"tick": 42}
 
 MESSAGES TO CLIENT FROM SERVER:
 
@@ -107,6 +105,9 @@ Size < 128
 205 - CURRENT CONNECTIONS
 {"amount" : 42}
 Size < 128
+
+206 - REQUEST HASH
+{"tick": 42}
 
 GAME (BROADCASTED) TYPES:
 
