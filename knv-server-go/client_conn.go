@@ -180,7 +180,7 @@ func (c *ClientConnection) Run() {
 	var mapDownloadURL string
 	var master bool
 	c.inbox, c.id, master, mapDownloadURL = c.reg.CreatePlayer(e)
-	log.Printf("client: registered as %d, is it master? %t", c.id, master)
+	log.Printf("client[%d]: registered, is it master? %t", c.id, master)
 
 	if master {
 		msg := &MessageSuccessfulConnect{MapURL: "no_map", ID: &c.id}

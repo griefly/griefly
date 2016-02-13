@@ -10,6 +10,7 @@ const (
 	MsgidExit               = 2
 	MsgidHash               = 3
 	MsgidRestart            = 4
+	MsgidRequestHash        = 5
 	MsgidSuccessfulConnect  = 201
 	MsgidMapUpload          = 202
 	MsgidNewTick            = 203
@@ -18,6 +19,10 @@ const (
 
 	MsgidWrongGameVersion = 401
 	MsgidWrongAuth        = 402
+	MsgidUndefinedError   = 403
+	MsgidServerExit       = 404
+	MsgidNoMaster         = 405
+	MsgidOutOfSync        = 406
 
 	MsgidOrdinary    = 1001
 	MsgidJustMessage = 1002
@@ -80,12 +85,22 @@ func getConcreteMessage(id uint32) Message {
 		return &MessageNewClient{}
 	case id == MsgidCurrentConnections:
 		return &MessageCurrentConnections{}
+	case id == MsgidRequestHash:
+		return &MessageRequestHash{}
 
 		// errors
 	case id == MsgidWrongGameVersion:
 		return &ErrmsgWrongGameVersion{}
 	case id == MsgidWrongAuth:
 		return &ErrmsgWrongAuth{}
+	case id == MsgidUndefinedError:
+		return &ErrmsgUndefinedError{}
+	case id == MsgidServerExit:
+		return &ErrmsgServerExit{}
+	case id == MsgidNoMaster:
+		return &ErrmsgNoMaster{}
+	case id == MsgidOutOfSync:
+		return &ErrmsgOutOfSync{}
 
 	case id == MsgidOrdinary:
 		return &MessageOrdinary{}
@@ -158,6 +173,14 @@ func (m *MessageHash) TypeName() string {
 	return "MessageHash"
 }
 
+type MessageRequestHash struct {
+	Tick *int `json:"tick" validate:"nonzero"`
+}
+
+func (m *MessageRequestHash) TypeName() string {
+	return "MessageRequestHash"
+}
+
 type MessageSuccessfulConnect struct {
 	ID     *int   `json:"your_id" validate:"nonzero"`
 	MapURL string `json:"map" validate:"nonzero"`
@@ -168,6 +191,7 @@ func (m *MessageSuccessfulConnect) TypeName() string {
 }
 
 type MessageMapUpload struct {
+	Tick   *int   `json:"tick" validate:"nonzero"`
 	MapURL string `json:"url_to_upload_map" validate:"nonzero"`
 }
 
@@ -211,6 +235,34 @@ type ErrmsgWrongAuth struct {
 
 func (m *ErrmsgWrongAuth) TypeName() string {
 	return "ErrmsgWrongAuth"
+}
+
+type ErrmsgServerExit struct {
+}
+
+func (m *ErrmsgServerExit) TypeName() string {
+	return "ErrmsgServerExit"
+}
+
+type ErrmsgNoMaster struct {
+}
+
+func (m *ErrmsgNoMaster) TypeName() string {
+	return "ErrmsgNoMaster"
+}
+
+type ErrmsgOutOfSync struct {
+}
+
+func (m *ErrmsgOutOfSync) TypeName() string {
+	return "ErrmsgOutOfSync"
+}
+
+type ErrmsgUndefinedError struct {
+}
+
+func (m *ErrmsgUndefinedError) TypeName() string {
+	return "ErrmsgUndefinedError"
 }
 
 type OpaqueMessage map[string]*json.RawMessage

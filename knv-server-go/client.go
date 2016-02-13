@@ -13,7 +13,9 @@ const (
 )
 
 var (
-	TickInterval = 100 * time.Millisecond
+	TickInterval        = 100 * time.Millisecond
+	StartHashCheckEvery = 5
+	HashCheckTimeout    = 500 * time.Millisecond
 )
 
 type newPlayerReply struct {
@@ -43,6 +45,21 @@ type versionCheckResponse struct {
 	version string
 }
 
+type hashCheck struct {
+	deadline           time.Time
+	waitingClientCount int
+	hashes             map[int]int
+}
+
+func (hc *hashCheck) add(id int, msg *MessageHash) {
+	hc.hashes[id] = *msg.Hash
+	hc.waitingClientCount--
+}
+
+type RegistryConfig struct {
+	DumpRoot string
+}
+
 type Registry struct {
 	nextID  int
 	clients map[int]chan *Envelope
@@ -56,14 +73,21 @@ type Registry struct {
 
 	droppedPlayers chan int
 
+	hashes      map[int]*hashCheck
+	currentTick int
+
 	inbox       chan *Envelope
 	ticker      *time.Ticker
 	assetServer *AssetServer
+	dumper      *DumpWriter
+
+	config *RegistryConfig
 }
 
-func newRegistry(as *AssetServer) *Registry {
+func newRegistry(as *AssetServer, config *RegistryConfig) *Registry {
 	return &Registry{1, make(map[int]chan *Envelope, RegistryQueueLength), make(map[string]PlayerInfo),
-		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan int), make(chan *Envelope), nil, as}
+		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan int),
+		make(map[int]*hashCheck), 0, make(chan *Envelope), nil, as, nil, config}
 }
 
 // async api
@@ -92,19 +116,28 @@ func (r *Registry) CheckVersion(version string) (bool, string) {
 // internals
 func (r *Registry) sendAll(m *Envelope) {
 	var deadPlayers []int
-	for idx, c := range r.clients {
-		if c != nil {
-			select {
-			case c <- m:
-			default:
-				// client is too slow, drop him (later)
-				deadPlayers = append(deadPlayers, idx)
-			}
+	for idx := range r.clients {
+		if !r.sendOne(idx, m) {
+			deadPlayers = append(deadPlayers, idx)
 		}
 	}
 
 	for _, idx := range deadPlayers {
 		r.removePlayer(idx)
+	}
+}
+
+func (r *Registry) sendOne(idx int, m *Envelope) bool {
+	client := r.clients[idx]
+	if client == nil {
+		return false
+	}
+
+	select {
+	case client <- m:
+		return true
+	default:
+		return false
 	}
 }
 
@@ -121,31 +154,39 @@ func (r *Registry) Run() {
 	for {
 		select {
 		case m := <-r.inbox:
-			frv, ok := m.Message.(Forwardable)
-			if !ok {
-				log.Printf("registry: cannot set id for message while forwarding it, dropping. ID: %d, type: %s",
-					m.From, m.Message.TypeName())
+			if r.handleHash(m) {
 				continue
 			}
-			frv.SetID(m.From)
-			r.sendAll(m)
-		case <-r.ticker.C:
-			m := &MessageNewTick{}
-			e := &Envelope{m, MsgidNewTick, 0}
-			r.sendAll(e)
+
+			r.handleGameMessage(m)
+
+		case now := <-r.ticker.C:
+			r.handleNewTick()
+			r.checkForHashStart(now)
+			r.checkHashes(now)
+
 		case newPlayer := <-r.newPlayers:
+			r.checkForNewGame()
 			r.registerPlayer(newPlayer)
+
 		case playerID := <-r.droppedPlayers:
 			r.removePlayer(playerID)
+
 		case req := <-r.versionCheck:
-			if r.clientVersion == "" {
-				r.clientVersion = req.version
-				req.response <- versionCheckResponse{true, req.version}
-			} else {
-				req.response <- versionCheckResponse{req.version == r.clientVersion, r.clientVersion}
-			}
+			r.handleVersionCheck(req)
 		}
 	}
+}
+
+func (r *Registry) checkForNewGame() {
+	if len(r.clients) != 0 {
+		return
+	}
+
+	// reset state for new game
+	r.currentTick = 0
+	sessionID := time.Now().String()
+	r.dumper = NewDumpWriter(r.config.DumpRoot, sessionID)
 }
 
 func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
@@ -205,8 +246,9 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	} else {
 		// immediately request map for new player
 		var mapUploadURL string
-		mapUploadURL, mapDownloadURL = r.assetServer.MakePipe()
-		m := &MessageMapUpload{mapUploadURL}
+		_, mapUploadURL, mapDownloadURL = r.assetServer.MakePipe()
+		curTick := r.currentTick
+		m := &MessageMapUpload{&curTick, mapUploadURL}
 		e := &Envelope{m, MsgidMapUpload, 0}
 		log.Printf("registry: requesting master %d to send map", r.masterID)
 		r.sendMaster(e)
@@ -239,6 +281,141 @@ func (r *Registry) removePlayer(id int) {
 		// there are no players left, clean up everything
 		log.Println("registry: no players left, cleaning up")
 		r.cleanUp()
+	}
+}
+
+func (r *Registry) handleHash(m *Envelope) bool {
+	hash, ok := m.Message.(*MessageHash)
+	if !ok {
+		return false
+	}
+
+	checker := r.hashes[*hash.Tick]
+	// too late hash check
+	if checker == nil {
+		return true
+	}
+
+	checker.add(m.From, hash)
+
+	return true
+}
+
+func (r *Registry) handleGameMessage(m *Envelope) {
+	frv, ok := m.Message.(Forwardable)
+	if !ok {
+		log.Printf("registry: cannot set id for message while forwarding it, dropping. "+
+			"ID: %d, type: %s", m.From, m.Message.TypeName())
+		return
+	}
+
+	frv.SetID(m.From)
+	r.sendAll(m)
+}
+
+func (r *Registry) handleNewTick() {
+	r.currentTick++
+	m := &MessageNewTick{}
+	e := &Envelope{m, MsgidNewTick, 0}
+	r.sendAll(e)
+}
+
+func (r *Registry) checkForHashStart(now time.Time) {
+	if !(r.currentTick%StartHashCheckEvery == 0 && len(r.clients) >= 2) {
+		return
+	}
+
+	checker := &hashCheck{
+		deadline:           now.Add(HashCheckTimeout),
+		hashes:             make(map[int]int),
+		waitingClientCount: len(r.clients),
+	}
+
+	r.hashes[r.currentTick] = checker
+	// request hashes from all clients
+	tick := r.currentTick
+	m := &MessageRequestHash{&tick}
+	e := &Envelope{m, MsgidNewTick, 0}
+	r.sendAll(e)
+}
+
+func (r *Registry) checkHashes(now time.Time) {
+	for tick, checker := range r.hashes {
+		if checker.deadline.Before(now) {
+			// deadline expired for this hash check, force check
+			r.checkHashesOne(tick, checker)
+			delete(r.hashes, tick)
+		} else if checker.waitingClientCount <= 0 {
+			// we collected hashes from all clients, start check
+			r.checkHashesOne(tick, checker)
+			delete(r.hashes, tick)
+		}
+	}
+}
+
+func (r *Registry) checkHashesOne(tick int, checker *hashCheck) {
+	master := r.masterID
+	if master == -1 {
+		// all of sudden we have no players, so nothing to do
+		return
+	}
+
+	mhash, ok := checker.hashes[master]
+	if !ok {
+		// master is slow, very very slow
+		log.Printf("hash-check: master %d did not sent his hash", master)
+		return
+	}
+	delete(checker.hashes, master)
+
+	unsynced := []int{}
+	for id, hash := range checker.hashes {
+		if hash != mhash {
+			unsynced = append(unsynced, id)
+		}
+	}
+
+	if len(unsynced) == 0 {
+		// everyone in sync, OK
+		return
+	}
+
+	// request and dump map from master and all of those faulty clients
+	r.dumpPlayerMap(master, tick, func() {})
+	for _, neud := range unsynced {
+		id := neud
+		callback := func() {
+			r.RemovePlayer(id)
+		}
+
+		r.dumpPlayerMap(id, tick, callback)
+	}
+}
+
+func (r *Registry) dumpPlayerMap(id, tick int, callback func()) {
+	pipe, uploadURL, _ := r.assetServer.MakePipe()
+	mapreq := &MessageMapUpload{&tick, uploadURL}
+	msg := &Envelope{mapreq, MsgidMapUpload, 0}
+	if !r.sendOne(id, msg) {
+		// too slow to live
+		r.removePlayer(id)
+	}
+
+	// start dumper
+	uid := strconv.Itoa(id)
+	if id == r.masterID {
+		uid += "-master"
+	}
+
+	go r.dumper.DumpMap(uid, pipe, callback)
+}
+
+func (r *Registry) handleVersionCheck(req versionCheck) {
+	if r.clientVersion == "" {
+		r.clientVersion = req.version
+		req.response <- versionCheckResponse{true, req.version}
+	} else {
+		req.response <- versionCheckResponse{req.version == r.clientVersion, r.clientVersion}
 	}
 }
 

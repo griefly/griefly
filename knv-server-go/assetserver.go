@@ -14,6 +14,7 @@ import (
 const (
 	PipeQueueLength    = 4
 	DefalutContentType = "application/octet-stream"
+	QZippedContentType = "application/zip"
 )
 
 type AssetServer struct {
@@ -32,7 +33,7 @@ func NewAssetServer(serverURL string) (*AssetServer, error) {
 	return &AssetServer{serverURL, make(map[string]*Pipe), sync.Mutex{}}, nil
 }
 
-func (as *AssetServer) MakePipe() (input, output string) {
+func (as *AssetServer) MakePipe() (*Pipe, string, string) {
 	as.pipeMutex.Lock()
 	defer as.pipeMutex.Unlock()
 
@@ -57,7 +58,7 @@ func (as *AssetServer) MakePipe() (input, output string) {
 	pipe := NewPipe(readID, writeID)
 	as.pipes[readID] = pipe
 	as.pipes[writeID] = pipe
-	return as.makePipeURL(writeID), as.makePipeURL(readID)
+	return pipe, as.makePipeURL(writeID), as.makePipeURL(readID)
 }
 
 func (as *AssetServer) ServeHTTP(rw http.ResponseWriter, req *http.Request) {

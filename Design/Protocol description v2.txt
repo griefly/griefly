@@ -22,7 +22,7 @@ System type:
 [{"login" : "retard", "password" : "iamnotretard"}]
 
 [[0x00000031][0x00000001]]
-[{"url_to_upload_map" : "grief.ly/FFFFFFFFFFFFFFFF"}]
+[{"url_to_upload_map" : "grief.ly/FFFFFFFFFFFFFFFF", "tick": 42}]
 
 [[0x00000035][0x00000001]]
 [{"url_to_download_map" : "grief.ly/FFFFFFFFFFFFFFFF"}]
@@ -59,6 +59,9 @@ Size < 512
 4 - RESTART ROUND
 (empty)
 
+5 - REQUEST HASH
+{"tick": 42}
+
 MESSAGES TO CLIENT FROM SERVER:
 
 ERROR MESSAGES:
@@ -88,7 +91,7 @@ NON ERROR MESSAGES:
 Size < 512
 
 202 - MAP UPLOAD
-{"url_to_upload_map" : "grief.ly/blah"}
+{"url_to_upload_map" : "grief.ly/blah", "tick": 42}
 Size < 512
 
 203 - NEW TICK
@@ -177,7 +180,7 @@ Server creates new client, gives number to him
 
  from SERVER to MASTER CLIENT
  type: MAP UPLOAD
-{"url_to_upload_map" : "grief.ly/blah"}
+{"url_to_upload_map" : "grief.ly/blah", "tick": 42}
 
  from SERVER to CLIENT
 type: SUCCESS CONNECTION
@@ -191,7 +194,7 @@ server should drop the old connection.
 
  from SERVER to MASTER CLIENT
  type: MAP UPLOAD
-{"url_to_upload_map" : "grief.ly/blah"}
+{"url_to_upload_map" : "grief.ly/blah", "tick": 42}
 
  from SERVER to CLIENT
 type: SUCCESS CONNECTION
@@ -262,7 +265,11 @@ from SERVER to CLIENT
 
 3. 
 
-from CLIENT to SERVER (unspecified time interval)
+from SERVER to CLIENT (server-configured time interval)
+type: REQUEST HASH
+{"tick":42}
+
+from CLIENT to SERVER
 type: HASH MESSAGE
 {"hash":42,"tick":42}
 
@@ -271,11 +278,11 @@ the hash for same tick for master client) then the server:
 
  from SERVER to MASTER CLIENT
  type: MAP UPLOAD
-{"url_to_upload_map" : "grief.ly/blah"}
+{"url_to_upload_map" : "grief.ly/blah", "tick": 42}
 
  from SERVER to THE UNSYNC CLIENT
  type: MAP UPLOAD
-{"url_to_upload_map" : "grief.ly/blah"}
+{"url_to_upload_map" : "grief.ly/blah", "tick": 42}
 
  from SERVER to THE UNSYNC CLIENT
 type: CLIENT IS OUT OF SYNC
