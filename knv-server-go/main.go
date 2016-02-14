@@ -12,6 +12,7 @@ import (
 var listen = flag.String("listen", ":1111", "address to listen on")
 var serverURL = flag.String("server-url", "http://localhost:8011/", "url of asset server")
 var tickInterval = flag.Int("tick-interval", 100, "tick interval in ms")
+var dumpsRoot = flag.String("dumps-root", "./dumps", "directory to store dumps to")
 
 func main() {
 	flag.Parse()
@@ -25,7 +26,8 @@ func main() {
 		panic(err)
 	}
 
-	registry := newRegistry(assetServer)
+	config := &RegistryConfig{DumpRoot: *dumpsRoot}
+	registry := newRegistry(assetServer, config)
 
 	go registry.Run()
 
