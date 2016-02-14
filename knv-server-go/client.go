@@ -345,7 +345,7 @@ func (r *Registry) checkForHashStart(now time.Time) {
 	// request hashes from all clients
 	tick := r.currentTick
 	m := &MessageRequestHash{&tick}
-	e := &Envelope{m, MsgidNewTick, 0}
+	e := &Envelope{m, MsgidRequestHash, 0}
 	r.sendAll(e)
 }
 
