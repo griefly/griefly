@@ -54,18 +54,21 @@ func readMessage(r io.Reader) (kind int, msg Value, err error) {
 	length := binary.BigEndian.Uint32(header[:4])
 	kind = int(binary.BigEndian.Uint32(header[4:]))
 	buf := make([]byte, int(length))
-	_, err = r.Read(buf)
+	_, err = io.ReadFull(r, buf)
 	if err != nil {
 		return
 	}
 
 	err = json.Unmarshal(buf, &msg)
+	if err != nil {
+		fmt.Println("faulty message:", string(buf))
+	}
 	return
 }
 
 func makeRandomMessage(counter int) Value {
 	return Value{
-		"counter": counter,
+		"text": "hello-" + strconv.Itoa(counter),
 	}
 }
 
@@ -85,8 +88,9 @@ func main() {
 	// login
 	login := "me-" + strconv.Itoa(rand.Intn(4096))
 	password := "letmein"
+	version := "v0.2.0-195-ga6aa"
 
-	msg := Value{"login": login, "password": password}
+	msg := Value{"login": login, "password": password, "game_version": version}
 	writeMessage(remote, 1, msg)
 	remote.Flush()
 
@@ -98,7 +102,9 @@ func main() {
 			break
 		}
 
-		fmt.Printf("msg of %d: %v\n", kind, msg)
+		if msg["ping_id"] == nil && kind != 1002 {
+			fmt.Printf("msg of %d: %v\n", kind, msg)
+		}
 		if kind == 202 {
 			// upload "map"
 			data := "hello world!"
@@ -149,12 +155,12 @@ func main() {
 				}
 			}
 
-			fmt.Println("got map!: ", string(data))
+			fmt.Println("got map of length", len(data))
 		}
 
 		if counter%10 == 4 {
-			fmt.Println("sending random message")
-			writeMessage(remote, 1001, makeRandomMessage(counter))
+			//fmt.Println("sending random message")
+			writeMessage(remote, 1002, makeRandomMessage(counter))
 			remote.Flush()
 		}
 		counter++
