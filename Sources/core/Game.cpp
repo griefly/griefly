@@ -363,6 +363,21 @@ void Game::ProcessInputMessages()
             continue;
         }
 
+        if (msg.type == MessageType::CLIENT_IS_OUT_OF_SYNC)
+        {
+            GetChat().PostText("The client is out of sync, so the server will drop the connection. Try to reconnect.");
+            continue;
+        }
+        if (msg.type == MessageType::CLIENT_TOO_SLOW)
+        {
+            GetChat().PostText("The client is too slow, so the server will drop the connection. Try to reconnect.");
+            continue;
+        }
+        if (msg.type == MessageType::EXIT_SERVER)
+        {
+            GetChat().PostText("The server is near to exit, so it will drop the connection. Try to reconnect.");
+            continue;
+        }
         if (   msg.type == MessageType::ORDINARY
             || msg.type == MessageType::MOUSE_CLICK
             || msg.type == MessageType::MESSAGE)
