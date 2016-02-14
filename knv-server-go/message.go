@@ -10,12 +10,12 @@ const (
 	MsgidExit               = 2
 	MsgidHash               = 3
 	MsgidRestart            = 4
-	MsgidRequestHash        = 5
 	MsgidSuccessfulConnect  = 201
 	MsgidMapUpload          = 202
 	MsgidNewTick            = 203
 	MsgidNewClient          = 204
 	MsgidCurrentConnections = 205
+	MsgidRequestHash        = 206
 
 	MsgidWrongGameVersion = 401
 	MsgidWrongAuth        = 402

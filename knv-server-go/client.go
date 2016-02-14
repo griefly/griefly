@@ -331,7 +331,7 @@ func (r *Registry) handleNewTick() {
 }
 
 func (r *Registry) checkForHashStart(now time.Time) {
-	if !(r.currentTick%StartHashCheckEvery == 0 && len(r.clients) >= 2) {
+	if r.currentTick%StartHashCheckEvery != 0 || len(r.clients) < 2 {
 		return
 	}
 
