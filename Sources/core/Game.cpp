@@ -98,8 +98,6 @@ void Game::Process()
                 GetMap().atmosphere.ProcessMove();
             }
 
-            GetFactory().Sync();
-        
             UpdateVisible();
 
             GetMap().GenerateFrame();
@@ -292,29 +290,59 @@ void Game::ProcessInputMessages()
             QJsonObject obj = Network2::ParseJson(msg);
             QString map_url = obj["url_to_upload_map"].toString();
 
-            qDebug() << "Map upload to " << map_url;
+            QJsonValue tick_v = obj["tick"];
+            int tick = tick_v.toVariant().toInt();
 
-            std::stringstream ss;
-            GetFactory().SaveMap(ss);
-            std::string string_data = ss.str();
+            qDebug() << "Map upload to " << map_url << ", tick " << tick;
 
-            QByteArray data(string_data.c_str(), string_data.size());
+            QByteArray data = saves_holder_.GetSaveFor(tick);
+
+            if ((data.length() == 0) && (tick == MAIN_TICK))
+            {
+                FastStringstream* ss = GetFactory().GetFastStream();
+                ss->Reset();
+                GetFactory().SaveMap(*ss->GetStream());
+                data = ss->GetCurrentData();
+            }
 
             emit sendMap(map_url, data);
             continue;
         }
 
-        if (msg.type == MessageType::HASH)
+        if (msg.type == MessageType::REQUEST_HASH)
         {
             QJsonObject obj = Network2::ParseJson(msg);
-
-            QJsonValue hash_v = obj["hash"];
-            int hash = hash_v.toVariant().toInt();
 
             QJsonValue tick_v = obj["tick"];
             int tick = tick_v.toVariant().toInt();
 
-            Debug::UnsyncDebug().AddNetSyncPair(hash, tick);
+            if (tick != MAIN_TICK)
+            {
+                qDebug() << "Tick mismatch! " << tick << " " << MAIN_TICK;
+                abort();
+            }
+
+            unsigned int hash = GetFactory().Hash();
+
+            FastStringstream* ss = GetFactory().GetFastStream();
+            ss->Reset();
+            GetFactory().SaveMap(*ss->GetStream());
+            QByteArray data = ss->GetCurrentData();
+
+            saves_holder_.ClearOldSaves();
+            saves_holder_.PutSave(data, MAIN_TICK);
+
+            Message2 msg;
+
+            msg.type = MessageType::HASH_MESSAGE;
+            msg.json =
+                      "{\"hash\":"
+                    + QString::number(hash)
+                    + ",\"tick\":"
+                    + QString::number(MAIN_TICK)
+                    + "}";
+
+            Network2::GetInstance().SendMsg(msg);
 
             continue;
         }
@@ -396,6 +424,36 @@ bool Game::IsMobVisible(int posx, int posy)
         }
     }
     return false;
+}
+
+void Game::SavesHolder::PutSave(QByteArray data, int tick)
+{
+    saves_.append(DataTick(data, tick));
+}
+
+QByteArray Game::SavesHolder::GetSaveFor(int tick)
+{
+    for (auto it = saves_.begin(); it != saves_.end(); ++it)
+    {
+        if (it->tick == tick)
+        {
+            return it->data;
+        }
+    }
+    return QByteArray();
+}
+
+void Game::SavesHolder::ClearOldSaves()
+{
+    auto erase_end = saves_.begin();
+    for (; erase_end != saves_.end(); ++erase_end)
+    {
+        if (erase_end->tick > static_cast<int>(MAIN_TICK - DATA_LIFETIME_TICKS))
+        {
+            break;
+        }
+    }
+    saves_.erase(saves_.begin(), erase_end);
 }
 
 Game* game_ = nullptr;

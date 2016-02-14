@@ -28,7 +28,6 @@ public:
         return objects_table_;
     }
 
-    void Sync();
     void ForeachProcess();
 
     static IMainObject* NewVoidObject(const std::string& type, size_t id);
@@ -103,6 +102,8 @@ public:
     void SetPlayerId(size_t net_id, size_t real_id);
     size_t GetPlayerId(size_t net_id);
     size_t GetNetId(size_t real_id);
+
+    FastStringstream* GetFastStream() { return &stream_; }
 private:
     FastStringstream stream_;
     QByteArray saved_map_;

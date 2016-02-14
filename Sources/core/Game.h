@@ -12,6 +12,8 @@
 #include <QObject>
 #include <QThread>
 
+#include "FastStringstream.h"
+
 class Game: public QObject
 {
     Q_OBJECT
@@ -40,6 +42,25 @@ signals:
     void insertHtmlIntoChat(QString html);
     void playMusic(QString name, float volume);
 private:
+    class SavesHolder
+    {
+    public:
+        static const int DATA_LIFETIME_TICKS = 25;
+        void PutSave(QByteArray data, int tick);
+        QByteArray GetSaveFor(int tick);
+        void ClearOldSaves();
+    private:
+        struct DataTick
+        {
+            DataTick() {}
+            DataTick(QByteArray d, int t) : data(d), tick(t) {}
+            QByteArray data;
+            int tick;
+        };
+
+        QVector<DataTick> saves_;
+    } saves_holder_;
+
     bool is_end_process_;
 
     std::list<point>* visible_points_;

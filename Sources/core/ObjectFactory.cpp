@@ -11,10 +11,7 @@
 
 #include "Debug.h"
 
-
-const int TEST_BUF_SIZE = 1024 * 1024 * 32;
-
-ObjectFactory::ObjectFactory() : stream_(TEST_BUF_SIZE)
+ObjectFactory::ObjectFactory()
 {
     objects_table_.resize(100);
     id_ = 1;
@@ -22,9 +19,7 @@ ObjectFactory::ObjectFactory() : stream_(TEST_BUF_SIZE)
 
 }
 
-const int HASH_OFTEN = 1;
-
-void ObjectFactory::Sync()
+/*void ObjectFactory::Sync()
 {
     if (MAIN_TICK % HASH_OFTEN == 0)
     {
@@ -51,7 +46,7 @@ void ObjectFactory::Sync()
         Network2::GetInstance().SendMsg(msg);
 
     }
-}
+}*/
 
 void ObjectFactory::UpdateProcessingItems()
 {   

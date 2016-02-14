@@ -5,6 +5,8 @@ namespace MessageType
     // MESSAGES TO SERVER FROM CLIENT:
     const int INITAL_LOGIN_MESSAGE = 1;
     const int EXIT_CLIENT = 2;
+    const int HASH_MESSAGE = 3;
+    const int RESTART_ROUND = 4;
 
     // MESSAGES TO CLIENT FROM SERVER:
 
@@ -20,12 +22,14 @@ namespace MessageType
     const int NEW_TICK = 203;
     const int NEW_CLIENT = 204;
 
+    const int REQUEST_HASH = 206;
+
     // GAME MESSAGES
     const int ORDINARY = 1001;
     const int MESSAGE = 1002;
 
     const int MOUSE_CLICK = 1004;
 
-    const int HASH = 1101;
+    //const int HASH = 1101;
     const int PING = 1102;
 }
