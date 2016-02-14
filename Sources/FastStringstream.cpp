@@ -1,9 +1,11 @@
 #include "FastStringstream.h"
 
+#include <QDebug>
+
 FastStringstream::FastStringstream(int buffer_size)
 {
     buffer_ = new char[buffer_size];
-    stream_.rdbuf()->pubsetbuf(buffer_, buffer_size);
+    //stream_.rdbuf()->pubsetbuf(buffer_, buffer_size);
 }
 
 FastStringstream::~FastStringstream()
@@ -13,8 +15,9 @@ FastStringstream::~FastStringstream()
 
 void FastStringstream::Reset()
 {
-    stream_.clear();
-    stream_.seekp(0);
+    //stream_.clear();
+    //stream_.seekp(0);
+    stream_.str("");
 }
 
 std::stringstream* FastStringstream::GetStream()
@@ -28,6 +31,8 @@ QByteArray FastStringstream::GetCurrentData()
     {
         return "";
     }
-    QByteArray retval(buffer_, stream_.tellp());
+    qDebug() << "Tellp: " << stream_.tellp();
+    std::string str = stream_.str();
+    QByteArray retval(str.c_str(), str.length());
     return retval;
 }

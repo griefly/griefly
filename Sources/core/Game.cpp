@@ -102,8 +102,6 @@ void Game::Process()
 
             GetMap().GenerateFrame();
             GetTexts().Process();
-
-            ++MAIN_TICK;
         }
 
         if((SDL_GetTicks() - last_time_fps) >= 1000)
@@ -208,6 +206,11 @@ void Game::InitWorld(int id, std::string map_name)
 
         QByteArray map_data = Network2::GetInstance().GetMapData();
 
+        if (map_data.length() == 0)
+        {
+            qDebug() << "An empty map received";
+            abort();
+        }
         std::stringstream ss;
         ss.write(map_data.data(), map_data.length());
         ss.seekg(0, std::ios::beg);
@@ -261,6 +264,7 @@ void Game::ProcessInputMessages()
         if (msg.type == MessageType::NEW_TICK)
         {
             process_in_ = true;
+            ++MAIN_TICK;
             break;
         }
         if (msg.type == MessageType::NEW_CLIENT)
@@ -294,16 +298,21 @@ void Game::ProcessInputMessages()
             int tick = tick_v.toVariant().toInt();
 
             qDebug() << "Map upload to " << map_url << ", tick " << tick;
+            qDebug() << "Current game tick: " << MAIN_TICK;
 
             QByteArray data = saves_holder_.GetSaveFor(tick);
 
             if ((data.length() == 0) && (tick == MAIN_TICK))
             {
+                qDebug() << "Map will be generated";
                 FastStringstream* ss = GetFactory().GetFastStream();
                 ss->Reset();
-                GetFactory().SaveMap(*ss->GetStream());
+                GetFactory().SaveMap(*(ss->GetStream()));
                 data = ss->GetCurrentData();
+                qDebug() << " " << data.length();
             }
+
+
 
             emit sendMap(map_url, data);
             continue;
@@ -311,6 +320,7 @@ void Game::ProcessInputMessages()
 
         if (msg.type == MessageType::REQUEST_HASH)
         {
+            qDebug() << "Hash: " << msg.json;
             QJsonObject obj = Network2::ParseJson(msg);
 
             QJsonValue tick_v = obj["tick"];
@@ -401,8 +411,10 @@ void Game::ProcessInputMessages()
                 qDebug() << "Game object is not valid: " << net_id;
                 abort();
             }
+            continue;
         }
 
+        qDebug() << "Unhandled message, type: " << msg.type << ", json: " << msg.json;
         // TODO: other stuff
     }
 }
