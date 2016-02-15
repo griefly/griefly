@@ -36,6 +36,7 @@
 #include <QJsonObject>
 #include <QByteArray>
 #include <QUuid>
+#include <QElapsedTimer>
 
 int ping_send;
 
@@ -291,6 +292,8 @@ void Game::ProcessInputMessages()
         }
         if (msg.type == MessageType::MAP_UPLOAD)
         {
+            QElapsedTimer timer;
+            timer.start();
             QJsonObject obj = Network2::ParseJson(msg);
             QString map_url = obj["url_to_upload_map"].toString();
 
@@ -313,6 +316,7 @@ void Game::ProcessInputMessages()
             }
 
             emit sendMap(map_url, data);
+            qDebug() << "It took " << timer.elapsed() << "ms to send the map";
             continue;
         }
 
