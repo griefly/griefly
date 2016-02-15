@@ -300,9 +300,9 @@ void Game::ProcessInputMessages()
             qDebug() << "Map upload to " << map_url << ", tick " << tick;
             qDebug() << "Current game tick: " << MAIN_TICK;
 
-            QByteArray data = saves_holder_.GetSaveFor(tick);
+            QByteArray data;
 
-            if ((data.length() == 0) && (tick == MAIN_TICK))
+            if (tick == MAIN_TICK)
             {
                 qDebug() << "Map will be generated";
                 FastStringstream* ss = GetFactory().GetFastStream();
@@ -312,15 +312,13 @@ void Game::ProcessInputMessages()
                 qDebug() << " " << data.length();
             }
 
-
-
             emit sendMap(map_url, data);
             continue;
         }
 
         if (msg.type == MessageType::REQUEST_HASH)
         {
-            qDebug() << "Hash: " << msg.json;
+            //qDebug() << "Hash: " << msg.json;
             QJsonObject obj = Network2::ParseJson(msg);
 
             QJsonValue tick_v = obj["tick"];
@@ -331,16 +329,7 @@ void Game::ProcessInputMessages()
                 qDebug() << "Tick mismatch! " << tick << " " << MAIN_TICK;
                 abort();
             }
-
             unsigned int hash = GetFactory().Hash();
-
-            FastStringstream* ss = GetFactory().GetFastStream();
-            ss->Reset();
-            GetFactory().SaveMap(*ss->GetStream());
-            QByteArray data = ss->GetCurrentData();
-
-            saves_holder_.ClearOldSaves();
-            saves_holder_.PutSave(data, MAIN_TICK);
 
             Message2 msg;
 
@@ -451,36 +440,6 @@ bool Game::IsMobVisible(int posx, int posy)
         }
     }
     return false;
-}
-
-void Game::SavesHolder::PutSave(QByteArray data, int tick)
-{
-    saves_.append(DataTick(data, tick));
-}
-
-QByteArray Game::SavesHolder::GetSaveFor(int tick)
-{
-    for (auto it = saves_.begin(); it != saves_.end(); ++it)
-    {
-        if (it->tick == tick)
-        {
-            return it->data;
-        }
-    }
-    return QByteArray();
-}
-
-void Game::SavesHolder::ClearOldSaves()
-{
-    auto erase_end = saves_.begin();
-    for (; erase_end != saves_.end(); ++erase_end)
-    {
-        if (erase_end->tick > static_cast<int>(MAIN_TICK - DATA_LIFETIME_TICKS))
-        {
-            break;
-        }
-    }
-    saves_.erase(saves_.begin(), erase_end);
 }
 
 Game* game_ = nullptr;
