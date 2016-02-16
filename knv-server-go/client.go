@@ -353,11 +353,13 @@ func (r *Registry) checkHashes(now time.Time) {
 	for tick, checker := range r.hashes {
 		if checker.deadline.Before(now) {
 			// deadline expired for this hash check, force check
-			r.checkHashesOne(tick, checker)
+			// we shall use the tick when hash was computed but due to #201 we will
+			// request current map
+			r.checkHashesOne(r.currentTick, checker)
 			delete(r.hashes, tick)
 		} else if checker.waitingClientCount <= 0 {
 			// we collected hashes from all clients, start check
-			r.checkHashesOne(tick, checker)
+			r.checkHashesOne(r.currentTick, checker)
 			delete(r.hashes, tick)
 		}
 	}
