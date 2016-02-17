@@ -10,6 +10,8 @@ import (
 const (
 	PlayerQueueLength   = 32
 	RegistryQueueLength = 8
+
+	SessionDirTimeFormat = "2006-01-02_15-04-05_07-00"
 )
 
 var (
@@ -190,7 +192,7 @@ func (r *Registry) checkForNewGame() {
 
 	// reset state for new game
 	r.currentTick = 0
-	sessionID := time.Now().String()
+	sessionID := time.Now().Format(SessionDirTimeFormat)
 	r.dumper = NewDumpWriter(r.config.DumpRoot, sessionID)
 }
 
