@@ -2,8 +2,6 @@
 
 #include "MainObject.h"
 
-enum DrawType {SAME, TOP};
-
 class IDraw: public IMainObject
 {
 public:

@@ -14,7 +14,7 @@ const (
 
 var (
 	TickInterval        = 100 * time.Millisecond
-	StartHashCheckEvery = 5
+	StartHashCheckEvery = 1
 	HashCheckTimeout    = 500 * time.Millisecond
 )
 

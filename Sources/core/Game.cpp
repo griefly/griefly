@@ -22,6 +22,7 @@
 #include "objects/LoginMob.h"
 #include "objects/Lobby.h"
 #include "objects/SpawnPoints.h"
+#include "objects/UnsyncGenerator.h"
 
 #include "AutogenMetadata.h"
 
@@ -175,6 +176,13 @@ void Game::InitWorld(int id, std::string map_name)
             GetMap().LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
             GetFactory().Create<Lobby>(Lobby::T_ITEM_S());
+
+            if (GetParamsHolder().GetParamBool("-unsync_generation"))
+            {
+                auto unsync_generator
+                    = GetFactory().Create<UnsyncGenerator>(UnsyncGenerator::T_ITEM_S());
+                SetUnsyncGenerator(unsync_generator);
+            }
 
             for (auto it = GetFactory().GetIdTable().begin();
                       it != GetFactory().GetIdTable().end();
@@ -427,6 +435,14 @@ void Game::endProcess()
 {
     is_end_process_ = true;
     qDebug() << "void Game::endProcess()";
+}
+
+void Game::generateUnsync()
+{
+    if (GetUnsyncGenerator().valid())
+    {
+        GetUnsyncGenerator()->PerformUnsync();
+    }
 }
 
 bool Game::IsMobVisible(int posx, int posy)

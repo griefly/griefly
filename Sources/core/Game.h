@@ -36,6 +36,9 @@ public:
 public slots:
     void process();
     void endProcess();
+
+    // God Bless The Mark
+    void generateUnsync();
 signals:
     void sendMap(QString url, QByteArray data);
     void addSystemText(QString key, QString text);

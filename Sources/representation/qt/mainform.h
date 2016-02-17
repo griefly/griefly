@@ -41,6 +41,7 @@ private slots:
 signals:
     void autoConnect();
     void closing();
+    void generateUnsync();
 private:
     void RemoveFirstBlockFromTextEditor();
 

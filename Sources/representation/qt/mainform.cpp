@@ -162,6 +162,7 @@ void MainForm::startGameLoop(int id, QString map)
     game->InitWorld(id, map.toStdString());
 
     connect(this, &MainForm::closing, game, &Game::endProcess);
+    connect(this, &MainForm::generateUnsync, game, &Game::generateUnsync);
 
     /*if (GetParamsHolder().GetParamBool("-auto"))
     {
@@ -312,6 +313,13 @@ void MainForm::on_lineEdit_returnPressed()
         return;
     }
 
+    if (ui->lineEdit->text() == "/generate_unsync")
+    {
+        qDebug() << "Unsync signal will be sended to the core...";
+        ui->lineEdit->clear();
+        emit generateUnsync();
+        return;
+    }
 
     Message2 msg;
     msg.type = MessageType::MESSAGE;
