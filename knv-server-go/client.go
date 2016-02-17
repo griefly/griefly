@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"strconv"
@@ -416,7 +417,7 @@ func (r *Registry) dumpPlayerMap(id, tick int, callback func()) {
 	}
 
 	// start dumper
-	uid := strconv.Itoa(id)
+	uid := fmt.Sprintf("t%d-%d", tick, id)
 	if id == r.masterID {
 		uid += "-master"
 	}
