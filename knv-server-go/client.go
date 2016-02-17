@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -394,6 +395,14 @@ func (r *Registry) checkHashesOne(tick int, checker *hashCheck) {
 		// everyone in sync, OK
 		return
 	}
+
+	unsyncedStrs := []string{}
+	for _, id := range unsynced {
+		unsyncedStrs = append(unsyncedStrs, strconv.Itoa(id))
+	}
+
+	log.Printf("hash-check: unsync detected on tick %d, fetching maps and dropping those clients: %s",
+		tick, strings.Join(unsyncedStrs, ", "))
 
 	// request and dump map from master and all of those faulty clients
 	r.dumpPlayerMap(master, tick, func() {})
