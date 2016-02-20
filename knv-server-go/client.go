@@ -20,6 +20,7 @@ var (
 	TickInterval        = 100 * time.Millisecond
 	StartHashCheckEvery = 1
 	HashCheckTimeout    = 500 * time.Millisecond
+	SendConnCountEvery  = 5
 )
 
 type newPlayerReply struct {
@@ -173,6 +174,7 @@ func (r *Registry) Run() {
 			r.handleNewTick()
 			r.checkForHashStart(now)
 			r.checkHashes(now)
+			r.maybeSendConnCounter()
 
 		case newPlayer := <-r.newPlayers:
 			r.checkForNewGame()
@@ -296,6 +298,17 @@ func (r *Registry) removePlayer(id int, reason *Envelope) {
 		log.Println("registry: no players left, cleaning up")
 		r.cleanUp()
 	}
+}
+
+func (r *Registry) maybeSendConnCounter() {
+	if r.currentTick%SendConnCountEvery != 0 {
+		return
+	}
+
+	count := len(r.clients)
+	msg := &MessageCurrentConnections{&count}
+	e := &Envelope{msg, MsgidCurrentConnections, 0}
+	r.sendAll(e)
 }
 
 func (r *Registry) handleHash(m *Envelope) bool {
