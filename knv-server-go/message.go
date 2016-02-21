@@ -17,13 +17,14 @@ const (
 	MsgidCurrentConnections = 205
 	MsgidRequestHash        = 206
 
-	MsgidWrongGameVersion = 401
-	MsgidWrongAuth        = 402
-	MsgidUndefinedError   = 403
-	MsgidServerExit       = 404
-	MsgidNoMaster         = 405
-	MsgidOutOfSync        = 406
-	MsgidTooSlow          = 407
+	MsgidWrongGameVersion    = 401
+	MsgidWrongAuth           = 402
+	MsgidUndefinedError      = 403
+	MsgidServerExit          = 404
+	MsgidNoMaster            = 405
+	MsgidOutOfSync           = 406
+	MsgidTooSlow             = 407
+	MsgidInternalServerError = 408
 
 	MsgidOrdinary    = 1001
 	MsgidJustMessage = 1002
@@ -104,6 +105,8 @@ func getConcreteMessage(id uint32) Message {
 		return &ErrmsgOutOfSync{}
 	case id == MsgidTooSlow:
 		return &ErrmsgTooSlow{}
+	case id == MsgidInternalServerError:
+		return &ErrmsgInternalServerError{}
 
 	case id == MsgidOrdinary:
 		return &MessageOrdinary{}
@@ -273,6 +276,14 @@ type ErrmsgTooSlow struct {
 
 func (m *ErrmsgTooSlow) TypeName() string {
 	return "ErrmsgTooSlow"
+}
+
+type ErrmsgInternalServerError struct {
+	Message string `json:"message"`
+}
+
+func (m *ErrmsgInternalServerError) TypeName() string {
+	return "ErrmsgInternalServerError"
 }
 
 type OpaqueMessage map[string]*json.RawMessage

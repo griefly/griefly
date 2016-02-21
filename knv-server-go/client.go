@@ -28,6 +28,7 @@ type newPlayerReply struct {
 	master         bool
 	mapDownloadURL string
 	inbox          chan *Envelope
+	errReply       *Envelope
 }
 
 type PlayerEnvelope struct {
@@ -36,8 +37,8 @@ type PlayerEnvelope struct {
 }
 
 type PlayerInfo struct {
-	id    int
-	login string
+	id       int
+	userInfo *UserInfo
 }
 
 type versionCheck struct {
@@ -90,22 +91,23 @@ type Registry struct {
 	ticker      *time.Ticker
 	assetServer *AssetServer
 	dumper      *DumpWriter
+	db          DB
 
 	config *RegistryConfig
 }
 
-func newRegistry(as *AssetServer, config *RegistryConfig) *Registry {
+func newRegistry(as *AssetServer, config *RegistryConfig, db DB) *Registry {
 	return &Registry{1, make(map[int]chan *Envelope, RegistryQueueLength), make(map[string]PlayerInfo),
 		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan playerDrop),
-		make(map[int]*hashCheck), 0, make(chan *Envelope), nil, as, nil, config}
+		make(map[int]*hashCheck), 0, make(chan *Envelope), nil, as, nil, db, config}
 }
 
 // async api
-func (r *Registry) CreatePlayer(m *Envelope) (inbox chan *Envelope, id int, master bool, mapURL string) {
+func (r *Registry) CreatePlayer(m *Envelope) (inbox chan *Envelope, id int, master bool, mapURL string, errResp *Envelope) {
 	pe := PlayerEnvelope{m, make(chan newPlayerReply, 1)}
 	r.newPlayers <- pe
 	response := <-pe.response
-	return response.inbox, response.id, response.master, response.mapDownloadURL
+	return response.inbox, response.id, response.master, response.mapDownloadURL, response.errReply
 }
 
 func (r *Registry) RemovePlayer(id int, reason *Envelope) {
@@ -204,39 +206,54 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	m := newPlayer.m.Message.(*MessageLogin)
 	var id int
 
-	if m.IsGuest {
-		// generate new guest user
-		m.Login = newGuest(r, m.Login)
+	info, err := Authenticate(r.db, m.Login, m.Password, m.IsGuest)
+	if err != nil {
+		if err == ErrNotAuthenticated {
+			log.Printf("registry: invalid auth for user '%s'", m.Login)
+			e := &Envelope{&ErrmsgWrongAuth{}, MsgidWrongAuth, 0}
+			response := newPlayerReply{errReply: e}
+			newPlayer.response <- response
+			return
+		} else {
+			log.Printf("registry: internal error while authenticating '%s': %v", m.Login, err)
+			e := &Envelope{&ErrmsgInternalServerError{"cannot authenticate you"}, MsgidInternalServerError, 0}
+			response := newPlayerReply{errReply: e}
+			newPlayer.response <- response
+			return
+		}
 	}
 
-	// TODO(mechmind): authenticate players
+	if m.IsGuest {
+		// generate new guest user
+		info.Login = newGuest(r, m.Login)
+	}
 
 	// look up for existing player avatar for current map
-	if info, ok := r.players[m.Login]; ok {
-		id = info.id
-		log.Printf("registry: reusing existing id %d for player '%s'", id, m.Login)
+	if playerInfo, ok := r.players[info.Login]; ok {
+		id = playerInfo.id
+		log.Printf("registry: reusing existing id %d for player '%s'", id, info.Login)
 		// remove player and then add him again
 		r.removePlayer(id, nil)
-		if _, ok := r.players[m.Login]; !ok {
+		if _, ok := r.players[info.Login]; !ok {
 			// server was restarted, so restart registration process
 			r.registerPlayer(newPlayer)
 			return
 		}
 
-		info = PlayerInfo{id: id, login: m.Login}
-		r.players[m.Login] = info
+		playerInfo = PlayerInfo{id: id, userInfo: info}
+		r.players[info.Login] = playerInfo
 	} else {
 		id = r.nextID
 		r.nextID++
-		info = PlayerInfo{id: id, login: m.Login}
-		r.players[m.Login] = info
-		log.Printf("registry: registered new id %d for player '%s'", id, m.Login)
+		playerInfo = PlayerInfo{id: id, userInfo: info}
+		r.players[info.Login] = playerInfo
+		log.Printf("registry: registered new id %d for player '%s'", id, info.Login)
 
 		// create player on maps
 		newm := &MessageNewClient{&id}
 		e := &Envelope{newm, MsgidNewClient, 0}
 		r.sendAll(e)
-		log.Printf("registry: creating new unit for client %d, login '%s'", id, m.Login)
+		log.Printf("registry: creating new unit for client %d, login '%s'", id, info.Login)
 	}
 
 	// if there are queue for previous connection of client then close it

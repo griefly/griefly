@@ -87,8 +87,9 @@ func main() {
 
 	// login
 	login := "me-" + strconv.Itoa(rand.Intn(4096))
-	password := "letmein"
-	version := "v0.2.0-195-ga6aa"
+	//login := "backdoor-admin"
+	password := "6b3a55e0261b0304143f805a24924d0c1c44524821305f31d9277843b8a10f4e"
+	version := "v0.2.0-214-gcc32"
 
 	msg := Value{"login": login, "password": password, "game_version": version}
 	writeMessage(remote, 1, msg)
