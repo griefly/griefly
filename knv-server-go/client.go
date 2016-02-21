@@ -418,14 +418,10 @@ func (r *Registry) checkHashesOne(tick int, checker *hashCheck) {
 		tick, strings.Join(unsyncedStrs, ", "))
 
 	// request and dump map from master and all of those faulty clients
-	r.dumpPlayerMap(master, tick, func() {})
-	for _, neud := range unsynced {
-		id := neud
-		callback := func() {
-			r.RemovePlayer(id, &Envelope{&ErrmsgOutOfSync{}, MsgidOutOfSync, 0})
-		}
-
-		r.dumpPlayerMap(id, tick, callback)
+	r.dumpPlayerMap(master, tick, nil)
+	for _, id := range unsynced {
+		r.dumpPlayerMap(id, tick, nil)
+		r.removePlayer(id, &Envelope{&ErrmsgOutOfSync{}, MsgidOutOfSync, 0})
 	}
 }
 

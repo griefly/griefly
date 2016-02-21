@@ -60,5 +60,7 @@ func (dw *DumpWriter) DumpMap(tag string, source *Pipe, callback func()) {
 	}
 
 	// everything is ok, notify customer
-	callback()
+	if callback != nil {
+		callback()
+	}
 }
