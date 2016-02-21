@@ -7,8 +7,9 @@ It used to be Karya &amp; Valya Rogue-like, but now it is Griefly: Yet Another S
 
 It's work now.
 
-Linux supported (ty Deirz).
+Command line params (1 in param means that it is disabled):
+mapgen_name=brig_small.gen i1p=grief.ly -nod1raw -autogen_reports -ed1itor -a1uto -auto_connect login=Guest -unsync_generation
 
-Travis supported (ty Deirz)
+
 
 Warning: 32bit only
