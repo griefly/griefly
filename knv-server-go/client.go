@@ -170,6 +170,10 @@ func (r *Registry) Run() {
 				continue
 			}
 
+			if r.handleRestart(m) {
+				continue
+			}
+
 			r.handleGameMessage(m)
 
 		case now := <-r.ticker.C:
@@ -345,6 +349,45 @@ func (r *Registry) handleHash(m *Envelope) bool {
 	return true
 }
 
+func (r *Registry) handleRestart(m *Envelope) bool {
+	if m.Kind != MsgidRestart {
+		return false
+	}
+
+	player, ok := r.getPlayerByID(m.From)
+	if !ok {
+		return true
+	}
+
+	if !player.userInfo.IsAdmin {
+		return true
+	}
+
+	// admin asked us to restart
+	log.Printf("registry: admin %d (%s) asked to restart server", player.id, player.userInfo.Login)
+
+	notifyMessage := &Envelope{&ErrmsgServerRestarting{}, MsgidServerRestarting, 0}
+
+	// remove all players
+	for _, playerInfo := range r.players {
+		r.removePlayer(playerInfo.id, notifyMessage)
+	}
+
+	if len(r.clients) != 0 {
+		// wtf
+		ids := []string{}
+		for id := range r.clients {
+			ids = append(ids, strconv.Itoa(id))
+
+			r.removePlayer(id, notifyMessage)
+		}
+
+		log.Printf("registry: some clients left after dropping all players: %s", strings.Join(ids, ", "))
+	}
+
+	return true
+}
+
 func (r *Registry) handleGameMessage(m *Envelope) {
 	frv, ok := m.Message.(Forwardable)
 	if !ok {
@@ -473,6 +516,15 @@ func (r *Registry) cleanUp() {
 	r.players = make(map[string]PlayerInfo)
 	r.nextID = 1
 	r.clientVersion = ""
+}
+
+func (r *Registry) getPlayerByID(id int) (PlayerInfo, bool) {
+	for _, p := range r.players {
+		if p.id == id {
+			return p, true
+		}
+	}
+	return PlayerInfo{}, false
 }
 
 func newGuest(r *Registry, prefix string) string {

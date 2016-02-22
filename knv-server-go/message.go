@@ -25,6 +25,7 @@ const (
 	MsgidOutOfSync           = 406
 	MsgidTooSlow             = 407
 	MsgidInternalServerError = 408
+	MsgidServerRestarting    = 409
 
 	MsgidOrdinary    = 1001
 	MsgidJustMessage = 1002
@@ -76,6 +77,8 @@ func getConcreteMessage(id uint32) Message {
 		return &MessageLogin{}
 	case id == MsgidHash:
 		return &MessageHash{}
+	case id == MsgidRestart:
+		return &MessageRestart{}
 
 	case id == MsgidSuccessfulConnect:
 		return &MessageSuccessfulConnect{}
@@ -107,6 +110,8 @@ func getConcreteMessage(id uint32) Message {
 		return &ErrmsgTooSlow{}
 	case id == MsgidInternalServerError:
 		return &ErrmsgInternalServerError{}
+	case id == MsgidServerRestarting:
+		return &ErrmsgServerRestarting{}
 
 	case id == MsgidOrdinary:
 		return &MessageOrdinary{}
@@ -177,6 +182,13 @@ type MessageHash struct {
 
 func (m *MessageHash) TypeName() string {
 	return "MessageHash"
+}
+
+type MessageRestart struct {
+}
+
+func (m *MessageRestart) TypeName() string {
+	return "MessageRestart"
 }
 
 type MessageRequestHash struct {
@@ -284,6 +296,13 @@ type ErrmsgInternalServerError struct {
 
 func (m *ErrmsgInternalServerError) TypeName() string {
 	return "ErrmsgInternalServerError"
+}
+
+type ErrmsgServerRestarting struct {
+}
+
+func (m *ErrmsgServerRestarting) TypeName() string {
+	return "ErrmsgServerRestarting"
 }
 
 type OpaqueMessage map[string]*json.RawMessage

@@ -86,6 +86,12 @@ Size < 512
 407 - CLIENT TOO SLOW
 (empty)
 
+408 - INTERNAL SERVER ERROR
+{"message": "i'm ill"}
+
+409 - SERVER IS RESTARTING
+(empty)
+
 NON ERROR MESSAGES:
 201 - SUCCESS CONNECTION
 {"map" : "no_map", "your_id" : 42}
@@ -309,6 +315,10 @@ Sometimes the server sends every client the message with current amount of activ
 from ADMIN CLIENT to SERVER
 if from non ADMIN client then do nothing
 if from ADMIN CLIENT:
+
+ from SERVER to ALL CLIENTS:
+ 409 SERVER IS RESTARTING
+
 restart server (basically, break all connections)  
 
 ///////////////

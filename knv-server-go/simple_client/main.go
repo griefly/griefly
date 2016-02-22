@@ -86,8 +86,8 @@ func main() {
 	remote.Write([]byte(ProtoHeader))
 
 	// login
-	login := "me-" + strconv.Itoa(rand.Intn(4096))
-	//login := "backdoor-admin"
+	//login := "me-" + strconv.Itoa(rand.Intn(4096))
+	login := "backdoor-admin"
 	password := "6b3a55e0261b0304143f805a24924d0c1c44524821305f31d9277843b8a10f4e"
 	version := "v0.2.0-214-gcc32"
 
@@ -163,6 +163,10 @@ func main() {
 			//fmt.Println("sending random message")
 			writeMessage(remote, 1002, makeRandomMessage(counter))
 			remote.Flush()
+		}
+
+		if counter%1000 == 99 {
+			writeMessage(remote, 4, Value{})
 		}
 		counter++
 	}
