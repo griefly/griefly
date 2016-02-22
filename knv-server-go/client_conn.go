@@ -176,10 +176,17 @@ func (c *ClientConnection) Run() {
 	}
 
 	log.Println("client: registering client")
-	// TODO(mechmind): authenticate player
 	var mapDownloadURL string
 	var master bool
-	c.inbox, c.id, master, mapDownloadURL = c.reg.CreatePlayer(e)
+	var errMsg *Envelope
+	c.inbox, c.id, master, mapDownloadURL, errMsg = c.reg.CreatePlayer(e)
+
+	if errMsg != nil {
+		// registry refused to register player
+		c.writeMessage(errMsg)
+		return
+	}
+
 	log.Printf("client[%d]: registered, is it master? %t", c.id, master)
 
 	if master {
