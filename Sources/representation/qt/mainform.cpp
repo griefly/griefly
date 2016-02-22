@@ -343,7 +343,7 @@ void MainForm::on_lineEdit_returnPressed()
     if (Chat::IsOOCMessage(text.toStdString()))
     {
         msg.type = MessageType::OOC_MESSAGE;
-        object["login"] = "";
+        object["login"] = QString("");
         object["text"] = ui->lineEdit->text().mid(3).trimmed();
     }
     else
