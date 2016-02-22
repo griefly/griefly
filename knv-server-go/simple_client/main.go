@@ -87,11 +87,16 @@ func main() {
 
 	// login
 	//login := "me-" + strconv.Itoa(rand.Intn(4096))
-	login := "backdoor-admin"
+	login := "guest"
 	password := "6b3a55e0261b0304143f805a24924d0c1c44524821305f31d9277843b8a10f4e"
 	version := "v0.2.0-214-gcc32"
+	isGuest := true
+	/*
+		login = "backdoor-admin"
+		isGuest = false
+		//*/
 
-	msg := Value{"login": login, "password": password, "game_version": version}
+	msg := Value{"login": login, "password": password, "game_version": version, "guest": isGuest}
 	writeMessage(remote, 1, msg)
 	remote.Flush()
 
@@ -165,9 +170,11 @@ func main() {
 			remote.Flush()
 		}
 
-		if counter%1000 == 99 {
-			writeMessage(remote, 4, Value{})
-		}
+		/*
+			if counter%1000 == 99 {
+				writeMessage(remote, 4, Value{})
+			}
+		*/
 		counter++
 	}
 }

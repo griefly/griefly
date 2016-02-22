@@ -72,10 +72,9 @@ type RegistryConfig struct {
 }
 
 type Registry struct {
-	nextID              int
-	clients             map[int]chan *Envelope
-	players             map[string]PlayerInfo
-	playerRegistrations []PlayerEnvelope
+	nextID  int
+	clients map[int]chan *Envelope
+	players map[string]PlayerInfo
 
 	masterID      int
 	clientVersion string
@@ -85,8 +84,9 @@ type Registry struct {
 
 	droppedPlayers chan playerDrop
 
-	hashes      map[int]*hashCheck
-	currentTick int
+	hashes            map[int]*hashCheck
+	currentTick       int
+	nextTickCallbacks []func(*Registry)
 
 	inbox       chan *Envelope
 	ticker      *time.Ticker
@@ -99,8 +99,8 @@ type Registry struct {
 
 func newRegistry(as *AssetServer, config *RegistryConfig, db DB) *Registry {
 	return &Registry{1, make(map[int]chan *Envelope, RegistryQueueLength), make(map[string]PlayerInfo),
-		nil, -1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan playerDrop),
-		make(map[int]*hashCheck), 0, make(chan *Envelope), nil, as, nil, db, config}
+		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan playerDrop),
+		make(map[int]*hashCheck), 0, nil, make(chan *Envelope), nil, as, nil, db, config}
 }
 
 // async api
@@ -183,11 +183,11 @@ func (r *Registry) Run() {
 			r.checkForHashStart(now)
 			r.checkHashes(now)
 			r.maybeSendConnCounter()
-			r.registerPostponedPlayers()
+			r.invokeNextTickCallbacks()
 
 		case newPlayer := <-r.newPlayers:
 			r.checkForNewGame()
-			r.postponeRegisterPlayer(newPlayer)
+			r.registerPlayer(newPlayer)
 
 		case info := <-r.droppedPlayers:
 			r.removePlayer(info.id, info.reason)
@@ -207,18 +207,6 @@ func (r *Registry) checkForNewGame() {
 	r.currentTick = 0
 	sessionID := time.Now().Format(SessionDirTimeFormat)
 	r.dumper = NewDumpWriter(r.config.DumpRoot, sessionID)
-}
-
-func (r *Registry) postponeRegisterPlayer(pe PlayerEnvelope) {
-	r.playerRegistrations = append(r.playerRegistrations, pe)
-}
-
-func (r *Registry) registerPostponedPlayers() {
-	for _, pe := range r.playerRegistrations {
-		r.registerPlayer(pe)
-	}
-
-	r.playerRegistrations = nil
 }
 
 func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
@@ -286,11 +274,11 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	// if there are queue for previous connection of client then close it
 	if r.clients[id] != nil {
 		close(r.clients[id])
+		delete(r.clients, id)
 	}
 
 	// create inbox for client
 	inbox := make(chan *Envelope, PlayerQueueLength)
-	r.clients[id] = inbox
 
 	var master bool
 	var mapDownloadURL string
@@ -298,15 +286,22 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		// praise the new master!
 		r.masterID = id
 		master = true
+		r.clients[id] = inbox
 	} else {
-		// immediately request map for new player
+		// postpone map request until new tick
 		var mapUploadURL string
 		_, mapUploadURL, mapDownloadURL = r.assetServer.MakePipe()
-		curTick := r.currentTick
-		m := &MessageMapUpload{&curTick, mapUploadURL}
-		e := &Envelope{m, MsgidMapUpload, 0}
-		log.Printf("registry: requesting master %d to send map", r.masterID)
-		r.sendMaster(e)
+
+		requestMap := func(r *Registry) {
+			curTick := r.currentTick
+			m := &MessageMapUpload{&curTick, mapUploadURL}
+			e := &Envelope{m, MsgidMapUpload, 0}
+			log.Printf("registry: requesting master %d to send map", r.masterID)
+			r.sendMaster(e)
+			r.clients[id] = inbox
+		}
+
+		r.onNextTick(requestMap)
 	}
 
 	response := newPlayerReply{id: id, master: master, mapDownloadURL: mapDownloadURL, inbox: inbox}
@@ -353,6 +348,18 @@ func (r *Registry) maybeSendConnCounter() {
 	msg := &MessageCurrentConnections{&count}
 	e := &Envelope{msg, MsgidCurrentConnections, 0}
 	r.sendAll(e)
+}
+
+func (r *Registry) onNextTick(callback func(r *Registry)) {
+	r.nextTickCallbacks = append(r.nextTickCallbacks, callback)
+}
+
+func (r *Registry) invokeNextTickCallbacks() {
+	for _, callback := range r.nextTickCallbacks {
+		callback(r)
+	}
+
+	r.nextTickCallbacks = nil
 }
 
 func (r *Registry) handleHash(m *Envelope) bool {
@@ -557,16 +564,7 @@ func (r *Registry) cleanUp() {
 	r.players = make(map[string]PlayerInfo)
 	r.nextID = 1
 	r.clientVersion = ""
-
-	// if there are losers who joined righ before everyone else quit
-	// drop them
-	notify := &Envelope{&ErrmsgServerRestarting{}, MsgidServerRestarting, 0}
-	response := newPlayerReply{errReply: notify}
-	for _, pe := range r.playerRegistrations {
-		pe.response <- response
-	}
-
-	r.playerRegistrations = nil
+	r.nextTickCallbacks = nil
 }
 
 func (r *Registry) getPlayerByID(id int) (PlayerInfo, bool) {
