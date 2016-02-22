@@ -232,6 +232,14 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		info.Login = newGuest(r, m.Login)
 	}
 
+	if len(r.players) == 0 && !info.IsAdmin {
+		// only admins allowed to start a game
+		e := &Envelope{&ErrmsgNoMaster{}, MsgidNoMaster, 0}
+		response := newPlayerReply{errReply: e}
+		newPlayer.response <- response
+		return
+	}
+
 	// look up for existing player avatar for current map
 	if playerInfo, ok := r.players[info.Login]; ok {
 		id = playerInfo.id
