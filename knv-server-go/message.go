@@ -346,14 +346,15 @@ func (m *MessageMouseClick) TypeName() string {
 }
 
 type MessageOOC struct {
-	MessageIDEmbed
-	Login string `json:"login" validate:"nonzero"`
+	Login string `json:"login"`
 	Text  string `json:"text" validate:"nonzero"`
 }
 
 func (m *MessageOOC) TypeName() string {
 	return "MessageOOC"
 }
+
+func (m *MessageOOC) SetID(id int) {}
 
 type MessagePing struct {
 	MessageIDEmbed

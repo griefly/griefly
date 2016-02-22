@@ -174,6 +174,7 @@ func (r *Registry) Run() {
 				continue
 			}
 
+			r.handleOOC(m)
 			r.handleGameMessage(m)
 
 		case now := <-r.ticker.C:
@@ -394,6 +395,24 @@ func (r *Registry) handleRestart(m *Envelope) bool {
 	}
 
 	return true
+}
+
+func (r *Registry) handleOOC(m *Envelope) {
+	if m.Kind != MsgidOOCMessage {
+		return
+	}
+
+	msg := m.Message.(*MessageOOC)
+	info, ok := r.getPlayerByID(m.From)
+	if ok {
+		msg.Login = info.userInfo.Login
+	} else {
+		// wtf
+		log.Printf("registry: failed to get user info for client %d", m.From)
+		msg.Login = "<unknown>"
+	}
+
+	return
 }
 
 func (r *Registry) handleGameMessage(m *Envelope) {
