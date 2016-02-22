@@ -322,14 +322,31 @@ void MainForm::on_lineEdit_returnPressed()
     }
 
     Message2 msg;
-    msg.type = MessageType::MESSAGE;
-    if (ui->lineEdit->text().length() == 0)
+
+    QString text = ui->lineEdit->text();
+    if (text.length() == 0)
     {
         return;
     }
 
     QJsonObject object;
-    object["text"] = ui->lineEdit->text();
+
+    msg.type = MessageType::MESSAGE;
+    if (Chat::IsOOCMessage(text.toStdString()))
+    {
+        msg.type = MessageType::OOC_MESSAGE;
+        object["login"] = "";
+        object["text"] = ui->lineEdit->text().mid(3).trimmed();
+    }
+    else
+    {
+        object["text"] = ui->lineEdit->text();
+    }
+
+    if (object["text"].toString().length() == 0)
+    {
+        return;
+    }
 
     QJsonDocument doc(object);
     msg.json = doc.toJson();

@@ -390,6 +390,15 @@ void Game::ProcessInputMessages()
             current_connections_ = amount_v.toVariant().toInt();
             continue;
         }
+        if (msg.type == MessageType::OOC_MESSAGE)
+        {
+            QJsonObject obj = Network2::ParseJson(msg);
+            QString login = obj["login"].toString();
+            QString text = obj["text"].toString();
+            GetChat().PostOOCText(login.toStdString(), text.toStdString());
+            continue;
+        }
+
         if (msg.type == MessageType::CLIENT_IS_OUT_OF_SYNC)
         {
             GetChat().PostText("The client is out of sync, so the server will drop the connection. Try to reconnect.");
@@ -404,7 +413,7 @@ void Game::ProcessInputMessages()
         {
             GetChat().PostText("The server is near to exit, so it will drop the connection. Try to reconnect.");
             continue;
-        }
+        }  
         if (   msg.type == MessageType::ORDINARY
             || msg.type == MessageType::MOUSE_CLICK
             || msg.type == MessageType::MESSAGE)

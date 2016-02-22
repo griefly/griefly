@@ -32,6 +32,7 @@ namespace MessageType
     const int MESSAGE = 1002;
 
     const int MOUSE_CLICK = 1004;
+    const int OOC_MESSAGE = 1005;
 
     //const int HASH = 1101;
     const int PING = 1102;

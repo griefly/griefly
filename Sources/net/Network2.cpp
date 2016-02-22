@@ -409,6 +409,10 @@ void SocketHandler::handleFirstMessage()
         qDebug() << m.json;
         HandleSuccessConnection(m);
         break;
+    case MessageType::MASTER_CLIENT_IS_NOT_CONNECTED:
+        qDebug() << "Master client is not connected";
+        possible_error_reason_ = "Master client is not connected";
+        break;
     default:
         qDebug() << "Unknown message type: " << m.type;
         qDebug() << m.json;

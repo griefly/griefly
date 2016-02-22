@@ -140,3 +140,6 @@ Saves
 /Exec/Launcher.exe
 /Exec/Launcher
 /knv-server-go/dumps
+/knv-server-go/db-local
+/knv-server-go/server_starter.bat
+/knv-server-go/server_starter.bat - Shortcut.lnk

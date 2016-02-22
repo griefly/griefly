@@ -110,11 +110,11 @@ void Human::processGUImsg(const Message2 &msg)
     {
         std::string text = obj["text"].toString().toStdString();
         //GetChat().PostText(name + ": " + msg.text + "\n");
-        if (Chat::IsOOCMessage(text))
+       /* if (Chat::IsOOCMessage(text))
         {
             GetChat().PostOOCText(name, text.substr(3));
-        }
-        else
+        }*/
+        //else
         {
             GetChat().PostWords(name, text, owner.ret_id());
         }

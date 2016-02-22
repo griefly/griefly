@@ -112,11 +112,11 @@ void LoginMob::processGUImsg(const Message2& msg)
     }
     if (msg.type == MessageType::MESSAGE)
     {
-        std::string text = obj["text"].toString().toStdString();
+        /*std::string text = obj["text"].toString().toStdString();
         if (Chat::IsOOCMessage(text))
         {
             GetChat().PostOOCText(name, text.substr(3));
-        }
+        }*/
     }
 }
 
