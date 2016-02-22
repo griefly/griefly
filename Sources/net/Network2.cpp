@@ -413,6 +413,10 @@ void SocketHandler::handleFirstMessage()
         qDebug() << "Master client is not connected";
         possible_error_reason_ = "Master client is not connected";
         break;
+    case MessageType::INTERNAL_SERVER_ERROR:
+        qDebug() << "The server experiences some internal troubles";
+        possible_error_reason_ = "The server experiences some internal troubles: " + m.json;
+        break;
     default:
         qDebug() << "Unknown message type: " << m.type;
         qDebug() << m.json;

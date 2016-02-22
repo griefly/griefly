@@ -409,6 +409,11 @@ void Game::ProcessInputMessages()
             GetChat().PostText("The client is too slow, so the server will drop the connection. Try to reconnect.");
             continue;
         }
+        if (msg.type == MessageType::SERVER_IS_RESTARTING)
+        {
+            GetChat().PostText("The server is restarting, so the connection will be dropped. Try to reconnect.");
+            continue;
+        }
         if (msg.type == MessageType::EXIT_SERVER)
         {
             GetChat().PostText("The server is near to exit, so it will drop the connection. Try to reconnect.");

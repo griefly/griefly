@@ -320,7 +320,15 @@ void MainForm::on_lineEdit_returnPressed()
         emit generateUnsync();
         return;
     }
-
+    if (ui->lineEdit->text() == "/restart_round")
+    {
+        qDebug() << "Restart round message will be sended to the server...";
+        ui->lineEdit->clear();
+        Message2 msg;
+        msg.type = MessageType::RESTART_ROUND;
+        Network2::GetInstance().SendMsg(msg);
+        return;
+    }
     Message2 msg;
 
     QString text = ui->lineEdit->text();

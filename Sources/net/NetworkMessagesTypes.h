@@ -18,6 +18,8 @@ namespace MessageType
     const int MASTER_CLIENT_IS_NOT_CONNECTED = 405;
     const int CLIENT_IS_OUT_OF_SYNC = 406;
     const int CLIENT_TOO_SLOW = 407;
+    const int INTERNAL_SERVER_ERROR = 408;
+    const int SERVER_IS_RESTARTING = 409;
 
     // NON ERROR MESSAGES:
     const int SUCCESS_CONNECTION = 201;
