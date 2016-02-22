@@ -72,9 +72,10 @@ type RegistryConfig struct {
 }
 
 type Registry struct {
-	nextID  int
-	clients map[int]chan *Envelope
-	players map[string]PlayerInfo
+	nextID              int
+	clients             map[int]chan *Envelope
+	players             map[string]PlayerInfo
+	playerRegistrations []PlayerEnvelope
 
 	masterID      int
 	clientVersion string
@@ -98,7 +99,7 @@ type Registry struct {
 
 func newRegistry(as *AssetServer, config *RegistryConfig, db DB) *Registry {
 	return &Registry{1, make(map[int]chan *Envelope, RegistryQueueLength), make(map[string]PlayerInfo),
-		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan playerDrop),
+		nil, -1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan playerDrop),
 		make(map[int]*hashCheck), 0, make(chan *Envelope), nil, as, nil, db, config}
 }
 
@@ -182,10 +183,11 @@ func (r *Registry) Run() {
 			r.checkForHashStart(now)
 			r.checkHashes(now)
 			r.maybeSendConnCounter()
+			r.registerPostponedPlayers()
 
 		case newPlayer := <-r.newPlayers:
 			r.checkForNewGame()
-			r.registerPlayer(newPlayer)
+			r.postponeRegisterPlayer(newPlayer)
 
 		case info := <-r.droppedPlayers:
 			r.removePlayer(info.id, info.reason)
@@ -205,6 +207,18 @@ func (r *Registry) checkForNewGame() {
 	r.currentTick = 0
 	sessionID := time.Now().Format(SessionDirTimeFormat)
 	r.dumper = NewDumpWriter(r.config.DumpRoot, sessionID)
+}
+
+func (r *Registry) postponeRegisterPlayer(pe PlayerEnvelope) {
+	r.playerRegistrations = append(r.playerRegistrations, pe)
+}
+
+func (r *Registry) registerPostponedPlayers() {
+	for _, pe := range r.playerRegistrations {
+		r.registerPlayer(pe)
+	}
+
+	r.playerRegistrations = nil
 }
 
 func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
@@ -543,6 +557,16 @@ func (r *Registry) cleanUp() {
 	r.players = make(map[string]PlayerInfo)
 	r.nextID = 1
 	r.clientVersion = ""
+
+	// if there are losers who joined righ before everyone else quit
+	// drop them
+	notify := &Envelope{&ErrmsgServerRestarting{}, MsgidServerRestarting, 0}
+	response := newPlayerReply{errReply: notify}
+	for _, pe := range r.playerRegistrations {
+		pe.response <- response
+	}
+
+	r.playerRegistrations = nil
 }
 
 func (r *Registry) getPlayerByID(id int) (PlayerInfo, bool) {
