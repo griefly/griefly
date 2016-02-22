@@ -293,6 +293,11 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		_, mapUploadURL, mapDownloadURL = r.assetServer.MakePipe()
 
 		requestMap := func(r *Registry) {
+			if _, ok := r.players[info.Login]; !ok {
+				close(inbox)
+				return
+			}
+
 			curTick := r.currentTick
 			m := &MessageMapUpload{&curTick, mapUploadURL}
 			e := &Envelope{m, MsgidMapUpload, 0}
@@ -564,7 +569,6 @@ func (r *Registry) cleanUp() {
 	r.players = make(map[string]PlayerInfo)
 	r.nextID = 1
 	r.clientVersion = ""
-	r.nextTickCallbacks = nil
 }
 
 func (r *Registry) getPlayerByID(id int) (PlayerInfo, bool) {
