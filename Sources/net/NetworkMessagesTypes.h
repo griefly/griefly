@@ -24,7 +24,7 @@ namespace MessageType
     const int MAP_UPLOAD = 202;
     const int NEW_TICK = 203;
     const int NEW_CLIENT = 204;
-
+    const int CURRENT_CONNECTIONS = 205;
     const int REQUEST_HASH = 206;
 
     // GAME MESSAGES

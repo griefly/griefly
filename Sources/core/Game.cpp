@@ -56,6 +56,8 @@ Game::Game()
 
     is_end_process_ = false;
 
+    current_connections_ = 0;
+
     this->moveToThread(&thread_);
     connect(&thread_, &QThread::started, this, &Game::process);
 }
@@ -253,6 +255,14 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     });
 
+    GetTexts()["AmountConnections"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Players: " << current_connections_;
+        *str = ss.str();
+    });
+
     GetTexts()["PingTimer"].SetUpdater
     ([&](std::string* str)
     {
@@ -373,7 +383,13 @@ void Game::ProcessInputMessages()
             ping_send_is_requested_ = true;
             continue;
         }
-
+        if (msg.type == MessageType::CURRENT_CONNECTIONS)
+        {
+            QJsonObject obj = Network2::ParseJson(msg);
+            QJsonValue amount_v = obj["amount"];
+            current_connections_ = amount_v.toVariant().toInt();
+            continue;
+        }
         if (msg.type == MessageType::CLIENT_IS_OUT_OF_SYNC)
         {
             GetChat().PostText("The client is out of sync, so the server will drop the connection. Try to reconnect.");

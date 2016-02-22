@@ -61,6 +61,8 @@ private:
     size_t creator_;
     bool auto_player_;
 
+    int current_connections_;
+
     QThread thread_;
 };
 
