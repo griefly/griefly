@@ -27,6 +27,7 @@
 #include <QJsonDocument>
 #include <QTime>
 #include <QTextBlock>
+#include <QMessageBox>
 
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
@@ -86,7 +87,7 @@ MainForm::MainForm(QWidget *parent) :
         activeTimer->start();
     }
 
-    //addSystemText("Welcome", "Welcome to the Griefly!");
+    map_sending_ = true;
 }
 
 void MainForm::setFocusOnLineEdit()
@@ -262,6 +263,24 @@ void MainForm::playMusic(QString name, float volume)
 void MainForm::oocPrefixToLineEdit()
 {
     ui->lineEdit->setText("OOC ");
+}
+
+void MainForm::closeEvent(QCloseEvent* event)
+{
+    if (map_sending_)
+    {
+        QMessageBox::StandardButton answer
+                = QMessageBox::question(
+                    this, "Griefly", "Are you sure?",
+                    QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+                    QMessageBox::No);
+        if (answer != QMessageBox::Yes)
+        {
+            event->ignore();
+            return;
+        }
+    }
+    event->accept();
 }
 
 void MainForm::ConnectToHost()

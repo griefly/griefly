@@ -30,6 +30,7 @@ public slots:
 
     void oocPrefixToLineEdit();
 protected:
+    void closeEvent(QCloseEvent* event);
     void resizeEvent(QResizeEvent* event);
 private slots:
     void setFocusOnLineEdit();
@@ -43,6 +44,8 @@ signals:
     void closing();
     void generateUnsync();
 private:
+    bool map_sending_;
+
     void RemoveFirstBlockFromTextEditor();
 
     void ConnectToHost();
