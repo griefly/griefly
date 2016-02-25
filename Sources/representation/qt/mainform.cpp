@@ -70,7 +70,8 @@ MainForm::MainForm(QWidget *parent) :
     connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
     connect(&Network2::GetInstance(), &Network2::connectionFailed, this, &MainForm::connectionFailed);
 
-
+    connect (&Network2::GetInstance(), &Network2::mapSendingStarted, this, &MainForm::uploadStarted);
+    connect (&Network2::GetInstance(), &Network2::mapSendingFinished, this, &MainForm::uploadFinished);
 
     connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
     connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);
@@ -87,7 +88,7 @@ MainForm::MainForm(QWidget *parent) :
         activeTimer->start();
     }
 
-    map_sending_ = true;
+    map_sending_ = false;
 }
 
 void MainForm::setFocusOnLineEdit()
@@ -263,6 +264,16 @@ void MainForm::playMusic(QString name, float volume)
 void MainForm::oocPrefixToLineEdit()
 {
     ui->lineEdit->setText("OOC ");
+}
+
+void MainForm::uploadStarted()
+{
+    map_sending_ = true;
+}
+
+void MainForm::uploadFinished()
+{
+    map_sending_ = false;
 }
 
 void MainForm::closeEvent(QCloseEvent* event)

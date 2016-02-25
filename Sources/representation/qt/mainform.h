@@ -30,6 +30,9 @@ public slots:
     void playMusic(QString name, float volume);
 
     void oocPrefixToLineEdit();
+
+    void uploadStarted();
+    void uploadFinished();
 protected:
     void closeEvent(QCloseEvent* event);
     void resizeEvent(QResizeEvent* event);

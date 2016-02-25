@@ -39,7 +39,7 @@ public slots:
 
     // God Bless The Mark
     void generateUnsync();
-signals:
+signals:    
     void sendMap(QString url, QByteArray data);
     void addSystemText(QString key, QString text);
     void insertHtmlIntoChat(QString html);

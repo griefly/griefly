@@ -61,6 +61,7 @@ void Network2::sendMap(QString url, QByteArray data)
     request.setHeader(QNetworkRequest::ContentLengthHeader, data.length());
     request.setHeader(QNetworkRequest::ContentTypeHeader, type_header);
 
+    emit mapSendingStarted();
     net_manager_->post(request, data);
 
     qDebug() << "Map has been sended to " << url << ", length: " << data.length();
@@ -161,6 +162,7 @@ void Network2::mapDownloaded(QNetworkReply* reply)
 {
     if (reply->request().url() != map_url_)
     {
+        emit mapSendingFinished();
         qDebug() << "End map upload";
         return;
     }

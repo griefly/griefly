@@ -120,6 +120,8 @@ public slots:
     void sendMap(QString url, QByteArray data);
     void onConnectionEnd(QString reason);
 signals:
+    void mapSendingStarted();
+    void mapSendingFinished();
     void connectRequested(QString host, int port, QString login, QString password);
     void sendMessage(Message2 message);
     void disconnectRequested();
