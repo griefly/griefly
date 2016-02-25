@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <QMap>
 #include <QVector>
+#include <QElapsedTimer>
 
 namespace Ui {
 class MainForm;
@@ -44,6 +45,7 @@ signals:
     void closing();
     void generateUnsync();
 private:
+    QElapsedTimer close_request_timer_;
     bool map_sending_;
 
     void RemoveFirstBlockFromTextEditor();

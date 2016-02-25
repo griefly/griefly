@@ -267,13 +267,26 @@ void MainForm::oocPrefixToLineEdit()
 
 void MainForm::closeEvent(QCloseEvent* event)
 {
+    const int WAIT_MAP_SENDING = 10 * 1000;
     if (map_sending_)
     {
-        QMessageBox::StandardButton answer
-                = QMessageBox::question(
-                    this, "Griefly", "Are you sure?",
-                    QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
-                    QMessageBox::No);
+        if (!close_request_timer_.isValid())
+        {
+            close_request_timer_.start();
+        }
+        QMessageBox::StandardButton answer;
+        if (close_request_timer_.elapsed() < WAIT_MAP_SENDING)
+        {
+            answer = QMessageBox::information(
+                this, "Griefly", "Wait a little bit (about 10 seconds)...");
+        }
+        else
+        {
+            answer = QMessageBox::question(
+                this, "Griefly", "Are you sure? Something still in the process...",
+                QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+                QMessageBox::No);
+        }
         if (answer != QMessageBox::Yes)
         {
             event->ignore();
