@@ -52,6 +52,9 @@ private:
     float cpu_load_;
     std::string last_touch_;
 
+    std::vector<Message2> messages_to_process_;
+    void ProcessBroadcastedMessages();
+
     QString ping_id_;
     int ping_send_time_;
     int current_ping_;
