@@ -186,7 +186,6 @@ func (r *Registry) Run() {
 			r.invokeNextTickCallbacks()
 
 		case newPlayer := <-r.newPlayers:
-			r.checkForNewGame()
 			r.registerPlayer(newPlayer)
 
 		case info := <-r.droppedPlayers:
@@ -242,6 +241,8 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		newPlayer.response <- response
 		return
 	}
+
+	r.checkForNewGame()
 
 	// look up for existing player avatar for current map
 	if playerInfo, ok := r.players[info.Login]; ok {
