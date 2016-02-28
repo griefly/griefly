@@ -311,6 +311,7 @@ void Game::ProcessInputMessages()
         }
         if (msg.type == MessageType::MAP_UPLOAD)
         {
+            CheckMessagesOrderCorrectness();
             QElapsedTimer timer;
             timer.start();
             QJsonObject obj = Network2::ParseJson(msg);
@@ -341,6 +342,7 @@ void Game::ProcessInputMessages()
 
         if (msg.type == MessageType::REQUEST_HASH)
         {
+            CheckMessagesOrderCorrectness();
             //qDebug() << "Hash: " << msg.json;
             QJsonObject obj = Network2::ParseJson(msg);
 
@@ -505,6 +507,15 @@ void Game::ProcessBroadcastedMessages()
          }
     }
     messages_to_process_.clear();
+}
+
+void Game::CheckMessagesOrderCorrectness()
+{
+    if (!messages_to_process_.empty())
+    {
+        qDebug() << "CheckMessagesOrderCorrectness fail";
+        abort();
+    }
 }
 
 bool Game::IsMobVisible(int posx, int posy)

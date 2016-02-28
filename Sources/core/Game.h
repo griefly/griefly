@@ -54,6 +54,8 @@ private:
 
     std::vector<Message2> messages_to_process_;
     void ProcessBroadcastedMessages();
+    void CheckMessagesOrderCorrectness();
+    //bool hash_
 
     QString ping_id_;
     int ping_send_time_;
