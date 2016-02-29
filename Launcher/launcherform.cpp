@@ -148,10 +148,13 @@ void LauncherForm::on_connectPushButton_clicked()
     args.push_back("mapgen_name=brig_small.gen");
     args.push_back("-autogen_reports");
 
+    QString custom_args = ui->customArgsLineEdit->text();
+    args.append(custom_args.split(" "));
+
     hide();
     ui->connectPushButton->setEnabled(false);
 
-    QString TARGET_NAME = "KVEngine";
+    const QString TARGET_NAME = "KVEngine";
 
     // The binary does not have .exe extension on Linux
 
