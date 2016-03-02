@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "core/Map.h"
-#include "Debug.h"
 #include "Params.h"
 #include "core/Game.h"
 #include "net/MagicStrings.h"
@@ -143,11 +142,6 @@ void MainForm::startGameLoop(int id, QString map)
     if (GetParamsHolder().GetParamBool("-nodraw"))
     {
         NODRAW = true;
-    }
-
-    if (GetParamsHolder().GetParamBool("name"))
-    {
-        Debug::SetUniqueName(GetParamsHolder().GetParam<std::string>("name"));
     }
 
     SetRepresentation(new Representation);

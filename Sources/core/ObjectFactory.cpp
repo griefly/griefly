@@ -9,8 +9,6 @@
 #include "net/MagicStrings.h"
 #include "net/NetworkMessagesTypes.h"
 
-#include "Debug.h"
-
 ObjectFactory::ObjectFactory()
 {
     objects_table_.resize(100);

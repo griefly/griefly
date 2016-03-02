@@ -15,8 +15,6 @@
 
 #include "qt/qtopengl.h"
 
-#include "Debug.h"
-
 #include <QMutexLocker>
 #include <QCoreApplication>
 
@@ -130,11 +128,6 @@ void Representation::HandleKeyboardDown(QKeyEvent* event)
     else if ((!event && (val % 100 == 12)) || (event && event->key() == Qt::Key_R))
     {
         text = Input::KEY_R;
-    }
-    else if (/* NO! */ (event && event->key() == Qt::Key_F3))
-    {
-        Debug::UnsyncDebug().GenerateAndSaveReport();
-        return;
     }
     else if (event && event->key() == Qt::Key_QuoteLeft)
     {
