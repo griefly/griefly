@@ -59,6 +59,8 @@ public:
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);
 private:
+    bool autoplay_;
+
     QMutex mutex_;
 
     void HandleInput();

@@ -160,11 +160,6 @@ void MainForm::startGameLoop(int id, QString map)
     connect(this, &MainForm::closing, game, &Game::endProcess);
     connect(this, &MainForm::generateUnsync, game, &Game::generateUnsync);
 
-    /*if (GetParamsHolder().GetParamBool("-auto"))
-    {
-        man.ToogleAutoplay();
-    }*/
-
     QTime fps_timer;
     fps_timer.start();
     int fps_counter = 0;

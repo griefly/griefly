@@ -6,6 +6,7 @@
 #include "Sound.h"
 #include "net/Network2.h"
 #include "net/MagicStrings.h"
+#include "Params.h"
 
 #include "Text.h"
 #include "SpriteHolder.h"
@@ -25,6 +26,12 @@ Representation::Representation()
     is_updated_ = false;
     current_frame_id_ = 1;
     pixel_movement_tick_ = SDL_GetTicks();
+
+    autoplay_ = false;
+    if (GetParamsHolder().GetParamBool("-auto"))
+    {
+        autoplay_ = true;
+    }
 
     if (!InitSDL())
     {
@@ -169,7 +176,7 @@ void Representation::HandleInput()
 {
     QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
 
-    if (true/*TODO!auto_player_*/)
+    if (!autoplay_)
     {
         return;
     }
@@ -179,11 +186,11 @@ void Representation::HandleInput()
 
     if (rand() % 5 == 1)
     {
-    //    ProcessClick(rand() % w, rand() % h);
+        Click(rand() % w, rand() % h);
     }
     if (rand() % 10 == 1)
     {
-        //HandleKeyboardDown(nullptr);
+        HandleKeyboardDown(nullptr);
     }
 }
 
