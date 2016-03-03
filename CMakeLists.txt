@@ -155,4 +155,35 @@ ELSE()
 
 ENDIF()
 
-#INSTALL(TARGETS KVEngine RUNTIME DESTINATION C:/Users/my/Documents/Qt/KVEngineQt/Exec)
+IF(WIN32)
+    SET(EXECUTABLE_SUFFIX ".exe")
+ELSE()
+    SET(EXECUTABLE_SUFFIX "")
+ENDIF()
+
+ADD_CUSTOM_COMMAND(
+    TARGET KVEngine
+    COMMAND
+        ${PYTHON_CMD}
+        ${CMAKE_CURRENT_SOURCE_DIR}/copy_file.py
+        KVEngine${EXECUTABLE_SUFFIX}
+        ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/KVEngine${EXECUTABLE_SUFFIX}
+)
+ADD_CUSTOM_COMMAND(
+    TARGET KVEngine
+    COMMAND
+        ${PYTHON_CMD}
+        ${CMAKE_CURRENT_SOURCE_DIR}/copy_file.py
+        metadata.json
+        ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/metadata.json
+)
+ADD_CUSTOM_COMMAND(
+    TARGET Launcher
+    COMMAND
+        ${PYTHON_CMD}
+        ${CMAKE_CURRENT_SOURCE_DIR}/copy_file.py
+        Launcher${EXECUTABLE_SUFFIX}
+        ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/Launcher${EXECUTABLE_SUFFIX}
+)
+
+
