@@ -223,16 +223,16 @@ void HumanInterface::HandleClick(const std::string& place)
     }
     else if (place == HumanInterfacePlaces::DROP)
     {
-        qDebug() << "Drop";
+        //qDebug() << "Drop";
         qDebug() << owner_.ret_id();
         qDebug() << owner_->GetOwner().ret_id();
         if (GetActiveHand().Get())
         {
-            qDebug() << "Begin add item";
+            //qDebug() << "Begin add item";
             owner_->GetOwner()->AddItem(GetActiveHand().Get());
-            qDebug() << "End add item";
+            //qDebug() << "End add item";
             Drop();
-            qDebug() << "End drop item";
+            //qDebug() << "End drop item";
         }
     }
     else if (place == HumanInterfacePlaces::LAY)

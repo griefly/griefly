@@ -207,7 +207,7 @@ void Game::InitWorld(int id, std::string map_name)
         }
         else
         {
-            // TODO: do smth
+            qDebug() << "No mapgen param";
             return;
         }
     }
