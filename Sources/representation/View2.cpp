@@ -63,7 +63,7 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
         return true;
     }
 
-    qDebug() << "Frameset: " << x << ", " << y;
+    //qDebug() << "Frameset: " << x << ", " << y;
 
     int current_frame = GetMetadata()->frames_sequence[image_state_];
     int current_frame_pos = GetMetadata()->first_frame_pos + current_frame * GetMetadata()->dirs + shift;

@@ -31,6 +31,7 @@ Representation::Representation()
     if (GetParamsHolder().GetParamBool("-auto"))
     {
         autoplay_ = true;
+        autoplay_timer_.start();
     }
 
     if (!InitSDL())
@@ -175,23 +176,6 @@ void Representation::HandleKeyboardUp(QKeyEvent *event)
 void Representation::HandleInput()
 {
     QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
-
-    if (!autoplay_)
-    {
-        return;
-    }
-
-    int w = GetGLWidget()->width();
-    int h = GetGLWidget()->height();
-
-    if (rand() % 5 == 1)
-    {
-        Click(rand() % w, rand() % h);
-    }
-    if (rand() % 10 == 1)
-    {
-        HandleKeyboardDown(nullptr);
-    }
 }
 
 Representation::Entity::Entity()
@@ -217,6 +201,22 @@ void Representation::Process()
     SynchronizeViews();
 
     HandleInput();
+    const int AUTOPLAY_INTERVAL = 10;
+    if (autoplay_ && (autoplay_timer_.elapsed() > AUTOPLAY_INTERVAL))
+    {
+        int w = GetGLWidget()->width();
+        int h = GetGLWidget()->height();
+
+        if (rand() % 1 == 0)
+        {
+            Click(rand() % w, rand() % h);
+        }
+        if (rand() % 1 == 0)
+        {
+            HandleKeyboardDown(nullptr);
+        }
+        autoplay_timer_.restart();
+    }
 
     if (!NODRAW)
     {
@@ -248,8 +248,8 @@ void Representation::Click(int x, int y)
     helpers::normalize_pixels(&x, &y);
     int s_x = x - camera_.GetFullShiftX();
     int s_y = y - camera_.GetFullShiftY();
-    qDebug() << "S_X: " << s_x << ", S_Y: " <<  s_y;
-    qDebug() << "X: " << x << ", Y: " <<  y;
+    //qDebug() << "S_X: " << s_x << ", S_Y: " <<  s_y;
+    //qDebug() << "X: " << x << ", Y: " <<  y;
 
     auto& units = current_frame_->units;
 
@@ -259,7 +259,7 @@ void Representation::Click(int x, int y)
         int bdir = units[i].shift;
         if (!interface_views_[i].IsTransp(x, y, bdir))
         {
-            qDebug() << "Clicked " << QString::fromStdString(units[i].name);
+            //qDebug() << "Clicked " << QString::fromStdString(units[i].name);
             Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(units[i].name));
             return;
         }
@@ -276,7 +276,7 @@ void Representation::Click(int x, int y)
             int bdir = helpers::dir_to_byond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                qDebug() << "Clicked " << it->id;
+                //qDebug() << "Clicked " << it->id;
                 id_to_send = it->id;
                 break;
             }
@@ -294,7 +294,7 @@ void Representation::Click(int x, int y)
             int bdir = helpers::dir_to_byond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                qDebug() << "Clicked " << it->id;
+                //qDebug() << "Clicked " << it->id;
                 id_to_send = it->id;
                 break;
             }

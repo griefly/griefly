@@ -8,6 +8,7 @@
 
 #include <QMutex>
 #include <QKeyEvent>
+#include <QElapsedTimer>
 
 const char* const STOP_MUSIC = "^";
 
@@ -59,6 +60,7 @@ public:
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);
 private:
+    QElapsedTimer autoplay_timer_;
     bool autoplay_;
 
     QMutex mutex_;
