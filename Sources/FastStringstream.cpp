@@ -4,13 +4,13 @@
 
 FastStringstream::FastStringstream(int buffer_size)
 {
-    buffer_ = new char[buffer_size];
+    //buffer_ = new char[buffer_size];
     //stream_.rdbuf()->pubsetbuf(buffer_, buffer_size);
 }
 
 FastStringstream::~FastStringstream()
 {
-    delete[] buffer_;
+    //delete[] buffer_;
 }
 
 void FastStringstream::Reset()
