@@ -204,16 +204,20 @@ void Representation::Process()
     const int AUTOPLAY_INTERVAL = 10;
     if (autoplay_ && (autoplay_timer_.elapsed() > AUTOPLAY_INTERVAL))
     {
-        int w = GetGLWidget()->width();
-        int h = GetGLWidget()->height();
+        int loops = autoplay_timer_.elapsed() / AUTOPLAY_INTERVAL;
+        for (int i = 0; i < loops; ++i)
+        {
+            int w = GetGLWidget()->width();
+            int h = GetGLWidget()->height();
 
-        if (rand() % 1 == 0)
-        {
-            Click(rand() % w, rand() % h);
-        }
-        if (rand() % 1 == 0)
-        {
-            HandleKeyboardDown(nullptr);
+            if (rand() % 1 == 0)
+            {
+                Click(rand() % w, rand() % h);
+            }
+            if (rand() % 1 == 0)
+            {
+                HandleKeyboardDown(nullptr);
+            }
         }
         autoplay_timer_.restart();
     }
