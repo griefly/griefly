@@ -288,6 +288,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 		r.masterID = id
 		master = true
 		r.clients[id] = inbox
+		log.Printf("registry: we have new master %d", id)
 	} else {
 		// postpone map request until new tick
 		var mapUploadURL string
@@ -315,9 +316,16 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 }
 
 func (r *Registry) removePlayer(id int, reason *Envelope) {
+	if reason != nil {
+		log.Printf("registry: removing client %d with message: %s", id, reason.TypeName())
+	} else {
+		log.Printf("registry: removing client %d", id)
+	}
+
 	inbox, ok := r.clients[id]
 	if !ok {
 		// already deleted
+		log.Printf("registry: client %d already removed", id)
 		return
 	}
 
@@ -332,8 +340,9 @@ func (r *Registry) removePlayer(id int, reason *Envelope) {
 	// if we deleted master, reelect new one
 	if r.masterID == id {
 		r.masterID = -1
-		for id := range r.clients {
-			r.masterID = id
+		for cid := range r.clients {
+			r.masterID = cid
+			log.Printf("registry: switching master %d -> %d", id, cid)
 			break
 		}
 	}
