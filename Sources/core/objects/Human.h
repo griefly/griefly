@@ -38,6 +38,8 @@ public:
 
     int GetHealth() { return health_; }
 protected:
+    int KV_SAVEBLE(attack_cooldown_);
+
     HumanInterface KV_SAVEBLE(interface_);
 
     int KV_SAVEBLE(lay_timer_);

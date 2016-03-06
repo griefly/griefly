@@ -164,6 +164,7 @@ void Network2::mapDownloaded(QNetworkReply* reply)
     {
         emit mapSendingFinished();
         qDebug() << "End map upload";
+        reply->deleteLater();
         return;
     }
 

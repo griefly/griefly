@@ -27,6 +27,7 @@ Human::Human(size_t id) : IMob(id)
     SetPassable(D_ALL, Passable::BIG_ITEM);
     v_level = 9;
     is_strong_owner = true;
+    attack_cooldown_ = 0;
     name = GetMaleName();
   //  name = "Yes, it is human.";
     interface_.InitSlots();
@@ -109,18 +110,16 @@ void Human::processGUImsg(const Message2 &msg)
     if (msg.type == MessageType::MESSAGE)
     {
         std::string text = obj["text"].toString().toStdString();
-        //GetChat().PostText(name + ": " + msg.text + "\n");
-       /* if (Chat::IsOOCMessage(text))
-        {
-            GetChat().PostOOCText(name, text.substr(3));
-        }*/
-        //else
-        {
-            GetChat().PostWords(name, text, owner.ret_id());
-        }
+        GetChat().PostWords(name, text, owner.ret_id());
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
+        const int ATTACK_CD = 10;
+        if ((MAIN_TICK - attack_cooldown_) < ATTACK_CD)
+        {
+            return;
+        }
+        attack_cooldown_ = MAIN_TICK;
         id_ptr_on<IOnMapObject> item = Network2::ExtractObjId(obj);
         if (item && item->GetOwner())
         {
