@@ -425,26 +425,6 @@ void Game::ProcessInputMessages()
             || msg.type == MessageType::MOUSE_CLICK
             || msg.type == MessageType::MESSAGE)
         {
-           /* QJsonObject obj = Network2::ParseJson(msg);
-            QJsonValue v = obj["id"];
-            int net_id = v.toVariant().toInt();
-            size_t game_id = GetFactory().GetPlayerId(net_id);
-            if (game_id == 0)
-            {
-                qDebug() << "Game id is 0";
-            }
-            id_ptr_on<IMessageReceiver> game_object = game_id;
-
-            if (game_object.valid())
-            {
-                game_object->processGUImsg(msg);
-            }
-            else
-            {
-                qDebug() << "Game object is not valid: " << net_id;
-                abort();
-            }
-            continue;*/
             messages_to_process_.push_back(msg);
             continue;
         }

@@ -224,8 +224,8 @@ void HumanInterface::HandleClick(const std::string& place)
     else if (place == HumanInterfacePlaces::DROP)
     {
         //qDebug() << "Drop";
-        qDebug() << owner_.ret_id();
-        qDebug() << owner_->GetOwner().ret_id();
+        //qDebug() << owner_.ret_id();
+        //qDebug() << owner_->GetOwner().ret_id();
         if (GetActiveHand().Get())
         {
             //qDebug() << "Begin add item";

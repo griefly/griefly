@@ -9,6 +9,7 @@
 #include <QJsonValueRef>
 #include <QVariant>
 #include <QUrl>
+#include <QElapsedTimer>
 
 #include <QCoreApplication>
 
@@ -234,7 +235,19 @@ void SocketHandler::process()
 
 void SocketHandler::handleNewData()
 {
-    //qDebug() << "handleNewData()";
+    static int nsec_amount = 0;
+    static QElapsedTimer timer;
+    if (!timer.isValid())
+    {
+        timer.start();
+    }
+    if (timer.elapsed() > 100)
+    {
+        qDebug() << "handleNewData takes: " << nsec_amount / 1000000.0;
+        timer.restart();
+        nsec_amount = 0;
+    }
+    int local = timer.nsecsElapsed();
 
     QByteArray new_data = socket_.readAll();
 
@@ -248,6 +261,13 @@ void SocketHandler::handleNewData()
     case ReadingState::BODY:
         HandleBody();
         break;
+    }
+
+    int this_cycle = timer.nsecsElapsed() - local;
+    nsec_amount += this_cycle;
+    if (this_cycle > 1000000)
+    {
+        //qDebug() << "handleNewData takes: " << nsec_amount / 1000000.0;
     }
 }
 
@@ -445,9 +465,30 @@ void SocketHandler::HandleSuccessConnection(Message2 message)
 
 void SocketHandler::SendData(const QByteArray &data)
 {
+    static int nsec_amount = 0;
+    static QElapsedTimer timer;
+    if (!timer.isValid())
+    {
+        timer.start();
+    }
+    if (timer.elapsed() > 100)
+    {
+        //qDebug() << "SendData takes: " << nsec_amount / 1000000.0;
+        timer.restart();
+        nsec_amount = 0;
+    }
+
+    int local = timer.nsecsElapsed();
     int counter = 0;
     while (counter != data.length() && socket_.isValid())
     {
         counter += socket_.write(data.data() + counter, data.length() - counter);
+    }
+    int this_cycle = timer.nsecsElapsed() - local;
+    nsec_amount += this_cycle;
+    if (this_cycle > 1000000)
+    {
+        qDebug() << "SendData takes: " << nsec_amount / 1000000.0;
+        qDebug() << data.length();
     }
 }

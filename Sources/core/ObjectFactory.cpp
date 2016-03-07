@@ -17,35 +17,6 @@ ObjectFactory::ObjectFactory()
 
 }
 
-/*void ObjectFactory::Sync()
-{
-    if (MAIN_TICK % HASH_OFTEN == 0)
-    {
-        hash_last_ = Hash();
-
-        //Debug::UnsyncDebug().AddLocalSyncPair(hash_last_, MAIN_TICK);
-
-        //Debug::UnsyncDebug().Save();
-
-        stream_.Reset();
-        SaveMap(*stream_.GetStream());
-        saved_map_ = stream_.GetCurrentData();
-
-        Message2 msg;
-
-        msg.type = MessageType::HASH;
-        msg.json =
-                  "{\"hash\":"
-                + QString::number(hash_last_)
-                + ",\"tick\":"
-                + QString::number(MAIN_TICK)
-                + "}";
-
-        Network2::GetInstance().SendMsg(msg);
-
-    }
-}*/
-
 void ObjectFactory::UpdateProcessingItems()
 {   
     if (!add_to_process_.size())
