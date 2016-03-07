@@ -243,13 +243,15 @@ void SocketHandler::handleNewData()
     }
     if (timer.elapsed() > 100)
     {
-        qDebug() << "handleNewData takes: " << nsec_amount / 1000000.0;
+        //qDebug() << "handleNewData takes: " << nsec_amount / 1000000.0;
         timer.restart();
         nsec_amount = 0;
     }
     int local = timer.nsecsElapsed();
 
     QByteArray new_data = socket_.readAll();
+
+    int read_all_ns = timer.nsecsElapsed();
 
     buffer_.append(new_data);
 
@@ -265,9 +267,11 @@ void SocketHandler::handleNewData()
 
     int this_cycle = timer.nsecsElapsed() - local;
     nsec_amount += this_cycle;
-    if (this_cycle > 1000000)
+    if (this_cycle > 2000000)
     {
-        //qDebug() << "handleNewData takes: " << nsec_amount / 1000000.0;
+        qDebug() << "handleNewData takes: " << nsec_amount / 1000000.0;
+        qDebug() << "readAll takes: " << (read_all_ns - local) / 1000000.0;
+        qDebug() << "New data length: " << new_data.length();
     }
 }
 
