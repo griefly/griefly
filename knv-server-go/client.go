@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	PlayerQueueLength   = 32
+	PlayerQueueLength   = 1024 * 2
 	RegistryQueueLength = 8
 
 	SessionDirTimeFormat = "2006-01-02_15-04-05_07-00"
