@@ -154,11 +154,26 @@ func (r *Registry) sendOne(idx int, m *Envelope) bool {
 	}
 }
 
-func (r *Registry) sendMaster(m *Envelope) {
+func (r *Registry) sendMaster(m *Envelope) bool {
 	if len(r.clients) == 0 {
-		log.Fatal("registry: cannot send to master when there are no clients at all")
+		return false
 	}
-	r.clients[r.masterID] <- m
+
+	for {
+		select {
+		case r.clients[r.masterID] <- m:
+			return true
+		default:
+			// master is too slow, drop him
+			// new master will be chosen in process of removal
+			r.removePlayer(r.masterID, &Envelope{&ErrmsgTooSlow{}, MsgidTooSlow, 0})
+			if r.masterID == -1 {
+				return false
+			}
+		}
+	}
+
+	return false
 }
 
 func (r *Registry) Run() {
@@ -304,8 +319,12 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 			m := &MessageMapUpload{&curTick, mapUploadURL}
 			e := &Envelope{m, MsgidMapUpload, 0}
 			log.Printf("registry: requesting master %d to send map", r.masterID)
-			r.sendMaster(e)
-			r.clients[id] = inbox
+			if r.sendMaster(e) {
+				r.clients[id] = inbox
+			} else {
+				// drop connection
+				close(inbox)
+			}
 		}
 
 		r.onNextTick(requestMap)
@@ -555,6 +574,7 @@ func (r *Registry) dumpPlayerMap(id, tick int, callback func()) {
 	if !r.sendOne(id, msg) {
 		// too slow to live
 		r.removePlayer(id, &Envelope{&ErrmsgTooSlow{}, MsgidTooSlow, 0})
+		return
 	}
 
 	// start dumper
