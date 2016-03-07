@@ -42,10 +42,10 @@ public slots:
     void sendMessage(Message2 message);
     void disconnectSocket();
     void errorSocket(QAbstractSocket::SocketError error);
-    void handleFirstMessage();
+    void handleFirstMessage(Message2 message);
     void handleNewData();
 signals:
-    void firstMessage();
+    void firstMessage(Message2 message);
     void connectionEnd(QString reason);
     void readyToStart(int your_id, QString map);
 private:
@@ -69,6 +69,7 @@ private:
     qint32 message_type_;
 
     QByteArray buffer_;
+    int buffer_pos_;
 
     enum ReadingState
     {
@@ -81,8 +82,8 @@ private:
     };
     NetworkState state_;
 
-    void HandleHeader();
-    void HandleBody();
+    bool HandleHeader();
+    bool HandleBody();
 
     QString possible_error_reason_;
 
@@ -142,6 +143,7 @@ private:
 
     QMutex queue_mutex_;
     QWaitCondition queue_wait_;
+
     QQueue<Message2> received_messages_;
 
     Network2();

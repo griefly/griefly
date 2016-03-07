@@ -69,8 +69,9 @@ MainForm::MainForm(QWidget *parent) :
     connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
     connect(&Network2::GetInstance(), &Network2::connectionFailed, this, &MainForm::connectionFailed);
 
-    connect (&Network2::GetInstance(), &Network2::mapSendingStarted, this, &MainForm::uploadStarted);
-    connect (&Network2::GetInstance(), &Network2::mapSendingFinished, this, &MainForm::uploadFinished);
+    connect(&Network2::GetInstance(), &Network2::mapSendingStarted, this, &MainForm::uploadStarted);
+    connect(&Network2::GetInstance(), &Network2::mapSendingFinished, this, &MainForm::uploadFinished);
+
 
     connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
     connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);

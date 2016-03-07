@@ -133,19 +133,17 @@ bool Network2::IsMessageAvailable()
     return received_messages_.size() > 0;
 }
 
-void Network2::PushMessage(Message2 message)
-{
-    QMutexLocker locker(&queue_mutex_);
-
-    received_messages_.enqueue(message);
-    queue_wait_.wakeOne();
-}
-
 Message2 Network2::PopMessage()
 {
     QMutexLocker locker(&queue_mutex_);
-
     return received_messages_.dequeue();
+}
+
+void Network2::PushMessage(Message2 message)
+{
+    QMutexLocker locker(&queue_mutex_);
+    received_messages_.enqueue(message);
+    queue_wait_.wakeOne();
 }
 
 QByteArray Network2::GetMapData()
@@ -231,104 +229,81 @@ void SocketHandler::process()
 {
     reading_state_ = ReadingState::HEADER;
     is_first_message_ = true;
+    buffer_pos_ = 0;
 }
 
 void SocketHandler::handleNewData()
 {
-    static int nsec_amount = 0;
-    static QElapsedTimer timer;
-    if (!timer.isValid())
-    {
-        timer.start();
-    }
-    if (timer.elapsed() > 100)
-    {
-        //qDebug() << "handleNewData takes: " << nsec_amount / 1000000.0;
-        timer.restart();
-        nsec_amount = 0;
-    }
-    int local = timer.nsecsElapsed();
-
     QByteArray new_data = socket_.readAll();
-
-    int read_all_ns = timer.nsecsElapsed();
-
     buffer_.append(new_data);
 
-    switch (reading_state_)
+    bool is_continue = true;
+    while (is_continue)
     {
-    case ReadingState::HEADER:
-        HandleHeader();
-        break;
-    case ReadingState::BODY:
-        HandleBody();
-        break;
+        switch (reading_state_)
+        {
+        case ReadingState::HEADER:
+            is_continue = HandleHeader();
+            break;
+        case ReadingState::BODY:
+            is_continue = HandleBody();
+            break;
+        }
     }
 
-    int this_cycle = timer.nsecsElapsed() - local;
-    nsec_amount += this_cycle;
-    if (this_cycle > 2000000)
+    const int MAX_BUFFER_SIZE = 1024 * 128;
+    if (buffer_.size() > MAX_BUFFER_SIZE)
     {
-        qDebug() << "handleNewData takes: " << nsec_amount / 1000000.0;
-        qDebug() << "readAll takes: " << (read_all_ns - local) / 1000000.0;
-        qDebug() << "New data length: " << new_data.length();
+        buffer_.remove(0, buffer_pos_);
+        buffer_pos_ = 0;
     }
 }
 
 const int HEADER_SIZE = 8;
 
-void SocketHandler::HandleHeader()
+bool SocketHandler::HandleHeader()
 {
-    if (buffer_.size() < HEADER_SIZE)
+    if (buffer_.size() - buffer_pos_ < HEADER_SIZE)
     {
-        return;
+        return false;
     }
-    QByteArray loc = buffer_.mid(0, 4);
-    message_size_ = qFromBigEndian<qint32>((const uchar*)loc.data());
+    message_size_ = qFromBigEndian<qint32>(
+        (const uchar*)&(buffer_.constData()[buffer_pos_]));
+    message_type_ = qFromBigEndian<qint32>(
+        (const uchar*)&(buffer_.constData()[buffer_pos_ + 4]));
 
-    loc = buffer_.mid(4, 4);
-    message_type_ = qFromBigEndian<qint32>((const uchar*)loc.data());
-
+    buffer_pos_ += 8;
     reading_state_ = ReadingState::BODY;
-    HandleBody();
+    return true;
 }
 
-void SocketHandler::HandleBody()
+bool SocketHandler::HandleBody()
 {
-    if (buffer_.size() < HEADER_SIZE + message_size_)
+    if (buffer_.size() - buffer_pos_ < message_size_)
     {
-        return;
+        return false;
     }
 
     Message2 new_message;
     new_message.type = message_type_;
 
-    QByteArray loc = buffer_.mid(HEADER_SIZE, message_size_);
-    new_message.json = net_codec_->toUnicode(loc);
-
-    //qDebug() << new_message.json;
-
-    network_->PushMessage(new_message);
-
-    if (buffer_.size() == HEADER_SIZE + message_size_)
-    {
-        buffer_.clear();
-    }
-    else
-    {
-        buffer_ = buffer_.mid(HEADER_SIZE + message_size_);
-    }
-
-    reading_state_ = ReadingState::HEADER;
+    new_message.json = net_codec_->toUnicode(
+        (const char*)&(buffer_.constData()[buffer_pos_]),
+        message_size_);
+    buffer_pos_ += message_size_;
 
     if (is_first_message_)
     {
-        qDebug() << "First message";
-        emit firstMessage();
+        emit firstMessage(new_message);
         is_first_message_ = false;
     }
+    else
+    {
+        network_->PushMessage(new_message);
+    }
+    reading_state_ = ReadingState::HEADER;
 
-    HandleHeader();
+    return true;
 }
 
 
@@ -415,10 +390,8 @@ void SocketHandler::errorSocket(QAbstractSocket::SocketError error)
             + possible_error_reason_);
 }
 
-void SocketHandler::handleFirstMessage()
+void SocketHandler::handleFirstMessage(Message2 m)
 {
-    Message2 m = network_->PopMessage();
-
     switch (m.type)
     {
     case MessageType::WRONG_GAME_VERSION:
@@ -469,30 +442,9 @@ void SocketHandler::HandleSuccessConnection(Message2 message)
 
 void SocketHandler::SendData(const QByteArray &data)
 {
-    static int nsec_amount = 0;
-    static QElapsedTimer timer;
-    if (!timer.isValid())
-    {
-        timer.start();
-    }
-    if (timer.elapsed() > 100)
-    {
-        //qDebug() << "SendData takes: " << nsec_amount / 1000000.0;
-        timer.restart();
-        nsec_amount = 0;
-    }
-
-    int local = timer.nsecsElapsed();
     int counter = 0;
     while (counter != data.length() && socket_.isValid())
     {
         counter += socket_.write(data.data() + counter, data.length() - counter);
-    }
-    int this_cycle = timer.nsecsElapsed() - local;
-    nsec_amount += this_cycle;
-    if (this_cycle > 1000000)
-    {
-        qDebug() << "SendData takes: " << nsec_amount / 1000000.0;
-        qDebug() << data.length();
     }
 }
