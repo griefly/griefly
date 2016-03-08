@@ -31,6 +31,15 @@ bool Closet::Contains(id_ptr_on<IOnMapBase> item) const
     return false;
 }
 
+bool Closet::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
+{
+    if (Contains(item))
+    {
+        return true;
+    }
+    return false;
+}
+
 void Closet::AttackBy(id_ptr_on<Item> item)
 {
     if (item)
