@@ -26,7 +26,9 @@ bool Closet::Contains(id_ptr_on<IOnMapBase> item) const
     for (auto it = content_.begin(); it != content_.end(); ++it)
     {
         if (it->ret_id() == item.ret_id())
+        {
             return true;
+        }
     }
     return false;
 }
@@ -43,12 +45,18 @@ bool Closet::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
 void Closet::AttackBy(id_ptr_on<Item> item)
 {
     if (item)
+    {
         return;
+    }
 
     if (open_)
+    {
         Close();
+    }
     else
+    {
         Open();
+    }
 }
 
 void Closet::Bump(id_ptr_on<IMovable> item)
