@@ -11,7 +11,7 @@ import (
 
 const (
 	PlayerQueueLength   = 1024 * 2
-	RegistryQueueLength = 8
+	RegistryQueueLength = 32
 
 	SessionDirTimeFormat = "2006-01-02_15-04-05_07-00"
 )
@@ -98,9 +98,10 @@ type Registry struct {
 }
 
 func newRegistry(as *AssetServer, config *RegistryConfig, db DB) *Registry {
-	return &Registry{1, make(map[int]chan *Envelope, RegistryQueueLength), make(map[string]PlayerInfo),
+	return &Registry{1, make(map[int]chan *Envelope), make(map[string]PlayerInfo),
 		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan playerDrop),
-		make(map[int]*hashCheck), 0, nil, make(chan *Envelope), nil, as, nil, db, config}
+		make(map[int]*hashCheck), 0, nil, make(chan *Envelope, RegistryQueueLength), nil, as, nil,
+		db, config}
 }
 
 // async api

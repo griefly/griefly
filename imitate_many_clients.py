@@ -2,9 +2,11 @@ import subprocess
 import time
 import random
 
-args = ['Exec/KVEngine.exe', '-nodraw', '-auto', '-auto_connect', 'login=Guest']
+TOTAL_BOTS = 20
+
+args = ['./KVEngine', '-nodraw', '-auto', '-auto_connect', 'login=Guest']
 processes = []
-for x in range(0, 5):
+for x in range(0, TOTAL_BOTS):
     p = subprocess.Popen(args, cwd = './Exec')
     processes.append(p)
 #p.kill ()
@@ -22,10 +24,4 @@ while 1:
         else:
             new_processes.append(p)
     processes = new_processes
-    
 
-    
-
-    
-    
-            
