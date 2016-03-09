@@ -25,15 +25,13 @@ def main():
 
     while True:
         time.sleep(5)
-        new_processes = []
         for p in processes[:]:
             if random.randint(0, 10) == 0:
                 p.kill()
                 p.communicate()
-                new_processes.append(subprocess.Popen(args, cwd='./Exec'))
+                processes.append(subprocess.Popen(args, cwd='./Exec'))
             else:
-                new_processes.append(p)
-        processes = new_processes
+                processes.append(p)
 
 
 if __name__ == "__main__":
