@@ -3,7 +3,7 @@ import sys
 import time
 import random
 
-TOTAL_BOTS = 20
+TOTAL_BOTS = 5
 
 def main():
     exe = "Exec/KVEngine.exe"
