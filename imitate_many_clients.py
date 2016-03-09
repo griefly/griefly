@@ -1,27 +1,40 @@
 import subprocess
+import sys
 import time
 import random
 
 TOTAL_BOTS = 20
 
-args = ['./KVEngine', '-nodraw', '-auto', '-auto_connect', 'login=Guest']
-processes = []
-for x in range(0, TOTAL_BOTS):
-    p = subprocess.Popen(args, cwd = './Exec')
-    processes.append(p)
-#p.kill ()
+def main():
+    exe = "Exec/KVEngine.exe"
+    if sys.platform.startswith("linux"):
+        exe = "./KVEngine"
+    args = [exe, '-nodraw', '-auto', '-auto_connect', 'login=Guest']
+    processes = []
 
-processes = processes[1:]
+    total_bots = TOTAL_BOTS
 
-while 1:
-    time.sleep(5)
-    new_processes = []
-    for p in processes:
-        if random.randint(0, 10) == 0:
-            p.kill()
-            p.communicate()
-            new_processes.append(subprocess.Popen(args, cwd = './Exec'))
-        else:
-            new_processes.append(p)
-    processes = new_processes
+    if len(sys.argv) == 2:
+        total_bots = int(sys.argv[1])
 
+    for x in range(0, total_bots):
+        p = subprocess.Popen(args, cwd='./Exec')
+        processes.append(p)
+
+    processes = processes[1:]
+
+    while True:
+        time.sleep(5)
+        new_processes = []
+        for p in processes[:]:
+            if random.randint(0, 10) == 0:
+                p.kill()
+                p.communicate()
+                new_processes.append(subprocess.Popen(args, cwd='./Exec'))
+            else:
+                new_processes.append(p)
+        processes = new_processes
+
+
+if __name__ == "__main__":
+    main()

@@ -1,4 +1,4 @@
-from shutil import copyfile
+from shutil import copyfile, copymode
 import sys
 
 src_file = ""
@@ -10,3 +10,4 @@ else:
     raise ParamsParseError("Wrong amount of command line options")
 
 copyfile(src_file, dst_file)
+copymode(src_file, dst_file)
