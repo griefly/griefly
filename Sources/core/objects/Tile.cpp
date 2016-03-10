@@ -24,28 +24,42 @@ CubeTile::CubeTile(size_t id) : IOnMapBase(id)
 bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
 {
     if (!item.valid())
+    {
         return false;
+    }
 
     if (!item->GetOwner())
+    {
         return false;
+    }
 
-    auto cube_tile = item->GetOwner();
-    if (!cube_tile)
+    id_ptr_on<CubeTile> cube_tile = item->GetOwner();
+    if (!cube_tile.valid())
+    {
         return false;
+    }
 
     int x_begin = posx_ - range;
     if (x_begin < 0)
+    {
         x_begin = 0;
+    }
     int y_begin = posy_ - range;
     if (y_begin < 0)
+    {
         y_begin = 0;
+    }
     
     int x_end = posx_ + range;
     if (x_end >= GetMap().GetMapW())
+    {
         x_end = GetMap().GetMapW() - 1;
+    }
     int y_end = posy_ + range;
     if (y_end >= GetMap().GetMapH())
+    {
         y_end = GetMap().GetMapH() - 1;
+    }
 
     // TODO
     // check something like 
@@ -54,13 +68,21 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
     //       xxx  
 
     if (cube_tile->GetX() < x_begin)
+    {
         return false;
+    }
     if (cube_tile->GetX() > x_end)
+    {
         return false;
+    }
     if (cube_tile->GetY() < y_begin)
+    {
         return false;
+    }
     if (cube_tile->GetY() > y_end)
+    {
         return false;
+    }
 
     return true;
 }
