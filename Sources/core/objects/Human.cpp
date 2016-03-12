@@ -123,10 +123,7 @@ void Human::processGUImsg(const Message2 &msg)
         id_ptr_on<IOnMapObject> item = Network2::ExtractObjId(obj);
         if (item && item->GetOwner())
         {
-
-            //SYSTEM_STREAM << "Item " << item->name << " clicked" << std::endl;
-            // It isn't fine
-            if (/*IsTileVisible(item->GetOwner().ret_id()) && */CanTouch(item, 1))
+            if (CanTouch(item))
             {
                 //SYSTEM_STREAM << "And we can touch it!" << std::endl;
                 if(!interface_.GetActiveHand().Get())

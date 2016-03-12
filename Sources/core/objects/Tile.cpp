@@ -21,7 +21,7 @@ CubeTile::CubeTile(size_t id) : IOnMapBase(id)
     sum_passable_right_ = Passable::FULL;
 }
 
-bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
+bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
 {
     if (!item.valid())
     {
@@ -38,6 +38,8 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, int range) const
     {
         return false;
     }
+
+    int range = 1;
 
     int x_begin = posx_ - range;
     if (x_begin < 0)

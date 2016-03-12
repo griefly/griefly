@@ -16,7 +16,7 @@ public:
     virtual void Bump(id_ptr_on<IMovable> item) override;
 
     virtual bool Contains(id_ptr_on<IOnMapBase> item) const override;
-    virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const override;
+    virtual bool CanTouch(id_ptr_on<IOnMapBase> item) const override;
 
     virtual bool AddItem(id_ptr_on<IOnMapBase> item) override;
     virtual bool RemoveItem(id_ptr_on<IOnMapBase> item) override;

@@ -63,10 +63,12 @@ public:
 
     virtual void ApplyForce(VDir force) {}
 
-    virtual bool CanTouch(id_ptr_on<IOnMapBase> item, int range = 0) const
+    virtual bool CanTouch(id_ptr_on<IOnMapBase> item) const
     {
         if (owner.valid())
-            return owner->CanTouch(item, range);
+        {
+            return owner->CanTouch(item);
+        }
         return false;
     }
 
