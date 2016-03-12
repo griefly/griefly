@@ -78,9 +78,8 @@ bool IMovable::checkMoveTime()
     if((static_cast<int>(MAIN_TICK) - lastMove) < tickSpeed) 
         return false;
     return true;
-};
+}
 
-// TODO: ТОРНАДО
 bool IMovable::checkPassable()
 {
     PassableLevel loc = GetPassable(dMove);

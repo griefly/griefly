@@ -39,51 +39,63 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
         return false;
     }
 
-    int range = 1;
-
-    int x_begin = posx_ - range;
-    if (x_begin < 0)
+    if (std::abs(posx() - cube_tile->posx()) > 1)
     {
-        x_begin = 0;
+        return false;
     }
-    int y_begin = posy_ - range;
-    if (y_begin < 0)
+    if (std::abs(posy() - cube_tile->posy()) > 1)
     {
-        y_begin = 0;
-    }
-    
-    int x_end = posx_ + range;
-    if (x_end >= GetMap().GetMapW())
-    {
-        x_end = GetMap().GetMapW() - 1;
-    }
-    int y_end = posy_ + range;
-    if (y_end >= GetMap().GetMapH())
-    {
-        y_end = GetMap().GetMapH() - 1;
+        return false;
     }
 
-    // TODO
-    // check something like 
-    //       xxx     o will be touchable (and its wrond)
-    //       xox     maybe whatever?
-    //       xxx  
+    if (   (posx() == cube_tile->posx())
+        && (posy() == cube_tile->posy()))
+    {
+        return true;
+    }
 
-    if (cube_tile->GetX() < x_begin)
+    // TODO: Glass blocks itself
+    if (posx() == cube_tile->posx())
     {
-        return false;
+        if (posy() > cube_tile->posy())
+        {
+            if (   CanPass(GetPassable(D_UP), Passable::BIG_ITEM)
+                && CanPass(cube_tile->GetPassable(D_DOWN), Passable::BIG_ITEM))
+            {
+                return true;
+            }
+            return false;
+        }
+        else
+        {
+            if (   CanPass(GetPassable(D_DOWN), Passable::BIG_ITEM)
+                && CanPass(cube_tile->GetPassable(D_UP), Passable::BIG_ITEM))
+            {
+                return true;
+            }
+            return false;
+        }
     }
-    if (cube_tile->GetX() > x_end)
+    if (posy() == cube_tile->posy())
     {
-        return false;
-    }
-    if (cube_tile->GetY() < y_begin)
-    {
-        return false;
-    }
-    if (cube_tile->GetY() > y_end)
-    {
-        return false;
+        if (posx() > cube_tile->posx())
+        {
+            if (   CanPass(GetPassable(D_LEFT), Passable::BIG_ITEM)
+                && CanPass(cube_tile->GetPassable(D_RIGHT), Passable::BIG_ITEM))
+            {
+                return true;
+            }
+            return false;
+        }
+        else
+        {
+            if (   CanPass(GetPassable(D_RIGHT), Passable::BIG_ITEM)
+                && CanPass(cube_tile->GetPassable(D_LEFT), Passable::BIG_ITEM))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     return true;
