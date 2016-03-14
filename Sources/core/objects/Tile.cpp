@@ -39,73 +39,71 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
         return false;
     }
 
-    if (std::abs(posx() - cube_tile->posx()) > 1)
+    int cube_tile_posx = cube_tile->posx();
+    int cube_tile_posy = cube_tile->posy();
+
+    if (std::abs(posx() - cube_tile_posx) > 1)
     {
         return false;
     }
-    if (std::abs(posy() - cube_tile->posy()) > 1)
+    if (std::abs(posy() - cube_tile_posy) > 1)
     {
         return false;
     }
 
-    if (   (posx() == cube_tile->posx())
-        && (posy() == cube_tile->posy()))
+    if (   (posx() == cube_tile_posx)
+        && (posy() == cube_tile_posy))
     {
         return true;
     }
 
     // TODO: Glass blocks itself
-    if (posx() == cube_tile->posx())
+    if (posx() == cube_tile_posx)
     {
-        if (posy() > cube_tile->posy())
+        if (posy() > cube_tile_posy)
         {
-            if (   CanPass(GetPassable(D_UP), Passable::BIG_ITEM)
-                && CanPass(cube_tile->GetPassable(D_DOWN), Passable::BIG_ITEM))
-            {
-                return true;
-            }
-            return false;
+            return CanTouch(item, D_UP);
         }
         else
         {
-            if (   CanPass(GetPassable(D_DOWN), Passable::BIG_ITEM)
-                && CanPass(cube_tile->GetPassable(D_UP), Passable::BIG_ITEM))
-            {
-                return true;
-            }
-            return false;
+            return CanTouch(item, D_DOWN);
         }
     }
-    if (posy() == cube_tile->posy())
+    if (posy() == cube_tile_posy)
     {
-        if (posx() > cube_tile->posx())
+        if (posx() > cube_tile_posx)
         {
-            if (   CanPass(GetPassable(D_LEFT), Passable::BIG_ITEM)
-                && CanPass(cube_tile->GetPassable(D_RIGHT), Passable::BIG_ITEM))
-            {
-                return true;
-            }
-            return false;
+            return CanTouch(item, D_LEFT);
         }
         else
         {
-            if (   CanPass(GetPassable(D_RIGHT), Passable::BIG_ITEM)
-                && CanPass(cube_tile->GetPassable(D_LEFT), Passable::BIG_ITEM))
-            {
-                return true;
-            }
-            return false;
+            return CanTouch(item, D_RIGHT);
         }
     }
 
     return true;
 }
 
+
+bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const
+{
+    if (   CanPass(GetPassable(dir), Passable::BIG_ITEM)
+        && CanPass(item->GetOwner()->GetPassable(helpers::revert_dir(dir)), Passable::BIG_ITEM))
+    {
+        return true;
+    }
+    return false;
+}
+
 bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
 {
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    {
         if (it->ret_id() == item.ret_id())
+        {
             return true;
+        }
+    }
     return false;
 }
 

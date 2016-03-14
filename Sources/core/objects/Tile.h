@@ -110,6 +110,8 @@ public:
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
+    bool CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const;
+
     id_ptr_on<ITurf> KV_SAVEBLE(turf_);
 
     AtmosHolder KV_SAVEBLE(atmos_holder_);
