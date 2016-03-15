@@ -57,7 +57,6 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
         return true;
     }
 
-    // TODO: Glass blocks itself
     if (posx() == cube_tile_posx)
     {
         if (posy() > cube_tile_posy)
@@ -87,6 +86,11 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
 
 bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const
 {
+    // TODO: implementation is not perfect, but fine for a while
+    if (!CanPass(item->GetPassable(helpers::revert_dir(dir)), Passable::BIG_ITEM))
+    {
+        return CanPass(GetPassable(dir), Passable::BIG_ITEM);
+    }
     if (   CanPass(GetPassable(dir), Passable::BIG_ITEM)
         && CanPass(item->GetOwner()->GetPassable(helpers::revert_dir(dir)), Passable::BIG_ITEM))
     {
