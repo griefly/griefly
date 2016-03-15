@@ -42,8 +42,8 @@ public:
     CubeTile(size_t id);
     virtual bool AddItem(id_ptr_on<IOnMapBase> item) override;
     virtual bool RemoveItem(id_ptr_on<IOnMapBase> item) override;
-    virtual id_ptr_on<IOnMapBase> GetNeighbour(Dir direct) override;
-    id_ptr_on<CubeTile> GetNeighbourImpl(Dir direct);
+    virtual id_ptr_on<IOnMapBase> GetNeighbour(Dir direct) const override;
+    id_ptr_on<CubeTile> GetNeighbourImpl(Dir direct) const;
     virtual void ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback) override;
     virtual bool IsVisibleByPlayer() const override
     {
@@ -111,6 +111,7 @@ protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
     bool CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const;
+    bool CanTouch(id_ptr_on<IOnMapBase> item, Dir first_dir, Dir second_dir) const;
 
     id_ptr_on<ITurf> KV_SAVEBLE(turf_);
 

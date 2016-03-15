@@ -92,7 +92,7 @@ public:
         return false;
     }
     // If id equal with object id, dir fail or something else (operation unsupported)
-    virtual id_ptr_on<IOnMapBase> GetNeighbour(Dir direct)
+    virtual id_ptr_on<IOnMapBase> GetNeighbour(Dir direct) const
     {
         if (owner.valid())
             return owner->GetNeighbour(direct);

@@ -80,22 +80,91 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
         }
     }
 
-    return true;
+    // Up Left
+    if (   (posy() > cube_tile_posy)
+        && (posx() > cube_tile_posx))
+    {
+        return    CanTouch(item, D_LEFT, D_UP)
+               || CanTouch(item, D_UP, D_LEFT);
+    }
+    // Down Right
+    if (   (posy() < cube_tile_posy)
+        && (posx() < cube_tile_posx))
+    {
+        return    CanTouch(item, D_RIGHT, D_DOWN)
+               || CanTouch(item, D_DOWN, D_RIGHT);
+    }
+
+    // Up Right
+    if (   (posy() > cube_tile_posy)
+        && (posx() < cube_tile_posx))
+    {
+        return    CanTouch(item, D_RIGHT, D_UP)
+               || CanTouch(item, D_UP, D_RIGHT);
+    }
+
+    // Down Left
+    if (   (posy() < cube_tile_posy)
+        && (posx() > cube_tile_posx))
+    {
+        return    CanTouch(item, D_LEFT, D_DOWN)
+               || CanTouch(item, D_DOWN, D_LEFT);
+    }
+
+    // It should not be reached
+    return false;
 }
 
 
 bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const
 {
+    if (!CanPass(GetPassable(dir), Passable::BIG_ITEM))
+    {
+        return false;
+    }
+
     // TODO: implementation is not perfect, but fine for a while
     if (!CanPass(item->GetPassable(helpers::revert_dir(dir)), Passable::BIG_ITEM))
     {
-        return CanPass(GetPassable(dir), Passable::BIG_ITEM);
+        return true;
     }
-    if (   CanPass(GetPassable(dir), Passable::BIG_ITEM)
-        && CanPass(item->GetOwner()->GetPassable(helpers::revert_dir(dir)), Passable::BIG_ITEM))
+    if (CanPass(item->GetOwner()->GetPassable(helpers::revert_dir(dir)), Passable::BIG_ITEM))
     {
         return true;
     }
+    return false;
+}
+
+bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, Dir first_dir, Dir second_dir) const
+{
+    if (!CanPass(GetPassable(first_dir), Passable::BIG_ITEM))
+    {
+        return false;
+    }
+
+    auto tile = GetNeighbour(first_dir);
+
+    if (   !CanPass(tile->GetPassable(helpers::revert_dir(first_dir)), Passable::BIG_ITEM)
+        || !CanPass(tile->GetPassable(helpers::revert_dir(D_ALL)), Passable::BIG_ITEM))
+    {
+        return false;
+    }
+
+    if (!CanPass(tile->GetPassable(second_dir), Passable::BIG_ITEM))
+    {
+        return false;
+    }
+
+    if (!CanPass(item->GetPassable(helpers::revert_dir(second_dir)), Passable::BIG_ITEM))
+    {
+        return true;
+    }
+
+    if (CanPass(item->GetOwner()->GetPassable(helpers::revert_dir(second_dir)), Passable::BIG_ITEM))
+    {
+        return true;
+    }
+
     return false;
 }
 
@@ -222,12 +291,12 @@ bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
 
 
 
-id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct)
+id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct) const
 {
     return GetNeighbourImpl(direct);
 }
 
-id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct)
+id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
 {
     int new_x = posx_;
     int new_y = posy_;
