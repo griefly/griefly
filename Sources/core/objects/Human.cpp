@@ -114,6 +114,10 @@ void Human::processGUImsg(const Message2 &msg)
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
+        if (lying_)
+        {
+            return;
+        }
         const int ATTACK_CD = 10;
         if ((MAIN_TICK - attack_cooldown_) < ATTACK_CD)
         {
