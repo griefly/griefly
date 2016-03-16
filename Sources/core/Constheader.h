@@ -42,6 +42,11 @@ const Dir D_DOWN = 3;
 const Dir D_ZUP = 4;
 const Dir D_ZDOWN = 5;
 
+const Dir D_SOUTHEAST = 6;
+const Dir D_SOUTHWEST = 7;
+const Dir D_NORTHEAST = 8;
+const Dir D_NORTHWEST = 9;
+
 struct VDir
 {
     int x;
@@ -87,8 +92,6 @@ inline Dir VDirToDir(const VDir& vdir)
 }
 
 const Dir DirToRDir[6] = {1, 0, 3, 2, 5, 4};
-
-const int DIR_TO_BYOND[6] = {3, 2, 1, 0, 3, 3};
 
 const int MAX_LEVEL = 20;
 

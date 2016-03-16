@@ -12,39 +12,6 @@ Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
 {
     fail_ = true;
     ResetScreen(x, y, 32, 0);
-    //if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    //    return;
-
-    /*auto flag = SDL_FULLSCREEN;
-    if(!fullscreen)
-        flag = 0;
-    ResetScreen(x, y, 32, SDL_OPENGL | SDL_RESIZABLE | flag);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    glOrtho(0, x, y, 0, 0, 1); // TODO: check
-    
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glEnable(GL_TEXTURE_2D);
-  
-    glClearColor(0, 0, 0, 0);
-
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    
-    if (!GetParamsHolder().GetParamBool("-novsync"))
-    {
-#ifdef WIN32
-        typedef BOOL (WINAPI *PFNWGLSWAPINTERVALEXTPROC)(int);
-        PFNWGLSWAPINTERVALEXTPROC wglSwapInterval = nullptr;
-
-        wglSwapInterval = reinterpret_cast<PFNWGLSWAPINTERVALEXTPROC>(wglGetProcAddress("wglSwapIntervalEXT"));
-        if (wglSwapInterval) 
-            wglSwapInterval(1);
-#endif
-    }*/
     fail_ = false;
 }
 
