@@ -23,6 +23,8 @@ public:
     Pipe(size_t id);
     virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
 private:
+    static void GetTailAndHead(Dir dir, Dir* head, Dir* tail);
+
     id_ptr_on<PipeBase> KV_SAVEBLE(head_);
     id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
 };
