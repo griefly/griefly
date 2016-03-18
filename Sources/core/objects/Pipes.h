@@ -22,6 +22,7 @@ public:
     DECLARE_GET_TYPE_ITEM(Pipe);
     Pipe(size_t id);
     virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
+    virtual void AfterWorldCreation() override;
 private:
     static void GetTailAndHead(Dir dir, Dir* head, Dir* tail);
 

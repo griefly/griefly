@@ -1,5 +1,7 @@
 #include "Pipes.h"
 
+#include "../Helpers.h"
+
 PipeBase::PipeBase(size_t id) : IMovable(id)
 {
     anchored = true;
@@ -39,6 +41,52 @@ bool Pipe::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
     }
 
     return false;
+}
+
+void Pipe::AfterWorldCreation()
+{
+    PipeBase::AfterWorldCreation();
+
+    Dir head;
+    Dir tail;
+    GetTailAndHead(GetDir(), &head, &tail);
+
+    if (!head_.valid())
+    {
+        GetNeighbour(head)->ForEach(
+        [&](id_ptr_on<IOnMapBase> obj)
+        {
+            if (head_.valid())
+            {
+                return;
+            }
+            if (id_ptr_on<PipeBase> pipe = obj)
+            {
+                if (pipe->Connect(helpers::revert_dir(head), GetId()))
+                {
+                    head_ = pipe;
+                }
+            }
+        });
+    }
+    if (!tail_.valid())
+    {
+        GetNeighbour(tail)->ForEach(
+        [&](id_ptr_on<IOnMapBase> obj)
+        {
+            if (tail_.valid())
+            {
+                return;
+            }
+            if (id_ptr_on<PipeBase> pipe = obj)
+            {
+                if (pipe->Connect(helpers::revert_dir(tail), GetId()))
+                {
+                    tail_ = pipe;
+                }
+            }
+        });
+    }
 }
 
 void Pipe::GetTailAndHead(Dir dir, Dir* head, Dir* tail)
