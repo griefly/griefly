@@ -394,7 +394,8 @@ bool checkCorner(point p) {
 
 
 point cornerPoint2point(point p) {
-    return point{corner2pos(p.posx), corner2pos(p.posy), corner2pos(p.posz)};
+    point retval = {corner2pos(p.posx), corner2pos(p.posy), corner2pos(p.posz)};
+    return retval;
 }
 
 bool isTransparent(point p) {
@@ -410,7 +411,8 @@ bool bresenX(point source, point target) {
     int deltastep = sign(target.posy - source.posy);
     int incrstep = sign(target.posx - source.posx);
     for (int x = source.posx; x != target.posx; x += incrstep) {
-        if (!isTransparent(point{x, y, source.posz})) {
+        point new_point = {x, y, source.posz};
+        if (!isTransparent(new_point)) {
             return false;
         }
 
@@ -432,7 +434,8 @@ bool bresenY(point source, point target) {
     int deltastep = sign(target.posx - source.posx);
     int incrstep = sign(target.posy - source.posy);
     for (int y = source.posy; y != target.posy; y += incrstep) {
-        if (!isTransparent(point{x, y, source.posz})) {
+        point new_point = {x, y, source.posz};
+        if (!isTransparent(new_point)) {
             return false;
         }
 
@@ -488,10 +491,9 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     }
 
     point source = {pos2corner(posx), pos2corner(posy), pos2corner(posz)};
-    point p;
     for (int i = -sizeWsq; i < sizeWsq+1; i++) {
         for (int j = -sizeHsq; j < sizeHsq+1; j++) {
-            p = {pos2corner(posx+i), pos2corner(posy+j), pos2corner(posz)};
+            point p = {pos2corner(posx+i), pos2corner(posy+j), pos2corner(posz)};
             if (!checkCorner(p)) {
                 continue;
             }
@@ -506,7 +508,7 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
         }
     }
 
-    delete visibleTiles;
+    delete[] visibleTiles;
     return retlist;
 
     /*
