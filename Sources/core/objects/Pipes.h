@@ -35,4 +35,19 @@ private:
 };
 ADD_TO_TYPELIST(Pipe);
 
+class Vent: public PipeBase
+{
+public:
+    DECLARE_SAVED(Vent, PipeBase);
+    DECLARE_GET_TYPE_ITEM(Vent);
+    Vent(size_t id);
+    virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
+    virtual void AfterWorldCreation() override;
+    virtual bool CanTransferGas(Dir dir) const override { return true; }
+    virtual void Process() override;
+private:
+    id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
+};
+ADD_TO_TYPELIST(Vent);
+
 

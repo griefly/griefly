@@ -3798,6 +3798,7 @@ Pipe 47 26 0 21 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 6 6 force_ 0  5 head
 Floor 47 27 0 1 5 dMove 0  
 Pipe 47 27 0 1 5 dMove 0  
 Floor 47 28 0 1 5 dMove 0  
+Vent 47 28 0 20 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 2 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  5 tail_ 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Floor 47 29 0 1 5 dMove 0  
 Floor 47 30 0 1 5 dMove 0  
 SecurityLocker 47 30 0 1 5 dMove 0  

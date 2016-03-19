@@ -145,3 +145,74 @@ void Pipe::GetTailAndHead(Dir dir, Dir* head, Dir* tail)
     *head = DIRS_DATA[dir][0];
     *tail = DIRS_DATA[dir][1];
 }
+
+
+Vent::Vent(size_t id) : PipeBase(id)
+{
+    SetState("vent_filter-4");
+
+    name = "Vent";
+
+    SetFreq(1);
+}
+
+bool Vent::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
+{
+    if (dir != GetDir())
+    {
+        return false;
+    }
+    if (tail_.valid())
+    {
+        return false;
+    }
+
+    tail_ = pipe;
+    return true;
+}
+
+void Vent::AfterWorldCreation()
+{
+    PipeBase::AfterWorldCreation();
+
+    if (!tail_.valid())
+    {
+        GetNeighbour(GetDir())->ForEach(
+        [&](id_ptr_on<IOnMapBase> obj)
+        {
+            if (tail_.valid())
+            {
+                return;
+            }
+            if (id_ptr_on<PipeBase> pipe = obj)
+            {
+                if (pipe->Connect(helpers::revert_dir(GetDir()), GetId()))
+                {
+                    tail_ = pipe;
+                }
+            }
+        });
+    }
+}
+
+void Vent::Process()
+{
+    if (tail_.valid())
+    {
+        if (tail_->CanTransferGas(helpers::revert_dir(GetDir())))
+        {
+            tail_->GetAtmosHolder()->Connect(GetAtmosHolder());
+        }
+    }
+    if (id_ptr_on<CubeTile> cube = owner)
+    {
+        cube->GetAtmosHolder()->Connect(GetAtmosHolder());
+    }
+}
+
+
+
+
+
+
+
