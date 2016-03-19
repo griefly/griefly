@@ -10,6 +10,8 @@ public:
     DECLARE_GET_TYPE_ITEM(PipeBase);
     PipeBase(size_t id);
     virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) { return false; }
+    virtual bool CanTransferGas(Dir dir) const { return false; }
+    AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 protected:
     AtmosHolder KV_SAVEBLE(atmos_holder_);
 };
@@ -23,6 +25,8 @@ public:
     Pipe(size_t id);
     virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
+    virtual bool CanTransferGas(Dir dir) const override { return true; }
+    virtual void Process() override;
 private:
     static void GetTailAndHead(Dir dir, Dir* head, Dir* tail);
 

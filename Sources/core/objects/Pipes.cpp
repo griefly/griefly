@@ -19,6 +19,8 @@ Pipe::Pipe(size_t id) : PipeBase(id)
     SetState("intact");
 
     name = "Pipe";
+
+    SetFreq(1);
 }
 
 bool Pipe::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
@@ -86,6 +88,42 @@ void Pipe::AfterWorldCreation()
                 }
             }
         });
+    }
+}
+
+void Pipe::Process()
+{
+    Dir head;
+    Dir tail;
+    GetTailAndHead(GetDir(), &head, &tail);
+
+    if (head_.valid())
+    {
+        if (head_->CanTransferGas(helpers::revert_dir(head)))
+        {
+            head_->GetAtmosHolder()->Connect(GetAtmosHolder());
+        }
+    }
+    else
+    {
+        if (id_ptr_on<CubeTile> cube = owner)
+        {
+            cube->GetAtmosHolder()->Connect(GetAtmosHolder());
+        }
+    }
+    if (tail_.valid())
+    {
+        if (tail_->CanTransferGas(helpers::revert_dir(tail)))
+        {
+            tail_->GetAtmosHolder()->Connect(GetAtmosHolder());
+        }
+    }
+    else
+    {
+        if (id_ptr_on<CubeTile> cube = owner)
+        {
+            cube->GetAtmosHolder()->Connect(GetAtmosHolder());
+        }
     }
 }
 
