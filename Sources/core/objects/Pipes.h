@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Movable.h"
+#include "Item.h"
+
 #include "../AtmosHolder.h"
 
 class PipeBase: public IMovable
@@ -34,6 +36,20 @@ private:
     id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
 };
 ADD_TO_TYPELIST(Pipe);
+
+class Valve: public Pipe
+{
+public:
+    DECLARE_SAVED(Valve, Pipe);
+    DECLARE_GET_TYPE_ITEM(Valve);
+    Valve(size_t id);
+    virtual bool CanTransferGas(Dir dir) const override;
+    virtual void Process() override;
+    virtual void AttackBy(id_ptr_on<Item> item) override;
+private:
+    bool KV_SAVEBLE(closed_);
+};
+ADD_TO_TYPELIST(Valve);
 
 class Vent: public PipeBase
 {

@@ -210,9 +210,41 @@ void Vent::Process()
     }
 }
 
+Valve::Valve(size_t id) : Pipe(id)
+{
+    SetSprite("icons/digital_valve.dmi");
+    SetState("valve0");
+    closed_ = true;
+}
 
+bool Valve::CanTransferGas(Dir dir) const
+{
+    if (closed_)
+    {
+        return false;
+    }
+    return true;
+}
 
+void Valve::Process()
+{
+    if (closed_)
+    {
+        return;\
+    }
+    Pipe::Process();
+}
 
-
-
-
+void Valve::AttackBy(id_ptr_on<Item> item)
+{
+    if (closed_)
+    {
+        closed_ = false;
+        SetState("valve1");
+    }
+    else
+    {
+        closed_ = true;
+        SetState("valve0");
+    }
+}
