@@ -460,8 +460,9 @@ bool rayTrace(point source, point target) {
     return false;
 }
 
-void markTilesOfCornerAsVisible(std::list<point>*retlist, point at, char visibility[]) {
+void markTilesOfCornerAsVisible(std::list<point>* retlist, point at, point center, char visibility[]) {
     point tileAt = cornerPoint2point(at);
+    point tileCenter = cornerPoint2point(center);
     for (int dx = -1; dx <= 0; dx++) {
         for (int dy = -1; dy <= 0; dy++) {
             point p = {tileAt.posx+dx, tileAt.posy+dy, tileAt.posz};
@@ -469,7 +470,9 @@ void markTilesOfCornerAsVisible(std::list<point>*retlist, point at, char visibil
                 continue;
             }
 
-            int visIdx = sizeWsq*p.posx + p.posy;
+            int visX = (p.posx - tileCenter.posx + sizeWsq);
+            int visY = (p.posy - tileCenter.posy + sizeHsq);
+            int visIdx = 2*sizeWsq*visX + visY;
 
             if (visibility[visIdx] == 1) {
                 continue;
@@ -485,8 +488,8 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
 {
     clearLOS();
 
-    auto visibleTiles = new char[sizeHsq*sizeWsq];
-    for (int i = 0; i < sizeHsq*sizeWsq; i++) {
+    auto visibleTiles = new char[4*sizeHsq*sizeWsq];
+    for (int i = 0; i < 4*sizeHsq*sizeWsq; i++) {
         visibleTiles[i] = 0;
     }
 
@@ -503,7 +506,7 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
 
             if (rayTrace(source, p)) {
                 // add all tiles with this corner to visible list
-                markTilesOfCornerAsVisible(retlist, p, visibleTiles);
+                markTilesOfCornerAsVisible(retlist, p, source, visibleTiles);
             }
         }
     }
