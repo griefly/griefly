@@ -37,6 +37,26 @@ private:
 };
 ADD_TO_TYPELIST(Pipe);
 
+class Manifold: public PipeBase
+{
+public:
+    DECLARE_SAVED(Manifold, PipeBase);
+    DECLARE_GET_TYPE_ITEM(Manifold);
+    Manifold(size_t id);
+    virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
+    virtual void AfterWorldCreation() override;
+    virtual bool CanTransferGas(Dir dir) const override;
+    virtual void Process() override;
+private:
+    static void GetConnectionsDirs(Dir dir, Dir* tail, Dir* left, Dir* right);
+
+    id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
+    id_ptr_on<PipeBase> KV_SAVEBLE(left_);
+    id_ptr_on<PipeBase> KV_SAVEBLE(right_);
+};
+ADD_TO_TYPELIST(Manifold);
+
+
 class Valve: public Pipe
 {
 public:

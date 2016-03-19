@@ -146,6 +146,40 @@ void Pipe::GetTailAndHead(Dir dir, Dir* head, Dir* tail)
     *tail = DIRS_DATA[dir][1];
 }
 
+Manifold::Manifold(size_t id) : PipeBase(id)
+{
+    SetState("manifold");
+    name = "Manifold";
+    SetFreq(1);
+}
+
+bool Manifold::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
+{
+    // TODO
+    return false;
+}
+
+void Manifold::AfterWorldCreation()
+{
+    // TODO
+    PipeBase::AfterWorldCreation();
+}
+
+bool Manifold::CanTransferGas(Dir dir) const
+{
+    // TODO
+    return true;
+}
+
+void Manifold::Process()
+{
+    // TODO
+}
+
+void Manifold::GetConnectionsDirs(Dir dir, Dir *tail, Dir *left, Dir *right)
+{
+    // TODO
+}
 
 Vent::Vent(size_t id) : PipeBase(id)
 {
