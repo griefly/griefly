@@ -350,10 +350,166 @@ void SetMapMaster(MapMaster* map_master)
 bool IsMapValid()
 {
     return map_master_ != nullptr;
-}\
+}
+
+int pos2corner(int pos) {
+    return pos*2;
+}
+
+int corner2pos(int corner) {
+    return corner/2;
+}
+
+int sign(int value) {
+    if (value > 0) {
+        return 1;
+    } else if (value < 0) {
+        return -1;
+    }
+
+    return 0;
+}
+
+bool checkCorner(point p) {
+    int x = corner2pos(p.posx);
+    int y = corner2pos(p.posy);
+    int z = corner2pos(p.posz);
+    return helpers::check_borders(&x, &y, &z);
+    /*
+    if (p.x >= GetMap().GetMapW()+1)
+        return false;
+    if (p.x < 0)
+        return false;
+    if (p.y >= GetMap().GetMapH()+1)
+        return false;
+    if (p.y < 0)
+        return false;
+    if (p.z >= GetMap().GetMapD()+1)
+        return false;
+    if (p.z < 0)
+        return false;
+    return true;
+    */
+}
+
+
+point cornerPoint2point(point p) {
+    return point{corner2pos(p.posx), corner2pos(p.posy), corner2pos(p.posz)};
+}
+
+bool isTransparent(point p) {
+    point tilePoint = cornerPoint2point(p);
+    return GetMap().IsTransparent(tilePoint.posx, tilePoint.posy, tilePoint.posz);
+}
+
+bool bresenX(point source, point target) {
+    int y = source.posy;
+    int error = 0;
+    int deltaX = abs(source.posx - target.posx);
+    int deltaerr = abs(source.posy - target.posy);
+    int deltastep = sign(target.posy - source.posy);
+    int incrstep = sign(target.posx - source.posx);
+    for (int x = source.posx; x != target.posx; x += incrstep) {
+        if (!isTransparent(point{x, y, source.posz})) {
+            return false;
+        }
+
+        error += deltaerr;
+        if (error*2 >= deltaX) {
+            y += deltastep;
+            error -= deltaX;
+        }
+    }
+
+    return true;
+}
+
+bool bresenY(point source, point target) {
+    int x = source.posx;
+    int error = 0;
+    int deltaY = abs(source.posy - target.posy);
+    int deltaerr = abs(source.posx - target.posx);
+    int deltastep = sign(target.posx - source.posx);
+    int incrstep = sign(target.posy - source.posy);
+    for (int y = source.posy; y != target.posy; y += incrstep) {
+        if (!isTransparent(point{x, y, source.posz})) {
+            return false;
+        }
+
+        error += deltaerr;
+        if (error*2 >= deltaY) {
+            x += deltastep;
+            error -= deltaY;
+        }
+    }
+
+    return true;
+}
+
+bool rayTrace(point source, point target) {
+    // run Bresenham's line algorithm
+    if (abs(source.posx - target.posx) > abs(source.posy - target.posy)) {
+        return bresenX(source, target);
+    } else {
+        return bresenY(source, target);
+    }
+
+    return false;
+}
+
+void markTilesOfCornerAsVisible(std::list<point>*retlist, point at, char visibility[]) {
+    point tileAt = cornerPoint2point(at);
+    for (int dx = -1; dx <= 0; dx++) {
+        for (int dy = -1; dy <= 0; dy++) {
+            point p = {tileAt.posx+dx, tileAt.posy+dy, tileAt.posz};
+            if (!helpers::check_borders(&p.posx, &p.posy, &p.posz)) {
+                continue;
+            }
+
+            int visIdx = sizeWsq*p.posx + p.posy;
+
+            if (visibility[visIdx] == 1) {
+                continue;
+            }
+
+            retlist->push_back(p);
+            visibility[visIdx] = 1;
+        }
+    }
+}
 
 std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
 {
+    clearLOS();
+
+    auto visibleTiles = new char[sizeHsq*sizeWsq];
+    for (int i = 0; i < sizeHsq*sizeWsq; i++) {
+        visibleTiles[i] = 0;
+    }
+
+    point source = {pos2corner(posx), pos2corner(posy), pos2corner(posz)};
+    point p;
+    for (int i = -sizeWsq; i < sizeWsq+1; i++) {
+        for (int j = -sizeHsq; j < sizeHsq+1; j++) {
+            p = {pos2corner(posx+i), pos2corner(posy+j), pos2corner(posz)};
+            if (!checkCorner(p)) {
+                continue;
+            }
+
+            // TODO: we can check that all siblings of this corner are visible
+            // so check is unnessesary
+
+            if (rayTrace(source, p)) {
+                // add all tiles with this corner to visible list
+                markTilesOfCornerAsVisible(retlist, p, visibleTiles);
+            }
+        }
+    }
+
+    delete visibleTiles;
+    return retlist;
+
+    /*
     //auto retlist = new std::list<point>;
     clearLOS();
     //for(int level = 0; level < 
@@ -626,6 +782,7 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
     retlist->splice(retlist->begin(), z_list);
 
     return retlist;
+    */
 }
 
 void LOSfinder::clearLOS()
