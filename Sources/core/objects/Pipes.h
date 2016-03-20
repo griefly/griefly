@@ -15,6 +15,8 @@ public:
     virtual bool CanTransferGas(Dir dir) const { return false; }
     AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 protected:
+    void ConnectHelper(id_ptr_on<PipeBase>& connection, Dir dir);
+    void ProcessHelper(id_ptr_on<PipeBase>& connection, Dir dir);
     AtmosHolder KV_SAVEBLE(atmos_holder_);
 };
 ADD_TO_TYPELIST(PipeBase);
@@ -31,7 +33,6 @@ public:
     virtual void Process() override;
 private:
     static void GetTailAndHead(Dir dir, Dir* head, Dir* tail);
-
     id_ptr_on<PipeBase> KV_SAVEBLE(head_);
     id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
 };

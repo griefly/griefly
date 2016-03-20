@@ -13,6 +13,46 @@ PipeBase::PipeBase(size_t id) : IMovable(id)
     name = "Please do not create me";
 }
 
+void PipeBase::ConnectHelper(id_ptr_on<PipeBase>& connection, Dir dir)
+{
+    if (!connection.valid())
+    {
+        GetNeighbour(dir)->ForEach(
+        [&](id_ptr_on<IOnMapBase> obj)
+        {
+            if (connection.valid())
+            {
+                return;
+            }
+            if (id_ptr_on<PipeBase> pipe = obj)
+            {
+                if (pipe->Connect(helpers::revert_dir(dir), GetId()))
+                {
+                    connection = pipe;
+                }
+            }
+        });
+    }
+}
+
+void PipeBase::ProcessHelper(id_ptr_on<PipeBase>& connection, Dir dir)
+{
+    if (connection.valid())
+    {
+        if (connection->CanTransferGas(helpers::revert_dir(dir)))
+        {
+            connection->GetAtmosHolder()->Connect(GetAtmosHolder());
+        }
+    }
+    else
+    {
+        if (id_ptr_on<CubeTile> cube = owner)
+        {
+            cube->GetAtmosHolder()->Connect(GetAtmosHolder());
+        }
+    }
+}
+
 
 Pipe::Pipe(size_t id) : PipeBase(id)
 {
@@ -53,42 +93,8 @@ void Pipe::AfterWorldCreation()
     Dir tail;
     GetTailAndHead(GetDir(), &head, &tail);
 
-    if (!head_.valid())
-    {
-        GetNeighbour(head)->ForEach(
-        [&](id_ptr_on<IOnMapBase> obj)
-        {
-            if (head_.valid())
-            {
-                return;
-            }
-            if (id_ptr_on<PipeBase> pipe = obj)
-            {
-                if (pipe->Connect(helpers::revert_dir(head), GetId()))
-                {
-                    head_ = pipe;
-                }
-            }
-        });
-    }
-    if (!tail_.valid())
-    {
-        GetNeighbour(tail)->ForEach(
-        [&](id_ptr_on<IOnMapBase> obj)
-        {
-            if (tail_.valid())
-            {
-                return;
-            }
-            if (id_ptr_on<PipeBase> pipe = obj)
-            {
-                if (pipe->Connect(helpers::revert_dir(tail), GetId()))
-                {
-                    tail_ = pipe;
-                }
-            }
-        });
-    }
+    ConnectHelper(head_, head);
+    ConnectHelper(tail_, tail);
 }
 
 void Pipe::Process()
@@ -97,34 +103,8 @@ void Pipe::Process()
     Dir tail;
     GetTailAndHead(GetDir(), &head, &tail);
 
-    if (head_.valid())
-    {
-        if (head_->CanTransferGas(helpers::revert_dir(head)))
-        {
-            head_->GetAtmosHolder()->Connect(GetAtmosHolder());
-        }
-    }
-    else
-    {
-        if (id_ptr_on<CubeTile> cube = owner)
-        {
-            cube->GetAtmosHolder()->Connect(GetAtmosHolder());
-        }
-    }
-    if (tail_.valid())
-    {
-        if (tail_->CanTransferGas(helpers::revert_dir(tail)))
-        {
-            tail_->GetAtmosHolder()->Connect(GetAtmosHolder());
-        }
-    }
-    else
-    {
-        if (id_ptr_on<CubeTile> cube = owner)
-        {
-            cube->GetAtmosHolder()->Connect(GetAtmosHolder());
-        }
-    }
+    ProcessHelper(head_, head);
+    ProcessHelper(tail_, tail);
 }
 
 void Pipe::GetTailAndHead(Dir dir, Dir* head, Dir* tail)
@@ -155,30 +135,89 @@ Manifold::Manifold(size_t id) : PipeBase(id)
 
 bool Manifold::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
 {
-    // TODO
+    Dir tail;
+    Dir left;
+    Dir right;
+    GetConnectionsDirs(GetDir(), &tail, &left, &right);
+
+    if (   (dir == tail)
+        && (!tail_.valid()))
+    {
+        tail_ = pipe;
+        return true;
+    }
+
+    if (   (dir == left)
+        && (!left_.valid()))
+    {
+        left_ = pipe;
+        return true;
+    }
+
+    if (   (dir == right)
+        && (!right_.valid()))
+    {
+        right_ = pipe;
+        return true;
+    }
+
     return false;
 }
 
 void Manifold::AfterWorldCreation()
 {
-    // TODO
     PipeBase::AfterWorldCreation();
+
+    Dir tail;
+    Dir left;
+    Dir right;
+    GetConnectionsDirs(GetDir(), &tail, &left, &right);
+
+    ConnectHelper(tail_, tail);
+    ConnectHelper(left_, left);
+    ConnectHelper(right_, right);
 }
 
 bool Manifold::CanTransferGas(Dir dir) const
 {
-    // TODO
     return true;
 }
 
 void Manifold::Process()
 {
-    // TODO
+    Dir tail;
+    Dir left;
+    Dir right;
+    GetConnectionsDirs(GetDir(), &tail, &left, &right);
+
+    ProcessHelper(tail_, tail);
+    ProcessHelper(left_, left);
+    ProcessHelper(right_, right);
 }
 
 void Manifold::GetConnectionsDirs(Dir dir, Dir *tail, Dir *left, Dir *right)
 {
-    // TODO
+    *tail = helpers::revert_dir(dir);
+    if (dir == D_DOWN)
+    {
+        *left = D_RIGHT;
+        *right = D_LEFT;
+    }
+    else if (dir == D_UP)
+    {
+        *left = D_LEFT;
+        *right = D_RIGHT;
+    }
+    else if (dir == D_RIGHT)
+    {
+        *left = D_UP;
+        *right = D_DOWN;
+    }
+    else
+    {
+        *left = D_DOWN;
+        *left = D_UP;
+    }
 }
 
 Vent::Vent(size_t id) : PipeBase(id)
