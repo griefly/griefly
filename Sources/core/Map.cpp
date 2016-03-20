@@ -352,12 +352,14 @@ bool IsMapValid()
     return map_master_ != nullptr;
 }
 
+const int rayMultiplier = 2;
+
 int pos2corner(int pos) {
-    return pos*2;
+    return pos*rayMultiplier;
 }
 
 int corner2pos(int corner) {
-    return corner/2;
+    return corner/rayMultiplier;
 }
 
 int sign(int value) {
@@ -396,12 +398,27 @@ bool bresenX(point source, point target) {
     int deltastep = sign(target.posy - source.posy);
     int incrstep = sign(target.posx - source.posx);
     for (int x = source.posx; x != target.posx; x += incrstep) {
-        if ((x % 2) == 0 && (y % 2) == 0) {
+        if ((x % rayMultiplier) == 0 && (y % rayMultiplier) == 0) {
             // when in corner check side neighbours
             // if both of them are not transparent then corner is not transparent
-            point left_neighbour = {x+deltastep, y, source.posz};
-            point right_neighbour = {x, y+incrstep, source.posz};
+            point left_neighbour = {x+incrstep, y, source.posz};
+            point right_neighbour = {x, y+deltastep, source.posz};
             if (!isTransparent(left_neighbour) && !isTransparent(right_neighbour)) {
+                return false;
+            }
+        } else if (x % rayMultiplier == 0) {
+            // when ray hits an edge check both tiles - current and previous. Since ray travels through edge both of them 
+            // must be transparent
+            point left_neighbour = {x-incrstep, y, source.posz};
+            point right_neighbour = {x+incrstep, y, source.posz};
+            if (!isTransparent(left_neighbour) || !isTransparent(right_neighbour)) {
+                return false;
+            }
+        } else if (y % rayMultiplier == 0) {
+            // second case of edge handling
+            point left_neighbour = {x, y-deltastep, source.posz};
+            point right_neighbour = {x, y+deltastep, source.posz};
+            if (!isTransparent(left_neighbour) || !isTransparent(right_neighbour)) {
                 return false;
             }
         } else {
@@ -429,12 +446,27 @@ bool bresenY(point source, point target) {
     int deltastep = sign(target.posx - source.posx);
     int incrstep = sign(target.posy - source.posy);
     for (int y = source.posy; y != target.posy; y += incrstep) {
-        if ((x % 2) == 0 && (y % 2) == 0) {
+        if ((x % rayMultiplier) == 0 && (y % rayMultiplier) == 0) {
             // when in corner check side neighbours
             // if both of them are not transparent then corner is not transparent
             point left_neighbour = {x+deltastep, y, source.posz};
             point right_neighbour = {x, y+incrstep, source.posz};
             if (!isTransparent(left_neighbour) && !isTransparent(right_neighbour)) {
+                return false;
+            }
+        } else if (x % rayMultiplier == 0) {
+            // when ray hits an edge check both tiles. Since ray travels through edge both of them 
+            // must be transparent
+            point left_neighbour = {x-deltastep, y, source.posz};
+            point right_neighbour = {x+deltastep, y, source.posz};
+            if (!isTransparent(left_neighbour) || !isTransparent(right_neighbour)) {
+                return false;
+            }
+        } else if (y % rayMultiplier == 0) {
+            // second case of edge handling
+            point left_neighbour = {x, y-incrstep, source.posz};
+            point right_neighbour = {x, y+incrstep, source.posz};
+            if (!isTransparent(left_neighbour) || !isTransparent(right_neighbour)) {
                 return false;
             }
         } else {
@@ -509,7 +541,7 @@ std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int po
         visibleTiles[i] = 0;
     }
 
-    point source = {pos2corner(posx)+1, pos2corner(posy)+1, pos2corner(posz)+1};
+    point source = {pos2corner(posx)+rayMultiplier/2, pos2corner(posy)+rayMultiplier/2, pos2corner(posz)+1};
     for (int i = -sizeWsq; i < sizeWsq; i++) {
         for (int j = -sizeHsq; j < sizeHsq; j++) {
             point p = {pos2corner(posx+i), pos2corner(posy+j), pos2corner(posz)};
