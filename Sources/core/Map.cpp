@@ -530,6 +530,7 @@ void markTilesOfCornerAsVisible(std::list<point>* retlist, point at, point cente
 // ray is casted from center of tile to corners, so it is never aligned to either axis
 // if ray passes only transparent tiles on its way to given corner then the corner is visible
 // if ray passes through corner then it checks sibling tiles. If both of them are not transparent then ray blocks
+// if ray passes through edge it checks both adjasent tiles. They both must be transparent, otherwise ray blocks
 // if tile has at least one visible corner then this tile is visible
 // otherwise tile is invisible
 std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
