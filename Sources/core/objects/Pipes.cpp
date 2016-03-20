@@ -216,7 +216,7 @@ void Manifold::GetConnectionsDirs(Dir dir, Dir *tail, Dir *left, Dir *right)
     else
     {
         *left = D_DOWN;
-        *left = D_UP;
+        *right = D_UP;
     }
 }
 
@@ -320,4 +320,30 @@ void Valve::AttackBy(id_ptr_on<Item> item)
         closed_ = true;
         SetState("valve0");
     }
+}
+
+Connector::Connector(size_t id) : PipeBase(id)
+{
+    SetState("connector");
+
+    name = "Connector";
+
+    SetFreq(1);
+}
+
+bool Connector::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
+{
+    // TODO
+    return false;
+}
+
+void Connector::AfterWorldCreation()
+{
+    PipeBase::AfterWorldCreation();
+    // TODO
+}
+
+void Connector::Process()
+{
+    // TODO
 }
