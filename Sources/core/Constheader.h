@@ -15,8 +15,8 @@ extern int FPS_MAX;//max fps
 
 extern int DRAW_MAX; // max real fps
 
-const int sizeHsq = 11; // visible size const
-const int sizeWsq = 11;
+const int SIZE_H_SQ = 11; // visible size const
+const int SIZE_W_SQ = 11;
 
 extern int sizeW; // visible play in pixel const
 extern int sizeH;

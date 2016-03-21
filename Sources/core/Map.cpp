@@ -352,27 +352,33 @@ bool IsMapValid()
     return map_master_ != nullptr;
 }
 
-const int rayMultiplier = 2;
+const int RAY_MULTIPLIER = 2;
 
-int pos2corner(int pos) {
-    return pos*rayMultiplier;
+int pos2corner(int pos)
+{
+    return pos * RAY_MULTIPLIER;
 }
 
-int corner2pos(int corner) {
-    return corner/rayMultiplier;
+int corner2pos(int corner)
+{
+    return corner / RAY_MULTIPLIER;
 }
 
-int sign(int value) {
-    if (value > 0) {
+int sign(int value)
+{
+    if (value > 0)
+    {
         return 1;
-    } else if (value < 0) {
+    }
+    else if (value < 0)
+    {
         return -1;
     }
-
     return 0;
 }
 
-bool checkCorner(point p) {
+bool check_corner(point p)
+{
     int x = corner2pos(p.posx);
     int y = corner2pos(p.posy);
     int z = corner2pos(p.posz);
@@ -380,146 +386,187 @@ bool checkCorner(point p) {
 }
 
 
-point cornerPoint2point(point p) {
+point corner_point2point(point p)
+{
     point retval = {corner2pos(p.posx), corner2pos(p.posy), corner2pos(p.posz)};
     return retval;
 }
 
-bool isTransparent(point p) {
-    point tilePoint = cornerPoint2point(p);
+bool is_transparent(point p)
+{
+    point tilePoint = corner_point2point(p);
     return GetMap().IsTransparent(tilePoint.posx, tilePoint.posy, tilePoint.posz);
 }
 
-bool bresenX(point source, point target) {
+bool bresen_x(point source, point target)
+{
     int y = source.posy;
     int error = 0;
-    int deltaX = abs(source.posx - target.posx);
-    int deltaerr = abs(source.posy - target.posy);
+    int delta_x = std::abs(source.posx - target.posx);
+    int deltaerr = std::abs(source.posy - target.posy);
     int deltastep = sign(target.posy - source.posy);
     int incrstep = sign(target.posx - source.posx);
-    for (int x = source.posx; x != target.posx; x += incrstep) {
-        if ((x % rayMultiplier) == 0 && (y % rayMultiplier) == 0) {
+    for (int x = source.posx; x != target.posx; x += incrstep)
+    {
+        if ((x % RAY_MULTIPLIER) == 0 && (y % RAY_MULTIPLIER) == 0)
+        {
             // when in corner check side neighbours
             // if both of them are not transparent then corner is not transparent
-            point left_neighbour = {x+incrstep, y, source.posz};
-            point right_neighbour = {x, y+deltastep, source.posz};
-            if (!isTransparent(left_neighbour) && !isTransparent(right_neighbour)) {
+            point left_neighbour = {x + incrstep, y, source.posz};
+            point right_neighbour = {x, y + deltastep, source.posz};
+            if (!is_transparent(left_neighbour) && !is_transparent(right_neighbour))
+            {
                 return false;
             }
-        } else if (x % rayMultiplier == 0) {
+        }
+        else if (x % RAY_MULTIPLIER == 0)
+        {
             // when ray hits an edge check both tiles - current and previous. Since ray travels through edge both of them 
             // must be transparent
-            point left_neighbour = {x-incrstep, y, source.posz};
-            point right_neighbour = {x+incrstep, y, source.posz};
-            if (!isTransparent(left_neighbour) || !isTransparent(right_neighbour)) {
+            point left_neighbour = {x - incrstep, y, source.posz};
+            point right_neighbour = {x + incrstep, y, source.posz};
+            if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
+            {
                 return false;
             }
-        } else if (y % rayMultiplier == 0) {
+        }
+        else if (y % RAY_MULTIPLIER == 0)
+        {
             // second case of edge handling
-            point left_neighbour = {x, y-deltastep, source.posz};
-            point right_neighbour = {x, y+deltastep, source.posz};
-            if (!isTransparent(left_neighbour) || !isTransparent(right_neighbour)) {
+            point left_neighbour = {x, y - deltastep, source.posz};
+            point right_neighbour = {x, y + deltastep, source.posz};
+            if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
+            {
                 return false;
             }
-        } else {
+        }
+        else
+        {
             point new_point = {x, y, source.posz};
-            if (!isTransparent(new_point)) {
+            if (!is_transparent(new_point))
+            {
                 return false;
             }
         }
 
         error += deltaerr;
-        if (error >= deltaX) {
+        if (error >= delta_x)
+        {
             y += deltastep;
-            error -= deltaX;
+            error -= delta_x;
         }
     }
 
     return true;
 }
 
-bool bresenY(point source, point target) {
+bool bresen_y(point source, point target)
+{
     int x = source.posx;
     int error = 0;
-    int deltaY = abs(source.posy - target.posy);
-    int deltaerr = abs(source.posx - target.posx);
+    int delta_y = std::abs(source.posy - target.posy);
+    int deltaerr = std::abs(source.posx - target.posx);
     int deltastep = sign(target.posx - source.posx);
     int incrstep = sign(target.posy - source.posy);
-    for (int y = source.posy; y != target.posy; y += incrstep) {
-        if ((x % rayMultiplier) == 0 && (y % rayMultiplier) == 0) {
+    for (int y = source.posy; y != target.posy; y += incrstep)
+    {
+        if ((x % RAY_MULTIPLIER) == 0 && (y % RAY_MULTIPLIER) == 0)
+        {
             // when in corner check side neighbours
             // if both of them are not transparent then corner is not transparent
-            point left_neighbour = {x+deltastep, y, source.posz};
-            point right_neighbour = {x, y+incrstep, source.posz};
-            if (!isTransparent(left_neighbour) && !isTransparent(right_neighbour)) {
+            point left_neighbour = {x + deltastep, y, source.posz};
+            point right_neighbour = {x, y + incrstep, source.posz};
+            if (!is_transparent(left_neighbour) && !is_transparent(right_neighbour))
+            {
                 return false;
             }
-        } else if (x % rayMultiplier == 0) {
+        }
+        else if (x % RAY_MULTIPLIER == 0)
+        {
             // when ray hits an edge check both tiles. Since ray travels through edge both of them 
             // must be transparent
-            point left_neighbour = {x-deltastep, y, source.posz};
-            point right_neighbour = {x+deltastep, y, source.posz};
-            if (!isTransparent(left_neighbour) || !isTransparent(right_neighbour)) {
+            point left_neighbour = {x - deltastep, y, source.posz};
+            point right_neighbour = {x + deltastep, y, source.posz};
+            if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
+            {
                 return false;
             }
-        } else if (y % rayMultiplier == 0) {
+        }
+        else if (y % RAY_MULTIPLIER == 0)
+        {
             // second case of edge handling
-            point left_neighbour = {x, y-incrstep, source.posz};
-            point right_neighbour = {x, y+incrstep, source.posz};
-            if (!isTransparent(left_neighbour) || !isTransparent(right_neighbour)) {
+            point left_neighbour = {x, y - incrstep, source.posz};
+            point right_neighbour = {x, y + incrstep, source.posz};
+            if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
+            {
                 return false;
             }
-        } else {
+        }
+        else
+        {
             point new_point = {x, y, source.posz};
 
-            if (!isTransparent(new_point)) {
+            if (!is_transparent(new_point))
+            {
                 return false;
             }
         }
 
         error += deltaerr;
-        if (error >= deltaY) {
+        if (error >= delta_y)
+        {
             x += deltastep;
-            error -= deltaY;
+            error -= delta_y;
         }
     }
 
     return true;
 }
 
-bool rayTrace(point source, point target) {
+bool ray_trace(point source, point target)
+{
     // run Bresenham's line algorithm
-    if (abs(source.posx - target.posx) > abs(source.posy - target.posy)) {
-        return bresenX(source, target);
-    } else {
-        return bresenY(source, target);
+    if (std::abs(source.posx - target.posx) > std::abs(source.posy - target.posy))
+    {
+        return bresen_x(source, target);
+    }
+    else
+    {
+        return bresen_y(source, target);
     }
 
     return false;
 }
 
-void markTilesOfCornerAsVisible(std::list<point>* retlist, point at, point center, char visibility[]) {
+void mark_tiles_of_corner_as_visible(
+        std::list<point>* retlist,
+        point at,
+        point center,
+        char visibility[])
+{
     for (int dx = -1; dx <= 0; dx++) {
         for (int dy = -1; dy <= 0; dy++) {
-            point p = {at.posx+dx, at.posy+dy, at.posz};
+            point p = {at.posx + dx, at.posy + dy, at.posz};
             if (!helpers::check_borders(&p.posx, &p.posy, &p.posz)) {
                 continue;
             }
 
-            int visX = (p.posx - center.posx + sizeWsq);
-            int visY = (p.posy - center.posy + sizeHsq);
-            int visIdx = 2*sizeHsq*visX + visY;
+            int vis_x = (p.posx - center.posx + SIZE_W_SQ);
+            int vis_y = (p.posy - center.posy + SIZE_H_SQ);
+            int vis_idx = 2 * SIZE_H_SQ * vis_x + vis_y;
 
-            if (visIdx < 0) {
+            if (vis_idx < 0)
+            {
                 continue;
             }
 
-            if (visibility[visIdx] == 1) {
+            if (visibility[vis_idx] == 1)
+            {
                 continue;
             }
 
             retlist->push_back(p);
-            visibility[visIdx] = 1;
+            visibility[vis_idx] = 1;
         }
     }
 }
@@ -533,38 +580,48 @@ void markTilesOfCornerAsVisible(std::list<point>* retlist, point at, point cente
 // if ray passes through edge it checks both adjasent tiles. They both must be transparent, otherwise ray blocks
 // if tile has at least one visible corner then this tile is visible
 // otherwise tile is invisible
-std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
+std::list<point>* LOSfinder::CalculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
 {
-    clearLOS();
+    Clear();
 
-    auto visibleTiles = new char[4*(sizeHsq+2)*(sizeWsq+2)];
-    for (int i = 0; i < 4*(sizeHsq+2)*(sizeWsq+2); i++) {
-        visibleTiles[i] = 0;
+    const int VISIBLE_TILES_SIZE = 4 * (SIZE_H_SQ + 2) * (SIZE_W_SQ + 2);
+    char* visible_tiles = new char[VISIBLE_TILES_SIZE];
+    for (int i = 0; i < VISIBLE_TILES_SIZE; ++i)
+    {
+        visible_tiles[i] = 0;
     }
 
-    point source = {pos2corner(posx)+rayMultiplier/2, pos2corner(posy)+rayMultiplier/2, pos2corner(posz)+1};
-    for (int i = -sizeWsq; i < sizeWsq; i++) {
-        for (int j = -sizeHsq; j < sizeHsq; j++) {
-            point p = {pos2corner(posx+i), pos2corner(posy+j), pos2corner(posz)};
-            if (!checkCorner(p)) {
+    point source =
+        { pos2corner(posx) + RAY_MULTIPLIER / 2,
+          pos2corner(posy) + RAY_MULTIPLIER / 2,
+          pos2corner(posz) + 1};
+    for (int i = -SIZE_W_SQ; i < SIZE_W_SQ; ++i)
+    {
+        for (int j = -SIZE_H_SQ; j < SIZE_H_SQ; ++j)
+        {
+            point p = {pos2corner(posx + i), pos2corner(posy + j), pos2corner(posz)};
+            if (!check_corner(p))
+            {
                 continue;
             }
 
             // TODO: we can check that all siblings of this corner are visible
             // so check is unnessesary
 
-            if (rayTrace(source, p)) {
+            if (ray_trace(source, p))
+            {
                 // add all tiles with this corner to visible list
-                markTilesOfCornerAsVisible(retlist, cornerPoint2point(p), cornerPoint2point(source), visibleTiles);
+                mark_tiles_of_corner_as_visible(
+                    retlist, corner_point2point(p), corner_point2point(source), visible_tiles);
             }
         }
     }
 
-    delete[] visibleTiles;
+    delete[] visible_tiles;
     return retlist;
 }
 
-void LOSfinder::clearLOS()
+void LOSfinder::Clear()
 {
     worklist.clear();
 }
