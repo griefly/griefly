@@ -340,6 +340,7 @@ void Connector::AfterWorldCreation()
     if (auto tank = owner->GetItem<GasTank>())
     {
         ConnectToGasTank(tank);
+        tank->anchored = true;
     }
 }
 
