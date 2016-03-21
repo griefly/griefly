@@ -70,3 +70,20 @@ void GasTank::Process()
         atmos_holder_.Connect(ct->GetAtmosHolder());
     }
 }
+
+MagicGasTank::MagicGasTank(size_t id) : GasTank(id)
+{
+    name = "Magic tank";
+    SetFreq(10);
+}
+
+void MagicGasTank::Process()
+{
+    GasTank::Process();
+
+    int new_oxygen = std::max(0, 20000 - static_cast<int>(GetAtmosHolder()->GetGase(OXYGEN)));
+    GetAtmosHolder()->AddGase(OXYGEN, new_oxygen);
+
+    int new_energy = std::max(0, 10000 - static_cast<int>(GetAtmosHolder()->GetEnergy()));
+    GetAtmosHolder()->AddEnergy(new_energy);
+}

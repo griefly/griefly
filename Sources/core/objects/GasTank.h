@@ -24,3 +24,13 @@ private:
     AtmosHolder KV_SAVEBLE(atmos_holder_);
 };
 ADD_TO_TYPELIST(GasTank);
+
+class MagicGasTank: public GasTank
+{
+public:
+    DECLARE_SAVED(MagicGasTank, GasTank);
+    DECLARE_GET_TYPE_ITEM(MagicGasTank);
+    MagicGasTank(size_t id);
+    virtual void Process() override;
+};
+ADD_TO_TYPELIST(MagicGasTank);

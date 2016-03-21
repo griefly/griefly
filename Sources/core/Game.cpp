@@ -85,7 +85,7 @@ void Game::Process()
 
         ProcessInputMessages();
 
-        const int ATMOS_OFTEN = 3;
+        const int ATMOS_OFTEN = 1;
         const int ATMOS_MOVE_OFTEN = 1;
 
         if (process_in_)
