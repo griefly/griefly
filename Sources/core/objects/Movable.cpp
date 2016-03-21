@@ -151,15 +151,14 @@ void IMovable::Represent()
 
 void IMovable::Bump(id_ptr_on<IMovable> item)
 {
-    id_ptr_on<IMob> m;
-    m = item;
-    if (m)
+    if (id_ptr_on<IMob> m = item)
+    {
         ApplyForce(DirToVDir[m->dMove]);
+    }
 }
 
 void IMovable::BumpByGas(Dir dir, bool inside)
 {
-    //checkMove(dir);
     ApplyForce(DirToVDir[dir]);
 }
 

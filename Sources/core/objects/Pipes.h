@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Movable.h"
-#include "Item.h"
 
 #include "../AtmosHolder.h"
+
+#include "Item.h"
+#include "GasTank.h"\
 
 class PipeBase: public IMovable
 {
@@ -93,11 +95,14 @@ public:
     DECLARE_SAVED(Connector, PipeBase);
     DECLARE_GET_TYPE_ITEM(Connector);
     Connector(size_t id);
+    void ConnectToGasTank(id_ptr_on<GasTank> tank);
+    void DisconnectFromGasTank();
     virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override { return true; }
     virtual void Process() override;
 private:
+    id_ptr_on<GasTank> KV_SAVEBLE(tank_);
     id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
 };
 ADD_TO_TYPELIST(Connector);

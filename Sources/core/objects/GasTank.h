@@ -14,6 +14,8 @@ public:
 
     virtual void AttackBy(id_ptr_on<Item> item) override;
     virtual void Process() override;
+
+    AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 private:
     void Open();
     void Close();

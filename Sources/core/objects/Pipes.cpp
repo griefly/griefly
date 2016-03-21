@@ -248,35 +248,12 @@ void Vent::AfterWorldCreation()
 {
     PipeBase::AfterWorldCreation();
 
-    if (!tail_.valid())
-    {
-        GetNeighbour(GetDir())->ForEach(
-        [&](id_ptr_on<IOnMapBase> obj)
-        {
-            if (tail_.valid())
-            {
-                return;
-            }
-            if (id_ptr_on<PipeBase> pipe = obj)
-            {
-                if (pipe->Connect(helpers::revert_dir(GetDir()), GetId()))
-                {
-                    tail_ = pipe;
-                }
-            }
-        });
-    }
+    ConnectHelper(tail_, GetDir());
 }
 
 void Vent::Process()
 {
-    if (tail_.valid())
-    {
-        if (tail_->CanTransferGas(helpers::revert_dir(GetDir())))
-        {
-            tail_->GetAtmosHolder()->Connect(GetAtmosHolder());
-        }
-    }
+    ProcessHelper(tail_, GetDir());
     if (id_ptr_on<CubeTile> cube = owner)
     {
         cube->GetAtmosHolder()->Connect(GetAtmosHolder());
@@ -331,19 +308,46 @@ Connector::Connector(size_t id) : PipeBase(id)
     SetFreq(1);
 }
 
+void Connector::ConnectToGasTank(id_ptr_on<GasTank> tank)
+{
+    tank_ = tank;
+}
+
+void Connector::DisconnectFromGasTank()
+{
+    tank_ = 0;
+}
+
 bool Connector::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
 {
-    // TODO
-    return false;
+    if (dir != GetDir())
+    {
+        return false;
+    }
+    if (tail_.valid())
+    {
+        return false;
+    }
+
+    tail_ = pipe;
+    return true;
 }
 
 void Connector::AfterWorldCreation()
 {
     PipeBase::AfterWorldCreation();
-    // TODO
+    ConnectHelper(tail_, GetDir());
+    if (auto tank = owner->GetItem<GasTank>())
+    {
+        ConnectToGasTank(tank);
+    }
 }
 
 void Connector::Process()
 {
-    // TODO
+    ProcessHelper(tail_, GetDir());
+    if (tank_)
+    {
+        tank_->GetAtmosHolder()->Connect(GetAtmosHolder());
+    }
 }
