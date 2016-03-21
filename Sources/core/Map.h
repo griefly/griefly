@@ -11,9 +11,9 @@
 class LOSfinder
 {
 public:
-    std::list<point>* calculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0);
+    std::list<point>* CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0);
 private:
-    void clearLOS();
+    void Clear();
     std::list<point> worklist;
 
 };

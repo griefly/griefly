@@ -13,7 +13,7 @@ Lobby& GetLobby()
 
 Lobby::Lobby(size_t id): IMainObject(id)
 {
-    seconds_ = 10;//60 * 2;
+    seconds_ = 1;//60 * 2;
 
     security_score_ = 0;
     janitors_score_ = 0;

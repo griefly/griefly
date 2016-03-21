@@ -59,8 +59,4 @@ void IMob::processGUImsg(const Message2 &msg)
 void IMob::ProcessPhysics()
 {
     IMessageReceiver::ProcessPhysics();
-    if(GetId() == GetMob().ret_id())
-    {
-        GetGame().UpdateVisible();
-    }
 }

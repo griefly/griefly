@@ -133,12 +133,6 @@ bool IMovable::mainMove()
     owner->RemoveItem(GetId());
     new_owner->AddItem(GetId());
 
-    if (   GetMob().ret_id() == GetId()
-        || Contains(GetMob()))
-    {
-        GetGame().UpdateVisible();
-    }
-
     lastMove = static_cast<int>(MAIN_TICK);
     return true;
 }

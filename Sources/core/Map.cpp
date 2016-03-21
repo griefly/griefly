@@ -350,285 +350,278 @@ void SetMapMaster(MapMaster* map_master)
 bool IsMapValid()
 {
     return map_master_ != nullptr;
-}\
+}
 
-std::list<point>* LOSfinder::calculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
+const int RAY_MULTIPLIER = 2;
+
+int pos2corner(int pos)
 {
-    //auto retlist = new std::list<point>;
-    clearLOS();
-    //for(int level = 0; level < 
-    point p = {posx, posy, posz};
-    retlist->push_back(p);
+    return pos * RAY_MULTIPLIER;
+}
 
-    p.posx = posx + 1;
-    p.posy = posy;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        worklist.push_back(p);
+int corner2pos(int corner)
+{
+    return corner / RAY_MULTIPLIER;
+}
 
-    p.posx = posx + 1;
-    p.posy = posy;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        retlist->push_back(p);
-
-    p.posx = posx + 1;
-    p.posy = posy + 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        worklist.push_back(p);
-
-    p.posx = posx + 1;
-    p.posy = posy + 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        retlist->push_back(p);
-
-    p.posx = posx;
-    p.posy = posy + 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        worklist.push_back(p);
-
-    p.posx = posx;
-    p.posy = posy + 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        retlist->push_back(p);
-
-    p.posx = posx - 1;
-    p.posy = posy + 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        worklist.push_back(p);
-
-    p.posx = posx - 1;
-    p.posy = posy + 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        retlist->push_back(p);
-
-    p.posx = posx - 1;
-    p.posy = posy;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        worklist.push_back(p);
-
-    p.posx = posx - 1;
-    p.posy = posy;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        retlist->push_back(p);
-    
-    p.posx = posx - 1;
-    p.posy = posy - 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        worklist.push_back(p);
-
-    p.posx = posx - 1;
-    p.posy = posy - 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        retlist->push_back(p);
-
-    p.posx = posx;
-    p.posy = posy - 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        worklist.push_back(p);
-
-    p.posx = posx;
-    p.posy = posy - 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        retlist->push_back(p);
-
-    p.posx = posx + 1;
-    p.posy = posy - 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        worklist.push_back(p);
-
-    p.posx = posx + 1;
-    p.posy = posy - 1;
-    if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-        retlist->push_back(p);
-
-    auto itr = worklist.begin();
-    while(itr != worklist.end())
+int sign(int value)
+{
+    if (value > 0)
     {
-        if(GetMap().IsTransparent(itr->posx, itr->posy, itr->posz)
-            && itr->posx != posx - sizeHsq && itr->posx != posx + sizeHsq
-            && itr->posy != posy - sizeWsq && itr->posy != posy + sizeWsq
-            && 
-            helpers::check_borders(&itr->posx, &itr->posy, &itr->posz))
-            if(abs(itr->posx - posx) > abs(itr->posy - posy)) 
-            if(itr->posx > posx)
-            {
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-            }
-            else 
-            {
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-            }
-            else if(abs(itr->posx - posx) < abs(itr->posy - posy)) 
-            if(itr->posy > posy) 
-            {
-                p.posx = itr->posx;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-            }
-            else 
-            {
-                p.posx = itr->posx;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-            }
-            else
-            if(itr->posx > posx)
-            {
-                if(itr->posy > posy)
-                {
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                }
-                else
-                {
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx + 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                }
-
-            }
-            else
-            {
-                if(itr->posy > posy)
-                {
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy + 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                }
-                else
-                {
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx - 1;
-                p.posy = itr->posy;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    worklist.push_back(p);
-                p.posx = itr->posx;
-                p.posy = itr->posy - 1;
-                if (helpers::check_borders(&p.posx, &p.posy, &p.posz))
-                    retlist->push_back(p);
-                }
-            }
-
-        worklist.erase(itr++);
-    };
-    if (retlist->begin()->posz == 0)
-        return retlist;
-    
-    std::list<point> z_list;
-    for (auto it = retlist->begin(); it != retlist->end(); ++it)
-    {
-        point p = *it;
-        p.posz -= 1;
-        z_list.push_back(p);
+        return 1;
     }
-    retlist->splice(retlist->begin(), z_list);
+    else if (value < 0)
+    {
+        return -1;
+    }
+    return 0;
+}
 
+bool check_corner(point p)
+{
+    int x = corner2pos(p.posx);
+    int y = corner2pos(p.posy);
+    int z = corner2pos(p.posz);
+    return helpers::check_borders(&x, &y, &z);
+}
+
+
+point corner_point2point(point p)
+{
+    point retval = {corner2pos(p.posx), corner2pos(p.posy), corner2pos(p.posz)};
+    return retval;
+}
+
+bool is_transparent(point p)
+{
+    point tilePoint = corner_point2point(p);
+    return GetMap().IsTransparent(tilePoint.posx, tilePoint.posy, tilePoint.posz);
+}
+
+bool bresen_x(point source, point target)
+{
+    int y = source.posy;
+    int error = 0;
+    int delta_x = std::abs(source.posx - target.posx);
+    int deltaerr = std::abs(source.posy - target.posy);
+    int deltastep = sign(target.posy - source.posy);
+    int incrstep = sign(target.posx - source.posx);
+    for (int x = source.posx; x != target.posx; x += incrstep)
+    {
+        if ((x % RAY_MULTIPLIER) == 0 && (y % RAY_MULTIPLIER) == 0)
+        {
+            // when in corner check side neighbours
+            // if both of them are not transparent then corner is not transparent
+            point left_neighbour = {x + incrstep, y, source.posz};
+            point right_neighbour = {x, y + deltastep, source.posz};
+            if (!is_transparent(left_neighbour) && !is_transparent(right_neighbour))
+            {
+                return false;
+            }
+        }
+        else if (x % RAY_MULTIPLIER == 0)
+        {
+            // when ray hits an edge check both tiles - current and previous. Since ray travels through edge both of them 
+            // must be transparent
+            point left_neighbour = {x - incrstep, y, source.posz};
+            point right_neighbour = {x + incrstep, y, source.posz};
+            if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
+            {
+                return false;
+            }
+        }
+        else if (y % RAY_MULTIPLIER == 0)
+        {
+            // second case of edge handling
+            point left_neighbour = {x, y - deltastep, source.posz};
+            point right_neighbour = {x, y + deltastep, source.posz};
+            if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            point new_point = {x, y, source.posz};
+            if (!is_transparent(new_point))
+            {
+                return false;
+            }
+        }
+
+        error += deltaerr;
+        if (error >= delta_x)
+        {
+            y += deltastep;
+            error -= delta_x;
+        }
+    }
+
+    return true;
+}
+
+bool bresen_y(point source, point target)
+{
+    int x = source.posx;
+    int error = 0;
+    int delta_y = std::abs(source.posy - target.posy);
+    int deltaerr = std::abs(source.posx - target.posx);
+    int deltastep = sign(target.posx - source.posx);
+    int incrstep = sign(target.posy - source.posy);
+    for (int y = source.posy; y != target.posy; y += incrstep)
+    {
+        if ((x % RAY_MULTIPLIER) == 0 && (y % RAY_MULTIPLIER) == 0)
+        {
+            // when in corner check side neighbours
+            // if both of them are not transparent then corner is not transparent
+            point left_neighbour = {x + deltastep, y, source.posz};
+            point right_neighbour = {x, y + incrstep, source.posz};
+            if (!is_transparent(left_neighbour) && !is_transparent(right_neighbour))
+            {
+                return false;
+            }
+        }
+        else if (x % RAY_MULTIPLIER == 0)
+        {
+            // when ray hits an edge check both tiles. Since ray travels through edge both of them 
+            // must be transparent
+            point left_neighbour = {x - deltastep, y, source.posz};
+            point right_neighbour = {x + deltastep, y, source.posz};
+            if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
+            {
+                return false;
+            }
+        }
+        else if (y % RAY_MULTIPLIER == 0)
+        {
+            // second case of edge handling
+            point left_neighbour = {x, y - incrstep, source.posz};
+            point right_neighbour = {x, y + incrstep, source.posz};
+            if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            point new_point = {x, y, source.posz};
+
+            if (!is_transparent(new_point))
+            {
+                return false;
+            }
+        }
+
+        error += deltaerr;
+        if (error >= delta_y)
+        {
+            x += deltastep;
+            error -= delta_y;
+        }
+    }
+
+    return true;
+}
+
+bool ray_trace(point source, point target)
+{
+    // run Bresenham's line algorithm
+    if (std::abs(source.posx - target.posx) > std::abs(source.posy - target.posy))
+    {
+        return bresen_x(source, target);
+    }
+    else
+    {
+        return bresen_y(source, target);
+    }
+
+    return false;
+}
+
+void mark_tiles_of_corner_as_visible(
+        std::list<point>* retlist,
+        point at,
+        point center,
+        char visibility[])
+{
+    for (int dx = -1; dx <= 0; dx++) {
+        for (int dy = -1; dy <= 0; dy++) {
+            point p = {at.posx + dx, at.posy + dy, at.posz};
+            if (!helpers::check_borders(&p.posx, &p.posy, &p.posz)) {
+                continue;
+            }
+
+            int vis_x = (p.posx - center.posx + SIZE_W_SQ);
+            int vis_y = (p.posy - center.posy + SIZE_H_SQ);
+            int vis_idx = 2 * SIZE_H_SQ * vis_x + vis_y;
+
+            if (vis_idx < 0)
+            {
+                continue;
+            }
+
+            if (visibility[vis_idx] == 1)
+            {
+                continue;
+            }
+
+            retlist->push_back(p);
+            visibility[vis_idx] = 1;
+        }
+    }
+}
+
+// LOSfinder::calculateVisisble calculates visibility list of map from given map point
+// The line-of-sigh check works as follows:
+// from the center of given tile to every tile corner of the viewport ray is casted
+// ray is casted from center of tile to corners, so it is never aligned to either axis
+// if ray passes only transparent tiles on its way to given corner then the corner is visible
+// if ray passes through corner then it checks sibling tiles. If both of them are not transparent then ray blocks
+// if ray passes through edge it checks both adjasent tiles. They both must be transparent, otherwise ray blocks
+// if tile has at least one visible corner then this tile is visible
+// otherwise tile is invisible
+std::list<point>* LOSfinder::CalculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
+{
+    Clear();
+
+    const int VISIBLE_TILES_SIZE = 4 * (SIZE_H_SQ + 2) * (SIZE_W_SQ + 2);
+    char* visible_tiles = new char[VISIBLE_TILES_SIZE];
+    for (int i = 0; i < VISIBLE_TILES_SIZE; ++i)
+    {
+        visible_tiles[i] = 0;
+    }
+
+    point source =
+        { pos2corner(posx) + RAY_MULTIPLIER / 2,
+          pos2corner(posy) + RAY_MULTIPLIER / 2,
+          pos2corner(posz) + 1};
+    for (int i = -SIZE_W_SQ; i < SIZE_W_SQ; ++i)
+    {
+        for (int j = -SIZE_H_SQ; j < SIZE_H_SQ; ++j)
+        {
+            point p = {pos2corner(posx + i), pos2corner(posy + j), pos2corner(posz)};
+            if (!check_corner(p))
+            {
+                continue;
+            }
+
+            // TODO: we can check that all siblings of this corner are visible
+            // so check is unnessesary
+
+            if (ray_trace(source, p))
+            {
+                // add all tiles with this corner to visible list
+                mark_tiles_of_corner_as_visible(
+                    retlist, corner_point2point(p), corner_point2point(source), visible_tiles);
+            }
+        }
+    }
+
+    delete[] visible_tiles;
     return retlist;
 }
 
-void LOSfinder::clearLOS()
+void LOSfinder::Clear()
 {
     worklist.clear();
 }
