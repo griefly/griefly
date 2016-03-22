@@ -70,7 +70,7 @@ void Chat::PostSimpleText(const std::string& str, size_t tile_id)
         return;
     }
 
-    emit insertHtmlIntoChat(QString::fromStdString(str + "<br>"));
+    emit insertHtmlIntoChat(QString::fromStdString(str));
 }
 
 void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id)

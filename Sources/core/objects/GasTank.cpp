@@ -18,6 +18,7 @@ GasTank::GasTank(size_t id)
     SetState("blue");
 
     open_ = false;
+    SetFreq(1);
     atmos_holder_.AddGase(OXYGEN, 20000);
     atmos_holder_.AddEnergy(10000);
    // atmos_holder_.SetVolume();
@@ -52,7 +53,6 @@ void GasTank::Open()
     GetChat().PostSimpleText(name + " is open", owner.ret_id());
 
     open_ = true;
-    SetFreq(1);
 }
 
 void GasTank::Close()
@@ -60,11 +60,14 @@ void GasTank::Close()
     GetChat().PostSimpleText(name + " is closed", owner.ret_id());
 
     open_ = false;
-    SetFreq(0);
 }
 
 void GasTank::Process()
 {
+    if (!open_)
+    {
+        return;
+    }
     if (id_ptr_on<CubeTile> ct = owner)
     {
         atmos_holder_.Connect(ct->GetAtmosHolder());
@@ -80,6 +83,9 @@ MagicGasTank::MagicGasTank(size_t id) : GasTank(id)
 void MagicGasTank::Process()
 {
     GasTank::Process();
+
+    GetAtmosHolder()->RemoveGase(CO2, GetAtmosHolder()->GetGase(CO2));
+    GetAtmosHolder()->RemoveGase(NYTROGEN, GetAtmosHolder()->GetGase(NYTROGEN));
 
     int new_oxygen = std::max(0, 20000 - static_cast<int>(GetAtmosHolder()->GetGase(OXYGEN)));
     GetAtmosHolder()->AddGase(OXYGEN, new_oxygen);
