@@ -1,6 +1,9 @@
 #include "Pipes.h"
 
 #include "../Helpers.h"
+#include "representation/Chat.h"
+
+#include "ElectricTools.h"
 
 PipeBase::PipeBase(size_t id) : IMovable(id)
 {
@@ -11,6 +14,15 @@ PipeBase::PipeBase(size_t id) : IMovable(id)
     //SetState("intact");
 
     name = "Please do not create me";
+}
+
+void PipeBase::AttackBy(id_ptr_on<Item> item)
+{
+    if (id_ptr_on<AtmosTool> at = item)
+    {
+        GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
+        return;
+    }
 }
 
 void PipeBase::ConnectHelper(id_ptr_on<PipeBase>& connection, Dir dir)
@@ -351,4 +363,57 @@ void Connector::Process()
     {
         tank_->GetAtmosHolder()->Connect(GetAtmosHolder());
     }
+}
+
+
+PipePump::PipePump(size_t id) : Pipe(id)
+{
+    SetSprite("icons/pipes2.dmi");
+    SetState("pipepump-run");
+
+    pump_pressure_ = 38000;
+}
+
+bool PipePump::CanTransferGas(Dir dir) const
+{
+    if (helpers::revert_dir(dir) == GetDir())
+    {
+        return true;
+    }
+    return false;
+}
+
+void PipePump::Process()
+{
+    Dir head;
+    Dir tail;
+    GetTailAndHead(GetDir(), &head, &tail);
+    ProcessHelper(tail_, tail);
+    AtmosHolder* head_connection = nullptr;
+    if (head_)
+    {
+        head_connection = head_->GetAtmosHolder();
+    }
+    if (head_connection == nullptr)
+    {
+        if (id_ptr_on<CubeTile> cube = owner)
+        {
+            head_connection = cube->GetAtmosHolder();
+        }
+    }
+    if (head_connection == nullptr)
+    {
+        return;
+    }
+
+    if (head_connection->GetPressure() >= pump_pressure_)
+    {
+        return;
+    }
+
+    head_connection->Connect(
+        GetAtmosHolder(),
+        MAX_GAS_LEVEL,
+        MAX_GAS_LEVEL / 4,
+        MAX_GAS_LEVEL);
 }

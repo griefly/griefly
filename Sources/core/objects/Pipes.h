@@ -13,6 +13,7 @@ public:
     DECLARE_SAVED(PipeBase, IMovable);
     DECLARE_GET_TYPE_ITEM(PipeBase);
     PipeBase(size_t id);
+    virtual void AttackBy(id_ptr_on<Item> item) override;
     virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) { return false; }
     virtual bool CanTransferGas(Dir dir) const { return false; }
     AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
@@ -33,7 +34,7 @@ public:
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override { return true; }
     virtual void Process() override;
-private:
+protected:
     static void GetTailAndHead(Dir dir, Dir* head, Dir* tail);
     id_ptr_on<PipeBase> KV_SAVEBLE(head_);
     id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
@@ -106,5 +107,18 @@ private:
     id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
 };
 ADD_TO_TYPELIST(Connector);
+
+class PipePump: public Pipe
+{
+public:
+    DECLARE_SAVED(PipePump, Pipe);
+    DECLARE_GET_TYPE_ITEM(PipePump);
+    PipePump(size_t id);
+    virtual bool CanTransferGas(Dir dir) const override;
+    virtual void Process() override;
+public:
+    int KV_SAVEBLE(pump_pressure_);
+};
+ADD_TO_TYPELIST(PipePump);
 
 

@@ -5,6 +5,9 @@
 
 #include "ElectricTools.h"
 
+const int O2_TANK_AMOUNT = 10000;
+const int O2_TANK_ENERGY = 5000;
+
 GasTank::GasTank(size_t id)
     : IMovable(id)
 {
@@ -19,8 +22,8 @@ GasTank::GasTank(size_t id)
 
     open_ = false;
     SetFreq(1);
-    atmos_holder_.AddGase(OXYGEN, 20000);
-    atmos_holder_.AddEnergy(10000);
+    atmos_holder_.AddGase(OXYGEN, O2_TANK_AMOUNT);
+    atmos_holder_.AddEnergy(O2_TANK_ENERGY);
    // atmos_holder_.SetVolume();
 }
 
@@ -87,9 +90,9 @@ void MagicGasTank::Process()
     GetAtmosHolder()->RemoveGase(CO2, GetAtmosHolder()->GetGase(CO2));
     GetAtmosHolder()->RemoveGase(NYTROGEN, GetAtmosHolder()->GetGase(NYTROGEN));
 
-    int new_oxygen = std::max(0, 20000 - static_cast<int>(GetAtmosHolder()->GetGase(OXYGEN)));
+    int new_oxygen = std::max(0, O2_TANK_AMOUNT - static_cast<int>(GetAtmosHolder()->GetGase(OXYGEN)));
     GetAtmosHolder()->AddGase(OXYGEN, new_oxygen);
 
-    int new_energy = std::max(0, 10000 - static_cast<int>(GetAtmosHolder()->GetEnergy()));
+    int new_energy = std::max(0, O2_TANK_ENERGY - static_cast<int>(GetAtmosHolder()->GetEnergy()));
     GetAtmosHolder()->AddEnergy(new_energy);
 }
