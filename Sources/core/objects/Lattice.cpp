@@ -12,6 +12,8 @@ Lattice::Lattice(size_t id) : Structure(id)
     SetSprite("icons/structures.dmi");
     SetState("latticefull");
 
+    v_level = 1;
+
     name = "Lattice";
 }
 

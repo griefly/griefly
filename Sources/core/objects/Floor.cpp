@@ -78,4 +78,6 @@ void Floor::SetOpen(bool o)
 Plating::Plating(size_t id) : Floor(id)
 {
     open_ = true;
+    // For map editor
+    SetState("plating");
 }
