@@ -8,7 +8,7 @@
 PipeBase::PipeBase(size_t id) : IMovable(id)
 {
     anchored = true;
-    v_level = 3;
+    v_level = 1;
 
     SetSprite("icons/pipes.dmi");
     //SetState("intact");
@@ -234,7 +234,11 @@ void Manifold::GetConnectionsDirs(Dir dir, Dir *tail, Dir *left, Dir *right)
 
 Vent::Vent(size_t id) : PipeBase(id)
 {
-    SetState("vent_filter-4");
+    SetSprite("icons/vent_pump.dmi");
+
+    SetHidden(false);
+
+    v_level = 3;
 
     name = "Vent";
 
@@ -269,6 +273,18 @@ void Vent::Process()
     if (id_ptr_on<CubeTile> cube = owner)
     {
         cube->GetAtmosHolder()->Connect(GetAtmosHolder());
+    }
+}
+
+void Vent::SetHidden(bool hidden)
+{
+    if (hidden)
+    {
+        SetState("hoff");
+    }
+    else
+    {
+        SetState("off");
     }
 }
 
@@ -314,6 +330,7 @@ void Valve::AttackBy(id_ptr_on<Item> item)
 Connector::Connector(size_t id) : PipeBase(id)
 {
     SetState("connector");
+    v_level = 3;
 
     name = "Connector";
 
@@ -406,7 +423,7 @@ void PipePump::Process()
         return;
     }
 
-    if (head_connection->GetPressure() >= pump_pressure_)
+    if (static_cast<int>(head_connection->GetPressure()) >= pump_pressure_)
     {
         return;
     }

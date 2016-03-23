@@ -4,6 +4,7 @@
 
 #include "Item.h"
 #include "FloorTile.h"
+#include "Pipes.h"
 
 #include "../ObjectFactory.h"
 
@@ -17,8 +18,14 @@ Floor::Floor(size_t id) : ITurf(id)
 
     name = "Floor";
 
-    SetOpen(false);
+    open_ = false;
     bloody = false;
+}
+
+void Floor::AfterWorldCreation()
+{
+    ITurf::AfterWorldCreation();
+    SetOpen(open_);
 }
 
 void Floor::AttackBy(id_ptr_on<Item> item)
@@ -49,10 +56,20 @@ void Floor::SetOpen(bool o)
     if (open_)
     {
         SetState("plating");
+        v_level = 0;
+        if (auto vent = owner->GetItem<Vent>())
+        {
+            vent->SetHidden(false);
+        }
     }
     else
     {
         SetState("floor");
+        v_level = 2;
+        if (auto vent = owner->GetItem<Vent>())
+        {
+            vent->SetHidden(true);
+        }
     }
     GetView()->RemoveOverlays();
 }
@@ -60,5 +77,5 @@ void Floor::SetOpen(bool o)
 
 Plating::Plating(size_t id) : Floor(id)
 {
-    SetOpen(true);
+    open_ = true;
 }

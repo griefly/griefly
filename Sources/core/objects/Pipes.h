@@ -85,6 +85,8 @@ public:
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override { return true; }
     virtual void Process() override;
+
+    void SetHidden(bool hidden);
 private:
     id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
 };

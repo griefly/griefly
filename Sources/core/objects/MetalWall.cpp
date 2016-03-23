@@ -14,6 +14,8 @@ MetalWall::MetalWall(size_t id) : ITurf(id)
     transparent = false;
     SetPassable(D_ALL, Passable::EMPTY);
 
+    v_level = 2;
+
     SetSprite("icons/walls.dmi");
     SetState("metal0");
 
@@ -39,6 +41,8 @@ ReinforcedWall::ReinforcedWall(size_t id) : ITurf(id)
 {
     transparent = false;
     SetPassable(D_ALL, Passable::EMPTY);
+
+    v_level = 2;
 
     SetSprite("icons/walls.dmi");
     SetState("r_wall");
