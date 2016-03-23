@@ -16,6 +16,11 @@ def main():
 
     if len(sys.argv) == 2:
         total_bots = int(sys.argv[1])
+    
+    if total_bots > 20:
+        raise ArgsError("Too much bots")
+        
+    print "Amount of bots: " + str(total_bots)
 
     for x in range(0, total_bots):
         p = subprocess.Popen(args, cwd='./Exec')
@@ -25,14 +30,16 @@ def main():
 
     while True:
         time.sleep(5)
-        for p in processes[:]:
+        new_processes = []
+        for p in processes:
             if random.randint(0, 10) == 0:
                 p.kill()
+                time.sleep(1)
                 p.communicate()
-                processes.append(subprocess.Popen(args, cwd='./Exec'))
+                new_processes.append(subprocess.Popen(args, cwd='./Exec'))
             else:
-                processes.append(p)
-
+                new_processes.append(p)
+        processes = new_processes
 
 if __name__ == "__main__":
     main()
