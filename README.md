@@ -12,8 +12,8 @@ Dependencies
 3. libpng
 4. Python 2.7
 5. Go
-6. SDL 1.2 (will be removed soon)
-7. SDL_image 1.2 (will be removed soon)
+6. SDL 1.2 _(will be removed soon)_
+7. SDL_image 1.2 _(will be removed soon)_
 
 Command line params (1 in param means that it is disabled):
 mapgen_name=brig_small.gen i1p=grief.ly -nod1raw -autogen_reports -ed1itor -a1uto -auto_connect login=Guest -unsync_generation
