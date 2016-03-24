@@ -17,7 +17,3 @@ Dependencies
 
 Command line params (1 in param means that it is disabled):
 mapgen_name=brig_small.gen i1p=grief.ly -nod1raw -autogen_reports -ed1itor -a1uto -auto_connect login=Guest -unsync_generation
-
-
-
-Warning: 32bit only
