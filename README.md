@@ -23,9 +23,10 @@ How to build everything on Windows
 _It is not tested guide, so if you have any issues during the process please report them_
 
 1. All tools and libs from the depencies list should be available on your machine
-2. Open CMakeLists.txt in Qt Creator
+2. Open CMakeLists.txt in Qt Creator  
+   Open Project -> Select CMakeLists.txt -> Select build folder -> Run CMake for the first time
 3. Environment variables  
-   Projects _(left column in Qt Creator)_ -> Build Environment  
+   In opened project: Projects _(left column in Qt Creator)_ -> Build Environment  
    It is needed to set environment variables for libs and tools.
    Mine setted as:  
   `Set GIT_PATH to C:\Program Files (x86)\Git\bin\git.exe`  
@@ -39,7 +40,7 @@ _It is not tested guide, so if you have any issues during the process please rep
   `Set SFML_AUDIO_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-audio.lib`  
   `Set SFML_INCLUDE_DIR to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\include`  
   `Set SFML_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-main.lib`  
-4. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
+4. Rerun CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
 5. Build the project. Client executables will appear in the Exec folder, and the server executable will appear in the knv-server-go folder.
 
 How to build everything on Linux
