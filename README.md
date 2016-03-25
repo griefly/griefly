@@ -41,5 +41,21 @@ _It is not tested guide, so if you have any issues during the process please rep
 4. Run CMake with param -DCMAKE_BUILD_TYPE=Release for Release verison.
 5. Build the project. Client executables will appear in the Exec folder, and the server executable will appear in the knv-server-go folder.
 
-Command line params (1 in param means that it is disabled):
-mapgen_name=brig_small.gen i1p=grief.ly -nod1raw -autogen_reports -ed1itor -a1uto -auto_connect login=Guest -unsync_generation
+How to build everything on linux
+--------------------------------
+
+1. Install dependencies. Look at `travis-get-deps` rule in Makefile for clues. Also you will need go (https://golang.org/dl/).
+2. `make`. Built project will be placed under `Exec` directory.
+3. `./build_go_server.sh`
+
+How to start server
+-------------------
+
+Just run the executable from directory `knv-server-go`.
+
+How to run game without launcher
+--------------------------------
+
+Pass those command line parameters to `KVEngine` or `KVEngine.exe`:
+`mapgen_name=brig_small.gen -autogen_reports -auto_connect login=Guest -unsync_generation`
+You can also specify game host by parameter `ip=game_host_address`. By default it connects to localhost.
