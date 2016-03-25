@@ -20,8 +20,7 @@ Dependencies
 
 How to build everything on Windows
 -----------------------------------
-_If you have any issues during the build process please report them_
-
+_If you have any issues during the build process please report them_  
 1. All tools and libs from the depencies list should be available on your machine
 2. Open CMakeLists.txt in Qt Creator  
    Open Project -> Select CMakeLists.txt -> Select build folder -> Run CMake _(for the first time)_
@@ -45,12 +44,16 @@ _If you have any issues during the build process please report them_
    Client executables will appear in the `Exec` folder, and the server executable will appear in the `knv-server-go` folder.  
    Client executables depend from various dlls (Qt, SDL, SFML), so it is needed to manually place them to the `Exec` folder.
 
+**Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).
+
 How to build everything on Linux
 --------------------------------
 
 1. Install dependencies. Look at `travis-get-deps` rule in Makefile for clues. Also you will need go (https://golang.org/dl/).
 2. `make`. Built project will be placed under `Exec` directory.
 3. `./build_go_server.sh`
+
+**Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).
 
 How to start server
 -------------------
