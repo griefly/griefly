@@ -7,8 +7,8 @@ It used to be Karya &amp; Valya Rogue-like, but now it is Griefly: Yet Another S
 
 Dependencies
 -------------
-1. Some C++ compiler (mine is the compiler from **Visual Studio 2012**)
-2. Qt5 (mine version is **Desktop Qt 5.4.0 MSVC2012 OpenGL 32bit**). Qt Creator is optional, but desired
+1. Some C++ compiler (e.g., the compiler from **Visual Studio 2012**)
+2. Qt5 (e.g., **Desktop Qt 5.4.0 MSVC2012 OpenGL 32bit**). Qt Creator is optional, but desired
 3. SFML 2.3
 4. libpng
 5. Python 2.7
@@ -20,7 +20,7 @@ Dependencies
 
 How to build everything on Windows
 -----------------------------------
-_It is not tested guide, so if you have any issues during the process please report them_
+_If you have any issues during the build process please report them_
 
 1. All tools and libs from the depencies list should be available on your machine
 2. Open CMakeLists.txt in Qt Creator  
@@ -41,7 +41,9 @@ _It is not tested guide, so if you have any issues during the process please rep
   `Set SFML_INCLUDE_DIR to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\include`  
   `Set SFML_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-main.lib`  
 4. Rerun CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
-5. Build the project. Client executables will appear in the Exec folder, and the server executable will appear in the knv-server-go folder.
+5. Build the project.  
+   Client executables will appear in the Exec folder, and the server executable will appear in the knv-server-go folder.  
+   Client executables depend from various dll (Qt, SDL, SFML), so it is needed to manually place them to the Exec folder.
 
 How to build everything on Linux
 --------------------------------
