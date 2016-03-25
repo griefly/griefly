@@ -24,9 +24,9 @@ _If you have any issues during the build process please report them_
 
 1. All tools and libs from the depencies list should be available on your machine
 2. Open CMakeLists.txt in Qt Creator  
-   Open Project -> Select CMakeLists.txt -> Select build folder -> Run CMake for the first time
+   Open Project -> Select CMakeLists.txt -> Select build folder -> Run CMake _(for the first time)_
 3. Environment variables  
-   In opened project: Projects _(left column in Qt Creator)_ -> Build Environment  
+   In the opened project: Projects _(left column in Qt Creator)_ -> Build Environment  
    It is needed to set environment variables for libs and tools.
    Mine setted as:  
   `Set GIT_PATH to C:\Program Files (x86)\Git\bin\git.exe`  
