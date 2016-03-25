@@ -3,7 +3,7 @@ Griefly
 
 [![Build Status](https://travis-ci.org/kremius/karya-valya.svg?branch=master)](https://travis-ci.org/kremius/karya-valya)
 
-It used to be Karya &amp; Valya Rogue-like, but now it is Griefly: Yet Another Space Station Remake
+It used to be **Karya &amp; Valya Rogue-like**, but now it is **Griefly: Yet Another Space Station Remake**
 
 Dependencies
 -------------
@@ -42,8 +42,8 @@ _If you have any issues during the build process please report them_
   `Set SFML_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-main.lib`  
 4. Rerun CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
 5. Build the project.  
-   Client executables will appear in the Exec folder, and the server executable will appear in the knv-server-go folder.  
-   Client executables depend from various dll (Qt, SDL, SFML), so it is needed to manually place them to the Exec folder.
+   Client executables will appear in the `Exec` folder, and the server executable will appear in the `knv-server-go` folder.  
+   Client executables depend from various dlls (Qt, SDL, SFML), so it is needed to manually place them to the `Exec` folder.
 
 How to build everything on Linux
 --------------------------------
@@ -64,7 +64,7 @@ Pass those command line parameters to `KVEngine` or `KVEngine.exe`:
 
 First (master) client:  
 `mapgen_name=brig_small.gen -auto_connect login=<admin login> password=<admin password>`  
-where 'login' and 'password' params values should match values in an auth database (by default `knv-server-go/db/auth.json`)  
+where `login` and `password` params values should match values in an auth database (by default `knv-server-go/db/auth.json`)  
 Other clients:  
 `-auto_connect login=Guest`
 
