@@ -14,8 +14,9 @@ Dependencies
 5. Python 2.7
 6. Go
 7. Git
-8. SDL 1.2 _(will be removed soon)_
-9. SDL_image 1.2 _(will be removed soon)_
+8. CMake 2.8 
+9. SDL 1.2 _(will be removed soon)_
+10. SDL_image 1.2 _(will be removed soon)_
 
 How to build everything on Windows
 -----------------------------------
@@ -38,10 +39,10 @@ _It is not tested guide, so if you have any issues during the process please rep
   `Set SFML_AUDIO_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-audio.lib`  
   `Set SFML_INCLUDE_DIR to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\include`  
   `Set SFML_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-main.lib`  
-4. Run CMake with param -DCMAKE_BUILD_TYPE=Release for Release verison.
+4. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
 5. Build the project. Client executables will appear in the Exec folder, and the server executable will appear in the knv-server-go folder.
 
-How to build everything on linux
+How to build everything on Linux
 --------------------------------
 
 1. Install dependencies. Look at `travis-get-deps` rule in Makefile for clues. Also you will need go (https://golang.org/dl/).
