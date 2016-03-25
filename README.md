@@ -26,7 +26,7 @@ _It is not tested guide, so if you have any issues during the process please rep
 3. Environment variables  
    Projects _(left column in Qt Creator)_ -> Build Environment  
    It is needed to set environment variables for libs and tools.
-   Mine setted as:
+   Mine setted as:  
   `Set GIT_PATH to C:\Program Files (x86)\Git\bin\git.exe`  
   `Set GOFMT_PATH to C:\Go\bin\gofmt.exe`  
   `Set GO_PATH to C:\Go\bin\go.exe`  
