@@ -61,5 +61,11 @@ How to run game without launcher
 --------------------------------
 
 Pass those command line parameters to `KVEngine` or `KVEngine.exe`:
-`mapgen_name=brig_small.gen -autogen_reports -auto_connect login=Guest -unsync_generation`
+
+First (master) client:  
+`mapgen_name=brig_small.gen -auto_connect login=<admin login> password=<admin password>`  
+where 'login' and 'password' params values should match values in an auth database (by default `knv-server-go/db/auth.json`)  
+Other clients:  
+`-auto_connect login=Guest`
+
 You can also specify game host by parameter `ip=game_host_address`. By default it connects to localhost.
