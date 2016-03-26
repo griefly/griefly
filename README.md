@@ -20,7 +20,8 @@ Dependencies
 
 How to build everything on Windows
 -----------------------------------
-_If you have any issues during the build process please report them_  
+_If you have any issues during the build process please report them_   
+
 1. All tools and libs from the depencies list should be available on your machine
 2. Open CMakeLists.txt in Qt Creator  
    Open Project -> Select CMakeLists.txt -> Select build folder -> Run CMake _(for the first time)_
