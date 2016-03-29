@@ -63,6 +63,8 @@ private:
     QElapsedTimer autoplay_timer_;
     bool autoplay_;
 
+    QElapsedTimer message_sending_interval_;
+
     QMutex mutex_;
 
     void HandleInput();

@@ -34,6 +34,8 @@ Representation::Representation()
         autoplay_timer_.start();
     }
 
+    message_sending_interval_.start();
+
     if (!InitSDL())
     {
         SYSTEM_STREAM << "Fail SDL load" << std::endl;
@@ -85,6 +87,16 @@ void Representation::Swap()
 
 void Representation::HandleKeyboardDown(QKeyEvent* event)
 {
+    if (autoplay_ == false)
+    {
+        const int MESSAGE_INTERVAL = 33;
+        if (message_sending_interval_.elapsed() < MESSAGE_INTERVAL)
+        {
+            return;
+        }
+        message_sending_interval_.restart();
+    }
+
     std::string text;
 
     int val = rand();
