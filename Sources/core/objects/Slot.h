@@ -64,6 +64,7 @@ public:
     }
     void SetName(const std::string& name)
     {
+        qDebug() << "New name: " << QString::fromStdString(name);
         name_ = name;
     }
 
@@ -89,6 +90,7 @@ public:
     }
     virtual void Draw(int shift)
     {
+        //qDebug() << "DrawName: " << QString::fromStdString(name_);
         Representation::InterfaceUnit unit;
         unit.name = name_;
         unit.pixel_x = 32 * posx_;
@@ -118,6 +120,7 @@ public:
         file << posx_ << " ";
         file << posy_ << " ";
         file << type_ << " ";
+        file << name_ << " ";
         return file;
     }
     virtual std::istream& operator>>(std::stringstream& file) override
@@ -127,6 +130,7 @@ public:
         file >> posx_;
         file >> posy_;
         file >> type_;
+        file >> name_;
         return file;
     }
     virtual unsigned int hash_member() const override
@@ -135,7 +139,8 @@ public:
                + hash(item_)
                + hash(posx_)
                + hash(posy_)
-               + hash(type_);
+               + hash(type_)
+               + hash(name_);
     }
 private:
     ViewInfo view_;

@@ -197,6 +197,7 @@ void HumanInterface::AddOverlays()
 
 void HumanInterface::HandleClick(const std::string& place)
 {
+    qDebug() << QString::fromStdString(place);
     if (place == HumanInterfacePlaces::RIGHT_HAND)
     {
         ApplyActiveHandOnSlot(&r_hand_);
@@ -270,6 +271,7 @@ HumanInterface::~HumanInterface()
 
 void HumanInterface::Draw()
 {
+    //qDebug() << "Generate interface for frame, " << owner_.ret_id();
     r_hand_.Draw();
     l_hand_.Draw();
     drop_.Draw();
