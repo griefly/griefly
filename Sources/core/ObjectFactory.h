@@ -64,9 +64,16 @@ public:
         }
         objects_table_[id_] = item;
         ++id_;
-        if (owner.valid() && !owner->AddItem(item->GetId()))
+        bool is_turf = std::is_base_of<ITurf, T>::value || std::is_same<ITurf, T>::value;
+        if (owner.valid() && is_turf)
+        {
+            qDebug() << "is_turf == true";
+            owner->SetTurf(item->GetId());
+        }
+        else if (owner.valid() && !owner->AddItem(item->GetId()))
         {
             qDebug() << "AddItem failed";
+
             abort();
         }
 

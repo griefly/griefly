@@ -31,7 +31,7 @@ void MetalWall::AttackBy(id_ptr_on<Item> item)
             PlaySoundIfVisible("Welder.ogg", owner.ret_id());
             GetFactory().Create<IOnMapObject>(Girder::T_ITEM_S(), GetOwner());
             GetFactory().Create<IOnMapObject>(Metal::T_ITEM_S(), GetOwner());
-            SetTurf(GetFactory().Create<ITurf>(Floor::T_ITEM_S()));
+            GetFactory().Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
             delThis();
         }
     }

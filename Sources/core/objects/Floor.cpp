@@ -52,6 +52,7 @@ void Floor::AttackBy(id_ptr_on<Item> item)
 
 void Floor::SetOpen(bool o)
 {
+    //qDebug() << "Start set open " << owner->GetId();
     open_ = o;
     if (open_)
     {
@@ -72,6 +73,7 @@ void Floor::SetOpen(bool o)
         }
     }
     GetView()->RemoveOverlays();
+    //qDebug() << "End setopen";
 }
 
 
