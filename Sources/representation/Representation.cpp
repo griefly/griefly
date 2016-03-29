@@ -149,24 +149,6 @@ void Representation::HandleKeyboardDown(QKeyEvent* event)
     {
         text = Input::KEY_R;
     }
-    else if (event && event->key() == Qt::Key_QuoteLeft)
-    {
-       /* GetTexts()["SecScore"].SetUpdater
-        ([&](std::string* str)
-        {
-            std::stringstream ss;
-            ss << "Security: " << GetLobby().security_score_;
-            *str = ss.str();
-        }).SetSize(15).SetPlace(10, 50).SetColor(140, 140, 240);
-        GetTexts()["JanScore"].SetUpdater
-        ([&](std::string* str)
-        {
-            std::stringstream ss;
-            ss << "Janitors: " << GetLobby().janitors_score_;
-            *str = ss.str();
-        }).SetSize(15).SetPlace(10, 70).SetColor(140, 140, 240);*/
-        return;
-    }
     else
     {
         return;
@@ -177,12 +159,7 @@ void Representation::HandleKeyboardDown(QKeyEvent* event)
 
 void Representation::HandleKeyboardUp(QKeyEvent *event)
 {
-    if (event && event->key() == Qt::Key_QuoteLeft)
-    {
-        /*GetTexts().Delete("SecScore");
-        GetTexts().Delete("JanScore");*/
-        return;
-    }
+
 }
 
 void Representation::HandleInput()
