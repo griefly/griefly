@@ -9,7 +9,7 @@ def main():
     exe = "Exec/KVEngine.exe"
     if sys.platform.startswith("linux"):
         exe = "./KVEngine"
-    args = [exe, '-nodraw', '-auto', '-auto_connect', 'login=Guest']
+    args = [exe, 'ip=grief.ly', '-nodraw', '-auto', '-auto_connect', 'login=Guest']
     processes = []
 
     total_bots = TOTAL_BOTS

@@ -43,6 +43,12 @@ signals:
     void insertHtmlIntoChat(QString html);
     void playMusic(QString name, float volume);
 private:
+    void AddLastMessages(std::stringstream& stream);
+    void AddMessageToMessageLog(Message2 message);
+
+    std::vector<Message2> messages_log_;
+    int log_pos_;
+
     bool is_end_process_;
 
     std::list<point>* visible_points_;

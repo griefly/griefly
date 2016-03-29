@@ -57,6 +57,15 @@ Game::Game()
 
     current_connections_ = 0;
 
+    const int MESSAGES_LOG_SIZE = 2 * 1024;
+    messages_log_.resize(MESSAGES_LOG_SIZE);
+    for (int i = 0; i < messages_log_.size(); ++i)
+    {
+        messages_log_[i].type = 0;
+        messages_log_[i].json = "(empty)";
+    }
+    log_pos_ = 0;
+
     this->moveToThread(&thread_);
     connect(&thread_, &QThread::started, this, &Game::process);
 }
@@ -280,6 +289,8 @@ void Game::ProcessInputMessages()
     {
         Message2 msg = Network2::GetInstance().PopMessage();
 
+        AddMessageToMessageLog(msg);
+
         if (msg.type == MessageType::NEW_TICK)
         {
             process_in_ = true;
@@ -330,6 +341,7 @@ void Game::ProcessInputMessages()
                 FastStringstream* ss = GetFactory().GetFastStream();
                 ss->Reset();
                 GetFactory().SaveMap(*(ss->GetStream()));
+                AddLastMessages(*ss->GetStream());
                 data = ss->GetCurrentData();
                 qDebug() << " " << data.length();
             }
@@ -457,6 +469,24 @@ void Game::generateUnsync()
     {
         GetUnsyncGenerator()->PerformUnsync();
     }
+}
+
+void Game::AddLastMessages(std::stringstream& stream)
+{
+    stream << std::endl;
+    for (int i = (log_pos_ + 1) % messages_log_.size();
+             i != log_pos_;
+             i = (i + 1) % messages_log_.size())
+    {
+        stream << messages_log_[i].type << " ";
+        stream << messages_log_[i].json.toStdString() << std::endl;
+    }
+}
+
+void Game::AddMessageToMessageLog(Message2 message)
+{
+    messages_log_[log_pos_] = message;
+    log_pos_ = (log_pos_ + 1) % messages_log_.size();
 }
 
 void Game::ProcessBroadcastedMessages()
