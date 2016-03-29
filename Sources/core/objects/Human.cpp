@@ -78,7 +78,9 @@ bool Human::checkMove(Dir direct)
     if (IMob::checkMove(direct))
     {   
         if (owner->GetItem<Shard>().valid())
+        {
             PlaySoundIfVisible("glass_step.ogg", GetOwner().ret_id());
+        }
         return true;
     }
     return false;
@@ -148,7 +150,9 @@ void Human::processGUImsg(const Message2 &msg)
                     if (interface_.GetActiveHand().Get())
                     {
                         if (!item->GetOwner()->RemoveItem(item))
+                        {
                             SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
+                        }
                         item->SetOwner(GetId());
                     }
                     else
