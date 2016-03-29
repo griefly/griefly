@@ -198,7 +198,7 @@ void MainForm::connectionFailed(QString reason)
 {
     insertHtmlIntoChat("<b>Connection failed!</b>");
     insertHtmlIntoChat(reason);
-    insertHtmlIntoChat("<br>If you would like to reconnect then do it manually<br>");
+    insertHtmlIntoChat("<br>If you would like to reconnect then do it manually (close the game window and start the game again)<br>");
 }
 
 void MainForm::insertHtmlIntoChat(QString html)

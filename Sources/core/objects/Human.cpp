@@ -98,13 +98,25 @@ void Human::processGUImsg(const Message2 &msg)
         if (std::abs(force_.x) + std::abs(force_.y) + std::abs(force_.z) < 4)
         {
             if (Network2::IsKey(obj, Input::MOVE_UP))
+            {
                 ApplyForce(DirToVDir[D_UP]);
+                return;
+            }
             else if (Network2::IsKey(obj, Input::MOVE_DOWN))
+            {
                 ApplyForce(DirToVDir[D_DOWN]);
+                return;
+            }
             else if (Network2::IsKey(obj, Input::MOVE_LEFT))
+            {
                 ApplyForce(DirToVDir[D_LEFT]);
+                return;
+            }
             else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
+            {
                 ApplyForce(DirToVDir[D_RIGHT]);
+                return;
+            }
         }
     }
     if (msg.type == MessageType::MESSAGE)

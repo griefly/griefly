@@ -64,7 +64,6 @@ public:
     }
     void SetName(const std::string& name)
     {
-        qDebug() << "New name: " << QString::fromStdString(name);
         name_ = name;
     }
 
@@ -90,7 +89,6 @@ public:
     }
     virtual void Draw(int shift)
     {
-        //qDebug() << "DrawName: " << QString::fromStdString(name_);
         Representation::InterfaceUnit unit;
         unit.name = name_;
         unit.pixel_x = 32 * posx_;
