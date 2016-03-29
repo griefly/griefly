@@ -260,6 +260,11 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 
 	r.checkForNewGame()
 
+	if r.clientVersion == "" {
+		// the first valid client defines game version
+		r.clientVersion = m.GameVersion
+	}
+
 	// look up for existing player avatar for current map
 	if playerInfo, ok := r.players[info.Login]; ok {
 		id = playerInfo.id
@@ -589,7 +594,6 @@ func (r *Registry) dumpPlayerMap(id, tick int, callback func()) {
 
 func (r *Registry) handleVersionCheck(req versionCheck) {
 	if r.clientVersion == "" {
-		r.clientVersion = req.version
 		req.response <- versionCheckResponse{true, req.version}
 	} else {
 		req.response <- versionCheckResponse{req.version == r.clientVersion, r.clientVersion}
