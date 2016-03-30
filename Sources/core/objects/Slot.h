@@ -39,6 +39,7 @@ public:
         item_ = 0;
         type_ = Slots::ANYTHING;
         name_ = "noname";
+        SetPos(0, 0);
     }
     virtual bool Set(id_ptr_on<Item> ptr) override
     {
