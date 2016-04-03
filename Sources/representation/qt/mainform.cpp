@@ -28,6 +28,8 @@
 #include <QTextBlock>
 #include <QMessageBox>
 
+#include "Version.h"
+
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainForm)
@@ -59,7 +61,7 @@ MainForm::MainForm(QWidget *parent) :
     }
 
 
-    setWindowTitle("Griefly");
+    setWindowTitle("Griefly " + QString(GetGameVersion()));
 
     left_column = ui->leftColumn->width();
     right_column = ui->rightColumn->width();

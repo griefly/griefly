@@ -14,6 +14,7 @@
 #include <QCoreApplication>
 
 #include "NetworkMessagesTypes.h"
+#include "Version.h"
 
 QJsonObject Network2::ParseJson(Message2 message)
 {
@@ -319,9 +320,6 @@ void SocketHandler::tryConnect(QString host, int port, QString login, QString pa
     qDebug() << "tryConnect()";
 }
 
-#define KV_XSTR(x) #x
-#define KV_STR(x) KV_XSTR(x)
-
 void SocketHandler::socketConnected()
 {
     qDebug() << "socketConnected()";
@@ -336,7 +334,7 @@ void SocketHandler::socketConnected()
     obj["password"] = password_;
 
     // It is compile time macro with version (/D or -D)
-    obj["game_version"] = QString(KV_STR(DEFINED_VERSION));
+    obj["game_version"] = QString(GetGameVersion());
 
     bool is_guest = (login_ == "Guest");
     obj["guest"] = is_guest;
