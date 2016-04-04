@@ -11,12 +11,20 @@
 
 #include "Params.h"
 
+#include <gtest/gtest.h>
+
 int main(int argc, char *argv[])
 {   
     qRegisterMetaType<Message2>();
 
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
+
+    if (app.arguments().contains("--run-tests"))
+    {
+        ::testing::InitGoogleTest(&argc, argv);
+        return RUN_ALL_TESTS();
+    }
 
     app.setStyle(QStyleFactory::create("fusion"));
 

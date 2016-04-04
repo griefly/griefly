@@ -1,6 +1,43 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(KVEngineQt)
 
+##########
+# GTEST
+##########
+# Props to http://crascit.com/2015/07/25/cmake-gtest/
+# Download and unpack googletest at configure time
+
+IF (MSVC) # VS2012 doesn't support correctly the tuples yet
+    ADD_DEFINITIONS( /D _VARIADIC_MAX=10 )
+ENDIF()
+
+CONFIGURE_FILE(Tests/CMakeLists.txt
+               googletest-download/CMakeLists.txt)
+EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} --build .
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+
+# Prevent GoogleTest from overriding our compiler/linker options
+# when building with Visual Studio
+SET(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Add googletest directly to our build. This adds
+# the following targets: gtest, gtest_main, gmock
+# and gmock_main
+ADD_SUBDIRECTORY(${CMAKE_BINARY_DIR}/googletest-src
+                 ${CMAKE_BINARY_DIR}/googletest-build)
+
+# The gtest/gmock targets carry header search path
+# dependencies automatically when using CMake 2.8.11 or
+# later. Otherwise we have to add them here ourselves.
+#IF (CMAKE_VERSION VERSION_LESS 2.8.11)
+INCLUDE_DIRECTORIES("${gtest_SOURCE_DIR}/include"
+                    "${gmock_SOURCE_DIR}/include")
+#ENDIF()
+
+##########
+
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTOUIC ON)
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -9,6 +46,7 @@ SET(UNPACKER_DIR QzipUnpacker/)
 SET(LAUNCHER_DIR Launcher/)
 SET(SOURCE_DIR Sources/)
 SET(EXEC_DIR Exec/)
+SET(TESTS_DIR Tests/)
 
 FIND_PACKAGE(Qt5Network REQUIRED)
 FIND_PACKAGE(Qt5Core REQUIRED)
@@ -119,6 +157,7 @@ ELSE()
     SET(PYTHON_CMD "$ENV{PYTHON_PATH}")
 ENDIF()
 
+FILE(GLOB_RECURSE TESTS "${TESTS_DIR}*.cpp")
 FILE(GLOB_RECURSE SOURCES "${SOURCE_DIR}*.cpp")
 FILE(GLOB_RECURSE HEADERS "${SOURCE_DIR}*.h")
 FILE(GLOB_RECURSE FORMS "${SOURCE_DIR}*.ui")
@@ -133,7 +172,7 @@ LIST(APPEND SOURCES "${CMAKE_BINARY_DIR}/AutogenMetadata.cpp")
 
 QT5_WRAP_UI(FORMS_HEADERS ${FORMS})
 
-ADD_EXECUTABLE(KVEngine WIN32 ${SOURCES} ${HEADERS} ${FORMS_HEADERS})
+ADD_EXECUTABLE(KVEngine WIN32 ${SOURCES} ${HEADERS} ${FORMS_HEADERS} ${TESTS})
 
 ADD_DEPENDENCIES(KVEngine metadata)
 
@@ -167,6 +206,9 @@ qt5_use_modules(Unpacker Core)
 IF(WIN32)
     TARGET_LINK_LIBRARIES(Launcher Qt5::WinMain)
 ENDIF()
+
+TARGET_LINK_LIBRARIES(KVEngine gtest)
+SET_TARGET_PROPERTIES(KVEngine PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:CONSOLE")
 
 IF(WIN32)
     TARGET_LINK_LIBRARIES(KVEngine $ENV{PNG_LIBRARY})
@@ -214,35 +256,3 @@ ADD_CUSTOM_COMMAND(
         Launcher${EXECUTABLE_SUFFIX}
         ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/Launcher${EXECUTABLE_SUFFIX}
 )
-
-##########
-# GTEST
-##########
-# Props to http://crascit.com/2015/07/25/cmake-gtest/
-# Download and unpack googletest at configure time
-CONFIGURE_FILE(CMakeListsGtest.txt
-               googletest-download/CMakeLists.txt)
-EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
-EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} --build .
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
-
-# Prevent GoogleTest from overriding our compiler/linker options
-# when building with Visual Studio
-SET(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-# Add googletest directly to our build. This adds
-# the following targets: gtest, gtest_main, gmock
-# and gmock_main
-ADD_SUBDIRECTORY(${CMAKE_BINARY_DIR}/googletest-src
-                 ${CMAKE_BINARY_DIR}/googletest-build)
-
-# The gtest/gmock targets carry header search path
-# dependencies automatically when using CMake 2.8.11 or
-# later. Otherwise we have to add them here ourselves.
-IF (CMAKE_VERSION VERSION_LESS 2.8.11)
-  INCLUDE_DIRECTORIES("${gtest_SOURCE_DIR}/include"
-                      "${gmock_SOURCE_DIR}/include")
-ENDIF()
-
-##########
