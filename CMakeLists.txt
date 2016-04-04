@@ -215,3 +215,34 @@ ADD_CUSTOM_COMMAND(
         ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/Launcher${EXECUTABLE_SUFFIX}
 )
 
+##########
+# GTEST
+##########
+# Props to http://crascit.com/2015/07/25/cmake-gtest/
+# Download and unpack googletest at configure time
+CONFIGURE_FILE(CMakeListsGtest.txt
+               googletest-download/CMakeLists.txt)
+EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} --build .
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+
+# Prevent GoogleTest from overriding our compiler/linker options
+# when building with Visual Studio
+SET(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Add googletest directly to our build. This adds
+# the following targets: gtest, gtest_main, gmock
+# and gmock_main
+ADD_SUBDIRECTORY(${CMAKE_BINARY_DIR}/googletest-src
+                 ${CMAKE_BINARY_DIR}/googletest-build)
+
+# The gtest/gmock targets carry header search path
+# dependencies automatically when using CMake 2.8.11 or
+# later. Otherwise we have to add them here ourselves.
+IF (CMAKE_VERSION VERSION_LESS 2.8.11)
+  INCLUDE_DIRECTORIES("${gtest_SOURCE_DIR}/include"
+                      "${gmock_SOURCE_DIR}/include")
+ENDIF()
+
+##########
