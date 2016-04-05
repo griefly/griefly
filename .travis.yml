@@ -2,3 +2,4 @@ language: cpp
 compiler: gcc
 install: make travis-get-deps
 script: make CXX=g++-4.9 CC=gcc-4.9
+after_script: make run-tests
