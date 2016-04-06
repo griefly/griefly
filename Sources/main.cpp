@@ -28,8 +28,13 @@ int main(int argc, char *argv[])
         ::testing::InitGoogleTest(&argc, argv);
         return RUN_ALL_TESTS();
     }
+#else
+    if (app.arguments().contains("--run-tests"))
+    {
+        std::cout << "This build is without tests!";
+        exit(-42);
+    }
 #endif
-
     app.setStyle(QStyleFactory::create("fusion"));
 
     if (!GetParamsHolder().GetParamBool("-editor"))
