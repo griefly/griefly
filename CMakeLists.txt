@@ -36,7 +36,7 @@ IF (BUILD_TESTS)
 
     IF (MSVC)
         ADD_DEFINITIONS(/D _BUILD_TESTS)
-    ELSEIF()
+    ELSE()
         ADD_DEFINITIONS(-D _BUILD_TESTS)
     ENDIF()
     ##########

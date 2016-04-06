@@ -59,7 +59,7 @@ Game::Game()
 
     const int MESSAGES_LOG_SIZE = 2 * 1024;
     messages_log_.resize(MESSAGES_LOG_SIZE);
-    for (int i = 0; i < messages_log_.size(); ++i)
+    for (size_t i = 0; i < messages_log_.size(); ++i)
     {
         messages_log_[i].type = 0;
         messages_log_[i].json = "(empty)";
