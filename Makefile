@@ -26,7 +26,7 @@ partial-build: build/Makefile
 
 build/Makefile:
 	mkdir -p build
-	cd build && cmake ../
+	cd build && cmake ../ -DBUILD_TESTS=ON
 
 Exec/KVEngine: install
 

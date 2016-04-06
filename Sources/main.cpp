@@ -11,7 +11,9 @@
 
 #include "Params.h"
 
+#ifdef _BUILD_TESTS
 #include <gtest/gtest.h>
+#endif
 
 int main(int argc, char *argv[])
 {   
@@ -20,11 +22,13 @@ int main(int argc, char *argv[])
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
 
+#ifdef _BUILD_TESTS
     if (app.arguments().contains("--run-tests"))
     {
         ::testing::InitGoogleTest(&argc, argv);
         return RUN_ALL_TESTS();
     }
+#endif
 
     app.setStyle(QStyleFactory::create("fusion"));
 
