@@ -11,7 +11,7 @@ script:
 after_success:
   - cd ${TRAVIS_BUILD_DIR}
 #  - rm -f KVEngine.dir/AutogenMetadata.cpp.gcda # workaround
-  - gcov `find . "*.gcda"`
+  - gcov `find . -name "*.gcda"`
   - lcov -c -d . -o coverage.info
   - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system code
   - lcov --list coverage.info # debug before upload
