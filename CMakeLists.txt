@@ -2,6 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(KVEngineQt)
 
 OPTION(BUILD_TESTS "Build tests" OFF)
+OPTION(BUILD_COVER "Generate test coverage" OFF)
 
 IF (BUILD_TESTS)
     ##########
@@ -169,6 +170,15 @@ ENDIF()
 FILE(GLOB_RECURSE SOURCES "${SOURCE_DIR}*.cpp")
 FILE(GLOB_RECURSE HEADERS "${SOURCE_DIR}*.h")
 FILE(GLOB_RECURSE FORMS "${SOURCE_DIR}*.ui")
+
+IF (BUILD_COVER)
+    IF (CMAKE_COMPILER_IS_GNUCXX)
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0") # debug, no optimisation
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage") # enabling coverage
+    ELSE()
+        MESSAGE(STATUS "No tests coverage on Windows!")
+    ENDIF()
+ENDIF()
 
 ADD_CUSTOM_COMMAND(
     OUTPUT AutogenMetadata.cpp
