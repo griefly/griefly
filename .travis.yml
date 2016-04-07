@@ -10,7 +10,8 @@ script:
   - ./Exec/KVEngine --run-tests
 after_success:
   - cd ${TRAVIS_BUILD_DIR}
-  - lcov --directory . --remove AutogenMetadata.cpp --capture --output-file coverage.info # capture coverage info
-  - lcov --remove coverage.info 'tests/*' '/usr/*' --output-file coverage.info # filter out system and test code
+  - rm -f KVEngine.dir/AutogenMetadata.cpp.gcda # workaround
+  - lcov --directory . --capture --output-file coverage.info # capture coverage info
+  - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system code
   - lcov --list coverage.info # debug before upload
   - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info # uploads to cov
