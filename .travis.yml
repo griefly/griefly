@@ -20,4 +20,4 @@ after_success:
   - lcov --remove coverage.info 'Tests/*' --output-file coverage.info # remove tests from coverage
   - lcov --remove coverage.info '/karya-valya/build/*' --output-file coverage.info # remove gtest and generated code from coverage
   - lcov --list coverage.info # debug before upload
-  - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info # uploads to cov
+  - coveralls-lcov --repo-token=${COVERALLS_TOKEN} coverage.info # uploads to cov
