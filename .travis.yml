@@ -3,9 +3,6 @@ sudo: required
 dist: trusty
 compiler: gcc
 before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -qq
-  - sudo apt-get install -y g++-4.9 lcov
   - export CXX="g++-4.9"
 install:
   - make travis-get-deps
