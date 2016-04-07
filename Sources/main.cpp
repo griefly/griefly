@@ -16,12 +16,13 @@
 #endif
 
 int main(int argc, char *argv[])
-{   
+{
+    // LCOV_EXCL_START
     qRegisterMetaType<Message2>();
 
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
-
+    // LCOV_EXCL_STOP
 #ifdef _BUILD_TESTS
     if (app.arguments().contains("--run-tests"))
     {
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
         exit(-42);
     }
 #endif
+    // LCOV_EXCL_START
     app.setStyle(QStyleFactory::create("fusion"));
 
     if (!GetParamsHolder().GetParamBool("-editor"))
@@ -46,4 +48,5 @@ int main(int argc, char *argv[])
     MapEditorForm editor_form;
     editor_form.show();
     return app.exec();
+    // LCOV_EXCL_STOP
 }
