@@ -3,7 +3,6 @@
 #include <list>
 
 #include "OnMapBase.h"
-#include "../HelperStructers.h"
 #include "representation/ViewInfo.h"
 
 class IOnMapObject: public IOnMapBase

@@ -54,6 +54,13 @@ struct VDir
     int z;
 };
 
+struct point
+{
+    int posx;
+    int posy;
+    int posz;
+};
+
 inline bool NonZero(const VDir& vdir)
 {
     return    vdir.x

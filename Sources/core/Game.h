@@ -4,8 +4,6 @@
 
 #include "objects/Mob.h"
 
-#include "HelperStructers.h"
-
 #include <QApplication>
 #include <QKeyEvent>
 #include <QString>

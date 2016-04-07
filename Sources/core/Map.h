@@ -3,7 +3,6 @@
 #include <list>
 #include <vector>
 
-#include "HelperStructers.h"
 #include "Constheader.h"
 #include "objects/Tile.h"
 #include "Atmos.h"
