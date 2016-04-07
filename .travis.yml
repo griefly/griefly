@@ -1,6 +1,9 @@
 language: cpp
 compiler: gcc
-install: make travis-get-deps
+before_install:
+  - export CXX="g++-4.9"
+install: 
+  - make travis-get-deps
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
