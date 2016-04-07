@@ -14,7 +14,7 @@ travis-get-deps:
 		libsdl-net1.2-dev zlib1g-dev libsfml-dev libpng-dev lcov
 	sudo apt-get install qtbase5-dev
 	sudo apt-get install cmake
-    gem install coveralls-lcov
+	gem install coveralls-lcov
 
 .PHONY: clean
 clean:
