@@ -34,9 +34,8 @@ TEST(HashesTest, VectorIdPtrOn)
     v.push_back(2);
     ASSERT_EQ(hash(v), 8);
 
-    // TODO
-    // v[0] = 4294967295;
-    // ASSERT_EQ(hash(v), 7);
+    v[0] = 4294967295;
+    ASSERT_EQ(hash(v), 7);
 }
 
 TEST(HashesTest, String)
