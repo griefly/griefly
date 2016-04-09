@@ -35,29 +35,6 @@ void Screen::Clear()
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Screen::Draw(const ApproxGLImage* sprite, int x_ul, int y_ul, int x_dr, int y_dr)
-{
-    if (sprite == nullptr)
-        return;
-
-    glColor4f(1, 1, 1, 1);
-    glBindTexture(GL_TEXTURE_2D, sprite->GetText());
-    if (glGetError())
-        SYSTEM_STREAM << glGetError() << std::endl; 
-
-    float text_x = sprite->GetX();
-    float text_y = sprite->GetY();
-
-    glBegin(GL_QUADS);
-        glTexCoord2f(0.0,       0.0);     glVertex3f(static_cast<float>(x_ul), static_cast<float>(y_ul), 0.0f);
-        glTexCoord2f(0.0,    text_y);     glVertex3f(static_cast<float>(x_ul), static_cast<float>(y_dr), 0.0f);
-        glTexCoord2f(text_x, text_y);     glVertex3f(static_cast<float>(x_dr), static_cast<float>(y_dr), 0.0f);
-        glTexCoord2f(text_x,    0.0);     glVertex3f(static_cast<float>(x_dr), static_cast<float>(y_ul), 0.0f);
-    glEnd();
-    if (glGetError())
-        SYSTEM_STREAM << glGetError() << std::endl; 
-}
-
 void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int imageH, float angle)
 {
     if (sprite_in == nullptr)

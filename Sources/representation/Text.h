@@ -8,7 +8,6 @@
 #include <SDL.h>
 
 #include "core/Constheader.h"
-#include "ApproxGLImage.h"
 
 #include <QObject>
 
