@@ -60,7 +60,7 @@ void GLSprite::Init(CSprite* sprite)
         gl_sprites_[i].resize(sprite->numFrameW);
 
     GLuint glFormat_text = GL_RGBA;
-    GLuint glFormat_surf = GL_BGRA;
+    GLuint glFormat_surf = GL_RGBA;
 
     for (int i = 0; i < sprite->numFrameH; ++i)
     {
@@ -76,8 +76,17 @@ void GLSprite::Init(CSprite* sprite)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-            glTexImage2D(GL_TEXTURE_2D, 0, glFormat_text, sprite->w, sprite->h, 0, glFormat_surf, GL_UNSIGNED_BYTE, 
-               sprite->frames[j * sprite->numFrameH + i].bits());
+            QImage image = QGLWidget::convertToGLFormat(sprite->frames[j * sprite->numFrameH + i]);
+            glTexImage2D(
+                GL_TEXTURE_2D,
+                0,
+                glFormat_text,
+                sprite->w,
+                sprite->h,
+                0,
+                glFormat_surf,
+                GL_UNSIGNED_BYTE,
+                image.bits());
 
             //SYSTEM_STREAM << gl_sprites_[i][j] << std::endl;
 

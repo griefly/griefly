@@ -65,7 +65,8 @@ bool CSprite::init(InitSprite data)
         for(int i = 0; i < numFrameW; ++i)
         {
             x = i * w;
-            frames[i * numFrameH + j] = QGLWidget::convertToGLFormat(image.copy(x, y, w, h));
+            // frames[i * numFrameH + j] = QGLWidget::convertToGLFormat(image.copy(x, y, w, h));
+            frames[i * numFrameH + j] = image.copy(x, y, w, h);
         }
     }
     return true;
