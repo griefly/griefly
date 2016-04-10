@@ -75,10 +75,7 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
     QImage image = loc->frames[image_state_w_ * loc->numFrameH + image_state_h_];
 
     QRgb pixel = image.pixel(x, y);
-
-    QColor c(pixel);
-
-    return c.alpha() < 1;
+    return qAlpha(pixel) < 1;
 }
 
 const int ANIMATION_MUL = 100;
