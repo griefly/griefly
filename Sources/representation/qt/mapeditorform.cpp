@@ -107,10 +107,8 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
             int image_state_h_ = current_frame_pos / view.GetBaseFrameset().GetSprite()->FrameW();
             int image_state_w_ = current_frame_pos % view.GetBaseFrameset().GetSprite()->FrameW();
 
-            SDL_Surface* s = view.GetBaseFrameset().GetSprite()->GetSDLSprite()->frames
+            QImage img = view.GetBaseFrameset().GetSprite()->GetSDLSprite()->frames
                     [image_state_w_ * view.GetBaseFrameset().GetSprite()->FrameH() + image_state_h_];
-            QImage img(static_cast<uchar*>(s->pixels),
-                                   s->w, s->h, QImage::Format_ARGB32);
 
             images.push_back(QPixmap::fromImage(img));
         }

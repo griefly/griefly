@@ -77,14 +77,14 @@ void GLSprite::Init(CSprite* sprite)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
             glTexImage2D(GL_TEXTURE_2D, 0, glFormat_text, sprite->w, sprite->h, 0, glFormat_surf, GL_UNSIGNED_BYTE, 
-               sprite->frames[j * sprite->numFrameH + i]->pixels);
+               sprite->frames[j * sprite->numFrameH + i].bits());
 
             //SYSTEM_STREAM << gl_sprites_[i][j] << std::endl;
 
             if (glGetError())
-                SYSTEM_STREAM << glGetError() << std::endl; 
-            if (sprite->frames[j * sprite->numFrameH + i] == nullptr || sprite->frames[j * sprite->numFrameH + i]->pixels == nullptr)
-                SYSTEM_STREAM << "nullptr pixels" << std::endl;
+                SYSTEM_STREAM << glGetError() << std::endl;
+            //if (sprite->frames[j * sprite->numFrameH + i] == nullptr || sprite->frames[j * sprite->numFrameH + i]->pixels == nullptr)
+            //    SYSTEM_STREAM << "nullptr pixels" << std::endl;
             //SYSTEM_STREAM << sprite->frames[j * sprite->numFrameH + i] << std::endl;
         }
     }

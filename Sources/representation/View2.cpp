@@ -1,6 +1,7 @@
 #include "View2.h"
 
 #include "SpriteHolder.h"
+#include <QColor>
 
 View2::FramesetState::FramesetState()
 {
@@ -71,15 +72,13 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
     int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
     int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
 
-    SDL_Surface* surf = loc->frames[image_state_w_ * loc->numFrameH + image_state_h_];
+    QImage image = loc->frames[image_state_w_ * loc->numFrameH + image_state_h_];
 
-    auto bpp = surf->format->BytesPerPixel;
+    QRgb pixel = image.pixel(x, y);
 
-    Uint8 un1, un2, un3, alpha;
+    QColor c(pixel);
 
-    SDL_GetRGBA(static_cast<Uint32*>(surf->pixels)[y * surf->pitch / bpp + x], surf->format, &un1, &un2, &un3, &alpha);
-
-    return alpha < 1;
+    return c.alpha() < 1;
 }
 
 const int ANIMATION_MUL = 100;

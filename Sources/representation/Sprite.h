@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SDL.h>
-#include <SDL_image.h>
+#include <QImage>
 
 #include "Metadata.h"
 
@@ -25,7 +24,7 @@ public:
     int w;
     int numFrameH;
     int numFrameW;
-    SDL_Surface** frames;
+    std::vector<QImage> frames;
     bool init(InitSprite data);
     ~CSprite();
 };

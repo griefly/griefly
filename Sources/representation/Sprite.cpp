@@ -1,5 +1,8 @@
 #include "Sprite.h"
 
+#include <QGLWidget>
+#include <QDebug>
+
 void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask)
 {
     #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -17,17 +20,18 @@ void SetMasks(Uint32* rmask, Uint32* gmask, Uint32* bmask, Uint32* amask)
 
 bool CSprite::init(InitSprite data)
 {
-    SDL_Surface* temp = IMG_Load(data.imgFile.c_str());
-    if(temp == NULL)
+    QImage image;
+    if (!image.load(QString::fromStdString(data.imgFile)))
     {
-        SYSTEM_STREAM << "IMG_Load error: " << IMG_GetError() << std::endl;
+        qDebug() << "Image load error: " << QString::fromStdString(data.imgFile);
         return false;
     }
-    metadata.Init(data.imgFile, temp->w, temp->h);
+
+    metadata.Init(data.imgFile, image.width(), image.height());
     if (metadata.Valid())
     {
-        numFrameW = temp->w / metadata.GetW();
-        numFrameH = temp->h / metadata.GetH();
+        numFrameW = image.width() / metadata.GetW();
+        numFrameH = image.height() / metadata.GetH();
     }
     else
     {
@@ -36,42 +40,34 @@ bool CSprite::init(InitSprite data)
     }
     if((numFrameH == 0) || (numFrameW == 0))
     {        
-        w = temp->w;
-        h = temp->h;
+        w = image.width();
+        h = image.height();
         numFrameW = 1;
         numFrameH = 1;
     }
     else
     {
-        w = temp->w / numFrameW;
-        h = temp->h / numFrameH;
+        w = image.width() / numFrameW;
+        h = image.height() / numFrameH;
     }
     SYSTEM_STREAM << numFrameW << "x" << numFrameH << " - loaded " << data.imgFile << std::endl;
 
     Uint32 rmask, gmask, bmask, amask;
     SetMasks(&rmask, &gmask, &bmask, &amask);
 
-    SDL_Rect place;
-    place.x = 0;
-    place.y = 0;
-    place.h = h;
-    place.w = w;
-    frames = new SDL_Surface*[numFrameH * numFrameW];
-    if (temp->flags & SDL_SRCALPHA)
-        temp->flags = temp->flags ^ SDL_SRCALPHA;//for alpha canal
-    SDL_Surface* local;
+    int x = 0;
+    int y = 0;
+    frames.resize(numFrameW * numFrameH);
+
     for(int j = 0; j < numFrameH; ++j)
     {
-        place.y = j * h;
+        y = j * h;
         for(int i = 0; i < numFrameW; ++i)
         {
-            place.x = i * w;
-            local = SDL_CreateRGBSurface(SDL_HWSURFACE, w, h, 32, bmask, gmask, rmask, amask);
-            SDL_BlitSurface(temp, &place, local, NULL);
-            frames[i * numFrameH + j] = local;
+            x = i * w;
+            frames[i * numFrameH + j] = QGLWidget::convertToGLFormat(image.copy(x, y, w, h));
         }
     }
-    SDL_FreeSurface(temp);
     return true;
 }
 
@@ -81,17 +77,9 @@ CSprite::CSprite()
     w = 0;
     numFrameH = 0;
     numFrameW = 0;
-    frames = nullptr;
 }
 
 CSprite::~CSprite()
 {
-    if (frames)
-    {
-        for (int j = 0; j < numFrameH; j++)
-            for (int i = 0; i < numFrameW; i++)
-                SDL_FreeSurface(frames[i * numFrameH + j]);
 
-        delete[] frames;
-    }
 }
