@@ -47,7 +47,6 @@ Game::Game()
     cpu_load_ = 0.0f;
 
     ping_id_ = "";
-    ping_send_time_ = 0;
 
     current_ping_ = 0;
 
@@ -78,11 +77,13 @@ void Game::UpdateVisible()
 
 void Game::Process()
 {
-    int last_time_fps = SDL_GetTicks();
+    QElapsedTimer fps_timer;
+    fps_timer.start();
     lps_ = 0;
     process_in_ = false;
 
-    unsigned int ping_send_time = 0;
+    QElapsedTimer ping_timer;
+    ping_timer.start();
 
     while (true)
     {
@@ -117,20 +118,21 @@ void Game::Process()
             GetTexts().Process();
         }
 
-        if((SDL_GetTicks() - last_time_fps) >= 1000)
+        if (fps_timer.elapsed() >= 1000)
         {
-            last_time_fps = SDL_GetTicks();
+            fps_timer.restart();
             cpu_load_ = ((1000.0f / MAX_WAIT_ON_QUEUE) - lps_) / (1000.0f / MAX_WAIT_ON_QUEUE) * 100;
             lps_ = 0;
         }
 
-        if (   (SDL_GetTicks() - ping_send_time) > 1000
+        if (   ping_timer.elapsed() > 1000
             && ping_send_is_requested_)
         {
             ping_id_ = QUuid::createUuid().toString();
             Network2::GetInstance().SendPing(ping_id_);
-            ping_send_time_ = SDL_GetTicks();
+            ping_timer.restart();
             ping_send_is_requested_ = false;
+            ping_send_time_.restart();
         }
 
         ++lps_;
@@ -150,7 +152,7 @@ void Game::WaitForExit()
 }
 
 void Game::InitWorld(int id, std::string map_name)
-{
+{   
     InitSettersForTypes();
 
     std::cout << "Begin init world" << std::endl;
@@ -181,7 +183,7 @@ void Game::InitWorld(int id, std::string map_name)
         if (   GetParamsHolder().GetParamBool("mapgen_name")
             && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("mapgen_name")))
         {
-            srand(SDL_GetTicks());
+            srand(QTime::currentTime().msecsSinceStartOfDay());
 
             GetMap().LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
 
@@ -392,7 +394,7 @@ void Game::ProcessInputMessages()
                 continue;
             }
 
-            current_ping_ = SDL_GetTicks() - ping_send_time_;
+            current_ping_ = ping_send_time_.elapsed();
             ping_send_is_requested_ = true;
             continue;
         }

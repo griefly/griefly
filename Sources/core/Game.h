@@ -60,7 +60,7 @@ private:
     //bool hash_
 
     QString ping_id_;
-    int ping_send_time_;
+    QElapsedTimer ping_send_time_;
     int current_ping_;
     bool ping_send_is_requested_;
     bool process_in_;

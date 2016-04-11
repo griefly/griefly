@@ -6,8 +6,6 @@
 //#include <sstream>
 #include <fstream>
 
-#include <SDL.h>
-
 #include "Macroses.h"
 #include "FastIsType.h"
 

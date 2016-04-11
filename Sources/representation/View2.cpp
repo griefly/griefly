@@ -6,6 +6,7 @@
 View2::FramesetState::FramesetState()
 {
     Reset();
+    last_frame_tick_.start();
 }
 
 void View2::FramesetState::LoadFramesetInfo(const ViewInfo::FramesetInfo& frameset_info)
@@ -114,7 +115,7 @@ void View2::FramesetState::Draw(size_t shift, int x, int y, int angle)
         return;
     }
 
-    int time_diff = SDL_GetTicks() - last_frame_tick_;
+    int time_diff = last_frame_tick_.elapsed();
 
     int next_state = image_state_;
     while (true)
@@ -129,7 +130,7 @@ void View2::FramesetState::Draw(size_t shift, int x, int y, int angle)
                 break;
             }
             image_state_ = next_state;
-            last_frame_tick_ = SDL_GetTicks();
+            last_frame_tick_.restart();
             break;
         }
         next_state = (next_state + 1) % GetMetadata()->frames_sequence.size();
@@ -141,7 +142,7 @@ void View2::FramesetState::Reset()
     sprite_ = nullptr;
     metadata_ = nullptr;
     image_state_ = 0;
-    last_frame_tick_ = SDL_GetTicks();
+    last_frame_tick_.restart();
 }
 
 View2::View2()

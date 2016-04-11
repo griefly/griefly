@@ -6,9 +6,9 @@ TextPainter::Text::Text(TextPainter* master, const std::string& key)
     : updater_([](std::string*){}),
     master_(master),
     how_often_(200),
-    time_(0),
     key_(key)
 {
+    time_.start();
 }
 
 TextPainter::Text::~Text()
@@ -44,9 +44,9 @@ void TextPainter::Text::Update()
 
 bool TextPainter::Text::CanUpdate()
 {
-    if (SDL_GetTicks() - time_ > how_often_)
+    if (time_.elapsed() > how_often_)
     {
-        time_ = SDL_GetTicks();
+        time_.restart();
         return true;
     }
     return false;

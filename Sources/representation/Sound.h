@@ -6,6 +6,10 @@
 
 #include "core/Constheader.h"
 
+#ifdef PlaySound
+#undef PlaySound
+#endif // PlaySound
+
 class SoundManager
 {
 public:

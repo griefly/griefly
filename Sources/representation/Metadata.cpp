@@ -51,7 +51,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     {
         SYSTEM_STREAM << "ERROR: Fail to read smth" << std::endl;
         SYSTEM_STREAM << source.bad() << " " << source.fail() << " " << source.eof() << std::endl;
-        SDL_Delay(10000);
+        abort();
         return;
     }
 
@@ -419,7 +419,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         else
         {
             SYSTEM_STREAM << "Unknown param: " << loc << std::endl;
-            SDL_Delay(100000);
+            abort();
             return false;
         }
         loc.clear();

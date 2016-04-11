@@ -187,14 +187,16 @@ unsigned int ForceManager::Hash()
 
 void ForceManager::Process()
 {
-    Timer timer, remove_timer;
-    timer.Start();
     for (auto movable = to_add_.begin(); movable != to_add_.end(); ++movable)
     {
         if (!(*movable).valid())
+        {
             continue;
+        }
         if (!NonZero((*movable)->force_))
+        {
             continue;
+        }
 
         auto to_add = std::find(under_force_.begin(), under_force_.end(), *movable);
         if (to_add == under_force_.end())
@@ -212,8 +214,6 @@ void ForceManager::Process()
         to_add_.clear();
     }
 
-  //  SYSTEM_STREAM << "Remove size: " << to_remove.size() << " Force size: " << under_force_.size() << std::endl;
-    remove_timer.Start();
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
         if (   !(*movable)
@@ -223,9 +223,6 @@ void ForceManager::Process()
         }
         (*movable)->ProcessForce();
     }
-  //  SYSTEM_STREAM << "Remove take: " << (remove_timer.Get() * 1.0 / timer.Get()) * 100.0 << "%" << std::endl;
-  //  SYSTEM_STREAM << "Remove size: " << to_remove.size() << " Force size: " << under_force_.size() << std::endl;
-    //SYSTEM_STREAM << "Force take: " << timer.Get() / 1000.0 << std::endl;
 }
 
 void ForceManager::Clear()

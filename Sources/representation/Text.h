@@ -5,11 +5,10 @@
 #include <vector>
 #include <functional>
 
-#include <SDL.h>
-
 #include "core/Constheader.h"
 
 #include <QObject>
+#include <QElapsedTimer>
 
 struct NameSize
 {
@@ -45,7 +44,7 @@ public:
         std::string key_;
 
         std::string content_;
-        unsigned int time_;
+        QElapsedTimer time_;
 
         TextPainter* master_;
     };

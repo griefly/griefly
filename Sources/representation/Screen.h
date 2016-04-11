@@ -7,7 +7,7 @@ class Screen
 public:
     Screen(unsigned int x, unsigned int y, bool fullscreen = false);
     void Draw(const GLSprite* sprite, int x, int y, int imageW, int imageH, float angle = 0.0f);
-    void ResetScreen(int x, int y, int bpp, Uint32 flags);
+    void ResetScreen(int x, int y);
     void Clear();
     void Swap();
     bool Fail();
@@ -18,7 +18,6 @@ public:
     int h();
 private:
     bool fail_;
-    SDL_Surface* screen_;
 };
 
 bool IsScreenValid();

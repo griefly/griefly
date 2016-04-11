@@ -6,6 +6,8 @@
 #include "Metadata.h"
 #include "GLSprite.h"
 
+#include <QElapsedTimer>
+
 class View2
 {
 public:
@@ -27,7 +29,7 @@ public:
         const GLSprite* sprite_;
         const ImageMetadata::SpriteMetadata* metadata_;
         int image_state_;
-        int last_frame_tick_;
+        QElapsedTimer last_frame_tick_;
     };
     View2();
 

@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include <SDL_opengl.h>
+#include <QGLWidget>
 
 #include "platform/gl.h"
 

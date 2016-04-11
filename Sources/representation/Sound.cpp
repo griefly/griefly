@@ -6,6 +6,10 @@
 
 #include <QDebug>
 
+#ifdef PlaySound
+#undef PlaySound
+#endif // PlaySound
+
 SoundManager& GetSoundManager()
 {
     static SoundManager snd_mngr;

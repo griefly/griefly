@@ -2,16 +2,13 @@
 
 #include <assert.h>
 
-#include <SDL.h>
-#include <SDL_opengl.h>
-
 #include "Params.h"
 #include "qt/qtopengl.h"
 
 Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
 {
     fail_ = true;
-    ResetScreen(x, y, 32, 0);
+    ResetScreen(x, y);
     fail_ = false;
 }
 
@@ -20,7 +17,7 @@ void Screen::PerformSizeUpdate()
     glViewport(0, 0, GetGLWidget()->width(), GetGLWidget()->height());
 }
 
-void Screen::ResetScreen(int x, int y, int bpp, Uint32 flags)
+void Screen::ResetScreen(int x, int y)
 {
     GetGLWidget()->resize(x, y);
 }

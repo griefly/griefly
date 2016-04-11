@@ -12,7 +12,6 @@
 #include "SpriteHolder.h"
 #include "SoundLoader.h"
 #include "ImageLoader.h"
-#include "SdlInit.h"
 
 #include "qt/qtopengl.h"
 
@@ -25,7 +24,7 @@ Representation::Representation()
     new_frame_ = &second_data_;
     is_updated_ = false;
     current_frame_id_ = 1;
-    pixel_movement_tick_ = SDL_GetTicks();
+    pixel_movement_tick_.start();
 
     autoplay_ = false;
     if (GetParamsHolder().GetParamBool("-auto"))
@@ -35,11 +34,6 @@ Representation::Representation()
     }
 
     message_sending_interval_.start();
-
-    if (!InitSDL())
-    {
-        SYSTEM_STREAM << "Fail SDL load" << std::endl;
-    }
 
     int old_size_w = GetGLWidget()->width();
     int old_size_h = GetGLWidget()->height();
@@ -220,11 +214,11 @@ void Representation::Process()
         DrawInterface();
 
         const int PIXEL_MOVEMENT_SPEED = 16;
-        if ((SDL_GetTicks() - pixel_movement_tick_) > PIXEL_MOVEMENT_SPEED)
+        if (pixel_movement_tick_.elapsed() > PIXEL_MOVEMENT_SPEED)
         {
             PerformPixelMovement();
             camera_.PerformPixelMovement();
-            pixel_movement_tick_ = SDL_GetTicks();
+            pixel_movement_tick_.restart();
         }
     }
     else

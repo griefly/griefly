@@ -215,8 +215,8 @@ void ObjectFactory::LoadMap(std::stringstream& savefile, size_t real_this_mob)
         j++;
         if(savefile.fail())
         {
-            SYSTEM_STREAM << "Error! " << j << "\n";
-            SDL_Delay(10000);
+            qDebug() << "Error! " << j << "\n";
+            abort();
         }
         std::string type;
         savefile >> type;

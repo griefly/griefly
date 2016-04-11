@@ -74,7 +74,7 @@ private:
     void Draw();
     void DrawInterface();
 
-    int pixel_movement_tick_;
+    QElapsedTimer pixel_movement_tick_;
 
     size_t current_frame_id_;
 
