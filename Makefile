@@ -7,8 +7,7 @@ travis-get-deps:
 	sudo add-apt-repository -y ppa:george-edison55/cmake-3.x
 	sudo apt-get update -qq
 	sudo apt-get install -y g++-4.9
-	sudo apt-get install -y libsdl-ttf2.0-dev libsdl-image1.2-dev libsdl-mixer1.2-dev \
-		libsdl-net1.2-dev zlib1g-dev libsfml-dev libpng-dev lcov
+	sudo apt-get install -y zlib1g-dev libsfml-dev libpng-dev lcov
 	sudo apt-get install -y qtbase5-dev
 	sudo apt-get install -y cmake
 	gem install coveralls-lcov
