@@ -15,9 +15,7 @@ Dependencies
 5. Python 2.7
 6. Go
 7. Git
-8. CMake 2.8 
-9. SDL 1.2 _(will be removed soon)_
-10. SDL_image 1.2 _(will be removed soon)_
+8. CMake 2.8
 
 How to build everything on Windows
 -----------------------------------
@@ -35,9 +33,7 @@ _If you have any issues during the build process please report them_
   `Set GO_PATH to C:\Go\bin\go.exe`  
   `Set PNG_INCLUDE_DIR to C:\Users\Kremius\Documents\ExternalLibs\lpng1612`    
   `Set PNG_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\lpng1612\projects\vstudio\Release\libpng16.lib`    
-  `Set PYTHON_PATH to C:\Python27\python.exe`    
-  `Set SDLDIR to C:\Users\Kremius\Documents\ExternalLibs\SDL-1.2.15`    
-  `Set SDLIMAGEDIR to C:\Users\Kremius\Documents\ExternalLibs\SDL_image-1.2.12`  
+  `Set PYTHON_PATH to C:\Python27\python.exe`  
   `Set SFML_AUDIO_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-audio.lib`  
   `Set SFML_INCLUDE_DIR to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\include`  
   `Set SFML_LIBRARY to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3\lib\sfml-main.lib`  
