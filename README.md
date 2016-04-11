@@ -4,7 +4,7 @@ Griefly
 [![Build Status](https://travis-ci.org/griefly/griefly.svg?branch=master)](https://travis-ci.org/griefly/griefly)
 [![Coverage Status](https://coveralls.io/repos/github/griefly/griefly/badge.svg?branch=master)](https://coveralls.io/github/griefly/griefly?branch=master)
 
-It used to be **Karya &amp; Valya Rogue-like**, but now it is **Griefly: Yet Another Space Station Remake**
+It is **Griefly: Yet Another Space Station Remake**.
 
 Dependencies
 -------------
