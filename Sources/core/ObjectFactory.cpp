@@ -245,12 +245,12 @@ IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)
     auto il = (*itemList());
     auto f = il[type];
     return f(id);
-};
+}
 
 IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
 {
     return (*itemListSaved())[type]();
-};
+}
 
 void ObjectFactory::ClearMap()
 {

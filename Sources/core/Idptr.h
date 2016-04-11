@@ -24,34 +24,6 @@ std::unordered_map<std::string, item_creator>* itemList();
 
 std::unordered_map<std::string, item_creator_saved>* itemListSaved();
 
-template<class T>
-class itemAdder 
-{
-public:
-    static IMainObject* creator(size_t id)
-    {
-        return new T(id);
-    };
-    static IMainObject* creatorSaved()
-    {
-        return new T(nouse);
-    };
-    itemAdder()
-    {
-        //T item;
-        std::string key = T::T_ITEM_S();
-        if (   itemList()->find(key) != itemList()->end()
-            || itemListSaved()->find(key) != itemListSaved()->end())
-        {
-            SYSTEM_STREAM << "FATAL ERROR: " << key << " hash miss!" << std::endl;
-            SDL_Delay(1000);
-            abort();
-        }
-        (*itemList())[key] = &creator;
-        (*itemListSaved())[key] = &creatorSaved;
-    };
-};
-
 IMainObject* GetFromIdTable(size_t id);
 
 template<typename T>
