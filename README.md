@@ -40,7 +40,7 @@ _If you have any issues during the build process please report them_
 4. Rerun CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
 5. Build the project.  
    Client executables will appear in the `Exec` folder, and the server executable will appear in the `knv-server-go` folder.  
-   Client executables depend from various dlls (Qt, SDL, SFML), so it is needed to manually place them to the `Exec` folder.
+   Client executables depend from various dlls (Qt, SFML), so it is needed to manually place them to the `Exec` folder.
 
 **Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).
 
