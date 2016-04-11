@@ -1,8 +1,8 @@
 Griefly
 ===========
 
-[![Build Status](https://travis-ci.org/kremius/karya-valya.svg?branch=master)](https://travis-ci.org/kremius/karya-valya)
-[![Coverage Status](https://coveralls.io/repos/github/kremius/karya-valya/badge.svg?branch=master)](https://coveralls.io/github/kremius/karya-valya?branch=master)
+[![Build Status](https://travis-ci.org/griefly/griefly.svg?branch=master)](https://travis-ci.org/griefly/griefly)
+[![Coverage Status](https://coveralls.io/repos/github/griefly/griefly/badge.svg?branch=master)](https://coveralls.io/github/griefly/griefly?branch=master)
 
 It used to be **Karya &amp; Valya Rogue-like**, but now it is **Griefly: Yet Another Space Station Remake**
 
