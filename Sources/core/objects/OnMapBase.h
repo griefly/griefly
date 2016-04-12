@@ -52,11 +52,11 @@ public:
         return true;
     }
     
-    virtual void delThis() override
+    virtual void Delete() override
     {
         if (owner.valid())
             owner->RemoveItem(GetId());
-        IDraw::delThis();
+        IDraw::Delete();
     }
 
     virtual void AttackBy(id_ptr_on<Item> item);

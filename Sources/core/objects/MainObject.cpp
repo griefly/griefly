@@ -2,7 +2,7 @@
 #include "../Map.h"
 #include "../ObjectFactory.h"
 
-void IMainObject::delThis()
+void IMainObject::Delete()
 {
     GetFactory().GetIdTable()[id_] = nullptr;
     delete this;

@@ -14,7 +14,7 @@ public:
     DECLARE_SAVED(ITurf, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(ITurf);
     ITurf(size_t id);
-    virtual void delThis() override;
+    virtual void Delete() override;
 
     int GetFriction() const { return friction_; }
     void SetFriction(int friction) { friction_ = friction; }

@@ -22,11 +22,11 @@ void IMob::GenerateInterfaceForFrame()
 {
 }
 
-void IMob::delThis()
+void IMob::Delete()
 {
     DeinitGUI();
     cautOverMind();
-    IOnMapObject::delThis();
+    IOnMapObject::Delete();
 }
 
 void IMob::processGUImsg(const Message2 &msg)

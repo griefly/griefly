@@ -256,8 +256,12 @@ void ObjectFactory::ClearMap()
 {
     size_t table_size = objects_table_.size();
     for (size_t i = 1; i < table_size; ++i)
+    {
         if (objects_table_[i] != nullptr)
-            objects_table_[i]->delThis();
+        {
+            objects_table_[i]->Delete();
+        }
+    }
     if (table_size != objects_table_.size())
         SYSTEM_STREAM << "WARNING: table_size != idTable_.size()!" << std::endl;
 

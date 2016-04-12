@@ -17,7 +17,7 @@ public:
         return GetId();
     }
 
-    virtual void delThis();
+    virtual void Delete();
     IMainObject(size_t id){ id_ = id; how_often_ = 0; }
     IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; }
     virtual void AfterWorldCreation() { }

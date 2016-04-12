@@ -44,7 +44,7 @@ void Floor::AttackBy(id_ptr_on<Item> item)
         if (open_)
         {
             SetOpen(false);
-            ftile->delThis();
+            ftile->Delete();
             PlaySoundIfVisible("Deconstruct.ogg", owner.ret_id());
         }
     }

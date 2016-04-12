@@ -46,9 +46,9 @@ void IOnMapObject::ProcessPhysics()
         down->AddItem(GetId());
     }
 }
-void IOnMapObject::delThis()
+void IOnMapObject::Delete()
 {
-    IOnMapBase::delThis();
+    IOnMapBase::Delete();
 }
 
 IOnMapObject::IOnMapObject(size_t id) : IOnMapBase(id)

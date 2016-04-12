@@ -40,7 +40,7 @@ void Grille::AttackBy(id_ptr_on<Item> item)
         else
         {
             GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
-            delThis();
+            Delete();
         }
     }
     else

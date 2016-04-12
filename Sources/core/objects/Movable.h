@@ -43,7 +43,7 @@ public:
     virtual void ProcessForce();
     virtual void ApplyForce(VDir force) override;
 
-    virtual void delThis() override { IOnMapObject::delThis(); }
+    virtual void Delete() override { IOnMapObject::Delete(); }
 
     virtual void Represent() override;
     virtual void Bump(id_ptr_on<IMovable> item) override;

@@ -120,7 +120,7 @@ void Ghost::Process()
             {
                 ChangeMob(login_mob);
             }
-            delThis();
+            Delete();
             //qDebug() << "Ghost deleted: net_id: " << net_id;
         }
     }

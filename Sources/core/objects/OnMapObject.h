@@ -53,7 +53,7 @@ public:
     }
     virtual void ProcessPhysics();
     
-    virtual void delThis() override;
+    virtual void Delete() override;
     virtual void Represent() override;
     void SetSprite(const std::string& T_SPR);
     void SetState(const std::string& name);

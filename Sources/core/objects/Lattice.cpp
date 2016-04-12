@@ -21,13 +21,13 @@ void Lattice::AttackBy(id_ptr_on<Item> item)
 {
     if (id_ptr_on<FloorTile> tile = item)
     {
-        tile->delThis();
+        tile->Delete();
 
-        GetTurf()->delThis();
+        GetTurf()->Delete();
         GetFactory().Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
 
         PlaySoundIfVisible("Deconstruct.ogg", owner.ret_id());
 
-        delThis();
+        Delete();
     }
 }

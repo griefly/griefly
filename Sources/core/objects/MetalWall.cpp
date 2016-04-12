@@ -32,7 +32,7 @@ void MetalWall::AttackBy(id_ptr_on<Item> item)
             GetFactory().Create<IOnMapObject>(Girder::T_ITEM_S(), GetOwner());
             GetFactory().Create<IOnMapObject>(Metal::T_ITEM_S(), GetOwner());
             GetFactory().Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
-            delThis();
+            Delete();
         }
     }
 }

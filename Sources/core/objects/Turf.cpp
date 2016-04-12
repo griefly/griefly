@@ -8,9 +8,9 @@ ITurf::ITurf(size_t id) : IOnMapObject(id)
     atmos_state_ = SIMULATED;
 }
 
-void ITurf::delThis() 
+void ITurf::Delete() 
 {
-    IOnMapObject::delThis();
+    IOnMapObject::Delete();
 }
 
 int Friction::CombinedFriction(id_ptr_on<ITurf> turf)

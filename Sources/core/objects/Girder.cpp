@@ -23,17 +23,17 @@ void Girder::AttackBy(id_ptr_on<Item> item)
 {
     if (id_ptr_on<Metal> metal = item)
     {
-        metal->delThis();
+        metal->Delete();
 
-        GetTurf()->delThis();
+        GetTurf()->Delete();
         GetFactory().Create<ITurf>(MetalWall::T_ITEM_S(), GetOwner());
 
-        delThis();
+        Delete();
     }
     else if (id_ptr_on<Wrench> wrench = item)
     {
         PlaySoundIfVisible("Ratchet.ogg", owner.ret_id());
         GetFactory().Create<Item>(Metal::T_ITEM_S(), GetOwner());
-        delThis();
+        Delete();
     }
 }

@@ -10,7 +10,7 @@ public:
     IMob(size_t id);
     DECLARE_SAVED(IMob, IMessageReceiver);
     DECLARE_GET_TYPE_ITEM(imob)
-    virtual void delThis();
+    virtual void Delete();
     virtual void cautOverMind();
 
     virtual void InitGUI(){}
