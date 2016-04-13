@@ -30,6 +30,8 @@ public:
     void LoadFromMapGen(const std::string& name);
 
 
+
+
     int GetMapW() const
     {
         return squares.size();
@@ -41,6 +43,37 @@ public:
     int GetMapD() const
     {
         return squares[0][0].size();
+    }
+
+    void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr)
+    {
+        if (x)
+        {
+            *x += DirToVDir[dir].x;
+            if (*x >= GetMapW() ||
+                *x <= -1)
+            {
+                *x -= DirToVDir[dir].x;
+            }
+        }
+        if (y)
+        {
+            *y += DirToVDir[dir].y;
+            if (*y >= GetMapH() ||
+                *y <= -1)
+            {
+                *y -= DirToVDir[dir].y;
+            }
+        }
+        if (z)
+        {
+            *z += DirToVDir[dir].z;
+            if (*z >= GetMapD() ||
+                *z <= -1)
+            {
+                *z -= DirToVDir[dir].z;
+            }
+        }
     }
 
     void ResizeMap(int x, int y, int z);

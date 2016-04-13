@@ -301,7 +301,7 @@ id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
     int new_x = posx_;
     int new_y = posy_;
     int new_z = posz_;
-    helpers::move_to_dir(direct, &new_x, &new_y, &new_z);
+    GetMap().MoveToDir(direct, &new_x, &new_y, &new_z);
     return GetMap().squares[new_x][new_y][new_z];
 }
 
