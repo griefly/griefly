@@ -54,3 +54,30 @@ TEST(FramesetInfoTest, IsSameSprites)
     frameset_info2.SetAngle(43);
     ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
 }
+
+TEST(FramesetInfoTest, StreamOperators)
+{
+    ViewInfo::FramesetInfo frameset_info;
+    frameset_info.SetSprite("sprite 1");
+    frameset_info.SetState("state 2");
+    frameset_info.SetAngle(84);
+
+    std::stringstream str;
+    str << frameset_info;
+
+    ASSERT_EQ(str.str(), "8 sprite 1 7 state 2 84 ");
+
+    str.str("8 sprite 2 7 state 3 -14");
+
+    ViewInfo::FramesetInfo frameset_info2;
+    str >> frameset_info2;
+    ASSERT_EQ(frameset_info2.GetSprite(), "sprite 2");
+    ASSERT_EQ(frameset_info2.GetState(), "state 3");
+    ASSERT_EQ(frameset_info2.GetAngle(), -14);
+
+    std::stringstream str2;
+    str2 << frameset_info;
+    ViewInfo::FramesetInfo frameset_info3;
+    str2 >> frameset_info3;
+    ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
+}
