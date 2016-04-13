@@ -41,5 +41,16 @@ TEST(FramesetInfoTest, IsSameSprites)
     frameset_info2.SetSprite("sprite");
     frameset_info2.SetState("state");
     frameset_info2.SetAngle(42);
-    ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+    ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));    
+
+    frameset_info2.SetSprite("sprite2");
+    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+
+    frameset_info2.SetSprite("sprite");
+    frameset_info2.SetState("state2");
+    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+
+    frameset_info2.SetState("state");
+    frameset_info2.SetAngle(43);
+    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
 }
