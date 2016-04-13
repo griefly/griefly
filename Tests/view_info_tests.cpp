@@ -81,3 +81,32 @@ TEST(FramesetInfoTest, StreamOperators)
     str2 >> frameset_info3;
     ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
 }
+
+TEST(ViewInfoTest, AngleAndBaseFrameset)
+{
+    ViewInfo view_info;
+    ASSERT_EQ(view_info.GetAngle(), 0);
+
+    view_info.SetSprite("windows better than linux");
+    ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "windows better than linux");
+    ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "");
+    ASSERT_EQ(view_info.GetAngle(), 0);
+
+    view_info.SetState("lol jk");
+    ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "windows better than linux");
+    ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "lol jk");
+    ASSERT_EQ(view_info.GetAngle(), 0);
+
+    view_info.SetAngle(33);
+    ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "windows better than linux");
+    ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "lol jk");
+    ASSERT_EQ(view_info.GetAngle(), 33);
+}
+
+
+
+
+
+
+
+
