@@ -76,6 +76,44 @@ public:
         }
     }
 
+    bool CheckBorders(const int* x, const int* y, const int* z)
+    {
+        if (x)
+        {
+            if (*x >= GetMapW())
+            {
+                return false;
+            }
+            if (*x < 0)
+            {
+                return false;
+            }
+        }
+        if (y)
+        {
+            if (*y >= GetMapH())
+            {
+                return false;
+            }
+            if (*y < 0)
+            {
+                return false;
+            }
+        }
+        if (z)
+        {
+            if (*z >= GetMapD())
+            {
+                return false;
+            }
+            if (*z < 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     void ResizeMap(int x, int y, int z);
 
     void Represent();

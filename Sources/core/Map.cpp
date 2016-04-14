@@ -329,7 +329,7 @@ void MapMaster::switchDir(int& posx, int& posy, Dir direct, int num, bool back)/
 
 bool MapMaster::IsTransparent(int posx, int posy, int posz)
 {
-    if (!helpers::check_borders(&posx, &posy, &posz))
+    if (!CheckBorders(&posx, &posy, &posz))
     {
         return false;
     }
@@ -382,7 +382,7 @@ bool check_corner(point p)
     int x = corner2pos(p.posx);
     int y = corner2pos(p.posy);
     int z = corner2pos(p.posz);
-    return helpers::check_borders(&x, &y, &z);
+    return GetMap().CheckBorders(&x, &y, &z);
 }
 
 
@@ -544,10 +544,13 @@ void mark_tiles_of_corner_as_visible(
         point center,
         char visibility[])
 {
-    for (int dx = -1; dx <= 0; dx++) {
-        for (int dy = -1; dy <= 0; dy++) {
+    for (int dx = -1; dx <= 0; dx++)
+    {
+        for (int dy = -1; dy <= 0; dy++)
+        {
             point p = {at.posx + dx, at.posy + dy, at.posz};
-            if (!helpers::check_borders(&p.posx, &p.posy, &p.posz)) {
+            if (!GetMap().CheckBorders(&p.posx, &p.posy, &p.posz))
+            {
                 continue;
             }
 
