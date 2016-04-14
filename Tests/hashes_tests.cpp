@@ -41,10 +41,10 @@ TEST(HashesTest, VectorIdPtrOn)
 TEST(HashesTest, String)
 {
     std::string s1("hello world");
-    ASSERT_EQ(hash(s1), 1045060183);
+    ASSERT_EQ(hash(s1), 1045060184);
 
     s1[4] = '\0';
-    ASSERT_EQ(hash(s1), 2292011937);
+    ASSERT_EQ(hash(s1), 2292011938);
 }
 
 

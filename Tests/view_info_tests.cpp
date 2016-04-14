@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(FramesetInfoTest, SettersAndGetters)
+TEST(FramesetInfo, SettersAndGetters)
 {
     ViewInfo::FramesetInfo frameset_info;
     ASSERT_EQ(frameset_info.GetSprite(), "");
@@ -25,7 +25,7 @@ TEST(FramesetInfoTest, SettersAndGetters)
     ASSERT_EQ(frameset_info.GetAngle(), 42);
 }
 
-TEST(FramesetInfoTest, IsSameSprites)
+TEST(FramesetInfo, IsSameSprites)
 {
     ViewInfo::FramesetInfo frameset_info1;
     ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info1));
@@ -55,7 +55,7 @@ TEST(FramesetInfoTest, IsSameSprites)
     ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
 }
 
-TEST(FramesetInfoTest, StreamOperators)
+TEST(FramesetInfo, StreamOperators)
 {
     ViewInfo::FramesetInfo frameset_info;
     frameset_info.SetSprite("sprite 1");
@@ -82,7 +82,18 @@ TEST(FramesetInfoTest, StreamOperators)
     ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
 }
 
-TEST(ViewInfoTest, AngleAndBaseFrameset)
+TEST(FramesetInfo, Hash)
+{
+    ViewInfo::FramesetInfo frameset_info;
+    ASSERT_EQ(hash(frameset_info), 2);
+
+    frameset_info.SetSprite("sprite 1");
+    frameset_info.SetState("state 2");
+    frameset_info.SetAngle(84);
+    ASSERT_EQ(hash(frameset_info), 230996884);
+}
+
+TEST(ViewInfo, AngleAndBaseFrameset)
 {
     ViewInfo view_info;
     ASSERT_EQ(view_info.GetAngle(), 0);

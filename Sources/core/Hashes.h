@@ -20,7 +20,7 @@ inline unsigned int hash(const std::string& str)
     hash += (hash << 3);
     hash ^= (hash >> 11);
     hash += (hash << 15);
-    return hash;
+    return hash + 1;
 }
 
 template<class T>
