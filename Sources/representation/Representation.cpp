@@ -232,7 +232,7 @@ void Representation::Process()
 
 void Representation::Click(int x, int y)
 {
-    helpers::normalize_pixels(&x, &y);
+    GetScreen().NormalizePixels(&x, &y);
     int s_x = x - camera_.GetFullShiftX();
     int s_y = y - camera_.GetFullShiftY();
     //qDebug() << "S_X: " << s_x << ", S_Y: " <<  s_y;

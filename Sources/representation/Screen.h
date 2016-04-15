@@ -14,6 +14,20 @@ public:
 
     void PerformSizeUpdate();
 
+    void NormalizePixels(int* x, int* y)
+    {
+        *x = static_cast<int>
+            (  static_cast<float>(*x)
+            * (  static_cast<float>(sizeW)
+               / static_cast<float>(w())
+               ));
+        *y = static_cast<int>
+            (  static_cast<float>(*y)
+            * (  static_cast<float>(sizeH)
+               / static_cast<float>(h())
+               ));
+    }
+
     int w();
     int h();
 private:
