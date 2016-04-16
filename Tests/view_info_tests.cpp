@@ -153,6 +153,73 @@ TEST(ViewInfo, OverlaysAndUnderlays)
     ASSERT_EQ(view_info.GetUnderlays().size(), 0);
 }
 
+TEST(ViewInfo, IsSameFramesets)
+{
+    ViewInfo view_info;
+    ASSERT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info));
+
+    view_info.SetAngle(10);
+    view_info.SetSprite("sprite");
+    view_info.SetState("state");
+    view_info.AddOverlay("1", "1");
+    view_info.AddUnderlay("2", "2");
+    ASSERT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info));
+
+    ViewInfo view_info2;
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.SetAngle(11);
+    view_info2.SetSprite("sprite");
+    view_info2.SetState("state");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.SetAngle(10);
+    view_info2.SetSprite("sprite1");
+    view_info2.SetState("state");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.SetAngle(10);
+    view_info2.SetSprite("sprite");
+    view_info2.SetState("state1");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.SetAngle(10);
+    view_info2.SetSprite("sprite");
+    view_info2.SetState("state");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.AddOverlay("vvv", "wwww");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.RemoveOverlays();
+    view_info2.AddOverlay("1", "1");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.AddUnderlay("vvv", "wwww");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.RemoveUnderlays();
+    view_info2.AddUnderlay("2", "2");
+    ASSERT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.AddOverlay("111", "111");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.RemoveOverlays();
+    view_info2.AddOverlay("1", "1");
+    view_info2.AddUnderlay("2", "2");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+}
+
+TEST(ViewInfo, StreamOperators)
+{
+    ViewInfo view_info;
+    std::stringstream str;
+    str << view_info;
+    ASSERT_EQ(str.str(), "0  0  0  0 0 0 ");
+    // TODO
+}
+
 
 
 
