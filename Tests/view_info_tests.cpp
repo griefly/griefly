@@ -114,7 +114,44 @@ TEST(ViewInfo, AngleAndBaseFrameset)
     ASSERT_EQ(view_info.GetAngle(), 33);
 }
 
+TEST(ViewInfo, OverlaysAndUnderlays)
+{
+    ViewInfo view_info;
+    ASSERT_EQ(view_info.GetOverlays().size(), 0);
+    ASSERT_EQ(view_info.GetUnderlays().size(), 0);
 
+    view_info.AddOverlay("bom bom", "bim bom");
+    ASSERT_EQ(view_info.GetOverlays().size(), 1);
+    ASSERT_EQ(view_info.GetUnderlays().size(), 0);
+    ASSERT_EQ(view_info.GetOverlays()[0].GetSprite(), "bom bom");
+    ASSERT_EQ(view_info.GetOverlays()[0].GetState(), "bim bom");
+
+    view_info.AddOverlay("bom bom2", "bim bom2");
+    ASSERT_EQ(view_info.GetOverlays().size(), 2);
+    ASSERT_EQ(view_info.GetUnderlays().size(), 0);
+    ASSERT_EQ(view_info.GetOverlays()[1].GetSprite(), "bom bom2");
+    ASSERT_EQ(view_info.GetOverlays()[1].GetState(), "bim bom2");
+
+    view_info.AddUnderlay("image", "state");
+    ASSERT_EQ(view_info.GetOverlays().size(), 2);
+    ASSERT_EQ(view_info.GetUnderlays().size(), 1);
+    ASSERT_EQ(view_info.GetUnderlays()[0].GetSprite(), "image");
+    ASSERT_EQ(view_info.GetUnderlays()[0].GetState(), "state");
+
+    view_info.AddUnderlay("image2", "state2");
+    ASSERT_EQ(view_info.GetOverlays().size(), 2);
+    ASSERT_EQ(view_info.GetUnderlays().size(), 2);
+    ASSERT_EQ(view_info.GetUnderlays()[1].GetSprite(), "image2");
+    ASSERT_EQ(view_info.GetUnderlays()[1].GetState(), "state2");
+
+    view_info.RemoveOverlays();
+    ASSERT_EQ(view_info.GetOverlays().size(), 0);
+    ASSERT_EQ(view_info.GetUnderlays().size(), 2);
+
+    view_info.RemoveUnderlays();
+    ASSERT_EQ(view_info.GetOverlays().size(), 0);
+    ASSERT_EQ(view_info.GetUnderlays().size(), 0);
+}
 
 
 
