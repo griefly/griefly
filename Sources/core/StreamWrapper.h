@@ -67,6 +67,7 @@ inline std::stringstream& WrapReadMessage(std::stringstream& file, std::string& 
 
     if (size == 0)
     {
+        to_read.clear();
         return file;
     }
     to_read.resize(size);

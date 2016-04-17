@@ -227,11 +227,51 @@ TEST(ViewInfo, IsSameFramesets)
 
 TEST(ViewInfo, StreamOperators)
 {
-    ViewInfo view_info;
-    std::stringstream str;
-    str << view_info;
-    ASSERT_EQ(str.str(), "0  0  0  0 0 0 ");
-    // TODO
+    ViewInfo view_info;  
+    {
+        std::stringstream str;
+        str << view_info;
+        ASSERT_EQ(str.str(), "0  0  0  0 0 0 ");
+    }
+
+    view_info.SetSprite("vhs");
+    view_info.SetState("dead");
+    view_info.SetAngle(11);
+    view_info.AddOverlay("something", "someone");
+    view_info.AddUnderlay("tree", "weed");
+    {
+        std::stringstream str;
+        str << view_info;
+        ASSERT_EQ(str.str(), "3 vhs 4 dead 0  1 4 tree 4 weed 0  1 9 something 7 someone 0  11 ");
+    }
+
+    {
+        std::stringstream str("0 0 0 0 0 0");
+        str >> view_info;
+        ASSERT_EQ(view_info.GetAngle(), 0);
+        ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "");
+        ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "");
+        ASSERT_EQ(view_info.GetOverlays().size(), 0);
+        ASSERT_EQ(view_info.GetUnderlays().size(), 0);
+    }
+
+    {
+        std::stringstream str("4 vhsa 5 dea1d 0 1 4 tree 4 weed 0 1 8 smething 7 someone 0 11");
+        str >> view_info;
+        ASSERT_EQ(view_info.GetAngle(), 11);
+        ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "vhsa");
+        ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "dea1d");
+
+        ASSERT_EQ(view_info.GetOverlays().size(), 1);
+        ViewInfo::FramesetInfo frameset_info1 = view_info.GetOverlays()[0];
+        ASSERT_EQ(frameset_info1.GetSprite(), "smething");
+        ASSERT_EQ(frameset_info1.GetState(), "someone");
+
+        ASSERT_EQ(view_info.GetUnderlays().size(), 1);
+        ViewInfo::FramesetInfo frameset_info2 = view_info.GetUnderlays()[0];
+        ASSERT_EQ(frameset_info2.GetSprite(), "tree");
+        ASSERT_EQ(frameset_info2.GetState(), "weed");
+    }
 }
 
 
