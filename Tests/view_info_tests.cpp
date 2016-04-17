@@ -218,6 +218,11 @@ TEST(ViewInfo, IsSameFramesets)
     view_info2.SetAngle(10);
     view_info2.SetState("spqr");
     ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.SetState("state");
+    view_info2.RemoveUnderlays();
+    view_info2.AddUnderlay("2fkds;a", "2fdjsl;kjf");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
 }
 
 TEST(ViewInfo, StreamOperators)
