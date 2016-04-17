@@ -183,6 +183,13 @@ TEST(ViewInfo, IsSameFramesets)
     view_info2.SetState("state1");
     ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
 
+    view_info2.AddUnderlay("vvv", "wwww");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.RemoveUnderlays();
+    view_info2.AddUnderlay("2", "2");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
     view_info2.SetAngle(10);
     view_info2.SetSprite("sprite");
     view_info2.SetState("state");
@@ -193,13 +200,6 @@ TEST(ViewInfo, IsSameFramesets)
 
     view_info2.RemoveOverlays();
     view_info2.AddOverlay("1", "1");
-    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
-
-    view_info2.AddUnderlay("vvv", "wwww");
-    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
-
-    view_info2.RemoveUnderlays();
-    view_info2.AddUnderlay("2", "2");
     ASSERT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info2));
 
     view_info2.AddOverlay("111", "111");
@@ -208,6 +208,15 @@ TEST(ViewInfo, IsSameFramesets)
     view_info2.RemoveOverlays();
     view_info2.AddOverlay("1", "1");
     view_info2.AddUnderlay("2", "2");
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.RemoveUnderlays();
+    view_info2.AddUnderlay("2", "2");
+    view_info2.SetAngle(88);
+    ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.SetAngle(10);
+    view_info2.SetState("spqr");
     ASSERT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
 }
 
