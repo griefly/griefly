@@ -88,7 +88,11 @@ TEST(FramesetInfo, Hash)
     ASSERT_EQ(hash(frameset_info), 2);
 
     frameset_info.SetSprite("sprite 1");
+    ASSERT_EQ(hash(frameset_info), 2014229692);
+
     frameset_info.SetState("state 2");
+    ASSERT_EQ(hash(frameset_info), 230996800);
+
     frameset_info.SetAngle(84);
     ASSERT_EQ(hash(frameset_info), 230996884);
 }
@@ -272,6 +276,27 @@ TEST(ViewInfo, StreamOperators)
         ASSERT_EQ(frameset_info2.GetSprite(), "tree");
         ASSERT_EQ(frameset_info2.GetState(), "weed");
     }
+}
+
+TEST(ViewInfo, Hash)
+{
+    ViewInfo view_info;
+    ASSERT_EQ(hash(view_info), 2);
+
+    view_info.SetAngle(10);
+    ASSERT_EQ(hash(view_info), 12);
+
+    view_info.SetSprite("sprite");
+    ASSERT_EQ(hash(view_info), 2514701247);
+
+    view_info.SetState("state");
+    ASSERT_EQ(hash(view_info), 227251334);
+
+    view_info.AddOverlay("1", "1");
+    ASSERT_EQ(hash(view_info), 241341978);
+
+    view_info.AddUnderlay("2", "2");
+    ASSERT_EQ(hash(view_info), 834067624);
 }
 
 
