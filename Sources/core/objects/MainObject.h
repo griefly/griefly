@@ -7,6 +7,7 @@
 
 class IMainObject
 {
+    friend class ObjectFactory;
 public:
     static const int THIS_COUNTER = __COUNTER__; 
     virtual bool saveSelf(std::stringstream& file);                              
@@ -18,8 +19,8 @@ public:
     }
 
     virtual void Delete();
-    IMainObject(size_t id){ id_ = id; how_often_ = 0; }
-    IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; }
+    IMainObject(size_t id){ id_ = id; how_often_ = 0; game_ = nullptr; }
+    IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
     virtual const std::string& T_ITEM()
     {                                        
@@ -46,6 +47,8 @@ public:
 
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
+protected:
+    Game* game_;
 private:
     size_t id_;
     int how_often_;

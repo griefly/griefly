@@ -157,7 +157,7 @@ void Game::InitWorld(int id, std::string map_name)
 
     std::cout << "Begin init world" << std::endl;
 
-    SetFactory(new ObjectFactory);
+    SetFactory(new ObjectFactory(this));
     SetMapMaster(new MapMaster);
 
     SetChat(new Chat);

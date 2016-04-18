@@ -9,11 +9,12 @@
 #include "net/MagicStrings.h"
 #include "net/NetworkMessagesTypes.h"
 
-ObjectFactory::ObjectFactory()
+ObjectFactory::ObjectFactory(Game* game)
 {
     objects_table_.resize(100);
     id_ = 1;
     is_world_generating_ = true;
+    game_ = game;
 
 }
 
