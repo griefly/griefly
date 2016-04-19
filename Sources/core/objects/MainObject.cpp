@@ -1,6 +1,22 @@
 #include "MainObject.h"
 #include "../Map.h"
 #include "../ObjectFactory.h"
+#include "../Game.h"
+#include "representation/Representation.h"
+
+void IMainObject::PlaySoundIfVisible(const std::string& name, size_t tile_id)
+{
+    if (GetMap().IsTileVisible(tile_id))
+    {
+        GetRepresentation().AddToNewFrame(name);
+    }
+}
+
+
+void IMainObject::PlayMusic(const std::string& name, float volume)
+{
+    game_->PlayMusic(name, volume);
+}
 
 void IMainObject::Delete()
 {

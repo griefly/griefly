@@ -277,9 +277,9 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
     atmosphere.Resize(new_map_x, new_map_y);
 }
 
-MapMaster::MapMaster()
+MapMaster::MapMaster(Game* game)
 {
-
+    game_ = game;
 }
 
 PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)
@@ -327,6 +327,11 @@ void MapMaster::switchDir(int& posx, int& posy, Dir direct, int num, bool back)/
     }
 }
 
+Game& MapMaster::GetGame()
+{
+    return *game_;
+}
+
 bool MapMaster::IsTransparent(int posx, int posy, int posz)
 {
     if (!CheckBorders(&posx, &posy, &posz))
@@ -334,6 +339,24 @@ bool MapMaster::IsTransparent(int posx, int posy, int posz)
         return false;
     }
     return squares[posx][posy][posz]->IsTransparent();
+}
+
+
+bool MapMaster::IsTileVisible(size_t tile_id)
+{
+    auto l = GetGame().GetVisiblePoints();
+    if (!l)
+    {
+        return false;
+    }
+    for (auto it = l->begin(); it != l->end(); ++it)
+    {
+        if (tile_id == squares[it->posx][it->posy][it->posz].ret_id())
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 MapMaster* map_master_ = 0;

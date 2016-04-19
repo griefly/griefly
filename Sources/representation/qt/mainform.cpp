@@ -150,7 +150,6 @@ void MainForm::startGameLoop(int id, QString map)
     SetRepresentation(new Representation);
 
     Game* game = new Game;
-    SetGame(game);
 
     connect(game, &Game::insertHtmlIntoChat, this, &MainForm::insertHtmlIntoChat);
     connect(game, &Game::addSystemText, this, &MainForm::addSystemText);
@@ -189,7 +188,7 @@ void MainForm::startGameLoop(int id, QString map)
     emit closing();
     QCoreApplication::processEvents(QEventLoop::AllEvents);
 
-    GetGame().WaitForExit();
+    game->WaitForExit();
 
     Network2::GetInstance().Disconnect();
 

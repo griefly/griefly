@@ -9,6 +9,9 @@ class IMainObject
 {
     friend class ObjectFactory;
 public:
+    void PlaySoundIfVisible(const std::string& name, size_t tile_id);
+    void PlayMusic(const std::string& name, float volume = 100.0f);
+
     static const int THIS_COUNTER = __COUNTER__; 
     virtual bool saveSelf(std::stringstream& file);                              
     virtual bool loadSelf(std::stringstream& file);                                                        

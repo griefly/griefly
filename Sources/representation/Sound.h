@@ -22,9 +22,6 @@ private:
 
 SoundManager& GetSoundManager();
 
-void PlaySoundIfVisible(const std::string& name, size_t tile_id);
-void PlayMusic(const std::string& name, float volume = 100.0f);
-
 class SoundPlayer
 {
 public:

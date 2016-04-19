@@ -65,7 +65,7 @@ Chat::Chat()
 
 void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 {
-    if (!IsTileVisible(tile_id))
+    if (!GetMap().IsTileVisible(tile_id))
     {
         return;
     }
@@ -75,7 +75,7 @@ void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 
 void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id)
 {
-    if (!IsTileVisible(tile_id))
+    if (!GetMap().IsTileVisible(tile_id))
     {
         return;
     }
@@ -97,7 +97,7 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
 
 void Chat::PostWords(const std::string& who, const std::string& text, size_t tile_id)
 {
-    if (!IsTileVisible(tile_id))
+    if (!GetMap().IsTileVisible(tile_id))
     {
         return;
     }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h>
+
 #include <list>
 #include <vector>
 
@@ -20,7 +22,7 @@ private:
 class MapMaster
 {
 public:
-    MapMaster();
+    MapMaster(Game* game);
     typedef id_ptr_on<CubeTile> SqType;
     std::vector<std::vector<std::vector<SqType> > > squares;
 
@@ -131,8 +133,12 @@ public:
     static void switchDir(int& posx, int& posy, Dir direct, int num = 1, bool back = false);
     
     id_ptr_on<IOnMapObject> Click(int x, int y);
-    
+    bool IsTileVisible(size_t tile_id);
+
     LOSfinder losf;
+private:
+    Game& GetGame();
+    Game* game_;
 };
 
 bool IsMapValid();

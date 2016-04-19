@@ -72,7 +72,3 @@ private:
 
     QThread thread_;
 };
-
-Game& GetGame();
-bool IsGameValid();
-void SetGame(Game* game);

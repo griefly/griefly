@@ -158,7 +158,7 @@ void Game::InitWorld(int id, std::string map_name)
     std::cout << "Begin init world" << std::endl;
 
     SetFactory(new ObjectFactory(this));
-    SetMapMaster(new MapMaster);
+    SetMapMaster(new MapMaster(this));
 
     SetChat(new Chat);
     SetTexts(new TextPainter);
@@ -543,20 +543,4 @@ bool Game::IsMobVisible(int posx, int posy)
         }
     }
     return false;
-}
-
-Game* game_ = nullptr;
-Game& GetGame()
-{
-    return *game_;
-}
-
-void SetGame(Game* game)
-{
-    game_ = game;
-}
-
-bool IsGameValid()
-{
-    return game_ != nullptr;
 }

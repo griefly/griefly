@@ -1,8 +1,6 @@
 #include "Sound.h"
 
-#include "core/VisiblePoints.h"
 #include "Representation.h"
-#include "core/Game.h"
 
 #include <QDebug>
 
@@ -116,21 +114,4 @@ sf::Sound* PlaySound(const std::string& name)
     sf::Sound* s = GetSoundPlayer().PlaySound(name);
     //s->setPosition(mob_position::x, y, 0);
     return s;
-}
-
-void PlaySoundIfVisible(const std::string& name, size_t tile_id)
-{
-    if (IsTileVisible(tile_id))
-    {
-        GetRepresentation().AddToNewFrame(name);
-    }
-}
-
-
-void PlayMusic(const std::string& name, float volume)
-{
-    if (IsGameValid())
-    {
-        GetGame().PlayMusic(name, volume);
-    }
 }
