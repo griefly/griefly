@@ -101,7 +101,7 @@ ipch
 /K&V/sounds/work_boots_skid_on_leaves.mp3
 /K&V/start.bat
 /K&V/zlib1.dll
-/knv-server-go/knv-server-go.exe
+/griefly-server/griefly-server.exe
 /KVEngine.opensdf
 /Release/*.obj
 /Release/*.tlog
@@ -139,8 +139,8 @@ Saves
 /Exec/metadata.json
 /Exec/Launcher.exe
 /Exec/Launcher
-/knv-server-go/dumps
-/knv-server-go/db-local
-/knv-server-go/server_starter.bat
-/knv-server-go/server_starter.bat - Shortcut.lnk
+/griefly-server/dumps
+/griefly-server/db-local
+/griefly-server/server_starter.bat
+/griefly-server/server_starter.bat - Shortcut.lnk
 /Exec/stderr.txt
