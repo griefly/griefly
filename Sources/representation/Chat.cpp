@@ -8,10 +8,6 @@
 #include "core/objects/Creator.h"
 #include "core/Helpers.h"
 
-
-
-#include "core/VisiblePoints.h"
-
 #include <QUuid>
 #include <QTextCursor>
 

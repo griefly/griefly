@@ -10,8 +10,6 @@
 #include "objects/Tile.h"
 #include "Game.h"
 #include "ObjectFactory.h"
-#include "VisiblePoints.h"
-#include "Helpers.h"
 #include "Helpers.h"
 #include "objects/Creator.h"
 #include "AutogenMetadata.h"
