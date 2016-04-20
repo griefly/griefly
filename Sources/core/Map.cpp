@@ -33,50 +33,6 @@ void MapMaster::FillAtmosphere()
                 }
 }
 
-void MapMaster::SaveToMapGen(const std::string& name)
-{
-    std::fstream sfile;
-    sfile.open(name, std::ios_base::out | std::ios_base::trunc);
-    if(sfile.fail()) 
-    {
-        SYSTEM_STREAM << "Error open " << name << std::endl; 
-        return;
-    }
-
-    sfile << GetMapW() << std::endl;
-    sfile << GetMapH() << std::endl;
-    sfile << GetMapD() << std::endl;
-//    sfile << GetCreator() << std::endl;
-
-    std::map<std::string, std::string> dummy;
-
-    for (int z = 0; z < GetMapD(); ++z)
-        for (int x = 0; x < GetMapW(); ++x)
-            for (int y = 0; y < GetMapH(); ++y)
-            {
-                if (auto t = squares[x][y][z]->GetTurf())
-                {
-                    sfile << t->T_ITEM() << " ";
-                    sfile << x << " ";
-                    sfile << y << " ";
-                    sfile << z << " ";
-                    sfile << std::endl;
-                }
-                auto& il = squares[x][y][z]->GetInsideList();
-                for (auto it = il.begin(); it != il.end(); ++it)
-                {
-                    sfile << (*it)->T_ITEM() << " ";
-                    sfile << x << " ";
-                    sfile << y << " ";
-                    sfile << z << " ";
-                    sfile << std::endl;
-                }
-                std::stringstream ss;
-                WrapWriteMessage(ss, dummy);
-                sfile << ss.str();
-            }
-}
-
 void MapMaster::LoadFromMapGen(const std::string& name)
 {
     GetFactory().ClearMap();

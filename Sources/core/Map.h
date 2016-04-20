@@ -27,12 +27,7 @@ public:
     std::vector<std::vector<std::vector<SqType> > > squares;
 
     Atmosphere atmosphere;
-
-    void SaveToMapGen(const std::string& name);
     void LoadFromMapGen(const std::string& name);
-
-
-
 
     int GetMapW() const
     {
