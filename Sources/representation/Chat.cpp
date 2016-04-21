@@ -7,6 +7,7 @@
 #include "Screen.h"
 #include "core/objects/Creator.h"
 #include "core/Helpers.h"
+#include "core/Game.h"
 
 #include <QUuid>
 #include <QTextCursor>
@@ -54,14 +55,14 @@ bool Chat::IsOOCMessage(const std::string &text)
     return false;
 }
 
-Chat::Chat()
+Chat::Chat(Game* game)
 {
-
+    game_ = game;
 }
 
 void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 {
-    if (!GetMap().IsTileVisible(tile_id))
+    if (!game_->GetMap().IsTileVisible(tile_id))
     {
         return;
     }
@@ -71,7 +72,7 @@ void Chat::PostSimpleText(const std::string& str, size_t tile_id)
 
 void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id)
 {
-    if (!GetMap().IsTileVisible(tile_id))
+    if (!game_->GetMap().IsTileVisible(tile_id))
     {
         return;
     }
@@ -93,7 +94,7 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
 
 void Chat::PostWords(const std::string& who, const std::string& text, size_t tile_id)
 {
-    if (!GetMap().IsTileVisible(tile_id))
+    if (!game_->GetMap().IsTileVisible(tile_id))
     {
         return;
     }

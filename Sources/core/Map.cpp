@@ -232,6 +232,8 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 }
 
 MapMaster::MapMaster(Game* game)
+    : atmosphere(this),
+      losf(this)
 {
     game_ = game;
 }
@@ -313,35 +315,19 @@ bool MapMaster::IsTileVisible(size_t tile_id)
     return false;
 }
 
-MapMaster* map_master_ = 0;
-MapMaster& GetMap()
-{
-    return *map_master_;
-}
-
-void SetMapMaster(MapMaster* map_master)
-{
-    map_master_ = map_master;
-}
-
-bool IsMapValid()
-{
-    return map_master_ != nullptr;
-}
-
 const int RAY_MULTIPLIER = 2;
 
-int pos2corner(int pos)
+int LOSfinder::pos2corner(int pos)
 {
     return pos * RAY_MULTIPLIER;
 }
 
-int corner2pos(int corner)
+int LOSfinder::corner2pos(int corner)
 {
     return corner / RAY_MULTIPLIER;
 }
 
-int sign(int value)
+int LOSfinder::sign(int value)
 {
     if (value > 0)
     {
@@ -354,28 +340,28 @@ int sign(int value)
     return 0;
 }
 
-bool check_corner(point p)
+bool LOSfinder::check_corner(point p)
 {
     int x = corner2pos(p.posx);
     int y = corner2pos(p.posy);
     int z = corner2pos(p.posz);
-    return GetMap().CheckBorders(&x, &y, &z);
+    return map_->CheckBorders(&x, &y, &z);
 }
 
 
-point corner_point2point(point p)
+point LOSfinder::corner_point2point(point p)
 {
     point retval = {corner2pos(p.posx), corner2pos(p.posy), corner2pos(p.posz)};
     return retval;
 }
 
-bool is_transparent(point p)
+bool LOSfinder::is_transparent(point p)
 {
     point tilePoint = corner_point2point(p);
-    return GetMap().IsTransparent(tilePoint.posx, tilePoint.posy, tilePoint.posz);
+    return map_->IsTransparent(tilePoint.posx, tilePoint.posy, tilePoint.posz);
 }
 
-bool bresen_x(point source, point target)
+bool LOSfinder::bresen_x(point source, point target)
 {
     int y = source.posy;
     int error = 0;
@@ -437,7 +423,7 @@ bool bresen_x(point source, point target)
     return true;
 }
 
-bool bresen_y(point source, point target)
+bool LOSfinder::bresen_y(point source, point target)
 {
     int x = source.posx;
     int error = 0;
@@ -500,7 +486,7 @@ bool bresen_y(point source, point target)
     return true;
 }
 
-bool ray_trace(point source, point target)
+bool LOSfinder::ray_trace(point source, point target)
 {
     // run Bresenham's line algorithm
     if (std::abs(source.posx - target.posx) > std::abs(source.posy - target.posy))
@@ -515,7 +501,7 @@ bool ray_trace(point source, point target)
     return false;
 }
 
-void mark_tiles_of_corner_as_visible(
+void LOSfinder::mark_tiles_of_corner_as_visible(
         std::list<point>* retlist,
         point at,
         point center,
@@ -526,7 +512,7 @@ void mark_tiles_of_corner_as_visible(
         for (int dy = -1; dy <= 0; dy++)
         {
             point p = {at.posx + dx, at.posy + dy, at.posz};
-            if (!GetMap().CheckBorders(&p.posx, &p.posy, &p.posz))
+            if (!map_->CheckBorders(&p.posx, &p.posy, &p.posz))
             {
                 continue;
             }
@@ -549,6 +535,11 @@ void mark_tiles_of_corner_as_visible(
             visibility[vis_idx] = 1;
         }
     }
+}
+
+LOSfinder::LOSfinder(MapMaster *map)
+{
+    map_ = map;
 }
 
 // LOSfinder::calculateVisisble calculates visibility list of map from given map point

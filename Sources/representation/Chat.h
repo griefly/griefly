@@ -13,7 +13,7 @@ class Chat: public QObject
     Q_OBJECT
 public:
     static bool IsOOCMessage(const std::string& text);
-    Chat();
+    Chat(Game* game);
     void PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner);
 
     void PostText(const std::string& str);
@@ -25,6 +25,8 @@ public:
     void PostWords(const std::string& who, const std::string& text, size_t tile_id);
 signals:
     void insertHtmlIntoChat(QString html);
+private:
+    Game* game_;
 };
 
 void SetLogToFile();

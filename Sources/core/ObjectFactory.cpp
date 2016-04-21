@@ -15,7 +15,6 @@ ObjectFactory::ObjectFactory(Game* game)
     id_ = 1;
     is_world_generating_ = true;
     game_ = game;
-
 }
 
 void ObjectFactory::UpdateProcessingItems()
@@ -79,9 +78,9 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
 
     // Save Map Size
 
-    savefile << GetMap().GetMapW() << std::endl;
-    savefile << GetMap().GetMapH() << std::endl;
-    savefile << GetMap().GetMapD() << std::endl;
+    savefile << game_->GetMap().GetMapW() << std::endl;
+    savefile << game_->GetMap().GetMapH() << std::endl;
+    savefile << game_->GetMap().GetMapD() << std::endl;
 
     // Save player table
     savefile << players_table_.size() << " ";
@@ -123,7 +122,7 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_
     savefile >> y;
     savefile >> z;
 
-    GetMap().ResizeMap(x, y, z);
+    game_->GetMap().ResizeMap(x, y, z);
 
     // Load player table
     size_t s;

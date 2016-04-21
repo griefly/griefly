@@ -6,9 +6,12 @@
 #include "AtmosHolder.h"
 #include "Constheader.h"
 
+class MapMaster;
+
 class Atmosphere
 {
 public:
+    Atmosphere(MapMaster* map);
     void Resize(size_t x, size_t y)
     {
         x_shuffle_.resize(x);
@@ -34,4 +37,6 @@ private:
     std::vector<size_t> y_shuffle_;
 
     std::array<Dir, 4> dir_shuffle_;
+
+    MapMaster* map_;
 };

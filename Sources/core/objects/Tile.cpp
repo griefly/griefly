@@ -2,6 +2,7 @@
 
 #include "../Helpers.h"
 #include "../Map.h"
+#include "../Game.h"
 #include "OnMapObject.h"
 #include "Tile.h"
 #include "Movable.h"
@@ -301,8 +302,8 @@ id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
     int new_x = posx_;
     int new_y = posy_;
     int new_z = posz_;
-    GetMap().MoveToDir(direct, &new_x, &new_y, &new_z);
-    return GetMap().squares[new_x][new_y][new_z];
+    game_->GetMap().MoveToDir(direct, &new_x, &new_y, &new_z);
+    return game_->GetMap().squares[new_x][new_y][new_z];
 }
 
 PassableLevel CubeTile::GetPassable(Dir direct) const
@@ -372,5 +373,5 @@ void CubeTile::ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
 
 void CubeTile::LoadInMap()
 {
-    GetMap().squares[posx_][posy_][posz_] = GetId();
+    game_->GetMap().squares[posx_][posy_][posz_] = GetId();
 }

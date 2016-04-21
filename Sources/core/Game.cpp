@@ -158,9 +158,9 @@ void Game::InitWorld(int id, std::string map_name)
     std::cout << "Begin init world" << std::endl;
 
     SetFactory(new ObjectFactory(this));
-    SetMapMaster(new MapMaster(this));
+    map_ = new MapMaster(this);
 
-    SetChat(new Chat);
+    SetChat(new Chat(this));
     SetTexts(new TextPainter);
 
     GetChat().moveToThread(&thread_);
@@ -451,6 +451,11 @@ void Game::PlayMusic(std::string name, float volume)
 {
     qDebug() << QString::fromStdString(name);
     emit playMusic(QString::fromStdString(name), volume);
+}
+
+MapMaster& Game::GetMap()
+{
+    return *map_;
 }
 
 void Game::process()

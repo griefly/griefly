@@ -17,6 +17,7 @@
 #include "Floor.h"
 #include "net/NetworkMessagesTypes.h"
 #include "Lobby.h"
+#include "../Game.h"
 
 Human::Human(size_t id) : IMob(id)
 {
@@ -370,14 +371,16 @@ void Human::Represent()
 
 void Human::CalculateVisible(std::list<point>* visible_list)
 {
+    qDebug() << "Begin vCalculateVisible";
     if (health_ >= 0)
     {
-        visible_list = 
-            GetMap().losf.CalculateVisisble(visible_list, 
+        visible_list =
+            game_->GetMap().losf.CalculateVisisble(visible_list,
                  GetX(),
                  GetY(),
                  GetZ());
     }
+    qDebug() << "End vCalculateVisible";
 }
 
 

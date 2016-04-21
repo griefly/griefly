@@ -31,6 +31,8 @@ public:
 
     std::list<point>* GetVisiblePoints() { return visible_points_; }
     void PlayMusic(std::string name, float volume);
+
+    MapMaster& GetMap();
 public slots:
     void process();
     void endProcess();
@@ -71,4 +73,6 @@ private:
     int current_connections_;
 
     QThread thread_;
+
+    MapMaster* map_;
 };

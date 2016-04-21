@@ -9,14 +9,31 @@
 #include "objects/Tile.h"
 #include "Atmos.h"
 
+class MapMaster;
 class LOSfinder
 {
 public:
+    LOSfinder(MapMaster* map);
     std::list<point>* CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0);
 private:
+    int pos2corner(int pos);
+    int corner2pos(int corner);
+    int sign(int value);
+    bool check_corner(point p);
+    point corner_point2point(point p);
+    bool is_transparent(point p);
+    bool bresen_x(point source, point target);
+    bool bresen_y(point source, point target);
+    bool ray_trace(point source, point target);
+    void mark_tiles_of_corner_as_visible(
+            std::list<point>* retlist,
+            point at,
+            point center,
+            char visibility[]);
     void Clear();
     std::list<point> worklist;
 
+    MapMaster* map_;
 };
 
 class MapMaster
@@ -135,7 +152,3 @@ private:
     Game& GetGame();
     Game* game_;
 };
-
-bool IsMapValid();
-MapMaster& GetMap();
-void SetMapMaster(MapMaster* map_master);
