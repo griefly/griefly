@@ -10,8 +10,12 @@
 
 IMob::IMob(size_t id) : IMessageReceiver(id)
 {
+    SetSprite("icons/ork.png");
+}
+
+void IMob::AfterWorldCreation()
+{
     SetFreq(1);
-    SetSprite("icons/ork.png");        
 }
 
 void IMob::cautOverMind()

@@ -20,7 +20,7 @@ void IMainObject::PlayMusic(const std::string& name, float volume)
 
 void IMainObject::Delete()
 {
-    GetFactory().GetIdTable()[id_] = nullptr;
+    game_->GetFactory().GetIdTable()[id_] = nullptr;
     delete this;
 }
 
@@ -44,6 +44,12 @@ bool IMainObject::loadSelf(std::stringstream& file)
 
 void IMainObject::SetFreq(int freq)
 {
+    if (game_ == nullptr)
+    {
+        qDebug() << "SetFreq is called in constructor";
+        abort();
+    }
+
     how_often_ = freq;
 
     // TODO: Why is it here?
@@ -52,7 +58,7 @@ void IMainObject::SetFreq(int freq)
 
     if (how_often_ != 0)
     {
-        GetFactory().AddProcessingItem(GetId());
+        game_->GetFactory().AddProcessingItem(GetId());
     }
 }
 

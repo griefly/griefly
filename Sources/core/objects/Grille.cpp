@@ -5,6 +5,7 @@
 #include "representation/Sound.h"
 
 #include "../ObjectFactory.h"
+#include "../Game.h"
 #include "Materials.h"
 
 Grille::Grille(size_t id) : Structure(id)
@@ -35,11 +36,11 @@ void Grille::AttackBy(id_ptr_on<Item> item)
             SetState("brokengrille");
             SetPassable(D_ALL, Passable::FULL);
             cutted_ = true;
-            GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+            game_->GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
         }
         else
         {
-            GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+            game_->GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
             Delete();
         }
     }

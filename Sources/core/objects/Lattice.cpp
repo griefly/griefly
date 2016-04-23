@@ -5,6 +5,7 @@
 #include "Floor.h"
 
 #include "../ObjectFactory.h"
+#include "../Game.h"
 #include "representation/Sound.h"
 
 Lattice::Lattice(size_t id) : Structure(id)
@@ -24,7 +25,7 @@ void Lattice::AttackBy(id_ptr_on<Item> item)
         tile->Delete();
 
         GetTurf()->Delete();
-        GetFactory().Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
+        game_->GetFactory().Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
 
         PlaySoundIfVisible("Deconstruct.ogg", owner.ret_id());
 

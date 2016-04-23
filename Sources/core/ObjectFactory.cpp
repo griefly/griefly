@@ -242,9 +242,16 @@ void ObjectFactory::LoadMap(std::stringstream& savefile, size_t real_this_mob)
 
 IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)
 {
-    auto il = (*itemList());
+    //qDebug() << "NewVoidObject: " << QString::fromStdString(type);
+    auto& il = (*itemList());
+    //qDebug() << il.size();
     auto f = il[type];
-    return f(id);
+
+    //qDebug() << f;
+
+    IMainObject* retval = f(id);
+    //qDebug() << "NewVoidObject end";
+    return retval;
 }
 
 IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
@@ -361,14 +368,4 @@ void ObjectFactory::ClearProcessing()
     {
         process_table_.erase(std::find(process_table_.begin(), process_table_.end(), *it));
     }
-}
-
-ObjectFactory* item_fabric_ = 0;
-ObjectFactory& GetFactory()
-{
-    return *item_fabric_;
-}
-void SetFactory(ObjectFactory* item_fabric)
-{
-    item_fabric_ = item_fabric;
 }

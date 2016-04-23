@@ -35,7 +35,9 @@ void MapMaster::FillAtmosphere()
 
 void MapMaster::LoadFromMapGen(const std::string& name)
 {
-    GetFactory().ClearMap();
+    //qDebug() << "Start clear";
+    GetGame().GetFactory().ClearMap();
+    //qDebug() << "End clear";
 
     std::fstream sfile;
     sfile.open(name, std::ios_base::in);
@@ -57,7 +59,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
     ss.write(buff, length);
     delete[] buff;
 
-    GetFactory().BeginWorldCreation();
+    game_->GetFactory().BeginWorldCreation();
 
     int x, y, z;
     ss >> x;
@@ -69,7 +71,8 @@ void MapMaster::LoadFromMapGen(const std::string& name)
 
     MakeTiles(x, y, z);
 
-   // qDebug() << "Begin loading cycle";
+
+    qDebug() << "Begin loading cycle";
     while (ss)
     {
         std::string t_item;
@@ -95,7 +98,10 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             continue;
         }
 
-        auto i = GetFactory().Create<IOnMapObject>(t_item);
+        //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
+        //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(t_item);
+        auto i = game_->GetFactory().Create<IOnMapObject>(t_item);
+        //qDebug() << "Success!";
 
         std::map<std::string, std::string> variables;
         WrapReadMessage(ss, variables);
@@ -114,6 +120,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             get_setters_for_types()[t_item][it->first](i.operator*(), local_variable);
         }
 
+        //qDebug() << "id_ptr_on<ITurf> t = i";
         if (id_ptr_on<ITurf> t = i)
         {
             if (squares[x][y][z]->GetTurf())
@@ -127,7 +134,7 @@ void MapMaster::LoadFromMapGen(const std::string& name)
             squares[x][y][z]->AddItem(i);
         }
     }
-   GetFactory().FinishWorldCreation();
+   GetGame().GetFactory().FinishWorldCreation();
 }
 
 void MapMaster::Represent()
@@ -209,7 +216,7 @@ void MapMaster::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMapD(); z++)
             {
-                auto loc = GetFactory().Create<CubeTile>(CubeTile::T_ITEM_S());
+                auto loc = GetGame().GetFactory().Create<CubeTile>(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 squares[x][y][z] = loc;
             }

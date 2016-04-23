@@ -4,10 +4,11 @@
 #include <memory>
 
 #include "Idptr.h"
-#include "objects/OnMapBase.h"
 #include "objects/OnMapObject.h"
 
 #include "FastStringstream.h"
+
+class IOnMapBase;
 
 class ObjectFactory
 {
@@ -51,15 +52,19 @@ public:
     template<typename T>
     id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
     {
+        //qDebug() << "Create start";
         T* item = castTo<T>(NewVoidObject(type, id_));
+        //qDebug() << item;
         if (item == 0)
         {
             qDebug() << "Creation type mismatch: " << QString::fromStdString(type);
             abort();
         }
 
+        //qDebug() << "item->game_ = game_";
         item->game_ = game_;
 
+        //qDebug() << "if (id_ >= objects_table_.size())";
         if (id_ >= objects_table_.size())
         {
             objects_table_.resize(id_ * 2);
@@ -75,7 +80,6 @@ public:
         else if (owner.valid() && !owner->AddItem(item->GetId()))
         {
             qDebug() << "AddItem failed";
-
             abort();
         }
 
@@ -137,6 +141,3 @@ private:
     std::map<size_t, size_t> players_table_;
 
 };
-
-ObjectFactory& GetFactory();
-void SetFactory(ObjectFactory* item_fabric);

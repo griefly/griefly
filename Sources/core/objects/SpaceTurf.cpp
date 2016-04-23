@@ -6,6 +6,7 @@
 #include "Materials.h"
 #include "Lattice.h"
 #include "../ObjectFactory.h"
+#include "../Game.h"
 
 Space::Space(size_t id) : ITurf(id)
 {
@@ -29,6 +30,6 @@ void Space::AttackBy(id_ptr_on<Item> item)
     if (id_ptr_on<Rod> rod = item)
     {
         rod->Delete();
-        GetFactory().Create<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());
+        game_->GetFactory().Create<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());
     }
 }

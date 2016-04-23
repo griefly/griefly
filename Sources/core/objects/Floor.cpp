@@ -7,6 +7,7 @@
 #include "Pipes.h"
 
 #include "../ObjectFactory.h"
+#include "../Game.h"
 
 Floor::Floor(size_t id) : ITurf(id)
 {
@@ -35,7 +36,7 @@ void Floor::AttackBy(id_ptr_on<Item> item)
         if (!open_)
         {
             SetOpen(true);
-            GetFactory().Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
+            game_->GetFactory().Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
             PlaySoundIfVisible("Crowbar.ogg", owner.ret_id());
         }
     }

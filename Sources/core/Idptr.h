@@ -12,9 +12,7 @@
 class IMainObject;
 class MapMaster;
 class Game;
-
-
-
+class ObjectFactory;
 
 typedef IMainObject* (*item_creator)(size_t id);
 typedef IMainObject* (*item_creator_saved)();
@@ -24,7 +22,7 @@ std::unordered_map<std::string, item_creator>* itemList();
 
 std::unordered_map<std::string, item_creator_saved>* itemListSaved();
 
-IMainObject* GetFromIdTable(size_t id);
+extern std::vector<IMainObject*>* id_ptr_id_table;
 
 template<typename T>
 class id_ptr_on
@@ -108,6 +106,11 @@ public:
         return id;
     }
 private:
+    static IMainObject* GetFromIdTable(size_t id)
+    {
+        return (*id_ptr_id_table)[id];
+    }
+
     size_t id;
 };
 

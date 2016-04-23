@@ -8,6 +8,7 @@
 #include "representation/Sound.h"
 
 #include "../ObjectFactory.h"
+#include "../Game.h"
 
 MetalWall::MetalWall(size_t id) : ITurf(id)
 {
@@ -29,9 +30,9 @@ void MetalWall::AttackBy(id_ptr_on<Item> item)
         if (wtool->Working())
         {
             PlaySoundIfVisible("Welder.ogg", owner.ret_id());
-            GetFactory().Create<IOnMapObject>(Girder::T_ITEM_S(), GetOwner());
-            GetFactory().Create<IOnMapObject>(Metal::T_ITEM_S(), GetOwner());
-            GetFactory().Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
+            game_->GetFactory().Create<IOnMapObject>(Girder::T_ITEM_S(), GetOwner());
+            game_->GetFactory().Create<IOnMapObject>(Metal::T_ITEM_S(), GetOwner());
+            game_->GetFactory().Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
             Delete();
         }
     }

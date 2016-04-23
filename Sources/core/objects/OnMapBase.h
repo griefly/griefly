@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "DrawInt.h"
+//#include "../ObjectFactory.h"
 
 class ITurf;
 class IMovable;

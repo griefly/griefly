@@ -11,6 +11,7 @@ public:
     DECLARE_SAVED(GasTank, IMovable);
     DECLARE_GET_TYPE_ITEM(GasTank);
     GasTank(size_t id);
+    virtual void AfterWorldCreation() override;
 
     virtual void AttackBy(id_ptr_on<Item> item) override;
     virtual void Process() override;
@@ -31,6 +32,7 @@ public:
     DECLARE_SAVED(MagicGasTank, GasTank);
     DECLARE_GET_TYPE_ITEM(MagicGasTank);
     MagicGasTank(size_t id);
+    virtual void AfterWorldCreation() override;
     virtual void Process() override;
 };
 ADD_TO_TYPELIST(MagicGasTank);

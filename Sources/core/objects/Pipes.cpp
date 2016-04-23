@@ -71,8 +71,6 @@ Pipe::Pipe(size_t id) : PipeBase(id)
     SetState("intact");
 
     name = "Pipe";
-
-    SetFreq(1);
 }
 
 bool Pipe::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
@@ -100,6 +98,7 @@ bool Pipe::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
 void Pipe::AfterWorldCreation()
 {
     PipeBase::AfterWorldCreation();
+    SetFreq(1);
 
     Dir head;
     Dir tail;
@@ -142,7 +141,6 @@ Manifold::Manifold(size_t id) : PipeBase(id)
 {
     SetState("manifold");
     name = "Manifold";
-    SetFreq(1);
 }
 
 bool Manifold::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
@@ -179,6 +177,8 @@ bool Manifold::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
 void Manifold::AfterWorldCreation()
 {
     PipeBase::AfterWorldCreation();
+
+    SetFreq(1);
 
     Dir tail;
     Dir left;
@@ -241,8 +241,6 @@ Vent::Vent(size_t id) : PipeBase(id)
     v_level = 3;
 
     name = "Vent";
-
-    SetFreq(1);
 }
 
 bool Vent::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
@@ -264,6 +262,7 @@ void Vent::AfterWorldCreation()
 {
     PipeBase::AfterWorldCreation();
 
+    SetFreq(1);
     ConnectHelper(tail_, GetDir());
 }
 
@@ -333,8 +332,6 @@ Connector::Connector(size_t id) : PipeBase(id)
     v_level = 3;
 
     name = "Connector";
-
-    SetFreq(1);
 }
 
 void Connector::ConnectToGasTank(id_ptr_on<GasTank> tank)
@@ -365,6 +362,7 @@ bool Connector::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
 void Connector::AfterWorldCreation()
 {
     PipeBase::AfterWorldCreation();
+    SetFreq(1);
     ConnectHelper(tail_, GetDir());
     if (auto tank = owner->GetItem<GasTank>())
     {

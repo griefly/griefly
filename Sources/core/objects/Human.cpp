@@ -45,9 +45,9 @@ void Human::AfterWorldCreation()
 {
     IMob::AfterWorldCreation();
 
-    interface_.uniform_.Set(GetFactory().Create<Item>(JanitorUniform::T_ITEM_S()));
-    interface_.feet_.Set(GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(GetFactory().Create<Item>(Crowbar::T_ITEM_S()));
+    interface_.uniform_.Set(game_->GetFactory().Create<Item>(JanitorUniform::T_ITEM_S()));
+    interface_.feet_.Set(game_->GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(game_->GetFactory().Create<Item>(Crowbar::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());
@@ -271,12 +271,12 @@ void Human::Live()
 
 void Human::OnDeath()
 {
-    size_t net_id = GetFactory().GetNetId(GetId());
+    size_t net_id = game_->GetFactory().GetNetId(GetId());
     if (net_id)
     {
-        auto ghost = GetFactory().Create<Ghost>(Ghost::T_ITEM_S());
+        auto ghost = game_->GetFactory().Create<Ghost>(Ghost::T_ITEM_S());
         ghost->name = name;
-        GetFactory().SetPlayerId(net_id, ghost.ret_id());
+        game_->GetFactory().SetPlayerId(net_id, ghost.ret_id());
         owner->AddItem(ghost);
         if (GetId() == GetMob().ret_id())
         {
@@ -371,7 +371,6 @@ void Human::Represent()
 
 void Human::CalculateVisible(std::list<point>* visible_list)
 {
-    qDebug() << "Begin vCalculateVisible";
     if (health_ >= 0)
     {
         visible_list =
@@ -380,7 +379,6 @@ void Human::CalculateVisible(std::list<point>* visible_list)
                  GetY(),
                  GetZ());
     }
-    qDebug() << "End vCalculateVisible";
 }
 
 
@@ -395,11 +393,11 @@ void CaucasianHuman::AfterWorldCreation()
     // because it create some new items
     IMob::AfterWorldCreation();
 
-    interface_.uniform_.Set(GetFactory().Create<Item>(RedUniform::T_ITEM_S()));
-    interface_.feet_.Set(GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(GetFactory().Create<Item>(Wrench::T_ITEM_S()));
-    interface_.head_.Set(GetFactory().Create<Item>(Helmet::T_ITEM_S()));
-    interface_.suit_.Set(GetFactory().Create<Item>(Armor::T_ITEM_S()));
+    interface_.uniform_.Set(game_->GetFactory().Create<Item>(RedUniform::T_ITEM_S()));
+    interface_.feet_.Set(game_->GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(game_->GetFactory().Create<Item>(Wrench::T_ITEM_S()));
+    interface_.head_.Set(game_->GetFactory().Create<Item>(Helmet::T_ITEM_S()));
+    interface_.suit_.Set(game_->GetFactory().Create<Item>(Armor::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());

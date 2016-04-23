@@ -8,6 +8,7 @@ public:
     DECLARE_SAVED(Ghost, IMob);
     DECLARE_GET_TYPE_ITEM(Ghost);
     Ghost(size_t id);
+    virtual void AfterWorldCreation() override;
     virtual void Represent() override;
     virtual void CalculateVisible(std::list<point>* visible_list) override;
     virtual void processGUImsg(const Message2& msg) override;

@@ -5,6 +5,7 @@
 #include "Item.h"
 
 #include "../ObjectFactory.h"
+#include "../Game.h"
 
 #include "representation/Sound.h"
 
@@ -26,14 +27,14 @@ void Girder::AttackBy(id_ptr_on<Item> item)
         metal->Delete();
 
         GetTurf()->Delete();
-        GetFactory().Create<ITurf>(MetalWall::T_ITEM_S(), GetOwner());
+        game_->GetFactory().Create<ITurf>(MetalWall::T_ITEM_S(), GetOwner());
 
         Delete();
     }
     else if (id_ptr_on<Wrench> wrench = item)
     {
         PlaySoundIfVisible("Ratchet.ogg", owner.ret_id());
-        GetFactory().Create<Item>(Metal::T_ITEM_S(), GetOwner());
+        game_->GetFactory().Create<Item>(Metal::T_ITEM_S(), GetOwner());
         Delete();
     }
 }

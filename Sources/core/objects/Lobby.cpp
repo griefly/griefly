@@ -17,7 +17,11 @@ Lobby::Lobby(size_t id): IMainObject(id)
 
     security_score_ = 0;
     janitors_score_ = 0;
+}
 
+void Lobby::AfterWorldCreation()
+{
+    IMainObject::AfterWorldCreation();
     SetFreq(10);
     SetThisAsLobby();
 }

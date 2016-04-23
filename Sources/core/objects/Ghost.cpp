@@ -27,9 +27,13 @@ Ghost::Ghost(size_t id) : IMob(id)
 
     name = "Ghost";
 
-    SetFreq(10);
-
     seconds_until_respawn_ = 15;
+}
+
+void Ghost::AfterWorldCreation()
+{
+    IMob::AfterWorldCreation();
+    SetFreq(10);
 }
 
 bool Ghost::IsMobGhost()
@@ -113,12 +117,12 @@ void Ghost::Process()
     --seconds_until_respawn_;
     if (seconds_until_respawn_ < 0)
     {
-        size_t net_id = GetFactory().GetNetId(GetId());
+        size_t net_id = game_->GetFactory().GetNetId(GetId());
         if (net_id)
         {
-            auto login_mob = GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
+            auto login_mob = game_->GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
 
-            GetFactory().SetPlayerId(net_id, login_mob.ret_id());
+            game_->GetFactory().SetPlayerId(net_id, login_mob.ret_id());
             if (GetId() == GetMob().ret_id())
             {
                 ChangeMob(login_mob);

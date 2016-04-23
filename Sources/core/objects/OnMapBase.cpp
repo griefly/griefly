@@ -2,6 +2,7 @@
 #include "Turf.h"
 #include "Movable.h"
 #include "Item.h"
+#include "../ObjectFactory.h"
 
 id_ptr_on<ITurf> IOnMapBase::GetTurf()
 {

@@ -5,6 +5,7 @@
 #include "Human.h"
 #include "../ObjectFactory.h"
 #include "../Map.h"
+#include "../Game.h"
 #include "Creator.h"
 #include "Lobby.h"
 #include "net/MagicStrings.h"
@@ -80,7 +81,7 @@ void LoginMob::processGUImsg(const Message2& msg)
         {
             return;
         }
-        size_t net_id = GetFactory().GetNetId(GetId());
+        size_t net_id = game_->GetFactory().GetNetId(GetId());
         if (net_id)
         {
             id_ptr_on<Human> human;
@@ -88,18 +89,18 @@ void LoginMob::processGUImsg(const Message2& msg)
             std::string text;
             if (net_id % 2)
             {
-                human = GetFactory().Create<Human>(CaucasianHuman::T_ITEM_S());
+                human = game_->GetFactory().Create<Human>(CaucasianHuman::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("security");
                 text = SECURITY_TEXT;
             }
             else
             {
-                human = GetFactory().Create<Human>(Human::T_ITEM_S());
+                human = game_->GetFactory().Create<Human>(Human::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("janitor");
                 text = JANITOR_TEXT;
             }
             //ghost->name = name;
-            GetFactory().SetPlayerId(net_id, human.ret_id());
+            game_->GetFactory().SetPlayerId(net_id, human.ret_id());
 
             tiles[0]->AddItem(human);
             if (GetId() == GetMob().ret_id())

@@ -12,6 +12,8 @@
 
 #include "FastStringstream.h"
 
+class ObjectFactory;
+
 class Game: public QObject
 {
     Q_OBJECT
@@ -33,6 +35,7 @@ public:
     void PlayMusic(std::string name, float volume);
 
     MapMaster& GetMap();
+    ObjectFactory& GetFactory();
 public slots:
     void process();
     void endProcess();
@@ -75,4 +78,5 @@ private:
     QThread thread_;
 
     MapMaster* map_;
+    ObjectFactory* factory_;
 };

@@ -151,13 +151,16 @@ void Game::WaitForExit()
     thread_.wait();
 }
 
+std::vector<IMainObject*>* id_ptr_id_table = nullptr;
+
 void Game::InitWorld(int id, std::string map_name)
 {   
     InitSettersForTypes();
 
     std::cout << "Begin init world" << std::endl;
 
-    SetFactory(new ObjectFactory(this));
+    factory_ = new ObjectFactory(this);
+    id_ptr_id_table = &(factory_->GetIdTable());
     map_ = new MapMaster(this);
 
     SetChat(new Chat(this));
@@ -186,6 +189,8 @@ void Game::InitWorld(int id, std::string map_name)
             srand(QTime::currentTime().msecsSinceStartOfDay());
 
             GetMap().LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
+            qDebug() << "End load from mapgen atmpsphere";
+
 
             GetFactory().Create<Lobby>(Lobby::T_ITEM_S());
 
@@ -213,6 +218,7 @@ void Game::InitWorld(int id, std::string map_name)
             GetFactory().SetPlayerId(id, newmob.ret_id());
 
             GetMap().FillAtmosphere();
+            qDebug() << "End fill atmpsphere";
 
         }
         else
@@ -456,6 +462,11 @@ void Game::PlayMusic(std::string name, float volume)
 MapMaster& Game::GetMap()
 {
     return *map_;
+}
+
+ObjectFactory &Game::GetFactory()
+{
+    return *factory_;
 }
 
 void Game::process()

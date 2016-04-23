@@ -10,6 +10,8 @@ public:
     DECLARE_SAVED(Lobby, IMainObject);
     DECLARE_GET_TYPE_ITEM(Lobby)
     Lobby(size_t id);
+    virtual void AfterWorldCreation() override;
+
     int GetSecondUntilStart();
     virtual void Process() override;
 

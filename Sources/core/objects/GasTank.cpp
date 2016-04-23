@@ -21,10 +21,15 @@ GasTank::GasTank(size_t id)
     SetState("blue");
 
     open_ = false;
-    SetFreq(1);
     atmos_holder_.AddGase(OXYGEN, O2_TANK_AMOUNT);
     atmos_holder_.AddEnergy(O2_TANK_ENERGY);
-   // atmos_holder_.SetVolume();
+    // atmos_holder_.SetVolume();
+}
+
+void GasTank::AfterWorldCreation()
+{
+    IMovable::AfterWorldCreation();
+    SetFreq(1);
 }
 
 void GasTank::AttackBy(id_ptr_on<Item> item)
@@ -80,6 +85,11 @@ void GasTank::Process()
 MagicGasTank::MagicGasTank(size_t id) : GasTank(id)
 {
     name = "Magic tank";
+}
+
+void MagicGasTank::AfterWorldCreation()
+{
+    GasTank::AfterWorldCreation();
     SetFreq(10);
 }
 

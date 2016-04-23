@@ -2,6 +2,7 @@
 
 #include "Girder.h"
 #include "../ObjectFactory.h"
+#include "../Game.h"
 #include "Floor.h"
 #include "Grille.h"
 
@@ -16,7 +17,7 @@ void Rod::AttackBy(id_ptr_on<Item> item)
 {
     if (item.ret_id() == GetId()) // Attack self
     {
-        GetFactory().Create<IOnMapObject>(Grille::T_ITEM_S(), GetTurf());
+        game_->GetFactory().Create<IOnMapObject>(Grille::T_ITEM_S(), GetTurf());
         Delete();
     }
 }
@@ -34,7 +35,7 @@ void Metal::AttackBy(id_ptr_on<Item> item)
     {
         if (id_ptr_on<Floor> floor = GetTurf())
         {
-            GetFactory().Create<IOnMapObject>(Girder::T_ITEM_S(), GetTurf());
+            game_->GetFactory().Create<IOnMapObject>(Girder::T_ITEM_S(), GetTurf());
             Delete();
         }
     }
