@@ -108,7 +108,7 @@ void LoginMob::processGUImsg(const Message2& msg)
                 ChangeMob(human);
             }
 
-            GetChat().PostTextFor(text, human);
+            game_->GetChat().PostTextFor(text, human);
         }
     }
     if (msg.type == MessageType::MESSAGE)

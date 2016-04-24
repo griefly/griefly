@@ -13,6 +13,7 @@
 #include "FastStringstream.h"
 
 class ObjectFactory;
+class Chat;
 
 class Game: public QObject
 {
@@ -36,6 +37,7 @@ public:
 
     MapMaster& GetMap();
     ObjectFactory& GetFactory();
+    Chat& GetChat();
 public slots:
     void process();
     void endProcess();
@@ -79,4 +81,5 @@ private:
 
     MapMaster* map_;
     ObjectFactory* factory_;
+    Chat* chat_;
 };

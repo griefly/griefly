@@ -2,6 +2,7 @@
 
 #include "Tile.h"
 #include "representation/Chat.h"
+#include "../Game.h"
 
 #include "ElectricTools.h"
 
@@ -36,7 +37,7 @@ void GasTank::AttackBy(id_ptr_on<Item> item)
 {
     if (id_ptr_on<AtmosTool> at = item)
     {
-        GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
+        game_->GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
         return;
     }
 
@@ -58,14 +59,14 @@ void GasTank::AttackBy(id_ptr_on<Item> item)
 
 void GasTank::Open()
 {
-    GetChat().PostSimpleText(name + " is open", owner.ret_id());
+    game_->GetChat().PostSimpleText(name + " is open", owner.ret_id());
 
     open_ = true;
 }
 
 void GasTank::Close()
 {
-    GetChat().PostSimpleText(name + " is closed", owner.ret_id());
+    game_->GetChat().PostSimpleText(name + " is closed", owner.ret_id());
 
     open_ = false;
 }

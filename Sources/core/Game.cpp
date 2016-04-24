@@ -163,7 +163,7 @@ void Game::InitWorld(int id, std::string map_name)
     id_ptr_id_table = &(factory_->GetIdTable());
     map_ = new MapMaster(this);
 
-    SetChat(new Chat(this));
+    chat_ = new Chat(this);
     SetTexts(new TextPainter);
 
     GetChat().moveToThread(&thread_);
@@ -464,9 +464,14 @@ MapMaster& Game::GetMap()
     return *map_;
 }
 
-ObjectFactory &Game::GetFactory()
+ObjectFactory& Game::GetFactory()
 {
     return *factory_;
+}
+
+Chat& Game::GetChat()
+{
+    return *chat_;
 }
 
 void Game::process()

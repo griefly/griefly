@@ -5,6 +5,7 @@
 #include "representation/Chat.h"
 #include "../AtmosHolder.h"
 #include "Tile.h"
+#include "../Game.h"
 
 AtmosTool::AtmosTool(size_t id) : Item(id)
 {
@@ -33,7 +34,7 @@ void AtmosTool::AttackBy(id_ptr_on<Item> item)
     {
         if (id_ptr_on<CubeTile> ct = GetOwner()->GetOwner())
         {
-            GetChat().PostTextFor(GetInfo(*ct->GetAtmosHolder()), GetOwner());
+            game_->GetChat().PostTextFor(GetInfo(*ct->GetAtmosHolder()), GetOwner());
         }
     }
 }

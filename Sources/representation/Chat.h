@@ -30,9 +30,3 @@ private:
 };
 
 void SetLogToFile();
-
-Chat& GetChat();
-void SetChat(Chat* chat);
-
-/*void SetTextBrowser(QTextBrowser* tb);
-QTextBrowser& GetTextBrowser();*/

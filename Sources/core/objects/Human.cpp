@@ -125,7 +125,7 @@ void Human::processGUImsg(const Message2 &msg)
     if (msg.type == MessageType::MESSAGE)
     {
         std::string text = obj["text"].toString().toStdString();
-        GetChat().PostWords(name, text, owner.ret_id());
+        game_->GetChat().PostWords(name, text, owner.ret_id());
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
@@ -201,14 +201,14 @@ void Human::SetLying(bool value)
     lying_ = value;
     if (lying_)
     {
-        GetChat().PostSimpleText(name + " is lying now", owner->GetId());
+        game_->GetChat().PostSimpleText(name + " is lying now", owner->GetId());
         view_.SetAngle(90);
         SetPassable(D_ALL, Passable::FULL);
         v_level = 8;
     }
     else
     {
-        GetChat().PostSimpleText(name + " is standing now!", owner->GetId());
+        game_->GetChat().PostSimpleText(name + " is standing now!", owner->GetId());
         view_.SetAngle(0);
         SetPassable(D_ALL, Passable::BIG_ITEM);
         v_level = 9;
@@ -241,7 +241,9 @@ void Human::Live()
             --health_;
             
             if (get_rand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
-                GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+            {
+                game_->GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+            }
         }
     }
 
@@ -260,7 +262,9 @@ void Human::Live()
         {
             --health_;
             if (get_rand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
-                GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+            {
+                game_->GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+            }
         }
     }
     if (health_ < -100 && !dead_)
@@ -306,7 +310,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
         PlaySoundIfVisible(snd, owner.ret_id());
         if (id_ptr_on<IOnMapObject> item_owner = item->GetOwner())
         {
-            GetChat().PostDamage(item_owner->name, name, item->name, owner.ret_id());
+            game_->GetChat().PostDamage(item_owner->name, name, item->name, owner.ret_id());
         }
 
         damaged = true;
@@ -324,17 +328,21 @@ void Human::AttackBy(id_ptr_on<Item> item)
         {
             SetLying(true);
             AddLyingTimer(100);
-            GetChat().PostSimpleText(name + " has been knocked out!", owner->GetId());
+            game_->GetChat().PostSimpleText(name + " has been knocked out!", owner->GetId());
         }
 
         damaged = true;
     }
 
     if (!damaged)
+    {
         return;
+    }
 
     if ((get_rand() % 3) != 0)
+    {
         return;
+    }
 
     unsigned int blood_value = (get_rand() % 7) + 1;
     std::stringstream conv;
