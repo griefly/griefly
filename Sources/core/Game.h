@@ -14,6 +14,7 @@
 
 class ObjectFactory;
 class Chat;
+class TextPainter;
 
 class Game: public QObject
 {
@@ -38,6 +39,7 @@ public:
     MapMaster& GetMap();
     ObjectFactory& GetFactory();
     Chat& GetChat();
+    TextPainter& GetTexts();
 public slots:
     void process();
     void endProcess();
@@ -82,4 +84,5 @@ private:
     MapMaster* map_;
     ObjectFactory* factory_;
     Chat* chat_;
+    TextPainter* texts_;
 };

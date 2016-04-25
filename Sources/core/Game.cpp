@@ -164,7 +164,7 @@ void Game::InitWorld(int id, std::string map_name)
     map_ = new MapMaster(this);
 
     chat_ = new Chat(this);
-    SetTexts(new TextPainter);
+    texts_ = new TextPainter;
 
     GetChat().moveToThread(&thread_);
     GetTexts().moveToThread(&thread_);
@@ -472,6 +472,11 @@ ObjectFactory& Game::GetFactory()
 Chat& Game::GetChat()
 {
     return *chat_;
+}
+
+TextPainter& Game::GetTexts()
+{
+    return *texts_;
 }
 
 void Game::process()

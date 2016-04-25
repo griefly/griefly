@@ -57,6 +57,3 @@ signals:
 private:
     std::map<std::string, Text*> texts_;
 };
-
-TextPainter& GetTexts();
-void SetTexts(TextPainter* text_painter);

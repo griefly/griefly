@@ -98,7 +98,7 @@ void Ghost::processGUImsg(const Message2& msg)
 
 void Ghost::InitGUI()
 {
-    GetTexts()["RespawnCount"].SetUpdater
+    game_->GetTexts()["RespawnCount"].SetUpdater
     ([this](std::string* str)
     {
         std::stringstream conv;
@@ -109,7 +109,7 @@ void Ghost::InitGUI()
 
 void Ghost::DeinitGUI()
 {
-    GetTexts().Delete("RespawnCount");
+    game_->GetTexts().Delete("RespawnCount");
 }
 
 void Ghost::Process()

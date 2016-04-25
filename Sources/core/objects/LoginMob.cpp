@@ -28,14 +28,14 @@ LoginMob::LoginMob(size_t id) : IMob(id)
 
 void LoginMob::DeinitGUI()
 {
-    GetTexts().Delete("LoginScreenCount");
+    game_->GetTexts().Delete("LoginScreenCount");
     PlayMusic("");
 }
 
 
 void LoginMob::InitGUI()
 {
-    GetTexts()["LoginScreenCount"].SetUpdater
+    game_->GetTexts()["LoginScreenCount"].SetUpdater
     ([this](std::string* str)
     {
         if (GetLobby().GetSecondUntilStart() < 0)
