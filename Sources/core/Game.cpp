@@ -67,6 +67,11 @@ Game::Game()
 
     this->moveToThread(&thread_);
     connect(&thread_, &QThread::started, this, &Game::process);
+
+    map_ = nullptr;
+    factory_ = nullptr;
+    texts_ = nullptr;
+    chat_ = nullptr;
 }
 
 void Game::UpdateVisible() 
