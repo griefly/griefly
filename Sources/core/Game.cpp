@@ -84,6 +84,16 @@ Game::~Game()
     delete visible_points_;
 }
 
+void Game::InitGlobalObjects()
+{
+    factory_ = new ObjectFactory(this);
+    id_ptr_id_table = &(factory_->GetIdTable());
+    map_ = new MapMaster(this);
+
+    chat_ = new Chat(this);
+    texts_ = new TextPainter;
+}
+
 void Game::UpdateVisible() 
 {
     visible_points_->clear();
@@ -174,12 +184,7 @@ void Game::InitWorld(int id, std::string map_name)
 
     std::cout << "Begin init world" << std::endl;
 
-    factory_ = new ObjectFactory(this);
-    id_ptr_id_table = &(factory_->GetIdTable());
-    map_ = new MapMaster(this);
-
-    chat_ = new Chat(this);
-    texts_ = new TextPainter;
+    InitGlobalObjects();
 
     GetChat().moveToThread(&thread_);
     GetTexts().moveToThread(&thread_);

@@ -48,6 +48,9 @@ public:
 
         TextPainter* master_;
     };
+
+    ~TextPainter();
+
     void Process();
     bool Delete(const std::string& name);
     Text& operator[](const std::string& name);

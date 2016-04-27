@@ -30,6 +30,8 @@ public:
     Game();
     ~Game();
 
+    void InitGlobalObjects();
+
     void UpdateVisible();
     void ProcessInputMessages();
     void ToogleAutoplay() { auto_player_ = !auto_player_; }

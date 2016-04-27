@@ -52,6 +52,11 @@ bool TextPainter::Text::CanUpdate()
     return false;
 }
 
+TextPainter::~TextPainter()
+{
+
+}
+
 void TextPainter::Process()
 {
     for (auto it = texts_.begin(); it != texts_.end(); ++it)
