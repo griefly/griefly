@@ -74,6 +74,16 @@ Game::Game()
     chat_ = nullptr;
 }
 
+Game::~Game()
+{
+    delete map_;
+    delete factory_;
+    delete texts_;
+    delete chat_;
+
+    delete visible_points_;
+}
+
 void Game::UpdateVisible() 
 {
     visible_points_->clear();

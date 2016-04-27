@@ -28,6 +28,7 @@ public:
     bool IsMobVisible(int posx, int posy);
 
     Game();
+    ~Game();
 
     void UpdateVisible();
     void ProcessInputMessages();
