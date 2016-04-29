@@ -18,11 +18,16 @@ Space::Space(size_t id) : ITurf(id)
     SetFriction(0);
 
     SetSprite("icons/space.png"); 
+    SetState("10");
+    name = "Space";
+}
+
+void Space::AfterWorldCreation()
+{
     std::stringstream conv;
-    size_t value = get_rand() % 25 + 1;
+    size_t value = GetRand() % 25 + 1;
     conv << value;
     SetState(conv.str());
-    name = "Space";
 }
 
 void Space::AttackBy(id_ptr_on<Item> item)

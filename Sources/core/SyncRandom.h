@@ -1,23 +1,30 @@
 #pragma once
 
 #include <vector>
+#include <random>
 
-unsigned int get_rand();
+typedef std::ranlux24 RandomGenerator;
 
-template<class T>
-T pick(const std::vector<T>& values)
+class SyncRandom
 {
-    unsigned int num = get_rand() % values.size();
-    return values[num];
-}
-
-namespace random_helpers
-{
-    inline int random_shuffle(int v)
+public:
+    SyncRandom();
+    unsigned int GetRand();
+    template<class T>
+    T Pick(const std::vector<T>& values)
     {
-        return static_cast<int>(get_rand() % v);
+        unsigned int num = GetRand() % values.size();
+        return values[num];
     }
-    void set_rand(unsigned int seed, unsigned int calls_counter);
-    unsigned int get_seed();
-    unsigned int get_calls_counter();
-}
+    inline int RandomShuffle(int v)
+    {
+        return static_cast<int>(GetRand() % v);
+    }
+    void SetRand(unsigned int seed, unsigned int calls_counter);
+    unsigned int GetSeed();
+    unsigned int GetCallsCounter();
+private:
+    unsigned int seed_;
+    unsigned int calls_counter_;
+    RandomGenerator generator_;
+};

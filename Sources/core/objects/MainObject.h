@@ -51,8 +51,9 @@ public:
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
 protected:
-    Game& GetGame() { return *game_; }
-    const Game& GetGame() const { return *game_; }
+    Game& GetGame();
+    const Game& GetGame() const;
+    unsigned int GetRand();
 private:
     Game* game_;
     size_t id_;

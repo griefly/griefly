@@ -62,6 +62,31 @@ void IMainObject::SetFreq(int freq)
     }
 }
 
+const Game& IMainObject::GetGame() const
+{
+    if (game_ == nullptr)
+    {
+        qDebug() << "IMainObject::GetGame() is called during construction of object";
+        abort();
+    }
+    return *game_;
+}
+
+Game& IMainObject::GetGame()
+{
+    if (game_ == nullptr)
+    {
+        qDebug() << "IMainObject::GetGame() is called during construction of object";
+        abort();
+    }
+    return *game_;
+}
+
+unsigned int IMainObject::GetRand()
+{
+    return GetGame().GetRandom().GetRand();
+}
+
 void IMainObject::SetId(size_t id)
 {
     id_ = id;

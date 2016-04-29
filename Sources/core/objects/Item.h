@@ -19,6 +19,7 @@ public:
     DECLARE_SAVED(Screwdriver, Item);
     DECLARE_GET_TYPE_ITEM(Screwdriver);
     Screwdriver(size_t id);
+    virtual void AfterWorldCreation() override;
 };
 ADD_TO_TYPELIST(Screwdriver);
 

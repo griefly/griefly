@@ -72,6 +72,8 @@ Game::Game()
     factory_ = nullptr;
     texts_ = nullptr;
     chat_ = nullptr;
+    sync_random_ = nullptr;
+    names_= nullptr;
 }
 
 Game::~Game()
@@ -80,6 +82,8 @@ Game::~Game()
     delete factory_;
     delete texts_;
     delete chat_;
+    delete sync_random_;
+    delete names_;
 
     delete visible_points_;
 }
@@ -89,9 +93,10 @@ void Game::InitGlobalObjects()
     factory_ = new ObjectFactory(this);
     id_ptr_id_table = &(factory_->GetIdTable());
     map_ = new MapMaster(this);
-
     chat_ = new Chat(this);
     texts_ = new TextPainter;
+    sync_random_ = new SyncRandom;
+    names_ = new Names(this);
 }
 
 void Game::UpdateVisible() 
@@ -191,8 +196,6 @@ void Game::InitWorld(int id, std::string map_name)
 
     connect(&GetChat(), &Chat::insertHtmlIntoChat, this, &Game::insertHtmlIntoChat);
     connect(&GetTexts(), &TextPainter::addSystemText, this, &Game::addSystemText);
-
-    LoadNames();
 
     std::cout << "Create tiles" << std::endl;
     int x = 40;
@@ -502,6 +505,16 @@ Chat& Game::GetChat()
 TextPainter& Game::GetTexts()
 {
     return *texts_;
+}
+
+SyncRandom& Game::GetRandom()
+{
+    return *sync_random_;
+}
+
+Names& Game::GetNames()
+{
+    return *names_;
 }
 
 void Game::process()

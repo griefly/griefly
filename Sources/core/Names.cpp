@@ -3,35 +3,43 @@
 #include <vector>
 #include <fstream>
 
-#include "SyncRandom.h"
+#include "Game.h"
 
-std::vector<std::string> male_names;
-std::vector<std::string> last;
-
-void LoadNames()
+void Names::LoadNames()
 {
+    male_names_.clear();
     std::fstream male("names/first_male.txt");
     while (!male.eof())
     {
         std::string n;
         male >> n;
-        male_names.push_back(n);
+        male_names_.push_back(n);
     }
 
+    last_.clear();
     std::fstream last_text("names/last.txt");
     while (!last_text.eof())
     {
         std::string l;
         last_text >> l;
-        last.push_back(l);
+        last_.push_back(l);
     }
 }
 
-std::string GetMaleName()
+Game& Names::GetGame()
 {
-    if (male_names.size() == 0)
-        LoadNames();
-    unsigned int f = get_rand() % male_names.size();
-    unsigned int l = get_rand() % last.size();
-    return male_names[f] + " " + last[l];
+    return *game_;
+}
+
+Names::Names(Game* game)
+    : game_(game)
+{
+    LoadNames();
+}
+
+std::string Names::GetMaleName()
+{
+    unsigned int f = GetGame().GetRandom().GetRand() % male_names_.size();
+    unsigned int l = GetGame().GetRandom().GetRand() % last_.size();
+    return male_names_[f] + " " + last_[l];
 }

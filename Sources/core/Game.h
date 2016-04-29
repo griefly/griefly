@@ -4,6 +4,9 @@
 
 #include "objects/Mob.h"
 
+#include "SyncRandom.h"
+#include "Names.h"
+
 #include <QApplication>
 #include <QKeyEvent>
 #include <QString>
@@ -44,6 +47,8 @@ public:
     ObjectFactory& GetFactory();
     Chat& GetChat();
     TextPainter& GetTexts();
+    SyncRandom& GetRandom();
+    Names& GetNames();
 public slots:
     void process();
     void endProcess();
@@ -89,4 +94,7 @@ private:
     ObjectFactory* factory_;
     Chat* chat_;
     TextPainter* texts_;
+
+    SyncRandom* sync_random_;
+    Names* names_;
 };

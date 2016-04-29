@@ -5,6 +5,8 @@
 #include "../SyncRandom.h"
 #include "Slot.h"
 
+#include "../Game.h"
+
 Item::Item(size_t id) : IMovable(id)
 {
     passable_level = Passable::SMALL_ITEM;
@@ -19,10 +21,16 @@ Item::Item(size_t id) : IMovable(id)
 
 Screwdriver::Screwdriver(size_t id) : Item(id)
 {
-    unsigned int value = get_rand() % 8;
-
     damage = 5;
+    SetState("screwdriver");
+    name = "Screwdriver";
+}
 
+void Screwdriver::AfterWorldCreation()
+{
+    Item::AfterWorldCreation();
+
+    unsigned int value = GetRand() % 8;
     std::stringstream converter;
     converter << "screwdriver";
     if (value > 1)
@@ -30,8 +38,6 @@ Screwdriver::Screwdriver(size_t id) : Item(id)
         converter << value;
     }
     SetState(converter.str());
-    
-    name = "Screwdriver";
 }
 
 Wirecutters::Wirecutters(size_t id) : Item(id)

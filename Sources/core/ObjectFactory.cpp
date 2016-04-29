@@ -73,8 +73,8 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
     savefile << GetMob().ret_id() << std::endl;
 
     // Random save
-    savefile << random_helpers::get_seed() << std::endl;
-    savefile << random_helpers::get_calls_counter() << std::endl;
+    savefile << game_->GetRandom().GetSeed() << std::endl;
+    savefile << game_->GetRandom().GetCallsCounter() << std::endl;
 
     // Save Map Size
 
@@ -109,7 +109,7 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_
     savefile >> new_seed;
     savefile >> new_calls_counter;
 
-    random_helpers::set_rand(new_seed, new_calls_counter);
+    game_->GetRandom().SetRand(new_seed, new_calls_counter);
 
     objects_table_.resize(id_ + 1);
 

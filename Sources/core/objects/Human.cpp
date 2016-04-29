@@ -29,8 +29,7 @@ Human::Human(size_t id) : IMob(id)
     v_level = 9;
     is_strong_owner = true;
     attack_cooldown_ = 0;
-    name = GetMaleName();
-  //  name = "Yes, it is human.";
+    name = "Morgan James";
     interface_.InitSlots();
     interface_.SetOwner(GetId());
 
@@ -54,6 +53,8 @@ void Human::AfterWorldCreation()
     interface_.r_hand_.Get()->SetOwner(GetId());
 
     UpdateOverlays();
+
+    name = GetGame().GetNames().GetMaleName();
 }
 void Human::InitGUI()
 {
@@ -240,7 +241,7 @@ void Human::Live()
         {
             --health_;
             
-            if (get_rand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
+            if (GetRand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
             {
                 GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
             }
@@ -263,7 +264,7 @@ void Human::Live()
         if (health_ >= -100)
         {
             --health_;
-            if (get_rand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
+            if (GetRand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
             {
                 GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
             }
@@ -301,7 +302,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
     if (item.valid() && (item->damage > 0))
     {
         health_ -= item->damage;
-        unsigned int value = get_rand() % 3;
+        unsigned int value = GetRand() % 3;
         std::string snd;
         if (value == 0)
             snd = "genhit1.ogg";
@@ -321,12 +322,12 @@ void Human::AttackBy(id_ptr_on<Item> item)
     {
         health_ -= 1;
 
-        unsigned int punch_value = (get_rand() % 4) + 1;
+        unsigned int punch_value = (GetRand() % 4) + 1;
         std::stringstream conv;
         conv << "punch" << punch_value << ".ogg";
         PlaySoundIfVisible(conv.str(), owner.ret_id());
 
-        if (get_rand() % 5 == 0)
+        if (GetRand() % 5 == 0)
         {
             SetLying(true);
             AddLyingTimer(100);
@@ -341,12 +342,12 @@ void Human::AttackBy(id_ptr_on<Item> item)
         return;
     }
 
-    if ((get_rand() % 3) != 0)
+    if ((GetRand() % 3) != 0)
     {
         return;
     }
 
-    unsigned int blood_value = (get_rand() % 7) + 1;
+    unsigned int blood_value = (GetRand() % 7) + 1;
     std::stringstream conv;
     conv << "floor" << blood_value;
 

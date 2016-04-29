@@ -239,7 +239,7 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 }
 
 MapMaster::MapMaster(Game* game)
-    : atmosphere(this),
+    : atmosphere(game),
       losf(this)
 {
     game_ = game;
