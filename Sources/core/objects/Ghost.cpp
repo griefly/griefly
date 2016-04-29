@@ -67,9 +67,9 @@ void Ghost::CalculateVisible(std::list<point>* visible_list)
     point p;
     p.posz = GetZ();
     int x_low_border = std::max(0, GetX() - SIZE_H_SQ - 1);
-    int x_high_border = std::min(game_->GetMap().GetMapW(), GetX() + SIZE_H_SQ);
+    int x_high_border = std::min(GetGame().GetMap().GetMapW(), GetX() + SIZE_H_SQ);
     int y_low_border = std::max(0, GetY() - SIZE_W_SQ - 2);
-    int y_high_border = std::min(game_->GetMap().GetMapH(), GetY() + SIZE_W_SQ);
+    int y_high_border = std::min(GetGame().GetMap().GetMapH(), GetY() + SIZE_W_SQ);
     for (int i = x_low_border; i < x_high_border; ++i)
     {
         for (int j = y_low_border; j < y_high_border; ++j)
@@ -98,7 +98,7 @@ void Ghost::processGUImsg(const Message2& msg)
 
 void Ghost::InitGUI()
 {
-    game_->GetTexts()["RespawnCount"].SetUpdater
+    GetGame().GetTexts()["RespawnCount"].SetUpdater
     ([this](std::string* str)
     {
         std::stringstream conv;
@@ -109,7 +109,7 @@ void Ghost::InitGUI()
 
 void Ghost::DeinitGUI()
 {
-    game_->GetTexts().Delete("RespawnCount");
+    GetGame().GetTexts().Delete("RespawnCount");
 }
 
 void Ghost::Process()
@@ -117,12 +117,12 @@ void Ghost::Process()
     --seconds_until_respawn_;
     if (seconds_until_respawn_ < 0)
     {
-        size_t net_id = game_->GetFactory().GetNetId(GetId());
+        size_t net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
-            auto login_mob = game_->GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
+            auto login_mob = GetGame().GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
 
-            game_->GetFactory().SetPlayerId(net_id, login_mob.ret_id());
+            GetGame().GetFactory().SetPlayerId(net_id, login_mob.ret_id());
             if (GetId() == GetMob().ret_id())
             {
                 ChangeMob(login_mob);

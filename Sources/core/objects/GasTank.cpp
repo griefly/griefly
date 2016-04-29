@@ -37,7 +37,7 @@ void GasTank::AttackBy(id_ptr_on<Item> item)
 {
     if (id_ptr_on<AtmosTool> at = item)
     {
-        game_->GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
+        GetGame().GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
         return;
     }
 
@@ -59,14 +59,14 @@ void GasTank::AttackBy(id_ptr_on<Item> item)
 
 void GasTank::Open()
 {
-    game_->GetChat().PostSimpleText(name + " is open", owner.ret_id());
+    GetGame().GetChat().PostSimpleText(name + " is open", owner.ret_id());
 
     open_ = true;
 }
 
 void GasTank::Close()
 {
-    game_->GetChat().PostSimpleText(name + " is closed", owner.ret_id());
+    GetGame().GetChat().PostSimpleText(name + " is closed", owner.ret_id());
 
     open_ = false;
 }

@@ -40,6 +40,7 @@ public:
     void PlayMusic(std::string name, float volume);
 
     MapMaster& GetMap();
+    const MapMaster& GetMap() const;
     ObjectFactory& GetFactory();
     Chat& GetChat();
     TextPainter& GetTexts();

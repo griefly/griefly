@@ -45,9 +45,9 @@ void Human::AfterWorldCreation()
 {
     IMob::AfterWorldCreation();
 
-    interface_.uniform_.Set(game_->GetFactory().Create<Item>(JanitorUniform::T_ITEM_S()));
-    interface_.feet_.Set(game_->GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(game_->GetFactory().Create<Item>(Crowbar::T_ITEM_S()));
+    interface_.uniform_.Set(GetGame().GetFactory().Create<Item>(JanitorUniform::T_ITEM_S()));
+    interface_.feet_.Set(GetGame().GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(GetGame().GetFactory().Create<Item>(Crowbar::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());
@@ -125,7 +125,7 @@ void Human::processGUImsg(const Message2 &msg)
     if (msg.type == MessageType::MESSAGE)
     {
         std::string text = obj["text"].toString().toStdString();
-        game_->GetChat().PostWords(name, text, owner.ret_id());
+        GetGame().GetChat().PostWords(name, text, owner.ret_id());
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
@@ -201,14 +201,14 @@ void Human::SetLying(bool value)
     lying_ = value;
     if (lying_)
     {
-        game_->GetChat().PostSimpleText(name + " is lying now", owner->GetId());
+        GetGame().GetChat().PostSimpleText(name + " is lying now", owner->GetId());
         view_.SetAngle(90);
         SetPassable(D_ALL, Passable::FULL);
         v_level = 8;
     }
     else
     {
-        game_->GetChat().PostSimpleText(name + " is standing now!", owner->GetId());
+        GetGame().GetChat().PostSimpleText(name + " is standing now!", owner->GetId());
         view_.SetAngle(0);
         SetPassable(D_ALL, Passable::BIG_ITEM);
         v_level = 9;
@@ -242,7 +242,7 @@ void Human::Live()
             
             if (get_rand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
             {
-                game_->GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+                GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
             }
         }
     }
@@ -250,7 +250,9 @@ void Human::Live()
     interface_.UpdateHealth();
 
     if (lay_timer_ > 0)
+    {
         --lay_timer_;
+    }
 
     if (health_ < 0)
     {
@@ -263,7 +265,7 @@ void Human::Live()
             --health_;
             if (get_rand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
             {
-                game_->GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+                GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
             }
         }
     }
@@ -275,12 +277,12 @@ void Human::Live()
 
 void Human::OnDeath()
 {
-    size_t net_id = game_->GetFactory().GetNetId(GetId());
+    size_t net_id = GetGame().GetFactory().GetNetId(GetId());
     if (net_id)
     {
-        auto ghost = game_->GetFactory().Create<Ghost>(Ghost::T_ITEM_S());
+        auto ghost = GetGame().GetFactory().Create<Ghost>(Ghost::T_ITEM_S());
         ghost->name = name;
-        game_->GetFactory().SetPlayerId(net_id, ghost.ret_id());
+        GetGame().GetFactory().SetPlayerId(net_id, ghost.ret_id());
         owner->AddItem(ghost);
         if (GetId() == GetMob().ret_id())
         {
@@ -310,7 +312,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
         PlaySoundIfVisible(snd, owner.ret_id());
         if (id_ptr_on<IOnMapObject> item_owner = item->GetOwner())
         {
-            game_->GetChat().PostDamage(item_owner->name, name, item->name, owner.ret_id());
+            GetGame().GetChat().PostDamage(item_owner->name, name, item->name, owner.ret_id());
         }
 
         damaged = true;
@@ -328,7 +330,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
         {
             SetLying(true);
             AddLyingTimer(100);
-            game_->GetChat().PostSimpleText(name + " has been knocked out!", owner->GetId());
+            GetGame().GetChat().PostSimpleText(name + " has been knocked out!", owner->GetId());
         }
 
         damaged = true;
@@ -382,7 +384,7 @@ void Human::CalculateVisible(std::list<point>* visible_list)
     if (health_ >= 0)
     {
         visible_list =
-            game_->GetMap().losf.CalculateVisisble(visible_list,
+            GetGame().GetMap().losf.CalculateVisisble(visible_list,
                  GetX(),
                  GetY(),
                  GetZ());
@@ -401,11 +403,11 @@ void CaucasianHuman::AfterWorldCreation()
     // because it create some new items
     IMob::AfterWorldCreation();
 
-    interface_.uniform_.Set(game_->GetFactory().Create<Item>(RedUniform::T_ITEM_S()));
-    interface_.feet_.Set(game_->GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(game_->GetFactory().Create<Item>(Wrench::T_ITEM_S()));
-    interface_.head_.Set(game_->GetFactory().Create<Item>(Helmet::T_ITEM_S()));
-    interface_.suit_.Set(game_->GetFactory().Create<Item>(Armor::T_ITEM_S()));
+    interface_.uniform_.Set(GetGame().GetFactory().Create<Item>(RedUniform::T_ITEM_S()));
+    interface_.feet_.Set(GetGame().GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(GetGame().GetFactory().Create<Item>(Wrench::T_ITEM_S()));
+    interface_.head_.Set(GetGame().GetFactory().Create<Item>(Helmet::T_ITEM_S()));
+    interface_.suit_.Set(GetGame().GetFactory().Create<Item>(Armor::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());

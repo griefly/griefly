@@ -484,6 +484,11 @@ MapMaster& Game::GetMap()
     return *map_;
 }
 
+const MapMaster& Game::GetMap() const
+{
+    return *map_;
+}
+
 ObjectFactory& Game::GetFactory()
 {
     return *factory_;

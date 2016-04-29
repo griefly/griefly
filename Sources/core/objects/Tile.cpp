@@ -302,8 +302,8 @@ id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
     int new_x = posx_;
     int new_y = posy_;
     int new_z = posz_;
-    game_->GetMap().MoveToDir(direct, &new_x, &new_y, &new_z);
-    return game_->GetMap().squares[new_x][new_y][new_z];
+    GetGame().GetMap().MoveToDir(direct, &new_x, &new_y, &new_z);
+    return GetGame().GetMap().squares[new_x][new_y][new_z];
 }
 
 PassableLevel CubeTile::GetPassable(Dir direct) const
@@ -348,18 +348,28 @@ void CubeTile::UpdatePassable()
 bool CubeTile::IsTransparent() const
 {
     if (turf_.valid() && !turf_->IsTransparent())
+    {
         return false;
+    }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    {
         if (!(*it)->IsTransparent())
+        {
             return false;
+        }
+    }
     return true;
 }
 
 size_t CubeTile::GetItemImpl(unsigned int hash)
 {
     for (auto it = inside_list_.rbegin(); it != inside_list_.rend(); ++it)
+    {
         if (FastIsType(hash, (*it)->RT_ITEM()))
+        {
             return it->ret_id();
+        }
+    }
     return 0;
 }
 
@@ -368,10 +378,12 @@ void CubeTile::ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
     InsideType copy_vector = inside_list_;
 
     for (auto it = copy_vector.begin(); it != copy_vector.end(); ++it)
+    {
         callback(*it);
+    }
 }
 
 void CubeTile::LoadInMap()
 {
-    game_->GetMap().squares[posx_][posy_][posz_] = GetId();
+    GetGame().GetMap().squares[posx_][posy_][posz_] = GetId();
 }

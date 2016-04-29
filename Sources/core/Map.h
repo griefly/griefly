@@ -59,7 +59,7 @@ public:
         return squares[0][0].size();
     }
 
-    void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr)
+    void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const
     {
         if (x)
         {
@@ -90,7 +90,7 @@ public:
         }
     }
 
-    bool CheckBorders(const int* x, const int* y, const int* z)
+    bool CheckBorders(const int* x, const int* y, const int* z) const
     {
         if (x)
         {

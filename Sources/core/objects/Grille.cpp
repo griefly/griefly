@@ -24,7 +24,7 @@ Grille::Grille(size_t id) : Structure(id)
     name = "Grille";
 
     cutted_ = false;
-};
+}
 
 void Grille::AttackBy(id_ptr_on<Item> item)
 {
@@ -36,14 +36,16 @@ void Grille::AttackBy(id_ptr_on<Item> item)
             SetState("brokengrille");
             SetPassable(D_ALL, Passable::FULL);
             cutted_ = true;
-            game_->GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+            GetGame().GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
         }
         else
         {
-            game_->GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+            GetGame().GetFactory().Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
             Delete();
         }
     }
     else
+    {
         Structure::AttackBy(item);
+    }
 }

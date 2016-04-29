@@ -28,14 +28,14 @@ LoginMob::LoginMob(size_t id) : IMob(id)
 
 void LoginMob::DeinitGUI()
 {
-    game_->GetTexts().Delete("LoginScreenCount");
+    GetGame().GetTexts().Delete("LoginScreenCount");
     PlayMusic("");
 }
 
 
 void LoginMob::InitGUI()
 {
-    game_->GetTexts()["LoginScreenCount"].SetUpdater
+    GetGame().GetTexts()["LoginScreenCount"].SetUpdater
     ([this](std::string* str)
     {
         if (GetLobby().GetSecondUntilStart() < 0)
@@ -81,7 +81,7 @@ void LoginMob::processGUImsg(const Message2& msg)
         {
             return;
         }
-        size_t net_id = game_->GetFactory().GetNetId(GetId());
+        size_t net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
             id_ptr_on<Human> human;
@@ -89,18 +89,18 @@ void LoginMob::processGUImsg(const Message2& msg)
             std::string text;
             if (net_id % 2)
             {
-                human = game_->GetFactory().Create<Human>(CaucasianHuman::T_ITEM_S());
+                human = GetGame().GetFactory().Create<Human>(CaucasianHuman::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("security");
                 text = SECURITY_TEXT;
             }
             else
             {
-                human = game_->GetFactory().Create<Human>(Human::T_ITEM_S());
+                human = GetGame().GetFactory().Create<Human>(Human::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("janitor");
                 text = JANITOR_TEXT;
             }
             //ghost->name = name;
-            game_->GetFactory().SetPlayerId(net_id, human.ret_id());
+            GetGame().GetFactory().SetPlayerId(net_id, human.ret_id());
 
             tiles[0]->AddItem(human);
             if (GetId() == GetMob().ret_id())
@@ -108,7 +108,7 @@ void LoginMob::processGUImsg(const Message2& msg)
                 ChangeMob(human);
             }
 
-            game_->GetChat().PostTextFor(text, human);
+            GetGame().GetChat().PostTextFor(text, human);
         }
     }
     if (msg.type == MessageType::MESSAGE)
