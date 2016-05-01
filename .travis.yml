@@ -12,7 +12,8 @@ before_script:
   - sleep 3
 script:
   - make CXX=g++-4.9 CC=gcc-4.9
-  - ./Exec/KVEngine --run-tests
+  - cd Exec
+  - ./KVEngine --run-tests
 after_success:
   - cd ${TRAVIS_BUILD_DIR}
   - lcov -c -d . -o coverage.info
