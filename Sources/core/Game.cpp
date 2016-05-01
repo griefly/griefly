@@ -96,7 +96,7 @@ void Game::InitGlobalObjects()
     chat_ = new Chat(this);
     texts_ = new TextPainter;
     sync_random_ = new SyncRandom;
-    names_ = new Names(this);
+    names_ = new Names(sync_random_);
 }
 
 void Game::UpdateVisible() 

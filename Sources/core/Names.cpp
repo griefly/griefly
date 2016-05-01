@@ -26,20 +26,15 @@ void Names::LoadNames()
     }
 }
 
-Game& Names::GetGame()
-{
-    return *game_;
-}
-
-Names::Names(Game* game)
-    : game_(game)
+Names::Names(SyncRandom* random)
+    : random_(random)
 {
     LoadNames();
 }
 
 std::string Names::GetMaleName()
 {
-    unsigned int f = GetGame().GetRandom().GetRand() % male_names_.size();
-    unsigned int l = GetGame().GetRandom().GetRand() % last_.size();
+    unsigned int f = random_->GetRand() % male_names_.size();
+    unsigned int l = random_->GetRand() % last_.size();
     return male_names_[f] + " " + last_[l];
 }

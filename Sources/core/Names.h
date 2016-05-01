@@ -3,16 +3,15 @@
 #include <string>
 #include <vector>
 
-class Game;
+class SyncRandom;
 class Names
 {
 public:
-    Names(Game* game);
+    Names(SyncRandom* random);
     std::string GetMaleName();
 private:
     void LoadNames();
-    Game& GetGame();
     std::vector<std::string> male_names_;
     std::vector<std::string> last_;
-    Game* game_;
+    SyncRandom* random_;
 };
