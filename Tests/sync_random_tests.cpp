@@ -34,3 +34,16 @@ TEST(SyncRandom, Pick)
     pickval = random.Pick(ints);
     ASSERT_EQ(pickval, 1);
 }
+
+TEST(SyncRandom, RandomShuffle)
+{
+    SyncRandom random;
+    random.SetRand(1337, 432432);
+
+    for (int i = 0; i < 100; ++i)
+    {
+        int val = random.RandomShuffle(14);
+        ASSERT_LT(val, 14);
+        ASSERT_GE(val, 0);
+    }
+}
