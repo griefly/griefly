@@ -1,3 +1,3 @@
 #pragma once
 
-const char* GetGameVersion();
+const char* get_game_version();

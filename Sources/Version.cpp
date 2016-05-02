@@ -3,7 +3,7 @@
 #define KV_XSTR(x) #x
 #define KV_STR(x) KV_XSTR(x)
 
-const char* GetGameVersion()
+const char* get_game_version()
 {
     static const char* const VERSION = KV_STR(DEFINED_VERSION);
     return VERSION;

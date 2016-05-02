@@ -61,7 +61,7 @@ MainForm::MainForm(QWidget *parent) :
     }
 
 
-    setWindowTitle("Griefly " + QString(GetGameVersion()));
+    setWindowTitle("Griefly " + QString(get_game_version()));
 
     left_column = ui->leftColumn->width();
     right_column = ui->rightColumn->width();
