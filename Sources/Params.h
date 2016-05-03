@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QDebug>
+#include <QString>
+
 #include <map>
 #include <string>
 #include <sstream>
@@ -16,25 +19,22 @@ public:
     {
         if (params_.find(name) == params_.end())
         {
-            SYSTEM_STREAM << "Cannot find param: " << name << std::endl;
+            qDebug() << "Cannot find param: " << QString::fromStdString(name);
+            return T();
         }
         std::stringstream converter;
         converter << params_[name];
-        T retval;
+        T retval = T();
         converter >> retval;
-        //SYSTEM_STREAM << "By key: " << name << " get param: " << retval << std::endl;
         return retval;
     }
 
     bool GetParamBool(std::string name)
     {
-        //SYSTEM_STREAM << "By key: " << name;
         if (params_.find(name) == params_.end())
         {
-            //SYSTEM_STREAM << " return false" << std::endl;
             return false;
         }
-        //SYSTEM_STREAM << " return true" << std::endl;
         return true;
     }
 private:
