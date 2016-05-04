@@ -6,7 +6,7 @@
 
 void IMainObject::PlaySoundIfVisible(const std::string& name, size_t tile_id)
 {
-    if (game_->GetMap().IsTileVisible(tile_id))
+    if (GetGame().GetMap().IsTileVisible(tile_id))
     {
         GetRepresentation().AddToNewFrame(name);
     }
@@ -15,13 +15,12 @@ void IMainObject::PlaySoundIfVisible(const std::string& name, size_t tile_id)
 
 void IMainObject::PlayMusic(const std::string& name, float volume)
 {
-    game_->PlayMusic(name, volume);
+    GetGame().PlayMusic(name, volume);
 }
 
 void IMainObject::Delete()
 {
-    game_->GetFactory().GetIdTable()[id_] = nullptr;
-    delete this;
+    GetGame().GetFactory().DeleteLater(id_);
 }
 
 bool IMainObject::saveSelf(std::stringstream& file)
@@ -54,11 +53,14 @@ void IMainObject::SetFreq(int freq)
 
     // TODO: Why is it here?
     if (!GetId())
-        return;
+    {
+        qDebug() << "GetId() is zero";
+        abort();
+    }
 
     if (how_often_ != 0)
     {
-        game_->GetFactory().AddProcessingItem(GetId());
+        GetGame().GetFactory().AddProcessingItem(GetId());
     }
 }
 

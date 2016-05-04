@@ -141,6 +141,7 @@ void Game::Process()
             {
                 GetMap().atmosphere.ProcessMove();
             }
+            GetFactory().ProcessDeletion();
 
             UpdateVisible();
 
@@ -196,12 +197,6 @@ void Game::InitWorld(int id, std::string map_name)
 
     connect(&GetChat(), &Chat::insertHtmlIntoChat, this, &Game::insertHtmlIntoChat);
     connect(&GetTexts(), &TextPainter::addSystemText, this, &Game::addSystemText);
-
-    std::cout << "Create tiles" << std::endl;
-    int x = 40;
-    int y = 40;
-    int z = 1;
-    GetMap().MakeTiles(x, y, z);
 
     std::cout << "Begin choose map" << std::endl;
     if (map_name == "no_map")

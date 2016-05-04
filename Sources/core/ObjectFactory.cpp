@@ -266,12 +266,15 @@ void ObjectFactory::ClearMap()
     {
         if (objects_table_[i] != nullptr)
         {
-            objects_table_[i]->Delete();
+            delete objects_table_[i];
         }
     }
     if (table_size != objects_table_.size())
+    {
         SYSTEM_STREAM << "WARNING: table_size != idTable_.size()!" << std::endl;
+    }
 
+    ids_to_delete_.clear();
     process_table_.clear();
     add_to_process_.clear();
     players_table_.clear();
@@ -295,6 +298,21 @@ void ObjectFactory::FinishWorldCreation()
             objects_table_[i]->AfterWorldCreation();
         }
     }
+}
+
+void ObjectFactory::DeleteLater(size_t id)
+{
+    ids_to_delete_.push_back(id);
+}
+
+void ObjectFactory::ProcessDeletion()
+{
+    for (auto it = ids_to_delete_.begin(); it != ids_to_delete_.end(); ++it)
+    {
+        delete objects_table_[*it];
+        objects_table_[*it] = nullptr;
+    }
+    ids_to_delete_.clear();
 }
 
 unsigned int ObjectFactory::Hash()

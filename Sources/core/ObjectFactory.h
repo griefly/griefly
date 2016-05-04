@@ -109,6 +109,9 @@ public:
         return item->GetId();
     }
 
+    void DeleteLater(size_t id);
+    void ProcessDeletion();
+
     void AddProcessingItem(id_ptr_on<IMainObject> item);
 
     void ClearProcessing();
@@ -127,6 +130,8 @@ private:
     bool is_world_generating_;
 
     void UpdateProcessingItems();
+
+    std::vector<size_t> ids_to_delete_;
 
     std::vector<IMainObject*> objects_table_;
     std::vector<id_ptr_on<IMainObject>> process_table_;
