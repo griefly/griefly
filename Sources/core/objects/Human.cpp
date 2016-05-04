@@ -401,7 +401,7 @@ CaucasianHuman::CaucasianHuman(size_t id) : Human(id)
 void CaucasianHuman::AfterWorldCreation()
 {
     // It is not mistake - we don't want to call Human function
-    // because it create some new items
+    // because it creates some new items
     IMob::AfterWorldCreation();
 
     interface_.uniform_.Set(GetGame().GetFactory().Create<Item>(RedUniform::T_ITEM_S()));

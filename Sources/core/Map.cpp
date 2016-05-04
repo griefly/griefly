@@ -139,15 +139,15 @@ void MapMaster::LoadFromMapGen(const std::string& name)
 
 void MapMaster::Represent()
 {
-    if(!GetGame().GetVisiblePoints())
+    if(!GetVisiblePoints())
     {
         return;
     }
 
     for(int i = 0; i < MAX_LEVEL; ++i)
     {
-        auto it2 = GetGame().GetVisiblePoints()->begin();
-        while(it2 != GetGame().GetVisiblePoints()->end())
+        auto it2 = GetVisiblePoints()->begin();
+        while(it2 != GetVisiblePoints()->end())
         {
             auto sq = squares[it2->posx][it2->posy][it2->posz];
             auto& in_list = sq->GetInsideList();
@@ -168,8 +168,8 @@ void MapMaster::Represent()
             ++it2;
         }
     }
-    auto it2 = GetGame().GetVisiblePoints()->begin();
-    while(it2 != GetGame().GetVisiblePoints()->end())
+    auto it2 = GetVisiblePoints()->begin();
+    while(it2 != GetVisiblePoints()->end())
     {
         auto sq = squares[it2->posx][it2->posy][it2->posz];
         auto& in_list = sq->GetInsideList();
@@ -193,7 +193,7 @@ void MapMaster::Represent()
 
 void MapMaster::GenerateFrame()
 {
-    if(!GetGame().GetVisiblePoints())
+    if(!GetVisiblePoints())
     {
         return;
     }
@@ -243,51 +243,17 @@ MapMaster::MapMaster(Game* game)
       losf(this)
 {
     game_ = game;
+    visible_points_ = new std::list<point>;
+}
+
+MapMaster::~MapMaster()
+{
+    delete visible_points_;
 }
 
 PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)
 {
     return squares[posx][posy][posz]->GetPassable(direct);
-}
-
-void MapMaster::switchDir(int& posx, int& posy, Dir direct, int num, bool back)//TODO: Remove back
-{
-    if(!back)
-    {
-        switch(direct)
-        {
-        case D_UP:
-            posy -= num;
-            return;
-        case D_DOWN:
-            posy += num;
-            return;
-        case D_LEFT:
-            posx -= num;
-            return;
-        case D_RIGHT:
-            posx += num;
-            return;
-        }
-    }
-    else
-    {
-        switch(direct)
-        {
-        case D_UP:
-            posy += num;
-            return;
-        case D_DOWN:
-            posy -= num;
-            return;
-        case D_LEFT:
-            posx += num;
-            return;
-        case D_RIGHT:
-            posx -= num;
-            return;
-        }
-    }
 }
 
 Game& MapMaster::GetGame()
@@ -304,10 +270,9 @@ bool MapMaster::IsTransparent(int posx, int posy, int posz)
     return squares[posx][posy][posz]->IsTransparent();
 }
 
-
 bool MapMaster::IsTileVisible(size_t tile_id)
 {
-    auto l = GetGame().GetVisiblePoints();
+    auto l = GetVisiblePoints();
     if (!l)
     {
         return false;
@@ -315,6 +280,18 @@ bool MapMaster::IsTileVisible(size_t tile_id)
     for (auto it = l->begin(); it != l->end(); ++it)
     {
         if (tile_id == squares[it->posx][it->posy][it->posz].ret_id())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool MapMaster::IsPlaceVisible(int posx, int posy)
+{
+    for (auto it = GetVisiblePoints()->begin(); it != GetVisiblePoints()->end(); ++it)
+    {
+        if(it->posx == posx && it->posy == posy)
         {
             return true;
         }

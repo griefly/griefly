@@ -43,7 +43,6 @@ int ping_send;
 Game::Game()
 {
     auto_player_ = false;
-    visible_points_ = new std::list<point>;
     cpu_load_ = 0.0f;
 
     ping_id_ = "";
@@ -84,8 +83,6 @@ Game::~Game()
     delete chat_;
     delete sync_random_;
     delete names_;
-
-    delete visible_points_;
 }
 
 void Game::InitGlobalObjects()
@@ -101,8 +98,8 @@ void Game::InitGlobalObjects()
 
 void Game::UpdateVisible() 
 {
-    visible_points_->clear();
-    GetMob()->CalculateVisible(visible_points_);
+    GetMap().GetVisiblePoints()->clear();
+    GetMob()->CalculateVisible(GetMap().GetVisiblePoints());
 }
 
 void Game::Process()
@@ -585,21 +582,4 @@ void Game::CheckMessagesOrderCorrectness()
         qDebug() << "CheckMessagesOrderCorrectness fail";
         abort();
     }
-}
-
-bool Game::IsMobVisible(int posx, int posy)
-{
-    // TODO: matrix for fast check
-    if (visible_points_ == nullptr)
-    {
-        return false;
-    }
-    for (auto it = visible_points_->begin(); it != visible_points_->end(); ++it)
-    {
-        if(it->posx == posx && it->posy == posy)
-        {
-            return true;
-        }
-    }
-    return false;
 }

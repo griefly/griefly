@@ -28,8 +28,6 @@ public:
     void InitWorld(int id, std::string map_name);
     void Process();
 
-    bool IsMobVisible(int posx, int posy);
-
     Game();
     ~Game();
 
@@ -39,7 +37,6 @@ public:
     void ProcessInputMessages();
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 
-    std::list<point>* GetVisiblePoints() { return visible_points_; }
     void PlayMusic(std::string name, float volume);
 
     MapMaster& GetMap();
@@ -67,7 +64,6 @@ private:
 
     bool is_end_process_;
 
-    std::list<point>* visible_points_;
     int lps_;
     float cpu_load_;
     std::string last_touch_;
