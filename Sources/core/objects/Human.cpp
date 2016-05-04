@@ -417,6 +417,8 @@ void CaucasianHuman::AfterWorldCreation()
     interface_.suit_.Get()->SetOwner(GetId());
 
     UpdateOverlays();
+
+    name = GetGame().GetNames().GetMaleName();
 }
 
 void CaucasianHuman::OnDeath()
