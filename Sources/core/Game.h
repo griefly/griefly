@@ -33,6 +33,8 @@ public:
 
     void InitGlobalObjects();
 
+    void MakeTiles(int size_x, int size_y, int size_z);
+
     void UpdateVisible();
     void ProcessInputMessages();
     void ToogleAutoplay() { auto_player_ = !auto_player_; }

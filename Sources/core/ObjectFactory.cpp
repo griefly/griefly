@@ -8,6 +8,7 @@
 #include "objects/Creator.h"
 #include "net/MagicStrings.h"
 #include "net/NetworkMessagesTypes.h"
+#include "AutogenMetadata.h"
 
 ObjectFactory::ObjectFactory(Game* game)
 {
@@ -238,6 +239,106 @@ void ObjectFactory::LoadMap(std::stringstream& savefile, size_t real_this_mob)
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
     ChangeMob(GetMob());
     is_world_generating_ = false;
+}
+
+void ObjectFactory::LoadFromMapGen(const std::string& name)
+{
+    //qDebug() << "Start clear";
+    ClearMap();
+    //qDebug() << "End clear";
+
+    std::fstream sfile;
+    sfile.open(name, std::ios_base::in);
+    if(sfile.fail())
+    {
+        SYSTEM_STREAM << "Error open " << name << std::endl;
+        return;
+    }
+
+    std::stringstream ss;
+
+    sfile.seekg (0, std::ios::end);
+    std::streamoff length = sfile.tellg();
+    sfile.seekg (0, std::ios::beg);
+    char* buff = new char[static_cast<size_t>(length)];
+
+    sfile.read(buff, length);
+    sfile.close();
+    ss.write(buff, length);
+    delete[] buff;
+
+    BeginWorldCreation();
+
+    int x, y, z;
+    ss >> x;
+    ss >> y;
+    ss >> z;
+
+    game_->MakeTiles(x, y, z);
+
+    qDebug() << "Begin loading cycle";
+    while (ss)
+    {
+        std::string t_item;
+        size_t x, y, z;
+        ss >> t_item;
+        if (!ss)
+        {
+            continue;
+        }
+        ss >> x;
+        if (!ss)
+        {
+            continue;
+        }
+        ss >> y;
+        if (!ss)
+        {
+            continue;
+        }
+        ss >> z;
+        if (!ss)
+        {
+            continue;
+        }
+
+        //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
+        //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(t_item);
+        auto i = Create<IOnMapObject>(t_item);
+        //qDebug() << "Success!";
+
+        std::map<std::string, std::string> variables;
+        WrapReadMessage(ss, variables);
+
+        for (auto it = variables.begin(); it != variables.end(); ++it)
+        {
+            if ((it->second.size() == 0) || (it->first.size() == 0))
+            {
+                continue;
+            }
+            std::stringstream local_variable;
+            local_variable << it->second;
+
+            //qDebug() << it->second.c_str();
+
+            get_setters_for_types()[t_item][it->first](i.operator*(), local_variable);
+        }
+
+        //qDebug() << "id_ptr_on<ITurf> t = i";
+        if (id_ptr_on<ITurf> t = i)
+        {
+            if (game_->GetMap().squares[x][y][z]->GetTurf())
+            {
+                SYSTEM_STREAM << "DOUBLE TURF!" << std::endl;
+            }
+            game_->GetMap().squares[x][y][z]->SetTurf(t);
+        }
+        else
+        {
+            game_->GetMap().squares[x][y][z]->AddItem(i);
+        }
+    }
+    FinishWorldCreation();
 }
 
 IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)

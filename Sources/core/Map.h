@@ -46,7 +46,6 @@ public:
     std::vector<std::vector<std::vector<SqType> > > squares;
 
     Atmosphere atmosphere;
-    void LoadFromMapGen(const std::string& name);
 
     int GetMapW() const
     {
@@ -137,17 +136,12 @@ public:
 
     bool IsTransparent(int posx, int posy, int posz = 0);
 
-    
     void FillAtmosphere();
-
-    void MakeTiles(int size_x, int size_y, int size_z);
 
     PassableLevel GetPassable(int posx, int posy, int posz = 0, Dir direct = D_ALL);
     
-    id_ptr_on<IOnMapObject> Click(int x, int y);
     bool IsTileVisible(size_t tile_id);
 
-    bool IsPlaceVisible(int posx, int posy);
     std::list<point>* GetVisiblePoints() { return visible_points_; }
 
     LOSfinder losf;

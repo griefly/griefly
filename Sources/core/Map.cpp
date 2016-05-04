@@ -33,109 +33,7 @@ void MapMaster::FillAtmosphere()
                 }
 }
 
-void MapMaster::LoadFromMapGen(const std::string& name)
-{
-    //qDebug() << "Start clear";
-    GetGame().GetFactory().ClearMap();
-    //qDebug() << "End clear";
 
-    std::fstream sfile;
-    sfile.open(name, std::ios_base::in);
-    if(sfile.fail()) 
-    {
-        SYSTEM_STREAM << "Error open " << name << std::endl; 
-        return;
-    }
-
-    std::stringstream ss;
-
-    sfile.seekg (0, std::ios::end);
-    std::streamoff length = sfile.tellg();
-    sfile.seekg (0, std::ios::beg);
-    char* buff = new char[static_cast<size_t>(length)];
-
-    sfile.read(buff, length);
-    sfile.close();
-    ss.write(buff, length);
-    delete[] buff;
-
-    game_->GetFactory().BeginWorldCreation();
-
-    int x, y, z;
-    ss >> x;
-    ss >> y;
-    ss >> z;
-
- //   size_t creator;
-//    sfile >> creator;
-
-    MakeTiles(x, y, z);
-
-
-    qDebug() << "Begin loading cycle";
-    while (ss)
-    {
-        std::string t_item;
-        size_t x, y, z;
-        ss >> t_item;
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> x;
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> y;
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> z;
-        if (!ss)
-        {
-            continue;
-        }
-
-        //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
-        //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(t_item);
-        auto i = game_->GetFactory().Create<IOnMapObject>(t_item);
-        //qDebug() << "Success!";
-
-        std::map<std::string, std::string> variables;
-        WrapReadMessage(ss, variables);
-
-        for (auto it = variables.begin(); it != variables.end(); ++it)
-        {
-            if ((it->second.size() == 0) || (it->first.size() == 0))
-            {
-                continue;
-            }
-            std::stringstream local_variable;
-            local_variable << it->second;
-
-            //qDebug() << it->second.c_str();
-
-            get_setters_for_types()[t_item][it->first](i.operator*(), local_variable);
-        }
-
-        //qDebug() << "id_ptr_on<ITurf> t = i";
-        if (id_ptr_on<ITurf> t = i)
-        {
-            if (squares[x][y][z]->GetTurf())
-            {
-                SYSTEM_STREAM << "DOUBLE TURF!" << std::endl;
-            }
-            squares[x][y][z]->SetTurf(t);
-        }
-        else
-        {
-            squares[x][y][z]->AddItem(i);
-        }
-    }
-   GetGame().GetFactory().FinishWorldCreation();
-}
 
 void MapMaster::Represent()
 {
@@ -193,6 +91,7 @@ void MapMaster::Represent()
 
 void MapMaster::GenerateFrame()
 {
+    // TODO: move to Game
     if(!GetVisiblePoints())
     {
         return;
@@ -205,23 +104,6 @@ void MapMaster::GenerateFrame()
     // TODO: reset all shifts
     GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
     GetRepresentation().Swap();
-}
-
-void MapMaster::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
-{
-    ResizeMap(new_map_x, new_map_y, new_map_z);
-    for(int x = 0; x < GetMapW(); x++)
-    {
-        for(int y = 0; y < GetMapH(); y++) 
-        {
-            for (int z = 0; z < GetMapD(); z++)
-            {
-                auto loc = GetGame().GetFactory().Create<CubeTile>(CubeTile::T_ITEM_S());
-                loc->SetPos(x, y, z);
-                squares[x][y][z] = loc;
-            }
-        }
-    }
 }
 
 void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
@@ -280,18 +162,6 @@ bool MapMaster::IsTileVisible(size_t tile_id)
     for (auto it = l->begin(); it != l->end(); ++it)
     {
         if (tile_id == squares[it->posx][it->posy][it->posz].ret_id())
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool MapMaster::IsPlaceVisible(int posx, int posy)
-{
-    for (auto it = GetVisiblePoints()->begin(); it != GetVisiblePoints()->end(); ++it)
-    {
-        if(it->posx == posx && it->posy == posy)
         {
             return true;
         }

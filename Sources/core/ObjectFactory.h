@@ -44,6 +44,8 @@ public:
     void LoadMap(const char* path);
     void LoadMap(std::stringstream& str, size_t real_this_mob);
     
+    void LoadFromMapGen(const std::string& name);
+
     void ClearMap();
 
     void BeginWorldCreation();

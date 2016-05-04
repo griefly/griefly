@@ -96,6 +96,23 @@ void Game::InitGlobalObjects()
     names_ = new Names(sync_random_);
 }
 
+void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
+{
+    GetMap().ResizeMap(new_map_x, new_map_y, new_map_z);
+    for(int x = 0; x < GetMap().GetMapW(); x++)
+    {
+        for(int y = 0; y < GetMap().GetMapH(); y++)
+        {
+            for (int z = 0; z < GetMap().GetMapD(); z++)
+            {
+                auto loc = GetFactory().Create<CubeTile>(CubeTile::T_ITEM_S());
+                loc->SetPos(x, y, z);
+                GetMap().squares[x][y][z] = loc;
+            }
+        }
+    }
+}
+
 void Game::UpdateVisible() 
 {
     GetMap().GetVisiblePoints()->clear();
@@ -203,7 +220,7 @@ void Game::InitWorld(int id, std::string map_name)
         {
             srand(QTime::currentTime().msecsSinceStartOfDay());
 
-            GetMap().LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
+            GetFactory().LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
             qDebug() << "End load from mapgen atmpsphere";
 
 
