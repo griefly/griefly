@@ -87,13 +87,17 @@ Game::~Game()
 
 void Game::InitGlobalObjects()
 {
+    qDebug() << "Begin init global objects";
+    sync_random_ = new SyncRandom;
+    qDebug() << "Begin master load";
+    map_ = new MapMaster(this);
+    qDebug() << "End master load";
     factory_ = new ObjectFactory(this);
     id_ptr_id_table = &(factory_->GetIdTable());
-    map_ = new MapMaster(this);
     chat_ = new Chat(this);
     texts_ = new TextPainter;
-    sync_random_ = new SyncRandom;
     names_ = new Names(sync_random_);
+    qDebug() << "End init global objects";
 }
 
 void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)

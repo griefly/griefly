@@ -6,24 +6,14 @@
 #include "AtmosHolder.h"
 #include "Constheader.h"
 
-class Game;
+class SyncRandom;
+class MapMaster;
 
 class Atmosphere
 {
 public:
-    Atmosphere(Game* game);
-    void Resize(size_t x, size_t y)
-    {
-        x_shuffle_.resize(x);
-        y_shuffle_.resize(y);
-
-        for (size_t i = 0; i < dir_shuffle_.size(); ++i)
-            dir_shuffle_[i] = i;
-        for (size_t i = 0; i < x_shuffle_.size(); ++i)
-            x_shuffle_[i] = i;
-        for (size_t i = 0; i < y_shuffle_.size(); ++i)
-            y_shuffle_[i] = i;
-    }
+    Atmosphere(SyncRandom* random, MapMaster* map);
+    void Resize(size_t x, size_t y);
     void Process();
     void ProcessMove();
 private:
@@ -38,5 +28,6 @@ private:
 
     std::array<Dir, 4> dir_shuffle_;
 
-    Game* game_;
+    SyncRandom* random_;
+    MapMaster* map_;
 };
