@@ -117,14 +117,13 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
             squares[x][y].resize(new_map_z);
         }
     }
-    atmosphere.Resize(new_map_x, new_map_y);
+    atmosphere.Resize(new_map_x, new_map_y, new_map_z);
 }
 
-MapMaster::MapMaster(Game* game)
-    : atmosphere(&game->GetRandom(), this),
+MapMaster::MapMaster(SyncRandom* random)
+    : atmosphere(random, this),
       losf(this)
 {
-    game_ = game;
     visible_points_ = new std::list<point>;
 }
 
@@ -136,11 +135,6 @@ MapMaster::~MapMaster()
 PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)
 {
     return squares[posx][posy][posz]->GetPassable(direct);
-}
-
-Game& MapMaster::GetGame()
-{
-    return *game_;
 }
 
 bool MapMaster::IsTransparent(int posx, int posy, int posz)

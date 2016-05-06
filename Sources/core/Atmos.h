@@ -13,7 +13,7 @@ class Atmosphere
 {
 public:
     Atmosphere(SyncRandom* random, MapMaster* map);
-    void Resize(size_t x, size_t y);
+    void Resize(size_t x, size_t y, size_t z);
     void Process();
     void ProcessMove();
 private:
@@ -25,6 +25,7 @@ private:
     void ShuffleDir();
     std::vector<size_t> x_shuffle_;
     std::vector<size_t> y_shuffle_;
+    size_t z_size_;
 
     std::array<Dir, 4> dir_shuffle_;
 

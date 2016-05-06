@@ -36,10 +36,11 @@ private:
     MapMaster* map_;
 };
 
+class SyncRandom;
 class MapMaster
 {
 public:
-    MapMaster(Game* game);
+    MapMaster(SyncRandom* random);
     ~MapMaster();
 
     typedef id_ptr_on<CubeTile> SqType;
@@ -147,7 +148,4 @@ public:
     LOSfinder losf;
 private:
     std::list<point>* visible_points_;
-
-    Game& GetGame();
-    Game* game_;
 };

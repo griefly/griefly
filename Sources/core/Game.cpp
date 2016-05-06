@@ -90,7 +90,7 @@ void Game::InitGlobalObjects()
     qDebug() << "Begin init global objects";
     sync_random_ = new SyncRandom;
     qDebug() << "Begin master load";
-    map_ = new MapMaster(this);
+    map_ = new MapMaster(sync_random_);
     qDebug() << "End master load";
     factory_ = new ObjectFactory(this);
     id_ptr_id_table = &(factory_->GetIdTable());

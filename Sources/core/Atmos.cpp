@@ -11,12 +11,14 @@ Atmosphere::Atmosphere(SyncRandom* random, MapMaster* map)
       map_(map)
 {
     qDebug() << "Atmosphere load";
+    z_size_ = 1;
 }
 
-void Atmosphere::Resize(size_t x, size_t y)
+void Atmosphere::Resize(size_t x, size_t y, size_t z)
 {
     x_shuffle_.resize(x);
     y_shuffle_.resize(y);
+    z_size_ = z;
 
     for (size_t i = 0; i < dir_shuffle_.size(); ++i)
     {
@@ -34,7 +36,7 @@ void Atmosphere::Resize(size_t x, size_t y)
 
 void Atmosphere::Process()
 {
-    for (size_t z_counter = 0; z_counter < static_cast<size_t>(map_->GetMapD()); ++z_counter)
+    for (size_t z_counter = 0; z_counter < z_size_; ++z_counter)
     {
         ShuffleX();
         ShuffleY();
@@ -103,7 +105,7 @@ void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
 
 void Atmosphere::ProcessMove()
 {
-    for (size_t z_counter = 0; z_counter < static_cast<size_t>(map_->GetMapD()); ++z_counter)
+    for (size_t z_counter = 0; z_counter < z_size_; ++z_counter)
     {
         ShuffleX();
         ShuffleY();
