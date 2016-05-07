@@ -2,6 +2,8 @@
 
 #include <QUuid>
 
+#include "../Game.h"
+
 UnsyncGenerator::UnsyncGenerator(size_t id) : IMainObject(id)
 {
     unsync_string_ = "default";
@@ -15,17 +17,5 @@ void UnsyncGenerator::PerformUnsync()
 
 void UnsyncGenerator::SetThisAsUnsyncGenerator()
 {
-    SetUnsyncGenerator(GetId());
-}
-
-id_ptr_on<UnsyncGenerator> unsync_generator = 0;
-
-void SetUnsyncGenerator(id_ptr_on<UnsyncGenerator> generator)
-{
-    unsync_generator = generator;
-}
-
-id_ptr_on<UnsyncGenerator> GetUnsyncGenerator()
-{
-    return unsync_generator;
+    GetGame().SetUnsyncGenerator(GetId());
 }

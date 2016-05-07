@@ -3,6 +3,7 @@
 #include <list>
 
 #include "objects/Mob.h"
+#include "objects/UnsyncGenerator.h"
 
 #include "SyncRandom.h"
 #include "Names.h"
@@ -48,6 +49,9 @@ public:
     TextPainter& GetTexts();
     SyncRandom& GetRandom();
     Names& GetNames();
+
+    void SetUnsyncGenerator(id_ptr_on<UnsyncGenerator> generator);
+    id_ptr_on<UnsyncGenerator> GetUnsyncGenerator();
 public slots:
     void process();
     void endProcess();
@@ -95,4 +99,6 @@ private:
 
     SyncRandom* sync_random_;
     Names* names_;
+
+    id_ptr_on<UnsyncGenerator> unsync_generator_;
 };

@@ -73,6 +73,8 @@ Game::Game()
     chat_ = nullptr;
     sync_random_ = nullptr;
     names_= nullptr;
+
+    unsync_generator_ = 0;
 }
 
 Game::~Game()
@@ -528,6 +530,16 @@ SyncRandom& Game::GetRandom()
 Names& Game::GetNames()
 {
     return *names_;
+}
+
+void Game::SetUnsyncGenerator(id_ptr_on<UnsyncGenerator> generator)
+{
+    unsync_generator_ = generator;
+}
+
+id_ptr_on<UnsyncGenerator> Game::GetUnsyncGenerator()
+{
+    return unsync_generator_;
 }
 
 void Game::process()

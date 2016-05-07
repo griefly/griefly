@@ -17,6 +17,3 @@ private:
 };
 ADD_TO_TYPELIST(UnsyncGenerator);
 
-void SetUnsyncGenerator(id_ptr_on<UnsyncGenerator> generator);
-id_ptr_on<UnsyncGenerator> GetUnsyncGenerator();
-
