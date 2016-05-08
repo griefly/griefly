@@ -114,7 +114,7 @@ void Chat::PostWords(const std::string& who, const std::string& text, size_t til
 
 void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapObject> owner)
 {
-    if (GetMob() == owner)
+    if (game_->GetMob() == owner)
     {
         PostText(str);
     }

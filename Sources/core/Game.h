@@ -40,6 +40,8 @@ public:
     void ProcessInputMessages();
     void ToogleAutoplay() { auto_player_ = !auto_player_; }
 
+    void GenerateFrame();
+
     void PlayMusic(std::string name, float volume);
 
     MapMaster& GetMap();
@@ -52,6 +54,10 @@ public:
 
     void SetUnsyncGenerator(id_ptr_on<UnsyncGenerator> generator);
     id_ptr_on<UnsyncGenerator> GetUnsyncGenerator();
+
+    void ChangeMob(id_ptr_on<IMob> new_mob);
+    id_ptr_on<IMob> GetMob();
+    void SetMob(size_t new_mob);
 public slots:
     void process();
     void endProcess();
@@ -101,4 +107,5 @@ private:
     Names* names_;
 
     id_ptr_on<UnsyncGenerator> unsync_generator_;
+    id_ptr_on<IMob> current_mob_;
 };

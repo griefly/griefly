@@ -71,7 +71,7 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
 {
     savefile << MAIN_TICK << std::endl;
     savefile << id_ << std::endl;
-    savefile << GetMob().ret_id() << std::endl;
+    savefile << game_->GetMob().ret_id() << std::endl;
 
     // Random save
     savefile << game_->GetRandom().GetSeed() << std::endl;
@@ -143,9 +143,13 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_
     qDebug() << "This mob: " << real_this_mob;
 
     if (real_this_mob == 0)
-        SetMob(loc);
+    {
+        game_->SetMob(loc);
+    }
     else
-        SetMob(GetPlayerId(real_this_mob));
+    {
+        game_->SetMob(GetPlayerId(real_this_mob));
+    }
 }
 
 void ObjectFactory::SaveMap(const char* path)
@@ -237,7 +241,7 @@ void ObjectFactory::LoadMap(std::stringstream& savefile, size_t real_this_mob)
         i->loadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
-    ChangeMob(GetMob());
+    game_->ChangeMob(game_->GetMob());
     is_world_generating_ = false;
 }
 

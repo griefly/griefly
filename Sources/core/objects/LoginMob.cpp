@@ -103,9 +103,9 @@ void LoginMob::processGUImsg(const Message2& msg)
             GetGame().GetFactory().SetPlayerId(net_id, human.ret_id());
 
             tiles[0]->AddItem(human);
-            if (GetId() == GetMob().ret_id())
+            if (GetId() == GetGame().GetMob().ret_id())
             {
-                ChangeMob(human);
+                GetGame().ChangeMob(human);
             }
 
             GetGame().GetChat().PostTextFor(text, human);

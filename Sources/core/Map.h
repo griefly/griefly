@@ -133,7 +133,6 @@ public:
     void ResizeMap(int x, int y, int z);
 
     void Represent();
-    void GenerateFrame();
 
     bool IsTransparent(int posx, int posy, int posz = 0);
 

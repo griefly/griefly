@@ -75,6 +75,7 @@ Game::Game()
     names_= nullptr;
 
     unsync_generator_ = 0;
+    current_mob_ = 0;
 }
 
 Game::~Game()
@@ -165,7 +166,7 @@ void Game::Process()
 
             UpdateVisible();
 
-            GetMap().GenerateFrame();
+            GenerateFrame();
             GetTexts().Process();
         }
 
@@ -491,6 +492,17 @@ void Game::ProcessInputMessages()
     }
 }
 
+void Game::GenerateFrame()
+{
+    map_->Represent();
+    GetMob()->GenerateInterfaceForFrame();
+
+
+    // TODO: reset all shifts
+    GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
+    GetRepresentation().Swap();
+}
+
 void Game::PlayMusic(std::string name, float volume)
 {
     qDebug() << QString::fromStdString(name);
@@ -540,6 +552,36 @@ void Game::SetUnsyncGenerator(id_ptr_on<UnsyncGenerator> generator)
 id_ptr_on<UnsyncGenerator> Game::GetUnsyncGenerator()
 {
     return unsync_generator_;
+}
+
+void Game::ChangeMob(id_ptr_on<IMob> i)
+{
+    if (!GetParamsHolder().GetParamBool("-editor") && current_mob_.valid())
+    {
+        current_mob_->DeinitGUI();
+    }
+
+    current_mob_ = i;
+
+    if (current_mob_.valid())
+    {
+        if (!GetParamsHolder().GetParamBool("-editor"))
+        {
+            current_mob_->InitGUI();
+        }
+    }
+
+    qDebug() << "Current mob change: " << current_mob_.ret_id();
+}
+
+id_ptr_on<IMob> Game::GetMob()
+{
+    return current_mob_;
+}
+
+void Game::SetMob(size_t new_mob)
+{
+    current_mob_ = new_mob;
 }
 
 void Game::process()

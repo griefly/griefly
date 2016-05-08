@@ -89,23 +89,6 @@ void MapMaster::Represent()
     }
 }
 
-void MapMaster::GenerateFrame()
-{
-    // TODO: move to Game
-    if(!GetVisiblePoints())
-    {
-        return;
-    }
-
-    Represent();
-    GetMob()->GenerateInterfaceForFrame();
-
-
-    // TODO: reset all shifts
-    GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
-    GetRepresentation().Swap();
-}
-
 void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 {
     squares.resize(new_map_x);

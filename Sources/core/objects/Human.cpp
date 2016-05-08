@@ -285,9 +285,9 @@ void Human::OnDeath()
         ghost->name = name;
         GetGame().GetFactory().SetPlayerId(net_id, ghost.ret_id());
         owner->AddItem(ghost);
-        if (GetId() == GetMob().ret_id())
+        if (GetId() == GetGame().GetMob().ret_id())
         {
-            ChangeMob(ghost);
+            GetGame().ChangeMob(ghost);
         }
     }
     dead_ = true;
