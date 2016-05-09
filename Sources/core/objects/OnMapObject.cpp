@@ -6,7 +6,6 @@
 #include "../Game.h"
 #include "Tile.h"
 
-#include "Creator.h"
 #include "../Helpers.h"
 
 void IOnMapObject::SetSprite(const std::string& name)

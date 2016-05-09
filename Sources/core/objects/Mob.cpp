@@ -3,9 +3,6 @@
 #include "../Map.h"
 
 #include "net/MagicStrings.h"
-#include "Creator.h"
-
-
 #include "net/NetworkMessagesTypes.h"
 
 IMob::IMob(size_t id) : IMessageReceiver(id)

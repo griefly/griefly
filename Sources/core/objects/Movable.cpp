@@ -3,7 +3,6 @@
 #include "../Helpers.h"
 #include "Mob.h"
 
-#include "Creator.h"
 #include "../Game.h"
 
 #include <assert.h>

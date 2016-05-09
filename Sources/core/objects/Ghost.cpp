@@ -1,7 +1,6 @@
 #include "Ghost.h"
 
 #include "../Map.h"
-#include "Creator.h"
 
 #include "net/MagicStrings.h"
 #include "representation/Chat.h"

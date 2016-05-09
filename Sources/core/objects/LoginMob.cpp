@@ -6,7 +6,6 @@
 #include "../ObjectFactory.h"
 #include "../Map.h"
 #include "../Game.h"
-#include "Creator.h"
 #include "Lobby.h"
 #include "net/MagicStrings.h"
 #include "representation/Chat.h"

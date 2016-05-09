@@ -5,15 +5,11 @@
 #include "Text.h"
 #include "core/Constheader.h"
 #include "Screen.h"
-#include "core/objects/Creator.h"
 #include "core/Helpers.h"
 #include "core/Game.h"
 
 #include <QUuid>
 #include <QTextCursor>
-
-
-Chat* chat = nullptr;
 
 std::stringstream ss;
 std::fstream loc("debug_reports//" + QUuid::createUuid().toString().toStdString() + ".txt", std::ios::trunc | std::ios::out | std::ios::in);
@@ -31,16 +27,6 @@ void SetLogToFile()
 std::ostream& get_system_stream()
 {
     return *local_stream;
-}
-
-Chat& GetChat()
-{
-    return *chat;
-}
-
-void SetChat(Chat* new_chat)
-{
-    chat = new_chat;
 }
 
 bool Chat::IsOOCMessage(const std::string &text)

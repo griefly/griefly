@@ -12,7 +12,6 @@
 #include "../Helpers.h"
 #include "../SyncRandom.h"
 #include "Ghost.h"
-#include "Creator.h"
 #include "Clothes.h"
 #include "Floor.h"
 #include "net/NetworkMessagesTypes.h"

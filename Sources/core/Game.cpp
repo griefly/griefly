@@ -11,7 +11,6 @@
 #include "objects/Tile.h"
 #include "Params.h"
 
-#include "objects/Creator.h"
 #include "objects/Mob.h"
 #include "representation/Utils.h"
 #include "representation/Chat.h"

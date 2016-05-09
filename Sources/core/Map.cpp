@@ -11,7 +11,6 @@
 #include "Game.h"
 #include "ObjectFactory.h"
 #include "Helpers.h"
-#include "objects/Creator.h"
 #include "AutogenMetadata.h"
 #include "representation/Representation.h"
 
