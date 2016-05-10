@@ -7,7 +7,6 @@
 
 class IMainObject
 {
-    friend class ObjectFactory;
 public:
     void PlaySoundIfVisible(const std::string& name, size_t tile_id);
     void PlayMusic(const std::string& name, float volume = 100.0f);
@@ -50,6 +49,7 @@ public:
 
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
+    void SetGame(Game* game) { game_ = game; }
 protected:
     Game& GetGame();
     const Game& GetGame() const;

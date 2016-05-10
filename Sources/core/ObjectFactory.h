@@ -64,7 +64,7 @@ public:
         }
 
         //qDebug() << "item->game_ = game_";
-        item->game_ = game_;
+        item->SetGame(game_);
 
         //qDebug() << "if (id_ >= objects_table_.size())";
         if (id_ >= objects_table_.size())
@@ -96,7 +96,7 @@ public:
     id_ptr_on<T> CreateVoid(const std::string& hash, size_t id_new)
     {
         T* item = castTo<T>(NewVoidObjectSaved(hash));
-        item->game_ = game_;
+        item->SetGame(game_);
         if (id_new >= objects_table_.size())
         {
             objects_table_.resize(id_new * 2);
