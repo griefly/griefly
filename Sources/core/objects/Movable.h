@@ -32,10 +32,10 @@ public:
     DECLARE_GET_TYPE_ITEM(IMovable);
     IMovable(size_t id);
     void processMove();//for move
-    virtual bool checkMove(Dir direct);
-    bool checkMoveTime();
-    bool checkPassable();
-    bool mainMove();
+    virtual bool TryMove(Dir direct);
+    bool CheckMoveTime();
+    bool CheckPassable();
+    bool MainMove();
 
     virtual bool Rotate(Dir dir);
     Dir GetDir() const { return dMove; }

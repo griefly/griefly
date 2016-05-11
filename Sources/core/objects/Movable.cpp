@@ -19,34 +19,38 @@ IMovable::IMovable(size_t id) : IOnMapObject(id)
     force_.z = 0;
 }
 
-bool IMovable::checkMove(Dir direct)
+bool IMovable::TryMove(Dir direct)
 {
-    if (!checkMoveTime()) 
-        return false;
-    if (anchored)
-        return false;
-    if (!Rotate(direct))
-        return false;
-    if (!checkPassable())
+    if (!CheckMoveTime())
     {
         return false;
     }
-    return mainMove();    
-};
+    if (anchored)
+    {
+        return false;
+    }
+    if (!Rotate(direct))
+    {
+        return false;
+    }
+    if (!CheckPassable())
+    {
+        return false;
+    }
+    return MainMove();
+}
 
 void IMovable::ProcessForce()
 {
 
     Dir step = VDirToDir(force_);
 
-    checkMove(step);
+    TryMove(step);
 
     if (!NonZero(force_))
+    {
         return;
-
-    // qDebug() << "Process force: " << GetId();
-    // qDebug() << force_.x;
-    // qDebug() << force_.y;
+    }
 
     VDir vstep = DirToVDir[step];
     force_.x -= (vstep.x * Friction::CombinedFriction(GetTurf())) / Friction::BASE_FRICTION;
@@ -69,17 +73,21 @@ void IMovable::ApplyForce(VDir force)
 void IMovable::LoadInForceManager()
 {
     if (NonZero(force_))
+    {
         ForceManager::Get().Add(GetId());
+    }
 }
 
-bool IMovable::checkMoveTime()
+bool IMovable::CheckMoveTime()
 {
-    if((static_cast<int>(MAIN_TICK) - lastMove) < tickSpeed) 
+    if ((static_cast<int>(MAIN_TICK) - lastMove) < tickSpeed)
+    {
         return false;
+    }
     return true;
 }
 
-bool IMovable::checkPassable()
+bool IMovable::CheckPassable()
 {
     PassableLevel loc = GetPassable(dMove);
     if (loc != Passable::FULL)
@@ -123,11 +131,13 @@ bool IMovable::Rotate(Dir dir)
     return true;
 }
 
-bool IMovable::mainMove()
+bool IMovable::MainMove()
 {
     auto new_owner = owner->GetNeighbour(dMove);
     if (new_owner == owner)
+    {
         return false;
+    }
 
     owner->RemoveItem(GetId());
     new_owner->AddItem(GetId());
@@ -236,5 +246,7 @@ void ForceManager::Clear()
         }
     }
     for (auto it = to_remove.begin(); it != to_remove.end(); ++it)
+    {
         under_force_.erase(std::find(under_force_.begin(), under_force_.end(), *it));
+    }
 }

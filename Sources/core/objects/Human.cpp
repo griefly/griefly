@@ -74,9 +74,9 @@ void Human::GenerateInterfaceForFrame()
     interface_.Draw();
 }
 
-bool Human::checkMove(Dir direct)
+bool Human::TryMove(Dir direct)
 {
-    if (IMob::checkMove(direct))
+    if (IMob::TryMove(direct))
     {   
         if (owner->GetItem<Shard>().valid())
         {

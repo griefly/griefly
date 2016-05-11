@@ -41,19 +41,19 @@ void IMob::processGUImsg(const Message2 &msg)
 
     if (Network2::IsKey(obj, Input::MOVE_UP))
     {
-        checkMove(D_UP);
+        TryMove(D_UP);
     }
     else if (Network2::IsKey(obj, Input::MOVE_DOWN))
     {
-        checkMove(D_DOWN);
+        TryMove(D_DOWN);
     }
     else if (Network2::IsKey(obj, Input::MOVE_LEFT))
     {
-        checkMove(D_LEFT);
+        TryMove(D_LEFT);
     }
     else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
     {
-        checkMove(D_RIGHT);
+        TryMove(D_RIGHT);
     }
 }
 
