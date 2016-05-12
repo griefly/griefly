@@ -56,7 +56,9 @@ public:
     virtual void Delete() override
     {
         if (owner.valid())
+        {
             owner->RemoveItem(GetId());
+        }
         IDraw::Delete();
     }
 
@@ -79,8 +81,10 @@ public:
     // This must not remove item from old place
     virtual bool AddItem(id_ptr_on<IOnMapBase> item)
     {
-        if (owner.valid()) 
+        if (owner.valid())
+        {
             return owner->AddItem(item);
+        }
         return false;
     }
     // Remove some item
@@ -88,15 +92,15 @@ public:
     // False failed
     virtual bool RemoveItem(id_ptr_on<IOnMapBase> item)
     {
-        if (owner.valid())
-            return owner->RemoveItem(item);
         return false;
     }
     // If id equal with object id, dir fail or something else (operation unsupported)
     virtual id_ptr_on<IOnMapBase> GetNeighbour(Dir direct) const
     {
         if (owner.valid())
+        {
             return owner->GetNeighbour(direct);
+        }
         return GetId();
     }
 

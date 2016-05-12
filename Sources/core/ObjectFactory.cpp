@@ -406,15 +406,15 @@ void ObjectFactory::FinishWorldCreation()
 
 void ObjectFactory::DeleteLater(size_t id)
 {
-    ids_to_delete_.push_back(id);
+    ids_to_delete_.push_back(objects_table_[id]);
+    objects_table_[id] = nullptr;
 }
 
 void ObjectFactory::ProcessDeletion()
 {
     for (auto it = ids_to_delete_.begin(); it != ids_to_delete_.end(); ++it)
     {
-        delete objects_table_[*it];
-        objects_table_[*it] = nullptr;
+        delete *it;
     }
     ids_to_delete_.clear();
 }

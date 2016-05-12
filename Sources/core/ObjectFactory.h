@@ -133,7 +133,7 @@ private:
 
     void UpdateProcessingItems();
 
-    std::vector<size_t> ids_to_delete_;
+    std::vector<IMainObject*> ids_to_delete_;
 
     std::vector<IMainObject*> objects_table_;
     std::vector<id_ptr_on<IMainObject>> process_table_;

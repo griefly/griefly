@@ -91,8 +91,7 @@ bool Closet::AddItem(id_ptr_on<IOnMapBase> item)
 
 bool Closet::RemoveItem(id_ptr_on<IOnMapBase> item)
 {
-    auto it = content_.begin();
-    for (; it != content_.end(); ++it)
+    for (auto it = content_.begin(); it != content_.end(); ++it)
     {
         if (*it == item)
         {
@@ -119,6 +118,21 @@ void Closet::AfterWorldCreation()
            owner->RemoveItem(object);
        }
     });
+}
+
+void Closet::Delete()
+{
+    std::vector<id_ptr_on<IMovable>> copy = content_;
+    for (auto it = copy.begin(); it != copy.end(); ++it)
+    {
+        if (!it->valid())
+        {
+            qDebug() << "Closet contains invalid id_ptr_on";
+            abort();
+        }
+        (*it)->Delete();
+    }
+    IMovable::Delete();
 }
 
 void Closet::Close()

@@ -23,6 +23,7 @@ public:
 
     virtual void AfterWorldCreation() override;
 
+    virtual void Delete() override;
     // TODO: ForEach (?)
 protected:
     virtual void Open();
