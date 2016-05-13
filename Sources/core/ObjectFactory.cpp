@@ -382,6 +382,7 @@ void ObjectFactory::ClearMap()
     process_table_.clear();
     add_to_process_.clear();
     players_table_.clear();
+    add_to_process_.clear();
 
     id_ = 1;
 }

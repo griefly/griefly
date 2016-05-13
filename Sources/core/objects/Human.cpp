@@ -55,22 +55,17 @@ void Human::AfterWorldCreation()
 
     name = GetGame().GetNames().GetMaleName();
 }
+
 void Human::InitGUI()
 {
 }
 
-
-
 void Human::DeinitGUI()
 {
-    //GetTexts().Delete("Sync");
 }
 void Human::GenerateInterfaceForFrame()
 {
-    ////
     IMob::GenerateInterfaceForFrame();
-    //////
-
     interface_.Draw();
 }
 

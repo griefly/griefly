@@ -24,7 +24,9 @@ Door::Door(size_t id) : IOnMapObject(id)
 void Door::Open()
 {
     if (door_state_ != CLOSED)
+    {
         return;
+    }
     SetState("door_opening");
     PlaySoundIfVisible("airlock.ogg", owner.ret_id());
     door_state_ = OPENING;
@@ -35,7 +37,9 @@ void Door::Open()
 void Door::Close()
 {
     if (door_state_ != OPEN)
+    {
         return;
+    }
     SetState("door_closing");
     PlaySoundIfVisible("airlock.ogg", owner.ret_id());
     SetPassable(D_ALL, Passable::EMPTY);
@@ -68,8 +72,12 @@ void Door::Process()
         return;
     }
     if (door_state_ == OPEN)
+    {
         if (MAIN_TICK - last_tick_ > 50)
+        {
             Close();
+        }
+    }
 }
 
 void Door::Bump(id_ptr_on<IMovable> item)
@@ -77,7 +85,9 @@ void Door::Bump(id_ptr_on<IMovable> item)
     if (id_ptr_on<IMob> m = item)
     {
         if (door_state_ == CLOSED)
+        {
             Open();
+        }
     }
 }
 
@@ -85,7 +95,9 @@ void Door::Weld()
 {
     if (   door_state_ != CLOSED
         && door_state_ != WELDED)
+    {
         return;
+    }
 
     if (door_state_ == WELDED)
     {
@@ -106,15 +118,21 @@ void Door::AttackBy(id_ptr_on<Item> item)
     if (id_ptr_on<Weldingtool> w = item)
     {
         if (IsClosed() && w->Working())
+        {
             Weld();
+        }
         return;
     }
 
 
     if (IsOpen())
+    {
         Close();
+    }
     else if (IsClosed())
+    {
         Open();
+    }
 }
 
 SecurityDoor::SecurityDoor(size_t id) : Door(id)
@@ -188,7 +206,9 @@ void GlassDoor::AfterWorldCreation()
 void GlassDoor::Open()
 {
     if (door_state_ != CLOSED)
+    {
         return;
+    }
     SetState(door_prefix_ + "opening");
     PlaySoundIfVisible("windowdoor.ogg", owner.ret_id());
     door_state_ = OPENING;
@@ -199,7 +219,9 @@ void GlassDoor::Open()
 void GlassDoor::Close()
 {
     if (door_state_ != OPEN)
+    {
         return;
+    }
     SetState(door_prefix_ + "closing");
     PlaySoundIfVisible("windowdoor.ogg", owner.ret_id());
     SetPassable(GetDir(), Passable::EMPTY);
@@ -232,8 +254,12 @@ void GlassDoor::Process()
         return;
     }
     if (door_state_ == OPEN)
+    {
         if (MAIN_TICK - last_tick_ > 50)
+        {
             Close();
+        }
+    }
 }
 
 void GlassDoor::Bump(id_ptr_on<IMovable> item)
@@ -241,14 +267,20 @@ void GlassDoor::Bump(id_ptr_on<IMovable> item)
     if (id_ptr_on<IMob> m = item)
     {
         if (door_state_ == CLOSED)
+        {
             Open();
+        }
     }
 }
 
 void GlassDoor::AttackBy(id_ptr_on<Item> item)
 {
     if (IsOpen())
+    {
         Close();
+    }
     else
+    {
         Open();
+    }
 }

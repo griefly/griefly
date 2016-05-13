@@ -89,16 +89,6 @@ void Ghost::CalculateVisible(std::list<point>* visible_list)
 void Ghost::processGUImsg(const Message2& msg)
 {
     IMob::processGUImsg(msg);
-
-    /*QJsonObject obj = Network2::ParseJson(msg);
-    if (msg.type == MessageType::MESSAGE)
-    {
-        std::string text = obj["text"].toString().toStdString();
-        if (Chat::IsOOCMessage(text))
-        {
-            GetChat().PostOOCText(name + " (ghost)", text.substr(3));
-        }
-    }*/
 }
 
 void Ghost::InitGUI()

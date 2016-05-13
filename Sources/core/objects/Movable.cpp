@@ -42,7 +42,6 @@ bool IMovable::TryMove(Dir direct)
 
 void IMovable::ProcessForce()
 {
-
     Dir step = VDirToDir(force_);
 
     TryMove(step);
