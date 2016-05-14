@@ -173,7 +173,7 @@ void ObjectFactory::SaveMap(std::stringstream& savefile)
     {
         if(*it) 
         {
-            (*it++)->saveSelf(savefile);
+            (*it++)->SaveSelf(savefile);
             savefile << std::endl;
         }
         else
@@ -237,7 +237,7 @@ void ObjectFactory::LoadMap(std::stringstream& savefile, size_t real_this_mob)
         
         id_ptr_on<IMainObject> i;
         i = CreateVoid<IMainObject>(type, id_loc);
-        i->loadSelf(savefile);
+        i->LoadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
     game_->ChangeMob(game_->GetMob());
@@ -428,7 +428,7 @@ unsigned int ObjectFactory::Hash()
     {
         if (objects_table_[i] != nullptr)
         {
-            h += objects_table_[i]->hashSelf();
+            h += objects_table_[i]->HashSelf();
         }
     }
 

@@ -23,7 +23,7 @@ void IMainObject::Delete()
     GetGame().GetFactory().DeleteLater(id_);
 }
 
-bool IMainObject::saveSelf(std::stringstream& file)
+bool IMainObject::SaveSelf(std::stringstream& file)
 {
     file << " " << T_ITEM() << " ";
     file << " " << id_ << " ";
@@ -31,7 +31,7 @@ bool IMainObject::saveSelf(std::stringstream& file)
     return true;
 }
 
-bool IMainObject::loadSelf(std::stringstream& file)
+bool IMainObject::LoadSelf(std::stringstream& file)
 {
     file >> how_often_;
 

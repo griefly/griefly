@@ -22,23 +22,23 @@ struct FakeParamClass {};
 template<int num> __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<num>){};     \
 template<int num> __forceinline void KV_LOAD_FUNC(std::stringstream& file, FakeParamClass<num>){};     \
 template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash, FakeParamClass<num>){return hash;};     \
-        virtual bool saveSelf(std::stringstream& file)                 \
+        virtual bool SaveSelf(std::stringstream& file)                 \
         {                                                           \
         static_assert(std::is_same<decltype(this), thisclass*>::value && std::is_base_of<masterclass, thisclass>::value, #thisclass " error DECLARE_SAVED");\
-            masterclass ::saveSelf(file);                           \
+            masterclass ::SaveSelf(file);                           \
             KV_SAVE_FUNC(file, FakeParamClass<THIS_COUNTER + 1>());    \
             return true;                                            \
         };                                                          \
-        virtual bool loadSelf(std::stringstream& file)                 \
+        virtual bool LoadSelf(std::stringstream& file)                 \
         {                                                           \
-            masterclass ::loadSelf(file);                           \
+            masterclass ::LoadSelf(file);                           \
             KV_LOAD_FUNC(file, FakeParamClass<THIS_COUNTER + 1>()); \
             return true;                                            \
         };                                                          \
-        virtual unsigned int hashSelf()                 \
+        virtual unsigned int HashSelf()                 \
         {                                                           \
             return                                                  \
-            KV_HASH_FUNC(masterclass ::hashSelf(), FakeParamClass<THIS_COUNTER + 1>());\
+            KV_HASH_FUNC(masterclass ::HashSelf(), FakeParamClass<THIS_COUNTER + 1>());\
         }; \
         thisclass (NotLoadItem) : masterclass(nouse) {}
 
