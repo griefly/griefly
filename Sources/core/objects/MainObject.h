@@ -24,23 +24,23 @@ public:
     IMainObject(size_t id){ id_ = id; how_often_ = 0; game_ = nullptr; }
     IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
-    virtual const std::string& T_ITEM()
-    {                                        
+    virtual const std::string& T_ITEM() const
+    {
         return T_ITEM_S();
-    }                                        
+    }
     static const std::string& T_ITEM_S()
     {                                         
         static std::string result = "main";
         return result;
     }
-    static int REAL_TYPE_ITEM;                
-    virtual int RT_ITEM()                     
+    static int REAL_TYPE_ITEM;
+    virtual int RT_ITEM() const
     {                                         
-        return REAL_TYPE_ITEM;                
+        return REAL_TYPE_ITEM;
     }                                         
-    __forceinline static int RT_ITEM_S()                    
+    static int RT_ITEM_S()
     {                                         
-        return REAL_TYPE_ITEM;                
+        return REAL_TYPE_ITEM;
     }       
     virtual void Process() { }
 

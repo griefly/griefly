@@ -50,17 +50,17 @@ template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash, Fak
 
 
 #define DECLARE_GET_TYPE_ITEM(str)            \
-    virtual const std::string& T_ITEM()             \
+    virtual const std::string& T_ITEM() const \
     {                                         \
-        return T_ITEM_S();                       \
+        return T_ITEM_S();                    \
     }                                         \
-    static const std::string& T_ITEM_S()            \
+    static const std::string& T_ITEM_S()      \
     {                                         \
-        static std::string result = #str;\
+        static std::string result = #str;     \
         return result;                        \
     }                                         \
     static int REAL_TYPE_ITEM;                \
-    virtual int RT_ITEM()                     \
+    virtual int RT_ITEM() const               \
     {                                         \
         return REAL_TYPE_ITEM;                \
     }                                         \
