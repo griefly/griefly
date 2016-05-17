@@ -21,7 +21,7 @@ public:
     }
 
     virtual void Delete();
-    IMainObject(size_t id){ id_ = id; how_often_ = 0; game_ = nullptr; }
+    IMainObject(size_t id) { id_ = id; how_often_ = 0; game_ = nullptr; }
     IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
     virtual const std::string& T_ITEM() const

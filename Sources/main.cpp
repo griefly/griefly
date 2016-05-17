@@ -16,6 +16,9 @@
 #include <gmock/gmock.h>
 #endif
 
+// Temporarly
+#include "Interfaces.h"
+
 int main(int argc, char *argv[])
 {
     // LCOV_EXCL_START
