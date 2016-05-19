@@ -16,9 +16,9 @@
 
 void MapMaster::FillAtmosphere()
 {
-    for (int z = 0; z < GetMapD(); ++z)
-        for (int x = 0; x < GetMapW(); ++x)
-            for (int y = 0; y < GetMapH(); ++y)
+    for (int z = 0; z < GetDepth(); ++z)
+        for (int x = 0; x < GetWidth(); ++x)
+            for (int y = 0; y < GetHeight(); ++y)
                 if (   squares[x][y][z]->GetTurf()
                     && squares[x][y][z]->GetTurf()->GetAtmosState() != SPACE
                     && squares[x][y][z]->GetTurf()->GetAtmosState() != NON_SIMULATED

@@ -105,11 +105,11 @@ void Game::InitGlobalObjects()
 void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
 {
     GetMap().ResizeMap(new_map_x, new_map_y, new_map_z);
-    for(int x = 0; x < GetMap().GetMapW(); x++)
+    for(int x = 0; x < GetMap().GetWidth(); x++)
     {
-        for(int y = 0; y < GetMap().GetMapH(); y++)
+        for(int y = 0; y < GetMap().GetHeight(); y++)
         {
-            for (int z = 0; z < GetMap().GetMapD(); z++)
+            for (int z = 0; z < GetMap().GetDepth(); z++)
             {
                 auto loc = GetFactory().Create<CubeTile>(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);

@@ -48,15 +48,15 @@ public:
 
     Atmosphere atmosphere;
 
-    int GetMapW() const
+    int GetWidth() const
     {
         return squares.size();
     }
-    int GetMapH() const
+    int GetHeight() const
     {
         return squares[0].size();
     }
-    int GetMapD() const
+    int GetDepth() const
     {
         return squares[0][0].size();
     }
@@ -66,7 +66,7 @@ public:
         if (x)
         {
             *x += DirToVDir[dir].x;
-            if (*x >= GetMapW() ||
+            if (*x >= GetWidth() ||
                 *x <= -1)
             {
                 *x -= DirToVDir[dir].x;
@@ -75,7 +75,7 @@ public:
         if (y)
         {
             *y += DirToVDir[dir].y;
-            if (*y >= GetMapH() ||
+            if (*y >= GetHeight() ||
                 *y <= -1)
             {
                 *y -= DirToVDir[dir].y;
@@ -84,7 +84,7 @@ public:
         if (z)
         {
             *z += DirToVDir[dir].z;
-            if (*z >= GetMapD() ||
+            if (*z >= GetDepth() ||
                 *z <= -1)
             {
                 *z -= DirToVDir[dir].z;
@@ -96,7 +96,7 @@ public:
     {
         if (x)
         {
-            if (*x >= GetMapW())
+            if (*x >= GetWidth())
             {
                 return false;
             }
@@ -107,7 +107,7 @@ public:
         }
         if (y)
         {
-            if (*y >= GetMapH())
+            if (*y >= GetHeight())
             {
                 return false;
             }
@@ -118,7 +118,7 @@ public:
         }
         if (z)
         {
-            if (*z >= GetMapD())
+            if (*z >= GetDepth())
             {
                 return false;
             }

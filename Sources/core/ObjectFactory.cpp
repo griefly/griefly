@@ -78,9 +78,9 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
 
     // Save Map Size
 
-    savefile << game_->GetMap().GetMapW() << std::endl;
-    savefile << game_->GetMap().GetMapH() << std::endl;
-    savefile << game_->GetMap().GetMapD() << std::endl;
+    savefile << game_->GetMap().GetWidth() << std::endl;
+    savefile << game_->GetMap().GetHeight() << std::endl;
+    savefile << game_->GetMap().GetDepth() << std::endl;
 
     // Save player table
     savefile << players_table_.size() << " ";
