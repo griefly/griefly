@@ -44,9 +44,18 @@ public:
     ~MapMaster();
 
     typedef id_ptr_on<CubeTile> SqType;
-    std::vector<std::vector<std::vector<SqType> > > squares;
 
     Atmosphere atmosphere;
+
+    std::vector<std::vector<std::vector<SqType>>>& GetSquares()
+    {
+        return squares;
+    }
+
+    const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const
+    {
+        return squares;
+    }
 
     int GetWidth() const
     {
@@ -146,5 +155,6 @@ public:
 
     LOSfinder losf;
 private:
+    std::vector<std::vector<std::vector<SqType>>> squares;
     std::list<point>* visible_points_;
 };

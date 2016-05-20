@@ -113,7 +113,7 @@ void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
             {
                 auto loc = GetFactory().Create<CubeTile>(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
-                GetMap().squares[x][y][z] = loc;
+                GetMap().GetSquares()[x][y][z] = loc;
             }
         }
     }

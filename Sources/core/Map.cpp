@@ -32,8 +32,6 @@ void MapMaster::FillAtmosphere()
                 }
 }
 
-
-
 void MapMaster::Represent()
 {
     if(!GetVisiblePoints())

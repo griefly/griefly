@@ -56,7 +56,7 @@ void Atmosphere::Process()
 
 void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
 {
-    auto tile = map_->squares[x][y][z];
+    auto tile = map_->GetSquares()[x][y][z];
     
     if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
     {
@@ -127,7 +127,7 @@ const unsigned int PRESSURE_MOVE_BORDER = 1000;
 
 void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 {
-    auto tile = map_->squares[x][y][z];
+    auto tile = map_->GetSquares()[x][y][z];
     
     if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
     {

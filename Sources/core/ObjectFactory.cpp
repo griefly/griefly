@@ -330,15 +330,15 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
         //qDebug() << "id_ptr_on<ITurf> t = i";
         if (id_ptr_on<ITurf> t = i)
         {
-            if (game_->GetMap().squares[x][y][z]->GetTurf())
+            if (game_->GetMap().GetSquares()[x][y][z]->GetTurf())
             {
                 SYSTEM_STREAM << "DOUBLE TURF!" << std::endl;
             }
-            game_->GetMap().squares[x][y][z]->SetTurf(t);
+            game_->GetMap().GetSquares()[x][y][z]->SetTurf(t);
         }
         else
         {
-            game_->GetMap().squares[x][y][z]->AddItem(i);
+            game_->GetMap().GetSquares()[x][y][z]->AddItem(i);
         }
     }
     FinishWorldCreation();
