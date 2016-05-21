@@ -155,11 +155,11 @@ void Game::Process()
             ForceManager::Get().Process();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
             {
-                GetMap().atmosphere.Process();
+                GetMap().GetAtmosphere().Process();
             }
             if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
             {
-                GetMap().atmosphere.ProcessMove();
+                GetMap().GetAtmosphere().ProcessMove();
             }
             GetFactory().ProcessDeletion();
 

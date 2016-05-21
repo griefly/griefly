@@ -19,12 +19,12 @@ void MapMaster::FillAtmosphere()
     for (int z = 0; z < GetDepth(); ++z)
         for (int x = 0; x < GetWidth(); ++x)
             for (int y = 0; y < GetHeight(); ++y)
-                if (   squares[x][y][z]->GetTurf()
-                    && squares[x][y][z]->GetTurf()->GetAtmosState() != SPACE
-                    && squares[x][y][z]->GetTurf()->GetAtmosState() != NON_SIMULATED
-                    && CanPass(squares[x][y][z]->GetPassable(D_ALL), Passable::AIR))
+                if (   squares_[x][y][z]->GetTurf()
+                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != SPACE
+                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != NON_SIMULATED
+                    && CanPass(squares_[x][y][z]->GetPassable(D_ALL), Passable::AIR))
                 {
-                    auto a = squares[x][y][z]->GetAtmosHolder();
+                    auto a = squares_[x][y][z]->GetAtmosHolder();
                     a->AddGase(NYTROGEN, 750);
                     a->AddGase(OXYGEN, 230);
                     a->AddGase(CO2, 1);
@@ -34,17 +34,17 @@ void MapMaster::FillAtmosphere()
 
 void MapMaster::Represent()
 {
-    if(!GetVisiblePoints())
+    if (!GetVisiblePoints())
     {
         return;
     }
 
-    for(int i = 0; i < MAX_LEVEL; ++i)
+    for (int i = 0; i < MAX_LEVEL; ++i)
     {
         auto it2 = GetVisiblePoints()->begin();
-        while(it2 != GetVisiblePoints()->end())
+        while (it2 != GetVisiblePoints()->end())
         {
-            auto sq = squares[it2->posx][it2->posy][it2->posz];
+            auto sq = squares_[it2->posx][it2->posy][it2->posz];
             auto& in_list = sq->GetInsideList();
 
             for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
@@ -55,7 +55,7 @@ void MapMaster::Represent()
                 }
             }
 
-            auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+            auto trf = squares_[it2->posx][it2->posy][it2->posz]->GetTurf();
             if (trf.valid() && trf->v_level == i)
             {
                 trf->Represent();
@@ -64,9 +64,9 @@ void MapMaster::Represent()
         }
     }
     auto it2 = GetVisiblePoints()->begin();
-    while(it2 != GetVisiblePoints()->end())
+    while (it2 != GetVisiblePoints()->end())
     {
-        auto sq = squares[it2->posx][it2->posy][it2->posz];
+        auto sq = squares_[it2->posx][it2->posy][it2->posz];
         auto& in_list = sq->GetInsideList();
 
         for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
@@ -77,7 +77,7 @@ void MapMaster::Represent()
             }
         }
 
-        auto trf = squares[it2->posx][it2->posy][it2->posz]->GetTurf();
+        auto trf = squares_[it2->posx][it2->posy][it2->posz]->GetTurf();
         if (trf.valid() && trf->v_level >= MAX_LEVEL)
         {
             trf->Represent();
@@ -88,20 +88,20 @@ void MapMaster::Represent()
 
 void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 {
-    squares.resize(new_map_x);
+    squares_.resize(new_map_x);
     for (int x = 0; x < new_map_x; ++x)
     {
-        squares[x].resize(new_map_y);
+        squares_[x].resize(new_map_y);
         for (int y = 0; y < new_map_y; ++y)
         {
-            squares[x][y].resize(new_map_z);
+            squares_[x][y].resize(new_map_z);
         }
     }
-    atmosphere.Resize(new_map_x, new_map_y, new_map_z);
+    atmosphere_.Resize(new_map_x, new_map_y, new_map_z);
 }
 
 MapMaster::MapMaster(SyncRandom* random)
-    : atmosphere(random, this),
+    : atmosphere_(random, this),
       losf(this)
 {
     visible_points_ = new std::list<point>;
@@ -114,7 +114,7 @@ MapMaster::~MapMaster()
 
 PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)
 {
-    return squares[posx][posy][posz]->GetPassable(direct);
+    return squares_[posx][posy][posz]->GetPassable(direct);
 }
 
 bool MapMaster::IsTransparent(int posx, int posy, int posz)
@@ -123,7 +123,7 @@ bool MapMaster::IsTransparent(int posx, int posy, int posz)
     {
         return false;
     }
-    return squares[posx][posy][posz]->IsTransparent();
+    return squares_[posx][posy][posz]->IsTransparent();
 }
 
 bool MapMaster::IsTileVisible(size_t tile_id)
@@ -135,7 +135,7 @@ bool MapMaster::IsTileVisible(size_t tile_id)
     }
     for (auto it = l->begin(); it != l->end(); ++it)
     {
-        if (tile_id == squares[it->posx][it->posy][it->posz].ret_id())
+        if (tile_id == squares_[it->posx][it->posy][it->posz].ret_id())
         {
             return true;
         }

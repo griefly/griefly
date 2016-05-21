@@ -2,12 +2,17 @@
 
 #include "core/Idptr.h"
 
+class CubeTile;
 class IMapMaster
 {
 public:
     virtual int GetWidth() const = 0;
     virtual int GetHeight() const = 0;
     virtual int GetDepth() const = 0;
+
+    typedef id_ptr_on<CubeTile> SqType;
+    virtual std::vector<std::vector<std::vector<SqType>>>& GetSquares() = 0;
+    virtual const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const = 0;
 };
 
 class IObjectFactory;

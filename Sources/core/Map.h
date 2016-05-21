@@ -45,29 +45,32 @@ public:
 
     typedef id_ptr_on<CubeTile> SqType;
 
-    Atmosphere atmosphere;
+    Atmosphere& GetAtmosphere()
+    {
+        return atmosphere_;
+    }
 
     std::vector<std::vector<std::vector<SqType>>>& GetSquares()
     {
-        return squares;
+        return squares_;
     }
 
     const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const
     {
-        return squares;
+        return squares_;
     }
 
     int GetWidth() const
     {
-        return squares.size();
+        return squares_.size();
     }
     int GetHeight() const
     {
-        return squares[0].size();
+        return squares_[0].size();
     }
     int GetDepth() const
     {
-        return squares[0][0].size();
+        return squares_[0][0].size();
     }
 
     void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const
@@ -155,6 +158,7 @@ public:
 
     LOSfinder losf;
 private:
-    std::vector<std::vector<std::vector<SqType>>> squares;
+    Atmosphere atmosphere_;
+    std::vector<std::vector<std::vector<SqType>>> squares_;
     std::list<point>* visible_points_;
 };
