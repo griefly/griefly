@@ -156,8 +156,12 @@ public:
 
     std::list<point>* GetVisiblePoints() { return visible_points_; }
 
-    LOSfinder losf;
+    void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0)
+    {
+        losf_.CalculateVisisble(retval, posx, posy, posz);
+    }
 private:
+    LOSfinder losf_;
     Atmosphere atmosphere_;
     std::vector<std::vector<std::vector<SqType>>> squares_;
     std::list<point>* visible_points_;

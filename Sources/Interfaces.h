@@ -3,6 +3,7 @@
 #include "core/Idptr.h"
 
 class CubeTile;
+class Atmosphere;
 class IMapMaster
 {
 public:
@@ -13,6 +14,11 @@ public:
     typedef id_ptr_on<CubeTile> SqType;
     virtual std::vector<std::vector<std::vector<SqType>>>& GetSquares() = 0;
     virtual const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const = 0;
+
+    virtual std::list<point>* GetVisiblePoints() = 0;
+    virtual Atmosphere& GetAtmosphere() = 0;
+    virtual void FillAtmosphere() = 0;
+    virtual void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0) = 0;
 };
 
 class IObjectFactory;

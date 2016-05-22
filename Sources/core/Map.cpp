@@ -102,7 +102,7 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 
 MapMaster::MapMaster(SyncRandom* random)
     : atmosphere_(random, this),
-      losf(this)
+      losf_(this)
 {
     visible_points_ = new std::list<point>;
 }

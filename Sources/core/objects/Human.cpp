@@ -378,11 +378,10 @@ void Human::CalculateVisible(std::list<point>* visible_list)
 {
     if (health_ >= 0)
     {
-        visible_list =
-            GetGame().GetMap().losf.CalculateVisisble(visible_list,
-                 GetX(),
-                 GetY(),
-                 GetZ());
+        GetGame().GetMap().CalculateVisisble(visible_list,
+            GetX(),
+            GetY(),
+            GetZ());
     }
 }
 
