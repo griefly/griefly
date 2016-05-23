@@ -11,6 +11,8 @@ public:
     virtual int GetHeight() const = 0;
     virtual int GetDepth() const = 0;
 
+    virtual void ResizeMap(int new_map_x, int new_map_y, int new_map_z) = 0;
+
     typedef id_ptr_on<CubeTile> SqType;
     virtual std::vector<std::vector<std::vector<SqType>>>& GetSquares() = 0;
     virtual const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const = 0;
