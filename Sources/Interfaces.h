@@ -21,6 +21,7 @@ public:
     virtual Atmosphere& GetAtmosphere() = 0;
     virtual void FillAtmosphere() = 0;
     virtual void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0) = 0;
+    virtual bool IsTileVisible(size_t tile_id) = 0;
 };
 
 class IObjectFactory;

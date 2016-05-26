@@ -73,6 +73,7 @@ public:
         return squares_[0][0].size();
     }
 
+    // TODO: to Tile.cpp probably
     void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const
     {
         if (x)
