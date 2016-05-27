@@ -3,7 +3,14 @@
 #include "core/Idptr.h"
 
 class CubeTile;
-class Atmosphere;
+class IAtmosphere
+{
+public:
+    virtual void Resize(size_t x, size_t y, size_t z) = 0;
+    virtual void Process() = 0;
+    virtual void ProcessMove() = 0;
+};
+
 class IMapMaster
 {
 public:
@@ -18,7 +25,7 @@ public:
     virtual const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const = 0;
 
     virtual std::list<point>* GetVisiblePoints() = 0;
-    virtual Atmosphere& GetAtmosphere() = 0;
+    virtual IAtmosphere& GetAtmosphere() = 0;
     virtual void FillAtmosphere() = 0;
     virtual void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0) = 0;
     virtual bool IsTileVisible(size_t tile_id) = 0;
