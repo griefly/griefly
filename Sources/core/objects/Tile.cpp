@@ -169,6 +169,37 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, Dir first_dir, Dir second_di
     return false;
 }
 
+void CubeTile::MoveToDir(Dir dir, int *x, int *y, int *z) const
+{
+    if (x)
+    {
+        *x += DirToVDir[dir].x;
+        if (*x >= GetGame().GetMap().GetWidth() ||
+            *x <= -1)
+        {
+            *x -= DirToVDir[dir].x;
+        }
+    }
+    if (y)
+    {
+        *y += DirToVDir[dir].y;
+        if (*y >= GetGame().GetMap().GetHeight() ||
+            *y <= -1)
+        {
+            *y -= DirToVDir[dir].y;
+        }
+    }
+    if (z)
+    {
+        *z += DirToVDir[dir].z;
+        if (*z >= GetGame().GetMap().GetDepth() ||
+            *z <= -1)
+        {
+            *z -= DirToVDir[dir].z;
+        }
+    }
+}
+
 bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
 {
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
@@ -302,7 +333,7 @@ id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
     int new_x = posx_;
     int new_y = posy_;
     int new_z = posz_;
-    GetGame().GetMap().MoveToDir(direct, &new_x, &new_y, &new_z);
+    MoveToDir(direct, &new_x, &new_y, &new_z);
     return GetGame().GetMap().GetSquares()[new_x][new_y][new_z];
 }
 

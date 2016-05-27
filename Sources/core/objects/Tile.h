@@ -113,6 +113,8 @@ private:
     bool CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const;
     bool CanTouch(id_ptr_on<IOnMapBase> item, Dir first_dir, Dir second_dir) const;
 
+    void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const;
+
     id_ptr_on<ITurf> KV_SAVEBLE(turf_);
 
     AtmosHolder KV_SAVEBLE(atmos_holder_);

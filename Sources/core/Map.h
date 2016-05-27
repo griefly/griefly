@@ -73,38 +73,6 @@ public:
         return squares_[0][0].size();
     }
 
-    // TODO: to Tile.cpp probably
-    void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const
-    {
-        if (x)
-        {
-            *x += DirToVDir[dir].x;
-            if (*x >= GetWidth() ||
-                *x <= -1)
-            {
-                *x -= DirToVDir[dir].x;
-            }
-        }
-        if (y)
-        {
-            *y += DirToVDir[dir].y;
-            if (*y >= GetHeight() ||
-                *y <= -1)
-            {
-                *y -= DirToVDir[dir].y;
-            }
-        }
-        if (z)
-        {
-            *z += DirToVDir[dir].z;
-            if (*z >= GetDepth() ||
-                *z <= -1)
-            {
-                *z -= DirToVDir[dir].z;
-            }
-        }
-    }
-
     bool CheckBorders(const int* x, const int* y, const int* z) const
     {
         if (x)
