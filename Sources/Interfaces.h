@@ -31,7 +31,12 @@ public:
     virtual bool IsTileVisible(size_t tile_id) = 0;
 };
 
-class IObjectFactory;
+class IObjectFactory
+{
+public:
+
+};
+
 class IChat;
 class ITextPainter;
 class ISyncRandom;

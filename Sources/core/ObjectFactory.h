@@ -31,9 +31,6 @@ public:
 
     void ForeachProcess();
 
-    static IMainObject* NewVoidObject(const std::string& type, size_t id);
-    static IMainObject* NewVoidObjectSaved(const std::string& type);
-
     unsigned int Hash();
 
     void SaveMapHeader(std::stringstream& str);
@@ -124,6 +121,9 @@ public:
 
     FastStringstream* GetFastStream() { return &stream_; }
 private:
+    static IMainObject* NewVoidObject(const std::string& type, size_t id);
+    static IMainObject* NewVoidObjectSaved(const std::string& type);
+
     Game* game_;
 
     FastStringstream stream_;
