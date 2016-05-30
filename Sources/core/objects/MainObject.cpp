@@ -64,7 +64,7 @@ void IMainObject::SetFreq(int freq)
     }
 }
 
-const Game& IMainObject::GetGame() const
+const IGame& IMainObject::GetGame() const
 {
     if (game_ == nullptr)
     {
@@ -74,7 +74,7 @@ const Game& IMainObject::GetGame() const
     return *game_;
 }
 
-Game& IMainObject::GetGame()
+IGame& IMainObject::GetGame()
 {
     if (game_ == nullptr)
     {

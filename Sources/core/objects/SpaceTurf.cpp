@@ -35,6 +35,6 @@ void Space::AttackBy(id_ptr_on<Item> item)
     if (id_ptr_on<Rod> rod = item)
     {
         rod->Delete();
-        GetGame().GetFactory().Create<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());
+        Create<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());
     }
 }

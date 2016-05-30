@@ -88,7 +88,7 @@ public:
         }
         return item->GetId();
     }
-    
+
     template<typename T>
     id_ptr_on<T> CreateVoid(const std::string& hash, size_t id_new)
     {

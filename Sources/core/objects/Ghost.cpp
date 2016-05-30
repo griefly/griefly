@@ -115,7 +115,7 @@ void Ghost::Process()
         size_t net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
-            auto login_mob = GetGame().GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
+            auto login_mob = Create<IMob>(LoginMob::T_ITEM_S(), 0);
 
             GetGame().GetFactory().SetPlayerId(net_id, login_mob.ret_id());
             if (GetId() == GetGame().GetMob().ret_id())

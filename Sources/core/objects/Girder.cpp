@@ -27,14 +27,14 @@ void Girder::AttackBy(id_ptr_on<Item> item)
         metal->Delete();
 
         GetTurf()->Delete();
-        GetGame().GetFactory().Create<ITurf>(MetalWall::T_ITEM_S(), GetOwner());
+        Create<ITurf>(MetalWall::T_ITEM_S(), GetOwner());
 
         Delete();
     }
     else if (id_ptr_on<Wrench> wrench = item)
     {
         PlaySoundIfVisible("Ratchet.ogg", owner.ret_id());
-        GetGame().GetFactory().Create<Item>(Metal::T_ITEM_S(), GetOwner());
+        Create<Item>(Metal::T_ITEM_S(), GetOwner());
         Delete();
     }
 }

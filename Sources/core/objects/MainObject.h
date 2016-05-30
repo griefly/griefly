@@ -5,6 +5,9 @@
 #include "../Idptr.h"
 #include "../Hashes.h"
 
+#include "Interfaces.h"
+
+class IOnMapBase;
 class IMainObject
 {
 public:
@@ -49,13 +52,19 @@ public:
 
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
-    void SetGame(Game* game) { game_ = game; }
+    void SetGame(IGame* game) { game_ = game; }
 protected:
-    Game& GetGame();
-    const Game& GetGame() const;
+    template<class T>
+    id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
+    {
+        return GetGame().GetFactory().Create<T>(type, owner);
+    }
+
+    IGame& GetGame();
+    const IGame& GetGame() const;
     unsigned int GetRand();
 private:
-    Game* game_;
+    IGame* game_;
     size_t id_;
     int how_often_;
 };

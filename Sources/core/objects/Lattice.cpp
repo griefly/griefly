@@ -25,7 +25,7 @@ void Lattice::AttackBy(id_ptr_on<Item> item)
         tile->Delete();
 
         GetTurf()->Delete();
-        GetGame().GetFactory().Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
+        Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
 
         PlaySoundIfVisible("Deconstruct.ogg", owner.ret_id());
 

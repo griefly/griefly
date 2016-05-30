@@ -43,9 +43,9 @@ void Human::AfterWorldCreation()
 {
     IMob::AfterWorldCreation();
 
-    interface_.uniform_.Set(GetGame().GetFactory().Create<Item>(JanitorUniform::T_ITEM_S()));
-    interface_.feet_.Set(GetGame().GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(GetGame().GetFactory().Create<Item>(Crowbar::T_ITEM_S()));
+    interface_.uniform_.Set(Create<Item>(JanitorUniform::T_ITEM_S()));
+    interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(Create<Item>(Crowbar::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());
@@ -275,7 +275,7 @@ void Human::OnDeath()
     size_t net_id = GetGame().GetFactory().GetNetId(GetId());
     if (net_id)
     {
-        auto ghost = GetGame().GetFactory().Create<Ghost>(Ghost::T_ITEM_S());
+        auto ghost = Create<Ghost>(Ghost::T_ITEM_S());
         ghost->name = name;
         GetGame().GetFactory().SetPlayerId(net_id, ghost.ret_id());
         owner->AddItem(ghost);
@@ -397,11 +397,11 @@ void CaucasianHuman::AfterWorldCreation()
     // because it creates some new items
     IMob::AfterWorldCreation();
 
-    interface_.uniform_.Set(GetGame().GetFactory().Create<Item>(RedUniform::T_ITEM_S()));
-    interface_.feet_.Set(GetGame().GetFactory().Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(GetGame().GetFactory().Create<Item>(Wrench::T_ITEM_S()));
-    interface_.head_.Set(GetGame().GetFactory().Create<Item>(Helmet::T_ITEM_S()));
-    interface_.suit_.Set(GetGame().GetFactory().Create<Item>(Armor::T_ITEM_S()));
+    interface_.uniform_.Set(Create<Item>(RedUniform::T_ITEM_S()));
+    interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
+    interface_.r_hand_.Set(Create<Item>(Wrench::T_ITEM_S()));
+    interface_.head_.Set(Create<Item>(Helmet::T_ITEM_S()));
+    interface_.suit_.Set(Create<Item>(Armor::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());

@@ -15,12 +15,13 @@
 #include <QThread>
 
 #include "FastStringstream.h"
+#include "Interfaces.h"
 
 class ObjectFactory;
 class Chat;
 class TextPainter;
 
-class Game: public QObject
+class Game : public QObject, public IGame
 {
     Q_OBJECT
 public:
@@ -42,21 +43,21 @@ public:
 
     void GenerateFrame();
 
-    void PlayMusic(std::string name, float volume);
+    virtual void PlayMusic(std::string name, float volume) override;
 
-    MapMaster& GetMap();
-    const MapMaster& GetMap() const;
-    ObjectFactory& GetFactory();
-    Chat& GetChat();
-    TextPainter& GetTexts();
-    SyncRandom& GetRandom();
-    Names& GetNames();
+    virtual MapMaster& GetMap() override;
+    virtual const MapMaster& GetMap() const override;
+    virtual ObjectFactory& GetFactory() override;
+    virtual Chat& GetChat() override;
+    virtual TextPainter& GetTexts() override;
+    virtual SyncRandom& GetRandom() override;
+    virtual Names& GetNames() override;
 
-    void SetUnsyncGenerator(id_ptr_on<UnsyncGenerator> generator);
+    virtual void SetUnsyncGenerator(size_t generator) override;
     id_ptr_on<UnsyncGenerator> GetUnsyncGenerator();
 
-    void ChangeMob(id_ptr_on<IMob> new_mob);
-    id_ptr_on<IMob> GetMob();
+    virtual void ChangeMob(id_ptr_on<IMob> new_mob) override;
+    virtual id_ptr_on<IMob> GetMob() override;
     void SetMob(size_t new_mob);
 public slots:
     void process();

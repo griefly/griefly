@@ -2,7 +2,9 @@
 
 #include "core/Idptr.h"
 
+class IMainObject;
 class CubeTile;
+class IOnMapBase;
 class IAtmosphere
 {
 public:
@@ -34,7 +36,8 @@ public:
 class IObjectFactory
 {
 public:
-
+    virtual id_ptr_on<IMainObject> CreateImpl(
+        const std::string& type, id_ptr_on<IOnMapBase> owner) = 0;
 };
 
 class IChat;
@@ -43,16 +46,24 @@ class ISyncRandom;
 class INames;
 class IMob;
 
+// TODO: return interfaces
+class Chat;
+class TextPainter;
+class SyncRandom;
+class Names;
+class Mob;
 class IGame
 {
 public:
-    virtual IMapMaster& GetMap() = 0;
-    virtual const IMapMaster& GetMap() const = 0;
-    virtual IObjectFactory& GetFactory() = 0;
-    virtual IChat& GetChat() = 0;
-    virtual ITextPainter& GetTexts() = 0;
-    virtual ISyncRandom& GetRandom() = 0;
-    virtual INames& GetNames() = 0;
+    virtual MapMaster& GetMap() = 0;
+    virtual const MapMaster& GetMap() const = 0;
+    virtual ObjectFactory& GetFactory() = 0;
+    virtual Chat& GetChat() = 0;
+    virtual TextPainter& GetTexts() = 0;
+    virtual SyncRandom& GetRandom() = 0;
+    virtual Names& GetNames() = 0;
+
+    virtual void SetUnsyncGenerator(size_t generator) = 0;
 
     virtual void ChangeMob(id_ptr_on<IMob> new_mob) = 0;
     virtual id_ptr_on<IMob> GetMob() = 0;

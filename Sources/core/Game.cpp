@@ -543,7 +543,7 @@ Names& Game::GetNames()
     return *names_;
 }
 
-void Game::SetUnsyncGenerator(id_ptr_on<UnsyncGenerator> generator)
+void Game::SetUnsyncGenerator(size_t generator)
 {
     unsync_generator_ = generator;
 }
