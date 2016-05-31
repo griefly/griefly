@@ -54,14 +54,9 @@ public:
     int GetFreq() const { return how_often_; }
     void SetGame(IGame* game) { game_ = game; }
 protected:
-    template<class T>
-    id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
-    {
-        return GetGame().GetFactory().Create<T>(type, owner);
-    }
-
     IGame& GetGame();
     const IGame& GetGame() const;
+    ObjectFactory& GetFactory();
     unsigned int GetRand();
 private:
     IGame* game_;

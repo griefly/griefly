@@ -305,8 +305,8 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
             continue;
         }
 
-        //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
-        //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(t_item);
+        //qDebug() << "GetFactory().Create<IOnMapObject>" << &game_->GetFactory();
+        //qDebug() << "GetFactory().Create<IOnMapObject> " << QString::fromStdString(t_item);
         auto i = Create<IOnMapObject>(t_item);
         //qDebug() << "Success!";
 

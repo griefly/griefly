@@ -74,6 +74,11 @@ const IGame& IMainObject::GetGame() const
     return *game_;
 }
 
+ObjectFactory& IMainObject::GetFactory()
+{
+    return GetGame().GetFactory();
+}
+
 IGame& IMainObject::GetGame()
 {
     if (game_ == nullptr)

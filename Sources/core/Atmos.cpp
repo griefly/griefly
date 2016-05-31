@@ -5,7 +5,6 @@
 #include "SyncRandom.h"
 #include "Map.h"
 #include "Helpers.h"
-#include "ObjectFactory.h"
 
 Atmosphere::Atmosphere(SyncRandom* random, MapMaster* map)
     : random_(random),
