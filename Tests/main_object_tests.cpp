@@ -12,3 +12,10 @@ TEST(MainObject, Constructor)
     ASSERT_EQ(object2.GetId(), 0);
     ASSERT_EQ(object2.GetFreq(), 0);
 }
+
+TEST(MainObject, Types)
+{
+   ASSERT_EQ(IMainObject::T_ITEM_S(), "main");
+   IMainObject object(42);
+   ASSERT_EQ(object.T_ITEM(), "main");
+}
