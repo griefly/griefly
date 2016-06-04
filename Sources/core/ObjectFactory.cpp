@@ -405,6 +405,44 @@ void ObjectFactory::FinishWorldCreation()
     }
 }
 
+size_t ObjectFactory::CreateImpl(const std::string &type, id_ptr_on<IOnMapBase> owner)
+{
+    IMainObject* item = NewVoidObject(type, id_);
+    if (item == 0)
+    {
+        qDebug() << "Unable to create object: " << QString::fromStdString(type);
+        abort();
+    }
+    item->SetGame(game_);
+
+    if (id_ >= objects_table_.size())
+    {
+        objects_table_.resize(id_ * 2);
+    }
+    objects_table_[id_] = item;
+    size_t retval = id_;
+    ++id_;
+    if (owner.valid())
+    {
+        if (castTo<ITurf>(item) != nullptr)
+        {
+            qDebug() << "is_turf == true";
+            owner->SetTurf(item->GetId());
+        }
+        else if (!owner->AddItem(item->GetId()))
+        {
+            qDebug() << "AddItem failed";
+            abort();
+        }
+    }
+
+    if (!is_world_generating_)
+    {
+        item->AfterWorldCreation();
+    }
+    return retval;
+}
+
 void ObjectFactory::DeleteLater(size_t id)
 {
     ids_to_delete_.push_back(objects_table_[id]);

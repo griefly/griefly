@@ -48,45 +48,18 @@ public:
     void BeginWorldCreation();
     void FinishWorldCreation();
 
+    size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0);
+
     template<typename T>
     id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
     {
-        //qDebug() << "Create start";
-        T* item = castTo<T>(NewVoidObject(type, id_));
-        //qDebug() << item;
-        if (item == 0)
+        id_ptr_on<T> retval = CreateImpl(type, owner);
+        if (!retval.valid())
         {
-            qDebug() << "Creation type mismatch: " << QString::fromStdString(type);
+            qDebug() << "Unable to cast object: " << QString::fromStdString(type);
             abort();
         }
-
-        //qDebug() << "item->game_ = game_";
-        item->SetGame(game_);
-
-        //qDebug() << "if (id_ >= objects_table_.size())";
-        if (id_ >= objects_table_.size())
-        {
-            objects_table_.resize(id_ * 2);
-        }
-        objects_table_[id_] = item;
-        ++id_;
-        bool is_turf = std::is_base_of<ITurf, T>::value || std::is_same<ITurf, T>::value;
-        if (owner.valid() && is_turf)
-        {
-            qDebug() << "is_turf == true";
-            owner->SetTurf(item->GetId());
-        }
-        else if (owner.valid() && !owner->AddItem(item->GetId()))
-        {
-            qDebug() << "AddItem failed";
-            abort();
-        }
-
-        if (!is_world_generating_)
-        {
-            item->AfterWorldCreation();
-        }
-        return item->GetId();
+        return retval;
     }
 
     template<typename T>
