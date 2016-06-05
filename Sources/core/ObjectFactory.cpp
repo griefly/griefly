@@ -235,9 +235,8 @@ void ObjectFactory::LoadMap(std::stringstream& savefile, size_t real_this_mob)
         size_t id_loc;
         savefile >> id_loc;
         
-        id_ptr_on<IMainObject> i;
-        i = CreateVoid<IMainObject>(type, id_loc);
-        i->LoadSelf(savefile);
+        IMainObject* object = CreateVoid(type, id_loc);
+        object->LoadSelf(savefile);
     }
     SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
     game_->ChangeMob(game_->GetMob());
@@ -441,6 +440,24 @@ size_t ObjectFactory::CreateImpl(const std::string &type, id_ptr_on<IOnMapBase> 
         item->AfterWorldCreation();
     }
     return retval;
+}
+
+IMainObject* ObjectFactory::CreateVoid(const std::string &hash, size_t id_new)
+{
+    IMainObject* item = NewVoidObjectSaved(hash);
+    item->SetGame(game_);
+    if (id_new >= objects_table_.size())
+    {
+        objects_table_.resize(id_new * 2);
+    }
+
+    if (id_new >= id_)
+    {
+        id_ = id_new + 1;
+    }
+    objects_table_[id_new] = item;
+    item->SetId(id_new);
+    return item;
 }
 
 void ObjectFactory::DeleteLater(size_t id)

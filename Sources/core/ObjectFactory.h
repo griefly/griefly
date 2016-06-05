@@ -62,24 +62,7 @@ public:
         return retval;
     }
 
-    template<typename T>
-    id_ptr_on<T> CreateVoid(const std::string& hash, size_t id_new)
-    {
-        T* item = castTo<T>(NewVoidObjectSaved(hash));
-        item->SetGame(game_);
-        if (id_new >= objects_table_.size())
-        {
-            objects_table_.resize(id_new * 2);
-        }
-
-        if (id_new >= id_)
-        {
-            id_ = id_new + 1;
-        }
-        objects_table_[id_new] = item;
-        item->SetId(id_new);
-        return item->GetId();
-    }
+    IMainObject* CreateVoid(const std::string& hash, size_t id_new);
 
     void DeleteLater(size_t id);
     void ProcessDeletion();
