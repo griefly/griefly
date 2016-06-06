@@ -36,8 +36,7 @@ public:
 class IObjectFactory
 {
 public:
-    virtual id_ptr_on<IMainObject> CreateImpl(
-        const std::string& type, id_ptr_on<IOnMapBase> owner) = 0;
+    virtual size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0) = 0;
 };
 
 class IChat;

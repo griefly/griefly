@@ -62,8 +62,6 @@ public:
         return retval;
     }
 
-    IMainObject* CreateVoid(const std::string& hash, size_t id_new);
-
     void DeleteLater(size_t id);
     void ProcessDeletion();
 
@@ -77,6 +75,8 @@ public:
 
     FastStringstream* GetFastStream() { return &stream_; }
 private:
+    IMainObject* CreateVoid(const std::string& hash, size_t id_new);
+
     static IMainObject* NewVoidObject(const std::string& type, size_t id);
     static IMainObject* NewVoidObjectSaved(const std::string& type);
 
