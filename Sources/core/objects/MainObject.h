@@ -58,7 +58,21 @@ protected:
     const IGame& GetGame() const;
     ObjectFactory& GetFactory();
     unsigned int GetRand();
+
+    template<typename T>
+    id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
+    {
+        id_ptr_on<T> retval = CreateImpl(type, owner);
+        if (!retval.valid())
+        {
+            qDebug() << "Unable to cast object: " << QString::fromStdString(type);
+            abort();
+        }
+        return retval;
+    }
 private:
+    size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0);
+
     IGame* game_;
     size_t id_;
     int how_often_;

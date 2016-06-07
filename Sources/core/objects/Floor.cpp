@@ -36,7 +36,7 @@ void Floor::AttackBy(id_ptr_on<Item> item)
         if (!open_)
         {
             SetOpen(true);
-            GetFactory().Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
+            Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
             PlaySoundIfVisible("Crowbar.ogg", owner.ret_id());
         }
     }
