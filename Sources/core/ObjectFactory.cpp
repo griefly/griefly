@@ -151,20 +151,6 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_
     }
 }
 
-void ObjectFactory::SaveMap(const char* path)
-{
-    std::fstream rfile;
-    rfile.open(path, std::ios_base::out | std::ios_base::trunc);
-    if(rfile.fail()) 
-    {
-        SYSTEM_STREAM << "Error open " << path << std::endl; 
-        return;
-    }
-    std::stringstream savefile;
-    SaveMap(savefile);
-    rfile << savefile.str();
-    rfile.close();
-}
 void ObjectFactory::SaveMap(std::stringstream& savefile)
 {
     SaveMapHeader(savefile);
@@ -182,28 +168,6 @@ void ObjectFactory::SaveMap(std::stringstream& savefile)
         }
     }
     savefile << "0 ~";
-}
-
-void ObjectFactory::LoadMap(const char* path)
-{
-    SYSTEM_STREAM << path << std::endl;
-    std::stringstream savefile;
-    std::fstream rfile;
-    rfile.open(path, std::ios_base::in);
-
-    SYSTEM_STREAM << "Point 1" << std::endl;
-
-    rfile.seekg (0, std::ios::end);
-    std::streamoff length = rfile.tellg();
-    rfile.seekg (0, std::ios::beg);
-    char* buff = new char[static_cast<size_t>(length)];
-
-    rfile.read(buff, length);
-    rfile.close();
-    savefile.write(buff, length);
-    delete[] buff;
-    SYSTEM_STREAM << "End map load" << std::endl;
-    LoadMap(savefile, 0);
 }
 
 const int AVERAGE_BYTE_PER_TILE = 129 * 2;

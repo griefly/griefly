@@ -34,11 +34,9 @@ public:
     unsigned int Hash();
 
     void SaveMapHeader(std::stringstream& str);
-    void SaveMap(const char* path);
     void SaveMap(std::stringstream& str);
 
     void LoadMapHeader(std::stringstream& savefile, size_t real_this_mob);
-    void LoadMap(const char* path);
     void LoadMap(std::stringstream& str, size_t real_this_mob);
     
     void LoadFromMapGen(const std::string& name);
