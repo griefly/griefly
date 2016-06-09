@@ -151,7 +151,7 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_
     }
 }
 
-void ObjectFactory::SaveMap(std::stringstream& savefile)
+void ObjectFactory::Save(std::stringstream& savefile)
 {
     SaveMapHeader(savefile);
     auto it = ++objects_table_.begin();
@@ -172,7 +172,7 @@ void ObjectFactory::SaveMap(std::stringstream& savefile)
 
 const int AVERAGE_BYTE_PER_TILE = 129 * 2;
 const long int UNCOMPRESS_LEN_DEFAULT = 50 * 50 * 5 * AVERAGE_BYTE_PER_TILE;
-void ObjectFactory::LoadMap(std::stringstream& savefile, size_t real_this_mob)
+void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
 {
     ClearMap();
 

@@ -280,7 +280,7 @@ void Game::InitWorld(int id, std::string map_name)
         ss.write(map_data.data(), map_data.length());
         ss.seekg(0, std::ios::beg);
 
-        GetFactory().LoadMap(ss, id);
+        GetFactory().Load(ss, id);
     }
 
     GetChat().PostText(ON_LOGIN_MESSAGE);
@@ -385,7 +385,7 @@ void Game::ProcessInputMessages()
                 qDebug() << "Map will be generated";
                 FastStringstream* ss = GetFactory().GetFastStream();
                 ss->Reset();
-                GetFactory().SaveMap(*(ss->GetStream()));
+                GetFactory().Save(*(ss->GetStream()));
                 AddLastMessages(*ss->GetStream());
                 data = ss->GetCurrentData();
                 qDebug() << " " << data.length();

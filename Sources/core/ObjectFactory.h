@@ -33,11 +33,8 @@ public:
 
     unsigned int Hash();
 
-    void SaveMapHeader(std::stringstream& str);
-    void SaveMap(std::stringstream& str);
-
-    void LoadMapHeader(std::stringstream& savefile, size_t real_this_mob);
-    void LoadMap(std::stringstream& str, size_t real_this_mob);
+    void Save(std::stringstream& str);
+    void Load(std::stringstream& str, size_t real_this_mob);
     
     void LoadFromMapGen(const std::string& name);
 
@@ -73,6 +70,9 @@ public:
 
     FastStringstream* GetFastStream() { return &stream_; }
 private:
+    void SaveMapHeader(std::stringstream& str);
+    void LoadMapHeader(std::stringstream& savefile, size_t real_this_mob);
+
     IMainObject* CreateVoid(const std::string& hash, size_t id_new);
 
     static IMainObject* NewVoidObject(const std::string& type, size_t id);
