@@ -8,12 +8,12 @@ It is **Griefly: Yet Another Space Station Remake**.
 
 Dependencies
 -------------
-1. Some C++ compiler (e.g., the compiler from **Visual Studio 2012**)
+1. Some C++ compiler (it works at least with compiler from **Visual Studio 2012** and **g++**)
 2. Qt5 (e.g., **Desktop Qt 5.4.0 MSVC2012 OpenGL 32bit**). Qt Creator is optional, but desired
 3. SFML 2.3
 4. libpng
 5. Python 2.7
-6. Go
+6. Go (https://golang.org/dl/)
 7. Git
 8. CMake 2.8
 
@@ -47,7 +47,7 @@ _If you have any issues during the build process please report them_
 How to build everything on Linux
 --------------------------------
 
-1. Install dependencies. Look at `travis-get-deps` rule in Makefile for clues. Also you will need go (https://golang.org/dl/).
+1. Install dependencies. Look at `travis-get-deps` rule in Makefile for clues.
 2. `make`. Built project will be placed under `Exec` directory.
 3. `./build_go_server.sh`
 
