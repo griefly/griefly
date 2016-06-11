@@ -383,11 +383,12 @@ void Game::ProcessInputMessages()
             if (tick == MAIN_TICK)
             {
                 qDebug() << "Map will be generated";
-                FastStringstream* ss = GetFactory().GetFastStream();
-                ss->Reset();
-                GetFactory().Save(*(ss->GetStream()));
-                AddLastMessages(*ss->GetStream());
-                data = ss->GetCurrentData();
+                std::stringstream ss;
+                GetFactory().Save(ss);
+                AddLastMessages(ss);
+                qDebug() << "Tellp: " << ss.tellp();
+                std::string string = ss.str();
+                data = QByteArray(string.c_str(), string.length());
                 qDebug() << " " << data.length();
             }
 

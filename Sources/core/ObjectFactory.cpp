@@ -17,6 +17,21 @@ ObjectFactory::ObjectFactory(Game* game)
     game_ = game;
 }
 
+unsigned int ObjectFactory::GetLastHash()
+{
+    return hash_last_;
+}
+
+unsigned int ObjectFactory::GetLastHashTick()
+{
+    return hash_last_tick_;
+}
+
+std::vector<IMainObject*>& ObjectFactory::GetIdTable()
+{
+    return objects_table_;
+}
+
 void ObjectFactory::UpdateProcessingItems()
 {   
     if (!add_to_process_.size())

@@ -14,7 +14,6 @@
 #include <QObject>
 #include <QThread>
 
-#include "FastStringstream.h"
 #include "Interfaces.h"
 
 class ObjectFactory;

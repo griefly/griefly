@@ -6,8 +6,6 @@
 #include "Idptr.h"
 #include "objects/OnMapObject.h"
 
-#include "FastStringstream.h"
-
 class IOnMapBase;
 
 class ObjectFactory
@@ -15,19 +13,10 @@ class ObjectFactory
 public:
     ObjectFactory(Game* game);
 
-    unsigned int GetLastHash()
-    {
-        return hash_last_;
-    }
-    unsigned int GetLastHashTick()
-    {
-        return hash_last_tick_;
-    }
+    unsigned int GetLastHash();
+    unsigned int GetLastHashTick();
 
-    std::vector<IMainObject*>& GetIdTable()
-    {
-        return objects_table_;
-    }
+    std::vector<IMainObject*>& GetIdTable();
 
     void ForeachProcess();
 
@@ -67,8 +56,6 @@ public:
     void SetPlayerId(size_t net_id, size_t real_id);
     size_t GetPlayerId(size_t net_id);
     size_t GetNetId(size_t real_id);
-
-    FastStringstream* GetFastStream() { return &stream_; }
 private:
     void SaveMapHeader(std::stringstream& str);
     void LoadMapHeader(std::stringstream& savefile, size_t real_this_mob);
@@ -80,7 +67,6 @@ private:
 
     Game* game_;
 
-    FastStringstream stream_;
     QByteArray saved_map_;
 
     bool is_world_generating_;
