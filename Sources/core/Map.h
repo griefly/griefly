@@ -9,11 +9,13 @@
 #include "objects/Tile.h"
 #include "Atmos.h"
 
+#include "Interfaces.h"
+
 class MapMaster;
 class LOSfinder
 {
 public:
-    LOSfinder(MapMaster* map);
+    LOSfinder(IMapMaster* map);
     std::list<point>* CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0);
 private:
     int pos2corner(int pos);
@@ -33,11 +35,11 @@ private:
     void Clear();
     std::list<point> worklist;
 
-    MapMaster* map_;
+    IMapMaster* map_;
 };
 
 class SyncRandom;
-class MapMaster
+class MapMaster : public IMapMaster
 {
 public:
     MapMaster(SyncRandom* random);
@@ -45,91 +47,30 @@ public:
 
     typedef id_ptr_on<CubeTile> SqType;
 
-    Atmosphere& GetAtmosphere()
-    {
-        return atmosphere_;
-    }
+    virtual IAtmosphere& GetAtmosphere() override;
 
-    std::vector<std::vector<std::vector<SqType>>>& GetSquares()
-    {
-        return squares_;
-    }
+    virtual std::vector<std::vector<std::vector<SqType>>>& GetSquares() override;
+    virtual const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const override;
 
-    const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const
-    {
-        return squares_;
-    }
+    virtual int GetWidth() const override;
+    virtual int GetHeight() const override;
+    virtual int GetDepth() const override;
 
-    int GetWidth() const
-    {
-        return squares_.size();
-    }
-    int GetHeight() const
-    {
-        return squares_[0].size();
-    }
-    int GetDepth() const
-    {
-        return squares_[0][0].size();
-    }
+    virtual std::list<point>* GetVisiblePoints() override;
 
-    bool CheckBorders(const int* x, const int* y, const int* z) const
-    {
-        if (x)
-        {
-            if (*x >= GetWidth())
-            {
-                return false;
-            }
-            if (*x < 0)
-            {
-                return false;
-            }
-        }
-        if (y)
-        {
-            if (*y >= GetHeight())
-            {
-                return false;
-            }
-            if (*y < 0)
-            {
-                return false;
-            }
-        }
-        if (z)
-        {
-            if (*z >= GetDepth())
-            {
-                return false;
-            }
-            if (*z < 0)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+    virtual void ResizeMap(int x, int y, int z) override;
+    virtual void FillAtmosphere() override;
 
-    void ResizeMap(int x, int y, int z);
+    virtual void Represent() override;
 
-    void Represent();
+    virtual bool IsTileVisible(size_t tile_id) override;
+    virtual bool IsTransparent(int posx, int posy, int posz = 0) override;
 
-    bool IsTransparent(int posx, int posy, int posz = 0);
+    virtual void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0) override;
 
-    void FillAtmosphere();
+    virtual bool CheckBorders(const int* x, const int* y, const int* z) const override;
+private:    
 
-    PassableLevel GetPassable(int posx, int posy, int posz = 0, Dir direct = D_ALL);
-    
-    bool IsTileVisible(size_t tile_id);
-
-    std::list<point>* GetVisiblePoints() { return visible_points_; }
-
-    void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0)
-    {
-        losf_.CalculateVisisble(retval, posx, posy, posz);
-    }
-private:
     LOSfinder losf_;
     Atmosphere atmosphere_;
     std::vector<std::vector<std::vector<SqType>>> squares_;

@@ -112,9 +112,72 @@ MapMaster::~MapMaster()
     delete visible_points_;
 }
 
-PassableLevel MapMaster::GetPassable(int posx, int posy, int posz, Dir direct)
+IAtmosphere& MapMaster::GetAtmosphere()
 {
-    return squares_[posx][posy][posz]->GetPassable(direct);
+    return atmosphere_;
+}
+
+std::vector<std::vector<std::vector<MapMaster::SqType>>>& MapMaster::GetSquares()
+{
+    return squares_;
+}
+
+const std::vector<std::vector<std::vector<MapMaster::SqType>>>& MapMaster::GetSquares() const
+{
+    return squares_;
+}
+
+int MapMaster::GetWidth() const
+{
+    return squares_.size();
+}
+
+int MapMaster::GetHeight() const
+{
+    return squares_[0].size();
+}
+
+int MapMaster::GetDepth() const
+{
+    return squares_[0][0].size();
+}
+
+bool MapMaster::CheckBorders(const int* x, const int* y, const int* z) const
+{
+    if (x)
+    {
+        if (*x >= GetWidth())
+        {
+            return false;
+        }
+        if (*x < 0)
+        {
+            return false;
+        }
+    }
+    if (y)
+    {
+        if (*y >= GetHeight())
+        {
+            return false;
+        }
+        if (*y < 0)
+        {
+            return false;
+        }
+    }
+    if (z)
+    {
+        if (*z >= GetDepth())
+        {
+            return false;
+        }
+        if (*z < 0)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool MapMaster::IsTransparent(int posx, int posy, int posz)
@@ -141,6 +204,16 @@ bool MapMaster::IsTileVisible(size_t tile_id)
         }
     }
     return false;
+}
+
+std::list<point>* MapMaster::GetVisiblePoints()
+{
+    return visible_points_;
+}
+
+void MapMaster::CalculateVisisble(std::list<point> *retval, int posx, int posy, int posz)
+{
+    losf_.CalculateVisisble(retval, posx, posy, posz);
 }
 
 const int RAY_MULTIPLIER = 2;
@@ -365,7 +438,7 @@ void LOSfinder::mark_tiles_of_corner_as_visible(
     }
 }
 
-LOSfinder::LOSfinder(MapMaster *map)
+LOSfinder::LOSfinder(IMapMaster* map)
 {
     map_ = map;
 }

@@ -44,8 +44,8 @@ public:
 
     virtual void PlayMusic(std::string name, float volume) override;
 
-    virtual MapMaster& GetMap() override;
-    virtual const MapMaster& GetMap() const override;
+    virtual IMapMaster& GetMap() override;
+    virtual const IMapMaster& GetMap() const override;
     virtual ObjectFactory& GetFactory() override;
     virtual Chat& GetChat() override;
     virtual TextPainter& GetTexts() override;
@@ -98,7 +98,7 @@ private:
 
     QThread thread_;
 
-    MapMaster* map_;
+    IMapMaster* map_;
     ObjectFactory* factory_;
     Chat* chat_;
     TextPainter* texts_;

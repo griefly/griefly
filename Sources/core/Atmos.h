@@ -5,17 +5,18 @@
 
 #include "AtmosHolder.h"
 #include "Constheader.h"
+#include "Interfaces.h"
 
 class SyncRandom;
-class MapMaster;
+class IMapMaster;
 
-class Atmosphere
+class Atmosphere : public IAtmosphere
 {
 public:
-    Atmosphere(SyncRandom* random, MapMaster* map);
-    void Resize(size_t x, size_t y, size_t z);
-    void Process();
-    void ProcessMove();
+    Atmosphere(SyncRandom* random, IMapMaster* map);
+    virtual void Resize(size_t x, size_t y, size_t z) override;
+    virtual void Process() override;
+    virtual void ProcessMove() override;
 private:
     void ProcessTile(size_t x, size_t y, size_t z); 
     void ProcessTileMove(size_t x, size_t y, size_t z);
@@ -30,5 +31,5 @@ private:
     std::array<Dir, 4> dir_shuffle_;
 
     SyncRandom* random_;
-    MapMaster* map_;
+    IMapMaster* map_;
 };

@@ -3,10 +3,9 @@
 #include <algorithm>
 
 #include "SyncRandom.h"
-#include "Map.h"
 #include "Helpers.h"
 
-Atmosphere::Atmosphere(SyncRandom* random, MapMaster* map)
+Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map)
     : random_(random),
       map_(map)
 {

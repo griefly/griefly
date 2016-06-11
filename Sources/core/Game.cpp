@@ -509,12 +509,12 @@ void Game::PlayMusic(std::string name, float volume)
     emit playMusic(QString::fromStdString(name), volume);
 }
 
-MapMaster& Game::GetMap()
+IMapMaster& Game::GetMap()
 {
     return *map_;
 }
 
-const MapMaster& Game::GetMap() const
+const IMapMaster& Game::GetMap() const
 {
     return *map_;
 }

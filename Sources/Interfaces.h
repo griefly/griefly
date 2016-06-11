@@ -20,6 +20,8 @@ public:
     virtual int GetHeight() const = 0;
     virtual int GetDepth() const = 0;
 
+    virtual void Represent() = 0;
+
     virtual void ResizeMap(int new_map_x, int new_map_y, int new_map_z) = 0;
 
     typedef id_ptr_on<CubeTile> SqType;
@@ -31,6 +33,10 @@ public:
     virtual void FillAtmosphere() = 0;
     virtual void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0) = 0;
     virtual bool IsTileVisible(size_t tile_id) = 0;
+
+    virtual bool IsTransparent(int posx, int posy, int posz = 0) = 0;
+
+    virtual bool CheckBorders(const int* x, const int* y, const int* z) const = 0;
 };
 
 class IObjectFactory
@@ -54,8 +60,8 @@ class Mob;
 class IGame
 {
 public:
-    virtual MapMaster& GetMap() = 0;
-    virtual const MapMaster& GetMap() const = 0;
+    virtual IMapMaster& GetMap() = 0;
+    virtual const IMapMaster& GetMap() const = 0;
     virtual ObjectFactory& GetFactory() = 0;
     virtual Chat& GetChat() = 0;
     virtual TextPainter& GetTexts() = 0;
