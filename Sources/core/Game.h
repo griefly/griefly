@@ -25,22 +25,12 @@ class Game : public QObject, public IGame
     Q_OBJECT
 public:
     void WaitForExit();
-
     void InitWorld(int id, std::string map_name);
-    void Process();
 
     Game();
     ~Game();
 
-    void InitGlobalObjects();
-
-    void MakeTiles(int size_x, int size_y, int size_z);
-
-    void UpdateVisible();
-    void ProcessInputMessages();
-    void ToogleAutoplay() { auto_player_ = !auto_player_; }
-
-    void GenerateFrame();
+    virtual void MakeTiles(int size_x, int size_y, int size_z) override;
 
     virtual void PlayMusic(std::string name, float volume) override;
 
@@ -53,11 +43,9 @@ public:
     virtual Names& GetNames() override;
 
     virtual void SetUnsyncGenerator(size_t generator) override;
-    id_ptr_on<UnsyncGenerator> GetUnsyncGenerator();
-
     virtual void ChangeMob(id_ptr_on<IMob> new_mob) override;
     virtual id_ptr_on<IMob> GetMob() override;
-    void SetMob(size_t new_mob);
+    virtual void SetMob(size_t new_mob) override;
 public slots:
     void process();
     void endProcess();
@@ -68,6 +56,14 @@ signals:
     void insertHtmlIntoChat(QString html);
     void playMusic(QString name, float volume);
 private:
+    id_ptr_on<UnsyncGenerator> GetUnsyncGenerator();
+    void GenerateFrame();
+
+    void UpdateVisible();
+    void ProcessInputMessages();
+    void InitGlobalObjects();
+    void Process();
+
     void AddLastMessages(std::stringstream& stream);
     void AddMessageToMessageLog(Message2 message);
 

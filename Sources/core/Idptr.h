@@ -10,9 +10,6 @@
 #include "FastIsType.h"
 
 class IMainObject;
-class MapMaster;
-class Game;
-class ObjectFactory;
 
 typedef IMainObject* (*item_creator)(size_t id);
 typedef IMainObject* (*item_creator_saved)();

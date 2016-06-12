@@ -11,7 +11,7 @@ class IOnMapBase;
 class ObjectFactory
 {
 public:
-    ObjectFactory(Game* game);
+    ObjectFactory(IGame* game);
 
     unsigned int GetLastHash();
     unsigned int GetLastHashTick();
@@ -65,7 +65,7 @@ private:
     static IMainObject* NewVoidObject(const std::string& type, size_t id);
     static IMainObject* NewVoidObjectSaved(const std::string& type);
 
-    Game* game_;
+    IGame* game_;
 
     QByteArray saved_map_;
 

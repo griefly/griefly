@@ -9,7 +9,7 @@
 #include "net/NetworkMessagesTypes.h"
 #include "AutogenMetadata.h"
 
-ObjectFactory::ObjectFactory(Game* game)
+ObjectFactory::ObjectFactory(IGame* game)
 {
     objects_table_.resize(100);
     id_ = 1;

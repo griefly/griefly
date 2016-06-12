@@ -41,7 +41,7 @@ bool Chat::IsOOCMessage(const std::string &text)
     return false;
 }
 
-Chat::Chat(Game* game)
+Chat::Chat(IGame* game)
 {
     game_ = game;
 }

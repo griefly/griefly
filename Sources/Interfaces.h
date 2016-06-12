@@ -65,6 +65,8 @@ class TextPainter;
 class SyncRandom;
 class Names;
 class Mob;
+class ObjectFactory;
+
 class IGame
 {
 public:
@@ -78,10 +80,13 @@ public:
     virtual SyncRandom& GetRandom() = 0;
     virtual Names& GetNames() = 0;
 
+    virtual void MakeTiles(int size_x, int size_y, int size_z) = 0;
+
     virtual void SetUnsyncGenerator(size_t generator) = 0;
 
     virtual void ChangeMob(id_ptr_on<IMob> new_mob) = 0;
     virtual id_ptr_on<IMob> GetMob() = 0;
+    virtual void SetMob(size_t new_mob) = 0;
 
     virtual void PlayMusic(std::string name, float volume) = 0;
 };
