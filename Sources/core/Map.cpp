@@ -97,24 +97,25 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
             squares_[x][y].resize(new_map_z);
         }
     }
-    atmosphere_.Resize(new_map_x, new_map_y, new_map_z);
+    atmosphere_->Resize(new_map_x, new_map_y, new_map_z);
 }
 
-MapMaster::MapMaster(SyncRandom* random)
-    : atmosphere_(random, this),
-      losf_(this)
+MapMaster::MapMaster(SyncRandom* sync_random)
+    : losf_(this),
+      atmosphere_(new Atmosphere(sync_random, this))
 {
     visible_points_ = new std::list<point>;
 }
 
 MapMaster::~MapMaster()
 {
+    delete atmosphere_;
     delete visible_points_;
 }
 
 IAtmosphere& MapMaster::GetAtmosphere()
 {
-    return atmosphere_;
+    return *atmosphere_;
 }
 
 std::vector<std::vector<std::vector<MapMaster::SqType>>>& MapMaster::GetSquares()

@@ -2,12 +2,16 @@
 
 #include "core/Idptr.h"
 
+// TODO: Do not forget: virtual destructors everywhere
+
 class IMainObject;
 class CubeTile;
 class IOnMapBase;
 class IAtmosphere
 {
 public:
+    virtual ~IAtmosphere() { }
+
     virtual void Resize(size_t x, size_t y, size_t z) = 0;
     virtual void Process() = 0;
     virtual void ProcessMove() = 0;
@@ -16,6 +20,8 @@ public:
 class IMapMaster
 {
 public:
+    virtual ~IMapMaster() { }
+
     virtual int GetWidth() const = 0;
     virtual int GetHeight() const = 0;
     virtual int GetDepth() const = 0;
@@ -42,6 +48,8 @@ public:
 class IObjectFactory
 {
 public:
+    virtual ~IObjectFactory() { }
+
     virtual size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0) = 0;
 };
 
@@ -60,6 +68,8 @@ class Mob;
 class IGame
 {
 public:
+    virtual ~IGame() { }
+
     virtual IMapMaster& GetMap() = 0;
     virtual const IMapMaster& GetMap() const = 0;
     virtual ObjectFactory& GetFactory() = 0;

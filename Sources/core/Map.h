@@ -42,7 +42,7 @@ class SyncRandom;
 class MapMaster : public IMapMaster
 {
 public:
-    MapMaster(SyncRandom* random);
+    MapMaster(SyncRandom* sync_random);
     ~MapMaster();
 
     typedef id_ptr_on<CubeTile> SqType;
@@ -69,10 +69,9 @@ public:
     virtual void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0) override;
 
     virtual bool CheckBorders(const int* x, const int* y, const int* z) const override;
-private:    
-
+private:
     LOSfinder losf_;
-    Atmosphere atmosphere_;
+    IAtmosphere* atmosphere_;
     std::vector<std::vector<std::vector<SqType>>> squares_;
     std::list<point>* visible_points_;
 };
