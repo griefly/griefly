@@ -22,11 +22,6 @@ unsigned int ObjectFactory::GetLastHash()
     return hash_last_;
 }
 
-unsigned int ObjectFactory::GetLastHashTick()
-{
-    return hash_last_tick_;
-}
-
 std::vector<IMainObject*>& ObjectFactory::GetIdTable()
 {
     return objects_table_;
@@ -189,7 +184,7 @@ const int AVERAGE_BYTE_PER_TILE = 129 * 2;
 const long int UNCOMPRESS_LEN_DEFAULT = 50 * 50 * 5 * AVERAGE_BYTE_PER_TILE;
 void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
 {
-    ClearMap();
+    Clear();
 
     LoadMapHeader(savefile, real_this_mob);
     int j = 0;
@@ -225,7 +220,7 @@ void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
 void ObjectFactory::LoadFromMapGen(const std::string& name)
 {
     //qDebug() << "Start clear";
-    ClearMap();
+    Clear();
     //qDebug() << "End clear";
 
     std::fstream sfile;
@@ -341,7 +336,7 @@ IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
     return (*itemListSaved())[type]();
 }
 
-void ObjectFactory::ClearMap()
+void ObjectFactory::Clear()
 {
     size_t table_size = objects_table_.size();
     for (size_t i = 1; i < table_size; ++i)

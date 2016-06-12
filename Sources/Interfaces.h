@@ -50,7 +50,33 @@ class IObjectFactory
 public:
     virtual ~IObjectFactory() { }
 
+    virtual unsigned int GetLastHash() = 0;
+    virtual std::vector<IMainObject*>& GetIdTable() = 0;
+
+    virtual void ForeachProcess() = 0;
+
+    virtual unsigned int Hash() = 0;
+
+    virtual void Save(std::stringstream& str) = 0;
+    virtual void Load(std::stringstream& str, size_t real_this_mob) = 0;
+
+    virtual void LoadFromMapGen(const std::string& name) = 0;
+
+    virtual void BeginWorldCreation() = 0;
+    virtual void FinishWorldCreation() = 0;
+
     virtual size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0) = 0;
+
+    virtual void DeleteLater(size_t id) = 0;
+    virtual void ProcessDeletion() = 0;
+
+    virtual void AddProcessingItem(id_ptr_on<IMainObject> item) = 0;
+
+    virtual void ClearProcessing() = 0;
+
+    virtual void SetPlayerId(size_t net_id, size_t real_id) = 0;
+    virtual size_t GetPlayerId(size_t net_id) = 0;
+    virtual size_t GetNetId(size_t real_id) = 0;
 };
 
 class IChat;

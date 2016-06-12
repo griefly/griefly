@@ -14,8 +14,6 @@ public:
     ObjectFactory(IGame* game);
 
     unsigned int GetLastHash();
-    unsigned int GetLastHashTick();
-
     std::vector<IMainObject*>& GetIdTable();
 
     void ForeachProcess();
@@ -27,12 +25,21 @@ public:
     
     void LoadFromMapGen(const std::string& name);
 
-    void ClearMap();
-
     void BeginWorldCreation();
     void FinishWorldCreation();
 
     size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0);
+
+    void DeleteLater(size_t id);
+    void ProcessDeletion();
+
+    void AddProcessingItem(id_ptr_on<IMainObject> item);
+
+    void ClearProcessing();
+
+    void SetPlayerId(size_t net_id, size_t real_id);
+    size_t GetPlayerId(size_t net_id);
+    size_t GetNetId(size_t real_id);
 
     template<typename T>
     id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
@@ -45,18 +52,9 @@ public:
         }
         return retval;
     }
-
-    void DeleteLater(size_t id);
-    void ProcessDeletion();
-
-    void AddProcessingItem(id_ptr_on<IMainObject> item);
-
-    void ClearProcessing();
-
-    void SetPlayerId(size_t net_id, size_t real_id);
-    size_t GetPlayerId(size_t net_id);
-    size_t GetNetId(size_t real_id);
 private:
+    void Clear();
+
     void SaveMapHeader(std::stringstream& str);
     void LoadMapHeader(std::stringstream& savefile, size_t real_this_mob);
 
