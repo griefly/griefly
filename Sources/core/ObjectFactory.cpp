@@ -280,7 +280,12 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
 
         //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
         //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(t_item);
-        auto i = Create<IOnMapObject>(t_item);
+        id_ptr_on<IOnMapObject> i = CreateImpl(t_item);
+        if (!i.valid())
+        {
+            qDebug() << "Unable to cast: " << QString::fromStdString(t_item);
+            abort();
+        }
         //qDebug() << "Success!";
 
         std::map<std::string, std::string> variables;

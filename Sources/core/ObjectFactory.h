@@ -39,18 +39,6 @@ public:
     virtual void SetPlayerId(size_t net_id, size_t real_id) override;
     virtual size_t GetPlayerId(size_t net_id) override;
     virtual size_t GetNetId(size_t real_id) override;
-
-    template<typename T>
-    id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
-    {
-        id_ptr_on<T> retval = CreateImpl(type, owner);
-        if (!retval.valid())
-        {
-            qDebug() << "Unable to cast object: " << QString::fromStdString(type);
-            abort();
-        }
-        return retval;
-    }
 private:
     void Clear();
 
