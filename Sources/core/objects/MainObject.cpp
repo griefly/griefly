@@ -74,7 +74,7 @@ const IGame& IMainObject::GetGame() const
     return *game_;
 }
 
-ObjectFactory& IMainObject::GetFactory()
+IObjectFactory& IMainObject::GetFactory()
 {
     return GetGame().GetFactory();
 }

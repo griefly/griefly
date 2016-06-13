@@ -16,7 +16,6 @@
 
 #include "Interfaces.h"
 
-class ObjectFactory;
 class Chat;
 class TextPainter;
 
@@ -36,7 +35,7 @@ public:
 
     virtual IMapMaster& GetMap() override;
     virtual const IMapMaster& GetMap() const override;
-    virtual ObjectFactory& GetFactory() override;
+    virtual IObjectFactory& GetFactory() override;
     virtual Chat& GetChat() override;
     virtual TextPainter& GetTexts() override;
     virtual SyncRandom& GetRandom() override;
@@ -95,7 +94,7 @@ private:
     QThread thread_;
 
     IMapMaster* map_;
-    ObjectFactory* factory_;
+    IObjectFactory* factory_;
     Chat* chat_;
     TextPainter* texts_;
 

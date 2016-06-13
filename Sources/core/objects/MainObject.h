@@ -56,7 +56,7 @@ public:
 protected:
     IGame& GetGame();
     const IGame& GetGame() const;
-    ObjectFactory& GetFactory();
+    IObjectFactory& GetFactory();
     unsigned int GetRand();
 
     template<typename T>

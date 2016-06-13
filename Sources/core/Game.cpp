@@ -111,7 +111,7 @@ void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMap().GetDepth(); z++)
             {
-                auto loc = GetFactory().Create<CubeTile>(CubeTile::T_ITEM_S());
+                id_ptr_on<CubeTile> loc = GetFactory().CreateImpl(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 GetMap().GetSquares()[x][y][z] = loc;
             }
@@ -230,12 +230,12 @@ void Game::InitWorld(int id, std::string map_name)
             qDebug() << "End load from mapgen atmpsphere";
 
 
-            GetFactory().Create<Lobby>(Lobby::T_ITEM_S());
+            GetFactory().CreateImpl(Lobby::T_ITEM_S());
 
             if (GetParamsHolder().GetParamBool("-unsync_generation"))
             {
-                auto unsync_generator
-                    = GetFactory().Create<UnsyncGenerator>(UnsyncGenerator::T_ITEM_S());
+                size_t unsync_generator
+                    = GetFactory().CreateImpl(UnsyncGenerator::T_ITEM_S());
                 SetUnsyncGenerator(unsync_generator);
             }
 
@@ -249,11 +249,10 @@ void Game::InitWorld(int id, std::string map_name)
                 }
             }
 
-            auto newmob = GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
-
+            size_t newmob = GetFactory().CreateImpl(LoginMob::T_ITEM_S());
 
             ChangeMob(newmob);
-            GetFactory().SetPlayerId(id, newmob.ret_id());
+            GetFactory().SetPlayerId(id, newmob);
 
             GetMap().FillAtmosphere();
             qDebug() << "End fill atmpsphere";
@@ -357,11 +356,11 @@ void Game::ProcessInputMessages()
                 continue;
             }
 
-            auto newmob = GetFactory().Create<IMob>(LoginMob::T_ITEM_S());
+            size_t newmob = GetFactory().CreateImpl(LoginMob::T_ITEM_S());
 
-            qDebug() << "New client " << newmob.ret_id();
+            qDebug() << "New client " << newmob;
 
-            GetFactory().SetPlayerId(new_id, newmob.ret_id());
+            GetFactory().SetPlayerId(new_id, newmob);
             continue;
         }
         if (msg.type == MessageType::MAP_UPLOAD)
@@ -519,7 +518,7 @@ const IMapMaster& Game::GetMap() const
     return *map_;
 }
 
-ObjectFactory& Game::GetFactory()
+IObjectFactory& Game::GetFactory()
 {
     return *factory_;
 }

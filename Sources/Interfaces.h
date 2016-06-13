@@ -91,7 +91,6 @@ class TextPainter;
 class SyncRandom;
 class Names;
 class Mob;
-class ObjectFactory;
 
 class IGame
 {
@@ -100,7 +99,7 @@ public:
 
     virtual IMapMaster& GetMap() = 0;
     virtual const IMapMaster& GetMap() const = 0;
-    virtual ObjectFactory& GetFactory() = 0;
+    virtual IObjectFactory& GetFactory() = 0;
     virtual Chat& GetChat() = 0;
     virtual TextPainter& GetTexts() = 0;
     virtual SyncRandom& GetRandom() = 0;

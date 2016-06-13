@@ -1,45 +1,44 @@
 #pragma once
 
 #include <vector>
-#include <memory>
 
 #include "Idptr.h"
 #include "objects/OnMapObject.h"
 
 class IOnMapBase;
 
-class ObjectFactory
+class ObjectFactory : public IObjectFactory
 {
 public:
     ObjectFactory(IGame* game);
 
-    unsigned int GetLastHash();
-    std::vector<IMainObject*>& GetIdTable();
+    virtual unsigned int GetLastHash() override;
+    virtual std::vector<IMainObject*>& GetIdTable() override;
 
-    void ForeachProcess();
+    virtual void ForeachProcess() override;
 
-    unsigned int Hash();
+    virtual unsigned int Hash() override;
 
-    void Save(std::stringstream& str);
-    void Load(std::stringstream& str, size_t real_this_mob);
+    virtual void Save(std::stringstream& str) override;
+    virtual void Load(std::stringstream& str, size_t real_this_mob) override;
     
-    void LoadFromMapGen(const std::string& name);
+    virtual void LoadFromMapGen(const std::string& name) override;
 
-    void BeginWorldCreation();
-    void FinishWorldCreation();
+    virtual void BeginWorldCreation() override;
+    virtual void FinishWorldCreation() override;
 
-    size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0);
+    virtual size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0) override;
 
-    void DeleteLater(size_t id);
-    void ProcessDeletion();
+    virtual void DeleteLater(size_t id) override;
+    virtual void ProcessDeletion() override;
 
-    void AddProcessingItem(id_ptr_on<IMainObject> item);
+    virtual void AddProcessingItem(id_ptr_on<IMainObject> item) override;
 
-    void ClearProcessing();
+    virtual void ClearProcessing() override;
 
-    void SetPlayerId(size_t net_id, size_t real_id);
-    size_t GetPlayerId(size_t net_id);
-    size_t GetNetId(size_t real_id);
+    virtual void SetPlayerId(size_t net_id, size_t real_id) override;
+    virtual size_t GetPlayerId(size_t net_id) override;
+    virtual size_t GetNetId(size_t real_id) override;
 
     template<typename T>
     id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
