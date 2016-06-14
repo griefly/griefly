@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "interfaces_mocks.h"
+
 #include "core/objects/MainObject.h"
 
 TEST(MainObject, Constructor)
