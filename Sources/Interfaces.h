@@ -7,6 +7,7 @@
 class IMainObject;
 class CubeTile;
 class IOnMapBase;
+
 class IAtmosphere
 {
 public:
@@ -79,7 +80,19 @@ public:
     virtual size_t GetNetId(size_t real_id) = 0;
 };
 
-class IChat;
+class IChat
+{
+public:
+    virtual ~IChat() { }
+
+    virtual void PostTextFor(const std::string& str, id_ptr_on<IOnMapBase> owner) = 0;
+    virtual void PostText(const std::string& str) = 0;
+    virtual void PostOOCText(const std::string& who, const std::string& str) = 0;
+    virtual void PostSimpleText(const std::string& str, size_t tile_id) = 0;
+    virtual void PostDamage(const std::string& by, const std::string& who,
+                            const std::string& object, size_t tile_id) = 0;
+    virtual void PostWords(const std::string& who, const std::string& text, size_t tile_id) = 0;
+};
 class ITextPainter;
 class ISyncRandom;
 class INames;
