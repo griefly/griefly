@@ -99,7 +99,6 @@ class INames;
 class IMob;
 
 // TODO: return interfaces
-class Chat;
 class TextPainter;
 class SyncRandom;
 class Names;
@@ -113,7 +112,7 @@ public:
     virtual IMapMaster& GetMap() = 0;
     virtual const IMapMaster& GetMap() const = 0;
     virtual IObjectFactory& GetFactory() = 0;
-    virtual Chat& GetChat() = 0;
+    virtual IChat& GetChat() = 0;
     virtual TextPainter& GetTexts() = 0;
     virtual SyncRandom& GetRandom() = 0;
     virtual Names& GetNames() = 0;

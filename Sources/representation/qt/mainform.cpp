@@ -331,6 +331,18 @@ void MainForm::ConnectToHost()
                 QString::fromStdString(password));
 }
 
+bool IsOOCMessage(const QString& text)
+{
+    if (    text.length() >= 3
+        && (   (text.left(3) == "OOC")
+            || (text.left(3) == "ooc"))
+        )
+    {
+        return true;
+    }
+    return false;
+}
+
 void MainForm::on_lineEdit_returnPressed()
 {
     static bool connected = false;
@@ -374,7 +386,7 @@ void MainForm::on_lineEdit_returnPressed()
     QJsonObject object;
 
     msg.type = MessageType::MESSAGE;
-    if (Chat::IsOOCMessage(text.toStdString()))
+    if (IsOOCMessage(text))
     {
         msg.type = MessageType::OOC_MESSAGE;
         object["login"] = QString("");

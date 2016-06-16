@@ -16,7 +16,6 @@
 
 #include "Interfaces.h"
 
-class Chat;
 class TextPainter;
 
 class Game : public QObject, public IGame
@@ -36,7 +35,7 @@ public:
     virtual IMapMaster& GetMap() override;
     virtual const IMapMaster& GetMap() const override;
     virtual IObjectFactory& GetFactory() override;
-    virtual Chat& GetChat() override;
+    virtual IChat& GetChat() override;
     virtual TextPainter& GetTexts() override;
     virtual SyncRandom& GetRandom() override;
     virtual Names& GetNames() override;
@@ -95,7 +94,7 @@ private:
 
     IMapMaster* map_;
     IObjectFactory* factory_;
-    Chat* chat_;
+    IChat* chat_;
     TextPainter* texts_;
 
     SyncRandom* sync_random_;

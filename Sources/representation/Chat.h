@@ -1,14 +1,14 @@
 #pragma once
 
-#include <vector>
 #include <string>
 
 #include "core/objects/Mob.h"
+#include "Interfaces.h"
 
 #include <QTextBrowser>
 #include <QObject>
 
-class Chat: public QObject
+class Chat: public QObject, public IChat
 {
     Q_OBJECT
 public:

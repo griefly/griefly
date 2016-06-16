@@ -15,7 +15,7 @@ public:
     MOCK_METHOD0(GetMap, IMapMaster&());
     MOCK_CONST_METHOD0(GetMap, const IMapMaster&());
     MOCK_METHOD0(GetFactory, IObjectFactory&());
-    MOCK_METHOD0(GetChat, Chat&());
+    MOCK_METHOD0(GetChat, IChat&());
     MOCK_METHOD0(GetTexts, TextPainter&());
     MOCK_METHOD0(GetRandom, SyncRandom&());
     MOCK_METHOD0(GetNames, Names&());

@@ -96,10 +96,20 @@ void Game::InitGlobalObjects()
     qDebug() << "End master load";
     factory_ = new ObjectFactory(this);
     id_ptr_id_table = &(factory_->GetIdTable());
-    chat_ = new Chat(this);
-    texts_ = new TextPainter;
+    Chat* chat = new Chat(this);
+    chat_ = chat;
+    TextPainter* texts = new TextPainter;
+    texts_ = texts;
     names_ = new Names(sync_random_);
     qDebug() << "End init global objects";
+
+    qDebug() << "Some moving and connecting";
+    chat->moveToThread(&thread_);
+    texts->moveToThread(&thread_);
+
+    connect(chat, &Chat::insertHtmlIntoChat, this, &Game::insertHtmlIntoChat);
+    connect(texts, &TextPainter::addSystemText, this, &Game::addSystemText);
+    qDebug() << "End some moving and connecting";
 }
 
 void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
@@ -211,12 +221,6 @@ void Game::InitWorld(int id, std::string map_name)
     std::cout << "Begin init world" << std::endl;
 
     InitGlobalObjects();
-
-    GetChat().moveToThread(&thread_);
-    GetTexts().moveToThread(&thread_);
-
-    connect(&GetChat(), &Chat::insertHtmlIntoChat, this, &Game::insertHtmlIntoChat);
-    connect(&GetTexts(), &TextPainter::addSystemText, this, &Game::addSystemText);
 
     std::cout << "Begin choose map" << std::endl;
     if (map_name == "no_map")
@@ -523,7 +527,7 @@ IObjectFactory& Game::GetFactory()
     return *factory_;
 }
 
-Chat& Game::GetChat()
+IChat& Game::GetChat()
 {
     return *chat_;
 }
