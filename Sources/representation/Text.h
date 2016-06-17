@@ -37,7 +37,7 @@ public:
         ~Text();
         void Update();
         bool CanUpdate();
-        
+
         unsigned int how_often_; // ms
         std::function<void(std::string*)> updater_;
 
@@ -49,7 +49,7 @@ public:
         TextPainter* master_;
     };
 
-    ~TextPainter();
+    virtual ~TextPainter();
 
     void Process();
     bool Delete(const std::string& name);

@@ -97,13 +97,3 @@ void TextPainter::AddSystemText(QString key, QString text)
 {
     emit addSystemText(key, text);
 }
-
-TextPainter* text_painter_ = nullptr;
-TextPainter& GetTexts()
-{
-    return *text_painter_;
-}
-void SetTexts(TextPainter* text_painter)
-{
-    text_painter_ = text_painter;
-}

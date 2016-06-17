@@ -93,16 +93,15 @@ public:
                             const std::string& object, size_t tile_id) = 0;
     virtual void PostWords(const std::string& who, const std::string& text, size_t tile_id) = 0;
 };
-class ITextPainter;
+
 class ISyncRandom;
 class INames;
 class IMob;
+class TextPainter;
 
 // TODO: return interfaces
-class TextPainter;
 class SyncRandom;
 class Names;
-class Mob;
 
 class IGame
 {
