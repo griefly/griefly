@@ -2,8 +2,6 @@
 
 #include "core/Idptr.h"
 
-// TODO: Do not forget: virtual destructors everywhere
-
 class IMainObject;
 class CubeTile;
 class IOnMapBase;
@@ -94,14 +92,10 @@ public:
     virtual void PostWords(const std::string& who, const std::string& text, size_t tile_id) = 0;
 };
 
-class ISyncRandom;
-class INames;
-class IMob;
-class TextPainter;
-
-// TODO: return interfaces
 class SyncRandom;
 class Names;
+class IMob;
+class TextPainter;
 
 class IGame
 {

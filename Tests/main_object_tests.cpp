@@ -4,6 +4,8 @@
 
 #include "core/objects/MainObject.h"
 
+using ::testing::ReturnRef;
+
 TEST(MainObject, Constructor)
 {
     IMainObject object(42);
@@ -30,4 +32,14 @@ TEST(MainObject, Save)
         object.SaveSelf(save);
         ASSERT_EQ(save.str(), " main  42  0 ");
     }
+
+    /*MockIGame game;
+    SyncRandom random;
+    SyncRandom random2;
+    EXPECT_CALL(game, GetRandom())
+        .WillRepeatedly(ReturnRef(random));
+
+
+    ASSERT_EQ(&random, &game.GetRandom());*/
+
 }

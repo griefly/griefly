@@ -4,7 +4,6 @@
 
 #include "Interfaces.h"
 
-#include "representation/Chat.h"
 #include "representation/Text.h"
 #include "core/SyncRandom.h"
 #include "core/Names.h"

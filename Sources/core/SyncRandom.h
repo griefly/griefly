@@ -10,12 +10,6 @@ class SyncRandom
 public:
     SyncRandom();
     unsigned int GetRand();
-    template<class T>
-    T Pick(const std::vector<T>& values)
-    {
-        unsigned int num = GetRand() % values.size();
-        return values[num];
-    }
     inline int RandomShuffle(int v)
     {
         return static_cast<int>(GetRand() % v);
