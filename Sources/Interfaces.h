@@ -2,6 +2,10 @@
 
 #include "core/Idptr.h"
 
+class SyncRandom;
+class Names;
+class IMob;
+class TextPainter;
 class IMainObject;
 class CubeTile;
 class IOnMapBase;
@@ -91,11 +95,6 @@ public:
                             const std::string& object, size_t tile_id) = 0;
     virtual void PostWords(const std::string& who, const std::string& text, size_t tile_id) = 0;
 };
-
-class SyncRandom;
-class Names;
-class IMob;
-class TextPainter;
 
 class IGame
 {
