@@ -17,10 +17,10 @@ public:
     void PlayMusic(const std::string& name, float volume = 100.0f);
 
     static const int THIS_COUNTER = __COUNTER__; 
-    virtual bool SaveSelf(std::stringstream& file);
-    virtual bool LoadSelf(std::stringstream& file);
+    virtual bool Save(std::stringstream& file);
+    virtual bool Load(std::stringstream& file);
 
-    virtual unsigned int HashSelf()
+    virtual unsigned int Hash()
     {
         return GetId();
     }

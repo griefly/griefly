@@ -29,7 +29,7 @@ TEST(MainObject, Save)
     {
         IMainObject object(42);
         std::stringstream save;
-        object.SaveSelf(save);
+        object.Save(save);
         ASSERT_EQ(save.str(), " main  42  0 ");
     }
 
