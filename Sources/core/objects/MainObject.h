@@ -7,10 +7,14 @@
 
 #include "Interfaces.h"
 
+#include <gtest/gtest.h>
+
 class IOnMapBase;
 class IMainObject
 {
 public:
+    FRIEND_TEST(MainObject, GameDeath);
+
     virtual ~IMainObject() { }
 
     void PlaySoundIfVisible(const std::string& name, size_t tile_id);

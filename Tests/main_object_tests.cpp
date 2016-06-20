@@ -43,3 +43,27 @@ TEST(MainObject, Save)
     ASSERT_EQ(&random, &game.GetRandom());*/
 
 }
+
+TEST(MainObject, GameDeath)
+{
+    IMainObject object(42);
+    ASSERT_DEATH(
+    {
+        object.GetGame();
+    }, "IMainObject::GetGame\\(\\) is called during construction of object");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
