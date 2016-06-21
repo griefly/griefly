@@ -44,12 +44,22 @@ TEST(MainObject, Save)
 
 }
 
-TEST(MainObject, GameDeath)
+TEST(MainObjectDeathTest, GameDeath)
 {
     IMainObject object(42);
     ASSERT_DEATH(
     {
         object.GetGame();
+    }, "IMainObject::GetGame\\(\\) is called during construction of object");
+}
+
+TEST(MainObjectDeathTest, GameConstDeath)
+{
+    IMainObject object(42);
+    const IMainObject* ptr = &object;
+    ASSERT_DEATH(
+    {
+        ptr->GetGame();
     }, "IMainObject::GetGame\\(\\) is called during construction of object");
 }
 
