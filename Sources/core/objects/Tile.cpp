@@ -418,3 +418,36 @@ void CubeTile::LoadInMap()
 {
     GetGame().GetMap().GetSquares()[posx_][posy_][posz_] = GetId();
 }
+
+
+
+bool CubeTile::Targetable(id_ptr_on<IOnMapBase> item) const
+{
+    if (!item.valid())
+    {
+        return false;
+    }
+
+    if (!item->GetOwner())
+    {
+        return false;
+    }
+
+    id_ptr_on<CubeTile> cube_tile = item->GetOwner();
+    if (!cube_tile.valid())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+sf::Vector2i CubeTile::TargetTileLoc(id_ptr_on<IOnMapBase> item) const
+{
+    id_ptr_on<CubeTile> cube_tile = item->GetOwner();
+    sf::Vector2i f;
+    f.x =  (cube_tile->posx() - posx());
+    f.y =  (cube_tile->posy() - posy());
+    return f;
+}
+

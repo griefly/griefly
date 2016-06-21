@@ -17,6 +17,8 @@
 #include "net/NetworkMessagesTypes.h"
 #include "Lobby.h"
 #include "../Game.h"
+#include "Revolver.h"
+
 
 Human::Human(size_t id) : IMob(id)
 {
@@ -133,6 +135,7 @@ void Human::processGUImsg(const Message2 &msg)
         {
             return;
         }
+	//TODO shorter cd when shooting with weapons
         attack_cooldown_ = MAIN_TICK;
         id_ptr_on<IOnMapObject> item = Network2::ExtractObjId(obj);
         if (item && item->GetOwner())
@@ -166,7 +169,14 @@ void Human::processGUImsg(const Message2 &msg)
                 }
                 
             }
-        } 
+            else if(id_ptr_on<Revolver> tool = interface_.GetActiveHand().Get())
+            {
+		if(GetLying() == false && Targetable(item))
+                {
+                tool->Shoot(TargetTileLoc(item));
+                }
+	    }
+        }
     }
     else
     {
@@ -399,7 +409,7 @@ void CaucasianHuman::AfterWorldCreation()
 
     interface_.uniform_.Set(Create<Item>(RedUniform::T_ITEM_S()));
     interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(Create<Item>(Wrench::T_ITEM_S()));
+    interface_.r_hand_.Set(Create<Item>(Revolver::T_ITEM_S())); // wrench
     interface_.head_.Set(Create<Item>(Helmet::T_ITEM_S()));
     interface_.suit_.Set(Create<Item>(Armor::T_ITEM_S()));
 

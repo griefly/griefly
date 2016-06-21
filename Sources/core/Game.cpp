@@ -153,6 +153,10 @@ void Game::Process()
             ProcessBroadcastedMessages();
             GetFactory().ForeachProcess();
             ForceManager::Get().Process();
+            for(auto& e : projectile_process)
+            {
+                (e.second)->ProcessMovement();
+            }
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
             {
                 GetMap().GetAtmosphere().Process();
@@ -541,6 +545,17 @@ SyncRandom& Game::GetRandom()
 Names& Game::GetNames()
 {
     return *names_;
+}
+
+IGame* Game::GetTrueGame()
+{
+    return this;
+}
+
+
+std::map<int,id_ptr_on<Projectile>>& Game::GetProjectileProcess()
+{
+	return projectile_process;
 }
 
 void Game::SetUnsyncGenerator(size_t generator)

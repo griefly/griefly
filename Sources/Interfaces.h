@@ -2,6 +2,7 @@
 
 #include "core/Idptr.h"
 
+
 // TODO: Do not forget: virtual destructors everywhere
 
 class IMainObject;
@@ -104,6 +105,7 @@ public:
     virtual TextPainter& GetTexts() = 0;
     virtual SyncRandom& GetRandom() = 0;
     virtual Names& GetNames() = 0;
+    virtual IGame* GetTrueGame() = 0;
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) = 0;
 

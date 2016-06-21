@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "DrawInt.h"
+#include <SFML/System/Vector2.hpp>
 //#include "../ObjectFactory.h"
 
 class ITurf;
@@ -74,7 +75,21 @@ public:
         }
         return false;
     }
-
+    virtual bool Targetable(id_ptr_on<IOnMapBase> item) const
+    {
+        if (owner.valid())
+        {
+            return owner->Targetable(item);
+        }
+        return false;
+    }
+    virtual sf::Vector2i TargetTileLoc(id_ptr_on<IOnMapBase> item) const
+    {
+        if (owner.valid())
+        {
+            return owner->TargetTileLoc(item);
+        }
+    }
     // Add some item
     // True - added
     // False - failed

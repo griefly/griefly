@@ -5,6 +5,7 @@
 #include "Turf.h"
 #include "OnMapBase.h"
 #include "OnMapObject.h"
+#include "Projectiles.h"
 #include "../AtmosHolder.h"
 
 template<class T>
@@ -107,6 +108,8 @@ public:
 
     typedef std::vector<id_ptr_on<IOnMapObject>> InsideType;
     InsideType& GetInsideList() { return inside_list_; }
+    bool Targetable(id_ptr_on<IOnMapBase> item) const override;
+    sf::Vector2i TargetTileLoc(id_ptr_on<IOnMapBase> item) const override;
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
