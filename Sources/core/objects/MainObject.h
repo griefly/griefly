@@ -13,8 +13,7 @@ class IOnMapBase;
 class IMainObject
 {
 public:
-    FRIEND_TEST(MainObjectDeathTest, GameDeath);
-    FRIEND_TEST(MainObjectDeathTest, GameConstDeath);
+    FRIEND_TEST(MainObjectDeathTest, Deaths);
 
     virtual ~IMainObject() { }
 

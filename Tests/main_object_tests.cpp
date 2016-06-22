@@ -44,25 +44,40 @@ TEST(MainObject, Save)
 
 }
 
-TEST(MainObjectDeathTest, GameDeath)
+TEST(MainObjectDeathTest, Deaths)
 {
-    IMainObject object(42);
-    ASSERT_DEATH(
     {
-        object.GetGame();
-    }, "IMainObject::GetGame\\(\\) is called during construction of object");
-}
-
-TEST(MainObjectDeathTest, GameConstDeath)
-{
-    IMainObject object(42);
-    const IMainObject* ptr = &object;
-    ASSERT_DEATH(
+        IMainObject object(42);
+        ASSERT_DEATH(
+        {
+            object.GetGame();
+        }, "IMainObject::GetGame\\(\\) is called during construction of object");
+    }
     {
-        ptr->GetGame();
-    }, "IMainObject::GetGame\\(\\) is called during construction of object");
+        IMainObject object(42);
+        const IMainObject* ptr = &object;
+        ASSERT_DEATH(
+        {
+            ptr->GetGame();
+        }, "IMainObject::GetGame\\(\\) is called during construction of object");
+    }
+    {
+        IMainObject object(42);
+        ASSERT_DEATH(
+        {
+            object.SetFreq(0);
+        }, "SetFreq is called in constructor");
+    }
+    {
+        IMainObject object(0);
+        MockIGame game;
+        object.SetGame(&game);
+        ASSERT_DEATH(
+        {
+            object.SetFreq(0);
+        }, "GetId\\(\\) is zero");
+    }
 }
-
 
 
 
