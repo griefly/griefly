@@ -19,7 +19,11 @@ void Projectile::Process()
     int z = current_step_;
     Dir step = VDirToDir(movement_[z]);
 
-   TryMove(step);
+   if(!TryMove(step))
+   {
+       this->Delete();
+       return;
+   }
    current_step_++;
    if(!(current_step_ < movement_.size()) && !reached_target )
    {
@@ -46,7 +50,6 @@ bool Projectile::CheckPassable()
     if (!CanPass(owner->GetPassable(dMove), passable_level))
     {
         owner->AttackByP(p);
-        this->Delete();
         if (loc != Passable::FULL)
         {
             SetPassable(dMove, loc);
@@ -63,7 +66,6 @@ bool Projectile::CheckPassable()
         || !CanPass(neighbour->GetPassable(helpers::revert_dir(dMove)), passable_level))
     {
         neighbour->AttackByP(p);
-        this->Delete();
         return false;
     }
     
