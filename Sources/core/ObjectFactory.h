@@ -32,7 +32,7 @@ public:
     virtual void DeleteLater(size_t id) override;
     virtual void ProcessDeletion() override;
 
-    virtual void AddProcessingItem(id_ptr_on<IMainObject> item) override;
+    virtual void AddProcessingItem(size_t item) override;
 
     virtual void ClearProcessing() override;
 

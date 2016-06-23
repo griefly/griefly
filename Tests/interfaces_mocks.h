@@ -47,10 +47,10 @@ public:
     MOCK_METHOD1(LoadFromMapGen, void(const std::string& name));
     MOCK_METHOD0(BeginWorldCreation, void());
     MOCK_METHOD0(FinishWorldCreation, void());
-    MOCK_METHOD2(CreateImpl, size_t(std::string, id_ptr_on<IOnMapBase>));
+    MOCK_METHOD2(CreateImpl, size_t(const std::string&, id_ptr_on<IOnMapBase>));
     MOCK_METHOD1(DeleteLater, void(size_t id));
     MOCK_METHOD0(ProcessDeletion, void());
-    MOCK_METHOD1(AddProcessingItem, void(id_ptr_on<IMainObject> item));
+    MOCK_METHOD1(AddProcessingItem, void(size_t item));
     MOCK_METHOD0(ClearProcessing, void());
     MOCK_METHOD2(SetPlayerId, void(size_t net_id, size_t real_id));
     MOCK_METHOD1(GetPlayerId, size_t(size_t net_id));

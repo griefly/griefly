@@ -503,7 +503,7 @@ size_t ObjectFactory::GetNetId(size_t real_id)
     return 0;
 }
 
-void ObjectFactory::AddProcessingItem(id_ptr_on<IMainObject> item)
+void ObjectFactory::AddProcessingItem(size_t item)
 {
     add_to_process_.push_back(item);
 }

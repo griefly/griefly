@@ -73,7 +73,7 @@ public:
     virtual void DeleteLater(size_t id) = 0;
     virtual void ProcessDeletion() = 0;
 
-    virtual void AddProcessingItem(id_ptr_on<IMainObject> item) = 0;
+    virtual void AddProcessingItem(size_t item) = 0;
 
     virtual void ClearProcessing() = 0;
 

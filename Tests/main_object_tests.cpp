@@ -79,7 +79,21 @@ TEST(MainObjectDeathTest, Deaths)
     }
 }
 
+TEST(MainObject, Freq)
+{
+    MockIGame game;
+    MockIObjectFactory factory;
+    EXPECT_CALL(game, GetFactory())
+        .WillRepeatedly(ReturnRef(factory));
+    EXPECT_CALL(factory, AddProcessingItem(43));
 
+    IMainObject object(43);
+    object.SetGame(&game);
+    ASSERT_EQ(object.GetFreq(), 0);
+
+    object.SetFreq(46);
+    ASSERT_EQ(object.GetFreq(), 46);
+}
 
 
 
