@@ -3,12 +3,12 @@
 #include <functional>
 
 #include "DrawInt.h"
-#include <SFML/System/Vector2.hpp>
 //#include "../ObjectFactory.h"
 
 class ITurf;
 class IMovable;
 class Item;
+class Projectile;
 
 typedef int PassableLevel;
 namespace Passable
@@ -64,6 +64,7 @@ public:
     }
 
     virtual void AttackBy(id_ptr_on<Item> item);
+    virtual void AttackByP(id_ptr_on<Projectile> item);
 
     virtual void ApplyForce(VDir force) {}
 
@@ -75,7 +76,7 @@ public:
         }
         return false;
     }
-    virtual bool Targetable(id_ptr_on<IOnMapBase> item) const
+    virtual bool Targetable(id_ptr_on<IOnMapBase> item) const  // maybe the players should be able to shoot black areas
     {
         if (owner.valid())
         {
@@ -83,7 +84,7 @@ public:
         }
         return false;
     }
-    virtual sf::Vector2i TargetTileLoc(id_ptr_on<IOnMapBase> item) const
+    virtual VDir TargetTileLoc(id_ptr_on<IOnMapBase> item) const
     {
         if (owner.valid())
         {

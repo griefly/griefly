@@ -21,14 +21,12 @@ bool Revolver::Handle_Ammo()
     return true;
 }
 
-void Revolver::Shoot(sf::Vector2i target)
+void Revolver::Shoot(VDir target)
 {	  
     if(Handle_Ammo())
     {
         id_ptr_on<Projectile> p = Create<Projectile>(Bullet::T_ITEM_S(),GetOwner());
         p->MakeMovementPattern(target);
-        Game* a  = static_cast<Game*>(GetGame().GetTrueGame());
-        a->GetProjectileProcess().insert(std::pair<int,id_ptr_on<Projectile>>(p.ret_id(),p));
              //       Create<Item>(Bullet_Casing::T_ITEM_S(),GetOwner);	
 		//sound and a counter that tells the number of bullets in magazine/clip
     }

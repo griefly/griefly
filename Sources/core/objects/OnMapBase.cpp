@@ -3,6 +3,7 @@
 #include "Movable.h"
 #include "Item.h"
 #include "../ObjectFactory.h"
+#include "Projectiles.h"
 
 id_ptr_on<ITurf> IOnMapBase::GetTurf()
 {
@@ -32,6 +33,11 @@ void IOnMapBase::BumpByGas(Dir dir, bool inside)
 }
 
 void IOnMapBase::AttackBy(id_ptr_on<Item> item)
+{
+    // nothing
+}
+
+void IOnMapBase::AttackByP(id_ptr_on<Projectile> p)
 {
     // nothing
 }

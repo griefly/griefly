@@ -442,12 +442,17 @@ bool CubeTile::Targetable(id_ptr_on<IOnMapBase> item) const
     return true;
 }
 
-sf::Vector2i CubeTile::TargetTileLoc(id_ptr_on<IOnMapBase> item) const
+VDir CubeTile::TargetTileLoc(id_ptr_on<IOnMapBase> item) const
 {
     id_ptr_on<CubeTile> cube_tile = item->GetOwner();
-    sf::Vector2i f;
-    f.x =  (cube_tile->posx() - posx());
-    f.y =  (cube_tile->posy() - posy());
+    VDir f;
+    f.x =  (cube_tile->GetX() - GetX());
+    f.y =  (cube_tile->GetY() - GetY());
     return f;
+}
+
+void CubeTile::AttackBy(id_ptr_on<Item> item)
+{
+    // nothing
 }
 

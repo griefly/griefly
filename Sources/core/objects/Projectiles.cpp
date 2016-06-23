@@ -1,79 +1,43 @@
 #include "Projectiles.h"
-
 #include "../Helpers.h"
-#include "Mob.h"
 
-#include "../Game.h"
 
-#include <assert.h>
-
-Projectile::Projectile(size_t id) : IOnMapObject(id)
+Projectile::Projectile(size_t id) : IMovable(id)
 {
-    lastMove = 0;
     SetPassable(D_ALL, Passable::AIR);
     tickSpeed = 0.25;
-    pixSpeed = 1;
-    dMove = D_DOWN;
-    anchored = false;
     damage = 0;
-
-    v_level = 5;
     SetSprite("icons/projectiles.dmi");
+    v_level = 5;
 }
-
-bool Projectile::TryMove(Dir direct)
+void Projectile::Process()
 {
-    if (!CheckMoveTime())
+    if(set_target_ == 0)
     {
-        return false;
+       return;
     }
-    if (anchored)
-    {
-        return false;
-    }
-    if (!Rotate(direct))
-    {
-        return false;
-    }
-    if (!CheckPassable())
-    {
-        return false;
-    }
-    return MainMove();
-}
-
-void Projectile::ProcessMovement()
-{
     int z = current_step_;
     Dir step = VDirToDir(movement_[z]);
 
-    TryMove(step);
-    current_step_++;
-    if(!(current_step_<movement_.size()) && !reached_target )
-    {
-        current_step_ = 0;
-        VDir temp = movement_[0];
-        movement_.clear();
-        reached_target = true;
-        movement_.push_back(temp);
-    }
-    if(!(current_step_<movement_.size()) && reached_target )
-    {
-        current_step_ = 0;
-    }    
-}
-
-bool Projectile::CheckMoveTime()
-{
-    if ((static_cast<int>(MAIN_TICK) - lastMove) < tickSpeed)
-    {
-        return false;
-    }
-    return true;
+   TryMove(step);
+   current_step_++;
+   if(!(current_step_ < movement_.size()) && !reached_target )
+   {
+       current_step_ = 0;
+       VDir temp = movement_[0];
+       movement_.clear();
+       reached_target = true;
+       movement_.push_back(temp);
+   }
+   if(!(current_step_<movement_.size()) && reached_target )
+   {
+   current_step_ = 0;
+   }   
 }
 
 bool Projectile::CheckPassable()
 {
+    id_ptr_on<Projectile> p = this->GetId();
     PassableLevel loc = GetPassable(dMove);
     if (loc != Passable::FULL)
     {
@@ -81,7 +45,8 @@ bool Projectile::CheckPassable()
     }
     if (!CanPass(owner->GetPassable(dMove), passable_level))
     {
-        owner->Bump(GetId());
+        owner->AttackByP(p);
+        this->Delete();
         if (loc != Passable::FULL)
         {
             SetPassable(dMove, loc);
@@ -97,75 +62,27 @@ bool Projectile::CheckPassable()
     if (   !CanPass(neighbour->GetPassable(D_ALL), passable_level)
         || !CanPass(neighbour->GetPassable(helpers::revert_dir(dMove)), passable_level))
     {
-        neighbour->Bump(GetId());
+        neighbour->AttackByP(p);
+        this->Delete();
         return false;
     }
     
     return true;
 }
-
-bool Projectile::Rotate(Dir dir)
-{
-    dMove = dir;
-    return true;
-}
-
-bool Projectile::MainMove()
-{
-    auto new_owner = owner->GetNeighbour(dMove);
-    if (new_owner == owner)
-    {
-        return false;
-    }
-
-    owner->RemoveItem(GetId());
-    new_owner->AddItem(GetId());
-
-    lastMove = static_cast<int>(MAIN_TICK);
-    return true;
-}
-
-
 void Projectile::Bump(id_ptr_on<IMovable> item)
 {
-    item->AttackBy(this->GetOwner());
-    Game* a  = static_cast<Game*>(GetGame().GetTrueGame());
-    auto it = a->GetProjectileProcess().find(this->GetOwner().ret_id());
-    a->GetProjectileProcess().erase(it);
+    id_ptr_on<Projectile> p = this->GetId();
+    item->AttackByP(p);
     this->Delete();
-    delete a;
-//TODO attackby()(things in other class related to this)
-//TODO maybe it can apply froce depending on bullet speed but that should be considered        ApplyForce(DirToVDir[m->dMove]);
-}
-void Projectile::Bump(id_ptr_on<Projectile> item)
-{
-    Game* a  = static_cast<Game*>(GetGame().GetTrueGame());
-    auto it = a->GetProjectileProcess().find(item.ret_id());
-    a->GetProjectileProcess().erase(it);
-    auto it2 = a->GetProjectileProcess().find(this->GetOwner().ret_id());
-    a->GetProjectileProcess().erase(it2);
-    item->Delete();
-    this->Delete();
-    delete a;
     
 //TODO attackby()(things in other class related to this)
 //TODO maybe it can apply froce depending on bullet speed but that should be considered        ApplyForce(DirToVDir[m->dMove]);
 }
-void Projectile::Represent()
-{
-    Representation::Entity ent;
-    ent.id = GetId();
-    ent.pos_x = GetX();
-    ent.pos_y = GetY();
-    ent.vlevel = v_level;
-    ent.view = *GetView();
-    ent.dir = GetDir();
-    GetRepresentation().AddToNewFrame(ent);
-}
-void Projectile::MakeMovementPattern(sf::Vector2i target)
+void Projectile::MakeMovementPattern(VDir target)
 {
 //TODO numbers to VDir!!!
 //TODO maybe an enum for directions would be better I might change this
+    set_target_=1;
     int x = target.x;
     int y = target.y;
     if(std::abs(x)>std::abs(y))
@@ -183,7 +100,8 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
             for(int i;diagonal_moves>i;i++)
             {
             movement_.push_back(VD_UPRight);
-            }	
+            }
+            return;	
         }
 	else if(x>0 && y<0)
         {
@@ -196,7 +114,8 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
             for(int i;diagonal_moves>i;i++)
             {
             movement_.push_back(VD_DOWNRight);
-            }	
+            }
+            return;	
         }
 	else if(x<0 && y>0)
         {
@@ -209,7 +128,8 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
             for(int i;diagonal_moves>i;i++)
             {
             movement_.push_back(VD_UPLeft);
-            }	
+            }
+            return;	
         }
 	else if(x<=0 && y<=0)
         {
@@ -223,6 +143,7 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
             {
             movement_.push_back(VD_DOWNLeft);
             }	
+            return;
         }
 	
 	
@@ -242,7 +163,8 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
             for(int i;diagonal_moves>i;i++)
             {
             movement_.push_back(VD_UPRight);
-            }	
+            }
+            return;	
         }
 	else if(x>0 && y<0)
         {
@@ -255,7 +177,8 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
             for(int i;diagonal_moves>i;i++)
             {
             movement_.push_back(VD_DOWNRight);
-            }	
+            }
+            return;	
         }
 	else if(x<0 && y>0)
         {
@@ -268,7 +191,8 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
             for(int i;diagonal_moves>i;i++)
             {
             movement_.push_back(VD_UPLeft);
-            }	
+            }
+            return;	
         }
 	else if(x<=0 && y<=0)
         {
@@ -281,7 +205,8 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
             for(int i;diagonal_moves>i;i++)
             {
             movement_.push_back(VD_DOWNLeft);
-            }	
+            }
+            return;	
         }
     }
     else if(std::abs(x)==std::abs(y))
@@ -290,32 +215,38 @@ void Projectile::MakeMovementPattern(sf::Vector2i target)
         {
             //northeast
             movement_.push_back(VD_UPRight);	
+            return;
         }
 	else if(x>0 && y<0)
         {
             //southeast
             movement_.push_back(VD_DOWNRight);
+            return;
         }
 	else if(x<0 && y>0)
         {
             //northwest
             movement_.push_back(VD_UPLeft);
+            return;
         }
-	else if(x<0 && y<0)
+	else if(x<=0 && y<=0)
         {
             //southwest
             movement_.push_back(VD_DOWNLeft);
+            return;
         }
 	
     }
     else
     {
     this->Delete();
-    Game* a  = static_cast<Game*>(GetGame().GetTrueGame());
-    auto it = a->GetProjectileProcess().find(this->GetOwner().ret_id());
-    a->GetProjectileProcess().erase(it);
-    delete a;
 //never should go here but if it does we should delete that projectile
     }
 }
+void Projectile::AfterWorldCreation()
+{
+    IMainObject::AfterWorldCreation();
+    SetFreq(1);
+}
+
 

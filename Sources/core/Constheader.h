@@ -56,17 +56,17 @@ inline bool NonZero(const VDir& vdir)
            || vdir.z;
 };
 
-const VDir VD_LEFT = {-1, 0, 0}; //west
-const VDir VD_RIGHT = {1, 0, 0}; //east
-const VDir VD_UP = {0, -1, 0}; //north
-const VDir VD_DOWN = {0, 1, 0}; //south
+const VDir VD_LEFT = {-1, 0, 0}; // west
+const VDir VD_RIGHT = {1, 0, 0}; // east
+const VDir VD_UP = {0, -1, 0}; // north
+const VDir VD_DOWN = {0, 1, 0}; // south
 const VDir VD_ZUP = {0, 0, 1};
 const VDir VD_ZDOWN = {0, 0, -1};
 
-const VDir VD_UPLeft = {-1, -1, 0}; //northwest
-const VDir VD_UPRight = {1, -1, 0}; //northeast
-const VDir VD_DOWNLeft = {-1, 1, 0};//southwest
-const VDir VD_DOWNRight = {1, 1, 0}; //southeast
+const VDir VD_UPLeft = {-1, -1, 0}; // northwest
+const VDir VD_UPRight = {1, -1, 0}; // northeast
+const VDir VD_DOWNLeft = {-1, 1, 0};// southwest
+const VDir VD_DOWNRight = {1, 1, 0}; // southeast
 
 
 const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};

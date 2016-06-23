@@ -42,8 +42,6 @@ public:
     virtual TextPainter& GetTexts() override;
     virtual SyncRandom& GetRandom() override;
     virtual Names& GetNames() override;
-    virtual IGame* GetTrueGame() override;
-    std::map<int,id_ptr_on<Projectile>>& GetProjectileProcess();
 
     virtual void SetUnsyncGenerator(size_t generator) override;
     virtual void ChangeMob(id_ptr_on<IMob> new_mob) override;
@@ -108,5 +106,4 @@ private:
     id_ptr_on<UnsyncGenerator> unsync_generator_;
     id_ptr_on<IMob> current_mob_;
 
-    std::map<int,id_ptr_on<Projectile>> projectile_process;
 };
