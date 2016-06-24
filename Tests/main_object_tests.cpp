@@ -32,16 +32,6 @@ TEST(MainObject, Save)
         object.Save(save);
         ASSERT_EQ(save.str(), " main  42  0 ");
     }
-
-    /*MockIGame game;
-    SyncRandom random;
-    SyncRandom random2;
-    EXPECT_CALL(game, GetRandom())
-        .WillRepeatedly(ReturnRef(random));
-
-
-    ASSERT_EQ(&random, &game.GetRandom());*/
-
 }
 
 TEST(MainObjectDeathTest, Deaths)
@@ -79,20 +69,38 @@ TEST(MainObjectDeathTest, Deaths)
     }
 }
 
-TEST(MainObject, Freq)
+TEST(MainObject, SettersAndGetters)
 {
-    MockIGame game;
-    MockIObjectFactory factory;
-    EXPECT_CALL(game, GetFactory())
-        .WillRepeatedly(ReturnRef(factory));
-    EXPECT_CALL(factory, AddProcessingItem(43));
+    {
+        MockIGame game;
+        MockIObjectFactory factory;
+        EXPECT_CALL(game, GetFactory())
+            .WillRepeatedly(ReturnRef(factory));
 
-    IMainObject object(43);
-    object.SetGame(&game);
-    ASSERT_EQ(object.GetFreq(), 0);
+        IMainObject object(43);
+        object.SetGame(&game);
+        IGame* interface_game = &object.GetGame();
+        ASSERT_EQ(interface_game, &game);
 
-    object.SetFreq(46);
-    ASSERT_EQ(object.GetFreq(), 46);
+        const IMainObject& object_const_ref = object;
+        ASSERT_EQ(&object_const_ref.GetGame(), &game);
+
+        ASSERT_EQ(&object.GetGame().GetFactory(), &factory);
+    }
+    {
+        MockIGame game;
+        MockIObjectFactory factory;
+        EXPECT_CALL(game, GetFactory())
+            .WillRepeatedly(ReturnRef(factory));
+        EXPECT_CALL(factory, AddProcessingItem(43));
+
+        IMainObject object(43);
+        object.SetGame(&game);
+        ASSERT_EQ(object.GetFreq(), 0);
+
+        object.SetFreq(46);
+        ASSERT_EQ(object.GetFreq(), 46);
+    }
 }
 
 

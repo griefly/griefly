@@ -14,6 +14,7 @@ class IMainObject
 {
 public:
     FRIEND_TEST(MainObjectDeathTest, Deaths);
+    FRIEND_TEST(MainObject, SettersAndGetters);
 
     virtual ~IMainObject() { }
 
