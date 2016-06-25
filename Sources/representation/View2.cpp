@@ -2,6 +2,7 @@
 
 #include "SpriteHolder.h"
 #include <QColor>
+#include <math.h>
 
 View2::FramesetState::FramesetState()
 {
