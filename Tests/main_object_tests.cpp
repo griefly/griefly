@@ -23,6 +23,24 @@ TEST(MainObject, Types)
    ASSERT_EQ(IMainObject::T_ITEM_S(), "main");
    IMainObject object(42);
    ASSERT_EQ(object.T_ITEM(), "main");
+
+   IMainObject::REAL_TYPE_ITEM = -1;
+   ASSERT_EQ(object.RT_ITEM(), -1);
+   ASSERT_EQ(IMainObject::RT_ITEM_S(), -1);
+}
+
+TEST(MainObject, Hash)
+{
+    IMainObject object(24);
+    ASSERT_EQ(object.Hash(), 24);
+}
+
+TEST(MainObject, EmptyFunctions)
+{
+    // They just should not crash the game
+    IMainObject object(11);
+    object.AfterWorldCreation();
+    object.Process();
 }
 
 TEST(MainObject, Save)
