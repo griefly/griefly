@@ -8,7 +8,7 @@ void IMainObject::PlaySoundIfVisible(const std::string& name, size_t tile_id)
 {
     if (GetGame().GetMap().IsTileVisible(tile_id))
     {
-        GetRepresentation().AddToNewFrame(name);
+        GetGame().AddSound(name);
     }
 }
 

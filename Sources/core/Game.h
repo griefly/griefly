@@ -30,7 +30,8 @@ public:
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) override;
 
-    virtual void PlayMusic(std::string name, float volume) override;
+    virtual void PlayMusic(const std::string& name, float volume) override;
+    virtual void AddSound(const std::string& name) override;
 
     virtual IMapMaster& GetMap() override;
     virtual const IMapMaster& GetMap() const override;

@@ -117,5 +117,6 @@ public:
     virtual id_ptr_on<IMob> GetMob() = 0;
     virtual void SetMob(size_t new_mob) = 0;
 
-    virtual void PlayMusic(std::string name, float volume) = 0;
+    virtual void AddSound(const std::string& name) = 0;
+    virtual void PlayMusic(const std::string& name, float volume) = 0;
 };

@@ -508,10 +508,15 @@ void Game::GenerateFrame()
     GetRepresentation().Swap();
 }
 
-void Game::PlayMusic(std::string name, float volume)
+void Game::PlayMusic(const std::string& name, float volume)
 {
     qDebug() << QString::fromStdString(name);
     emit playMusic(QString::fromStdString(name), volume);
+}
+
+void Game::AddSound(const std::string& name)
+{
+    GetRepresentation().AddToNewFrame(name);
 }
 
 IMapMaster& Game::GetMap()

@@ -59,13 +59,13 @@ public:
 
 class MockIChat : public IChat {
 public:
-  MOCK_METHOD2(PostTextFor, void(const std::string& str, id_ptr_on<IOnMapBase> owner));
-  MOCK_METHOD1(PostText, void(const std::string& str));
-  MOCK_METHOD2(PostOOCText, void(const std::string& who, const std::string& str));
-  MOCK_METHOD2(PostSimpleText, void(const std::string& str, size_t tile_id));
-  MOCK_METHOD4(PostDamage, void(const std::string& by, const std::string& who,
+    MOCK_METHOD2(PostTextFor, void(const std::string& str, id_ptr_on<IOnMapBase> owner));
+    MOCK_METHOD1(PostText, void(const std::string& str));
+    MOCK_METHOD2(PostOOCText, void(const std::string& who, const std::string& str));
+    MOCK_METHOD2(PostSimpleText, void(const std::string& str, size_t tile_id));
+    MOCK_METHOD4(PostDamage, void(const std::string& by, const std::string& who,
                                 const std::string& object, size_t tile_id));
-  MOCK_METHOD3(PostWords, void(const std::string& who, const std::string& text, size_t tile_id));
+    MOCK_METHOD3(PostWords, void(const std::string& who, const std::string& text, size_t tile_id));
 };
 
 class MockIGame : public IGame
@@ -83,6 +83,7 @@ public:
     MOCK_METHOD1(ChangeMob, void(id_ptr_on<IMob> new_mob));
     MOCK_METHOD0(GetMob, id_ptr_on<IMob>());
     MOCK_METHOD1(SetMob, void(size_t new_mob));
-    MOCK_METHOD2(PlayMusic, void(std::string name, float volume));
+    MOCK_METHOD2(PlayMusic, void(const std::string& name, float volume));
+    MOCK_METHOD1(AddSound, void(const std::string& name));
 };
 
