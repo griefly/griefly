@@ -47,7 +47,7 @@ public:
     MOCK_METHOD1(LoadFromMapGen, void(const std::string& name));
     MOCK_METHOD0(BeginWorldCreation, void());
     MOCK_METHOD0(FinishWorldCreation, void());
-    MOCK_METHOD2(CreateImpl, size_t(const std::string&, id_ptr_on<IOnMapBase>));
+    MOCK_METHOD2(CreateImpl, size_t(const std::string&, size_t));
     MOCK_METHOD1(DeleteLater, void(size_t id));
     MOCK_METHOD0(ProcessDeletion, void());
     MOCK_METHOD1(AddProcessingItem, void(size_t item));

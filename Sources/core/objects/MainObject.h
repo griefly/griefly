@@ -16,7 +16,7 @@ class IMainObject
 {
 public:
     FRIEND_TEST(MainObjectDeathTest, Deaths);
-    FRIEND_TEST(MainObject, SettersAndGetters);
+    FRIEND_TEST(MainObject, SettersAndGettersAndCreateImpl);
 
     virtual ~IMainObject() { }
 
@@ -71,7 +71,7 @@ protected:
     template<typename T>
     id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
     {
-        id_ptr_on<T> retval = CreateImpl(type, owner);
+        id_ptr_on<T> retval = CreateImpl(type, owner.ret_id());
         if (!retval.valid())
         {
             qDebug() << "Unable to cast object: " << QString::fromStdString(type);
@@ -80,7 +80,7 @@ protected:
         return retval;
     }
 private:
-    size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0);
+    size_t CreateImpl(const std::string& type, size_t owner = 0);
 
     IGame* game_;
     size_t id_;

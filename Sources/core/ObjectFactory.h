@@ -27,7 +27,7 @@ public:
     virtual void BeginWorldCreation() override;
     virtual void FinishWorldCreation() override;
 
-    virtual size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0) override;
+    virtual size_t CreateImpl(const std::string& type, size_t owner = 0) override;
 
     virtual void DeleteLater(size_t id) override;
     virtual void ProcessDeletion() override;

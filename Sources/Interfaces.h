@@ -68,7 +68,7 @@ public:
     virtual void BeginWorldCreation() = 0;
     virtual void FinishWorldCreation() = 0;
 
-    virtual size_t CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner = 0) = 0;
+    virtual size_t CreateImpl(const std::string& type, size_t owner = 0) = 0;
 
     virtual void DeleteLater(size_t id) = 0;
     virtual void ProcessDeletion() = 0;

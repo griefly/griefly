@@ -385,7 +385,7 @@ void ObjectFactory::FinishWorldCreation()
     }
 }
 
-size_t ObjectFactory::CreateImpl(const std::string &type, id_ptr_on<IOnMapBase> owner)
+size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
 {
     IMainObject* item = NewVoidObject(type, id_);
     if (item == 0)
@@ -402,6 +402,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, id_ptr_on<IOnMapBase> 
     objects_table_[id_] = item;
     size_t retval = id_;
     ++id_;
+    id_ptr_on<IOnMapBase> owner = owner_id;
     if (owner.valid())
     {
         if (castTo<ITurf>(item) != nullptr)

@@ -94,7 +94,7 @@ unsigned int IMainObject::GetRand()
     return GetGame().GetRandom().GetRand();
 }
 
-size_t IMainObject::CreateImpl(const std::string& type, id_ptr_on<IOnMapBase> owner)
+size_t IMainObject::CreateImpl(const std::string& type, size_t owner)
 {
     return GetFactory().CreateImpl(type, owner);
 }

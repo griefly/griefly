@@ -5,6 +5,7 @@
 #include "core/objects/MainObject.h"
 
 using ::testing::ReturnRef;
+using ::testing::Return;
 
 TEST(MainObject, Constructor)
 {
@@ -31,6 +32,20 @@ TEST(MainObject, Save)
         std::stringstream save;
         object.Save(save);
         ASSERT_EQ(save.str(), " main  42  0 ");
+    }
+    {
+        MockIGame game;
+        MockIObjectFactory factory;
+        EXPECT_CALL(game, GetFactory())
+            .WillRepeatedly(ReturnRef(factory));
+        EXPECT_CALL(factory, AddProcessingItem(42))
+            .WillOnce(Return());
+
+        IMainObject object(42);
+        object.SetGame(&game);
+        std::stringstream save("18");
+        object.Load(save);
+        ASSERT_EQ(object.GetFreq(), 18);
     }
 }
 
@@ -69,13 +84,11 @@ TEST(MainObjectDeathTest, Deaths)
     }
 }
 
-TEST(MainObject, SettersAndGetters)
+TEST(MainObject, SettersAndGettersAndCreateImpl)
 {
     {
         MockIGame game;
         MockIObjectFactory factory;
-        EXPECT_CALL(game, GetFactory())
-            .WillRepeatedly(ReturnRef(factory));
 
         IMainObject object(43);
         object.SetGame(&game);
@@ -85,21 +98,45 @@ TEST(MainObject, SettersAndGetters)
         const IMainObject& object_const_ref = object;
         ASSERT_EQ(&object_const_ref.GetGame(), &game);
 
-        ASSERT_EQ(&object.GetGame().GetFactory(), &factory);
+        EXPECT_CALL(game, GetFactory())
+            .WillRepeatedly(ReturnRef(factory));
+        ASSERT_EQ(&object.GetFactory(), &factory);
+
+        SyncRandom random;
+        random.SetRand(42, 42);
+        EXPECT_CALL(game, GetRandom())
+            .WillRepeatedly(ReturnRef(random));
+        ASSERT_EQ(object.GetRand(), 5885939);
     }
     {
         MockIGame game;
         MockIObjectFactory factory;
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
-        EXPECT_CALL(factory, AddProcessingItem(43));
 
         IMainObject object(43);
         object.SetGame(&game);
         ASSERT_EQ(object.GetFreq(), 0);
 
+        EXPECT_CALL(factory, AddProcessingItem(43));
         object.SetFreq(46);
         ASSERT_EQ(object.GetFreq(), 46);
+
+        EXPECT_CALL(factory, AddProcessingItem(84));
+        object.SetId(84);
+        ASSERT_EQ(object.GetId(), 84);
+    }
+    {
+        MockIGame game;
+        MockIObjectFactory factory;
+        EXPECT_CALL(game, GetFactory())
+            .WillRepeatedly(ReturnRef(factory));
+        EXPECT_CALL(factory, CreateImpl("type", 42))
+            .WillOnce(Return(111));
+
+        IMainObject object(43);
+        object.SetGame(&game);
+        ASSERT_EQ(object.CreateImpl("type", 42), 111);
     }
 }
 
