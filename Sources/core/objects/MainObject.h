@@ -1,5 +1,7 @@
 #pragma once
 
+#include "KVAbort.h"
+
 #include "../FastIsType.h"
 #include "../Constheader.h"
 #include "../Idptr.h"
@@ -73,7 +75,7 @@ protected:
         if (!retval.valid())
         {
             qDebug() << "Unable to cast object: " << QString::fromStdString(type);
-            abort();
+            kv_abort();
         }
         return retval;
     }

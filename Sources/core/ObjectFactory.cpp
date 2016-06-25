@@ -1,5 +1,7 @@
 #include "ObjectFactory.h"
 
+#include "KVAbort.h"
+
 #include "objects/MainObject.h"
 #include "objects/OnMapObject.h"
 #include "Game.h"
@@ -194,7 +196,7 @@ void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
         if(savefile.fail())
         {
             qDebug() << "Error! " << j << "\n";
-            abort();
+            kv_abort();
         }
         std::string type;
         savefile >> type;
@@ -284,7 +286,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
         if (!i.valid())
         {
             qDebug() << "Unable to cast: " << QString::fromStdString(t_item);
-            abort();
+            kv_abort();
         }
         //qDebug() << "Success!";
 
@@ -389,7 +391,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, id_ptr_on<IOnMapBase> 
     if (item == 0)
     {
         qDebug() << "Unable to create object: " << QString::fromStdString(type);
-        abort();
+        kv_abort();
     }
     item->SetGame(game_);
 
@@ -410,7 +412,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, id_ptr_on<IOnMapBase> 
         else if (!owner->AddItem(item->GetId()))
         {
             qDebug() << "AddItem failed";
-            abort();
+            kv_abort();
         }
     }
 

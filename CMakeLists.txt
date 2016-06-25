@@ -136,6 +136,7 @@ IF (BUILD_COVER)
     IF (CMAKE_COMPILER_IS_GNUCXX)
         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0") # debug, no optimisation
         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage") # enabling coverage
+        ADD_DEFINITIONS(-D _BUILD_COVER)
     ELSE()
         MESSAGE(STATUS "No tests coverage on Windows!")
     ENDIF()

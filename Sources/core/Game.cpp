@@ -2,6 +2,8 @@
 
 #include <iomanip>
 
+#include "KVAbort.h"
+
 #include "Map.h"
 #include "representation/Text.h"
 
@@ -277,7 +279,7 @@ void Game::InitWorld(int id, std::string map_name)
         if (map_data.length() == 0)
         {
             qDebug() << "An empty map received";
-            abort();
+            kv_abort();
         }
         std::stringstream ss;
         ss.write(map_data.data(), map_data.length());
@@ -412,7 +414,7 @@ void Game::ProcessInputMessages()
             if (tick != MAIN_TICK)
             {
                 qDebug() << "Tick mismatch! " << tick << " " << MAIN_TICK;
-                abort();
+                kv_abort();
             }
             unsigned int hash = GetFactory().Hash();
 
@@ -647,7 +649,7 @@ void Game::ProcessBroadcastedMessages()
          else
          {
              qDebug() << "Game object is not valid: " << net_id;
-             abort();
+             kv_abort();
          }
     }
     messages_to_process_.clear();
@@ -658,6 +660,6 @@ void Game::CheckMessagesOrderCorrectness()
     if (!messages_to_process_.empty())
     {
         qDebug() << "CheckMessagesOrderCorrectness fail";
-        abort();
+        kv_abort();
     }
 }
