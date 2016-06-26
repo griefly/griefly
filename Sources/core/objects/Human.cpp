@@ -18,8 +18,7 @@
 #include "Lobby.h"
 #include "../Game.h"
 #include "Gun.h"
-#include "Revolver.h"
-#include "Laser_Gun.h"
+#include "Weapons.h"
 
 
 Human::Human(size_t id) : IMob(id)
