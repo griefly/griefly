@@ -17,7 +17,9 @@
 #include "net/NetworkMessagesTypes.h"
 #include "Lobby.h"
 #include "../Game.h"
+#include "Gun.h"
 #include "Revolver.h"
+#include "Laser_Gun.h"
 
 
 Human::Human(size_t id) : IMob(id)
@@ -47,7 +49,7 @@ void Human::AfterWorldCreation()
 
     interface_.uniform_.Set(Create<Item>(JanitorUniform::T_ITEM_S()));
     interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(Create<Item>(Crowbar::T_ITEM_S()));
+    interface_.r_hand_.Set(Create<Item>(LaserGun::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());
@@ -169,11 +171,11 @@ void Human::processGUImsg(const Message2 &msg)
                 }
                 
             }
-            else if(id_ptr_on<Revolver> tool = interface_.GetActiveHand().Get())
+            else if(id_ptr_on<Gun> tool = interface_.GetActiveHand().Get())
             {
 		if(GetLying() == false && Targetable(item))
                 {
-                tool->Shoot(TargetTileLoc(item));
+                tool->Shoot(TargetTileLoc(item),GetId());
                 }
 	    }
         }
@@ -395,6 +397,57 @@ void Human::CalculateVisible(std::list<point>* visible_list)
     }
 }
 
+void Human::Bump(id_ptr_on<IMovable> item)
+{
+    if(id_ptr_on<Projectile> p = item)
+    {
+        bool damaged = false;
+        if (p.valid())
+        {
+            health_ -= p->damage;
+            if (id_ptr_on<Bullet> b = p)
+            {
+                 GetGame().GetChat().PostSimpleText(name + " got hit by a bullet!", owner->GetId());
+                 unsigned int value = GetRand() % 3;
+                 std::string snd;
+                 if (value == 0)
+                     snd = "genhit1.ogg";
+                 if (value == 1)
+                     snd = "genhit2.ogg";
+                 if (value == 2)
+                     snd = "genhit3.ogg";
+                 PlaySoundIfVisible(snd, owner.ret_id());
+            }
+            damaged = true;
+        }
+        if (!damaged)
+        {
+            return;
+        }
+
+        if ((GetRand() % 3) != 0)
+        {
+            return;
+        }
+
+        unsigned int blood_value = (GetRand() % 7) + 1;
+        std::stringstream conv;
+        conv << "floor" << blood_value;
+
+        if (id_ptr_on<Floor> f = GetTurf())
+        {
+            if (!f->bloody)
+            {
+                f->GetView()->AddOverlay("icons/blood.dmi", conv.str());
+                f->bloody = true;
+            }
+        }
+    }
+    else
+    {
+    IMovable::Bump(item);
+    }
+}
 
 CaucasianHuman::CaucasianHuman(size_t id) : Human(id)
 {

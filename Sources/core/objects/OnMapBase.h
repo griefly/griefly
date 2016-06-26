@@ -10,6 +10,7 @@ class IMovable;
 class Item;
 class Projectile;
 
+
 typedef int PassableLevel;
 namespace Passable
 {
@@ -64,7 +65,6 @@ public:
     }
 
     virtual void AttackBy(id_ptr_on<Item> item);
-    virtual void AttackByP(id_ptr_on<Projectile> item);
 
     virtual void ApplyForce(VDir force) {}
 

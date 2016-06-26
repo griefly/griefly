@@ -36,8 +36,3 @@ void IOnMapBase::AttackBy(id_ptr_on<Item> item)
 {
     // nothing
 }
-
-void IOnMapBase::AttackByP(id_ptr_on<Projectile> p)
-{
-    // nothing
-}

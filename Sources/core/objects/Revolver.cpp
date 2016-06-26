@@ -1,53 +1,52 @@
 #include "Revolver.h"
+#include "Gun.cpp"
 
-Revolver::Revolver(size_t id) : Item(id)
+Revolver::Revolver(size_t id) : Gun(id)
 {
-    SetSprite("icons/guns.dmi");
     SetState("revolver");
 
-    name = "Revolver",
+    name = "Revolver";
     
     ammunition_ = 6;
+    max_ammunition_ = 6;
 }
 
-bool Revolver::Handle_Ammo()
-{
-    if (ammunition_ <= 0)
-    {
-        ammunition_ = 0;
-        return false;
-    }
-    --ammunition_;
-    return true;
-}
-
-void Revolver::Shoot(VDir target)
-{	  
+void Revolver::Shoot(VDir target,id_ptr_on<Human> shooter)
+{	
     if(Handle_Ammo())
     {
-        id_ptr_on<Projectile> p = Create<Projectile>(Bullet::T_ITEM_S(),GetOwner());
-        p->MakeMovementPattern(target);
-             //       Create<Item>(Bullet_Casing::T_ITEM_S(),GetOwner);	
-		//sound and a counter that tells the number of bullets in magazine/clip
+      if(GetOwner()->GetOwner().valid())
+      {
+          id_ptr_on<Projectile> p = Create<Projectile>(Bullet::T_ITEM_S(),GetOwner()->GetOwner());
+          p->MakeMovementPattern(target,shooter);
+          std::string snd;
+          snd = "Gunshot.ogg";
+          PlaySoundIfVisible(snd, owner.ret_id());
+          id_ptr_on<Item> bc =Create<Item>(BulletCasing::T_ITEM_S(),GetOwner()->GetOwner());
+          unsigned int r = GetRand() % 4;
+          switch(r)
+          {
+          case(0):
+              bc->Rotate(D_RIGHT);
+              break;
+          case(1):
+              bc->Rotate(D_LEFT);
+              break;
+          case(3):
+              bc->Rotate(D_DOWN);
+              break;
+          case(4):
+              bc->Rotate(D_UP);
+              break;
+          }
+      }	
+		//a counter that tells the number of bullets in magazine/clip
     }
     else
     {
+        PlaySoundIfVisible("empty.ogg",owner.ret_id());
 		//sound and the *click* text from ss13
     }	
-}
-
-int Revolver::AddAmmunition()
-{
-    if (ammunition_ < 0 && ammunition_ > 6)
-    {
-        ++ammunition_;
-	return ammunition_;
-    }    
-    if (ammunition_ > 6)
-    {
-	--ammunition_;
-        return ammunition_;
-    }
 }
 void Revolver::AttackBy(id_ptr_on<Item> item)
 {
@@ -55,7 +54,10 @@ void Revolver::AttackBy(id_ptr_on<Item> item)
     {
 	if(r->CheckBullets())
         {
-		r->RemoveBullet();
+		if(AddAmmunition())
+                {
+		    r->RemoveBullet();
+	        }
 	}
 	else
 	{
