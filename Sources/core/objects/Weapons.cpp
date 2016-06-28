@@ -1,5 +1,6 @@
 #include "Weapons.h"
-
+#include "representation/Sound.h"
+#include "Tile.h"
 
 
 LaserGun::LaserGun(size_t id) : Gun(id)
@@ -12,28 +13,29 @@ LaserGun::LaserGun(size_t id) : Gun(id)
     max_ammunition_ = 20;
 }
 
-void LaserGun::Shoot(VDir target,id_ptr_on<Human> shooter)
-{	
-    if(Handle_Ammo())
+void LaserGun::Shoot(VDir target)
+{
+    id_ptr_on<CubeTile> tile = GetOwner()->GetOwner();
+    if (tile.valid())
     {
-      if(GetOwner()->GetOwner().valid())
-      {
-          id_ptr_on<Projectile> p = Create<Projectile>(Laser::T_ITEM_S(),GetOwner()->GetOwner());
-          p->MakeMovementPattern(target,shooter);
-          unsigned int value = GetRand() % 2;
-          std::string snd;
-          if (value == 0)
-              snd = "laser3.ogg";
-          if (value == 1)
-              snd = "Laser.ogg";
-          GetOwner()->PlaySoundIfVisible(snd, owner.ret_id());
-      }
+        if(UseAmmo())
+        {
+            id_ptr_on<Projectile> p = Create<Projectile>(Laser::T_ITEM_S(),tile.ret_id());
+            p->MakeMovementPattern(target,GetOwner());
+            unsigned int value = GetRand() % 2;
+            std::string snd;
+            if (value == 0)
+                snd = "laser3.ogg";
+            if (value == 1)
+                snd = "Laser.ogg";
+            PlaySoundIfVisible(snd, tile.ret_id());
+        }
 		//a counter that tells the number of bullets in magazine/clip
-    }
-    else
-    {
-          GetOwner()->PlaySoundIfVisible("empty.ogg",owner.ret_id());
+        else
+        {
+          PlaySoundIfVisible("empty.ogg", tile.ret_id());
 		//the *click* text from ss13
+       }
     }	
 }
 void LaserGun::AttackBy(id_ptr_on<Item> item)
@@ -42,7 +44,7 @@ void LaserGun::AttackBy(id_ptr_on<Item> item)
     {
 	if(r->CheckBullets())
         {
-		if(AddAmmunition())
+		if(AddAmmo())
                 {
 		    r->RemoveBullet();
 	        }
@@ -61,46 +63,33 @@ Revolver::Revolver(size_t id) : Gun(id)
 
     name = "Revolver";
     
-    ammunition_ = 6;
-    max_ammunition_ = 6;
+    ammunition_ = 999;
+    max_ammunition_ = 999;
 }
 
-void Revolver::Shoot(VDir target,id_ptr_on<Human> shooter)
-{	
-    if(Handle_Ammo())
-    {
-      if(GetOwner()->GetOwner().valid())
-      {
-          id_ptr_on<Projectile> p = Create<Projectile>(Bullet::T_ITEM_S(),GetOwner()->GetOwner());
-          p->MakeMovementPattern(target,shooter);
-          std::string snd;
-          snd = "Gunshot.ogg";
-          GetOwner()->PlaySoundIfVisible(snd, owner.ret_id());
-          id_ptr_on<Item> bc =Create<Item>(BulletCasing::T_ITEM_S(),GetOwner()->GetOwner());
-          unsigned int r = GetRand() % 4;
-          switch(r)
-          {
-          case(0):
-              bc->Rotate(D_RIGHT);
-              break;
-          case(1):
-              bc->Rotate(D_LEFT);
-              break;
-          case(3):
-              bc->Rotate(D_DOWN);
-              break;
-          case(4):
-              bc->Rotate(D_UP);
-              break;
-          }
-      }	
+void Revolver::Shoot(VDir target)
+{
+    id_ptr_on<CubeTile> tile = GetOwner()->GetOwner();
+    if (tile.valid())
+    {	
+        if (UseAmmo())
+        {
+            id_ptr_on<Projectile> p = Create<Projectile>(Bullet::T_ITEM_S(),tile.ret_id());
+            p->MakeMovementPattern(target,GetOwner());
+            std::string snd;
+            snd = "Gunshot.ogg";
+            PlaySoundIfVisible(snd, tile.ret_id());
+            id_ptr_on<Item> bc =Create<Item>(BulletCasing::T_ITEM_S(),tile.ret_id());
+            Dir dir = GetRand() % 4;
+            bc->Rotate(dir);
+        }
 		//a counter that tells the number of bullets in magazine/clip
-    }
-    else
-    {
-        GetOwner()->PlaySoundIfVisible("empty.ogg",owner.ret_id());
+        else
+        {
+            PlaySoundIfVisible("empty.ogg", tile.ret_id());
 		//sound and the *click* text from ss13
-    }	
+        }
+     }
 }
 void Revolver::AttackBy(id_ptr_on<Item> item)
 {
@@ -108,7 +97,7 @@ void Revolver::AttackBy(id_ptr_on<Item> item)
     {
 	if(r->CheckBullets())
         {
-		if(AddAmmunition())
+		if(AddAmmo())
                 {
 		    r->RemoveBullet();
 	        }

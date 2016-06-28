@@ -16,8 +16,6 @@
 
 #include "Interfaces.h"
 
-#include "objects/Projectiles.h"
-
 class Chat;
 class TextPainter;
 
@@ -105,5 +103,4 @@ private:
 
     id_ptr_on<UnsyncGenerator> unsync_generator_;
     id_ptr_on<IMob> current_mob_;
-
 };

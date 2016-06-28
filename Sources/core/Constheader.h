@@ -63,11 +63,6 @@ const VDir VD_DOWN = {0, 1, 0}; // south
 const VDir VD_ZUP = {0, 0, 1};
 const VDir VD_ZDOWN = {0, 0, -1};
 
-const VDir VD_UPLeft = {-1, -1, 0}; // northwest
-const VDir VD_UPRight = {1, -1, 0}; // northeast
-const VDir VD_DOWNLeft = {-1, 1, 0};// southwest
-const VDir VD_DOWNRight = {1, 1, 0}; // southeast
-
 
 const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
 
@@ -87,22 +82,9 @@ inline Dir VDirToDir(const VDir& vdir)
         else
             return D_UP;
 
-    if (abs_z > 0)
-        if(vdir.z>0)
-            return D_ZUP;
-        else
-            return D_ZDOWN;
-    if(abs_x >0 && abs_y>0 && abs_z == 0)
-       if(vdir.y>0)
-           if(vdir.x>0)
-               return D_SOUTHEAST;
-           else
-               return D_SOUTHWEST;
-       else
-           if(vdir.x>0)
-               return D_NORTHEAST;
-           else
-               return D_NORTHWEST;
+    if (vdir.z > 0)
+        return D_ZUP;
+    return D_ZDOWN;
 }
 
 const Dir DirToRDir[6] = {1, 0, 3, 2, 5, 4};

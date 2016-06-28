@@ -3,6 +3,9 @@
 #include "Movable.h"
 #include "Human.h"
 
+std::ostream& operator<<(std::stringstream& file, const std::vector<Dir> & content);
+std::istream& operator>>(std::stringstream& file, std::vector<Dir> & content);
+unsigned int hash(const std::vector<Dir>& content);
 
 class Projectile : public IMovable
 {
@@ -18,14 +21,15 @@ public:
     virtual void AfterWorldCreation() override;
     void MakeMovementLoops(int straight,int diagonal,VDir Direction,VDir Direction2);
     Dir CalculateTrajectoryMove();
-    int KV_SAVEBLE(damage);
+    void MakeMovementLoops(int x,int y,Dir d1,Dir d2);
+    int GetDamage();
 private:
-    VDir KV_SAVEBLE(target_);
     bool KV_SAVEBLE(reached_target);
     int KV_SAVEBLE(set_target_);
-    Dir KV_SAVEBLE(direction);
-    int KV_SAVEBLE(cases_);
     id_ptr_on<Human> KV_SAVEBLE(shooter_);
-    int KV_SAVEBLE(got_bored_);
+    int KV_SAVEBLE(current_step_);
+    std::vector<Dir> KV_SAVEBLE(movement_);
+protected:
+    int KV_SAVEBLE(damage);
 };
 ADD_TO_TYPELIST(Projectile);

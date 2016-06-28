@@ -12,10 +12,12 @@ public:
     DECLARE_SAVED(Gun, Item);
     DECLARE_GET_TYPE_ITEM(Gun);
     Gun(size_t id);
-    virtual void Shoot(VDir target,id_ptr_on<Human> shooter);
-    int AddAmmunition();
-    bool Handle_Ammo();   
+    virtual void Shoot(VDir target);
+    bool AddAmmo();
+    bool UseAmmo();   
     virtual void AttackBy(id_ptr_on<Item> item);
+    static bool Targetable(id_ptr_on<IOnMapBase> item);
+    VDir TargetTileLoc(id_ptr_on<IOnMapBase> item) const;
 protected:
     int KV_SAVEBLE(max_ammunition_);
     int KV_SAVEBLE(ammunition_);

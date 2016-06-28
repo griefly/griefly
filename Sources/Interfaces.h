@@ -2,7 +2,6 @@
 
 #include "core/Idptr.h"
 
-
 // TODO: Do not forget: virtual destructors everywhere
 
 class IMainObject;

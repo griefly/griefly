@@ -172,9 +172,9 @@ void Human::processGUImsg(const Message2 &msg)
             }
             else if(id_ptr_on<Gun> tool = interface_.GetActiveHand().Get())
             {
-		if(GetLying() == false && Targetable(item))
+		if(GetLying() == false && tool->Targetable(item))
                 {
-                tool->Shoot(TargetTileLoc(item),GetId());
+                tool->Shoot(tool->TargetTileLoc(item));
                 }
 	    }
         }
@@ -403,7 +403,7 @@ void Human::Bump(id_ptr_on<IMovable> item)
         bool damaged = false;
         if (p.valid())
         {
-            health_ -= p->damage;
+            health_ -= p->GetDamage();
             if (id_ptr_on<Bullet> b = p)
             {
                  GetGame().GetChat().PostSimpleText(name + " got hit by a bullet!", owner->GetId());
@@ -442,10 +442,7 @@ void Human::Bump(id_ptr_on<IMovable> item)
             }
         }
     }
-    else
-    {
     IMovable::Bump(item);
-    }
 }
 
 CaucasianHuman::CaucasianHuman(size_t id) : Human(id)

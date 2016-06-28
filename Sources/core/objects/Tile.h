@@ -59,7 +59,6 @@ public:
 
     virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
-    virtual void AttackBy(id_ptr_on<Item> item) override;
 
     void SetPos(int posx, int posy, int posz = 0)
     {
@@ -109,8 +108,6 @@ public:
 
     typedef std::vector<id_ptr_on<IOnMapObject>> InsideType;
     InsideType& GetInsideList() { return inside_list_; }
-    bool Targetable(id_ptr_on<IOnMapBase> item) const override;
-    VDir TargetTileLoc(id_ptr_on<IOnMapBase> item) const override;
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:

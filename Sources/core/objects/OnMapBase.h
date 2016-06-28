@@ -76,21 +76,6 @@ public:
         }
         return false;
     }
-    virtual bool Targetable(id_ptr_on<IOnMapBase> item) const  // maybe the players should be able to shoot black areas
-    {
-        if (owner.valid())
-        {
-            return owner->Targetable(item);
-        }
-        return false;
-    }
-    virtual VDir TargetTileLoc(id_ptr_on<IOnMapBase> item) const
-    {
-        if (owner.valid())
-        {
-            return owner->TargetTileLoc(item);
-        }
-    }
     // Add some item
     // True - added
     // False - failed

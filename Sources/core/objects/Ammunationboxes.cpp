@@ -12,14 +12,11 @@ AmmunitionBox::AmmunitionBox(size_t id) : Item(id)
 
 bool AmmunitionBox::CheckBullets()
 {
-    if(bullets_>0)
+    if (bullets_ > 0)
     {
         return true;
     }
-    if(bullets_<=0)
-    {
-        return false;
-    }
+    return false;
 }
 
 void AmmunitionBox::RemoveBullet()

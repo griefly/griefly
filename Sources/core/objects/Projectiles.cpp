@@ -1,31 +1,83 @@
 #include "Projectiles.h"
 #include "../Helpers.h"
 
+inline std::ostream& operator<<(std::stringstream& file,const std::vector<Dir>& s)
+{
+    file << " " << s.size() << " ";
+    for (auto it : s)
+        file << " " << it << " ";
+    return file;
+}
+
+inline std::istream& operator>>(std::stringstream& file,std::vector<Dir>& s)
+{
+    size_t size;
+    file >> size;
+    s.reserve(size);
+
+    unsigned int local_id;
+    for (size_t i = 0; i < size; ++i)
+    {
+        file >> local_id;
+        s.push_back(local_id);
+    }
+    return file;
+}
+
+unsigned int hash(const std::vector<Dir>& content)
+{
+    unsigned int retval = 0;
+    int i = 1;
+    for (auto it = content.begin(); it != content.end(); ++it, ++i)
+    {
+        retval += *it * i;
+    }
+    return retval;
+}
+
 
 Projectile::Projectile(size_t id) : IMovable(id)
 {
     SetPassable(D_ALL, Passable::AIR);
-    tickSpeed = 0.25;
     damage = 0;
     SetSprite("icons/projectiles.dmi");
     v_level = 5;
-    got_bored_ = 0;
+    current_step_ = 0;
     set_target_ = 0;
+    tickSpeed = 1;
+    pixSpeed = 4;
 }
 void Projectile::Process()
 {
-   if(set_target_ == 0)
+   if (set_target_ == 1)
    {
-      return;
+       std::cout << "here" << std::endl;
+       Dir step =  movement_[current_step_];
+       Rotate(step);
+       if(!CheckPassable())
+       {
+           this->Delete();
+           return;
+       }
+       else if (reached_target)
+       {
+           MainMove();
+           return;
+       }
+       else if (current_step_ < movement_.size()-1 && !reached_target)
+       {
+           current_step_++;
+       }
+       else if(!reached_target && current_step_ == movement_.size()-1)
+       {
+           current_step_ =0;
+           Dir tmp = movement_[1];
+           movement_.clear();
+           movement_.push_back(tmp);
+           reached_target = 1;
+       }    
+       MainMove();
    }
-   Dir step = CalculateTrajectoryMove();
-   Rotate(step);
-   if(!CheckPassable())
-   {
-       this->Delete();
-       return;
-   }
-   MainMove(); 
 }
 
 bool Projectile::CheckPassable()
@@ -62,330 +114,148 @@ bool Projectile::CheckPassable()
 }
 void Projectile::Bump(id_ptr_on<IMovable> item)
 {
-    id_ptr_on<Projectile> p = this->GetId();
-    item->Bump(p);
-    this->Delete();
-   
-//TODO maybe it can apply froce depending on bullet speed but that should be considered        ApplyForce(DirToVDir[m->dMove]);
 }
+//TODO maybe it can apply froce depending on bullet speed but that should be considered        ApplyForce(DirToVDir[m->dMove]);
 void Projectile::MakeMovementPattern(VDir target,id_ptr_on<Human> someone)
 {
     set_target_=1;
-    target_ = target;
     int x = target.x;
     int y = target.y;
     int abs_x = std::abs(x);
     int abs_y = std::abs(y);
     shooter_ = someone;
     Dir facing = someone->GetDir();
-    if(abs_x == abs_y)
+    std::cout << y << " x: " <<  x << std::endl;
+    if (abs_x == abs_y)
     {
-        if(y<0)
+        if (y<0)
         {
-            if(facing == 0|| facing == 1)
+            if (facing == 0|| facing == 1)
             {
-                if(x>0)
+                if (x>0)
                 {
-                    direction = D_RIGHT;
-                    cases_ = 3;
+                    MakeMovementLoops(abs_y,abs_x,D_RIGHT,D_UP);
                 }
                 else
                 {
-                    direction = D_LEFT;
-                    cases_ = 6;
+                    MakeMovementLoops(abs_y,abs_x,D_LEFT,D_UP);
                 }
             }
             else
             {
-                if(x>0)
+                if (x>0)
                 {
-                    direction = D_UP;
-                    cases_ = 4;
+                    MakeMovementLoops(abs_y,abs_x,D_UP,D_RIGHT);
                 }
                 else
                 {
-                    direction = D_UP;
-                    cases_ = 5;
+                    MakeMovementLoops(abs_y,abs_x,D_UP,D_LEFT);
                 }
             }
         }
         else
         {
-        if(facing == 0|| facing == 1)
+            if (facing == 0|| facing == 1)
             {
-                if(x>0)
+                if ( x > 0)
                 {
-                    direction = D_RIGHT;
-                    cases_ = 2;
+                    MakeMovementLoops(abs_y,abs_x,D_RIGHT,D_DOWN);
                 }
                 else
                 {
-                    direction = D_LEFT;
-                    cases_ = 7;
+                    MakeMovementLoops(abs_y,abs_x,D_LEFT,D_DOWN);
                 }
             }
             else
             {
-                if(x>0)
+                if (x>0)
                 {
-                    direction = D_DOWN;
-                    cases_ = 1;
+                    MakeMovementLoops(abs_y,abs_x,D_DOWN,D_RIGHT);
                 }
                 else
                 {
-                    direction = D_DOWN;
-                    cases_ = 8;
+                    MakeMovementLoops(abs_y,abs_x,D_DOWN,D_LEFT);
                 }
             }
         }
     }
-    else if(x >= 0 && y >= 0)
+    else if (x >= 0 && y >= 0)
     {
-        if(x != 0)
-        {
-            if((float)y / (float)x > 1 )
-            {
-                direction = D_DOWN;
-                cases_ = 1;
-            }
-            else if((float)y / (float)x < 1)
-            {
-                direction = D_RIGHT;
-                cases_ = 2; 
-            }
-       }
-       else
+       if (y > x)
        {
-           direction = D_DOWN;
-           cases_ = 1; 
+            MakeMovementLoops(abs_y,abs_x,D_DOWN,D_RIGHT);
+       }
+       else if (x > y)
+       {
+            MakeMovementLoops(abs_x,abs_y,D_RIGHT,D_DOWN);
        }
     }
     else if(x <= 0 && y <= 0)
     {   
-        if(x != 0)
+       if ( abs_y > abs_x  )
+       {
+           MakeMovementLoops(abs_y,abs_x,D_UP,D_LEFT);
+       }
+       else if ( abs_x > abs_y)
+       {
+           MakeMovementLoops(abs_x,abs_y,D_LEFT,D_UP);
+       }
+    }
+    else if (x < 0 && y > 0)
+    {
+        if (y > abs_x)
         {
-             if((float)y / (float)x > 1 )
-             {
-                 direction = D_UP;
-                 cases_ = 5;
-             }
-             else if((float)y / (float)x < 1)
-             {
-                 direction = D_LEFT;
-                 cases_ = 6;
-             }
+             MakeMovementLoops(abs_y,abs_x,D_DOWN,D_LEFT);
         }
-        else
+        else if (abs_x > abs_y)
         {
-            direction = D_UP;
-            cases_ = 5;
+            MakeMovementLoops(abs_x,abs_y,D_LEFT,D_DOWN);
         }
     }
-    else if(x < 0 && y > 0)
+    else if (x > 0 && y < 0)
     {
-        if((float)y / (float)x  < -1 )
+        if (abs_y > x)
         {
-             direction = D_DOWN;
-             cases_ = 8;
+            MakeMovementLoops(abs_y,abs_x,D_UP,D_RIGHT);
         }
-        else if(y / x > -1)
+        else if (x > abs_y )
         {
-            direction = D_LEFT;
-            cases_ = 7;
-        }
-    }
-    else if(x > 0 && y < 0)
-    {
-        if((float)y / (float)x  < -1 )
-        {
-            direction = D_UP;
-            cases_ = 4;
-        }
-        else if((float)y / (float)x  > -1 )
-        {
-            direction = D_RIGHT;
-            cases_ = 3;
+            MakeMovementLoops(abs_x,abs_y,D_RIGHT,D_UP);
         }
         
     }
     else
     {
-        this->Delete();
-        return;
-//never should go here but if it does we should delete that projectile
+        qDebug() << "Critical error, MakeMovementPattern has reached unreachable place";
+        abort();
     }
-    shooter_->Rotate(direction);
+    shooter_->Rotate(movement_[1]);
 }
-Dir Projectile::CalculateTrajectoryMove()
+void Projectile::MakeMovementLoops(int x,int y,Dir d1,Dir d2)
 {
-    if(reached_target)
+int shuffle = 0;
+int z = (2*y)-1;
+for (int i = 0; i < y+x;i++)
+{
+    if (shuffle == 1 || z < i)
     {
-        return direction;
+        movement_.push_back(d1);
+        shuffle = 0;
     }
-    if(!reached_target  && target_.x == 0 && target_.y == 0)
+    else if (shuffle == 0)
     {
-         reached_target = true;
-         return direction;
+        movement_.push_back(d2);
+        shuffle = 1;
     }
-    switch(cases_)
-    {
-    case(1):
-         if(got_bored_ == 1 || target_.x == 0)
-         {
-             target_.y--;
-             got_bored_=2;
-             return D_DOWN;
-         }
-         else if(got_bored_ == 2)
-         {
-             target_.x--; 
-             got_bored_=1;
-             return D_RIGHT;
-         }
-         else if(got_bored_ == 0)
-         {
-             target_.x--;
-             got_bored_=1;
-             return D_RIGHT;
-         }
-    case(2):
-         if(got_bored_ == 1||target_.y == 0)
-         {
-             target_.x--;
-             got_bored_=2;
-             return D_RIGHT;
-         }
-         else if(got_bored_ == 2 )
-         {
-             target_.y--;
-             got_bored_=1;
-             return D_DOWN;
-         }
-         else if(got_bored_ == 0)
-         {
-             target_.y--;
-             got_bored_=1;
-             return D_DOWN;
-         }
-    case(3):
-         if(got_bored_ == 1 || target_.y==0)
-         {
-             target_.x--;
-             got_bored_=2;
-             return D_RIGHT;
-         }
-         else if(got_bored_ == 2)
-         {
-             target_.y++;
-             got_bored_=1;
-             return D_UP;
-         }
-         else if(got_bored_ == 0)
-         {
-             target_.y++;
-             got_bored_=1;
-             return D_UP;
-         }
-    case(4):
-         if(got_bored_ == 1 || target_.x==0)
-         {
-             target_.y++;
-             got_bored_=2;
-             return D_UP;
-         }
-         else if(got_bored_ == 2)
-         {
-             target_.x--;
-             got_bored_=1;
-             return D_RIGHT;
-         }
-         else if(got_bored_ == 0)
-         {
-             target_.x--;
-             got_bored_=1;
-             return D_RIGHT;
-         }
-    case(5):
-         if(got_bored_ == 1 || target_.x ==0)
-         {
-             target_.y++;
-             got_bored_=2;
-             return D_UP;
-         }
-         else if(got_bored_ == 2)
-         {
-             target_.x++;
-             got_bored_=1;
-             return D_LEFT;
-         }
-         else if(got_bored_ == 0)
-         {
-             target_.x++;
-             got_bored_=1;
-             return D_LEFT;
-         }
-    case(6):
-         if(got_bored_ == 1 || target_.y == 0)
-         {
-             target_.x++;
-             got_bored_=2;
-             return D_LEFT;
-         }
-         else if(got_bored_ == 2)
-         {
-             target_.y++;
-             got_bored_=1;
-             return D_UP;
-         }
-         else if(got_bored_ == 0)
-         {
-             target_.y++;
-             got_bored_=1;
-             return D_UP;
-         }
-    case(7):
-         if(got_bored_ == 1 || target_.y==0)
-         {
-             target_.x++;
-             got_bored_=2;
-             return D_LEFT;
-         }
-         else if(got_bored_ == 2)
-         {
-             target_.y--;
-             got_bored_=1;
-             return D_DOWN;
-         }
-         else if(got_bored_ == 0)
-         {
-             target_.y--;
-             got_bored_=1;
-             return D_DOWN;
-         }
-    case(8):
-         if(got_bored_ == 1|| target_.x==0)
-         {
-             target_.y--;
-             got_bored_=2;
-             return D_DOWN;
-         }
-         else if(got_bored_ == 2)
-         {
-             target_.x++;
-             got_bored_=1;
-             return D_LEFT;
-         }
-         else if(got_bored_ == 0)
-         {
-             target_.x++;
-             got_bored_=1;
-             return D_LEFT;
-         }
-    }    
+}
 }
 void Projectile::AfterWorldCreation()
 {
     IMovable::AfterWorldCreation();
     SetFreq(1);
+}
+int Projectile::GetDamage()
+{
+    return damage;
 }
 
