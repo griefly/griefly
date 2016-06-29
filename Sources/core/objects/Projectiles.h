@@ -14,13 +14,12 @@ public:
     DECLARE_SAVED(Projectile,IMovable)	
     DECLARE_GET_TYPE_ITEM(Projectile)
     void MakeMovementPattern(VDir target,id_ptr_on<Human> x);
-    void Process();
+    virtual void Process() override;
     virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override {};
     virtual bool CheckPassable() override;
     virtual void AfterWorldCreation() override;
-    void MakeMovementLoops(int straight,int diagonal,VDir Direction,VDir Direction2);
-    Dir CalculateTrajectoryMove();
+    virtual void ProcessForce() override {};
     void MakeMovementLoops(int x,int y,Dir d1,Dir d2);
     int GetDamage();
 private:

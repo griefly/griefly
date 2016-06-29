@@ -46,6 +46,7 @@ Projectile::Projectile(size_t id) : IMovable(id)
     set_target_ = 0;
     tickSpeed = 1;
     pixSpeed = 4;
+    reached_target = 0;
 }
 void Projectile::Process()
 {

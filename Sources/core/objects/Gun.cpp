@@ -91,5 +91,6 @@ VDir Gun::TargetTileLoc(id_ptr_on<IOnMapBase> item) const
     VDir f;
     f.x =  (cube_tile->GetX() - GetOwner()->GetX());
     f.y =  (cube_tile->GetY() - GetOwner()->GetY());
+    f.z = 0;
     return f;
 }
