@@ -90,9 +90,13 @@ public:
     {
         return operator->() != nullptr; 
     }
-    operator bool()
+    operator void*() const
     {
-        return valid();
+        if (valid())
+        {
+            return reinterpret_cast<void*>(0x1);
+        }
+        return nullptr;
     }
     id_ptr_on(size_t id_new)
     {
