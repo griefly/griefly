@@ -67,7 +67,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
     SetSpriter(new SpriteHolder);
 
-    for (auto it = (*itemList()).begin(); it != (*itemList()).end(); ++it)
+    for (auto it = (*items_creators()).begin(); it != (*items_creators()).end(); ++it)
     {
         IMainObject* loc = it->second(0);
         IOnMapObject* bloc = castTo<IOnMapObject>(loc);

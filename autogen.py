@@ -53,8 +53,8 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
     print("{", file = autogen_file)
     for class_data in metadata["classes"]:
         class_name = class_data["class"]
-        print("    (*itemList())[" + class_name + "::T_ITEM_S()] = &" + class_name + "::_Z_creator;", file = autogen_file)
-        print("    (*itemListSaved())[" + class_name + "::T_ITEM_S()] = &" + class_name + "::_Z_creatorSaved;", file = autogen_file)
+        print("    (*items_creators())[" + class_name + "::T_ITEM_S()] = &" + class_name + "::_Z_creator;", file = autogen_file)
+        print("    (*items_void_creators())[" + class_name + "::T_ITEM_S()] = &" + class_name + "::_Z_creatorSaved;", file = autogen_file)
     print("}", file = autogen_file)
     print("", file = autogen_file)
     print("void InitSettersForTypes()", file = autogen_file)

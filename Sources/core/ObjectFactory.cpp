@@ -327,7 +327,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
 IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)
 {
     //qDebug() << "NewVoidObject: " << QString::fromStdString(type);
-    auto& il = (*itemList());
+    auto& il = (*items_creators());
     //qDebug() << il.size();
     auto f = il[type];
 
@@ -340,7 +340,7 @@ IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)
 
 IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
 {
-    return (*itemListSaved())[type]();
+    return (*items_void_creators())[type]();
 }
 
 void ObjectFactory::Clear()

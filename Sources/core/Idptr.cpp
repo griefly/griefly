@@ -16,7 +16,7 @@ bool is_creators_inited()
     return true;
 }
 
-std::unordered_map<std::string, item_creator>* itemList()
+std::unordered_map<std::string, item_creator>* items_creators()
 {
     static std::unordered_map<std::string, item_creator>* result
             = new std::unordered_map<std::string, item_creator>;
@@ -28,7 +28,7 @@ std::unordered_map<std::string, item_creator>* itemList()
     return result;
 }
 
-std::unordered_map<std::string, item_creator_saved>* itemListSaved()
+std::unordered_map<std::string, item_creator_saved>* items_void_creators()
 {
     static std::unordered_map<std::string, item_creator_saved>* result
             = new std::unordered_map<std::string, item_creator_saved>;
