@@ -1,7 +1,7 @@
 #include "Projectiles.h"
 #include "../Helpers.h"
 
-inline std::ostream& operator<<(std::stringstream& file,const std::vector<Dir>& s)
+std::ostream& operator<<(std::stringstream& file,const std::vector<Dir>& s)
 {
     file << " " << s.size() << " ";
     for (auto it : s)
@@ -9,7 +9,7 @@ inline std::ostream& operator<<(std::stringstream& file,const std::vector<Dir>& 
     return file;
 }
 
-inline std::istream& operator>>(std::stringstream& file,std::vector<Dir>& s)
+std::istream& operator>>(std::stringstream& file,std::vector<Dir>& s)
 {
     size_t size;
     file >> size;
@@ -38,7 +38,7 @@ unsigned int hash(const std::vector<Dir>& content)
 
 Projectile::Projectile(size_t id) : IMovable(id)
 {
-    SetPassable(D_ALL, Passable::AIR);
+    SetPassable(D_ALL, Passable::EMPTY);
     damage = 0;
     SetSprite("icons/projectiles.dmi");
     v_level = 5;
@@ -52,7 +52,6 @@ void Projectile::Process()
 {
    if (set_target_ == 1)
    {
-       std::cout << "here" << std::endl;
        Dir step =  movement_[current_step_];
        Rotate(step);
        if(!CheckPassable())
@@ -80,42 +79,6 @@ void Projectile::Process()
        MainMove();
    }
 }
-
-bool Projectile::CheckPassable()
-{
-    id_ptr_on<Projectile> p = this->GetId();
-    PassableLevel loc = GetPassable(GetDir());
-    if (loc != Passable::FULL)
-    {
-        SetPassable(GetDir(), Passable::FULL);
-    }
-    if (!CanPass(owner->GetPassable(GetDir()), passable_level))
-    {
-        owner->Bump(p);
-        if (loc != Passable::FULL)
-        {
-            SetPassable(GetDir(), loc);
-        }
-        return false;
-    }
-    if (loc != Passable::FULL)
-    {
-        SetPassable(GetDir(), loc);
-    }
-
-    auto neighbour = owner->GetNeighbour(GetDir());
-    if (   !CanPass(neighbour->GetPassable(D_ALL), passable_level)
-        || !CanPass(neighbour->GetPassable(helpers::revert_dir(GetDir())), passable_level))
-    {
-        neighbour->Bump(p);
-        return false;
-    }
-    
-    return true;
-}
-void Projectile::Bump(id_ptr_on<IMovable> item)
-{
-}
 //TODO maybe it can apply froce depending on bullet speed but that should be considered        ApplyForce(DirToVDir[m->dMove]);
 void Projectile::MakeMovementPattern(VDir target,id_ptr_on<Human> someone)
 {
@@ -126,7 +89,6 @@ void Projectile::MakeMovementPattern(VDir target,id_ptr_on<Human> someone)
     int abs_y = std::abs(y);
     shooter_ = someone;
     Dir facing = someone->GetDir();
-    std::cout << y << " x: " <<  x << std::endl;
     if (abs_x == abs_y)
     {
         if (y<0)

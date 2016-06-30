@@ -15,9 +15,7 @@ public:
     DECLARE_GET_TYPE_ITEM(Projectile)
     void MakeMovementPattern(VDir target,id_ptr_on<Human> x);
     virtual void Process() override;
-    virtual void Bump(id_ptr_on<IMovable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override {};
-    virtual bool CheckPassable() override;
     virtual void AfterWorldCreation() override;
     virtual void ProcessForce() override {};
     void MakeMovementLoops(int x,int y,Dir d1,Dir d2);

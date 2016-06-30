@@ -8,7 +8,6 @@
 class ITurf;
 class IMovable;
 class Item;
-class Projectile;
 
 
 typedef int PassableLevel;
@@ -76,6 +75,7 @@ public:
         }
         return false;
     }
+
     // Add some item
     // True - added
     // False - failed

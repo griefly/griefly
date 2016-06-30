@@ -5,7 +5,6 @@
 #include "Turf.h"
 #include "OnMapBase.h"
 #include "OnMapObject.h"
-#include "Projectiles.h"
 #include "../AtmosHolder.h"
 
 template<class T>
