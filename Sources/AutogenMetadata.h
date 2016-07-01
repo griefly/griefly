@@ -1,6 +1,15 @@
 #pragma once
 
+#include <unordered_map>
+
 #include "core/objects/MainObject.h"
+
+typedef IMainObject* (*item_creator)(size_t id);
+typedef IMainObject* (*item_creator_saved)();
+
+std::unordered_map<std::string, item_creator>* items_creators();
+
+std::unordered_map<std::string, item_creator_saved>* items_void_creators();
 
 typedef void (*variable_setter)(IMainObject* ptr, std::stringstream& str);
 

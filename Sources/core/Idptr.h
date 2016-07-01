@@ -2,20 +2,9 @@
 
 #include <stdlib.h>
 
-#include <unordered_map>
-
-#include "Macroses.h"
 #include "FastIsType.h"
 
 class IMainObject;
-
-typedef IMainObject* (*item_creator)(size_t id);
-typedef IMainObject* (*item_creator_saved)();
-typedef unsigned int (*type_item)();
-
-std::unordered_map<std::string, item_creator>* items_creators();
-
-std::unordered_map<std::string, item_creator_saved>* items_void_creators();
 
 extern std::vector<IMainObject*>* id_ptr_id_table;
 

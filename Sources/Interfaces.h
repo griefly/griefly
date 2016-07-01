@@ -1,5 +1,8 @@
 #pragma once
 
+#include <list>
+
+#include "core/Constheader.h"
 #include "core/Idptr.h"
 
 class SyncRandom;

@@ -1,5 +1,7 @@
 #include "ViewInfo.h"
 
+#include "core/StreamWrapper.h"
+
 std::ostream& operator<<(std::stringstream& file, ViewInfo& view_info)
 {
     WrapWriteMessage(file, view_info.base_frameset_);
