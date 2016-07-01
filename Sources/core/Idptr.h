@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#include <iostream>
+
 #include "FastIsType.h"
 
 class IMainObject;
