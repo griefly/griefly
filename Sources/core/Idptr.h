@@ -10,25 +10,58 @@ class IMainObject;
 
 extern std::vector<IMainObject*>* id_ptr_id_table;
 
-template<typename T>
+template<class T>
 class id_ptr_on
 {
-    template<typename U>
+    template<class U>
     friend std::ostream& operator<<(std::ostream& stream, const id_ptr_on<U>& ptr);
-    template<typename U>
+    template<class U>
     friend std::istream& operator>>(std::istream& stream, id_ptr_on<U>& ptr);
+    template<class U>
+    friend class id_ptr_on;
 public:
     id_ptr_on()
     {
         id_ = 0;
     }
-    template<class T2>
-    bool operator==(const id_ptr_on<T2>& rval)
+    id_ptr_on(size_t id)
     {
-        return ret_id() == rval.ret_id();
+        *this = id;
+    }
+    template<class U>
+    id_ptr_on(const id_ptr_on<U>& other)
+    {
+        if (std::is_base_of<U, T>::value)
+        {
+            id_ = other.id_;
+            return;
+        }
+        *this = other.id_;
+    }
+    template<class U>
+    bool operator==(const id_ptr_on<U>& other)
+    {
+        return id_ == other.id_;
     }
 
-    T* operator*()
+    id_ptr_on& operator=(size_t id)
+    {
+        id_ = id;
+        return *this;
+    }
+    template<class U>
+    id_ptr_on& operator=(const id_ptr_on<U>& other)
+    {
+        if (std::is_base_of<U, T>::value)
+        {
+            id_ = other.id_;
+            return *this;
+        }
+        *this = other.id_;
+        return *this;
+    }
+
+    T* operator*() const
     {
         if (id_ == 0)
         {
@@ -41,47 +74,15 @@ public:
         }
         return castTo<T>(local);
     }
-    const T* operator*() const
-    {
-        if (id_ == 0)
-        {
-            return nullptr;
-        }
-        IMainObject* local = GetFromIdTable(id_);
-        if (nullptr == local)
-        {
-            return nullptr;
-        }
-        return castTo<T>(local);
-    }
-    T* operator->()
+
+    T* operator->() const
     {
         return operator*();
-    }
-    const T* operator->() const
-    {
-        return operator*();
-    }
-    id_ptr_on& operator=(size_t id_new)
-    {
-        id_ = id_new;
-        return *this;
-    }
-    template<typename T2>
-    id_ptr_on& operator=(id_ptr_on<T2> value)
-    {
-        id_ = value.ret_id();
-        return *this;
-    }
-    template<typename T2>
-    id_ptr_on(id_ptr_on<T2> value)
-    {
-        id_ = value.ret_id();
     }
 
     bool valid() const
     {
-        return operator->() != nullptr; 
+        return operator*() != nullptr;
     }
     operator void*() const
     {
@@ -90,10 +91,6 @@ public:
             return reinterpret_cast<void*>(0x1);
         }
         return nullptr;
-    }
-    id_ptr_on(size_t id_new)
-    {
-        id_ = id_new;
     }
     size_t ret_id() const
     {
