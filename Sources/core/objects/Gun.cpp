@@ -19,15 +19,22 @@ bool Gun::UseAmmo()
     return true;
 }
 
-void Gun::Shoot(VDir target)
+void Gun::ShootImpl(VDir target, const std::string& sound, const std::string& projectile_type, const std::string& casing_type)
 {
     id_ptr_on<CubeTile> tile = GetOwner()->GetOwner();
     if (tile.valid())
     {	
         if (UseAmmo())
         { 
-            auto projectile = Create<Projectile>(Bullet::T_ITEM_S(),tile);
-            projectile->MakeMovementPattern(target,GetOwner());	
+            auto projectile = Create<Projectile>(projectile_type,tile);
+            projectile->MakeMovementPattern(target,GetOwner());
+            PlaySoundIfVisible(sound,tile.ret_id());
+            if(!casing_type.empty())
+            {
+                Dir dir = GetRand() % 4;
+                id_ptr_on<Item> bc =Create<Item>(casing_type,tile.ret_id());
+                bc->Rotate(dir);
+            } 	
         }
         else
         {
@@ -35,6 +42,10 @@ void Gun::Shoot(VDir target)
             // the *click* text from ss13
         }
     }	
+}
+
+void Gun::Shoot(VDir target)
+{
 }
 
 bool Gun::AddAmmo()

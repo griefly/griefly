@@ -15,32 +15,17 @@ LaserGun::LaserGun(size_t id) : Gun(id)
 
 void LaserGun::Shoot(VDir target)
 {
-    id_ptr_on<CubeTile> tile = GetOwner()->GetOwner();
-    if (tile.valid())
+    unsigned int value = GetRand() % 2;
+    std::string snd;
+    if (value == 0)
     {
-        if(UseAmmo())
-        {
-            id_ptr_on<Projectile> p = Create<Projectile>(Laser::T_ITEM_S(),tile);
-            p->MakeMovementPattern(target,GetOwner());
-            unsigned int value = GetRand() % 2;
-            std::string snd;
-            if (value == 0)
-            {
-                snd = "laser3.ogg";
-            }
-            if (value == 1)
-            {
-                snd = "Laser.ogg";
-            }
-            PlaySoundIfVisible(snd, tile.ret_id());
-        }
-		// a counter that tells the number of bullets in magazine/clip
-        else
-        {
-          PlaySoundIfVisible("empty.ogg", tile.ret_id());
-		// the *click* text from ss13
-       }
-    }	
+        snd = "laser3.ogg";
+    }
+    if (value == 1)
+    {
+        snd = "Laser.ogg";
+    }
+    ShootImpl(target,snd,Laser::T_ITEM_S(),"");
 }
 void LaserGun::AttackBy(id_ptr_on<Item> item)
 {
@@ -71,27 +56,9 @@ Revolver::Revolver(size_t id) : Gun(id)
 
 void Revolver::Shoot(VDir target)
 {
-    id_ptr_on<CubeTile> tile = GetOwner()->GetOwner();
-    if (tile.valid())
-    {	
-        if (UseAmmo())
-        {
-            id_ptr_on<Projectile> p = Create<Projectile>(Bullet::T_ITEM_S(),tile);
-            p->MakeMovementPattern(target,GetOwner());
-            std::string snd;
-            snd = "Gunshot.ogg";
-            PlaySoundIfVisible(snd, tile.ret_id());
-            id_ptr_on<Item> bc =Create<Item>(BulletCasing::T_ITEM_S(),tile.ret_id());
-            Dir dir = GetRand() % 4;
-            bc->Rotate(dir);
-        }
-		// a counter that tells the number of bullets in magazine/clip
-        else
-        {
-            PlaySoundIfVisible("empty.ogg", tile.ret_id());
-		// sound and the *click* text from ss13
-        }
-     }
+    std::string snd;
+    snd = "Gunshot.ogg";
+    ShootImpl(target,snd,Bullet::T_ITEM_S(),BulletCasing::T_ITEM_S());
 }
 void Revolver::AttackBy(id_ptr_on<Item> item)
 {

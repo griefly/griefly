@@ -56,7 +56,6 @@ void Projectile::Process()
        Rotate(step);
        if(!CheckPassable())
        {
-           this->Delete();
            return;
        }
        else if (reached_target)
@@ -78,6 +77,16 @@ void Projectile::Process()
        }    
        MainMove();
    }
+}
+
+bool Projectile::CheckPassable()
+{
+    if (IMovable::CheckPassable())
+    {
+        return true;
+    }
+    this->Delete();
+    return false;
 }
 //TODO maybe it can apply froce depending on bullet speed but that should be considered        ApplyForce(DirToVDir[m->dMove]);
 void Projectile::MakeMovementPattern(VDir target,id_ptr_on<Human> someone)

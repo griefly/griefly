@@ -20,6 +20,7 @@ public:
     virtual void ProcessForce() override {};
     void MakeMovementLoops(int x,int y,Dir d1,Dir d2);
     int GetDamage();
+    virtual bool CheckPassable();
 private:
     bool KV_SAVEBLE(reached_target);
     int KV_SAVEBLE(set_target_);
