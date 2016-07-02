@@ -104,7 +104,7 @@ MapMaster::MapMaster(SyncRandom* sync_random)
     : losf_(this),
       atmosphere_(new Atmosphere(sync_random, this))
 {
-    visible_points_ = new std::list<point>;
+    visible_points_ = new std::list<PosPoint>;
 }
 
 MapMaster::~MapMaster()
@@ -207,12 +207,12 @@ bool MapMaster::IsTileVisible(size_t tile_id)
     return false;
 }
 
-std::list<point>* MapMaster::GetVisiblePoints()
+std::list<PosPoint>* MapMaster::GetVisiblePoints()
 {
     return visible_points_;
 }
 
-void MapMaster::CalculateVisisble(std::list<point> *retval, int posx, int posy, int posz)
+void MapMaster::CalculateVisisble(std::list<PosPoint> *retval, int posx, int posy, int posz)
 {
     losf_.CalculateVisisble(retval, posx, posy, posz);
 }
@@ -242,7 +242,7 @@ int LOSfinder::sign(int value)
     return 0;
 }
 
-bool LOSfinder::check_corner(point p)
+bool LOSfinder::check_corner(PosPoint p)
 {
     int x = corner2pos(p.posx);
     int y = corner2pos(p.posy);
@@ -251,19 +251,19 @@ bool LOSfinder::check_corner(point p)
 }
 
 
-point LOSfinder::corner_point2point(point p)
+PosPoint LOSfinder::corner_point2point(PosPoint p)
 {
-    point retval = {corner2pos(p.posx), corner2pos(p.posy), corner2pos(p.posz)};
+    PosPoint retval(corner2pos(p.posx), corner2pos(p.posy), corner2pos(p.posz));
     return retval;
 }
 
-bool LOSfinder::is_transparent(point p)
+bool LOSfinder::is_transparent(PosPoint p)
 {
-    point tilePoint = corner_point2point(p);
+    PosPoint tilePoint = corner_point2point(p);
     return map_->IsTransparent(tilePoint.posx, tilePoint.posy, tilePoint.posz);
 }
 
-bool LOSfinder::bresen_x(point source, point target)
+bool LOSfinder::bresen_x(PosPoint source, PosPoint target)
 {
     int y = source.posy;
     int error = 0;
@@ -277,8 +277,8 @@ bool LOSfinder::bresen_x(point source, point target)
         {
             // when in corner check side neighbours
             // if both of them are not transparent then corner is not transparent
-            point left_neighbour = {x + incrstep, y, source.posz};
-            point right_neighbour = {x, y + deltastep, source.posz};
+            PosPoint left_neighbour(x + incrstep, y, source.posz);
+            PosPoint right_neighbour(x, y + deltastep, source.posz);
             if (!is_transparent(left_neighbour) && !is_transparent(right_neighbour))
             {
                 return false;
@@ -288,8 +288,8 @@ bool LOSfinder::bresen_x(point source, point target)
         {
             // when ray hits an edge check both tiles - current and previous. Since ray travels through edge both of them 
             // must be transparent
-            point left_neighbour = {x - incrstep, y, source.posz};
-            point right_neighbour = {x + incrstep, y, source.posz};
+            PosPoint left_neighbour(x - incrstep, y, source.posz);
+            PosPoint right_neighbour(x + incrstep, y, source.posz);
             if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
             {
                 return false;
@@ -298,8 +298,8 @@ bool LOSfinder::bresen_x(point source, point target)
         else if (y % RAY_MULTIPLIER == 0)
         {
             // second case of edge handling
-            point left_neighbour = {x, y - deltastep, source.posz};
-            point right_neighbour = {x, y + deltastep, source.posz};
+            PosPoint left_neighbour(x, y - deltastep, source.posz);
+            PosPoint right_neighbour(x, y + deltastep, source.posz);
             if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
             {
                 return false;
@@ -307,7 +307,7 @@ bool LOSfinder::bresen_x(point source, point target)
         }
         else
         {
-            point new_point = {x, y, source.posz};
+            PosPoint new_point(x, y, source.posz);
             if (!is_transparent(new_point))
             {
                 return false;
@@ -325,7 +325,7 @@ bool LOSfinder::bresen_x(point source, point target)
     return true;
 }
 
-bool LOSfinder::bresen_y(point source, point target)
+bool LOSfinder::bresen_y(PosPoint source, PosPoint target)
 {
     int x = source.posx;
     int error = 0;
@@ -339,8 +339,8 @@ bool LOSfinder::bresen_y(point source, point target)
         {
             // when in corner check side neighbours
             // if both of them are not transparent then corner is not transparent
-            point left_neighbour = {x + deltastep, y, source.posz};
-            point right_neighbour = {x, y + incrstep, source.posz};
+            PosPoint left_neighbour(x + deltastep, y, source.posz);
+            PosPoint right_neighbour(x, y + incrstep, source.posz);
             if (!is_transparent(left_neighbour) && !is_transparent(right_neighbour))
             {
                 return false;
@@ -350,8 +350,8 @@ bool LOSfinder::bresen_y(point source, point target)
         {
             // when ray hits an edge check both tiles. Since ray travels through edge both of them 
             // must be transparent
-            point left_neighbour = {x - deltastep, y, source.posz};
-            point right_neighbour = {x + deltastep, y, source.posz};
+            PosPoint left_neighbour(x - deltastep, y, source.posz);
+            PosPoint right_neighbour(x + deltastep, y, source.posz);
             if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
             {
                 return false;
@@ -360,8 +360,8 @@ bool LOSfinder::bresen_y(point source, point target)
         else if (y % RAY_MULTIPLIER == 0)
         {
             // second case of edge handling
-            point left_neighbour = {x, y - incrstep, source.posz};
-            point right_neighbour = {x, y + incrstep, source.posz};
+            PosPoint left_neighbour(x, y - incrstep, source.posz);
+            PosPoint right_neighbour(x, y + incrstep, source.posz);
             if (!is_transparent(left_neighbour) || !is_transparent(right_neighbour))
             {
                 return false;
@@ -369,7 +369,7 @@ bool LOSfinder::bresen_y(point source, point target)
         }
         else
         {
-            point new_point = {x, y, source.posz};
+            PosPoint new_point(x, y, source.posz);
 
             if (!is_transparent(new_point))
             {
@@ -388,7 +388,7 @@ bool LOSfinder::bresen_y(point source, point target)
     return true;
 }
 
-bool LOSfinder::ray_trace(point source, point target)
+bool LOSfinder::ray_trace(PosPoint source, PosPoint target)
 {
     // run Bresenham's line algorithm
     if (std::abs(source.posx - target.posx) > std::abs(source.posy - target.posy))
@@ -404,16 +404,16 @@ bool LOSfinder::ray_trace(point source, point target)
 }
 
 void LOSfinder::mark_tiles_of_corner_as_visible(
-        std::list<point>* retlist,
-        point at,
-        point center,
+        std::list<PosPoint>* retlist,
+        PosPoint at,
+        PosPoint center,
         char visibility[])
 {
     for (int dx = -1; dx <= 0; dx++)
     {
         for (int dy = -1; dy <= 0; dy++)
         {
-            point p = {at.posx + dx, at.posy + dy, at.posz};
+            PosPoint p(at.posx + dx, at.posy + dy, at.posz);
             if (!map_->CheckBorders(&p.posx, &p.posy, &p.posz))
             {
                 continue;
@@ -453,7 +453,7 @@ LOSfinder::LOSfinder(IMapMaster* map)
 // if ray passes through edge it checks both adjasent tiles. They both must be transparent, otherwise ray blocks
 // if tile has at least one visible corner then this tile is visible
 // otherwise tile is invisible
-std::list<point>* LOSfinder::CalculateVisisble(std::list<point>* retlist, int posx, int posy, int posz)
+std::list<PosPoint>* LOSfinder::CalculateVisisble(std::list<PosPoint>* retlist, int posx, int posy, int posz)
 {
     Clear();
 
@@ -464,15 +464,15 @@ std::list<point>* LOSfinder::CalculateVisisble(std::list<point>* retlist, int po
         visible_tiles[i] = 0;
     }
 
-    point source =
-        { pos2corner(posx) + RAY_MULTIPLIER / 2,
+    PosPoint source(
+          pos2corner(posx) + RAY_MULTIPLIER / 2,
           pos2corner(posy) + RAY_MULTIPLIER / 2,
-          pos2corner(posz) + 1};
+          pos2corner(posz) + 1);
     for (int i = -SIZE_W_SQ; i < SIZE_W_SQ; ++i)
     {
         for (int j = -SIZE_H_SQ; j < SIZE_H_SQ; ++j)
         {
-            point p = {pos2corner(posx + i), pos2corner(posy + j), pos2corner(posz)};
+            PosPoint p(pos2corner(posx + i), pos2corner(posy + j), pos2corner(posz));
             if (!check_corner(p))
             {
                 continue;

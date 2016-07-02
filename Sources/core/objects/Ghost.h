@@ -10,7 +10,7 @@ public:
     Ghost(size_t id);
     virtual void AfterWorldCreation() override;
     virtual void Represent() override;
-    virtual void CalculateVisible(std::list<point>* visible_list) override;
+    virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;
     virtual void processGUImsg(const Message2& msg) override;
 
     virtual void InitGUI() override;

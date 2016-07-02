@@ -16,24 +16,24 @@ class LOSfinder
 {
 public:
     LOSfinder(IMapMaster* map);
-    std::list<point>* CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0);
+    std::list<PosPoint>* CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0);
 private:
     int pos2corner(int pos);
     int corner2pos(int corner);
     int sign(int value);
-    bool check_corner(point p);
-    point corner_point2point(point p);
-    bool is_transparent(point p);
-    bool bresen_x(point source, point target);
-    bool bresen_y(point source, point target);
-    bool ray_trace(point source, point target);
+    bool check_corner(PosPoint p);
+    PosPoint corner_point2point(PosPoint p);
+    bool is_transparent(PosPoint p);
+    bool bresen_x(PosPoint source, PosPoint target);
+    bool bresen_y(PosPoint source, PosPoint target);
+    bool ray_trace(PosPoint source, PosPoint target);
     void mark_tiles_of_corner_as_visible(
-            std::list<point>* retlist,
-            point at,
-            point center,
+            std::list<PosPoint>* retlist,
+            PosPoint at,
+            PosPoint center,
             char visibility[]);
     void Clear();
-    std::list<point> worklist;
+    std::list<PosPoint> worklist;
 
     IMapMaster* map_;
 };
@@ -56,7 +56,7 @@ public:
     virtual int GetHeight() const override;
     virtual int GetDepth() const override;
 
-    virtual std::list<point>* GetVisiblePoints() override;
+    virtual std::list<PosPoint>* GetVisiblePoints() override;
 
     virtual void ResizeMap(int x, int y, int z) override;
     virtual void FillAtmosphere() override;
@@ -66,12 +66,12 @@ public:
     virtual bool IsTileVisible(size_t tile_id) override;
     virtual bool IsTransparent(int posx, int posy, int posz = 0) override;
 
-    virtual void CalculateVisisble(std::list<point>* retval, int posx, int posy, int posz = 0) override;
+    virtual void CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) override;
 
     virtual bool CheckBorders(const int* x, const int* y, const int* z) const override;
 private:
     LOSfinder losf_;
     IAtmosphere* atmosphere_;
     std::vector<std::vector<std::vector<SqType>>> squares_;
-    std::list<point>* visible_points_;
+    std::list<PosPoint>* visible_points_;
 };

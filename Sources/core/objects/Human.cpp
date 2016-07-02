@@ -374,7 +374,7 @@ void Human::Represent()
     GetRepresentation().AddToNewFrame(ent);
 }
 
-void Human::CalculateVisible(std::list<point>* visible_list)
+void Human::CalculateVisible(std::list<PosPoint>* visible_list)
 {
     if (health_ >= 0)
     {

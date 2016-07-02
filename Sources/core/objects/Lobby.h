@@ -15,7 +15,7 @@ public:
     int GetSecondUntilStart();
     virtual void Process() override;
 
-    void AddSpawnPoint(id_ptr_on<SpawnPoint> point);
+    void AddSpawnPoint(id_ptr_on<SpawnPoint> PosPoint);
     std::vector<id_ptr_on<CubeTile>> GetTilesFor(const std::string& type);
 
     int KV_SAVEBLE(security_score_);

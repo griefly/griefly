@@ -37,13 +37,17 @@ const Dir D_NORTHWEST = 9;
 
 struct VDir
 {
+    VDir(int new_x = 0, int new_y = 0, int new_z = 0)
+        : x(new_x), y(new_y), z(new_z) { }
     int x;
     int y;
     int z;
 };
 
-struct point
+struct PosPoint
 {
+    PosPoint(int new_x = 0, int new_y = 0, int new_z = 0)
+        : posx(new_x), posy(new_y), posz(new_z) { }
     int posx;
     int posy;
     int posz;
@@ -54,14 +58,14 @@ inline bool NonZero(const VDir& vdir)
     return    vdir.x
            || vdir.y
            || vdir.z;
-};
+}
 
-const VDir VD_LEFT = {-1, 0, 0};
-const VDir VD_RIGHT = {1, 0, 0};
-const VDir VD_UP = {0, -1, 0};
-const VDir VD_DOWN = {0, 1, 0};
-const VDir VD_ZUP = {0, 0, 1};
-const VDir VD_ZDOWN = {0, 0, -1};
+const VDir VD_LEFT(-1, 0, 0);
+const VDir VD_RIGHT(1, 0, 0);
+const VDir VD_UP(0, -1, 0);
+const VDir VD_DOWN(0, 1, 0);
+const VDir VD_ZUP(0, 0, 1);
+const VDir VD_ZDOWN(0, 0, -1);
 
 const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
 

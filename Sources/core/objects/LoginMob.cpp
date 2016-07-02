@@ -125,7 +125,7 @@ void LoginMob::Process()
 
 }
 
-void LoginMob::CalculateVisible(std::list<point>* visible_list)
+void LoginMob::CalculateVisible(std::list<PosPoint>* visible_list)
 {
     visible_list->clear();
 }

@@ -58,7 +58,7 @@ public:
 
     virtual InterfaceBase* GetInterface() override { return &interface_; }
 
-    virtual void CalculateVisible(std::list<point>* visible_list) override;
+    virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;
 private:
     LoginInterface KV_SAVEBLE(interface_);
 };

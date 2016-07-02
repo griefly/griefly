@@ -26,10 +26,10 @@ public:
     MOCK_METHOD3(ResizeMap, void(int new_map_x, int new_map_y, int new_map_z));
     MOCK_METHOD0(GetSquares, std::vector<std::vector<std::vector<SqType>>>&());
     MOCK_CONST_METHOD0(GetSquares, const std::vector<std::vector<std::vector<SqType>>>&());
-    MOCK_METHOD0(GetVisiblePoints, std::list<point>*());
+    MOCK_METHOD0(GetVisiblePoints, std::list<PosPoint>*());
     MOCK_METHOD0(GetAtmosphere, IAtmosphere&());
     MOCK_METHOD0(FillAtmosphere, void());
-    MOCK_METHOD4(CalculateVisisble, void(std::list<point>*, int, int, int));
+    MOCK_METHOD4(CalculateVisisble, void(std::list<PosPoint>*, int, int, int));
     MOCK_METHOD1(IsTileVisible, bool(size_t tile_id));
     MOCK_METHOD3(IsTransparent, bool(int, int, int));
     MOCK_CONST_METHOD3(CheckBorders, bool(const int* x, const int* y, const int* z));
