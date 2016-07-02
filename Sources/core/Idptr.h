@@ -13,10 +13,14 @@ extern std::vector<IMainObject*>* id_ptr_id_table;
 template<typename T>
 class id_ptr_on
 {
+    template<typename U>
+    friend std::ostream& operator<<(std::ostream& stream, const id_ptr_on<U>& ptr);
+    template<typename U>
+    friend std::istream& operator>>(std::istream& stream, id_ptr_on<U>& ptr);
 public:
     id_ptr_on()
     {
-        id = 0;
+        id_ = 0;
     }
     template<class T2>
     bool operator==(const id_ptr_on<T2>& rval)
@@ -26,11 +30,11 @@ public:
 
     T* operator*()
     {
-        if (id == 0)
+        if (id_ == 0)
         {
             return nullptr;
         }
-        IMainObject* local = GetFromIdTable(id);
+        IMainObject* local = GetFromIdTable(id_);
         if (nullptr == local)
         {
             return nullptr;
@@ -39,11 +43,11 @@ public:
     }
     const T* operator*() const
     {
-        if (id == 0)
+        if (id_ == 0)
         {
             return nullptr;
         }
-        IMainObject* local = GetFromIdTable(id);
+        IMainObject* local = GetFromIdTable(id_);
         if (nullptr == local)
         {
             return nullptr;
@@ -60,19 +64,19 @@ public:
     }
     id_ptr_on& operator=(size_t id_new)
     {
-        id = id_new;
+        id_ = id_new;
         return *this;
     }
     template<typename T2>
     id_ptr_on& operator=(id_ptr_on<T2> value)
     {
-        id = value.ret_id();
+        id_ = value.ret_id();
         return *this;
     }
     template<typename T2>
     id_ptr_on(id_ptr_on<T2> value)
     {
-        id = value.ret_id();
+        id_ = value.ret_id();
     }
 
     bool valid() const
@@ -89,11 +93,11 @@ public:
     }
     id_ptr_on(size_t id_new)
     {
-        id = id_new;
+        id_ = id_new;
     }
     size_t ret_id() const
     {
-        return id;
+        return id_;
     }
 private:
     static IMainObject* GetFromIdTable(size_t id)
@@ -101,21 +105,19 @@ private:
         return (*id_ptr_id_table)[id];
     }
 
-    size_t id;
+    size_t id_;
 };
 
 template<typename T>
 std::ostream& operator<<(std::ostream& stream, const id_ptr_on<T>& ptr)
 {
-    stream << ptr.ret_id();
+    stream << ptr.id_;
     return stream;
 }
 
 template<typename T>
 std::istream& operator>>(std::istream& stream, id_ptr_on<T>& ptr)
 {
-    size_t l;
-    stream >> l;
-    ptr = l;
+    stream >> ptr.id_;
     return stream;
 }
