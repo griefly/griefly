@@ -4,7 +4,10 @@
 
 #include <iostream>
 
+#include <QDebug>
+
 #include "FastIsType.h"
+#include "KVAbort.h"
 
 class IMainObject;
 
@@ -31,12 +34,7 @@ public:
     template<class U>
     id_ptr_on(const id_ptr_on<U>& other)
     {
-        if (std::is_base_of<U, T>::value)
-        {
-            id_ = other.id_;
-            return;
-        }
-        *this = other.id_;
+        *this = other;
     }
     template<class U>
     bool operator==(const id_ptr_on<U>& other)
@@ -52,11 +50,6 @@ public:
     template<class U>
     id_ptr_on& operator=(const id_ptr_on<U>& other)
     {
-        if (std::is_base_of<U, T>::value)
-        {
-            id_ = other.id_;
-            return *this;
-        }
         *this = other.id_;
         return *this;
     }
@@ -68,7 +61,7 @@ public:
             return nullptr;
         }
         IMainObject* local = GetFromIdTable(id_);
-        if (nullptr == local)
+        if (local == nullptr)
         {
             return nullptr;
         }
@@ -99,6 +92,12 @@ public:
 private:
     static IMainObject* GetFromIdTable(size_t id)
     {
+        if (id >= id_ptr_id_table->size())
+        {
+            qDebug() << "Id table lookup fail, id: "
+                     << id << ", size: " << id_ptr_id_table->size();
+            kv_abort();
+        }
         return (*id_ptr_id_table)[id];
     }
 

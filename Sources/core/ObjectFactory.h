@@ -43,7 +43,7 @@ private:
     void Clear();
 
     void SaveMapHeader(std::stringstream& str);
-    void LoadMapHeader(std::stringstream& savefile, size_t real_this_mob);
+    void LoadMapHeader(std::stringstream& savefile);
 
     IMainObject* CreateVoid(const std::string& hash, size_t id_new);
 

@@ -104,7 +104,7 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
     savefile << std::endl;
 }
 
-void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_mob)
+void ObjectFactory::LoadMapHeader(std::stringstream& savefile)
 {
     savefile >> MAIN_TICK;
     SYSTEM_STREAM << "MAIN_TICK: " << MAIN_TICK << std::endl;
@@ -150,17 +150,6 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile, size_t real_this_
         qDebug() << second;
         SetPlayerId(first, second);
     }
-
-    qDebug() << "This mob: " << real_this_mob;
-
-    if (real_this_mob == 0)
-    {
-        game_->SetMob(loc);
-    }
-    else
-    {
-        game_->SetMob(GetPlayerId(real_this_mob));
-    }
 }
 
 void ObjectFactory::Save(std::stringstream& savefile)
@@ -188,7 +177,7 @@ void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
 {
     Clear();
 
-    LoadMapHeader(savefile, real_this_mob);
+    LoadMapHeader(savefile);
     int j = 0;
     while(!savefile.eof())
     {
@@ -214,7 +203,10 @@ void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
         IMainObject* object = CreateVoid(type, id_loc);
         object->Load(savefile);
     }
-    SYSTEM_STREAM << "\n NUM OF ELEMENTS CREATED: " << j << "\n";
+    qDebug() << "\n NUM OF ELEMENTS CREATED: " << j;
+    qDebug() << "SET MOB START" << GetPlayerId(real_this_mob);
+    game_->SetMob(GetPlayerId(real_this_mob));
+    qDebug() << "SET MOB END" << game_->GetMob().ret_id();
     game_->ChangeMob(game_->GetMob());
     is_world_generating_ = false;
 }

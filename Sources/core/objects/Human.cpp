@@ -29,8 +29,6 @@ Human::Human(size_t id) : IMob(id)
     is_strong_owner = true;
     attack_cooldown_ = 0;
     name = "Morgan James";
-    interface_.InitSlots();
-    interface_.SetOwner(GetId());
 
     lay_timer_ = 0;
 
@@ -42,6 +40,9 @@ Human::Human(size_t id) : IMob(id)
 void Human::AfterWorldCreation()
 {
     IMob::AfterWorldCreation();
+
+    interface_.InitSlots();
+    interface_.SetOwner(GetId());
 
     interface_.uniform_.Set(Create<Item>(JanitorUniform::T_ITEM_S()));
     interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
@@ -396,6 +397,8 @@ void CaucasianHuman::AfterWorldCreation()
     // It is not mistake - we don't want to call Human function
     // because it creates some new items
     IMob::AfterWorldCreation();
+    interface_.InitSlots();
+    interface_.SetOwner(GetId());
 
     interface_.uniform_.Set(Create<Item>(RedUniform::T_ITEM_S()));
     interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));

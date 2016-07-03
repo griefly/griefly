@@ -80,6 +80,7 @@ void LoginMob::processGUImsg(const Message2& msg)
         {
             return;
         }
+        qDebug() << "Begin human creation in LoginMob";
         size_t net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
@@ -88,9 +89,12 @@ void LoginMob::processGUImsg(const Message2& msg)
             std::string text;
             if (net_id % 2)
             {
+                qDebug() << "Creating security...";
                 human = Create<Human>(CaucasianHuman::T_ITEM_S());
+                qDebug() << "End creating security1...";
                 tiles = GetLobby().GetTilesFor("security");
                 text = SECURITY_TEXT;
+                qDebug() << "End creating security2...";
             }
             else
             {
@@ -109,6 +113,7 @@ void LoginMob::processGUImsg(const Message2& msg)
 
             GetGame().GetChat().PostTextFor(text, human);
         }
+        qDebug() << "End human creation in LoginMob";
     }
     if (msg.type == MessageType::MESSAGE)
     {
