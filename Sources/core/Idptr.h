@@ -26,6 +26,7 @@ public:
     id_ptr_on()
     {
         id_ = 0;
+        casted_ = false;
     }
     id_ptr_on(size_t id)
     {
@@ -45,6 +46,7 @@ public:
     id_ptr_on& operator=(size_t id)
     {
         id_ = id;
+        casted_ = false;
         return *this;
     }
     template<class U>
@@ -65,7 +67,16 @@ public:
         {
             return nullptr;
         }
-        return castTo<T>(local);
+        if (casted_)
+        {
+            return reinterpret_cast<T*>(local);
+        }
+        T* retval = castTo<T>(local);
+        if (retval)
+        {
+            casted_ = true;
+        }
+        return retval;
     }
 
     T* operator->() const
@@ -100,7 +111,7 @@ private:
         }
         return (*id_ptr_id_table)[id];
     }
-
+    mutable bool casted_;
     size_t id_;
 };
 
