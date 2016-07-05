@@ -16,8 +16,7 @@
 #include <gmock/gmock.h>
 #endif
 
-// Temporarly
-#include "Interfaces.h"
+#include "core/FastIsType.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +25,8 @@ int main(int argc, char *argv[])
 
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
+
+    InitCastTable();
     // LCOV_EXCL_STOP
 #ifdef _BUILD_TESTS
     if (app.arguments().contains("--run-tests"))

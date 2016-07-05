@@ -2,8 +2,21 @@
 
 #include <string>
 
-// TODO: inline
-bool FastIsType(int typeto, int typefrom);
+#include <QVector>
+#include <QBitArray>
+
+#if defined(__linux__)
+#define __forceinline __attribute__((always_inline))
+#endif
+
+extern QVector<QBitArray>* cast_table;
+
+__forceinline bool FastIsType(int typeto, int typefrom)
+{
+    return (*cast_table)[typefrom].testBit(typeto);
+}
+
+void InitCastTable();
 
 template<typename Typeto>
 inline bool FastIsType(int typefrom)
