@@ -6,7 +6,7 @@
 #include <QBitArray>
 
 #if defined(__linux__)
-#define __forceinline __attribute__((always_inline))
+#define __forceinline __attribute__((always_inline)) inline
 #endif
 
 extern QVector<QBitArray>* cast_table;
