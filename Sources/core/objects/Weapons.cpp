@@ -25,25 +25,8 @@ void LaserGun::Shoot(VDir target)
     {
         snd = "Laser.ogg";
     }
-    ShootImpl(target,snd,Laser::T_ITEM_S(),"");
+    ShootImpl(target, snd, Laser::T_ITEM_S(),"");
 }
-void LaserGun::AttackBy(id_ptr_on<Item> item)
-{
-    if (id_ptr_on<AmmunitionBox> r = item)
-    {
-        if(r->CheckBullets())
-        {
-            if(AddAmmo())
-            {
-                r->RemoveBullet();
-                return;
-            }
-        }
-        // message which tells the player that the box is empty 
-    }
-}
-
-
 Revolver::Revolver(size_t id) : Gun(id)
 {
     SetState("revolver");
@@ -58,20 +41,5 @@ void Revolver::Shoot(VDir target)
 {
     std::string snd;
     snd = "Gunshot.ogg";
-    ShootImpl(target,snd,Bullet::T_ITEM_S(),BulletCasing::T_ITEM_S());
-}
-void Revolver::AttackBy(id_ptr_on<Item> item)
-{
-    if (id_ptr_on<AmmunitionBox> r = item)
-    {
-        if(r->CheckBullets())
-        {
-		    if(AddAmmo())
-            {
-                r->RemoveBullet();
-                return;
-            }
-	    }
-	    // message which tells the player that the box is empty 
-    }
+    ShootImpl(target, snd, Bullet::T_ITEM_S(), BulletCasing::T_ITEM_S());
 }

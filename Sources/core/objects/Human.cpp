@@ -467,7 +467,7 @@ void CaucasianHuman::AfterWorldCreation()
 
     interface_.uniform_.Set(Create<Item>(RedUniform::T_ITEM_S()));
     interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(Create<Item>(Wrench::T_ITEM_S())); // wrench
+    interface_.r_hand_.Set(Create<Item>(LaserGun::T_ITEM_S())); // wrench
     interface_.head_.Set(Create<Item>(Helmet::T_ITEM_S()));
     interface_.suit_.Set(Create<Item>(Armor::T_ITEM_S()));
 

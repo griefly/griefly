@@ -22,23 +22,82 @@ bool Gun::UseAmmo()
 void Gun::ShootImpl(VDir target, const std::string& sound, const std::string& projectile_type, const std::string& casing_type)
 {
     id_ptr_on<CubeTile> tile = GetOwner()->GetOwner();
+    id_ptr_on<IMovable> shooter = GetOwner();
     if (tile.valid())
     {	
         if (UseAmmo())
-        { 
-            auto projectile = Create<Projectile>(projectile_type,tile);
-            projectile->MakeMovementPattern(target,GetOwner());
-            PlaySoundIfVisible(sound,tile.ret_id());
+        {
+            int x = target.x;
+            int y = target.y;
+            Dir facing = shooter->GetDir();
+            if(std::abs(y) != std::abs(x))
+            {
+                shooter->Rotate(VDirToDir(target));
+                auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(VDirToDir(target)));
+                projectile->MakeMovementPattern(target, facing);
+            }
+            else
+            {
+                if (y < 0)
+                {
+                    if (facing == 0|| facing == 1)
+                    {
+                        if (x > 0)
+                        {
+                            shooter->Rotate(D_RIGHT);
+                            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_RIGHT));
+                            projectile->MakeMovementPattern(target, facing);
+                        }
+                        else
+                        {
+                            shooter->Rotate(D_LEFT);
+                            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_LEFT));
+                            projectile->MakeMovementPattern(target, facing);
+                        }
+                    }
+                    else
+                    {
+                        shooter->Rotate(D_UP);
+                        auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_UP));
+                        projectile->MakeMovementPattern(target, facing);
+                    }
+                }
+                else
+                {
+                    if (facing == 0|| facing == 1)
+                    {
+                        if (x > 0)
+                        {
+                            shooter->Rotate(D_RIGHT);
+                            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_RIGHT));
+                            projectile->MakeMovementPattern(target, facing);
+                        }
+                        else
+                        {
+                            shooter->Rotate(D_LEFT);
+                            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_LEFT));
+                            projectile->MakeMovementPattern(target, facing);
+                        }
+                    }
+                    else
+                    {
+                        shooter->Rotate(D_DOWN);
+                        auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_DOWN));
+                        projectile->MakeMovementPattern(target, facing);
+                    }
+                }
+            }
+            PlaySoundIfVisible(sound, tile.ret_id());
             if(!casing_type.empty())
             {
                 Dir dir = GetRand() % 4;
-                id_ptr_on<Item> bc =Create<Item>(casing_type,tile.ret_id());
+                id_ptr_on<Item> bc =Create<Item>(casing_type, tile.ret_id());
                 bc->Rotate(dir);
             } 	
         }
         else
         {
-            PlaySoundIfVisible("empty.ogg",tile.ret_id()); 
+            PlaySoundIfVisible("empty.ogg", tile.ret_id()); 
             // the *click* text from ss13
         }
     }	
@@ -65,7 +124,7 @@ void Gun::AttackBy(id_ptr_on<Item> item)
         {
             if(AddAmmo())
             {
-		        box->RemoveBullet();
+                box->RemoveBullet();
                 return;
             }
         }

@@ -11,20 +11,17 @@ class Projectile : public IMovable
 {
 public:
     Projectile(size_t id);
-    DECLARE_SAVED(Projectile,IMovable)	
+    DECLARE_SAVED(Projectile, IMovable)	
     DECLARE_GET_TYPE_ITEM(Projectile)
-    void MakeMovementPattern(VDir target,id_ptr_on<Human> x);
+    void MakeMovementPattern(VDir target, Dir facing);
     virtual void Process() override;
     virtual void BumpByGas(Dir dir, bool inside = false) override {};
     virtual void AfterWorldCreation() override;
     virtual void ProcessForce() override {};
-    void MakeMovementLoops(int x,int y,Dir d1,Dir d2);
+    void MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2);
     int GetDamage();
     virtual bool CheckPassable();
 private:
-    bool KV_SAVEBLE(reached_target);
-    int KV_SAVEBLE(set_target_);
-    id_ptr_on<Human> KV_SAVEBLE(shooter_);
     int KV_SAVEBLE(current_step_);
     std::vector<Dir> KV_SAVEBLE(movement_);
 protected:
