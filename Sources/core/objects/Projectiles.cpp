@@ -189,12 +189,13 @@ void Projectile::MakeMovementPattern(VDir target, Dir facing)
         qDebug() << "Critical error, MakeMovementPattern has reached unreachable place";
         abort();
     }
+    std::cout << "size: " << movement_.size() << std::endl;
 }
 void Projectile::MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2)
 {
     int shuffle = 1;
-    int z = (2 * y) - 1;
-    for (int i = 0; i < y + x; i++)
+    int z = (2 * d2_number) - 1;
+    for (int i = 0; i < d2_number + d1_number; i++)
     {
         if (shuffle == 1 || z < i)
         {
