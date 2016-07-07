@@ -73,4 +73,4 @@ You can also specify game host by parameter `ip=game_host_address`. By default i
 
 Codestyle
 ----------
-See `CODESTYLE.md` file.
+See `CODESTYLE.md` file for C++ codestyle. Use default ones for Python and Go (PEP8 and Go Coding Style accordingly).

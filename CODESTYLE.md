@@ -1,5 +1,5 @@
-Codestyle
-----------
+С++ Codestyle
+-------------
 _This guide is not completed_
 
 #### Tabs  
