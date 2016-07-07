@@ -214,7 +214,7 @@ void Game::WaitForExit()
     thread_.wait();
 }
 
-std::vector<IMainObject*>* id_ptr_id_table = nullptr;
+std::vector<ObjectInfo>* id_ptr_id_table = nullptr;
 
 void Game::InitWorld(int id, std::string map_name)
 {   
@@ -249,9 +249,9 @@ void Game::InitWorld(int id, std::string map_name)
                       it != GetFactory().GetIdTable().end();
                       ++it)
             {
-                if ((*it) && ((*it)->RT_ITEM() == SpawnPoint::REAL_TYPE_ITEM))
+                if (it->object && (it->object->RT_ITEM() == SpawnPoint::REAL_TYPE_ITEM))
                 {
-                    GetLobby().AddSpawnPoint((*it)->GetId());
+                    GetLobby().AddSpawnPoint(it->object->GetId());
                 }
             }
 

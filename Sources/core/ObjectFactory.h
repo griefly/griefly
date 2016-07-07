@@ -13,7 +13,7 @@ public:
     ObjectFactory(IGame* game);
 
     virtual unsigned int GetLastHash() override;
-    virtual std::vector<IMainObject*>& GetIdTable() override;
+    virtual std::vector<ObjectInfo>& GetIdTable() override;
 
     virtual void ForeachProcess() override;
 
@@ -60,7 +60,7 @@ private:
 
     std::vector<IMainObject*> ids_to_delete_;
 
-    std::vector<IMainObject*> objects_table_;
+    std::vector<ObjectInfo> objects_table_;
     std::vector<id_ptr_on<IMainObject>> process_table_;
 
     std::vector<id_ptr_on<IMainObject>> add_to_process_;

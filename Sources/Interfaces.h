@@ -57,7 +57,7 @@ public:
     virtual ~IObjectFactory() { }
 
     virtual unsigned int GetLastHash() = 0;
-    virtual std::vector<IMainObject*>& GetIdTable() = 0;
+    virtual std::vector<ObjectInfo>& GetIdTable() = 0;
 
     virtual void ForeachProcess() = 0;
 

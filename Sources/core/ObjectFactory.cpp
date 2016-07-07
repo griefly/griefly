@@ -24,7 +24,7 @@ unsigned int ObjectFactory::GetLastHash()
     return hash_last_;
 }
 
-std::vector<IMainObject*>& ObjectFactory::GetIdTable()
+std::vector<ObjectInfo>& ObjectFactory::GetIdTable()
 {
     return objects_table_;
 }
@@ -155,18 +155,22 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile)
 void ObjectFactory::Save(std::stringstream& savefile)
 {
     SaveMapHeader(savefile);
-    auto it = ++objects_table_.begin();
-    while(it != objects_table_.end())
+
+    if (objects_table_.empty())
     {
-        if(*it) 
+        qDebug() << "Trying to save empty world!";
+        kv_abort();
+    }
+
+    auto it = ++objects_table_.begin();
+    while (it != objects_table_.end())
+    {
+        if (it->object)
         {
-            (*it++)->Save(savefile);
+            it->object->Save(savefile);
             savefile << std::endl;
         }
-        else
-        {
-            ++it;
-        }
+        ++it;
     }
     savefile << "0 ~";
 }
@@ -340,9 +344,9 @@ void ObjectFactory::Clear()
     size_t table_size = objects_table_.size();
     for (size_t i = 1; i < table_size; ++i)
     {
-        if (objects_table_[i] != nullptr)
+        if (objects_table_[i].object != nullptr)
         {
-            delete objects_table_[i];
+            delete objects_table_[i].object;
         }
     }
     if (table_size != objects_table_.size())
@@ -370,9 +374,9 @@ void ObjectFactory::FinishWorldCreation()
     size_t table_size = objects_table_.size();
     for (size_t i = 1; i < table_size; ++i)
     {
-        if (objects_table_[i] != nullptr)
+        if (objects_table_[i].object != nullptr)
         {
-            objects_table_[i]->AfterWorldCreation();
+            objects_table_[i].object->AfterWorldCreation();
         }
     }
 }
@@ -391,7 +395,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
     {
         objects_table_.resize(id_ * 2);
     }
-    objects_table_[id_] = item;
+    objects_table_[id_].object = item;
     size_t retval = id_;
     ++id_;
     id_ptr_on<IOnMapBase> owner = owner_id;
@@ -429,15 +433,15 @@ IMainObject* ObjectFactory::CreateVoid(const std::string &hash, size_t id_new)
     {
         id_ = id_new + 1;
     }
-    objects_table_[id_new] = item;
+    objects_table_[id_new].object = item;
     item->SetId(id_new);
     return item;
 }
 
 void ObjectFactory::DeleteLater(size_t id)
 {
-    ids_to_delete_.push_back(objects_table_[id]);
-    objects_table_[id] = nullptr;
+    ids_to_delete_.push_back(objects_table_[id].object);
+    objects_table_[id].object = nullptr;
 }
 
 void ObjectFactory::ProcessDeletion()
@@ -455,9 +459,9 @@ unsigned int ObjectFactory::Hash()
     size_t table_size = objects_table_.size();
     for (size_t i = 1; i < table_size; ++i)
     {
-        if (objects_table_[i] != nullptr)
+        if (objects_table_[i].object != nullptr)
         {
-            h += objects_table_[i]->Hash();
+            h += objects_table_[i].object->Hash();
         }
     }
 

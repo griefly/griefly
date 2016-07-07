@@ -11,7 +11,17 @@
 
 class IMainObject;
 
-extern std::vector<IMainObject*>* id_ptr_id_table;
+struct ObjectInfo
+{
+    ObjectInfo()
+        : object(nullptr)
+    {
+        // Nothing
+    }
+    IMainObject* object;
+};
+
+extern std::vector<ObjectInfo>* id_ptr_id_table;
 
 template<class T>
 class id_ptr_on
@@ -109,7 +119,7 @@ private:
                      << id << ", size: " << id_ptr_id_table->size();
             kv_abort();
         }
-        return (*id_ptr_id_table)[id];
+        return (*id_ptr_id_table)[id].object;
     }
     mutable bool casted_;
     size_t id_;

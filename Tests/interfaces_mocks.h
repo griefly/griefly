@@ -39,7 +39,7 @@ class MockIObjectFactory : public IObjectFactory
 {
 public:
     MOCK_METHOD0(GetLastHash, unsigned int());
-    MOCK_METHOD0(GetIdTable, std::vector<IMainObject*>&());
+    MOCK_METHOD0(GetIdTable, std::vector<ObjectInfo>&());
     MOCK_METHOD0(ForeachProcess, void());
     MOCK_METHOD0(Hash, unsigned int());
     MOCK_METHOD1(Save, void(std::stringstream& str));
