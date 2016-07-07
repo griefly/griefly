@@ -9,7 +9,6 @@ class ITurf;
 class IMovable;
 class Item;
 
-
 typedef int PassableLevel;
 namespace Passable
 {

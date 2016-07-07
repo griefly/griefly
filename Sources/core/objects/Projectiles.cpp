@@ -39,7 +39,7 @@ unsigned int hash(const std::vector<Dir>& content)
 Projectile::Projectile(size_t id) : IMovable(id)
 {
     SetPassable(D_ALL, Passable::FULL);
-    damage = 0;
+    damage_ = 0;
     SetSprite("icons/projectiles.dmi");
     v_level = 5;
     current_step_ = 1;
@@ -90,7 +90,7 @@ void Projectile::MakeMovementPattern(VDir target, Dir facing)
     {
         if (y < 0)
         {
-            if (facing == 0|| facing == 1)
+            if (facing == D_LEFT || facing == D_RIGHT)
             {
                 if (x > 0)
                 {
@@ -115,7 +115,7 @@ void Projectile::MakeMovementPattern(VDir target, Dir facing)
         }
         else
         {
-            if (facing == 0|| facing == 1)
+            if (facing == D_LEFT || facing == D_RIGHT)
             {
                 if (x > 0)
                 {
@@ -189,7 +189,6 @@ void Projectile::MakeMovementPattern(VDir target, Dir facing)
         qDebug() << "Critical error, MakeMovementPattern has reached unreachable place";
         abort();
     }
-    std::cout << "size: " << movement_.size() << std::endl;
 }
 void Projectile::MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2)
 {
@@ -216,6 +215,6 @@ void Projectile::AfterWorldCreation()
 }
 int Projectile::GetDamage()
 {
-    return damage;
+    return damage_;
 }
 

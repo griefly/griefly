@@ -25,7 +25,7 @@ void LaserGun::Shoot(VDir target)
     {
         snd = "Laser.ogg";
     }
-    ShootImpl(target, snd, Laser::T_ITEM_S(),"");
+    ShootImpl(target, snd, Laser::T_ITEM_S(), "");
 }
 Revolver::Revolver(size_t id) : Gun(id)
 {

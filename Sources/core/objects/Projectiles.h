@@ -21,10 +21,10 @@ public:
     void MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2);
     int GetDamage();
     virtual bool CheckPassable();
+protected:
+    int KV_SAVEBLE(damage_);
 private:
     int KV_SAVEBLE(current_step_);
     std::vector<Dir> KV_SAVEBLE(movement_);
-protected:
-    int KV_SAVEBLE(damage);
 };
 ADD_TO_TYPELIST(Projectile);

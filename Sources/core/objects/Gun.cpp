@@ -29,70 +29,60 @@ void Gun::ShootImpl(VDir target, const std::string& sound, const std::string& pr
         {
             int x = target.x;
             int y = target.y;
+            Dir shooting_direction;
             Dir facing = shooter->GetDir();
             if(std::abs(y) != std::abs(x))
             {
-                shooter->Rotate(VDirToDir(target));
-                auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(VDirToDir(target)));
-                projectile->MakeMovementPattern(target, facing);
+                shooting_direction = VDirToDir(target);
             }
             else
             {
                 if (y < 0)
                 {
-                    if (facing == 0|| facing == 1)
+                    if (facing == D_LEFT || facing == D_RIGHT)
                     {
                         if (x > 0)
                         {
-                            shooter->Rotate(D_RIGHT);
-                            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_RIGHT));
-                            projectile->MakeMovementPattern(target, facing);
+                            shooting_direction = D_RIGHT;
                         }
                         else
                         {
-                            shooter->Rotate(D_LEFT);
-                            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_LEFT));
-                            projectile->MakeMovementPattern(target, facing);
+                            shooting_direction = D_LEFT;
                         }
                     }
                     else
                     {
-                        shooter->Rotate(D_UP);
-                        auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_UP));
-                        projectile->MakeMovementPattern(target, facing);
+                        shooting_direction = D_UP;
                     }
                 }
                 else
                 {
-                    if (facing == 0|| facing == 1)
+                    if (facing == D_LEFT || facing == D_RIGHT)
                     {
                         if (x > 0)
                         {
-                            shooter->Rotate(D_RIGHT);
-                            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_RIGHT));
-                            projectile->MakeMovementPattern(target, facing);
+                            shooting_direction = D_RIGHT;
                         }
                         else
                         {
-                            shooter->Rotate(D_LEFT);
-                            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_LEFT));
-                            projectile->MakeMovementPattern(target, facing);
+                            shooting_direction = D_LEFT;
                         }
                     }
                     else
                     {
-                        shooter->Rotate(D_DOWN);
-                        auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(D_DOWN));
-                        projectile->MakeMovementPattern(target, facing);
+                        shooting_direction = D_DOWN;
                     }
                 }
             }
+            shooter->Rotate(shooting_direction);
+            auto projectile = Create<Projectile>(projectile_type, tile->GetNeighbour(shooting_direction));
+            projectile->MakeMovementPattern(target, facing);
             PlaySoundIfVisible(sound, tile.ret_id());
-            if(!casing_type.empty())
+            if (!casing_type.empty())
             {
                 Dir dir = GetRand() % 4;
-                id_ptr_on<Item> bc =Create<Item>(casing_type, tile.ret_id());
-                bc->Rotate(dir);
+                id_ptr_on<Item> casing = Create<Item>(casing_type, tile.ret_id());
+                casing->Rotate(dir);
             } 	
         }
         else
@@ -120,9 +110,9 @@ void Gun::AttackBy(id_ptr_on<Item> item)
 {
     if (id_ptr_on<AmmunitionBox> box = item)
     {
-        if(box->CheckBullets())
+        if (box->CheckBullets())
         {
-            if(AddAmmo())
+            if (AddAmmo())
             {
                 box->RemoveBullet();
                 return;

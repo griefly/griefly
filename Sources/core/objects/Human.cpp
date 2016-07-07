@@ -161,7 +161,7 @@ void Human::processGUImsg(const Message2 &msg)
                         item->AttackBy(0);
                     }
                 }
-                else    
+                else
                 {
                     if (GetLying() == false)
                     {
@@ -412,18 +412,22 @@ void Human::Bump(id_ptr_on<IMovable> item)
             health_ -= projectile->GetDamage();
             if (id_ptr_on<Bullet> bullet = projectile)
             {
-                 GetGame().GetChat().PostSimpleText(name + " got hit by a bullet!", owner->GetId()); // TODO maybe this is not necessary don't remember if this can be found in original ss13
-                 unsigned int value = GetRand() % 3;
-                 std::string snd;
-                 if (value == 0)
-                 {
-                     snd = "genhit1.ogg";
-                 }
-                 if (value == 1)
-                     snd = "genhit2.ogg";
-                 if (value == 2)
-                     snd = "genhit3.ogg";
-                 PlaySoundIfVisible(snd, owner.ret_id());
+                GetGame().GetChat().PostSimpleText(name + " got hit by a bullet!", owner->GetId());    // TODO maybe this is not necessary don't remember if this can be found in original ss13
+                unsigned int value = GetRand() % 3;
+                std::string snd;
+                if (value == 0)
+                {
+                    snd = "genhit1.ogg";
+                }
+                if (value == 1)
+                {
+                    snd = "genhit2.ogg";
+                }
+                if (value == 2)
+                {
+                    snd = "genhit3.ogg";
+                }
+                PlaySoundIfVisible(snd, owner.ret_id());
             }
             damaged = true;
         }
