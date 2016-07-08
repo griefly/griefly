@@ -136,7 +136,7 @@ void Human::processGUImsg(const Message2 &msg)
         {
             return;
         }
-    // TODO shorter cd when shooting with weapons
+        // TODO shorter cd when shooting with weapons
         attack_cooldown_ = MAIN_TICK;
         id_ptr_on<IOnMapObject> item = Network2::ExtractObjId(obj);
         if (item && item->GetOwner())
