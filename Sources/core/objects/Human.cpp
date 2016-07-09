@@ -17,6 +17,9 @@
 #include "net/NetworkMessagesTypes.h"
 #include "Lobby.h"
 #include "../Game.h"
+#include "Gun.h"
+#include "Weapons.h"
+
 
 Human::Human(size_t id) : IMob(id)
 {
@@ -134,6 +137,7 @@ void Human::processGUImsg(const Message2 &msg)
         {
             return;
         }
+        // TODO shorter cd when shooting with weapons
         attack_cooldown_ = MAIN_TICK;
         id_ptr_on<IOnMapObject> item = Network2::ExtractObjId(obj);
         if (item && item->GetOwner())
@@ -167,7 +171,14 @@ void Human::processGUImsg(const Message2 &msg)
                 }
                 
             }
-        } 
+            else if (id_ptr_on<Gun> tool = interface_.GetActiveHand().Get())
+            {
+                if (GetLying() == false && Gun::Targetable(item))
+                {
+                    tool->Shoot(tool->TargetTileLoc(item));
+                }
+            }
+        }
     }
     else
     {
@@ -300,11 +311,17 @@ void Human::AttackBy(id_ptr_on<Item> item)
         unsigned int value = GetRand() % 3;
         std::string snd;
         if (value == 0)
+        {
             snd = "genhit1.ogg";
+        }
         if (value == 1)
+        {
             snd = "genhit2.ogg";
+        }
         if (value == 2)
+        {
             snd = "genhit3.ogg";
+        }
         PlaySoundIfVisible(snd, owner.ret_id());
         if (id_ptr_on<IOnMapObject> item_owner = item->GetOwner())
         {
@@ -386,6 +403,61 @@ void Human::CalculateVisible(std::list<PosPoint>* visible_list)
     }
 }
 
+void Human::Bump(id_ptr_on<IMovable> item)
+{
+    if(id_ptr_on<Projectile> projectile = item)
+    {
+        bool damaged = false;
+        if (projectile.valid())
+        {
+            health_ -= projectile->GetDamage();
+            if (id_ptr_on<Bullet> bullet = projectile)
+            {
+                GetGame().GetChat().PostSimpleText(name + " got hit by a bullet!", owner->GetId());    // TODO maybe this is not necessary don't remember if this can be found in original ss13
+                unsigned int value = GetRand() % 3;
+                std::string snd;
+                if (value == 0)
+                {
+                    snd = "genhit1.ogg";
+                }
+                if (value == 1)
+                {
+                    snd = "genhit2.ogg";
+                }
+                if (value == 2)
+                {
+                    snd = "genhit3.ogg";
+                }
+                PlaySoundIfVisible(snd, owner.ret_id());
+            }
+            damaged = true;
+        }
+        if (!damaged)
+        {
+            return;
+        }
+
+        if ((GetRand() % 3) != 0)
+        {
+            return;
+        }
+
+        unsigned int blood_value = (GetRand() % 7) + 1;
+        std::stringstream conv;
+        conv << "floor" << blood_value;
+
+        if (id_ptr_on<Floor> f = GetTurf())
+        {
+            if (!f->bloody)
+            {
+                f->GetView()->AddOverlay("icons/blood.dmi", conv.str());
+                f->bloody = true;
+            }
+        }
+        return;
+    }
+    IMovable::Bump(item);
+}
 
 CaucasianHuman::CaucasianHuman(size_t id) : Human(id)
 {
@@ -402,7 +474,7 @@ void CaucasianHuman::AfterWorldCreation()
 
     interface_.uniform_.Set(Create<Item>(RedUniform::T_ITEM_S()));
     interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(Create<Item>(Wrench::T_ITEM_S()));
+    interface_.r_hand_.Set(Create<Item>(Wrench::T_ITEM_S())); // wrench
     interface_.head_.Set(Create<Item>(Helmet::T_ITEM_S()));
     interface_.suit_.Set(Create<Item>(Armor::T_ITEM_S()));
 

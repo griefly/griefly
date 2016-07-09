@@ -10,15 +10,18 @@
 
 #include "Interfaces.h"
 
+#ifdef _BUILD_TESTS
 #include <gtest/gtest.h>
+#endif // _BUILD_TESTS
 
 class IOnMapBase;
 class IMainObject
 {
 public:
+#ifdef _BUILD_TESTS
     FRIEND_TEST(MainObjectDeathTest, Deaths);
     FRIEND_TEST(MainObject, SettersAndGettersAndCreateImpl);
-
+#endif // _BUILD_TESTS
     virtual ~IMainObject() { }
 
     void PlaySoundIfVisible(const std::string& name, size_t tile_id);
