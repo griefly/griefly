@@ -2002,7 +2002,7 @@ Floor 26 35 0 1 5 dMove 0
 Stool 26 35 0 1 5 dMove 0  
 Floor 26 36 0 1 5 dMove 0  
 Floor 26 37 0 1 5 dMove 0  
-Vent 26 37 0 0 
+Vent 26 37 0 1 5 dMove 0  
 Floor 26 38 0 1 5 dMove 0  
 Grille 26 38 0 19 8 anchored 1 1 7 cutted_ 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 26 38 0 18 8 anchored 1 1 5 dMove 1 1 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
@@ -2263,13 +2263,13 @@ Floor 29 35 0 1 5 dMove 0
 Stool 29 35 0 1 5 dMove 0  
 Floor 29 36 0 1 5 dMove 0  
 Floor 29 37 0 1 5 dMove 0  
-Vent 29 37 0 0 
+Vent 29 37 0 1 5 dMove 0  
 Floor 29 38 0 1 5 dMove 0  
 Grille 29 38 0 19 8 anchored 1 1 7 cutted_ 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 29 38 0 18 8 anchored 1 1 5 dMove 1 1 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 29 38 0 18 8 anchored 1 1 5 dMove 1 2 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 29 38 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Manifold 29 38 0 0 
+Manifold 29 38 0 1 5 dMove 0  
 Space 29 39 0 1 5 dMove 0  
 Lattice 29 39 0 1 5 dMove 0  
 Plating 29 40 0 1 5 dMove 0  
@@ -2539,13 +2539,13 @@ Floor 32 35 0 1 5 dMove 0
 Stool 32 35 0 1 5 dMove 0  
 Floor 32 36 0 1 5 dMove 0  
 Floor 32 37 0 1 5 dMove 0  
-Vent 32 37 0 0 
+Vent 32 37 0 1 5 dMove 0  
 Floor 32 38 0 1 5 dMove 0  
 Grille 32 38 0 19 8 anchored 1 1 7 cutted_ 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 32 38 0 18 8 anchored 1 1 5 dMove 1 1 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 32 38 0 18 8 anchored 1 1 5 dMove 1 2 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 32 38 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Manifold 32 38 0 0 
+Manifold 32 38 0 1 5 dMove 0  
 Space 32 39 0 1 5 dMove 0  
 Space 32 40 0 1 5 dMove 0  
 Lattice 32 40 0 1 5 dMove 0  
@@ -2728,9 +2728,9 @@ ReinforcedWall 34 51 0 1 5 dMove 0
 Space 34 52 0 1 5 dMove 0  
 Pipe 34 52 0 21 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 6 6 force_ 0  5 head_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  5 tail_ 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Space 34 53 0 1 5 dMove 0  
-Pipe 34 53 0 0 
+Pipe 34 53 0 1 5 dMove 0  
 Space 34 54 0 1 5 dMove 0  
-Pipe 34 54 0 0 
+Pipe 34 54 0 1 5 dMove 0  
 Space 34 55 0 1 5 dMove 0  
 Pipe 34 55 0 21 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 8 6 force_ 0  5 head_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  5 tail_ 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Space 34 56 0 1 5 dMove 0  
@@ -2802,13 +2802,13 @@ Floor 35 35 0 1 5 dMove 0
 Stool 35 35 0 1 5 dMove 0  
 Floor 35 36 0 1 5 dMove 0  
 Floor 35 37 0 1 5 dMove 0  
-Vent 35 37 0 0 
+Vent 35 37 0 1 5 dMove 0  
 Floor 35 38 0 1 5 dMove 0  
 Grille 35 38 0 19 8 anchored 1 1 7 cutted_ 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 35 38 0 18 8 anchored 1 1 5 dMove 1 1 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 35 38 0 18 8 anchored 1 1 5 dMove 1 2 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 35 38 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Manifold 35 38 0 0 
+Manifold 35 38 0 1 5 dMove 0  
 Space 35 39 0 1 5 dMove 0  
 Space 35 40 0 1 5 dMove 0  
 Space 35 41 0 1 5 dMove 0  
@@ -3155,10 +3155,10 @@ Floor 39 34 0 1 5 dMove 0
 Floor 39 35 0 1 5 dMove 0  
 Floor 39 36 0 1 5 dMove 0  
 Floor 39 37 0 1 5 dMove 0  
-Vent 39 37 0 0 
+Vent 39 37 0 1 5 dMove 0  
 Floor 39 38 0 1 5 dMove 0  
 GlassDoor 39 38 0 21 8 anchored 0  5 dMove 1 3 12 door_prefix_ 7 5 right 11 door_state_ 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  10 last_tick_ 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Manifold 39 38 0 0 
+Manifold 39 38 0 1 5 dMove 0  
 Space 39 39 0 1 5 dMove 0  
 Lattice 39 39 0 1 5 dMove 0  
 Space 39 40 0 1 5 dMove 0  
@@ -3408,6 +3408,7 @@ Floor 42 26 0 1 5 dMove 0
 Floor 42 27 0 1 5 dMove 0  
 Floor 42 28 0 1 5 dMove 0  
 Floor 42 29 0 1 5 dMove 0  
+LaserGun 42 29 0 0 
 Floor 42 30 0 1 5 dMove 0  
 MetalWall 42 31 0 1 5 dMove 0  
 Floor 42 32 0 1 5 dMove 0  
@@ -3421,13 +3422,13 @@ ReinforcedFlatGlass 42 34 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_stro
 Floor 42 35 0 1 5 dMove 0  
 Floor 42 36 0 1 5 dMove 0  
 Floor 42 37 0 1 5 dMove 0  
-Vent 42 37 0 0 
+Vent 42 37 0 1 5 dMove 0  
 Floor 42 38 0 1 5 dMove 0  
 Grille 42 38 0 19 8 anchored 1 1 7 cutted_ 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 42 38 0 18 8 anchored 1 1 5 dMove 1 1 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 42 38 0 18 8 anchored 1 1 5 dMove 1 2 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 42 38 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Manifold 42 38 0 0 
+Manifold 42 38 0 1 5 dMove 0  
 Space 42 39 0 1 5 dMove 0  
 Space 42 40 0 1 5 dMove 0  
 Space 42 41 0 1 5 dMove 0  
@@ -3437,13 +3438,13 @@ Space 42 43 0 1 5 dMove 0
 Space 42 44 0 1 5 dMove 0  
 Pipe 42 44 0 21 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 6 6 force_ 0  5 head_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  5 tail_ 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Space 42 45 0 1 5 dMove 0  
-PipePump 42 45 0 0 
+PipePump 42 45 0 1 5 dMove 0  
 Space 42 46 0 1 5 dMove 0  
-Pipe 42 46 0 0 
+Pipe 42 46 0 1 5 dMove 0  
 Space 42 47 0 1 5 dMove 0  
-Pipe 42 47 0 0 
+Pipe 42 47 0 1 5 dMove 0  
 MetalWall 42 48 0 1 5 dMove 0  
-Pipe 42 48 0 0 
+Pipe 42 48 0 1 5 dMove 0  
 Floor 42 49 0 1 5 dMove 0  
 Vent 42 49 0 20 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 2 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  5 tail_ 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Floor 42 50 0 1 5 dMove 0  
@@ -3687,14 +3688,16 @@ ReinforcedFlatGlass 45 23 0 18 8 anchored 1 1 5 dMove 1 2 6 force_ 0  15 is_stro
 ReinforcedFlatGlass 45 23 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Pipe 45 23 0 1 5 dMove 0  
 Plating 45 24 0 1 5 dMove 0  
-Valve 45 24 0 0 
+Valve 45 24 0 1 5 dMove 0  
 Plating 45 25 0 1 5 dMove 0  
+AmmunitionBox 45 25 0 0 
 Floor 45 26 0 1 5 dMove 0  
 SpawnPoint 45 26 0 14 5 dMove 0  15 is_strong_owner 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  10 spawn_type 10 8 security 11 transparent 0  7 v_level 0  5 view_ 0  
 Plating 45 27 0 1 5 dMove 0  
 AtmosTool 45 27 0 1 5 dMove 0  
 Floor 45 28 0 1 5 dMove 0  
 Floor 45 29 0 1 5 dMove 0  
+Revolver 45 29 0 0 
 Floor 45 30 0 1 5 dMove 0  
 SecurityLocker 45 30 0 1 5 dMove 0  
 RedUniform 45 30 0 1 5 dMove 0  
@@ -3770,6 +3773,7 @@ Space 46 21 0 1 5 dMove 0
 Space 46 22 0 1 5 dMove 0  
 ReinforcedWall 46 23 0 1 5 dMove 0  
 Plating 46 24 0 1 5 dMove 0  
+AmmunitionBox 46 24 0 0 
 Plating 46 25 0 1 5 dMove 0  
 Chair 46 25 0 18 8 anchored 0  5 dMove 1 0 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Floor 46 26 0 1 5 dMove 0  
@@ -3794,7 +3798,7 @@ Space 46 36 0 1 5 dMove 0
 Space 46 37 0 1 5 dMove 0  
 Space 46 38 0 1 5 dMove 0  
 Manifold 46 38 0 22 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 2 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  5 left_ 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  6 right_ 0  5 tail_ 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Plating 46 39 0 0 
+Plating 46 39 0 1 5 dMove 0  
 Pipe 46 39 0 21 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 8 6 force_ 0  5 head_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  5 tail_ 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Space 46 40 0 1 5 dMove 0  
 Pipe 46 40 0 21 8 anchored 0  13 atmos_holder_ 0  5 dMove 1 6 6 force_ 0  5 head_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  5 tail_ 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
@@ -3944,6 +3948,7 @@ Plating 48 24 0 1 5 dMove 0
 Valve 48 24 0 1 5 dMove 0  
 Plating 48 25 0 1 5 dMove 0  
 Pipe 48 25 0 1 5 dMove 0  
+AmmunitionBox 48 25 0 0 
 Plating 48 26 0 1 5 dMove 0  
 Manifold 48 26 0 1 5 dMove 0  
 Plating 48 27 0 1 5 dMove 0  

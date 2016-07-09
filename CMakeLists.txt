@@ -4,6 +4,9 @@ PROJECT(KVEngineQt)
 OPTION(BUILD_TESTS "Build tests" OFF)
 OPTION(BUILD_COVER "Generate test coverage" OFF)
 
+FIND_PACKAGE(Git REQUIRED)
+MESSAGE(STATUS ${GIT_VERSION_STRING})
+
 IF (BUILD_TESTS)
     ##########
     # GTEST
