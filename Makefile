@@ -5,9 +5,11 @@ all: Exec/KVEngine
 travis-get-deps:
 	sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 	sudo add-apt-repository -y ppa:george-edison55/cmake-3.x
+    sudo add-apt-repository ppa:sonkun/sfml-stable
+    sudo add-apt-repository ppa:sonkun/sfml-development
 	sudo apt-get update -qq
 	sudo apt-get install -y g++-4.9
-	sudo apt-get install -y zlib1g-dev libsfml-dev libpng-dev lcov
+	sudo apt-get install -y zlib1g-dev sfml libpng-dev lcov
 	sudo apt-get install -y qtbase5-dev
 	sudo apt-get install -y cmake
 	gem install coveralls-lcov
