@@ -183,7 +183,7 @@ execute_process(
     OUTPUT_VARIABLE CLIENT_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
 if(NOT CLIENT_VERSION)
     # No tags or shallow copy
-    set(CLIENT_VERSION "undefined")
+    set(CLIENT_VERSION "v0.0.0")
 endif()
 message(STATUS ${CLIENT_VERSION})
 
