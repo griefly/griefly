@@ -16,7 +16,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 #
 ###########################
 find_package(Git REQUIRED)
-if(Git_FOUND)
+if(GIT_FOUND)
     message(STATUS "Git has been found, ${GIT_VERSION_STRING}")
 else()
     message(FATAL_ERROR "Unable to find Git!")
@@ -66,7 +66,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 #
 ###########################
 find_package(Go REQUIRED)
-if(Go_FOUND)
+if(GO_FOUND)
     message(STATUS "Go has been found, version: ${GO_VERSION}")
 else()
     message(FATAL_ERROR "Unable to find Go!")
@@ -78,7 +78,7 @@ endif()
 #
 ###########################
 find_package(PythonInterp 2.7 REQUIRED)
-if(PythonInterp_FOUND)
+if(PYTHONINTERP_FOUND)
     message(STATUS "Python has been found, version: ${PYTHON_VERSION_STRING}")
 else()
     message(FATAL_ERROR "Unable to find Python!")
