@@ -1,0 +1,425 @@
+Image: structures.dmi
+  Format: PNG (Portable Network Graphics)
+  Class: DirectClass
+  Geometry: 544x512+0+0
+  Resolution: 72x72
+  Print size: 7.55556x7.11111
+  Units: Undefined
+  Type: TrueColorAlpha
+  Endianess: Undefined
+  Colorspace: sRGB
+  Depth: 8-bit
+  Channel depth:
+    red: 8-bit
+    green: 8-bit
+    blue: 8-bit
+    alpha: 8-bit
+  Channel statistics:
+    Red:
+      min: 0 (0)
+      max: 255 (1)
+      mean: 116.51 (0.456903)
+      standard deviation: 67.3707 (0.264199)
+      kurtosis: -1.15936
+      skewness: -0.380493
+    Green:
+      min: 0 (0)
+      max: 255 (1)
+      mean: 124.143 (0.486834)
+      standard deviation: 60.9297 (0.23894)
+      kurtosis: -1.1381
+      skewness: -0.341606
+    Blue:
+      min: 0 (0)
+      max: 255 (1)
+      mean: 117.777 (0.461869)
+      standard deviation: 74.309 (0.291408)
+      kurtosis: -1.51199
+      skewness: -0.369376
+    Alpha:
+      min: 0 (0)
+      max: 255 (1)
+      mean: 169.365 (0.664176)
+      standard deviation: 102.822 (0.403222)
+      kurtosis: -1.08637
+      skewness: 0.710416
+  Image statistics:
+    Overall:
+      min: 0 (0)
+      max: 255 (1)
+      mean: 111.016 (0.435357)
+      standard deviation: 78.0149 (0.305941)
+      kurtosis: -1.10215
+      skewness: -0.0308241
+  Alpha: srgba(192,192,192,0)   #C0C0C000
+  Rendering intent: Perceptual
+  Gamma: 0.454545
+  Chromaticity:
+    red primary: (0.64,0.33)
+    green primary: (0.3,0.6)
+    blue primary: (0.15,0.06)
+    white point: (0.3127,0.329)
+  Interlace: None
+  Background color: white
+  Border color: srgba(223,223,223,1)
+  Matte color: grey74
+  Transparent color: none
+  Compose: Over
+  Page geometry: 544x512+0+0
+  Dispose: Undefined
+  Iterations: 0
+  Compression: Zip
+  Orientation: Undefined
+  Properties:
+    date:create: 2016-06-26T14:52:16+02:00
+    date:modify: 2016-06-26T14:52:16+02:00
+    Description: # BEGIN DMI
+version = 4.0
+	width = 32
+	height = 32
+state = "girder"
+	dirs = 1
+	frames = 1
+state = ""
+	dirs = 1
+	frames = 1
+state = "displaced"
+	dirs = 1
+	frames = 1
+state = "reinforced"
+	dirs = 1
+	frames = 1
+state = "melted"
+	dirs = 1
+	frames = 1
+state = "grille"
+	dirs = 1
+	frames = 1
+state = "brokengrille"
+	dirs = 1
+	frames = 1
+state = "latticefull"
+	dirs = 1
+	frames = 1
+state = "window"
+	dirs = 8
+	frames = 1
+state = "rwindow"
+	dirs = 8
+	frames = 1
+state = "twindow"
+	dirs = 8
+	frames = 1
+state = "twindowold"
+	dirs = 8
+	frames = 1
+state = "fwindow"
+	dirs = 8
+	frames = 1
+state = "unwall"
+	dirs = 1
+	frames = 3
+	delay = 1,1,1
+state = "ungirder"
+	dirs = 1
+	frames = 5
+	delay = 1,1,1,1,1
+state = "unr_girder"
+	dirs = 1
+	frames = 3
+	delay = 1,1,1
+state = "r_girder"
+	dirs = 1
+	frames = 1
+state = "table_dir"
+	dirs = 8
+	frames = 1
+state = "table"
+	dirs = 1
+	frames = 1
+state = "table_1tilethick"
+	dirs = 8
+	frames = 1
+state = "table_1tileendtable"
+	dirs = 4
+	frames = 1
+state = "table_middle"
+	dirs = 1
+	frames = 1
+state = "table_dir2"
+	dirs = 4
+	frames = 1
+state = "table_dir3"
+	dirs = 8
+	frames = 1
+state = "woodenbarricade"
+	dirs = 1
+	frames = 1
+state = "reinftable"
+	dirs = 1
+	frames = 1
+state = "reinftable_dir"
+	dirs = 8
+	frames = 1
+state = "reinftable_1tilethick"
+	dirs = 8
+	frames = 1
+state = "reinftable_1tileendtable"
+	dirs = 4
+	frames = 1
+state = "reinftable_middle"
+	dirs = 1
+	frames = 1
+state = "reinftable_dir2"
+	dirs = 4
+	frames = 1
+state = "reinftable_dir3"
+	dirs = 8
+	frames = 1
+state = "table_horizontal"
+	dirs = 4
+	frames = 1
+state = "table_vertical"
+	dirs = 4
+	frames = 1
+state = "window1"
+	dirs = 1
+	frames = 1
+state = "window2"
+	dirs = 1
+	frames = 1
+state = "window3"
+	dirs = 1
+	frames = 1
+state = "window4"
+	dirs = 1
+	frames = 1
+state = "window5"
+	dirs = 1
+	frames = 1
+state = "window6"
+	dirs = 1
+	frames = 1
+state = "window7"
+	dirs = 1
+	frames = 1
+state = "window8"
+	dirs = 1
+	frames = 1
+state = "window9"
+	dirs = 1
+	frames = 1
+state = "window10"
+	dirs = 1
+	frames = 1
+state = "window11"
+	dirs = 1
+	frames = 1
+state = "window13"
+	dirs = 1
+	frames = 1
+state = "window12"
+	dirs = 1
+	frames = 1
+state = "window14"
+	dirs = 1
+	frames = 1
+state = "window15"
+	dirs = 1
+	frames = 1
+state = "window0"
+	dirs = 1
+	frames = 1
+state = "rwindow15"
+	dirs = 1
+	frames = 1
+state = "rwindow0"
+	dirs = 1
+	frames = 1
+state = "rwindow1"
+	dirs = 1
+	frames = 1
+state = "rwindow2"
+	dirs = 1
+	frames = 1
+state = "rwindow3"
+	dirs = 1
+	frames = 1
+state = "rwindow4"
+	dirs = 1
+	frames = 1
+state = "rwindow5"
+	dirs = 1
+	frames = 1
+state = "rwindow6"
+	dirs = 1
+	frames = 1
+state = "rwindow7"
+	dirs = 1
+	frames = 1
+state = "rwindow8"
+	dirs = 1
+	frames = 1
+state = "rwindow9"
+	dirs = 1
+	frames = 1
+state = "rwindow10"
+	dirs = 1
+	frames = 1
+state = "rwindow11"
+	dirs = 1
+	frames = 1
+state = "rwindow12"
+	dirs = 1
+	frames = 1
+state = "rwindow13"
+	dirs = 1
+	frames = 1
+state = "rwindow14"
+	dirs = 1
+	frames = 1
+state = "twindow0"
+	dirs = 1
+	frames = 1
+state = "twindow1"
+	dirs = 1
+	frames = 1
+state = "twindow2"
+	dirs = 1
+	frames = 1
+state = "twindow3"
+	dirs = 1
+	frames = 1
+state = "twindow4"
+	dirs = 1
+	frames = 1
+state = "twindow5"
+	dirs = 1
+	frames = 1
+state = "twindow6"
+	dirs = 1
+	frames = 1
+state = "twindow7"
+	dirs = 1
+	frames = 1
+state = "twindow8"
+	dirs = 1
+	frames = 1
+state = "twindow9"
+	dirs = 1
+	frames = 1
+state = "twindow10"
+	dirs = 1
+	frames = 1
+state = "twindow11"
+	dirs = 1
+	frames = 1
+state = "twindow12"
+	dirs = 1
+	frames = 1
+state = "twindow13"
+	dirs = 1
+	frames = 1
+state = "twindow14"
+	dirs = 1
+	frames = 1
+state = "twindow15"
+	dirs = 1
+	frames = 1
+state = "ladder00"
+	dirs = 1
+	frames = 1
+state = "ladder10"
+	dirs = 1
+	frames = 1
+state = "ladder01"
+	dirs = 1
+	frames = 1
+state = "ladder11"
+	dirs = 1
+	frames = 1
+state = "woodtable"
+	dirs = 1
+	frames = 1
+state = "woodtable_dir"
+	dirs = 8
+	frames = 1
+	hotspot = 25,3,5
+state = "woodtable_1tilethick"
+	dirs = 8
+	frames = 1
+state = "woodtable_1tileendtable"
+	dirs = 4
+	frames = 1
+state = "woodtable_middle"
+	dirs = 1
+	frames = 1
+state = "woodtable_dir2"
+	dirs = 4
+	frames = 1
+state = "woodtable_dir3"
+	dirs = 8
+	frames = 1
+state = "safe"
+	dirs = 1
+	frames = 1
+state = "safe-open"
+	dirs = 1
+	frames = 1
+state = "floorsafe"
+	dirs = 1
+	frames = 1
+state = "floorsafe-open"
+	dirs = 1
+	frames = 1
+state = "linenbin-full"
+	dirs = 1
+	frames = 1
+state = "linenbin-half"
+	dirs = 1
+	frames = 1
+state = "linenbin-empty"
+	dirs = 1
+	frames = 1
+state = "pokertable"
+	dirs = 1
+	frames = 1
+state = "pokertable_dir"
+	dirs = 8
+	frames = 1
+state = "pokertable_1tilethick"
+	dirs = 8
+	frames = 1
+state = "pokertable_1tileendtable"
+	dirs = 4
+	frames = 1
+state = "pokertable_middle"
+	dirs = 1
+	frames = 1
+state = "pokertable_dir2"
+	dirs = 4
+	frames = 1
+state = "pokertable_dir3"
+	dirs = 8
+	frames = 1
+# END DMI
+
+    png:cHRM                 : chunk was found (see Chromaticity, above)
+    png:gAMA                 : gamma=0.45454544 (See Gamma, above)
+    png:IHDR.bit_depth       : 8
+    png:IHDR.color_type      : 6 (RGBA)
+    png:IHDR.interlace_method: 0 (Not interlaced)
+    png:IHDR.width,height    : 544, 512
+    png:sRGB                 : intent=0 (See Rendering intent)
+    png:text                 : 1 tEXt/zTXt/iTXt chunks were found
+    signature: eaf90729452c1b55f67f77898ba1fe6a55dc9f14a3f2553df2cb2069c8ede1d5
+  Artifacts:
+    filename: structures.dmi
+    verbose: true
+  Tainted: False
+  Filesize: 105KB
+  Number pixels: 279K
+  Pixels per second: 27.85MB
+  User time: 0.000u
+  Elapsed time: 0:01.009
+  Version: ImageMagick 6.7.7-10 2016-06-01 Q16 http://www.imagemagick.org

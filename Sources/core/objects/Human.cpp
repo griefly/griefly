@@ -32,6 +32,7 @@ Human::Human(size_t id) : IMob(id)
     is_strong_owner = true;
     attack_cooldown_ = 0;
     name = "Morgan James";
+    passable_level = Passable::BIG_CREATURE;
 
     lay_timer_ = 0;
 
