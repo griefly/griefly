@@ -49,7 +49,8 @@ How to build everything on Linux
 3. `./build_go_server.sh`
 
 **Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).
-
+**Note:** gccgo is not supported! The current `FindGo.cmake` cannot parse the gccgo version string, so you will obtain an error. Use the official version instead.
+ 
 How to start server
 -------------------
 
