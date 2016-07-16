@@ -111,10 +111,8 @@ public:
         return id_;
     }
 private:
-    static void* operator new(size_t)
-    {
-        static_assert(false, "Dynamic allocation of id_ptr_on objects is forbidden!");
-    }
+    // Dynamic memory allocation is disabled
+    static void* operator new(size_t);
 
     static IMainObject* GetFromIdTable(size_t id)
     {
