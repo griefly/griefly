@@ -111,6 +111,11 @@ public:
         return id_;
     }
 private:
+    static void* operator new(size_t)
+    {
+        static_assert(false, "Dynamic allocation of id_ptr_on objects is forbidden!");
+    }
+
     static IMainObject* GetFromIdTable(size_t id)
     {
         if (id >= id_ptr_id_table->size())
