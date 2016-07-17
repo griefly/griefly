@@ -23,8 +23,15 @@ struct ObjectInfo
 
 extern std::vector<ObjectInfo>* id_ptr_id_table;
 
+struct id_ptr_base
+{
+protected:
+    mutable bool casted_;
+    size_t id_;
+};
+
 template<class T>
-class id_ptr_on
+class id_ptr_on : public id_ptr_base
 {
     template<class U>
     friend std::ostream& operator<<(std::ostream& stream, const id_ptr_on<U>& ptr);
@@ -111,9 +118,6 @@ public:
         return id_;
     }
 private:
-    // Dynamic memory allocation is disabled
-    static void* operator new(size_t);
-
     static IMainObject* GetFromIdTable(size_t id)
     {
         if (id >= id_ptr_id_table->size())
@@ -124,8 +128,8 @@ private:
         }
         return (*id_ptr_id_table)[id].object;
     }
-    mutable bool casted_;
-    size_t id_;
+    // Dynamic memory allocation is disabled
+    static void* operator new(size_t);
 };
 
 template<typename T>
