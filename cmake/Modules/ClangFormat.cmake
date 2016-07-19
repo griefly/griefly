@@ -1,16 +1,15 @@
-# Highly experimental/work in progress/etc.
+# Highly experimental, don't use those targets unless the official guide says so
 # cmake-tidy requires CMAKE_EXPORT_COMPILE_COMMANDS=ON
 
 file(GLOB_RECURSE ALL_SOURCES "Sources/*.cpp")
 file(GLOB_RECURSE ALL_HEADERS "Sources/*.h")
-
-file(GLOB_RECURSE CORE_SOURCES "Sources/core/*.cpp")
 
 find_program(clang-format NAMES clang-format)
 find_program(clang-tidy NAMES clang-tidy)
 
 if (clang-format)
     add_custom_target(clang-format SOURCES .clang-format)
+    set_target_properties(clang-format PROPERTIES EXCLUDE_FROM_ALL TRUE EXCLUDE_FROM_DEFAULT_BUILD TRUE)
 
     foreach(SOURCE_FILE ${ALL_SOURCES} ${ALL_HEADERS})
       add_custom_command(TARGET clang-format PRE_BUILD
@@ -22,14 +21,19 @@ endif()
 
 if (clang-tidy)
     add_custom_target(clang-tidy SOURCES .clang-tidy)
+    set_target_properties(clang-tidy PROPERTIES EXCLUDE_FROM_ALL TRUE EXCLUDE_FROM_DEFAULT_BUILD TRUE)
 
     if (NOT CMAKE_EXPORT_COMPILE_COMMANDS)
         message(WARNING "CMAKE_EXPORT_COMPILE_COMMANDS is not enabled, clang-tidy probably won't work")
     endif()
 
-    foreach(SOURCE_FILE ${CORE_SOURCES})
-        add_custom_command(TARGET clang-tidy COMMAND clang-tidy -enable-check-profile -p=${CMAKE_BINARY_DIR}/compile_commands.json -header-filter=Sources/ -config= ${SOURCE_FILE})
-    endforeach()
+    # Check everything
+    add_custom_command(TARGET clang-tidy COMMAND clang-tidy -enable-check-profile -p=${CMAKE_BINARY_DIR}/compile_commands.json -header-filter=Sources/ -config= ${ALL_SOURCES})
+
+    # Per-file check
+    #foreach(SOURCE_FILE ${ALL_SOURCES})
+    #    add_custom_command(TARGET clang-tidy COMMAND clang-tidy -enable-check-profile -p=${CMAKE_BINARY_DIR}/compile_commands.json -header-filter=Sources/ -config= ${SOURCE_FILE})
+    #endforeach()
 else()
     message(STATUS "No clang-tidy found")
 endif()
