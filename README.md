@@ -19,12 +19,14 @@ Dependencies
 9. CMake 2.8
 
 How to build everything on Windows
------------------------------------
+----------------------------------
 _If you have any issues during the build process please report them_   
+
+It should be possible to build everything without Qt Cretor, but the guide assumes that Qt Creator is used.  
 
 1. All tools and libs from the depencies list should be available on your machine
 2. Open CMakeLists.txt in Qt Creator  
-   Open Project -> Select CMakeLists.txt -> Select build folder -> Run CMake _(for the first time)_
+   Open Project -> Select CMakeLists.txt -> Select build folder
 3. Environment variables  
    In the opened project: Projects _(left column in Qt Creator)_ -> Build Environment  
    It is needed to set environment or usual CMake variables for some libs. Other tools and libs should be present in `%PATH%`, so if you have installed them then everything should be fine.
@@ -33,8 +35,8 @@ _If you have any issues during the build process please report them_
   `Set PNG_LIBRARY_DIR to C:\Users\Kremius\Documents\ExternalLibs\lpng1612\projects\vstudio\Release`  
   `Set SFML_ROOT to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3`  
   `Set ZLIB_ROOT to C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll`  
-  If you cannot open the environment variables table or prefer usual variables in CMake then you can set them as `-DVARIABLE=VALUE` (e.g. `-DSFML_ROOT=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3`)
-4. Rerun CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
+  If you cannot open the environment variables table (Qt Creator 3.\* does not allow that before successfull CMake generation) or prefer usual variables in CMake (Qt Creator 4.\* allows to use them in convenient way) then you can set them as `-DVARIABLE=VALUE` (e.g. `-DSFML_ROOT=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3`)
+4. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
 5. Build the project.  
    Client executables will appear in the `Exec` folder, and the server executable will appear in the `griefly-server` folder.  
    Client executables depend from various dlls (Qt, SFML), so it is needed to manually place them to the `Exec` folder.
