@@ -128,6 +128,11 @@ void Human::processGUImsg(const Message2 &msg)
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
+        if (obj["action"] != "lclick")
+        {
+            qDebug() << "Unknown action: " << obj["action"];
+            return;
+        }
         if (lying_)
         {
             return;
