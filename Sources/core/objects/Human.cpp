@@ -128,9 +128,10 @@ void Human::processGUImsg(const Message2 &msg)
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
-        if (obj["action"] != "lclick")
+        QString action = Network2::ExtractAction(obj);
+        if (action != "lclick")
         {
-            qDebug() << "Unknown action: " << obj["action"];
+            qDebug() << "Unknown action: " << action;
             return;
         }
         if (lying_)

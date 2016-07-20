@@ -38,6 +38,13 @@ size_t Network2::ExtractObjId(const QJsonObject &json)
     return val.toVariant().toInt();
 }
 
+QString Network2::ExtractAction(const QJsonObject &json)
+{
+    QJsonValue val = json["action"];
+
+    return val.toVariant().toString();
+}
+
 Network2 &Network2::GetInstance()
 {
     static Network2* network = new Network2;
