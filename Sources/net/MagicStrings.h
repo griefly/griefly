@@ -24,8 +24,6 @@ namespace Net
 
 namespace Input
 {
-    const char* const LEFT_CLICK = "LEFT_CLICK";
-
     const char* const MOVE_UP = "MOVE_UP";
     const char* const MOVE_DOWN = "MOVE_DOWN";
     const char* const MOVE_LEFT = "MOVE_LEFT";
@@ -35,4 +33,9 @@ namespace Input
     const char* const KEY_W = "KEY_W";
     const char* const KEY_E = "KEY_E";
     const char* const KEY_R = "KEY_R";
+}
+
+namespace Click
+{
+    const char* const LCLICK = "lclick";
 }

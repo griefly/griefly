@@ -102,6 +102,8 @@ public:
     static size_t ExtractObjId(const QJsonObject& json);
     static QString ExtractAction(const QJsonObject& json);
 
+    static Message2 MakeClickMessage(int object_id, QString click_type);
+
     static Network2& GetInstance();
 
     bool IsGood();

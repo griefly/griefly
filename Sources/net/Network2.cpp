@@ -45,6 +45,23 @@ QString Network2::ExtractAction(const QJsonObject &json)
     return val.toVariant().toString();
 }
 
+Message2 Network2::MakeClickMessage(int object_id, QString click_type)
+{
+    Message2 msg;
+
+    msg.type = MessageType::MOUSE_CLICK;
+
+    QJsonObject obj;
+    obj.insert("action", click_type);
+
+    QJsonValue value(object_id);
+    obj.insert("obj", value);
+    QJsonDocument doc(obj);
+    msg.json = doc.toJson(QJsonDocument::Compact);
+
+    return msg;
+}
+
 Network2 &Network2::GetInstance()
 {
     static Network2* network = new Network2;
