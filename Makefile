@@ -18,18 +18,16 @@ clean:
 	rm -rf build
 	rm -f Exec/KVEngine Exec/Launcher Exec/metadata.json
 
-.PHONY: partial-build
-partial-build: build/Makefile
-	$(MAKE) -C build
-
-build/Makefile:
-	mkdir -p build
-	cd build && cmake ../ -DBUILD_TESTS=ON -DBUILD_COVER=ON
-
 Exec/KVEngine: install
 
 .PHONY: install
-install: partial-build
+install: build
 	cp build/KVEngine Exec
 	cp build/Launcher Exec
 	cp build/metadata.json Exec
+
+.PHONY: build
+build:
+	mkdir -p build
+	cd build && cmake ../ -DBUILD_TESTS=ON -DBUILD_COVER=ON
+	$(MAKE) -C build
