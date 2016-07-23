@@ -26,7 +26,7 @@ extern std::vector<ObjectInfo>* id_ptr_id_table;
 struct id_ptr_base
 {
 protected:
-    mutable bool casted_;
+    mutable IMainObject* casted_;
     size_t id_;
 };
 
@@ -43,7 +43,7 @@ public:
     id_ptr_on()
     {
         id_ = 0;
-        casted_ = false;
+        casted_ = nullptr;
     }
     id_ptr_on(size_t id)
     {
@@ -63,7 +63,7 @@ public:
     id_ptr_on& operator=(size_t id)
     {
         id_ = id;
-        casted_ = false;
+        casted_ = nullptr;
         return *this;
     }
     template<class U>
@@ -79,21 +79,11 @@ public:
         {
             return nullptr;
         }
-        IMainObject* local = GetFromIdTable(id_);
-        if (local == nullptr)
+        if (casted_ == nullptr)
         {
-            return nullptr;
+            update();
         }
-        if (casted_)
-        {
-            return reinterpret_cast<T*>(local);
-        }
-        T* retval = castTo<T>(local);
-        if (retval)
-        {
-            casted_ = true;
-        }
-        return retval;
+        return reinterpret_cast<T*>(casted_);
     }
 
     T* operator->() const
@@ -103,6 +93,7 @@ public:
 
     bool valid() const
     {
+        update();
         return operator*() != nullptr;
     }
     operator void*() const
@@ -118,6 +109,25 @@ public:
         return id_;
     }
 private:
+    void update() const
+    {
+        IMainObject* local = GetFromIdTable(id_);
+        if (local == nullptr)
+        {
+            casted_ = nullptr;
+            return;
+        }
+        if (casted_)
+        {
+            return;
+        }
+        T* retval = castTo<T>(local);
+        if (retval)
+        {
+            casted_ = retval;
+        }
+    }
+
     static IMainObject* GetFromIdTable(size_t id)
     {
         if (id >= id_ptr_id_table->size())
