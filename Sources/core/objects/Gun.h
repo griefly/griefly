@@ -2,7 +2,7 @@
 
 #include "Item.h"
 #include "Projectiles.h"
-#include "Ammunationboxes.h"
+#include "AmmunitionBoxes.h"
 #include "Projectiletypes.h"
 #include "../Game.h"
 

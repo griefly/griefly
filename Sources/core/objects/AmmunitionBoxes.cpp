@@ -1,4 +1,4 @@
-#include "Ammunationboxes.h"
+#include "AmmunitionBoxes.h"
 
 AmmunitionBox::AmmunitionBox(size_t id) : Item(id)
 {
