@@ -73,6 +73,10 @@ private:
 
     int lps_;
     float cpu_load_;
+
+    std::vector<float> cpu_loads_;
+    int cpu_loads_id_;
+
     std::string last_touch_;
 
     std::vector<Message2> messages_to_process_;

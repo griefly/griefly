@@ -46,6 +46,10 @@ Game::Game()
     auto_player_ = false;
     cpu_load_ = 0.0f;
 
+    const int LOADS_AMOUNT = 60;
+    cpu_loads_.resize(LOADS_AMOUNT);
+    cpu_loads_id_ = 0;
+
     ping_id_ = "";
 
     current_ping_ = 0;
@@ -186,6 +190,8 @@ void Game::Process()
             fps_timer.restart();
             cpu_load_ = ((1000.0f / MAX_WAIT_ON_QUEUE) - lps_) / (1000.0f / MAX_WAIT_ON_QUEUE) * 100;
             lps_ = 0;
+            cpu_loads_[cpu_loads_id_] = cpu_load_;
+            cpu_loads_id_ = (cpu_loads_id_ + 1) % cpu_loads_.size();
         }
 
         if (   ping_timer.elapsed() > 1000
@@ -295,6 +301,20 @@ void Game::InitWorld(int id, std::string map_name)
     {
         std::stringstream ss; 
         ss << "CPU load: " << cpu_load_ << "%";
+        *str = ss.str();
+    }).SetFreq(1000);
+
+    GetTexts()["CpuLoadAverage"].SetUpdater
+    ([this](std::string* str)
+    {
+        float sum = 0.0f;
+        for (float load : cpu_loads_)
+        {
+            sum += load;
+        }
+
+        std::stringstream ss;
+        ss << "Average CPU load: " << sum / cpu_loads_.size() << "%";
         *str = ss.str();
     }).SetFreq(1000);
 
