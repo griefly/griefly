@@ -69,6 +69,33 @@ public:
     template<class U>
     id_ptr_on& operator=(const id_ptr_on<U>& other)
     {
+#if defined(KV_ID_PTR_CASTING_CACHE)
+        if (other.id_ == 0)
+        {
+            id_ = 0;
+            casted_ = nullptr;
+            return *this;
+        }
+        if (other.casted_ != nullptr)
+        {
+            if (std::is_base_of<T, U>::value)
+            {
+                casted_ = other.casted_;
+                id_ = other.id_;
+                return *this;
+            }
+            T* retval = castTo<T>(other.casted_);
+            if (retval)
+            {
+                casted_ = retval;
+                id_ = other.id_;
+                return *this;
+            }
+            id_ = 0;
+            casted_ = nullptr;
+            return *this;
+        }
+#endif // KV_ID_PTR_CASTING_CACHE
         *this = other.id_;
         return *this;
     }
@@ -98,6 +125,12 @@ public:
     }
     operator void*() const
     {
+#if defined(KV_ID_PTR_VALID_CACHE)
+        if (casted_)
+        {
+            return reinterpret_cast<void*>(0x1);
+        }
+#endif // KV_ID_PTR_VALID_CACHE
         if (valid())
         {
             return reinterpret_cast<void*>(0x1);
