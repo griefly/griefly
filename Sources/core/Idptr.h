@@ -144,6 +144,12 @@ public:
 private:
     void update() const
     {
+        if (id_ == 0)
+        {
+            casted_ = nullptr;
+            return;
+        }
+
         IMainObject* local = GetFromIdTable(id_);
         if (local == nullptr)
         {

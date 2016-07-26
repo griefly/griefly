@@ -11,6 +11,7 @@ Closet::Closet(size_t id)
     name = "Closet";
 
     open_ = false;
+
     SetPassable(D_ALL, Passable::AIR);
     SetPassable(D_UP, Passable::AIR);
     SetPassable(D_DOWN, Passable::AIR);
