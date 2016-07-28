@@ -13,9 +13,9 @@ Rod::Rod(size_t id) : Item(id)
     name = "Rods";
 }
 
-void Rod::AttackBy(id_ptr_on<Item> item)
+void Rod::AttackBy(IdPtr<Item> item)
 {
-    if (item.ret_id() == GetId()) // Attack self
+    if (item.Id() == GetId()) // Attack self
     {
         Create<IOnMapObject>(Grille::T_ITEM_S(), GetTurf());
         Delete();
@@ -29,11 +29,11 @@ Metal::Metal(size_t id) : Item(id)
     name = "Metal";
 }
 
-void Metal::AttackBy(id_ptr_on<Item> item)
+void Metal::AttackBy(IdPtr<Item> item)
 {
-    if (item.ret_id() == GetId()) // Attack self
+    if (item.Id() == GetId()) // Attack self
     {
-        if (id_ptr_on<Floor> floor = GetTurf())
+        if (IdPtr<Floor> floor = GetTurf())
         {
             Create<IOnMapObject>(Girder::T_ITEM_S(), GetTurf());
             Delete();

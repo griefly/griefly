@@ -86,7 +86,7 @@ void Chat::PostWords(const std::string& who, const std::string& text, size_t til
          + "</span>");
 }
 
-void Chat::PostTextFor(const std::string& str, id_ptr_on<IOnMapBase> owner)
+void Chat::PostTextFor(const std::string& str, IdPtr<IOnMapBase> owner)
 {
     if (game_->GetMob() == owner)
     {

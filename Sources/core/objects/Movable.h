@@ -46,7 +46,7 @@ public:
     virtual void Delete() override { IOnMapObject::Delete(); }
 
     virtual void Represent() override;
-    virtual void Bump(id_ptr_on<IMovable> item) override;
+    virtual void Bump(IdPtr<IMovable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 public:
     VDir KV_SAVEBLE(force_);
@@ -67,12 +67,12 @@ class ForceManager
 public:
     static ForceManager& Get();
 
-    void Add(id_ptr_on<IMovable> m);
+    void Add(IdPtr<IMovable> m);
     void Process();
     void Clear();
     unsigned int Hash();
 private:
-    std::vector<id_ptr_on<IMovable>> under_force_;
+    std::vector<IdPtr<IMovable>> under_force_;
 
-    std::vector<id_ptr_on<IMovable>> to_add_;
+    std::vector<IdPtr<IMovable>> to_add_;
 };

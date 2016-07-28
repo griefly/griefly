@@ -12,14 +12,14 @@ public:
     DECLARE_GET_TYPE_ITEM(Closet);
     Closet(size_t id);
 
-    virtual void AttackBy(id_ptr_on<Item> item) override;
-    virtual void Bump(id_ptr_on<IMovable> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
+    virtual void Bump(IdPtr<IMovable> item) override;
 
-    virtual bool Contains(id_ptr_on<IOnMapBase> item) const override;
-    virtual bool CanTouch(id_ptr_on<IOnMapBase> item) const override;
+    virtual bool Contains(IdPtr<IOnMapBase> item) const override;
+    virtual bool CanTouch(IdPtr<IOnMapBase> item) const override;
 
-    virtual bool AddItem(id_ptr_on<IOnMapBase> item) override;
-    virtual bool RemoveItem(id_ptr_on<IOnMapBase> item) override;
+    virtual bool AddItem(IdPtr<IOnMapBase> item) override;
+    virtual bool RemoveItem(IdPtr<IOnMapBase> item) override;
 
     virtual void AfterWorldCreation() override;
 
@@ -31,7 +31,7 @@ protected:
 
     bool KV_SAVEBLE(open_);
 
-    std::vector<id_ptr_on<IMovable>> KV_SAVEBLE(content_);
+    std::vector<IdPtr<IMovable>> KV_SAVEBLE(content_);
 };
 ADD_TO_TYPELIST(Closet);
 
@@ -41,7 +41,7 @@ public:
     DECLARE_SAVED(SecurityLocker, Closet);
     DECLARE_GET_TYPE_ITEM(SecurityLocker);
     SecurityLocker(size_t id);
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 protected:
     virtual void Lock();
     virtual void Unlock();

@@ -13,7 +13,7 @@ public:
     GasTank(size_t id);
     virtual void AfterWorldCreation() override;
 
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Process() override;
 
     AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }

@@ -30,9 +30,9 @@ void Space::AfterWorldCreation()
     SetState(conv.str());
 }
 
-void Space::AttackBy(id_ptr_on<Item> item)
+void Space::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Rod> rod = item)
+    if (IdPtr<Rod> rod = item)
     {
         rod->Delete();
         Create<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());

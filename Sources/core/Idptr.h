@@ -23,7 +23,7 @@ struct ObjectInfo
 
 extern std::vector<ObjectInfo>* id_ptr_id_table;
 
-struct id_ptr_base
+struct IdPtrBase
 {
 protected:
     mutable IMainObject* casted_;
@@ -31,43 +31,43 @@ protected:
 };
 
 template<class T>
-class id_ptr_on : public id_ptr_base
+class IdPtr : public IdPtrBase
 {
     template<class U>
-    friend std::ostream& operator<<(std::ostream& stream, const id_ptr_on<U>& ptr);
+    friend std::ostream& operator<<(std::ostream& stream, const IdPtr<U>& ptr);
     template<class U>
-    friend std::istream& operator>>(std::istream& stream, id_ptr_on<U>& ptr);
+    friend std::istream& operator>>(std::istream& stream, IdPtr<U>& ptr);
     template<class U>
-    friend class id_ptr_on;
+    friend class IdPtr;
 public:
-    id_ptr_on()
+    IdPtr()
     {
         id_ = 0;
         casted_ = nullptr;
     }
-    id_ptr_on(size_t id)
+    IdPtr(size_t id)
     {
         *this = id;
     }
     template<class U>
-    id_ptr_on(const id_ptr_on<U>& other)
+    IdPtr(const IdPtr<U>& other)
     {
         *this = other;
     }
     template<class U>
-    bool operator==(const id_ptr_on<U>& other)
+    bool operator==(const IdPtr<U>& other)
     {
         return id_ == other.id_;
     }
 
-    id_ptr_on& operator=(size_t id)
+    IdPtr& operator=(size_t id)
     {
         id_ = id;
         casted_ = nullptr;
         return *this;
     }
     template<class U>
-    id_ptr_on& operator=(const id_ptr_on<U>& other)
+    IdPtr& operator=(const IdPtr<U>& other)
     {
 #if defined(KV_ID_PTR_CASTING_CACHE)
         if (other.id_ == 0)
@@ -108,7 +108,7 @@ public:
         }
         if (casted_ == nullptr)
         {
-            update();
+            Update();
         }
         return reinterpret_cast<T*>(casted_);
     }
@@ -118,9 +118,9 @@ public:
         return operator*();
     }
 
-    bool valid() const
+    bool IsValid() const
     {
-        update();
+        Update();
         return operator*() != nullptr;
     }
     operator void*() const
@@ -131,18 +131,18 @@ public:
             return reinterpret_cast<void*>(0x1);
         }
 #endif // KV_ID_PTR_VALID_CACHE
-        if (valid())
+        if (IsValid())
         {
             return reinterpret_cast<void*>(0x1);
         }
         return nullptr;
     }
-    size_t ret_id() const
+    size_t Id() const
     {
         return id_;
     }
 private:
-    void update() const
+    void Update() const
     {
         if (id_ == 0)
         {
@@ -182,14 +182,14 @@ private:
 };
 
 template<typename T>
-std::ostream& operator<<(std::ostream& stream, const id_ptr_on<T>& ptr)
+std::ostream& operator<<(std::ostream& stream, const IdPtr<T>& ptr)
 {
     stream << ptr.id_;
     return stream;
 }
 
 template<typename T>
-std::istream& operator>>(std::istream& stream, id_ptr_on<T>& ptr)
+std::istream& operator>>(std::istream& stream, IdPtr<T>& ptr)
 {
     stream >> ptr.id_;
     return stream;

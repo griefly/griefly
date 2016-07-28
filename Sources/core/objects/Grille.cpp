@@ -26,11 +26,11 @@ Grille::Grille(size_t id) : Structure(id)
     cutted_ = false;
 }
 
-void Grille::AttackBy(id_ptr_on<Item> item)
+void Grille::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Wirecutters> w = item)
+    if (IdPtr<Wirecutters> w = item)
     {
-        PlaySoundIfVisible("Wirecutter.ogg", owner.ret_id());
+        PlaySoundIfVisible("Wirecutter.ogg", owner.Id());
         if (!cutted_)
         {
             SetState("brokengrille");

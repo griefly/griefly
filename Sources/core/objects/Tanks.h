@@ -17,7 +17,7 @@ public:
     DECLARE_SAVED(FuelTank, Tank);
     DECLARE_GET_TYPE_ITEM(FuelTank);
     FuelTank(size_t id);
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(FuelTank);
 
@@ -27,6 +27,6 @@ public:
     DECLARE_SAVED(WaterTank, Tank);
     DECLARE_GET_TYPE_ITEM(WaterTank);
     WaterTank(size_t id);
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(WaterTank);

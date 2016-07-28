@@ -77,9 +77,9 @@ bool Human::TryMove(Dir direct)
 {
     if (IMob::TryMove(direct))
     {   
-        if (owner->GetItem<Shard>().valid())
+        if (owner->GetItem<Shard>().IsValid())
         {
-            PlaySoundIfVisible("glass_step.ogg", GetOwner().ret_id());
+            PlaySoundIfVisible("glass_step.ogg", GetOwner().Id());
         }
         return true;
     }
@@ -124,7 +124,7 @@ void Human::processGUImsg(const Message2 &msg)
     if (msg.type == MessageType::MESSAGE)
     {
         std::string text = obj["text"].toString().toStdString();
-        GetGame().GetChat().PostWords(name, text, owner.ret_id());
+        GetGame().GetChat().PostWords(name, text, owner.Id());
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
@@ -145,7 +145,7 @@ void Human::processGUImsg(const Message2 &msg)
         }
         // TODO shorter cd when shooting with weapons
         attack_cooldown_ = MAIN_TICK;
-        id_ptr_on<IOnMapObject> item = Network2::ExtractObjId(obj);
+        IdPtr<IOnMapObject> item = Network2::ExtractObjId(obj);
         if (item && item->GetOwner())
         {
             if (CanTouch(item))
@@ -177,7 +177,7 @@ void Human::processGUImsg(const Message2 &msg)
                 }
                 
             }
-            else if (id_ptr_on<Gun> tool = interface_.GetActiveHand().Get())
+            else if (IdPtr<Gun> tool = interface_.GetActiveHand().Get())
             {
                 if (GetLying() == false && Gun::Targetable(item))
                 {
@@ -241,7 +241,7 @@ void Human::Live()
         return;
     }
 
-    if (id_ptr_on<CubeTile> t = owner)
+    if (IdPtr<CubeTile> t = owner)
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
         if (oxygen > 0)
@@ -295,9 +295,9 @@ void Human::OnDeath()
     {
         auto ghost = Create<Ghost>(Ghost::T_ITEM_S());
         ghost->name = name;
-        GetGame().GetFactory().SetPlayerId(net_id, ghost.ret_id());
+        GetGame().GetFactory().SetPlayerId(net_id, ghost.Id());
         owner->AddItem(ghost);
-        if (GetId() == GetGame().GetMob().ret_id())
+        if (GetId() == GetGame().GetMob().Id())
         {
             GetGame().ChangeMob(ghost);
         }
@@ -308,10 +308,10 @@ void Human::OnDeath()
     GetLobby().security_score_ += 1;
 }
 
-void Human::AttackBy(id_ptr_on<Item> item)
+void Human::AttackBy(IdPtr<Item> item)
 {
     bool damaged = false;
-    if (item.valid() && (item->damage > 0))
+    if (item.IsValid() && (item->damage > 0))
     {
         health_ -= item->damage;
         unsigned int value = GetRand() % 3;
@@ -328,22 +328,22 @@ void Human::AttackBy(id_ptr_on<Item> item)
         {
             snd = "genhit3.ogg";
         }
-        PlaySoundIfVisible(snd, owner.ret_id());
-        if (id_ptr_on<IOnMapObject> item_owner = item->GetOwner())
+        PlaySoundIfVisible(snd, owner.Id());
+        if (IdPtr<IOnMapObject> item_owner = item->GetOwner())
         {
-            GetGame().GetChat().PostDamage(item_owner->name, name, item->name, owner.ret_id());
+            GetGame().GetChat().PostDamage(item_owner->name, name, item->name, owner.Id());
         }
 
         damaged = true;
     }
-    else if (!item.valid())
+    else if (!item.IsValid())
     {
         health_ -= 1;
 
         unsigned int punch_value = (GetRand() % 4) + 1;
         std::stringstream conv;
         conv << "punch" << punch_value << ".ogg";
-        PlaySoundIfVisible(conv.str(), owner.ret_id());
+        PlaySoundIfVisible(conv.str(), owner.Id());
 
         if (GetRand() % 5 == 0)
         {
@@ -369,7 +369,7 @@ void Human::AttackBy(id_ptr_on<Item> item)
     std::stringstream conv;
     conv << "floor" << blood_value;
 
-    if (id_ptr_on<Floor> f = GetTurf())
+    if (IdPtr<Floor> f = GetTurf())
     {
         if (!f->bloody)
         {
@@ -409,15 +409,15 @@ void Human::CalculateVisible(std::list<PosPoint>* visible_list)
     }
 }
 
-void Human::Bump(id_ptr_on<IMovable> item)
+void Human::Bump(IdPtr<IMovable> item)
 {
-    if(id_ptr_on<Projectile> projectile = item)
+    if(IdPtr<Projectile> projectile = item)
     {
         bool damaged = false;
-        if (projectile.valid())
+        if (projectile.IsValid())
         {
             health_ -= projectile->GetDamage();
-            if (id_ptr_on<Bullet> bullet = projectile)
+            if (IdPtr<Bullet> bullet = projectile)
             {
                 GetGame().GetChat().PostSimpleText(name + " got hit by a bullet!", owner->GetId());    // TODO maybe this is not necessary don't remember if this can be found in original ss13
                 unsigned int value = GetRand() % 3;
@@ -434,7 +434,7 @@ void Human::Bump(id_ptr_on<IMovable> item)
                 {
                     snd = "genhit3.ogg";
                 }
-                PlaySoundIfVisible(snd, owner.ret_id());
+                PlaySoundIfVisible(snd, owner.Id());
             }
             damaged = true;
         }
@@ -452,7 +452,7 @@ void Human::Bump(id_ptr_on<IMovable> item)
         std::stringstream conv;
         conv << "floor" << blood_value;
 
-        if (id_ptr_on<Floor> f = GetTurf())
+        if (IdPtr<Floor> f = GetTurf())
         {
             if (!f->bloody)
             {

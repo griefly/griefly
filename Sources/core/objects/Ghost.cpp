@@ -43,9 +43,9 @@ bool Ghost::IsMobGhost()
     {
         return false;
     }
-    if (mob_id != GetGame().GetMob().ret_id())
+    if (mob_id != GetGame().GetMob().Id())
     {
-        if (id_ptr_on<Ghost> g = GetGame().GetMob())
+        if (IdPtr<Ghost> g = GetGame().GetMob())
         {
             draw = true;
         }
@@ -53,7 +53,7 @@ bool Ghost::IsMobGhost()
         {
             draw = false;
         }
-        mob_id = GetGame().GetMob().ret_id();
+        mob_id = GetGame().GetMob().Id();
     }
     return draw;
 }
@@ -117,8 +117,8 @@ void Ghost::Process()
         {
             auto login_mob = Create<IMob>(LoginMob::T_ITEM_S(), 0);
 
-            GetGame().GetFactory().SetPlayerId(net_id, login_mob.ret_id());
-            if (GetId() == GetGame().GetMob().ret_id())
+            GetGame().GetFactory().SetPlayerId(net_id, login_mob.Id());
+            if (GetId() == GetGame().GetMob().Id())
             {
                 GetGame().ChangeMob(login_mob);
             }

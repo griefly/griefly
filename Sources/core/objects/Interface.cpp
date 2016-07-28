@@ -56,7 +56,7 @@ void HumanInterface::InitSlots()
     lay_.GetView()->SetState("rest0");
     lay_.SetName(HumanInterfacePlaces::LAY);
 
-    if (id_ptr_on<Human> owner = owner_)
+    if (IdPtr<Human> owner = owner_)
     {
         owner->UpdateOverlays();
     }
@@ -88,7 +88,7 @@ Slot<Item>& HumanInterface::GetActiveHand()
 
 void HumanInterface::UpdateLaying()
 {
-    if (id_ptr_on<Human> human = owner_)
+    if (IdPtr<Human> human = owner_)
     {
         if (human->GetLying() == true)
         {
@@ -103,7 +103,7 @@ void HumanInterface::UpdateLaying()
 
 void HumanInterface::UpdateHealth()
 {
-    if (id_ptr_on<Human> human = owner_)
+    if (IdPtr<Human> human = owner_)
     {
         int health = human->GetHealth();
         if (health == 100)
@@ -224,8 +224,8 @@ void HumanInterface::HandleClick(const std::string& place)
     else if (place == HumanInterfacePlaces::DROP)
     {
         //qDebug() << "Drop";
-        //qDebug() << owner_.ret_id();
-        //qDebug() << owner_->GetOwner().ret_id();
+        //qDebug() << owner_.Id();
+        //qDebug() << owner_->GetOwner().Id();
         if (GetActiveHand().Get())
         {
             //qDebug() << "Begin add item";
@@ -237,7 +237,7 @@ void HumanInterface::HandleClick(const std::string& place)
     }
     else if (place == HumanInterfacePlaces::LAY)
     {
-        if (id_ptr_on<Human> owner = owner_)
+        if (IdPtr<Human> owner = owner_)
         {
             bool laying_ = owner->GetLying();
             if (laying_)
@@ -256,7 +256,7 @@ void HumanInterface::HandleClick(const std::string& place)
         SwapHands();
     }
 
-    if (id_ptr_on<Human> owner = owner_)
+    if (IdPtr<Human> owner = owner_)
     {
         owner->UpdateOverlays();
     }
@@ -270,7 +270,7 @@ HumanInterface::~HumanInterface()
 
 void HumanInterface::Draw()
 {
-    //qDebug() << "Generate interface for frame, " << owner_.ret_id();
+    //qDebug() << "Generate interface for frame, " << owner_.Id();
     r_hand_.Draw();
     l_hand_.Draw();
     drop_.Draw();
@@ -297,16 +297,16 @@ unsigned int HumanInterface::hash() const
     hash += swap_.hash_member();
     hash += health_.hash_member();
     hash += lay_.hash_member();
-    hash += owner_.ret_id();
+    hash += owner_.Id();
     return hash;
 }
 
-void HumanInterface::Pick(id_ptr_on<Item> item)
+void HumanInterface::Pick(IdPtr<Item> item)
 {
     if (GetActiveHand().Get())
         return;
     GetActiveHand().Set(item);
-    if (id_ptr_on<Human> owner = owner_)
+    if (IdPtr<Human> owner = owner_)
     {
         owner->UpdateOverlays();
     }
@@ -317,12 +317,12 @@ void HumanInterface::Drop()
     GetActiveHand().Remove();
 }
 
-id_ptr_on<Item> HumanInterface::GetRHand()
+IdPtr<Item> HumanInterface::GetRHand()
 {
     return r_hand_.Get();
 }
 
-id_ptr_on<Item> HumanInterface::GetLHand()
+IdPtr<Item> HumanInterface::GetLHand()
 {
     return l_hand_.Get();
 }

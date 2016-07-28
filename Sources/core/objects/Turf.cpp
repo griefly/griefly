@@ -13,7 +13,7 @@ void ITurf::Delete()
     IOnMapObject::Delete();
 }
 
-int Friction::CombinedFriction(id_ptr_on<ITurf> turf)
+int Friction::CombinedFriction(IdPtr<ITurf> turf)
 {
     int retval =
           turf->GetFriction()

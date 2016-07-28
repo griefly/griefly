@@ -127,7 +127,7 @@ void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMap().GetDepth(); z++)
             {
-                id_ptr_on<CubeTile> loc = GetFactory().CreateImpl(CubeTile::T_ITEM_S());
+                IdPtr<CubeTile> loc = GetFactory().CreateImpl(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 GetMap().GetSquares()[x][y][z] = loc;
             }
@@ -579,21 +579,21 @@ void Game::SetUnsyncGenerator(size_t generator)
     unsync_generator_ = generator;
 }
 
-id_ptr_on<UnsyncGenerator> Game::GetUnsyncGenerator()
+IdPtr<UnsyncGenerator> Game::GetUnsyncGenerator()
 {
     return unsync_generator_;
 }
 
-void Game::ChangeMob(id_ptr_on<IMob> i)
+void Game::ChangeMob(IdPtr<IMob> i)
 {
-    if (!GetParamsHolder().GetParamBool("-editor") && current_mob_.valid())
+    if (!GetParamsHolder().GetParamBool("-editor") && current_mob_.IsValid())
     {
         current_mob_->DeinitGUI();
     }
 
     current_mob_ = i;
 
-    if (current_mob_.valid())
+    if (current_mob_.IsValid())
     {
         if (!GetParamsHolder().GetParamBool("-editor"))
         {
@@ -601,10 +601,10 @@ void Game::ChangeMob(id_ptr_on<IMob> i)
         }
     }
 
-    qDebug() << "Current mob change: " << current_mob_.ret_id();
+    qDebug() << "Current mob change: " << current_mob_.Id();
 }
 
-id_ptr_on<IMob> Game::GetMob()
+IdPtr<IMob> Game::GetMob()
 {
     return current_mob_;
 }
@@ -627,7 +627,7 @@ void Game::endProcess()
 
 void Game::generateUnsync()
 {
-    if (GetUnsyncGenerator().valid())
+    if (GetUnsyncGenerator().IsValid())
     {
         GetUnsyncGenerator()->PerformUnsync();
     }
@@ -665,9 +665,9 @@ void Game::ProcessBroadcastedMessages()
          {
              qDebug() << "Game id is 0";
          }
-         id_ptr_on<IMessageReceiver> game_object = game_id;
+         IdPtr<IMessageReceiver> game_object = game_id;
 
-         if (game_object.valid())
+         if (game_object.IsValid())
          {
              game_object->processGUImsg(*it);
          }

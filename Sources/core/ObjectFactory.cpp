@@ -37,7 +37,7 @@ void ObjectFactory::UpdateProcessingItems()
     }
     for (auto it = add_to_process_.begin(); it != add_to_process_.end(); ++it)
     {
-        if (!(*it).valid())
+        if (!(*it).IsValid())
         {
             continue;
         }
@@ -52,9 +52,9 @@ void ObjectFactory::UpdateProcessingItems()
         }
     }
     std::sort(process_table_.begin(), process_table_.end(),
-    [](id_ptr_on<IMainObject> item1, id_ptr_on<IMainObject> item2)
+    [](IdPtr<IMainObject> item1, IdPtr<IMainObject> item2)
     {
-        return item1.ret_id() < item2.ret_id();
+        return item1.Id() < item2.Id();
     });
     add_to_process_.clear();
 }
@@ -66,7 +66,7 @@ void ObjectFactory::ForeachProcess()
     size_t table_size = process_table_.size();
     for (size_t i = 0; i < table_size; ++i)
     {
-        if (!(   process_table_[i].valid()
+        if (!(   process_table_[i].IsValid()
               && process_table_[i]->GetFreq()))
         {
             continue;
@@ -82,7 +82,7 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
 {
     savefile << MAIN_TICK << std::endl;
     savefile << id_ << std::endl;
-    savefile << game_->GetMob().ret_id() << std::endl;
+    savefile << game_->GetMob().Id() << std::endl;
 
     // Random save
     savefile << game_->GetRandom().GetSeed() << std::endl;
@@ -210,7 +210,7 @@ void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
     qDebug() << "\n NUM OF ELEMENTS CREATED: " << j;
     qDebug() << "SET MOB START" << GetPlayerId(real_this_mob);
     game_->SetMob(GetPlayerId(real_this_mob));
-    qDebug() << "SET MOB END" << game_->GetMob().ret_id();
+    qDebug() << "SET MOB END" << game_->GetMob().Id();
     game_->ChangeMob(game_->GetMob());
     is_world_generating_ = false;
 }
@@ -278,8 +278,8 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
 
         //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
         //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(t_item);
-        id_ptr_on<IOnMapObject> i = CreateImpl(t_item);
-        if (!i.valid())
+        IdPtr<IOnMapObject> i = CreateImpl(t_item);
+        if (!i.IsValid())
         {
             qDebug() << "Unable to cast: " << QString::fromStdString(t_item);
             kv_abort();
@@ -304,7 +304,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
         }
 
         //qDebug() << "id_ptr_on<ITurf> t = i";
-        if (id_ptr_on<ITurf> t = i)
+        if (IdPtr<ITurf> t = i)
         {
             if (game_->GetMap().GetSquares()[x][y][z]->GetTurf())
             {
@@ -398,8 +398,8 @@ size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
     objects_table_[id_].object = item;
     size_t retval = id_;
     ++id_;
-    id_ptr_on<IOnMapBase> owner = owner_id;
-    if (owner.valid())
+    IdPtr<IOnMapBase> owner = owner_id;
+    if (owner.IsValid())
     {
         if (castTo<ITurf>(item) != nullptr)
         {
@@ -473,7 +473,7 @@ unsigned int ObjectFactory::Hash()
     int i = 1;
     for (auto p = process_table_.begin(); p != process_table_.end(); ++p)
     {
-        h += p->ret_id() * i;
+        h += p->Id() * i;
         i++;
     }
 
@@ -509,11 +509,11 @@ void ObjectFactory::AddProcessingItem(size_t item)
 
 void ObjectFactory::ClearProcessing()
 {
-    std::vector<id_ptr_on<IMainObject>> remove_from_process;
+    std::vector<IdPtr<IMainObject>> remove_from_process;
     size_t table_size = process_table_.size();
     for (size_t i = 0; i < table_size; ++i)
     {
-        if (!(   process_table_[i].valid()
+        if (!(   process_table_[i].IsValid()
               && process_table_[i]->GetFreq()))
         {
             remove_from_process.push_back(process_table_[i]);

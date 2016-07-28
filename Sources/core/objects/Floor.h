@@ -10,7 +10,7 @@ public:
     Floor(size_t id);
     virtual void AfterWorldCreation() override;
 
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
     void SetOpen(bool o);
 
     bool KV_SAVEBLE(bloody);

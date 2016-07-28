@@ -4,24 +4,24 @@
 #include "Item.h"
 #include "../ObjectFactory.h"
 
-id_ptr_on<ITurf> IOnMapBase::GetTurf()
+IdPtr<ITurf> IOnMapBase::GetTurf()
 {
-    if (owner.valid())
+    if (owner.IsValid())
     {
         return owner->GetTurf();
     }
     return 0;
 }
 
-void IOnMapBase::SetTurf(id_ptr_on<ITurf> turf)
+void IOnMapBase::SetTurf(IdPtr<ITurf> turf)
 {
-    if (owner.valid())
+    if (owner.IsValid())
     {
         owner->SetTurf(turf);
     }
 }
 
-void IOnMapBase::Bump(id_ptr_on<IMovable> item)
+void IOnMapBase::Bump(IdPtr<IMovable> item)
 {
    // nothing
 }
@@ -31,7 +31,7 @@ void IOnMapBase::BumpByGas(Dir dir, bool inside)
    // nothing
 }
 
-void IOnMapBase::AttackBy(id_ptr_on<Item> item)
+void IOnMapBase::AttackBy(IdPtr<Item> item)
 {
     // nothing
 }

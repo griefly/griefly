@@ -18,16 +18,16 @@ Lattice::Lattice(size_t id) : Structure(id)
     name = "Lattice";
 }
 
-void Lattice::AttackBy(id_ptr_on<Item> item)
+void Lattice::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<FloorTile> tile = item)
+    if (IdPtr<FloorTile> tile = item)
     {
         tile->Delete();
 
         GetTurf()->Delete();
         Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
 
-        PlaySoundIfVisible("Deconstruct.ogg", owner.ret_id());
+        PlaySoundIfVisible("Deconstruct.ogg", owner.Id());
 
         Delete();
     }

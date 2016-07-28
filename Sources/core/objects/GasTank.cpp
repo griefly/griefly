@@ -33,9 +33,9 @@ void GasTank::AfterWorldCreation()
     SetFreq(1);
 }
 
-void GasTank::AttackBy(id_ptr_on<Item> item)
+void GasTank::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<AtmosTool> at = item)
+    if (IdPtr<AtmosTool> at = item)
     {
         GetGame().GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
         return;
@@ -59,14 +59,14 @@ void GasTank::AttackBy(id_ptr_on<Item> item)
 
 void GasTank::Open()
 {
-    GetGame().GetChat().PostSimpleText(name + " is open", owner.ret_id());
+    GetGame().GetChat().PostSimpleText(name + " is open", owner.Id());
 
     open_ = true;
 }
 
 void GasTank::Close()
 {
-    GetGame().GetChat().PostSimpleText(name + " is closed", owner.ret_id());
+    GetGame().GetChat().PostSimpleText(name + " is closed", owner.Id());
 
     open_ = false;
 }
@@ -77,7 +77,7 @@ void GasTank::Process()
     {
         return;
     }
-    if (id_ptr_on<CubeTile> ct = owner)
+    if (IdPtr<CubeTile> ct = owner)
     {
         atmos_holder_.Connect(ct->GetAtmosHolder());
     }

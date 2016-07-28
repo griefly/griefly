@@ -20,8 +20,8 @@ namespace Slots
 class BaseSlot
 {
 public:
-    virtual bool Set(id_ptr_on<Item> ptr) = 0;
-    virtual id_ptr_on<Item>  Get() = 0;
+    virtual bool Set(IdPtr<Item> ptr) = 0;
+    virtual IdPtr<Item>  Get() = 0;
     virtual void Remove() = 0;
     virtual void Draw() = 0;
     virtual std::ostream& operator<<(std::stringstream& file) = 0;
@@ -41,7 +41,7 @@ public:
         name_ = "noname";
         SetPos(0, 0);
     }
-    virtual bool Set(id_ptr_on<Item> ptr) override
+    virtual bool Set(IdPtr<Item> ptr) override
     {
         if (!(item_ = ptr))
         {
@@ -50,7 +50,7 @@ public:
         }
         return true;
     }
-    virtual id_ptr_on<Item> Get() override
+    virtual IdPtr<Item> Get() override
     {
         return item_;
     }
@@ -143,7 +143,7 @@ public:
     }
 private:
     ViewInfo view_;
-    id_ptr_on<T> item_;
+    IdPtr<T> item_;
     int posx_;
     int posy_;
     std::string type_;

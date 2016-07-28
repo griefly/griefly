@@ -31,9 +31,9 @@ void FlatGlass::AfterWorldCreation()
     SetPassable(GetDir(), Passable::EMPTY);
 }
 
-void FlatGlass::Bump(id_ptr_on<IMovable> item)
+void FlatGlass::Bump(IdPtr<IMovable> item)
 {
-    id_ptr_on<IMob> m;
+    IdPtr<IMob> m;
     m = item;
     if (!m)
         return;

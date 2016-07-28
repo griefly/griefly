@@ -9,7 +9,7 @@ public:
     DECLARE_GET_TYPE_ITEM(Weldingtool);
     Weldingtool(size_t id);
     virtual void Process() override;
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
     void TurnOn();
     void TurnOff();
     bool Working() const { return on_; }

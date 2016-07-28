@@ -36,7 +36,7 @@ public:
 
     virtual void ResizeMap(int new_map_x, int new_map_y, int new_map_z) = 0;
 
-    typedef id_ptr_on<CubeTile> SqType;
+    typedef IdPtr<CubeTile> SqType;
     virtual std::vector<std::vector<std::vector<SqType>>>& GetSquares() = 0;
     virtual const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const = 0;
 
@@ -90,7 +90,7 @@ class IChat
 public:
     virtual ~IChat() { }
 
-    virtual void PostTextFor(const std::string& str, id_ptr_on<IOnMapBase> owner) = 0;
+    virtual void PostTextFor(const std::string& str, IdPtr<IOnMapBase> owner) = 0;
     virtual void PostText(const std::string& str) = 0;
     virtual void PostOOCText(const std::string& who, const std::string& str) = 0;
     virtual void PostSimpleText(const std::string& str, size_t tile_id) = 0;
@@ -116,8 +116,8 @@ public:
 
     virtual void SetUnsyncGenerator(size_t generator) = 0;
 
-    virtual void ChangeMob(id_ptr_on<IMob> new_mob) = 0;
-    virtual id_ptr_on<IMob> GetMob() = 0;
+    virtual void ChangeMob(IdPtr<IMob> new_mob) = 0;
+    virtual IdPtr<IMob> GetMob() = 0;
     virtual void SetMob(size_t new_mob) = 0;
 
     virtual void AddSound(const std::string& name) = 0;

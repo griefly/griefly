@@ -59,7 +59,7 @@ public:
 
 class MockIChat : public IChat {
 public:
-    MOCK_METHOD2(PostTextFor, void(const std::string& str, id_ptr_on<IOnMapBase> owner));
+    MOCK_METHOD2(PostTextFor, void(const std::string& str, IdPtr<IOnMapBase> owner));
     MOCK_METHOD1(PostText, void(const std::string& str));
     MOCK_METHOD2(PostOOCText, void(const std::string& who, const std::string& str));
     MOCK_METHOD2(PostSimpleText, void(const std::string& str, size_t tile_id));
@@ -80,8 +80,8 @@ public:
     MOCK_METHOD0(GetNames, Names&());
     MOCK_METHOD3(MakeTiles, void(int size_x, int size_y, int size_z));
     MOCK_METHOD1(SetUnsyncGenerator, void(size_t generator));
-    MOCK_METHOD1(ChangeMob, void(id_ptr_on<IMob> new_mob));
-    MOCK_METHOD0(GetMob, id_ptr_on<IMob>());
+    MOCK_METHOD1(ChangeMob, void(IdPtr<IMob> new_mob));
+    MOCK_METHOD0(GetMob, IdPtr<IMob>());
     MOCK_METHOD1(SetMob, void(size_t new_mob));
     MOCK_METHOD2(PlayMusic, void(const std::string& name, float volume));
     MOCK_METHOD1(AddSound, void(const std::string& name));

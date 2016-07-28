@@ -29,5 +29,5 @@ ADD_TO_TYPELIST(ITurf);
 
 namespace Friction
 {
-    int CombinedFriction(id_ptr_on<ITurf> turf);
+    int CombinedFriction(IdPtr<ITurf> turf);
 }

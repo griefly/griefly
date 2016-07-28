@@ -42,8 +42,8 @@ public:
     virtual Names& GetNames() override;
 
     virtual void SetUnsyncGenerator(size_t generator) override;
-    virtual void ChangeMob(id_ptr_on<IMob> new_mob) override;
-    virtual id_ptr_on<IMob> GetMob() override;
+    virtual void ChangeMob(IdPtr<IMob> new_mob) override;
+    virtual IdPtr<IMob> GetMob() override;
     virtual void SetMob(size_t new_mob) override;
 public slots:
     void process();
@@ -55,7 +55,7 @@ signals:
     void insertHtmlIntoChat(QString html);
     void playMusic(QString name, float volume);
 private:
-    id_ptr_on<UnsyncGenerator> GetUnsyncGenerator();
+    IdPtr<UnsyncGenerator> GetUnsyncGenerator();
     void GenerateFrame();
 
     void UpdateVisible();
@@ -105,6 +105,6 @@ private:
     SyncRandom* sync_random_;
     Names* names_;
 
-    id_ptr_on<UnsyncGenerator> unsync_generator_;
-    id_ptr_on<IMob> current_mob_;
+    IdPtr<UnsyncGenerator> unsync_generator_;
+    IdPtr<IMob> current_mob_;
 };

@@ -31,7 +31,7 @@ namespace HumanInterfacePlaces
 class HumanInterface: public InterfaceBase
 {
 public:
-    void SetOwner(id_ptr_on<IOnMapObject> owner)
+    void SetOwner(IdPtr<IOnMapObject> owner)
     {
         owner_ = owner;
     }
@@ -44,13 +44,13 @@ public:
     friend std::istream& operator>>(std::stringstream& file, HumanInterface& interf);
     virtual unsigned int hash() const override;
 
-    void Pick(id_ptr_on<Item> item);
+    void Pick(IdPtr<Item> item);
     void Drop();
 
     void AddOverlays();
 
-    id_ptr_on<Item> GetRHand();
-    id_ptr_on<Item> GetLHand();
+    IdPtr<Item> GetRHand();
+    IdPtr<Item> GetLHand();
     Slot<Item>& GetActiveHand();
     void SwapHands();
 
@@ -60,7 +60,7 @@ public:
 public:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
 
-    id_ptr_on<IOnMapObject> owner_;
+    IdPtr<IOnMapObject> owner_;
 
     bool active_hand_;
 

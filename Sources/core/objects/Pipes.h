@@ -13,13 +13,13 @@ public:
     DECLARE_SAVED(PipeBase, IMovable);
     DECLARE_GET_TYPE_ITEM(PipeBase);
     PipeBase(size_t id);
-    virtual void AttackBy(id_ptr_on<Item> item) override;
-    virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) { return false; }
+    virtual void AttackBy(IdPtr<Item> item) override;
+    virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) { return false; }
     virtual bool CanTransferGas(Dir dir) const { return false; }
     AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 protected:
-    void ConnectHelper(id_ptr_on<PipeBase>& connection, Dir dir);
-    void ProcessHelper(id_ptr_on<PipeBase>& connection, Dir dir);
+    void ConnectHelper(IdPtr<PipeBase>& connection, Dir dir);
+    void ProcessHelper(IdPtr<PipeBase>& connection, Dir dir);
     AtmosHolder KV_SAVEBLE(atmos_holder_);
 };
 ADD_TO_TYPELIST(PipeBase);
@@ -30,14 +30,14 @@ public:
     DECLARE_SAVED(Pipe, PipeBase);
     DECLARE_GET_TYPE_ITEM(Pipe);
     Pipe(size_t id);
-    virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
+    virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override { return true; }
     virtual void Process() override;
 protected:
     static void GetTailAndHead(Dir dir, Dir* head, Dir* tail);
-    id_ptr_on<PipeBase> KV_SAVEBLE(head_);
-    id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
+    IdPtr<PipeBase> KV_SAVEBLE(head_);
+    IdPtr<PipeBase> KV_SAVEBLE(tail_);
 };
 ADD_TO_TYPELIST(Pipe);
 
@@ -47,16 +47,16 @@ public:
     DECLARE_SAVED(Manifold, PipeBase);
     DECLARE_GET_TYPE_ITEM(Manifold);
     Manifold(size_t id);
-    virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
+    virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override;
     virtual void Process() override;
 private:
     static void GetConnectionsDirs(Dir dir, Dir* tail, Dir* left, Dir* right);
 
-    id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
-    id_ptr_on<PipeBase> KV_SAVEBLE(left_);
-    id_ptr_on<PipeBase> KV_SAVEBLE(right_);
+    IdPtr<PipeBase> KV_SAVEBLE(tail_);
+    IdPtr<PipeBase> KV_SAVEBLE(left_);
+    IdPtr<PipeBase> KV_SAVEBLE(right_);
 };
 ADD_TO_TYPELIST(Manifold);
 
@@ -69,7 +69,7 @@ public:
     Valve(size_t id);
     virtual bool CanTransferGas(Dir dir) const override;
     virtual void Process() override;
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 private:
     bool KV_SAVEBLE(closed_);
 };
@@ -81,14 +81,14 @@ public:
     DECLARE_SAVED(Vent, PipeBase);
     DECLARE_GET_TYPE_ITEM(Vent);
     Vent(size_t id);
-    virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
+    virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override { return true; }
     virtual void Process() override;
 
     void SetHidden(bool hidden);
 private:
-    id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
+    IdPtr<PipeBase> KV_SAVEBLE(tail_);
 };
 ADD_TO_TYPELIST(Vent);
 
@@ -98,15 +98,15 @@ public:
     DECLARE_SAVED(Connector, PipeBase);
     DECLARE_GET_TYPE_ITEM(Connector);
     Connector(size_t id);
-    void ConnectToGasTank(id_ptr_on<GasTank> tank);
+    void ConnectToGasTank(IdPtr<GasTank> tank);
     void DisconnectFromGasTank();
-    virtual bool Connect(Dir dir, id_ptr_on<PipeBase> pipe) override;
+    virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override { return true; }
     virtual void Process() override;
 private:
-    id_ptr_on<GasTank> KV_SAVEBLE(tank_);
-    id_ptr_on<PipeBase> KV_SAVEBLE(tail_);
+    IdPtr<GasTank> KV_SAVEBLE(tank_);
+    IdPtr<PipeBase> KV_SAVEBLE(tail_);
 };
 ADD_TO_TYPELIST(Connector);
 

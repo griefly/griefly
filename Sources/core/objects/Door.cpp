@@ -28,7 +28,7 @@ void Door::Open()
         return;
     }
     SetState("door_opening");
-    PlaySoundIfVisible("airlock.ogg", owner.ret_id());
+    PlaySoundIfVisible("airlock.ogg", owner.Id());
     door_state_ = OPENING;
     last_tick_ = MAIN_TICK;
     SetFreq(1);
@@ -41,7 +41,7 @@ void Door::Close()
         return;
     }
     SetState("door_closing");
-    PlaySoundIfVisible("airlock.ogg", owner.ret_id());
+    PlaySoundIfVisible("airlock.ogg", owner.Id());
     SetPassable(D_ALL, Passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;
@@ -80,9 +80,9 @@ void Door::Process()
     }
 }
 
-void Door::Bump(id_ptr_on<IMovable> item)
+void Door::Bump(IdPtr<IMovable> item)
 {
-    if (id_ptr_on<IMob> m = item)
+    if (IdPtr<IMob> m = item)
     {
         if (door_state_ == CLOSED)
         {
@@ -110,12 +110,12 @@ void Door::Weld()
         GetView()->AddOverlay("icons/Doorglass.dmi", "welded");
         door_state_ = WELDED;
     }
-    PlaySoundIfVisible("Welder.ogg", owner.ret_id());
+    PlaySoundIfVisible("Welder.ogg", owner.Id());
 }
 
-void Door::AttackBy(id_ptr_on<Item> item)
+void Door::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Weldingtool> w = item)
+    if (IdPtr<Weldingtool> w = item)
     {
         if (IsClosed() && w->Working())
         {
@@ -210,7 +210,7 @@ void GlassDoor::Open()
         return;
     }
     SetState(door_prefix_ + "opening");
-    PlaySoundIfVisible("windowdoor.ogg", owner.ret_id());
+    PlaySoundIfVisible("windowdoor.ogg", owner.Id());
     door_state_ = OPENING;
     last_tick_ = MAIN_TICK;
     SetFreq(1);
@@ -223,7 +223,7 @@ void GlassDoor::Close()
         return;
     }
     SetState(door_prefix_ + "closing");
-    PlaySoundIfVisible("windowdoor.ogg", owner.ret_id());
+    PlaySoundIfVisible("windowdoor.ogg", owner.Id());
     SetPassable(GetDir(), Passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;
@@ -262,9 +262,9 @@ void GlassDoor::Process()
     }
 }
 
-void GlassDoor::Bump(id_ptr_on<IMovable> item)
+void GlassDoor::Bump(IdPtr<IMovable> item)
 {
-    if (id_ptr_on<IMob> m = item)
+    if (IdPtr<IMob> m = item)
     {
         if (door_state_ == CLOSED)
         {
@@ -273,7 +273,7 @@ void GlassDoor::Bump(id_ptr_on<IMovable> item)
     }
 }
 
-void GlassDoor::AttackBy(id_ptr_on<Item> item)
+void GlassDoor::AttackBy(IdPtr<Item> item)
 {
     if (IsOpen())
     {
