@@ -71,14 +71,14 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     for (auto it = (*items_creators()).begin(); it != (*items_creators()).end(); ++it)
     {
         IMainObject* loc = it->second(0);
-        IOnMapObject* bloc = castTo<IOnMapObject>(loc);
+        IOnMapObject* bloc = CastTo<IOnMapObject>(loc);
         if (!bloc)
         {
             //delete loc;
             continue;
         }
         bool is_turf = false;
-        if (castTo<ITurf>(loc))
+        if (CastTo<ITurf>(loc))
         {
             is_turf = true;
         }

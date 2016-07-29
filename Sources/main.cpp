@@ -17,6 +17,7 @@
 #endif
 
 #include "core/FastIsType.h"
+#include "AutogenMetadata.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
 
+    InitRealTypes();
     InitCastTable();
     // LCOV_EXCL_STOP
 #ifdef _BUILD_TESTS

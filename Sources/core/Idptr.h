@@ -160,7 +160,7 @@ private:
         {
             return;
         }
-        T* retval = castTo<T>(local);
+        T* retval = CastTo<T>(local);
         if (retval)
         {
             casted_ = retval;

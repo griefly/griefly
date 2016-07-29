@@ -401,7 +401,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
     IdPtr<IOnMapBase> owner = owner_id;
     if (owner.IsValid())
     {
-        if (castTo<ITurf>(item) != nullptr)
+        if (CastTo<ITurf>(item) != nullptr)
         {
             qDebug() << "is_turf == true";
             owner->SetTurf(item->GetId());
