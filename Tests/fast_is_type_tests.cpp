@@ -14,6 +14,9 @@ TEST(FastIsTypeTest, TwoArgs)
     int unsync_type = UnsyncGenerator::RT_ITEM_S();
     int draw_type = IDraw::RT_ITEM_S();
 
+    std::cout << main_type << "," << unsync_type << "," << draw_type
+              << "," << cast_table << std::endl;
+
     ASSERT_TRUE(FastIsType(main_type, main_type));
     ASSERT_TRUE(FastIsType(main_type, unsync_type));
     ASSERT_TRUE(FastIsType(unsync_type, unsync_type));
