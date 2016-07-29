@@ -17,7 +17,8 @@ class FastTypeHelper
 public:
     FastTypeHelper()
     {
-        if (cast_table == nullptr)
+        static bool inited = false;
+        if (!inited)
         {
             cast_table = new QVector<QBitArray>;
 
@@ -28,6 +29,7 @@ public:
             classes_data_ = parsed_json_.object().value("classes").toArray();
 
             InitTable();
+            inited = true;
         }
     }
 private:

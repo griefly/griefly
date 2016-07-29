@@ -24,9 +24,8 @@ TEST(MainObject, Types)
    IMainObject object(42);
    ASSERT_EQ(object.T_ITEM(), "main");
 
-   IMainObject::REAL_TYPE_ITEM = -1;
-   ASSERT_EQ(object.RT_ITEM(), -1);
-   ASSERT_EQ(IMainObject::RT_ITEM_S(), -1);
+   ASSERT_EQ(object.RT_ITEM(), 0);
+   ASSERT_EQ(IMainObject::RT_ITEM_S(), 0);
 }
 
 TEST(MainObject, Hash)
