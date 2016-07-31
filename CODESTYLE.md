@@ -25,7 +25,6 @@ class FooBar
     // Do something
 };
 ```
-**Exception:** template classes which mimic sdl classes (e.g., the `id_ptr_on` class) 
 
 #### Class member functions naming  
 Class member functions names should be capitalized.  
