@@ -2,7 +2,8 @@
 
 #include "core/Idptr.h"
 
-#include"core/objects/MainObject.h"
+#include "core/objects/MainObject.h"
+#include "core/objects/UnsyncGenerator.h"
 
 class TempTable
 {
@@ -51,4 +52,11 @@ TEST(IdPtr, Constructors)
 
     IdPtr<IMainObject> from_other(empty);
     ASSERT_EQ(from_other.Id(), 10);
+
+    IdPtr<UnsyncGenerator> gen_from_other(from_other);
+    ASSERT_EQ(from_other.Id(), 10);
+
+    from_other = 33;
+    gen_from_other = from_other;
+    ASSERT_EQ(from_other.Id(), 33);
 }
