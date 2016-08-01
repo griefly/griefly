@@ -68,14 +68,19 @@ TEST(IdPtr, EqualOperator)
 
     IdPtr<IMainObject> object(23);
     ASSERT_TRUE(object == object);
+    ASSERT_FALSE(object != object);
 
     IdPtr<IMainObject> other(22);
     ASSERT_FALSE(object == other);
     ASSERT_FALSE(other == object);
+    ASSERT_TRUE(object != other);
+    ASSERT_TRUE(other != object);
 
     IdPtr<IMainObject> object2(23);
     ASSERT_TRUE(object == object2);
     ASSERT_TRUE(object2 == object);
+    ASSERT_FALSE(object != object2);
+    ASSERT_FALSE(object2 != object);
 }
 
 TEST(IdPtr, Dereference)
@@ -97,6 +102,44 @@ TEST(IdPtr, Dereference)
     ASSERT_EQ(ptr.operator*(), &object);
 
     ASSERT_EQ(ptr.operator*(), ptr.operator->());
+}
+
+TEST(IdPtr, Validating)
+{
+    TempTable table;
+
+    IMainObject object(42);
+    (*id_ptr_id_table)[42].object = &object;
+
+    IdPtr<IMainObject> ptr;
+    ASSERT_FALSE(ptr.IsValid());
+    ASSERT_FALSE(ptr);
+
+    ptr = 10;
+    ASSERT_FALSE(ptr.IsValid());
+
+    ptr = 42;
+    ASSERT_TRUE(ptr.IsValid());
+    ASSERT_TRUE(ptr);
+
+    (*id_ptr_id_table)[42].object = nullptr;
+    ASSERT_FALSE(ptr.IsValid());
+}
+
+TEST(IdPtr, SaveAndLoad)
+{
+    TempTable table;
+
+    IdPtr<IMainObject> ptr(93);
+    std::stringstream str;
+    str << ptr;
+    ASSERT_EQ(str.str(), "93 ");
+
+    IdPtr<IMainObject> ptr2;
+    ASSERT_FALSE(ptr2 == ptr);
+
+    str >> ptr2;
+    ASSERT_TRUE(ptr2 == ptr);
 }
 
 

@@ -64,6 +64,11 @@ public:
     {
         return id_ == other.id_;
     }
+    template<class U>
+    bool operator!=(const IdPtr<U>& other)
+    {
+        return !operator==(other);
+    }
 
     IdPtr& operator=(size_t id)
     {
@@ -140,12 +145,12 @@ public:
 #if defined(KV_ID_PTR_VALID_CACHE)
         if (casted_)
         {
-            return reinterpret_cast<void*>(0x1);
+            return reinterpret_cast<void*>(casted_);
         }
 #endif // KV_ID_PTR_VALID_CACHE
         if (IsValid())
         {
-            return reinterpret_cast<void*>(0x1);
+            return reinterpret_cast<void*>(casted_);
         }
         return nullptr;
     }
@@ -196,7 +201,7 @@ private:
 template<typename T>
 std::ostream& operator<<(std::ostream& stream, const IdPtr<T>& ptr)
 {
-    stream << ptr.id_;
+    stream << ptr.id_ << " ";
     return stream;
 }
 
