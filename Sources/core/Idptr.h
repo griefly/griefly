@@ -49,6 +49,11 @@ public:
     {
         *this = id;
     }
+    IdPtr(const IdPtr& other)
+    {
+        *this = other;
+    }
+
     template<class U>
     IdPtr(const IdPtr<U>& other)
     {
@@ -66,6 +71,13 @@ public:
         casted_ = nullptr;
         return *this;
     }
+    IdPtr& operator=(const IdPtr& other)
+    {
+        id_ = other.id_;
+        casted_ = other.casted_;
+        return *this;
+    }
+
     template<class U>
     IdPtr& operator=(const IdPtr<U>& other)
     {
