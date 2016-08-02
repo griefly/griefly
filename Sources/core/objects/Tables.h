@@ -8,7 +8,7 @@ public:
     DECLARE_SAVED(Tables, IMovable);
     DECLARE_GET_TYPE_ITEM(Tables);
     Tables(size_t id);
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Delete() override;
     void CheckSurroundings(bool table);
     void UpdateSprite();

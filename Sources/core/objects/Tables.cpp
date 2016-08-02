@@ -259,9 +259,9 @@ void Tables::SetTable(int direction, bool table)
         break;
     }
 }
-void Tables::AttackBy(id_ptr_on<Item> item)
+void Tables::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Human> human= item->GetOwner())
+    if (IdPtr<Human> human= item->GetOwner())
     {
         if(auto r_item = dynamic_cast<HumanInterface*>(human->GetInterface())->GetActiveHand().Get())
             {
