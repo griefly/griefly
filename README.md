@@ -14,7 +14,7 @@ Dependencies
 4. libpng
 5. zlib
 6. Python 2.7
-7. Go (https://golang.org/dl/)
+7. Go 1.6+ (https://golang.org/dl/)
 8. Git
 9. CMake 2.8
 
@@ -47,8 +47,8 @@ How to build everything on Linux
 --------------------------------
 
 1. Install dependencies. Look at `travis-get-deps` rule in Makefile for clues.
-2. `make`. Built project will be placed under `Exec` directory.
-3. `./build_go_server.sh`
+2. `make`. Built project will be placed under `Exec` directory. Server will be
+   built in `gopath/src/griefly-server` directory.
 
 **Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).  
 **Note:** gccgo is not supported! The current `FindGo.cmake` cannot parse the gccgo version string, so you will obtain an error. Use the official version instead.
@@ -56,7 +56,7 @@ How to build everything on Linux
 How to start server
 -------------------
 
-Just run the executable from directory `griefly-server`.
+Just run the executable from directory `gopath/src/griefly-server`.
 
 How to run game without launcher
 --------------------------------
