@@ -12,6 +12,7 @@ public:
     {
         old_table_ = id_ptr_id_table;
         id_ptr_id_table = &table_;
+        table_.resize(100);
     }
     ~TempTable()
     {
@@ -29,7 +30,7 @@ TEST(IdPtrDeathTest, Death)
 
     ASSERT_DEATH(
     {
-        IdPtr<IMainObject> object(42);
+        IdPtr<IMainObject> object(101);
         object.IsValid();
     }, "Id table lookup fail");
 }
@@ -60,3 +61,47 @@ TEST(IdPtr, Constructors)
     gen_from_other = from_other;
     ASSERT_EQ(from_other.Id(), 33);
 }
+
+TEST(IdPtr, EqualOperator)
+{
+    TempTable table;
+
+    IdPtr<IMainObject> object(23);
+    ASSERT_TRUE(object == object);
+
+    IdPtr<IMainObject> other(22);
+    ASSERT_FALSE(object == other);
+    ASSERT_FALSE(other == object);
+
+    IdPtr<IMainObject> object2(23);
+    ASSERT_TRUE(object == object2);
+    ASSERT_TRUE(object2 == object);
+}
+
+TEST(IdPtr, Dereference)
+{
+    TempTable table;
+
+    IMainObject object(42);
+    (*id_ptr_id_table)[42].object = &object;
+
+    IdPtr<IMainObject> ptr;
+    ASSERT_EQ(ptr.operator*(), nullptr);
+
+    ptr = 10;
+    ASSERT_EQ(ptr.operator*(), nullptr);
+
+    ptr = 42;
+    ASSERT_EQ(ptr.operator*(), &object);
+    // Cache
+    ASSERT_EQ(ptr.operator*(), &object);
+
+    ASSERT_EQ(ptr.operator*(), ptr.operator->());
+}
+
+
+
+
+
+
+
