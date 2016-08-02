@@ -380,7 +380,7 @@ file(GLOB_RECURSE GOFILES "${SERVER_DIR}/*.go")
 add_custom_command(
     OUTPUT ${SERVER_DIR}/griefly-server${EXECUTABLE_SUFFIX}
     WORKING_DIRECTORY ${SERVER_DIR}
-    COMMAND ${CMAKE_COMMAND} -E env GOPATH=${GOPATH} ${GO_EXECUTABLE} build -ldflags "-X main.clientVersionBuild=${CLIENT_VERSION}"
+    COMMAND ${CMAKE_COMMAND} -E env GOPATH=${GOPATH} GO15VENDOREXPERIMENT=1 ${GO_EXECUTABLE} build -ldflags "-X main.clientVersionBuild=${CLIENT_VERSION}"
     DEPENDS ${GOFILES})
 add_custom_target(GoServer ALL DEPENDS ${SERVER_DIR}/griefly-server${EXECUTABLE_SUFFIX})
 
