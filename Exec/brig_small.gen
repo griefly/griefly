@@ -3056,7 +3056,9 @@ Floor 38 31 0 1 5 dMove 0
 Floor 38 32 0 1 5 dMove 0  
 SpawnPoint 38 32 0 14 5 dMove 0  15 is_strong_owner 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  10 spawn_type 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Floor 38 33 0 1 5 dMove 0  
+MetalTable 38 33 0 0 
 Floor 38 34 0 1 5 dMove 0  
+MetalTable 38 34 0 0 
 Floor 38 35 0 1 5 dMove 0  
 Floor 38 36 0 1 5 dMove 0  
 Floor 38 37 0 1 5 dMove 0  
@@ -3408,7 +3410,7 @@ Floor 42 26 0 1 5 dMove 0
 Floor 42 27 0 1 5 dMove 0  
 Floor 42 28 0 1 5 dMove 0  
 Floor 42 29 0 1 5 dMove 0  
-LaserGun 42 29 0 0 
+LaserGun 42 29 0 1 5 dMove 0  
 Floor 42 30 0 1 5 dMove 0  
 MetalWall 42 31 0 1 5 dMove 0  
 Floor 42 32 0 1 5 dMove 0  
@@ -3690,14 +3692,14 @@ Pipe 45 23 0 1 5 dMove 0
 Plating 45 24 0 1 5 dMove 0  
 Valve 45 24 0 1 5 dMove 0  
 Plating 45 25 0 1 5 dMove 0  
-AmmunitionBox 45 25 0 0 
+AmmunitionBox 45 25 0 1 5 dMove 0  
 Floor 45 26 0 1 5 dMove 0  
 SpawnPoint 45 26 0 14 5 dMove 0  15 is_strong_owner 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  10 spawn_type 10 8 security 11 transparent 0  7 v_level 0  5 view_ 0  
 Plating 45 27 0 1 5 dMove 0  
 AtmosTool 45 27 0 1 5 dMove 0  
 Floor 45 28 0 1 5 dMove 0  
 Floor 45 29 0 1 5 dMove 0  
-Revolver 45 29 0 0 
+Revolver 45 29 0 1 5 dMove 0  
 Floor 45 30 0 1 5 dMove 0  
 SecurityLocker 45 30 0 1 5 dMove 0  
 RedUniform 45 30 0 1 5 dMove 0  
@@ -3773,7 +3775,7 @@ Space 46 21 0 1 5 dMove 0
 Space 46 22 0 1 5 dMove 0  
 ReinforcedWall 46 23 0 1 5 dMove 0  
 Plating 46 24 0 1 5 dMove 0  
-AmmunitionBox 46 24 0 0 
+AmmunitionBox 46 24 0 1 5 dMove 0  
 Plating 46 25 0 1 5 dMove 0  
 Chair 46 25 0 18 8 anchored 0  5 dMove 1 0 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Floor 46 26 0 1 5 dMove 0  
@@ -3948,7 +3950,7 @@ Plating 48 24 0 1 5 dMove 0
 Valve 48 24 0 1 5 dMove 0  
 Plating 48 25 0 1 5 dMove 0  
 Pipe 48 25 0 1 5 dMove 0  
-AmmunitionBox 48 25 0 0 
+AmmunitionBox 48 25 0 1 5 dMove 0  
 Plating 48 26 0 1 5 dMove 0  
 Manifold 48 26 0 1 5 dMove 0  
 Plating 48 27 0 1 5 dMove 0  
