@@ -2,38 +2,28 @@
 
 #include "Movable.h"
 
-class Tables: public IMovable
+class Table: public IMovable
 {
 public:
-    DECLARE_SAVED(Tables, IMovable);
-    DECLARE_GET_TYPE_ITEM(Tables);
-    Tables(size_t id);
+    DECLARE_SAVED(Table, IMovable);
+    DECLARE_GET_TYPE_ITEM(Table);
+    Table(size_t id);
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Delete() override;
-    void CheckSurroundings(bool table);
-    void UpdateSprite();
-    void SetTable(Dir directon, bool table);
+    void NotifyNeighborhood(bool is_in_existence);
+    void UpdateSprite(size_t ignored_table);
     virtual void AfterWorldCreation() override;
 protected:
     std::string KV_SAVEBLE(material_);
-private:
-    bool KV_SAVEBLE(up_);
-    bool KV_SAVEBLE(down_);
-    bool KV_SAVEBLE(left_);
-    bool KV_SAVEBLE(right_);
-    bool KV_SAVEBLE(upright_);
-    bool KV_SAVEBLE(downright_);
-    bool KV_SAVEBLE(upleft_);
-    bool KV_SAVEBLE(downleft_);
-};
-ADD_TO_TYPELIST(Tables);
+}
+ADD_TO_TYPELIST(Table);
 
 
 
-class MetalTable: public Tables
+class MetalTable: public Table
 {
 public:
-    DECLARE_SAVED(MetalTable, Tables);
+    DECLARE_SAVED(MetalTable, Table);
     DECLARE_GET_TYPE_ITEM(MetalTable);
     MetalTable(size_t id);
 }

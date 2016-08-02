@@ -2,144 +2,173 @@
 #include "Item.h"
 #include "Human.h"
 
-Tables::Tables(size_t id) : IMovable(id)
+Table::Table(size_t id) : IMovable(id)
 {
     anchored = true;
     v_level = 6;
-    up_ = 0;
-    down_ = 0;
-    left_  = 0;
-    right_ = 0; 
     SetPassable(D_ALL, Passable::SMALL_CREATURE);
     SetSprite(""); 
     material_ = "";
     SetState(material_ + "_table_d0");
 }
 
-void Tables::AfterWorldCreation()
+void Table::AfterWorldCreation()
 {
-    CheckSurroundings(true);
+    NotifyNeighborhood(true);
 }
 
-void Tables::Delete()
+void Table::Delete()
 {
-    CheckSurroundings(false);
+    NotifyNeighborhood(false);
     IOnMapObject::Delete();
 }
-void Tables::CheckSurroundings(bool table)
+void Table::NotifyNeighborhood(bool is_in_existence)
 {
-    if (auto table_up = GetNeighbour(D_UP)->GetItem<Tables>())
+    size_t id;
+    if(is_in_existence)
     {
-        table_up->SetTable(2, table);
-        table_up->UpdateSprite();
-        SetTable(1, table);
+        id = 0;
     }
-    if (auto table_down = GetNeighbour(D_DOWN)->GetItem<Tables>())
+    else
     {
-        table_down->SetTable(1, table);
-        table_down->UpdateSprite();
-        SetTable(2, table);
+        id = GetId();
     }
-    if (auto table_left = GetNeighbour(D_LEFT)->GetItem<Tables>())
+    if (auto table_up = GetNeighbour(D_UP)->GetItem<Table>())
     {
-        table_left->SetTable(4, table);
-        table_left->UpdateSprite();
-        SetTable(3, table);
+        table_up->UpdateSprite(id);
     }
-    if (auto table_right = GetNeighbour(D_RIGHT)->GetItem<Tables>())
+    if (auto table_down = GetNeighbour(D_DOWN)->GetItem<Table>())
     {
-        table_right->SetTable(3, table);
-        table_right->UpdateSprite();
-        SetTable(4, table);
+        table_down->UpdateSprite(id);
     }
-    if (auto table_upleft = GetNeighbour(D_LEFT)->GetNeighbour(D_UP)->GetItem<Tables>())
+    if (auto table_left = GetNeighbour(D_LEFT)->GetItem<Table>())
     {
-        table_upleft->SetTable(8, table);
-        table_upleft->UpdateSprite();
-        SetTable(5, table);
+        table_left->UpdateSprite(id);
     }
-    if (auto table_downleft = GetNeighbour(D_LEFT)->GetNeighbour(D_DOWN)->GetItem<Tables>())
+    if (auto table_right = GetNeighbour(D_RIGHT)->GetItem<Table>())
     {
-        table_downleft->SetTable(7, table);
-        table_downleft->UpdateSprite();
-        SetTable(6, table);
+        table_right->UpdateSprite(id);
     }
-    if (auto table_upright = GetNeighbour(D_UP)->GetNeighbour(D_RIGHT)->GetItem<Tables>())
+    if (auto table_upleft = GetNeighbour(D_LEFT)->GetNeighbour(D_UP)->GetItem<Table>())
     {
-        table_upright->SetTable(6, table);
-        table_upright->UpdateSprite();
-        SetTable(7, table);
+        table_upleft->UpdateSprite(id);
     }
-    if (auto table_downright = GetNeighbour(D_DOWN)->GetNeighbour(D_RIGHT)->GetItem<Tables>())
+    if (auto table_downleft = GetNeighbour(D_LEFT)->GetNeighbour(D_DOWN)->GetItem<Table>())
     {
-        table_downright->SetTable(5, table);
-        table_downright->UpdateSprite();
-        SetTable(8, table);
+        table_downleft->UpdateSprite(id);
     }
-    UpdateSprite();
+    if (auto table_upright = GetNeighbour(D_UP)->GetNeighbour(D_RIGHT)->GetItem<Table>())
+    {
+        table_upright->UpdateSprite(id);
+    }
+    if (auto table_downright = GetNeighbour(D_DOWN)->GetNeighbour(D_RIGHT)->GetItem<Table>())
+    {
+        table_downright->UpdateSprite(id);
+    }
+    UpdateSprite(id);
 }
-void Tables::UpdateSprite()
+void Table::UpdateSprite(size_t ignored_table)
 {
-    if (up_ + down_ + left_ + right_ == 4)
+    bool up  = false;
+    bool down = false;
+    bool left = false;
+    bool right = false;
+    bool upright = false;
+    bool downright = false;
+    bool upleft = false;
+    bool downleft = false;
+    if (bool(GetNeighbour(D_UP)->GetItem<Table>()) != ignored_table && GetNeighbour(D_UP)->GetItem<Table>())
+    {
+        up = true;
+    }
+    if (bool(GetNeighbour(D_DOWN)->GetItem<Table>()) != ignored_table && GetNeighbour(D_DOWN)->GetItem<Table>())
+    {
+        down = true;
+    }
+    if (bool(GetNeighbour(D_LEFT)->GetItem<Table>()) != ignored_table && GetNeighbour(D_LEFT)->GetItem<Table>())
+    {
+        left = true;
+    }
+    if (bool(GetNeighbour(D_RIGHT)->GetItem<Table>()) != ignored_table && GetNeighbour(D_RIGHT)->GetItem<Table>())
+    {
+        right = true;
+    }
+    if (bool(GetNeighbour(D_LEFT)->GetNeighbour(D_UP)->GetItem<Table>()) != ignored_table && GetNeighbour(D_LEFT)->GetNeighbour(D_UP)->GetItem<Table>())
+    {
+        upleft = true;
+    }
+    if (bool(GetNeighbour(D_LEFT)->GetNeighbour(D_DOWN)->GetItem<Table>()) != ignored_table && GetNeighbour(D_LEFT)->GetNeighbour(D_DOWN)->GetItem<Table>())
+    {
+        downleft = true;
+    }
+    if (bool(GetNeighbour(D_UP)->GetNeighbour(D_RIGHT)->GetItem<Table>()) != ignored_table && GetNeighbour(D_UP)->GetNeighbour(D_RIGHT)->GetItem<Table>())
+    {
+        upright = true;
+    }
+    if (bool(GetNeighbour(D_DOWN)->GetNeighbour(D_RIGHT)->GetItem<Table>()) != ignored_table && GetNeighbour(D_DOWN)->GetNeighbour(D_RIGHT)->GetItem<Table>())
+    {
+        downright = true;
+    }
+    if (up + down + left + right == 4)
     {
             SetState(material_ + "_table_d4");
     }
-    else if (up_ + down_ + left_ + right_ == 3)
+    else if (up + down + left + right == 3)
     {
-        if (up_ + down_ + left_ == 3)
+        if (up + down + left == 3)
         {
-            if (upleft_ && downleft_)
+            if (upleft && downleft)
             {
             }
-            else if (!upleft_ && downleft_)
+            else if (!upleft && downleft)
             {
             }
-            else if (upleft_ && !downleft_)
+            else if (upleft && !downleft)
             {
             }
             else
             {
             }
         }
-        else if (up_ + down_ + right_ == 3)
+        else if (up + down + right == 3)
         {
-            if (upright_ && downright_)
+            if (upright && downright)
             {
             }
-            else if (!upright_ && downright_)
+            else if (!upright && downright)
             {
             }
-            else if (upright_ && !downright_)
+            else if (upright && !downright)
             {
             }
             else
             {
             }
         }
-        else if (up_ + right_ + left_ == 3)
+        else if (up + right + left == 3)
         {
-            if (upleft_ && upright_)
+            if (upleft && upright)
             {
             }
-            else if (!upleft_ && upright_)
+            else if (!upleft && upright)
             {
             }
-            else if (upleft_ && !upright_)
+            else if (upleft && !upright)
             {
             }
             else
             {
             }
         }
-        else if (right_ + down_ + left_ == 3)
+        else if (right + down + left == 3)
         {
-            if (downleft_ && downright_)
+            if (downleft && downright)
             {
             }
-            else if (!downleft_ && downright_)
+            else if (!downleft && downright)
             {
             }
-            else if (downleft_ && !downleft_)
+            else if (downleft && !downleft)
             {
             }
             else
@@ -147,16 +176,16 @@ void Tables::UpdateSprite()
             }
         }
     }
-    else if (up_ + down_ + left_ + right_ == 2)
+    else if (up + down + left + right == 2)
     {
-        if (up_ + down_ == 2)
+        if (up + down == 2)
         {
             SetState(material_ + "_table_d2");
             Rotate(D_UP);
         }
-        else if (up_ + left_ == 2)
+        else if (up + left == 2)
         {
-            if (upleft_)
+            if (upleft)
             {
                 SetState(material_ + "_table_d2_c_r");
                 Rotate(D_UP);
@@ -167,9 +196,9 @@ void Tables::UpdateSprite()
                 Rotate(D_UP);
             }
         }
-        else if (up_ + right_ == 2)
+        else if (up + right == 2)
         {
-            if (upright_)
+            if (upright)
             {
                 SetState(material_ + "_table_d2_c_r");
                 Rotate(D_RIGHT);
@@ -180,9 +209,9 @@ void Tables::UpdateSprite()
                 Rotate(D_RIGHT);
             }
         }
-        else if (down_ + left_ == 2)
+        else if (down + left == 2)
         {
-            if (downleft_)
+            if (downleft)
             {
                 SetState(material_ + "_table_d2_c_r");
                 Rotate(D_DOWN);
@@ -193,9 +222,9 @@ void Tables::UpdateSprite()
                 Rotate(D_DOWN);
             }
         }
-        else if (down_ + right_ == 2)
+        else if (down + right == 2)
         {
-            if (downright_)
+            if (downright)
             {
                 SetState(material_ + "_table_d2_c_r");
                 Rotate(D_LEFT);
@@ -206,72 +235,53 @@ void Tables::UpdateSprite()
                 Rotate(D_LEFT);
             }
         }
-        else if (right_ + left_ == 2)
+        else if (right + left == 2)
         {
             SetState(material_ + "_table_d2");
             Rotate(D_LEFT);
         }
     }
-    else if (up_ + down_ + left_ + right_ == 1)
+    else if (up + down + left + right == 1)
     {
         SetState(material_ + "_table_d1");
-        if (up_ == 1)
+        if (up == 1)
         {
             Rotate(D_UP);
         }
-        if (down_ == 1)
+        if (down == 1)
         {
             Rotate(D_DOWN);
         }
-        if (left_ == 1)
+        if (left == 1)
         {
             Rotate(D_LEFT);
         }
-        if (right_ == 1)
+        if (right == 1)
         {
             Rotate(D_RIGHT);
         }
     }
-    else if (up_ + down_ + left_ + right_ == 0)
+    else if (up + down + left + right == 0)
     {
         SetState(material_ + "_table_d0");
     }
 }
-void Tables::SetTable(int direction, bool table)
+void Table::AttackBy(IdPtr<Item> item)
 {
-    switch (direction)
+    if (item.IsValid())
     {
-    case 1 : up_ = table;
-        break;  
-    case 2 : down_ = table;
-        break;
-    case 3 : left_ = table;
-        break;
-    case 4 : right_ = table;
-        break;
-    case 5 : upleft_ = table;
-        break;  
-    case 6 : downleft_ = table;
-        break;
-    case 7 : upright_ = table;
-        break;
-    case 8 : downright_ = table;
-        break;
-    }
-}
-void Tables::AttackBy(IdPtr<Item> item)
-{
-    if (IdPtr<Human> human= item->GetOwner())
-    {
-        if(auto r_item = dynamic_cast<HumanInterface*>(human->GetInterface())->GetActiveHand().Get())
-            {
-                GetOwner()->AddItem(r_item);
-                dynamic_cast<HumanInterface*>(human->GetInterface())->Drop();
-            }
+        if (IdPtr<Human> human= item->GetOwner())
+        {
+            if(auto r_item = dynamic_cast<HumanInterface*>(human->GetInterface())->GetActiveHand().Get())
+                {
+                    GetOwner()->AddItem(r_item);
+                    dynamic_cast<HumanInterface*>(human->GetInterface())->Drop();
+                }
+        }
     }
 }
 
-MetalTable::MetalTable(size_t id) : Tables(id)
+MetalTable::MetalTable(size_t id) : Table(id)
 {
     SetSprite("icons/metaltables.dmi"); 
     material_ = "metal";
