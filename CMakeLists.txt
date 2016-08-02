@@ -371,14 +371,16 @@ qt5_use_modules(Unpacker Core)
 ### Building server
 ###
 
-set(SERVER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/griefly-server)
+set(GOPATH ${CMAKE_CURRENT_SOURCE_DIR}/gopath)
+set(SERVER_DIR ${GOPATH}/src/griefly-server)
 
 file(GLOB_RECURSE GOFILES "${SERVER_DIR}/*.go")
+
 
 add_custom_command(
     OUTPUT ${SERVER_DIR}/griefly-server${EXECUTABLE_SUFFIX}
     WORKING_DIRECTORY ${SERVER_DIR}
-    COMMAND ${GO_EXECUTABLE} build -ldflags "-X main.clientVersionBuild=${CLIENT_VERSION}"
+    COMMAND ${CMAKE_COMMAND} -E env GOPATH=${GOPATH} ${GO_EXECUTABLE} build -ldflags "-X main.clientVersionBuild=${CLIENT_VERSION}"
     DEPENDS ${GOFILES})
 add_custom_target(GoServer ALL DEPENDS ${SERVER_DIR}/griefly-server${EXECUTABLE_SUFFIX})
 
