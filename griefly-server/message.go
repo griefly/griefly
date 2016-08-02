@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"strconv"
+	"time"
 )
 
 const (
@@ -65,6 +66,11 @@ type Envelope struct {
 	Message
 	Kind uint32
 	From int
+	Born time.Time
+}
+
+func NewEnvelope(msg Message, kind uint32, from int) *Envelope {
+	return &Envelope{msg, kind, from, time.Now()}
 }
 
 var (

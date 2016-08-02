@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"strconv"
 	"sync"
+	"time"
 )
 
 const (
@@ -18,19 +19,26 @@ const (
 )
 
 type AssetServer struct {
-	serverURL string
+	serverURL *url.URL
 
 	pipes     map[string]*Pipe
 	pipeMutex sync.Mutex
+
+	collector *StatsCollector
 }
 
-func NewAssetServer(serverURL string) (*AssetServer, error) {
-	_, err := url.Parse(serverURL)
+func NewAssetServer(serverURL string, collector *StatsCollector) (*AssetServer, error) {
+	u, err := url.Parse(serverURL)
 	if err != nil {
 		return nil, err
 	}
 
-	return &AssetServer{serverURL, make(map[string]*Pipe), sync.Mutex{}}, nil
+	return &AssetServer{u, make(map[string]*Pipe), sync.Mutex{}, collector}, nil
+}
+
+func (as *AssetServer) ListenAndServe() error {
+	server := http.Server{Addr: as.serverURL.Host, Handler: as}
+	return server.ListenAndServe()
 }
 
 func (as *AssetServer) MakePipe() (*Pipe, string, string) {
@@ -95,12 +103,7 @@ func (as *AssetServer) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 }
 
 func (as *AssetServer) makePipeURL(id string) string {
-	surl, err := url.Parse(as.serverURL)
-	if err != nil {
-		// must be validated already
-		panic(err)
-	}
-
+	surl := *as.serverURL
 	query := surl.Query()
 	query.Set("id", id)
 	surl.RawQuery = query.Encode()
@@ -127,11 +130,14 @@ func (as *AssetServer) pipeDownload(rw http.ResponseWriter, req *http.Request, i
 	rw.Header().Set("Content-Length", strconv.Itoa(int(info.Size)))
 	rw.Header().Set("Content-Type", contentType)
 
+	start := time.Now()
 	_, err := io.Copy(rw, pipe)
+	dur := time.Since(start)
 	if err != nil {
 		// TODO(mechmind): handle error
 	}
 
+	as.collector.ObservePipeDownloadTime(dur)
 }
 
 func (as *AssetServer) pipeUpload(rw http.ResponseWriter, req *http.Request, id string, pipe *Pipe) {
@@ -153,6 +159,8 @@ func (as *AssetServer) pipeUpload(rw http.ResponseWriter, req *http.Request, id 
 
 	info.Size = int64(length)
 	info.ContentType = req.Header.Get("Content-Type")
+
+	as.collector.ObservePipeLength(int64(length))
 	pipe.info <- info
 
 	_, err = io.Copy(pipe, io.LimitReader(req.Body, int64(length)))

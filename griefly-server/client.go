@@ -93,15 +93,16 @@ type Registry struct {
 	assetServer *AssetServer
 	dumper      *DumpWriter
 	db          DB
+	collector   *StatsCollector
 
 	config *RegistryConfig
 }
 
-func newRegistry(as *AssetServer, config *RegistryConfig, db DB) *Registry {
+func newRegistry(as *AssetServer, config *RegistryConfig, db DB, collector *StatsCollector) *Registry {
 	return &Registry{1, make(map[int]chan *Envelope), make(map[string]PlayerInfo),
 		-1, "", make(chan PlayerEnvelope), make(chan versionCheck), make(chan playerDrop),
 		make(map[int]*hashCheck), 0, nil, make(chan *Envelope, RegistryQueueLength), nil, as, nil,
-		db, config}
+		db, collector, config}
 }
 
 // async api
@@ -137,7 +138,7 @@ func (r *Registry) sendAll(m *Envelope) {
 	}
 
 	for _, idx := range deadPlayers {
-		r.removePlayer(idx, &Envelope{&ErrmsgTooSlow{}, MsgidTooSlow, 0})
+		r.removePlayer(idx, NewEnvelope(&ErrmsgTooSlow{}, MsgidTooSlow, 0))
 	}
 }
 
@@ -167,7 +168,7 @@ func (r *Registry) sendMaster(m *Envelope) bool {
 		default:
 			// master is too slow, drop him
 			// new master will be chosen in process of removal
-			r.removePlayer(r.masterID, &Envelope{&ErrmsgTooSlow{}, MsgidTooSlow, 0})
+			r.removePlayer(r.masterID, NewEnvelope(&ErrmsgTooSlow{}, MsgidTooSlow, 0))
 			if r.masterID == -1 {
 				return false
 			}
@@ -232,13 +233,13 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 	if err != nil {
 		if err == ErrNotAuthenticated {
 			log.Printf("registry: invalid auth for user '%s'", m.Login)
-			e := &Envelope{&ErrmsgWrongAuth{}, MsgidWrongAuth, 0}
+			e := NewEnvelope(&ErrmsgWrongAuth{}, MsgidWrongAuth, 0)
 			response := newPlayerReply{errReply: e}
 			newPlayer.response <- response
 			return
 		} else {
 			log.Printf("registry: internal error while authenticating '%s': %v", m.Login, err)
-			e := &Envelope{&ErrmsgInternalServerError{"cannot authenticate you"}, MsgidInternalServerError, 0}
+			e := NewEnvelope(&ErrmsgInternalServerError{"cannot authenticate you"}, MsgidInternalServerError, 0)
 			response := newPlayerReply{errReply: e}
 			newPlayer.response <- response
 			return
@@ -252,7 +253,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 
 	if len(r.players) == 0 && !info.IsAdmin {
 		// only admins allowed to start a game
-		e := &Envelope{&ErrmsgNoMaster{}, MsgidNoMaster, 0}
+		e := NewEnvelope(&ErrmsgNoMaster{}, MsgidNoMaster, 0)
 		response := newPlayerReply{errReply: e}
 		newPlayer.response <- response
 		return
@@ -288,7 +289,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 
 		// create player on maps
 		newm := &MessageNewClient{&id}
-		e := &Envelope{newm, MsgidNewClient, 0}
+		e := NewEnvelope(newm, MsgidNewClient, 0)
 		r.sendAll(e)
 		log.Printf("registry: creating new unit for client %d, login '%s'", id, info.Login)
 	}
@@ -323,7 +324,7 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 
 			curTick := r.currentTick
 			m := &MessageMapUpload{&curTick, mapUploadURL}
-			e := &Envelope{m, MsgidMapUpload, 0}
+			e := NewEnvelope(m, MsgidMapUpload, 0)
 			log.Printf("registry: requesting master %d to send map", r.masterID)
 			if r.sendMaster(e) {
 				r.clients[id] = inbox
@@ -335,6 +336,8 @@ func (r *Registry) registerPlayer(newPlayer PlayerEnvelope) {
 
 		r.onNextTick(requestMap)
 	}
+
+	r.collector.ObserveNewClient()
 
 	response := newPlayerReply{id: id, master: master, mapDownloadURL: mapDownloadURL, inbox: inbox}
 	newPlayer.response <- response
@@ -353,6 +356,8 @@ func (r *Registry) removePlayer(id int, reason *Envelope) {
 		log.Printf("registry: client %d already removed", id)
 		return
 	}
+
+	r.collector.ObserveDroppedClient()
 
 	// send reason
 	if reason != nil {
@@ -386,7 +391,7 @@ func (r *Registry) maybeSendConnCounter() {
 
 	count := len(r.clients)
 	msg := &MessageCurrentConnections{&count}
-	e := &Envelope{msg, MsgidCurrentConnections, 0}
+	e := NewEnvelope(msg, MsgidCurrentConnections, 0)
 	r.sendAll(e)
 }
 
@@ -436,7 +441,7 @@ func (r *Registry) handleRestart(m *Envelope) bool {
 	// admin asked us to restart
 	log.Printf("registry: admin %d (%s) asked to restart server", player.id, player.userInfo.Login)
 
-	notifyMessage := &Envelope{&ErrmsgServerRestarting{}, MsgidServerRestarting, 0}
+	notifyMessage := NewEnvelope(&ErrmsgServerRestarting{}, MsgidServerRestarting, 0)
 
 	// remove all players
 	for _, playerInfo := range r.players {
@@ -491,7 +496,7 @@ func (r *Registry) handleGameMessage(m *Envelope) {
 func (r *Registry) handleNewTick() {
 	r.currentTick++
 	m := &MessageNewTick{}
-	e := &Envelope{m, MsgidNewTick, 0}
+	e := NewEnvelope(m, MsgidNewTick, 0)
 	r.sendAll(e)
 }
 
@@ -510,7 +515,7 @@ func (r *Registry) checkForHashStart(now time.Time) {
 	// request hashes from all clients
 	tick := r.currentTick
 	m := &MessageRequestHash{&tick}
-	e := &Envelope{m, MsgidRequestHash, 0}
+	e := NewEnvelope(m, MsgidRequestHash, 0)
 	r.sendAll(e)
 }
 
@@ -569,17 +574,17 @@ func (r *Registry) checkHashesOne(tick int, checker *hashCheck) {
 	r.dumpPlayerMap(master, tick, nil)
 	for _, id := range unsynced {
 		r.dumpPlayerMap(id, tick, nil)
-		r.removePlayer(id, &Envelope{&ErrmsgOutOfSync{}, MsgidOutOfSync, 0})
+		r.removePlayer(id, NewEnvelope(&ErrmsgOutOfSync{}, MsgidOutOfSync, 0))
 	}
 }
 
 func (r *Registry) dumpPlayerMap(id, tick int, callback func()) {
 	pipe, uploadURL, _ := r.assetServer.MakePipe()
 	mapreq := &MessageMapUpload{&tick, uploadURL}
-	msg := &Envelope{mapreq, MsgidMapUpload, 0}
+	msg := NewEnvelope(mapreq, MsgidMapUpload, 0)
 	if !r.sendOne(id, msg) {
 		// too slow to live
-		r.removePlayer(id, &Envelope{&ErrmsgTooSlow{}, MsgidTooSlow, 0})
+		r.removePlayer(id, NewEnvelope(&ErrmsgTooSlow{}, MsgidTooSlow, 0))
 		return
 	}
 
@@ -604,6 +609,7 @@ func (r *Registry) cleanUp() {
 	r.players = make(map[string]PlayerInfo)
 	r.nextID = 1
 	r.clientVersion = ""
+	r.collector.ResetClients()
 }
 
 func (r *Registry) getPlayerByID(id int) (PlayerInfo, bool) {

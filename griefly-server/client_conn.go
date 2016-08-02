@@ -31,6 +31,8 @@ type ClientConnection struct {
 	readErrs chan error
 
 	id int
+
+	collector *StatsCollector
 }
 
 func (c *ClientConnection) readMessage() (*Envelope, error) {
@@ -54,7 +56,7 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 	}
 
 	if length == 0 {
-		return &Envelope{emptyMessage, kind, 0}, nil
+		return NewEnvelope(emptyMessage, kind, 0), nil
 	}
 
 	// read body
@@ -79,12 +81,14 @@ func (c *ClientConnection) readMessage() (*Envelope, error) {
 		return nil, err
 	}
 
-	return &Envelope{msg, kind, 0}, nil
+	return NewEnvelope(msg, kind, 0), nil
 }
 
 func (c *ClientConnection) writeMessage(e *Envelope) error {
 	var buf []byte
 	var err error
+
+	c.collector.ObserveOutgoingMessage(e)
 
 	if e.Message != emptyMessage {
 		buf, err = json.Marshal(e.Message)
@@ -108,7 +112,9 @@ func (c *ClientConnection) writeMessage(e *Envelope) error {
 		return err
 	}
 
-	return c.bufConn.Writer.Flush()
+	err = c.bufConn.Writer.Flush()
+	c.collector.ObserveSentMessage(e)
+	return err
 }
 
 func (c *ClientConnection) reciever() {
@@ -120,6 +126,7 @@ func (c *ClientConnection) reciever() {
 		}
 
 		e.From = c.id
+		c.collector.ObserveIncomingMessage(e)
 		c.reg.RecvMessage(e)
 	}
 }
@@ -160,7 +167,7 @@ func (c *ClientConnection) Run() {
 		log.Printf("client is too old. Server version: '%s', client version: '%s'",
 			clientVersionBuild, login.GameVersion)
 		msg := &ErrmsgWrongGameVersion{CorrectVersion: clientVersionBuild}
-		reply := &Envelope{msg, MsgidWrongGameVersion, 0}
+		reply := NewEnvelope(msg, MsgidWrongGameVersion, 0)
 		c.writeMessage(reply)
 		return
 	}
@@ -170,7 +177,7 @@ func (c *ClientConnection) Run() {
 		log.Printf("client version mismatch. Game version: '%s', client version: '%s'",
 			currentVersion, login.GameVersion)
 		msg := &ErrmsgWrongGameVersion{CorrectVersion: clientVersionBuild}
-		reply := &Envelope{msg, MsgidWrongGameVersion, 0}
+		reply := NewEnvelope(msg, MsgidWrongGameVersion, 0)
 		c.writeMessage(reply)
 		return
 	}
@@ -191,7 +198,7 @@ func (c *ClientConnection) Run() {
 
 	if master {
 		msg := &MessageSuccessfulConnect{MapURL: "no_map", ID: &c.id}
-		e := &Envelope{msg, MsgidSuccessfulConnect, 0}
+		e := NewEnvelope(msg, MsgidSuccessfulConnect, 0)
 		err = c.writeMessage(e)
 
 		if err != nil {
@@ -201,7 +208,7 @@ func (c *ClientConnection) Run() {
 		}
 	} else {
 		msg := &MessageSuccessfulConnect{MapURL: mapDownloadURL, ID: &c.id}
-		e := &Envelope{msg, MsgidSuccessfulConnect, 0}
+		e := NewEnvelope(msg, MsgidSuccessfulConnect, 0)
 		err = c.writeMessage(e)
 
 		if err != nil {
@@ -245,7 +252,7 @@ func (c *ClientConnection) Run() {
 	}
 }
 
-func ListenAndServe(addr string, r *Registry) error {
+func ListenAndServe(addr string, r *Registry, collector *StatsCollector) error {
 	socket, err := net.Listen("tcp", addr)
 	if err != nil {
 		return err
@@ -259,7 +266,14 @@ func ListenAndServe(addr string, r *Registry) error {
 		}
 
 		bufrw := bufio.NewReadWriter(bufio.NewReader(conn), bufio.NewWriter(conn))
-		client := &ClientConnection{conn: conn, bufConn: bufrw, reg: r, id: -1, readErrs: make(chan error, 1)}
+		client := &ClientConnection{
+			conn:      conn,
+			bufConn:   bufrw,
+			reg:       r,
+			id:        -1,
+			readErrs:  make(chan error, 1),
+			collector: collector,
+		}
 		go client.Run()
 	}
 }
