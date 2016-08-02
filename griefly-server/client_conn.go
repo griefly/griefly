@@ -9,7 +9,7 @@ import (
 	"log"
 	"net"
 
-	"./bundled/validator"
+	"gopkg.in/validator.v2"
 )
 
 const (
