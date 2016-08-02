@@ -32,7 +32,9 @@ public:
     virtual void Represent() override;
 
     virtual bool TryMove(Dir direct) override;
-    virtual InterfaceBase* GetInterface() override { return &interface_; }
+    virtual InterfaceBase* GetInterface() override { return GetHumanInterface();}
+    
+    HumanInterface* GetHumanInterface(){return &interface_;}
 
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;
 

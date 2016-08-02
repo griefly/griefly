@@ -5,7 +5,7 @@
 Table::Table(size_t id) : IMovable(id)
 {
     anchored = true;
-    v_level = 6;
+    v_level = 5;
     SetPassable(D_ALL, Passable::SMALL_CREATURE);
     SetSprite(""); 
     material_ = "";
@@ -272,11 +272,9 @@ void Table::AttackBy(IdPtr<Item> item)
     {
         if (IdPtr<Human> human= item->GetOwner())
         {
-            if(auto r_item = dynamic_cast<HumanInterface*>(human->GetInterface())->GetActiveHand().Get())
-                {
-                    GetOwner()->AddItem(r_item);
-                    dynamic_cast<HumanInterface*>(human->GetInterface())->Drop();
-                }
+            GetOwner()->AddItem(item);
+            human->GetHumanInterface()->Drop();
+            human->UpdateOverlays();
         }
     }
 }
