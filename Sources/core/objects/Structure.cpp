@@ -3,11 +3,11 @@
 #include "Item.h"
 #include "representation/Sound.h"
 
-void Structure::AttackBy(id_ptr_on<Item> item)
+void Structure::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Screwdriver> scr = item)
+    if (IdPtr<Screwdriver> scr = item)
     {
         anchored = !anchored;
-        PlaySoundIfVisible("Screwdriver.ogg", owner.ret_id());
+        PlaySoundIfVisible("Screwdriver.ogg", owner.Id());
     }
 }

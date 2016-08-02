@@ -37,7 +37,7 @@ void IOnMapObject::ProcessPhysics()
         return;
     }
     auto down = owner->GetNeighbour(D_ZDOWN);
-    if (    down.valid() 
+    if (    down.IsValid() 
         && (CanPass(down->GetPassable(D_ZUP), passable_level)) 
         && (CanPass(down->GetPassable(D_ALL), passable_level)) )
     {

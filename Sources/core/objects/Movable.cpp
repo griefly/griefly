@@ -157,9 +157,9 @@ void IMovable::Represent()
     GetRepresentation().AddToNewFrame(ent);
 }
 
-void IMovable::Bump(id_ptr_on<IMovable> item)
+void IMovable::Bump(IdPtr<IMovable> item)
 {
-    if (id_ptr_on<IMob> m = item)
+    if (IdPtr<IMob> m = item)
     {
         ApplyForce(DirToVDir[m->dMove]);
     }
@@ -176,7 +176,7 @@ ForceManager& ForceManager::Get()
     return *fm;
 }
 
-void ForceManager::Add(id_ptr_on<IMovable> movable)
+void ForceManager::Add(IdPtr<IMovable> movable)
 {
     to_add_.push_back(movable);
 }
@@ -187,7 +187,7 @@ unsigned int ForceManager::Hash()
     int i = 1;
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
-        hash += movable->ret_id() * i;
+        hash += movable->Id() * i;
         ++i;
     }
     return hash;
@@ -197,7 +197,7 @@ void ForceManager::Process()
 {
     for (auto movable = to_add_.begin(); movable != to_add_.end(); ++movable)
     {
-        if (!(*movable).valid())
+        if (!(*movable).IsValid())
         {
             continue;
         }
@@ -215,9 +215,9 @@ void ForceManager::Process()
     if (to_add_.size())
     {
         std::sort(under_force_.begin(), under_force_.end(),
-        [](id_ptr_on<IMovable> item1, id_ptr_on<IMovable> item2)
+        [](IdPtr<IMovable> item1, IdPtr<IMovable> item2)
         {
-            return item1.ret_id() < item2.ret_id();
+            return item1.Id() < item2.Id();
         });
         to_add_.clear();
     }
@@ -235,7 +235,7 @@ void ForceManager::Process()
 
 void ForceManager::Clear()
 {
-    std::vector<id_ptr_on<IMovable>> to_remove;
+    std::vector<IdPtr<IMovable>> to_remove;
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
         if (   !(*movable)

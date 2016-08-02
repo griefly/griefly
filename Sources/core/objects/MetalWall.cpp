@@ -23,13 +23,13 @@ MetalWall::MetalWall(size_t id) : ITurf(id)
     name = "Metal wall";
 }
 
-void MetalWall::AttackBy(id_ptr_on<Item> item)
+void MetalWall::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Weldingtool> wtool = item)
+    if (IdPtr<Weldingtool> wtool = item)
     {
         if (wtool->Working())
         {
-            PlaySoundIfVisible("Welder.ogg", owner.ret_id());
+            PlaySoundIfVisible("Welder.ogg", owner.Id());
             Create<IOnMapObject>(Girder::T_ITEM_S(), GetOwner());
             Create<IOnMapObject>(Metal::T_ITEM_S(), GetOwner());
             Create<ITurf>(Plating::T_ITEM_S(), GetOwner());

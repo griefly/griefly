@@ -22,9 +22,9 @@ bool Gun::UseAmmo()
 void Gun::ShootImpl(VDir target, const std::string& sound,
                     const std::string& projectile_type, const std::string& casing_type)
 {
-    id_ptr_on<CubeTile> tile = GetOwner()->GetOwner();
-    id_ptr_on<IMovable> shooter = GetOwner();
-    if (tile.valid())
+    IdPtr<CubeTile> tile = GetOwner()->GetOwner();
+    IdPtr<IMovable> shooter = GetOwner();
+    if (tile.IsValid())
     {	
         if (UseAmmo())
         {
@@ -80,17 +80,17 @@ void Gun::ShootImpl(VDir target, const std::string& sound,
                                 projectile_type,
                                 tile->GetNeighbour(shooting_direction));
             projectile->MakeMovementPattern(target, facing);
-            PlaySoundIfVisible(sound, tile.ret_id());
+            PlaySoundIfVisible(sound, tile.Id());
             if (!casing_type.empty())
             {
                 Dir dir = GetRand() % 4;
-                id_ptr_on<Item> casing = Create<Item>(casing_type, tile.ret_id());
+                IdPtr<Item> casing = Create<Item>(casing_type, tile.Id());
                 casing->Rotate(dir);
             } 	
         }
         else
         {
-            PlaySoundIfVisible("empty.ogg", tile.ret_id()); 
+            PlaySoundIfVisible("empty.ogg", tile.Id()); 
             // the *click* text from ss13
         }
     }	
@@ -109,9 +109,9 @@ bool Gun::AddAmmo()
     }
     return false;
 }
-void Gun::AttackBy(id_ptr_on<Item> item)
+void Gun::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<AmmunitionBox> box = item)
+    if (IdPtr<AmmunitionBox> box = item)
     {
         if (box->CheckBullets())
         {
@@ -125,9 +125,9 @@ void Gun::AttackBy(id_ptr_on<Item> item)
     }
 }
 
-bool Gun::Targetable(id_ptr_on<IOnMapBase> item)
+bool Gun::Targetable(IdPtr<IOnMapBase> item)
 {
-    if (!item.valid())
+    if (!item.IsValid())
     {
         return false;
     }
@@ -137,8 +137,8 @@ bool Gun::Targetable(id_ptr_on<IOnMapBase> item)
         return false;
     }
 
-    id_ptr_on<CubeTile> cube_tile = item->GetOwner();
-    if (!cube_tile.valid())
+    IdPtr<CubeTile> cube_tile = item->GetOwner();
+    if (!cube_tile.IsValid())
     {
         return false;
     }
@@ -146,9 +146,9 @@ bool Gun::Targetable(id_ptr_on<IOnMapBase> item)
     return true;
 }
 
-VDir Gun::TargetTileLoc(id_ptr_on<IOnMapBase> item) const
+VDir Gun::TargetTileLoc(IdPtr<IOnMapBase> item) const
 {
-    id_ptr_on<CubeTile> cube_tile = item->GetOwner();
+    IdPtr<CubeTile> cube_tile = item->GetOwner();
     VDir f;
     f.x = (cube_tile->GetX() - GetOwner()->GetX());
     f.y = (cube_tile->GetY() - GetOwner()->GetY());

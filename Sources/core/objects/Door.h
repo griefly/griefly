@@ -13,8 +13,8 @@ public:
     virtual void Open();
     virtual void Close();
     virtual void Process() override;
-    virtual void Bump(id_ptr_on<IMovable> item) override;
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
     bool IsOpen() const { return door_state_ == OPEN; }
     bool IsClosed() const { return door_state_ == CLOSED; }
     void Weld();
@@ -79,8 +79,8 @@ public:
     virtual void Open();
     virtual void Close();
     virtual void Process() override;
-    virtual void Bump(id_ptr_on<IMovable> item) override;
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
     bool IsOpen() const { return door_state_ == OPEN; }
 private:
     enum STATE

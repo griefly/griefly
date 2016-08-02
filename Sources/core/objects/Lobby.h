@@ -15,14 +15,14 @@ public:
     int GetSecondUntilStart();
     virtual void Process() override;
 
-    void AddSpawnPoint(id_ptr_on<SpawnPoint> PosPoint);
-    std::vector<id_ptr_on<CubeTile>> GetTilesFor(const std::string& type);
+    void AddSpawnPoint(IdPtr<SpawnPoint> PosPoint);
+    std::vector<IdPtr<CubeTile>> GetTilesFor(const std::string& type);
 
     int KV_SAVEBLE(security_score_);
     int KV_SAVEBLE(janitors_score_);
 private:
     int KV_SAVEBLE(seconds_);
-    std::vector<id_ptr_on<SpawnPoint>> KV_SAVEBLE(spawn_points_);
+    std::vector<IdPtr<SpawnPoint>> KV_SAVEBLE(spawn_points_);
 
     KV_ON_LOAD_CALL(SetThisAsLobby);
     void SetThisAsLobby();

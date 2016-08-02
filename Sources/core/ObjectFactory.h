@@ -61,9 +61,9 @@ private:
     std::vector<IMainObject*> ids_to_delete_;
 
     std::vector<ObjectInfo> objects_table_;
-    std::vector<id_ptr_on<IMainObject>> process_table_;
+    std::vector<IdPtr<IMainObject>> process_table_;
 
-    std::vector<id_ptr_on<IMainObject>> add_to_process_;
+    std::vector<IdPtr<IMainObject>> add_to_process_;
 
     unsigned int hash_last_;
     unsigned int hash_last_tick_;

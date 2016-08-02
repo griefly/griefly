@@ -15,7 +15,7 @@ public:
     static bool IsOOCMessage(const std::string& text);
     Chat(IGame* game);
 
-    void PostTextFor(const std::string& str, id_ptr_on<IOnMapBase> owner);
+    void PostTextFor(const std::string& str, IdPtr<IOnMapBase> owner);
     void PostText(const std::string& str);
     void PostOOCText(const std::string& who, const std::string& str);
     void PostSimpleText(const std::string& str, size_t tile_id);

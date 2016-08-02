@@ -36,7 +36,7 @@ public:
     {
         return true;
     }
-    virtual void ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
+    virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
     {
         return;
     }
@@ -55,20 +55,20 @@ public:
     
     virtual void Delete() override
     {
-        if (owner.valid())
+        if (owner.IsValid())
         {
             owner->RemoveItem(GetId());
         }
         IDraw::Delete();
     }
 
-    virtual void AttackBy(id_ptr_on<Item> item);
+    virtual void AttackBy(IdPtr<Item> item);
 
     virtual void ApplyForce(VDir force) {}
 
-    virtual bool CanTouch(id_ptr_on<IOnMapBase> item) const
+    virtual bool CanTouch(IdPtr<IOnMapBase> item) const
     {
-        if (owner.valid())
+        if (owner.IsValid())
         {
             return owner->CanTouch(item);
         }
@@ -79,9 +79,9 @@ public:
     // True - added
     // False - failed
     // This must not remove item from old place
-    virtual bool AddItem(id_ptr_on<IOnMapBase> item)
+    virtual bool AddItem(IdPtr<IOnMapBase> item)
     {
-        if (owner.valid())
+        if (owner.IsValid())
         {
             return owner->AddItem(item);
         }
@@ -90,32 +90,32 @@ public:
     // Remove some item
     // True - removed
     // False failed
-    virtual bool RemoveItem(id_ptr_on<IOnMapBase> item)
+    virtual bool RemoveItem(IdPtr<IOnMapBase> item)
     {
         return false;
     }
     // If id equal with object id, dir fail or something else (operation unsupported)
-    virtual id_ptr_on<IOnMapBase> GetNeighbour(Dir direct) const
+    virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const
     {
-        if (owner.valid())
+        if (owner.IsValid())
         {
             return owner->GetNeighbour(direct);
         }
         return GetId();
     }
 
-    virtual bool Contains(id_ptr_on<IOnMapBase> item) const
+    virtual bool Contains(IdPtr<IOnMapBase> item) const
     {
-        // if (owner.valid())
+        // if (owner.IsValid())
         //    return owner->Contains(item);
         return false;
     }
 
-    virtual void Bump(id_ptr_on<IMovable> item);
+    virtual void Bump(IdPtr<IMovable> item);
     virtual void BumpByGas(Dir dir, bool inside = false);
 
     template<class T>
-    id_ptr_on<T> GetItem()
+    IdPtr<T> GetItem()
     {
         return GetItemImpl(T::RT_ITEM_S());
     }
@@ -123,7 +123,7 @@ public:
     {
         owner = value;
     }
-    id_ptr_on<IOnMapBase> GetOwner() const
+    IdPtr<IOnMapBase> GetOwner() const
     {
         return owner;
     }
@@ -145,11 +145,11 @@ public:
         return owner->GetZ();
     }
     virtual void UpdatePassable() {}
-    virtual id_ptr_on<ITurf> GetTurf();
-    virtual void SetTurf(id_ptr_on<ITurf> turf);
+    virtual IdPtr<ITurf> GetTurf();
+    virtual void SetTurf(IdPtr<ITurf> turf);
 protected:
     bool KV_SAVEBLE(is_strong_owner);
-    id_ptr_on<IOnMapBase> KV_SAVEBLE(owner);
+    IdPtr<IOnMapBase> KV_SAVEBLE(owner);
     virtual size_t GetItemImpl(unsigned int hash) { return 0; }
 };
 ADD_TO_TYPELIST(IOnMapBase);

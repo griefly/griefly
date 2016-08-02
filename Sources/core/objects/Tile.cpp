@@ -22,9 +22,9 @@ CubeTile::CubeTile(size_t id) : IOnMapBase(id)
     sum_passable_right_ = Passable::FULL;
 }
 
-bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
+bool CubeTile::CanTouch(IdPtr<IOnMapBase> item) const
 {
-    if (!item.valid())
+    if (!item.IsValid())
     {
         return false;
     }
@@ -34,8 +34,8 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
         return false;
     }
 
-    id_ptr_on<CubeTile> cube_tile = item->GetOwner();
-    if (!cube_tile.valid())
+    IdPtr<CubeTile> cube_tile = item->GetOwner();
+    if (!cube_tile.IsValid())
     {
         return false;
     }
@@ -117,7 +117,7 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item) const
 }
 
 
-bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const
+bool CubeTile::CanTouch(IdPtr<IOnMapBase> item, Dir dir) const
 {
     if (!CanPass(GetPassable(dir), Passable::BIG_ITEM))
     {
@@ -136,7 +136,7 @@ bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const
     return false;
 }
 
-bool CubeTile::CanTouch(id_ptr_on<IOnMapBase> item, Dir first_dir, Dir second_dir) const
+bool CubeTile::CanTouch(IdPtr<IOnMapBase> item, Dir first_dir, Dir second_dir) const
 {
     if (!CanPass(GetPassable(first_dir), Passable::BIG_ITEM))
     {
@@ -200,11 +200,11 @@ void CubeTile::MoveToDir(Dir dir, int *x, int *y, int *z) const
     }
 }
 
-bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
+bool CubeTile::Contains(IdPtr<IOnMapBase> item) const
 {
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
     {
-        if (it->ret_id() == item.ret_id())
+        if (it->Id() == item.Id())
         {
             return true;
         }
@@ -212,14 +212,14 @@ bool CubeTile::Contains(id_ptr_on<IOnMapBase> item) const
     return false;
 }
 
-void CubeTile::Bump(id_ptr_on<IMovable> item)
+void CubeTile::Bump(IdPtr<IMovable> item)
 {
     if (GetTurf())
     {
         GetTurf()->Bump(item);
     }
 
-    if (item->GetOwner().ret_id() == GetId())
+    if (item->GetOwner().Id() == GetId())
     {
         for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
             if (!CanPass((*it)->GetPassable(item->GetDir()), item->passable_level))
@@ -274,10 +274,10 @@ void CubeTile::BumpByGas(Dir dir, bool inside)
         }
 }
 
-bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
+bool CubeTile::AddItem(IdPtr<IOnMapBase> item_raw)
 {
-    id_ptr_on<IOnMapObject> item = item_raw;
-    if (!item.valid())
+    IdPtr<IOnMapObject> item = item_raw;
+    if (!item.IsValid())
     {
         return false;
     }
@@ -293,10 +293,10 @@ bool CubeTile::AddItem(id_ptr_on<IOnMapBase> item_raw)
 
     return true;
 }
-bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
+bool CubeTile::RemoveItem(IdPtr<IOnMapBase> item_raw)
 {
-    id_ptr_on<IOnMapObject> item = item_raw;
-    if (!item.valid())
+    IdPtr<IOnMapObject> item = item_raw;
+    if (!item.IsValid())
     {
         return false;
     }
@@ -310,7 +310,7 @@ bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
     auto itr = inside_list_.begin();
     while(itr != inside_list_.end())
     {
-        if (itr->ret_id() == item->GetId())
+        if (itr->Id() == item->GetId())
         {
             inside_list_.erase(itr);
             UpdatePassable();
@@ -323,12 +323,12 @@ bool CubeTile::RemoveItem(id_ptr_on<IOnMapBase> item_raw)
 
 
 
-id_ptr_on<IOnMapBase> CubeTile::GetNeighbour(Dir direct) const
+IdPtr<IOnMapBase> CubeTile::GetNeighbour(Dir direct) const
 {
     return GetNeighbourImpl(direct);
 }
 
-id_ptr_on<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
+IdPtr<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
 {
     int new_x = posx_;
     int new_y = posy_;
@@ -358,7 +358,7 @@ void CubeTile::UpdatePassable()
     sum_passable_left_ = Passable::FULL;
     sum_passable_right_ = Passable::FULL;
 
-    if (turf_.valid())
+    if (turf_.IsValid())
     {
         sum_passable_all_ = std::min(sum_passable_all_, turf_->GetPassable(D_ALL));
         sum_passable_up_ = std::min(sum_passable_up_, turf_->GetPassable(D_UP));
@@ -378,7 +378,7 @@ void CubeTile::UpdatePassable()
 
 bool CubeTile::IsTransparent() const
 {
-    if (turf_.valid() && !turf_->IsTransparent())
+    if (turf_.IsValid() && !turf_->IsTransparent())
     {
         return false;
     }
@@ -398,13 +398,13 @@ size_t CubeTile::GetItemImpl(unsigned int hash)
     {
         if (FastIsType(hash, (*it)->RT_ITEM()))
         {
-            return it->ret_id();
+            return it->Id();
         }
     }
     return 0;
 }
 
-void CubeTile::ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback)
+void CubeTile::ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
 {
     InsideType copy_vector = inside_list_;
 

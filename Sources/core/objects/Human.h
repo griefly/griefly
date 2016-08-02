@@ -25,9 +25,9 @@ public:
 
     void AddLyingTimer(int value);
   
-    virtual void Bump(id_ptr_on<IMovable> item) override;
+    virtual void Bump(IdPtr<IMovable> item) override;
 
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 
     virtual void Represent() override;
 

@@ -84,8 +84,8 @@ void LoginMob::processGUImsg(const Message2& msg)
         size_t net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
-            id_ptr_on<Human> human;
-            std::vector<id_ptr_on<CubeTile>> tiles;
+            IdPtr<Human> human;
+            std::vector<IdPtr<CubeTile>> tiles;
             std::string text;
             if (net_id % 2)
             {
@@ -103,10 +103,10 @@ void LoginMob::processGUImsg(const Message2& msg)
                 text = JANITOR_TEXT;
             }
             //ghost->name = name;
-            GetGame().GetFactory().SetPlayerId(net_id, human.ret_id());
+            GetGame().GetFactory().SetPlayerId(net_id, human.Id());
 
             tiles[0]->AddItem(human);
-            if (GetId() == GetGame().GetMob().ret_id())
+            if (GetId() == GetGame().GetMob().Id())
             {
                 GetGame().ChangeMob(human);
             }

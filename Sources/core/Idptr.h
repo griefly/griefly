@@ -23,45 +23,91 @@ struct ObjectInfo
 
 extern std::vector<ObjectInfo>* id_ptr_id_table;
 
+struct IdPtrBase
+{
+protected:
+    mutable IMainObject* casted_;
+    size_t id_;
+};
+
 template<class T>
-class id_ptr_on
+class IdPtr : public IdPtrBase
 {
     template<class U>
-    friend std::ostream& operator<<(std::ostream& stream, const id_ptr_on<U>& ptr);
+    friend std::ostream& operator<<(std::ostream& stream, const IdPtr<U>& ptr);
     template<class U>
-    friend std::istream& operator>>(std::istream& stream, id_ptr_on<U>& ptr);
+    friend std::istream& operator>>(std::istream& stream, IdPtr<U>& ptr);
     template<class U>
-    friend class id_ptr_on;
+    friend class IdPtr;
 public:
-    id_ptr_on()
+    IdPtr()
     {
         id_ = 0;
-        casted_ = false;
+        casted_ = nullptr;
     }
-    id_ptr_on(size_t id)
+    IdPtr(size_t id)
     {
         *this = id;
     }
+    IdPtr(const IdPtr& other)
+    {
+        *this = other;
+    }
+
     template<class U>
-    id_ptr_on(const id_ptr_on<U>& other)
+    IdPtr(const IdPtr<U>& other)
     {
         *this = other;
     }
     template<class U>
-    bool operator==(const id_ptr_on<U>& other)
+    bool operator==(const IdPtr<U>& other)
     {
         return id_ == other.id_;
     }
 
-    id_ptr_on& operator=(size_t id)
+    IdPtr& operator=(size_t id)
     {
         id_ = id;
-        casted_ = false;
+        casted_ = nullptr;
         return *this;
     }
-    template<class U>
-    id_ptr_on& operator=(const id_ptr_on<U>& other)
+    IdPtr& operator=(const IdPtr& other)
     {
+        id_ = other.id_;
+        casted_ = other.casted_;
+        return *this;
+    }
+
+    template<class U>
+    IdPtr& operator=(const IdPtr<U>& other)
+    {
+#if defined(KV_ID_PTR_CASTING_CACHE)
+        if (other.id_ == 0)
+        {
+            id_ = 0;
+            casted_ = nullptr;
+            return *this;
+        }
+        if (other.casted_ != nullptr)
+        {
+            if (std::is_base_of<T, U>::value)
+            {
+                casted_ = other.casted_;
+                id_ = other.id_;
+                return *this;
+            }
+            T* retval = castTo<T>(other.casted_);
+            if (retval)
+            {
+                casted_ = retval;
+                id_ = other.id_;
+                return *this;
+            }
+            id_ = 0;
+            casted_ = nullptr;
+            return *this;
+        }
+#endif // KV_ID_PTR_CASTING_CACHE
         *this = other.id_;
         return *this;
     }
@@ -72,21 +118,11 @@ public:
         {
             return nullptr;
         }
-        IMainObject* local = GetFromIdTable(id_);
-        if (local == nullptr)
+        if (casted_ == nullptr)
         {
-            return nullptr;
+            Update();
         }
-        if (casted_)
-        {
-            return reinterpret_cast<T*>(local);
-        }
-        T* retval = castTo<T>(local);
-        if (retval)
-        {
-            casted_ = true;
-        }
-        return retval;
+        return reinterpret_cast<T*>(casted_);
     }
 
     T* operator->() const
@@ -94,23 +130,55 @@ public:
         return operator*();
     }
 
-    bool valid() const
+    bool IsValid() const
     {
+        Update();
         return operator*() != nullptr;
     }
     operator void*() const
     {
-        if (valid())
+#if defined(KV_ID_PTR_VALID_CACHE)
+        if (casted_)
+        {
+            return reinterpret_cast<void*>(0x1);
+        }
+#endif // KV_ID_PTR_VALID_CACHE
+        if (IsValid())
         {
             return reinterpret_cast<void*>(0x1);
         }
         return nullptr;
     }
-    size_t ret_id() const
+    size_t Id() const
     {
         return id_;
     }
 private:
+    void Update() const
+    {
+        if (id_ == 0)
+        {
+            casted_ = nullptr;
+            return;
+        }
+
+        IMainObject* local = GetFromIdTable(id_);
+        if (local == nullptr)
+        {
+            casted_ = nullptr;
+            return;
+        }
+        if (casted_)
+        {
+            return;
+        }
+        T* retval = CastTo<T>(local);
+        if (retval)
+        {
+            casted_ = retval;
+        }
+    }
+
     static IMainObject* GetFromIdTable(size_t id)
     {
         if (id >= id_ptr_id_table->size())
@@ -121,19 +189,19 @@ private:
         }
         return (*id_ptr_id_table)[id].object;
     }
-    mutable bool casted_;
-    size_t id_;
+    // Dynamic memory allocation is disabled
+    static void* operator new(size_t);
 };
 
 template<typename T>
-std::ostream& operator<<(std::ostream& stream, const id_ptr_on<T>& ptr)
+std::ostream& operator<<(std::ostream& stream, const IdPtr<T>& ptr)
 {
     stream << ptr.id_;
     return stream;
 }
 
 template<typename T>
-std::istream& operator>>(std::istream& stream, id_ptr_on<T>& ptr)
+std::istream& operator>>(std::istream& stream, IdPtr<T>& ptr)
 {
     stream >> ptr.id_;
     return stream;

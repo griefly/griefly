@@ -17,27 +17,27 @@ PipeBase::PipeBase(size_t id) : IMovable(id)
     name = "Please do not create me";
 }
 
-void PipeBase::AttackBy(id_ptr_on<Item> item)
+void PipeBase::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<AtmosTool> at = item)
+    if (IdPtr<AtmosTool> at = item)
     {
         GetGame().GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
         return;
     }
 }
 
-void PipeBase::ConnectHelper(id_ptr_on<PipeBase>& connection, Dir dir)
+void PipeBase::ConnectHelper(IdPtr<PipeBase>& connection, Dir dir)
 {
-    if (!connection.valid())
+    if (!connection.IsValid())
     {
         GetNeighbour(dir)->ForEach(
-        [&](id_ptr_on<IOnMapBase> obj)
+        [&](IdPtr<IOnMapBase> obj)
         {
-            if (connection.valid())
+            if (connection.IsValid())
             {
                 return;
             }
-            if (id_ptr_on<PipeBase> pipe = obj)
+            if (IdPtr<PipeBase> pipe = obj)
             {
                 if (pipe->Connect(helpers::revert_dir(dir), GetId()))
                 {
@@ -48,9 +48,9 @@ void PipeBase::ConnectHelper(id_ptr_on<PipeBase>& connection, Dir dir)
     }
 }
 
-void PipeBase::ProcessHelper(id_ptr_on<PipeBase>& connection, Dir dir)
+void PipeBase::ProcessHelper(IdPtr<PipeBase>& connection, Dir dir)
 {
-    if (connection.valid())
+    if (connection.IsValid())
     {
         if (connection->CanTransferGas(helpers::revert_dir(dir)))
         {
@@ -59,7 +59,7 @@ void PipeBase::ProcessHelper(id_ptr_on<PipeBase>& connection, Dir dir)
     }
     else
     {
-        if (id_ptr_on<CubeTile> cube = owner)
+        if (IdPtr<CubeTile> cube = owner)
         {
             cube->GetAtmosHolder()->Connect(GetAtmosHolder());
         }
@@ -74,20 +74,20 @@ Pipe::Pipe(size_t id) : PipeBase(id)
     name = "Pipe";
 }
 
-bool Pipe::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
+bool Pipe::Connect(Dir dir, IdPtr<PipeBase> pipe)
 {
     Dir head;
     Dir tail;
     GetTailAndHead(GetDir(), &head, &tail);
 
     if (   (dir == head)
-        && (!head_.valid()))
+        && (!head_.IsValid()))
     {
         head_ = pipe;
         return true;
     }
     if (   (dir == tail)
-        && (!tail_.valid()))
+        && (!tail_.IsValid()))
     {
         tail_ = pipe;
         return true;
@@ -144,7 +144,7 @@ Manifold::Manifold(size_t id) : PipeBase(id)
     name = "Manifold";
 }
 
-bool Manifold::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
+bool Manifold::Connect(Dir dir, IdPtr<PipeBase> pipe)
 {
     Dir tail;
     Dir left;
@@ -152,21 +152,21 @@ bool Manifold::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
     GetConnectionsDirs(GetDir(), &tail, &left, &right);
 
     if (   (dir == tail)
-        && (!tail_.valid()))
+        && (!tail_.IsValid()))
     {
         tail_ = pipe;
         return true;
     }
 
     if (   (dir == left)
-        && (!left_.valid()))
+        && (!left_.IsValid()))
     {
         left_ = pipe;
         return true;
     }
 
     if (   (dir == right)
-        && (!right_.valid()))
+        && (!right_.IsValid()))
     {
         right_ = pipe;
         return true;
@@ -244,13 +244,13 @@ Vent::Vent(size_t id) : PipeBase(id)
     name = "Vent";
 }
 
-bool Vent::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
+bool Vent::Connect(Dir dir, IdPtr<PipeBase> pipe)
 {
     if (dir != GetDir())
     {
         return false;
     }
-    if (tail_.valid())
+    if (tail_.IsValid())
     {
         return false;
     }
@@ -270,7 +270,7 @@ void Vent::AfterWorldCreation()
 void Vent::Process()
 {
     ProcessHelper(tail_, GetDir());
-    if (id_ptr_on<CubeTile> cube = owner)
+    if (IdPtr<CubeTile> cube = owner)
     {
         cube->GetAtmosHolder()->Connect(GetAtmosHolder());
     }
@@ -313,7 +313,7 @@ void Valve::Process()
     Pipe::Process();
 }
 
-void Valve::AttackBy(id_ptr_on<Item> item)
+void Valve::AttackBy(IdPtr<Item> item)
 {
     if (closed_)
     {
@@ -335,7 +335,7 @@ Connector::Connector(size_t id) : PipeBase(id)
     name = "Connector";
 }
 
-void Connector::ConnectToGasTank(id_ptr_on<GasTank> tank)
+void Connector::ConnectToGasTank(IdPtr<GasTank> tank)
 {
     tank_ = tank;
 }
@@ -345,13 +345,13 @@ void Connector::DisconnectFromGasTank()
     tank_ = 0;
 }
 
-bool Connector::Connect(Dir dir, id_ptr_on<PipeBase> pipe)
+bool Connector::Connect(Dir dir, IdPtr<PipeBase> pipe)
 {
     if (dir != GetDir())
     {
         return false;
     }
-    if (tail_.valid())
+    if (tail_.IsValid())
     {
         return false;
     }
@@ -412,7 +412,7 @@ void PipePump::Process()
     }
     if (head_connection == nullptr)
     {
-        if (id_ptr_on<CubeTile> cube = owner)
+        if (IdPtr<CubeTile> cube = owner)
         {
             head_connection = cube->GetAtmosHolder();
         }

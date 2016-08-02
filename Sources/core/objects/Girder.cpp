@@ -20,9 +20,9 @@ Girder::Girder(size_t id) : Structure(id)
     name = "Girder";
 }
 
-void Girder::AttackBy(id_ptr_on<Item> item)
+void Girder::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Metal> metal = item)
+    if (IdPtr<Metal> metal = item)
     {
         metal->Delete();
 
@@ -31,9 +31,9 @@ void Girder::AttackBy(id_ptr_on<Item> item)
 
         Delete();
     }
-    else if (id_ptr_on<Wrench> wrench = item)
+    else if (IdPtr<Wrench> wrench = item)
     {
-        PlaySoundIfVisible("Ratchet.ogg", owner.ret_id());
+        PlaySoundIfVisible("Ratchet.ogg", owner.Id());
         Create<Item>(Metal::T_ITEM_S(), GetOwner());
         Delete();
     }

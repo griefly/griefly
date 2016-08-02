@@ -13,7 +13,7 @@ public:
     DECLARE_GET_TYPE_ITEM(ionmapitem);
     virtual bool IsVisibleByPlayer() const override
     {
-        return owner.valid() && owner->IsVisibleByPlayer();
+        return owner.IsValid() && owner->IsVisibleByPlayer();
     }
 
     virtual PassableLevel GetPassable(Dir direct) const override

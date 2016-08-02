@@ -67,22 +67,25 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
     SetSpriter(new SpriteHolder);
 
+    qDebug() << "Start generate images for creators";
     for (auto it = (*items_creators()).begin(); it != (*items_creators()).end(); ++it)
     {
         IMainObject* loc = it->second(0);
-        IOnMapObject* bloc = castTo<IOnMapObject>(loc);
+        IOnMapObject* bloc = CastTo<IOnMapObject>(loc);
         if (!bloc)
         {
             //delete loc;
             continue;
         }
         bool is_turf = false;
-        if (castTo<ITurf>(loc))
+        if (CastTo<ITurf>(loc))
         {
             is_turf = true;
         }
 
         ViewInfo* view_info = bloc->GetView();
+
+        qDebug() << view_info;
 
         if (   view_info->GetBaseFrameset().GetSprite() == ""
             || view_info->GetBaseFrameset().GetState() == "")
@@ -114,6 +117,11 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         }
         map_editor_->AddItemType(it->first, images);
 
+        if (images.length() == 0)
+        {
+            qDebug() << images.length();
+        }
+
         QListWidgetItem* new_item
                 = new QListWidgetItem(QIcon(images[0]), bloc->T_ITEM().c_str());
 
@@ -129,6 +137,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
             ui->listWidgetTurf->addItem(new_item);
         }
     }
+    qDebug() << "End generating";
 }
 
 MapEditorForm::~MapEditorForm()

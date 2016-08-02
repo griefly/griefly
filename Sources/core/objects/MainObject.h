@@ -73,10 +73,10 @@ protected:
     unsigned int GetRand();
 
     template<typename T>
-    id_ptr_on<T> Create(const std::string& type, id_ptr_on<IOnMapBase> owner = 0)
+    IdPtr<T> Create(const std::string& type, IdPtr<IOnMapBase> owner = 0)
     {
-        id_ptr_on<T> retval = CreateImpl(type, owner.ret_id());
-        if (!retval.valid())
+        IdPtr<T> retval = CreateImpl(type, owner.Id());
+        if (!retval.IsValid())
         {
             qDebug() << "Unable to cast object: " << QString::fromStdString(type);
             kv_abort();

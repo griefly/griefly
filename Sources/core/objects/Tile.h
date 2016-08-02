@@ -8,16 +8,16 @@
 #include "../AtmosHolder.h"
 
 template<class T>
-std::iostream& operator<<(std::iostream& file, std::vector<id_ptr_on<T>>& content)
+std::iostream& operator<<(std::iostream& file, std::vector<IdPtr<T>>& content)
 {
     file << " " << content.size() << " ";
     for (auto it = content.begin(); it != content.end(); ++it)
-        file << " " << it->ret_id() << " ";
+        file << " " << it->Id() << " ";
     return file;
 }
 
 template<class T>
-std::iostream& operator>>(std::iostream& file, std::vector<id_ptr_on<T>>& content)
+std::iostream& operator>>(std::iostream& file, std::vector<IdPtr<T>>& content)
 {
     size_t size;
     file >> size;
@@ -40,11 +40,11 @@ public:
     DECLARE_SAVED(CubeTile, IOnMapBase);
     DECLARE_GET_TYPE_ITEM(CubeTile);
     CubeTile(size_t id);
-    virtual bool AddItem(id_ptr_on<IOnMapBase> item) override;
-    virtual bool RemoveItem(id_ptr_on<IOnMapBase> item) override;
-    virtual id_ptr_on<IOnMapBase> GetNeighbour(Dir direct) const override;
-    id_ptr_on<CubeTile> GetNeighbourImpl(Dir direct) const;
-    virtual void ForEach(std::function<void(id_ptr_on<IOnMapBase>)> callback) override;
+    virtual bool AddItem(IdPtr<IOnMapBase> item) override;
+    virtual bool RemoveItem(IdPtr<IOnMapBase> item) override;
+    virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const override;
+    IdPtr<CubeTile> GetNeighbourImpl(Dir direct) const;
+    virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback) override;
     virtual bool IsVisibleByPlayer() const override
     {
         // TODO
@@ -53,10 +53,10 @@ public:
     virtual PassableLevel GetPassable(Dir direct) const override;
     virtual bool IsTransparent() const override;
 
-    virtual bool CanTouch(id_ptr_on<IOnMapBase> item) const override;
-    virtual bool Contains(id_ptr_on<IOnMapBase> item) const override;
+    virtual bool CanTouch(IdPtr<IOnMapBase> item) const override;
+    virtual bool Contains(IdPtr<IOnMapBase> item) const override;
 
-    virtual void Bump(id_ptr_on<IMovable> item) override;
+    virtual void Bump(IdPtr<IMovable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 
     void SetPos(int posx, int posy, int posz = 0)
@@ -89,14 +89,14 @@ public:
     {
         return posz();
     }
-    virtual id_ptr_on<ITurf> GetTurf()  override
+    virtual IdPtr<ITurf> GetTurf()  override
     {
         return turf_;
     }
-    virtual void SetTurf(id_ptr_on<ITurf> turf) override
+    virtual void SetTurf(IdPtr<ITurf> turf) override
     {
         turf_ = turf;
-        if (turf_.valid())
+        if (turf_.IsValid())
         {
             turf_->SetOwner(GetId());
         }
@@ -105,17 +105,17 @@ public:
     virtual void UpdatePassable() override;
     AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 
-    typedef std::vector<id_ptr_on<IOnMapObject>> InsideType;
+    typedef std::vector<IdPtr<IOnMapObject>> InsideType;
     InsideType& GetInsideList() { return inside_list_; }
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
-    bool CanTouch(id_ptr_on<IOnMapBase> item, Dir dir) const;
-    bool CanTouch(id_ptr_on<IOnMapBase> item, Dir first_dir, Dir second_dir) const;
+    bool CanTouch(IdPtr<IOnMapBase> item, Dir dir) const;
+    bool CanTouch(IdPtr<IOnMapBase> item, Dir first_dir, Dir second_dir) const;
 
     void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const;
 
-    id_ptr_on<ITurf> KV_SAVEBLE(turf_);
+    IdPtr<ITurf> KV_SAVEBLE(turf_);
 
     AtmosHolder KV_SAVEBLE(atmos_holder_);
 

@@ -52,7 +52,7 @@ void Weldingtool::TurnOff()
     SetFreq(0);
 }
 
-void Weldingtool::AttackBy(id_ptr_on<Item> item)
+void Weldingtool::AttackBy(IdPtr<Item> item)
 {
     if (Working())
         TurnOff();

@@ -8,7 +8,7 @@ public:
     DECLARE_SAVED(MetalWall, ITurf);
     DECLARE_GET_TYPE_ITEM(MetalWall);
     MetalWall(size_t id);
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(MetalWall);
 

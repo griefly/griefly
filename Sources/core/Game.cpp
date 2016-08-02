@@ -46,6 +46,10 @@ Game::Game()
     auto_player_ = false;
     cpu_load_ = 0.0f;
 
+    const int LOADS_AMOUNT = 60;
+    cpu_loads_.resize(LOADS_AMOUNT);
+    cpu_loads_id_ = 0;
+
     ping_id_ = "";
 
     current_ping_ = 0;
@@ -123,7 +127,7 @@ void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMap().GetDepth(); z++)
             {
-                id_ptr_on<CubeTile> loc = GetFactory().CreateImpl(CubeTile::T_ITEM_S());
+                IdPtr<CubeTile> loc = GetFactory().CreateImpl(CubeTile::T_ITEM_S());
                 loc->SetPos(x, y, z);
                 GetMap().GetSquares()[x][y][z] = loc;
             }
@@ -186,6 +190,8 @@ void Game::Process()
             fps_timer.restart();
             cpu_load_ = ((1000.0f / MAX_WAIT_ON_QUEUE) - lps_) / (1000.0f / MAX_WAIT_ON_QUEUE) * 100;
             lps_ = 0;
+            cpu_loads_[cpu_loads_id_] = cpu_load_;
+            cpu_loads_id_ = (cpu_loads_id_ + 1) % cpu_loads_.size();
         }
 
         if (   ping_timer.elapsed() > 1000
@@ -295,6 +301,20 @@ void Game::InitWorld(int id, std::string map_name)
     {
         std::stringstream ss; 
         ss << "CPU load: " << cpu_load_ << "%";
+        *str = ss.str();
+    }).SetFreq(1000);
+
+    GetTexts()["CpuLoadAverage"].SetUpdater
+    ([this](std::string* str)
+    {
+        float sum = 0.0f;
+        for (float load : cpu_loads_)
+        {
+            sum += load;
+        }
+
+        std::stringstream ss;
+        ss << "Average CPU load: " << sum / cpu_loads_.size() << "%";
         *str = ss.str();
     }).SetFreq(1000);
 
@@ -559,21 +579,21 @@ void Game::SetUnsyncGenerator(size_t generator)
     unsync_generator_ = generator;
 }
 
-id_ptr_on<UnsyncGenerator> Game::GetUnsyncGenerator()
+IdPtr<UnsyncGenerator> Game::GetUnsyncGenerator()
 {
     return unsync_generator_;
 }
 
-void Game::ChangeMob(id_ptr_on<IMob> i)
+void Game::ChangeMob(IdPtr<IMob> i)
 {
-    if (!GetParamsHolder().GetParamBool("-editor") && current_mob_.valid())
+    if (!GetParamsHolder().GetParamBool("-editor") && current_mob_.IsValid())
     {
         current_mob_->DeinitGUI();
     }
 
     current_mob_ = i;
 
-    if (current_mob_.valid())
+    if (current_mob_.IsValid())
     {
         if (!GetParamsHolder().GetParamBool("-editor"))
         {
@@ -581,10 +601,10 @@ void Game::ChangeMob(id_ptr_on<IMob> i)
         }
     }
 
-    qDebug() << "Current mob change: " << current_mob_.ret_id();
+    qDebug() << "Current mob change: " << current_mob_.Id();
 }
 
-id_ptr_on<IMob> Game::GetMob()
+IdPtr<IMob> Game::GetMob()
 {
     return current_mob_;
 }
@@ -607,7 +627,7 @@ void Game::endProcess()
 
 void Game::generateUnsync()
 {
-    if (GetUnsyncGenerator().valid())
+    if (GetUnsyncGenerator().IsValid())
     {
         GetUnsyncGenerator()->PerformUnsync();
     }
@@ -645,9 +665,9 @@ void Game::ProcessBroadcastedMessages()
          {
              qDebug() << "Game id is 0";
          }
-         id_ptr_on<IMessageReceiver> game_object = game_id;
+         IdPtr<IMessageReceiver> game_object = game_id;
 
-         if (game_object.valid())
+         if (game_object.IsValid())
          {
              game_object->processGUImsg(*it);
          }

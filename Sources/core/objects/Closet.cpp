@@ -11,6 +11,7 @@ Closet::Closet(size_t id)
     name = "Closet";
 
     open_ = false;
+
     SetPassable(D_ALL, Passable::AIR);
     SetPassable(D_UP, Passable::AIR);
     SetPassable(D_DOWN, Passable::AIR);
@@ -21,11 +22,11 @@ Closet::Closet(size_t id)
     SetState("closed");
 }
 
-bool Closet::Contains(id_ptr_on<IOnMapBase> item) const
+bool Closet::Contains(IdPtr<IOnMapBase> item) const
 {
     for (auto it = content_.begin(); it != content_.end(); ++it)
     {
-        if (it->ret_id() == item.ret_id())
+        if (it->Id() == item.Id())
         {
             return true;
         }
@@ -33,7 +34,7 @@ bool Closet::Contains(id_ptr_on<IOnMapBase> item) const
     return false;
 }
 
-bool Closet::CanTouch(id_ptr_on<IOnMapBase> item) const
+bool Closet::CanTouch(IdPtr<IOnMapBase> item) const
 {
     if (Contains(item))
     {
@@ -42,7 +43,7 @@ bool Closet::CanTouch(id_ptr_on<IOnMapBase> item) const
     return false;
 }
 
-void Closet::AttackBy(id_ptr_on<Item> item)
+void Closet::AttackBy(IdPtr<Item> item)
 {
     if (item)
     {
@@ -59,7 +60,7 @@ void Closet::AttackBy(id_ptr_on<Item> item)
     }
 }
 
-void Closet::Bump(id_ptr_on<IMovable> item)
+void Closet::Bump(IdPtr<IMovable> item)
 {
     if (Contains(item))
     {
@@ -72,15 +73,15 @@ void Closet::Bump(id_ptr_on<IMovable> item)
     IMovable::Bump(item);
 }
 
-bool Closet::AddItem(id_ptr_on<IOnMapBase> item)
+bool Closet::AddItem(IdPtr<IOnMapBase> item)
 {
-    if (id_ptr_on<Item> i = item)
+    if (IdPtr<Item> i = item)
     {
         content_.push_back(item);
         item->SetOwner(GetId());
         return true;
     }
-    if (id_ptr_on<Human> h = item)
+    if (IdPtr<Human> h = item)
     {
         content_.push_back(item);
         item->SetOwner(GetId());
@@ -89,7 +90,7 @@ bool Closet::AddItem(id_ptr_on<IOnMapBase> item)
     return false;
 }
 
-bool Closet::RemoveItem(id_ptr_on<IOnMapBase> item)
+bool Closet::RemoveItem(IdPtr<IOnMapBase> item)
 {
     for (auto it = content_.begin(); it != content_.end(); ++it)
     {
@@ -111,7 +112,7 @@ void Closet::AfterWorldCreation()
         return;
     }
 
-    owner->ForEach([this](id_ptr_on<IOnMapBase> object)
+    owner->ForEach([this](IdPtr<IOnMapBase> object)
     {
        if (AddItem(object))
        {
@@ -122,10 +123,10 @@ void Closet::AfterWorldCreation()
 
 void Closet::Delete()
 {
-    std::vector<id_ptr_on<IMovable>> copy = content_;
+    std::vector<IdPtr<IMovable>> copy = content_;
     for (auto it = copy.begin(); it != copy.end(); ++it)
     {
-        if (!it->valid())
+        if (!it->IsValid())
         {
             qDebug() << "Closet contains invalid id_ptr_on";
             kv_abort();
@@ -137,7 +138,7 @@ void Closet::Delete()
 
 void Closet::Close()
 {
-    owner->ForEach([this](id_ptr_on<IOnMapBase> item)
+    owner->ForEach([this](IdPtr<IOnMapBase> item)
     {
         if (AddItem(item))
         {
@@ -153,7 +154,7 @@ void Closet::Close()
     SetPassable(D_RIGHT, Passable::AIR);
     SetState("closed");
 
-    PlaySoundIfVisible("click.ogg", owner.ret_id());
+    PlaySoundIfVisible("click.ogg", owner.Id());
 }
 
 void Closet::Open()
@@ -172,7 +173,7 @@ void Closet::Open()
     SetPassable(D_RIGHT, Passable::FULL);
     SetState("open");
 
-    PlaySoundIfVisible("click.ogg", owner.ret_id());
+    PlaySoundIfVisible("click.ogg", owner.Id());
 }
 
 
@@ -184,9 +185,9 @@ SecurityLocker::SecurityLocker(size_t id) : Closet(id)
     name = "Security locker";
 }
 
-void SecurityLocker::AttackBy(id_ptr_on<Item> item)
+void SecurityLocker::AttackBy(IdPtr<Item> item)
 {
-    if (item.valid())
+    if (item.IsValid())
     {
         if (!open_)
         {

@@ -290,10 +290,7 @@ void Representation::Click(int x, int y)
 
     if (id_to_send != -1)
     {
-        Message2 msg;
-        msg.type = MessageType::MOUSE_CLICK;
-        msg.json = "{\"obj\":" + QString::number(id_to_send) + "}";
-
+        Message2 msg = Network2::MakeClickMessage(id_to_send, Click::LCLICK);
         Network2::GetInstance().SendMsg(msg);
     }
 }

@@ -145,3 +145,5 @@ Saves
 /griefly-server/server_starter.bat - Shortcut.lnk
 /Exec/stderr.txt
 *~
+/Exec/atmos_test
+/Exec/atmos_test.gen

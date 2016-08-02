@@ -8,6 +8,6 @@ public:
     DECLARE_SAVED(Girder, Structure);
     DECLARE_GET_TYPE_ITEM(Girder);
     Girder(size_t id);
-    virtual void AttackBy(id_ptr_on<Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(Girder);

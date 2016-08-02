@@ -18,12 +18,12 @@ FuelTank::FuelTank(size_t id)
     SetPassable(D_ALL, Passable::AIR);
 }
 
-void FuelTank::AttackBy(id_ptr_on<Item> item)
+void FuelTank::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Weldingtool> w = item)
+    if (IdPtr<Weldingtool> w = item)
     {
         w->AddFuel(50);
-        PlaySoundIfVisible("refill.ogg", owner.ret_id());
+        PlaySoundIfVisible("refill.ogg", owner.Id());
     }
 }
 
@@ -42,7 +42,7 @@ WaterTank::WaterTank(size_t id)
     SetPassable(D_ALL, Passable::AIR);
 }
 
-void WaterTank::AttackBy(id_ptr_on<Item> item)
+void WaterTank::AttackBy(IdPtr<Item> item)
 {
 
 }

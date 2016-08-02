@@ -29,24 +29,24 @@ void Floor::AfterWorldCreation()
     SetOpen(open_);
 }
 
-void Floor::AttackBy(id_ptr_on<Item> item)
+void Floor::AttackBy(IdPtr<Item> item)
 {
-    if (id_ptr_on<Crowbar> c = item)
+    if (IdPtr<Crowbar> c = item)
     {
         if (!open_)
         {
             SetOpen(true);
             Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
-            PlaySoundIfVisible("Crowbar.ogg", owner.ret_id());
+            PlaySoundIfVisible("Crowbar.ogg", owner.Id());
         }
     }
-    else if (id_ptr_on<FloorTile> ftile = item)
+    else if (IdPtr<FloorTile> ftile = item)
     {
         if (open_)
         {
             SetOpen(false);
             ftile->Delete();
-            PlaySoundIfVisible("Deconstruct.ogg", owner.ret_id());
+            PlaySoundIfVisible("Deconstruct.ogg", owner.Id());
         }
     }
 }

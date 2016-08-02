@@ -28,11 +28,11 @@ std::string AtmosTool::GetInfo(AtmosHolder &holder)
     return ss.str();
 }
 
-void AtmosTool::AttackBy(id_ptr_on<Item> item)
+void AtmosTool::AttackBy(IdPtr<Item> item)
 {
-    if (item.ret_id() == GetId())
+    if (item.Id() == GetId())
     {
-        if (id_ptr_on<CubeTile> ct = GetOwner()->GetOwner())
+        if (IdPtr<CubeTile> ct = GetOwner()->GetOwner())
         {
             GetGame().GetChat().PostTextFor(GetInfo(*ct->GetAtmosHolder()), GetOwner());
         }

@@ -45,7 +45,7 @@ public:
     MapMaster(SyncRandom* sync_random);
     ~MapMaster();
 
-    typedef id_ptr_on<CubeTile> SqType;
+    typedef IdPtr<CubeTile> SqType;
 
     virtual IAtmosphere& GetAtmosphere() override;
 

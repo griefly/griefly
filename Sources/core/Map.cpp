@@ -56,7 +56,7 @@ void MapMaster::Represent()
             }
 
             auto trf = squares_[it2->posx][it2->posy][it2->posz]->GetTurf();
-            if (trf.valid() && trf->v_level == i)
+            if (trf.IsValid() && trf->v_level == i)
             {
                 trf->Represent();
             }
@@ -78,7 +78,7 @@ void MapMaster::Represent()
         }
 
         auto trf = squares_[it2->posx][it2->posy][it2->posz]->GetTurf();
-        if (trf.valid() && trf->v_level >= MAX_LEVEL)
+        if (trf.IsValid() && trf->v_level >= MAX_LEVEL)
         {
             trf->Represent();
         }
@@ -199,7 +199,7 @@ bool MapMaster::IsTileVisible(size_t tile_id)
     }
     for (auto it = l->begin(); it != l->end(); ++it)
     {
-        if (tile_id == squares_[it->posx][it->posy][it->posz].ret_id())
+        if (tile_id == squares_[it->posx][it->posy][it->posz].Id())
         {
             return true;
         }

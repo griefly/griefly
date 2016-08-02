@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 #include <QVector>
 #include <QBitArray>
 
@@ -25,7 +23,7 @@ inline bool FastIsType(int typefrom)
 }
 
 template<typename Typeto, typename TypeObjectFrom>
-inline Typeto* castTo(TypeObjectFrom* ptr)
+inline Typeto* CastTo(TypeObjectFrom* ptr)
 {
     if (ptr == nullptr)
     {

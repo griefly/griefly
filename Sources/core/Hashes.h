@@ -24,19 +24,19 @@ inline unsigned int hash(const std::string& str)
 }
 
 template<class T>
-unsigned int hash(const id_ptr_on<T>& h)
+unsigned int hash(const IdPtr<T>& h)
 {
-    return h.ret_id();
+    return h.Id();
 }
 
 template<class T>
-unsigned int hash(std::vector<id_ptr_on<T>>& content)
+unsigned int hash(std::vector<IdPtr<T>>& content)
 {
     unsigned int retval = 0;
     int i = 1;
     for (auto it = content.begin(); it != content.end(); ++it, ++i)
     {
-        retval += it->ret_id() * i;
+        retval += it->Id() * i;
     }
     return retval;
 }
