@@ -119,60 +119,92 @@ void Table::UpdateSprite(size_t ignored_table)
         {
             if (upleft && downleft)
             {
+                SetState(material_ + "_table_d3");
+                Rotate(D_LEFT);    
             }
             else if (!upleft && downleft)
             {
+                SetState(material_ + "_table_d3_c_m_l");
+                Rotate(D_RIGHT);
             }
             else if (upleft && !downleft)
             {
+                SetState(material_ + "_table_d3_c_m_l");
+                Rotate(D_LEFT);
             }
             else
             {
+                SetState(material_ + "_table_d3_f");
+                Rotate(D_LEFT);
             }
         }
         else if (up + down + right == 3)
         {
             if (upright && downright)
             {
+                SetState(material_ + "_table_d3");
+                Rotate(D_RIGHT);
             }
             else if (!upright && downright)
             {
+                SetState(material_ + "_table_d3_c_m_r");
+                Rotate(D_RIGHT);
             }
             else if (upright && !downright)
             {
+                SetState(material_ + "_table_d3_c_m_r");
+                Rotate(D_LEFT);
             }
             else
             {
+                SetState(material_ + "_table_d3_f");
+                Rotate(D_RIGHT);
             }
         }
         else if (up + right + left == 3)
         {
             if (upleft && upright)
             {
+                SetState(material_ + "_table_d3");
+                Rotate(D_UP);
             }
             else if (!upleft && upright)
             {
+                SetState(material_ + "_table_d3_c_m_l");
+                Rotate(D_UP);
             }
             else if (upleft && !upright)
             {
+                SetState(material_ + "_table_d3_c_m_l");
+                Rotate(D_DOWN);
             }
             else
             {
+                SetState(material_ + "_table_d3_f");
+                Rotate(D_UP);
             }
         }
         else if (right + down + left == 3)
         {
             if (downleft && downright)
             {
+                SetState(material_ + "_table_d3");
+                Rotate(D_DOWN);
             }
             else if (!downleft && downright)
             {
+                SetState(material_ + "_table_d3_c_m_r");
+                Rotate(D_UP);
             }
             else if (downleft && !downleft)
             {
+                SetState(material_ + "_table_d3_c_m_r");
+                Rotate(D_DOWN);
             }
             else
             {
+                SetState(material_ + "_table_d3_f");
+                Rotate(D_DOWN);
             }
         }
     }
@@ -188,12 +220,12 @@ void Table::UpdateSprite(size_t ignored_table)
             if (upleft)
             {
                 SetState(material_ + "_table_d2_c_r");
-                Rotate(D_UP);
+                Rotate(D_LEFT);
             }
             else
             {
                 SetState(material_ + "_table_d2_c_f");
-                Rotate(D_UP);
+                Rotate(D_LEFT);
             }
         }
         else if (up + right == 2)
@@ -214,12 +246,12 @@ void Table::UpdateSprite(size_t ignored_table)
             if (downleft)
             {
                 SetState(material_ + "_table_d2_c_r");
-                Rotate(D_DOWN);
+                Rotate(D_UP);
             }
             else
             {
                 SetState(material_ + "_table_d2_c_f");
-                Rotate(D_DOWN);
+                Rotate(D_UP);
             }
         }
         else if (down + right == 2)
@@ -227,12 +259,12 @@ void Table::UpdateSprite(size_t ignored_table)
             if (downright)
             {
                 SetState(material_ + "_table_d2_c_r");
-                Rotate(D_LEFT);
+                Rotate(D_DOWN);
             }
             else
             {
                 SetState(material_ + "_table_d2_c_f");
-                Rotate(D_LEFT);
+                Rotate(D_DOWN);
             }
         }
         else if (right + left == 2)

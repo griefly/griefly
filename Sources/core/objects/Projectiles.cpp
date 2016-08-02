@@ -45,6 +45,7 @@ Projectile::Projectile(size_t id) : IMovable(id)
     current_step_ = 1;
     tickSpeed = 1;
     pixSpeed = 4;
+    passable_level = Passable::SMALL_ITEM;
 }
 void Projectile::Process()
 {
