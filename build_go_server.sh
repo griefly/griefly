@@ -9,7 +9,7 @@ then
 fi
 
 echo "Start build"
-export GOPATH=`pwd`/griefly-server
+export GOPATH=`pwd`/gopath
 cd $GOPATH/src/griefly-server
 go build -ldflags "-X main.clientVersionBuild=$version"
 cd -
