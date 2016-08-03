@@ -13,6 +13,7 @@ public:
     void NotifyNeighborhood(bool is_in_existence);
     void UpdateSprite(size_t ignored_table);
     virtual void AfterWorldCreation() override;
+    int CheckTable(IdPtr<IOnMapBase> container, size_t ignored_table);
 protected:
     std::string KV_SAVEBLE(material_);
 }

@@ -69,49 +69,17 @@ void Table::NotifyNeighborhood(bool is_in_existence)
 }
 void Table::UpdateSprite(size_t ignored_table)
 {
-    bool up  = false;
-    bool down = false;
-    bool left = false;
-    bool right = false;
-    bool upright = false;
-    bool downright = false;
-    bool upleft = false;
-    bool downleft = false;
-    if (bool(GetNeighbour(D_UP)->GetItem<Table>()) != ignored_table && GetNeighbour(D_UP)->GetItem<Table>())
-    {
-        up = true;
-    }
-    if (bool(GetNeighbour(D_DOWN)->GetItem<Table>()) != ignored_table && GetNeighbour(D_DOWN)->GetItem<Table>())
-    {
-        down = true;
-    }
-    if (bool(GetNeighbour(D_LEFT)->GetItem<Table>()) != ignored_table && GetNeighbour(D_LEFT)->GetItem<Table>())
-    {
-        left = true;
-    }
-    if (bool(GetNeighbour(D_RIGHT)->GetItem<Table>()) != ignored_table && GetNeighbour(D_RIGHT)->GetItem<Table>())
-    {
-        right = true;
-    }
-    if (bool(GetNeighbour(D_LEFT)->GetNeighbour(D_UP)->GetItem<Table>()) != ignored_table && GetNeighbour(D_LEFT)->GetNeighbour(D_UP)->GetItem<Table>())
-    {
-        upleft = true;
-    }
-    if (bool(GetNeighbour(D_LEFT)->GetNeighbour(D_DOWN)->GetItem<Table>()) != ignored_table && GetNeighbour(D_LEFT)->GetNeighbour(D_DOWN)->GetItem<Table>())
-    {
-        downleft = true;
-    }
-    if (bool(GetNeighbour(D_UP)->GetNeighbour(D_RIGHT)->GetItem<Table>()) != ignored_table && GetNeighbour(D_UP)->GetNeighbour(D_RIGHT)->GetItem<Table>())
-    {
-        upright = true;
-    }
-    if (bool(GetNeighbour(D_DOWN)->GetNeighbour(D_RIGHT)->GetItem<Table>()) != ignored_table && GetNeighbour(D_DOWN)->GetNeighbour(D_RIGHT)->GetItem<Table>())
-    {
-        downright = true;
-    }
+    int up = CheckTable(GetNeighbour(D_UP), ignored_table);
+    int down = CheckTable(GetNeighbour(D_DOWN), ignored_table);
+    int left = CheckTable(GetNeighbour(D_LEFT), ignored_table);
+    int right = CheckTable(GetNeighbour(D_RIGHT), ignored_table);
+    int upright = CheckTable(GetNeighbour(D_UP)->GetNeighbour(D_RIGHT), ignored_table);
+    int downright = CheckTable(GetNeighbour(D_DOWN)->GetNeighbour(D_RIGHT), ignored_table);
+    int upleft = CheckTable(GetNeighbour(D_LEFT)->GetNeighbour(D_UP), ignored_table);
+    int downleft = CheckTable(GetNeighbour(D_LEFT)->GetNeighbour(D_DOWN), ignored_table);
     if (up + down + left + right == 4)
     {
-            SetState(material_ + "_table_d4");
+        SetState(material_ + "_table_d4");
     }
     else if (up + down + left + right == 3)
     {
@@ -302,13 +270,26 @@ void Table::AttackBy(IdPtr<Item> item)
 {
     if (item.IsValid())
     {
-        if (IdPtr<Human> human= item->GetOwner())
+        if (IdPtr<Human> human = item->GetOwner())
         {
             GetOwner()->AddItem(item);
             human->GetHumanInterface()->Drop();
             human->UpdateOverlays();
         }
     }
+}
+int Table::CheckTable(IdPtr<IOnMapBase> container, size_t ignored_table)
+{
+    IdPtr<Table> table = container->GetItem<Table>();
+    if (!table.IsValid())
+    {
+        return 0;
+    }
+    if (table.Id() == ignored_table)
+    {
+        return 0;
+    }
+    return 1;
 }
 
 MetalTable::MetalTable(size_t id) : Table(id)
