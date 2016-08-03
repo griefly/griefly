@@ -5,7 +5,7 @@
 #include "Turf.h"
 #include "OnMapBase.h"
 #include "OnMapObject.h"
-#include "../AtmosHolder.h"
+#include "../atmos/AtmosHolder.h"
 
 template<class T>
 std::iostream& operator<<(std::iostream& file, std::vector<IdPtr<T>>& content)

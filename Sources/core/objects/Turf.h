@@ -1,7 +1,7 @@
 #pragma once
 
 #include "OnMapObject.h"
-#include "../AtmosHolder.h"
+#include "../atmos/AtmosHolder.h"
 
 namespace Friction
 {

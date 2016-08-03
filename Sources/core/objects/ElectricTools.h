@@ -2,7 +2,7 @@
 
 #include "Item.h"
 
-#include "../AtmosHolder.h"
+#include "../atmos/AtmosHolder.h"
 
 class AtmosTool: public Item
 {

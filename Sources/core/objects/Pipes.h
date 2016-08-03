@@ -2,7 +2,7 @@
 
 #include "Movable.h"
 
-#include "../AtmosHolder.h"
+#include "../atmos/AtmosHolder.h"
 
 #include "Item.h"
 #include "GasTank.h"\

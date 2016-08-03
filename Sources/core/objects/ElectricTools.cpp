@@ -3,7 +3,6 @@
 #include <sstream>
 
 #include "representation/Chat.h"
-#include "../AtmosHolder.h"
 #include "Tile.h"
 #include "../Game.h"
 

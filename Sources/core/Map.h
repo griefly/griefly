@@ -7,7 +7,7 @@
 
 #include "Constheader.h"
 #include "objects/Tile.h"
-#include "Atmos.h"
+#include "atmos/Atmos.h"
 
 #include "Interfaces.h"
 

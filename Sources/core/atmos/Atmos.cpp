@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-#include "SyncRandom.h"
-#include "Helpers.h"
+#include "../SyncRandom.h"
+#include "../Helpers.h"
 
 Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map)
     : random_(random),

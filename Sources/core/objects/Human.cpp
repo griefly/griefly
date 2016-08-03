@@ -7,7 +7,7 @@
 #include "Shard.h"
 #include "net/MagicStrings.h"
 #include "representation/Chat.h"
-#include "../AtmosHolder.h"
+#include "../atmos/AtmosHolder.h"
 #include "Tile.h"
 #include "../Helpers.h"
 #include "../SyncRandom.h"
