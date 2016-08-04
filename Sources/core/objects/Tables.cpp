@@ -24,14 +24,10 @@ void Table::Delete()
 }
 void Table::NotifyNeighborhood(bool is_in_existence)
 {
-    size_t id;
+    size_t id = GetId();
     if(is_in_existence)
     {
         id = 0;
-    }
-    else
-    {
-        id = GetId();
     }
     if (auto table_up = GetNeighbour(D_UP)->GetItem<Table>())
     {
