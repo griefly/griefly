@@ -2226,15 +2226,15 @@ Space 29 10 0 1 5 dMove 0
 Space 29 11 0 1 5 dMove 0  
 Space 29 12 0 1 5 dMove 0  
 Space 29 13 0 1 5 dMove 0  
-Space 29 14 0 1 5 dMove 0  
-Space 29 15 0 1 5 dMove 0  
-Space 29 16 0 1 5 dMove 0  
-Space 29 17 0 1 5 dMove 0  
-Space 29 18 0 1 5 dMove 0  
-Space 29 19 0 1 5 dMove 0  
-Space 29 20 0 1 5 dMove 0  
-Space 29 21 0 1 5 dMove 0  
-Space 29 22 0 1 5 dMove 0  
+ReinforcedWall 29 14 0 1 5 dMove 0  
+ReinforcedWall 29 15 0 1 5 dMove 0  
+ReinforcedWall 29 16 0 1 5 dMove 0  
+ReinforcedWall 29 17 0 1 5 dMove 0  
+ReinforcedWall 29 18 0 1 5 dMove 0  
+ReinforcedWall 29 19 0 1 5 dMove 0  
+ReinforcedWall 29 20 0 1 5 dMove 0  
+ReinforcedWall 29 21 0 1 5 dMove 0  
+ReinforcedWall 29 22 0 1 5 dMove 0  
 Space 29 23 0 1 5 dMove 0  
 Space 29 24 0 1 5 dMove 0  
 Space 29 25 0 1 5 dMove 0  
@@ -2316,15 +2316,19 @@ Space 30 10 0 1 5 dMove 0
 Space 30 11 0 1 5 dMove 0  
 Space 30 12 0 1 5 dMove 0  
 Space 30 13 0 1 5 dMove 0  
-Space 30 14 0 1 5 dMove 0  
-Space 30 15 0 1 5 dMove 0  
-Space 30 16 0 1 5 dMove 0  
-Space 30 17 0 1 5 dMove 0  
-Space 30 18 0 1 5 dMove 0  
-Space 30 19 0 1 5 dMove 0  
-Space 30 20 0 1 5 dMove 0  
-Space 30 21 0 1 5 dMove 0  
-Space 30 22 0 1 5 dMove 0  
+ReinforcedWall 30 14 0 1 5 dMove 0  
+Floor 30 15 0 1 5 dMove 0  
+AmmunitionBox 30 15 0 0 
+Floor 30 16 0 1 5 dMove 0  
+Floor 30 17 0 1 5 dMove 0  
+AmmunitionBox 30 17 0 0 
+Floor 30 18 0 1 5 dMove 0  
+Floor 30 19 0 1 5 dMove 0  
+AmmunitionBox 30 19 0 0 
+Floor 30 20 0 1 5 dMove 0  
+Floor 30 21 0 1 5 dMove 0  
+AmmunitionBox 30 21 0 0 
+ReinforcedWall 30 22 0 1 5 dMove 0  
 Space 30 23 0 1 5 dMove 0  
 Space 30 24 0 1 5 dMove 0  
 Space 30 25 0 1 5 dMove 0  
@@ -2402,15 +2406,19 @@ Space 31 10 0 1 5 dMove 0
 Space 31 11 0 1 5 dMove 0  
 Space 31 12 0 1 5 dMove 0  
 Space 31 13 0 1 5 dMove 0  
-Space 31 14 0 1 5 dMove 0  
-Space 31 15 0 1 5 dMove 0  
-Space 31 16 0 1 5 dMove 0  
-Space 31 17 0 1 5 dMove 0  
-Space 31 18 0 1 5 dMove 0  
-Space 31 19 0 1 5 dMove 0  
-Space 31 20 0 1 5 dMove 0  
-Space 31 21 0 1 5 dMove 0  
-Space 31 22 0 1 5 dMove 0  
+ReinforcedWall 31 14 0 1 5 dMove 0  
+Floor 31 15 0 1 5 dMove 0  
+Floor 31 16 0 1 5 dMove 0  
+AmmunitionBox 31 16 0 0 
+Floor 31 17 0 1 5 dMove 0  
+Floor 31 18 0 1 5 dMove 0  
+AmmunitionBox 31 18 0 0 
+Floor 31 19 0 1 5 dMove 0  
+Floor 31 20 0 1 5 dMove 0  
+MetalTable 31 20 0 1 5 dMove 0  
+Revolver 31 20 0 0 
+Floor 31 21 0 1 5 dMove 0  
+ReinforcedWall 31 22 0 1 5 dMove 0  
 Space 31 23 0 1 5 dMove 0  
 Space 31 24 0 1 5 dMove 0  
 Space 31 25 0 1 5 dMove 0  
@@ -2500,15 +2508,26 @@ Space 32 10 0 1 5 dMove 0
 Space 32 11 0 1 5 dMove 0  
 Space 32 12 0 1 5 dMove 0  
 Space 32 13 0 1 5 dMove 0  
-Space 32 14 0 1 5 dMove 0  
-Space 32 15 0 1 5 dMove 0  
-Space 32 16 0 1 5 dMove 0  
-Space 32 17 0 1 5 dMove 0  
-Space 32 18 0 1 5 dMove 0  
-Space 32 19 0 1 5 dMove 0  
-Space 32 20 0 1 5 dMove 0  
-Space 32 21 0 1 5 dMove 0  
-Space 32 22 0 1 5 dMove 0  
+ReinforcedWall 32 14 0 1 5 dMove 0  
+Floor 32 15 0 1 5 dMove 0  
+AmmunitionBox 32 15 0 0 
+Floor 32 16 0 1 5 dMove 0  
+MetalTable 32 16 0 1 5 dMove 0  
+LaserGun 32 16 0 0 
+Floor 32 17 0 1 5 dMove 0  
+MetalTable 32 17 0 1 5 dMove 0  
+Revolver 32 17 0 0 
+Floor 32 18 0 1 5 dMove 0  
+MetalTable 32 18 0 1 5 dMove 0  
+LaserGun 32 18 0 0 
+Floor 32 19 0 1 5 dMove 0  
+AmmunitionBox 32 19 0 0 
+Floor 32 20 0 1 5 dMove 0  
+MetalTable 32 20 0 1 5 dMove 0  
+LaserGun 32 20 0 0 
+Floor 32 21 0 1 5 dMove 0  
+AmmunitionBox 32 21 0 0 
+ReinforcedWall 32 22 0 1 5 dMove 0  
 Space 32 23 0 1 5 dMove 0  
 Space 32 24 0 1 5 dMove 0  
 Plating 32 25 0 1 5 dMove 0  
@@ -2595,16 +2614,24 @@ Space 33 10 0 1 5 dMove 0
 Space 33 11 0 1 5 dMove 0  
 Space 33 12 0 1 5 dMove 0  
 Space 33 13 0 1 5 dMove 0  
-Space 33 14 0 1 5 dMove 0  
-Space 33 15 0 1 5 dMove 0  
-Space 33 16 0 1 5 dMove 0  
-Space 33 17 0 1 5 dMove 0  
-Space 33 18 0 1 5 dMove 0  
-Space 33 19 0 1 5 dMove 0  
-Space 33 20 0 1 5 dMove 0  
-Space 33 21 0 1 5 dMove 0  
-Space 33 22 0 1 5 dMove 0  
-Space 33 23 0 1 5 dMove 0  
+ReinforcedWall 33 14 0 1 5 dMove 0  
+Floor 33 15 0 1 5 dMove 0  
+Floor 33 16 0 1 5 dMove 0  
+MetalTable 33 16 0 1 5 dMove 0  
+Revolver 33 16 0 0 
+Floor 33 17 0 1 5 dMove 0  
+Floor 33 18 0 1 5 dMove 0  
+MetalTable 33 18 0 1 5 dMove 0  
+Revolver 33 18 0 0 
+Floor 33 19 0 1 5 dMove 0  
+MetalTable 33 19 0 1 5 dMove 0  
+LaserGun 33 19 0 0 
+Floor 33 20 0 1 5 dMove 0  
+MetalTable 33 20 0 1 5 dMove 0  
+Revolver 33 20 0 0 
+Floor 33 21 0 1 5 dMove 0  
+ReinforcedWall 33 22 0 1 5 dMove 0  
+Plating 33 23 0 1 5 dMove 0  
 Space 33 24 0 1 5 dMove 0  
 Space 33 25 0 1 5 dMove 0  
 Lattice 33 25 0 1 5 dMove 0  
@@ -2676,18 +2703,23 @@ Space 34 10 0 1 5 dMove 0
 Space 34 11 0 1 5 dMove 0  
 Space 34 12 0 1 5 dMove 0  
 Space 34 13 0 1 5 dMove 0  
-Space 34 14 0 1 5 dMove 0  
-Space 34 15 0 1 5 dMove 0  
-Space 34 16 0 1 5 dMove 0  
-Space 34 17 0 1 5 dMove 0  
-Space 34 18 0 1 5 dMove 0  
-Space 34 19 0 1 5 dMove 0  
-Space 34 20 0 1 5 dMove 0  
-Space 34 21 0 1 5 dMove 0  
-Space 34 22 0 1 5 dMove 0  
-Plating 34 23 0 1 5 dMove 0  
-Plating 34 24 0 1 5 dMove 0  
-Girder 34 24 0 18 8 anchored 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
+ReinforcedWall 34 14 0 1 5 dMove 0  
+Floor 34 15 0 1 5 dMove 0  
+AmmunitionBox 34 15 0 0 
+Floor 34 16 0 1 5 dMove 0  
+MetalTable 34 16 0 1 5 dMove 0  
+LaserGun 34 16 0 0 
+Floor 34 17 0 1 5 dMove 0  
+AmmunitionBox 34 17 0 0 
+Floor 34 18 0 1 5 dMove 0  
+Floor 34 19 0 1 5 dMove 0  
+AmmunitionBox 34 19 0 0 
+Floor 34 20 0 1 5 dMove 0  
+Floor 34 21 0 1 5 dMove 0  
+AmmunitionBox 34 21 0 0 
+ReinforcedWall 34 22 0 1 5 dMove 0  
+ReinforcedWall 34 23 0 1 5 dMove 0  
+ReinforcedWall 34 24 0 1 5 dMove 0  
 ReinforcedWall 34 25 0 1 5 dMove 0  
 ReinforcedWall 34 26 0 1 5 dMove 0  
 ReinforcedWall 34 27 0 1 5 dMove 0  
@@ -2761,20 +2793,34 @@ Space 35 10 0 1 5 dMove 0
 Space 35 11 0 1 5 dMove 0  
 Space 35 12 0 1 5 dMove 0  
 Space 35 13 0 1 5 dMove 0  
-Space 35 14 0 1 5 dMove 0  
-Space 35 15 0 1 5 dMove 0  
-Space 35 16 0 1 5 dMove 0  
-Space 35 17 0 1 5 dMove 0  
-Space 35 18 0 1 5 dMove 0  
-Space 35 19 0 1 5 dMove 0  
-Space 35 20 0 1 5 dMove 0  
-Space 35 21 0 1 5 dMove 0  
-Space 35 22 0 1 5 dMove 0  
-Space 35 23 0 1 5 dMove 0  
-Space 35 24 0 1 5 dMove 0  
-Space 35 25 0 1 5 dMove 0  
-Space 35 26 0 1 5 dMove 0  
-Lattice 35 26 0 1 5 dMove 0  
+ReinforcedWall 35 14 0 1 5 dMove 0  
+Floor 35 15 0 1 5 dMove 0  
+Floor 35 16 0 1 5 dMove 0  
+MetalTable 35 16 0 1 5 dMove 0  
+Revolver 35 16 0 0 
+Floor 35 17 0 1 5 dMove 0  
+MetalTable 35 17 0 1 5 dMove 0  
+LaserGun 35 17 0 0 
+Floor 35 18 0 1 5 dMove 0  
+MetalTable 35 18 0 1 5 dMove 0  
+Revolver 35 18 0 0 
+Floor 35 19 0 1 5 dMove 0  
+MetalTable 35 19 0 1 5 dMove 0  
+LaserGun 35 19 0 0 
+Floor 35 20 0 1 5 dMove 0  
+MetalTable 35 20 0 1 5 dMove 0  
+Revolver 35 20 0 0 
+Floor 35 21 0 1 5 dMove 0  
+MetalTable 35 21 0 1 5 dMove 0  
+LaserGun 35 21 0 0 
+Floor 35 22 0 1 5 dMove 0  
+AmmunitionBox 35 22 0 0 
+Floor 35 23 0 1 5 dMove 0  
+Floor 35 24 0 1 5 dMove 0  
+AmmunitionBox 35 24 0 0 
+Floor 35 25 0 1 5 dMove 0  
+Floor 35 26 0 1 5 dMove 0  
+AmmunitionBox 35 26 0 0 
 Floor 35 27 0 1 5 dMove 0  
 Grille 35 27 0 19 8 anchored 1 1 7 cutted_ 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 35 27 0 18 8 anchored 1 1 5 dMove 1 0 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
@@ -2857,19 +2903,31 @@ Space 36 10 0 1 5 dMove 0
 Space 36 11 0 1 5 dMove 0  
 Space 36 12 0 1 5 dMove 0  
 Space 36 13 0 1 5 dMove 0  
-Space 36 14 0 1 5 dMove 0  
-Space 36 15 0 1 5 dMove 0  
-Space 36 16 0 1 5 dMove 0  
-Space 36 17 0 1 5 dMove 0  
-Space 36 18 0 1 5 dMove 0  
-Space 36 19 0 1 5 dMove 0  
-Space 36 20 0 1 5 dMove 0  
-Space 36 21 0 1 5 dMove 0  
-Space 36 22 0 1 5 dMove 0  
-Space 36 23 0 1 5 dMove 0  
-Space 36 24 0 1 5 dMove 0  
-Space 36 25 0 1 5 dMove 0  
-Plating 36 26 0 1 5 dMove 0  
+ReinforcedWall 36 14 0 1 5 dMove 0  
+Floor 36 15 0 1 5 dMove 0  
+AmmunitionBox 36 15 0 0 
+Floor 36 16 0 1 5 dMove 0  
+Floor 36 17 0 1 5 dMove 0  
+MetalTable 36 17 0 1 5 dMove 0  
+Revolver 36 17 0 0 
+Floor 36 18 0 1 5 dMove 0  
+MetalTable 36 18 0 1 5 dMove 0  
+Floor 36 19 0 1 5 dMove 0  
+MetalTable 36 19 0 0 
+Floor 36 20 0 1 5 dMove 0  
+Floor 36 21 0 1 5 dMove 0  
+MetalTable 36 21 0 1 5 dMove 0  
+Revolver 36 21 0 0 
+Floor 36 22 0 1 5 dMove 0  
+MetalTable 36 22 0 1 5 dMove 0  
+LaserGun 36 22 0 0 
+Floor 36 23 0 1 5 dMove 0  
+MetalTable 36 23 0 1 5 dMove 0  
+Revolver 36 23 0 0 
+Floor 36 24 0 1 5 dMove 0  
+Floor 36 25 0 1 5 dMove 0  
+AmmunitionBox 36 25 0 0 
+Floor 36 26 0 1 5 dMove 0  
 ReinforcedWall 36 27 0 1 5 dMove 0  
 Floor 36 28 0 1 5 dMove 0  
 Floor 36 29 0 1 5 dMove 0  
@@ -2945,23 +3003,33 @@ Space 37 10 0 1 5 dMove 0
 Space 37 11 0 1 5 dMove 0  
 Space 37 12 0 1 5 dMove 0  
 Space 37 13 0 1 5 dMove 0  
-Space 37 14 0 1 5 dMove 0  
-Space 37 15 0 1 5 dMove 0  
-Space 37 16 0 1 5 dMove 0  
-Space 37 17 0 1 5 dMove 0  
-Space 37 18 0 1 5 dMove 0  
-Space 37 19 0 1 5 dMove 0  
-Space 37 20 0 1 5 dMove 0  
-Space 37 21 0 1 5 dMove 0  
-Space 37 22 0 1 5 dMove 0  
-Space 37 23 0 1 5 dMove 0  
-Space 37 24 0 1 5 dMove 0  
-Chair 37 24 0 18 8 anchored 0  5 dMove 1 1 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Space 37 25 0 1 5 dMove 0  
-Lattice 37 25 0 1 5 dMove 0  
-Chair 37 25 0 18 8 anchored 0  5 dMove 1 1 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Plating 37 26 0 1 5 dMove 0  
-Plating 37 27 0 1 5 dMove 0  
+ReinforcedWall 37 14 0 1 5 dMove 0  
+Floor 37 15 0 1 5 dMove 0  
+Floor 37 16 0 1 5 dMove 0  
+AmmunitionBox 37 16 0 0 
+Floor 37 17 0 1 5 dMove 0  
+MetalTable 37 17 0 1 5 dMove 0  
+LaserGun 37 17 0 0 
+Floor 37 18 0 1 5 dMove 0  
+MetalTable 37 18 0 1 5 dMove 0  
+Floor 37 19 0 1 5 dMove 0  
+MetalTable 37 19 0 0 
+Floor 37 20 0 1 5 dMove 0  
+Floor 37 21 0 1 5 dMove 0  
+MetalTable 37 21 0 1 5 dMove 0  
+LaserGun 37 21 0 0 
+Floor 37 22 0 1 5 dMove 0  
+AmmunitionBox 37 22 0 0 
+Floor 37 23 0 1 5 dMove 0  
+MetalTable 37 23 0 1 5 dMove 0  
+MetalTable 37 23 0 1 5 dMove 0  
+LaserGun 37 23 0 0 
+Floor 37 24 0 1 5 dMove 0  
+AmmunitionBox 37 24 0 0 
+Floor 37 25 0 1 5 dMove 0  
+Floor 37 26 0 1 5 dMove 0  
+AmmunitionBox 37 26 0 0 
+Floor 37 27 0 1 5 dMove 0  
 GlassDoor 37 27 0 21 8 anchored 0  5 dMove 1 3 12 door_prefix_ 7 5 right 11 door_state_ 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  10 last_tick_ 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Floor 37 28 0 1 5 dMove 0  
 Floor 37 29 0 1 5 dMove 0  
@@ -3030,19 +3098,29 @@ Space 38 10 0 1 5 dMove 0
 Space 38 11 0 1 5 dMove 0  
 Space 38 12 0 1 5 dMove 0  
 Space 38 13 0 1 5 dMove 0  
-Space 38 14 0 1 5 dMove 0  
-Space 38 15 0 1 5 dMove 0  
-Space 38 16 0 1 5 dMove 0  
-Space 38 17 0 1 5 dMove 0  
-Space 38 18 0 1 5 dMove 0  
-Space 38 19 0 1 5 dMove 0  
-Space 38 20 0 1 5 dMove 0  
-Space 38 21 0 1 5 dMove 0  
-Space 38 22 0 1 5 dMove 0  
-Space 38 23 0 1 5 dMove 0  
-Space 38 24 0 1 5 dMove 0  
-Plating 38 25 0 1 5 dMove 0  
-Plating 38 26 0 1 5 dMove 0  
+ReinforcedWall 38 14 0 1 5 dMove 0  
+Floor 38 15 0 1 5 dMove 0  
+AmmunitionBox 38 15 0 0 
+Floor 38 16 0 1 5 dMove 0  
+Floor 38 17 0 1 5 dMove 0  
+MetalTable 38 17 0 1 5 dMove 0  
+Revolver 38 17 0 0 
+Floor 38 18 0 1 5 dMove 0  
+MetalTable 38 18 0 1 5 dMove 0  
+Floor 38 19 0 1 5 dMove 0  
+MetalTable 38 19 0 0 
+Floor 38 20 0 1 5 dMove 0  
+Floor 38 21 0 1 5 dMove 0  
+MetalTable 38 21 0 1 5 dMove 0  
+Revolver 38 21 0 0 
+Floor 38 22 0 1 5 dMove 0  
+Floor 38 23 0 1 5 dMove 0  
+MetalTable 38 23 0 1 5 dMove 0  
+Revolver 38 23 0 0 
+Floor 38 24 0 1 5 dMove 0  
+Floor 38 25 0 1 5 dMove 0  
+AmmunitionBox 38 25 0 0 
+Floor 38 26 0 1 5 dMove 0  
 ReinforcedWall 38 27 0 1 5 dMove 0  
 Floor 38 28 0 1 5 dMove 0  
 Floor 38 29 0 1 5 dMove 0  
@@ -3122,22 +3200,36 @@ Space 39 10 0 1 5 dMove 0
 Space 39 11 0 1 5 dMove 0  
 Space 39 12 0 1 5 dMove 0  
 Space 39 13 0 1 5 dMove 0  
-Space 39 14 0 1 5 dMove 0  
-Space 39 15 0 1 5 dMove 0  
-Space 39 16 0 1 5 dMove 0  
-Space 39 17 0 1 5 dMove 0  
-Space 39 18 0 1 5 dMove 0  
-Space 39 19 0 1 5 dMove 0  
-Space 39 20 0 1 5 dMove 0  
-Space 39 21 0 1 5 dMove 0  
-Space 39 22 0 1 5 dMove 0  
-Plating 39 23 0 1 5 dMove 0  
-Computer 39 23 0 1 5 dMove 0  
-Space 39 24 0 1 5 dMove 0  
-Lattice 39 24 0 1 5 dMove 0  
-Chair 39 24 0 18 8 anchored 0  5 dMove 1 0 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
-Plating 39 25 0 1 5 dMove 0  
-Plating 39 26 0 1 5 dMove 0  
+ReinforcedWall 39 14 0 1 5 dMove 0  
+Floor 39 15 0 1 5 dMove 0  
+Floor 39 16 0 1 5 dMove 0  
+MetalTable 39 16 0 1 5 dMove 0  
+Revolver 39 16 0 0 
+Floor 39 17 0 1 5 dMove 0  
+MetalTable 39 17 0 1 5 dMove 0  
+LaserGun 39 17 0 0 
+Floor 39 18 0 1 5 dMove 0  
+MetalTable 39 18 0 1 5 dMove 0  
+Revolver 39 18 0 0 
+Floor 39 19 0 1 5 dMove 0  
+MetalTable 39 19 0 1 5 dMove 0  
+LaserGun 39 19 0 0 
+Floor 39 20 0 1 5 dMove 0  
+MetalTable 39 20 0 1 5 dMove 0  
+Revolver 39 20 0 0 
+Floor 39 21 0 1 5 dMove 0  
+MetalTable 39 21 0 1 5 dMove 0  
+LaserGun 39 21 0 0 
+Floor 39 22 0 1 5 dMove 0  
+AmmunitionBox 39 22 0 0 
+Floor 39 23 0 1 5 dMove 0  
+MetalTable 39 23 0 1 5 dMove 0  
+LaserGun 39 23 0 0 
+Floor 39 24 0 1 5 dMove 0  
+AmmunitionBox 39 24 0 0 
+Floor 39 25 0 1 5 dMove 0  
+Floor 39 26 0 1 5 dMove 0  
+AmmunitionBox 39 26 0 0 
 Floor 39 27 0 1 5 dMove 0  
 Grille 39 27 0 19 8 anchored 1 1 7 cutted_ 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 ReinforcedFlatGlass 39 27 0 18 8 anchored 1 1 5 dMove 1 0 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
@@ -3211,22 +3303,25 @@ Space 40 10 0 1 5 dMove 0
 Space 40 11 0 1 5 dMove 0  
 Space 40 12 0 1 5 dMove 0  
 Space 40 13 0 1 5 dMove 0  
-Space 40 14 0 1 5 dMove 0  
-Space 40 15 0 1 5 dMove 0  
-Space 40 16 0 1 5 dMove 0  
-Space 40 17 0 1 5 dMove 0  
-Space 40 18 0 1 5 dMove 0  
-Space 40 19 0 1 5 dMove 0  
-Space 40 20 0 1 5 dMove 0  
-Space 40 21 0 1 5 dMove 0  
-Space 40 22 0 1 5 dMove 0  
-Space 40 23 0 1 5 dMove 0  
-Space 40 24 0 1 5 dMove 0  
-Lattice 40 24 0 1 5 dMove 0  
-Space 40 25 0 1 5 dMove 0  
-Lattice 40 25 0 1 5 dMove 0  
-Space 40 26 0 1 5 dMove 0  
-Lattice 40 26 0 2 5 dMove 0  10 spawn_type 0  
+ReinforcedWall 40 14 0 1 5 dMove 0  
+Floor 40 15 0 1 5 dMove 0  
+AmmunitionBox 40 15 0 0 
+Floor 40 16 0 1 5 dMove 0  
+Floor 40 17 0 1 5 dMove 0  
+AmmunitionBox 40 17 0 0 
+Floor 40 18 0 1 5 dMove 0  
+Floor 40 19 0 1 5 dMove 0  
+AmmunitionBox 40 19 0 0 
+Floor 40 20 0 1 5 dMove 0  
+Floor 40 21 0 1 5 dMove 0  
+AmmunitionBox 40 21 0 0 
+Floor 40 22 0 1 5 dMove 0  
+Floor 40 23 0 1 5 dMove 0  
+AmmunitionBox 40 23 0 0 
+Floor 40 24 0 1 5 dMove 0  
+Floor 40 25 0 1 5 dMove 0  
+AmmunitionBox 40 25 0 0 
+Floor 40 26 0 1 5 dMove 0  
 ReinforcedWall 40 27 0 1 5 dMove 0  
 Floor 40 28 0 1 5 dMove 0  
 Floor 40 29 0 1 5 dMove 0  
@@ -3299,16 +3394,18 @@ Space 41 10 0 1 5 dMove 0
 Space 41 11 0 1 5 dMove 0  
 Space 41 12 0 1 5 dMove 0  
 Space 41 13 0 1 5 dMove 0  
-Space 41 14 0 1 5 dMove 0  
-Space 41 15 0 1 5 dMove 0  
-Space 41 16 0 1 5 dMove 0  
-Space 41 17 0 1 5 dMove 0  
-Space 41 18 0 1 5 dMove 0  
-Space 41 19 0 1 5 dMove 0  
-Space 41 20 0 1 5 dMove 0  
-Space 41 21 0 1 5 dMove 0  
-Plating 41 22 0 1 5 dMove 0  
-Girder 41 22 0 1 5 dMove 0  
+ReinforcedWall 41 14 0 1 5 dMove 0  
+Floor 41 15 0 1 5 dMove 0  
+Floor 41 16 0 1 5 dMove 0  
+AmmunitionBox 41 16 0 0 
+Floor 41 17 0 1 5 dMove 0  
+Floor 41 18 0 1 5 dMove 0  
+AmmunitionBox 41 18 0 0 
+Floor 41 19 0 1 5 dMove 0  
+Floor 41 20 0 1 5 dMove 0  
+AmmunitionBox 41 20 0 0 
+ReinforcedWall 41 21 0 1 5 dMove 0  
+ReinforcedWall 41 22 0 1 5 dMove 0  
 ReinforcedWall 41 23 0 1 5 dMove 0  
 ReinforcedWall 41 24 0 1 5 dMove 0  
 ReinforcedWall 41 25 0 1 5 dMove 0  
@@ -3390,14 +3487,17 @@ Space 42 10 0 1 5 dMove 0
 Space 42 11 0 1 5 dMove 0  
 Space 42 12 0 1 5 dMove 0  
 Space 42 13 0 1 5 dMove 0  
-Space 42 14 0 1 5 dMove 0  
-Space 42 15 0 1 5 dMove 0  
-Space 42 16 0 1 5 dMove 0  
-Space 42 17 0 1 5 dMove 0  
-Space 42 18 0 1 5 dMove 0  
-Space 42 19 0 1 5 dMove 0  
-Space 42 20 0 1 5 dMove 0  
-Space 42 21 0 1 5 dMove 0  
+ReinforcedWall 42 14 0 1 5 dMove 0  
+Floor 42 15 0 1 5 dMove 0  
+AmmunitionBox 42 15 0 0 
+Floor 42 16 0 1 5 dMove 0  
+Floor 42 17 0 1 5 dMove 0  
+AmmunitionBox 42 17 0 0 
+Floor 42 18 0 1 5 dMove 0  
+Floor 42 19 0 1 5 dMove 0  
+AmmunitionBox 42 19 0 0 
+Floor 42 20 0 1 5 dMove 0  
+ReinforcedWall 42 21 0 1 5 dMove 0  
 Space 42 22 0 1 5 dMove 0  
 ReinforcedWall 42 23 0 1 5 dMove 0  
 Plating 42 24 0 1 5 dMove 0  
@@ -3408,7 +3508,6 @@ Floor 42 26 0 1 5 dMove 0
 Floor 42 27 0 1 5 dMove 0  
 Floor 42 28 0 1 5 dMove 0  
 Floor 42 29 0 1 5 dMove 0  
-LaserGun 42 29 0 0 
 Floor 42 30 0 1 5 dMove 0  
 MetalWall 42 31 0 1 5 dMove 0  
 Floor 42 32 0 1 5 dMove 0  
@@ -3486,14 +3585,14 @@ Space 43 10 0 1 5 dMove 0
 Space 43 11 0 1 5 dMove 0  
 Space 43 12 0 1 5 dMove 0  
 Space 43 13 0 1 5 dMove 0  
-Space 43 14 0 1 5 dMove 0  
-Space 43 15 0 1 5 dMove 0  
-Space 43 16 0 1 5 dMove 0  
-Space 43 17 0 1 5 dMove 0  
-Space 43 18 0 1 5 dMove 0  
-Space 43 19 0 1 5 dMove 0  
-Space 43 20 0 1 5 dMove 0  
-Space 43 21 0 1 5 dMove 0  
+ReinforcedWall 43 14 0 1 5 dMove 0  
+ReinforcedWall 43 15 0 1 5 dMove 0  
+ReinforcedWall 43 16 0 1 5 dMove 0  
+ReinforcedWall 43 17 0 1 5 dMove 0  
+ReinforcedWall 43 18 0 1 5 dMove 0  
+ReinforcedWall 43 19 0 1 5 dMove 0  
+ReinforcedWall 43 20 0 1 5 dMove 0  
+ReinforcedWall 43 21 0 1 5 dMove 0  
 Space 43 22 0 1 5 dMove 0  
 Plating 43 23 0 1 5 dMove 0  
 Grille 43 23 0 19 8 anchored 1 1 7 cutted_ 0  5 dMove 0  6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
@@ -3690,14 +3789,13 @@ Pipe 45 23 0 1 5 dMove 0
 Plating 45 24 0 1 5 dMove 0  
 Valve 45 24 0 1 5 dMove 0  
 Plating 45 25 0 1 5 dMove 0  
-AmmunitionBox 45 25 0 0 
+AmmunitionBox 45 25 0 1 5 dMove 0  
 Floor 45 26 0 1 5 dMove 0  
 SpawnPoint 45 26 0 14 5 dMove 0  15 is_strong_owner 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  10 spawn_type 10 8 security 11 transparent 0  7 v_level 0  5 view_ 0  
 Plating 45 27 0 1 5 dMove 0  
 AtmosTool 45 27 0 1 5 dMove 0  
 Floor 45 28 0 1 5 dMove 0  
 Floor 45 29 0 1 5 dMove 0  
-Revolver 45 29 0 0 
 Floor 45 30 0 1 5 dMove 0  
 SecurityLocker 45 30 0 1 5 dMove 0  
 RedUniform 45 30 0 1 5 dMove 0  
@@ -3773,7 +3871,7 @@ Space 46 21 0 1 5 dMove 0
 Space 46 22 0 1 5 dMove 0  
 ReinforcedWall 46 23 0 1 5 dMove 0  
 Plating 46 24 0 1 5 dMove 0  
-AmmunitionBox 46 24 0 0 
+AmmunitionBox 46 24 0 1 5 dMove 0  
 Plating 46 25 0 1 5 dMove 0  
 Chair 46 25 0 18 8 anchored 0  5 dMove 1 0 6 force_ 0  15 is_strong_owner 0  8 lastMove 0  4 name 0  5 owner 0  12 passable_all 0  13 passable_down 0  13 passable_left 0  14 passable_level 0  14 passable_right 0  11 passable_up 0  8 pixSpeed 0  9 tickSpeed 0  11 transparent 0  7 v_level 0  5 view_ 0  
 Floor 46 26 0 1 5 dMove 0  
@@ -3948,7 +4046,7 @@ Plating 48 24 0 1 5 dMove 0
 Valve 48 24 0 1 5 dMove 0  
 Plating 48 25 0 1 5 dMove 0  
 Pipe 48 25 0 1 5 dMove 0  
-AmmunitionBox 48 25 0 0 
+AmmunitionBox 48 25 0 1 5 dMove 0  
 Plating 48 26 0 1 5 dMove 0  
 Manifold 48 26 0 1 5 dMove 0  
 Plating 48 27 0 1 5 dMove 0  
