@@ -25,7 +25,7 @@ void Table::Delete()
 void Table::NotifyNeighborhood(bool is_in_existence)
 {
     size_t id = GetId();
-    if(is_in_existence)
+    if (is_in_existence)
     {
         id = 0;
     }

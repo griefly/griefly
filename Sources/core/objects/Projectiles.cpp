@@ -41,7 +41,7 @@ Projectile::Projectile(size_t id) : IMovable(id)
     SetPassable(D_ALL, Passable::FULL);
     damage_ = 0;
     SetSprite("icons/projectiles.dmi");
-    v_level = 5;
+    v_level = 6;
     current_step_ = 1;
     tickSpeed = 1;
     pixSpeed = 4;
