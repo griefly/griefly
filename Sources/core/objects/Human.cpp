@@ -125,7 +125,17 @@ void Human::processGUImsg(const Message2 &msg)
     if (msg.type == MessageType::MESSAGE)
     {
         std::string text = obj["text"].toString().toStdString();
+        if (text.find("me") == 0 || text.find("*") == 0)
+        {
+            
+            size_t length = text.find("me") == 0 ? std::string("me").length() : std::string("*").length();
+            text.replace(0, length, name);
+            GetGame().GetChat().PostSimpleText(text, owner.Id());
+        }
+        else
+        {
         GetGame().GetChat().PostWords(name, text, owner.Id());
+        }
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
