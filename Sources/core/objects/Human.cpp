@@ -125,7 +125,7 @@ void Human::processGUImsg(const Message2 &msg)
     if (msg.type == MessageType::MESSAGE)
     {
         std::string text = obj["text"].toString().toStdString();
-        std::string prefixes[] = {"me", "me ", "*", "* "};
+        std::string prefixes[] = {"me ", "me", "* ", "*"};
         bool found = false;
         for(auto& str : prefixes)
         {
@@ -135,9 +135,10 @@ void Human::processGUImsg(const Message2 &msg)
                 text.replace(0, length, name + " ");
                 GetGame().GetChat().PostSimpleText(text, owner.Id());
                 found = true;
+                break;
             }
         }
-        if(!found)
+        if (!found)
         {
             GetGame().GetChat().PostWords(name, text, owner.Id());
         }
