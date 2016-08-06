@@ -5,12 +5,15 @@
 #include "../SyncRandom.h"
 #include "../Helpers.h"
 
+#include "AtmosGrid.h"
+
 Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map)
     : random_(random),
       map_(map)
 {
     qDebug() << "Atmosphere load";
     z_size_ = 1;
+    grid_ = nullptr;
 }
 
 void Atmosphere::Resize(size_t x, size_t y, size_t z)
@@ -31,26 +34,32 @@ void Atmosphere::Resize(size_t x, size_t y, size_t z)
     {
         y_shuffle_[i] = i;
     }
+
+    delete grid_;
+    grid_ = new AtmosGrid(x, y);
 }
 
 void Atmosphere::Process()
 {
-    for (size_t z_counter = 0; z_counter < z_size_; ++z_counter)
+    LoadDataToGrid();
+    grid_->Process();
+    UnloadDataFromGrid();
+    /*for (size_t z_counter = 0; z_counter < z_size_; ++z_counter)
     {
-        ShuffleX();
-        ShuffleY();
-        ShuffleDir();
+        //ShuffleX();
+        //ShuffleY();
+        //ShuffleDir();
         for (size_t x_sh = 0; x_sh < x_shuffle_.size(); ++x_sh)
         {
-            size_t x_counter = x_shuffle_[x_sh];
+            size_t x_counter = x_sh;//x_shuffle_[x_sh];
             for (size_t y_sh = 0; y_sh < y_shuffle_.size(); ++y_sh)
             {
-                size_t y_counter = y_shuffle_[y_sh];
+                size_t y_counter = y_sh;//y_shuffle_[y_sh];
 
                 ProcessTile(x_counter, y_counter, z_counter);
             }
         }
-    }
+    }*/
 }
 
 void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
@@ -104,20 +113,101 @@ void Atmosphere::ProcessTile(size_t x, size_t y, size_t z)
 
 void Atmosphere::ProcessMove()
 {
+    // TODO: this takes abou 70% of atmos processing time
+    // Some wind variable for each tile?
     for (size_t z_counter = 0; z_counter < z_size_; ++z_counter)
     {
-        ShuffleX();
-        ShuffleY();
-        ShuffleDir();
+       // ShuffleX();
+       // ShuffleY();
+       // ShuffleDir();
         for (size_t x_sh = 0; x_sh < x_shuffle_.size(); ++x_sh)
         {
-            size_t x_counter = x_shuffle_[x_sh];
+            size_t x_counter = x_sh;//x_shuffle_[x_sh];
             for (size_t y_sh = 0; y_sh < y_shuffle_.size(); ++y_sh)
             {
-                size_t y_counter = y_shuffle_[y_sh];
+                size_t y_counter = y_sh;//y_shuffle_[y_sh];
 
                 ProcessTileMove(x_counter, y_counter, z_counter);
             }
+        }
+    }
+}
+
+void Atmosphere::LoadDataToGrid()
+{
+    auto& squares = map_->GetSquares();
+    for (int y = 0; y < map_->GetHeight(); ++y)
+    {
+        for (int x = 0; x < map_->GetWidth(); ++x)
+        {
+            auto tile = squares[y][x][0];
+
+            AtmosGrid::Cell& cell = grid_->At(x, y);
+            cell.ResetPassable();
+
+            if (!CanPass(tile->GetPassable(D_UP), Passable::AIR))
+            {
+                cell.SetUnpassable(AtmosGrid::Cell::UP);
+            }
+            if (!CanPass(tile->GetPassable(D_DOWN), Passable::AIR))
+            {
+                cell.SetUnpassable(AtmosGrid::Cell::DOWN);
+            }
+            if (!CanPass(tile->GetPassable(D_LEFT), Passable::AIR))
+            {
+                cell.SetUnpassable(AtmosGrid::Cell::LEFT);
+            }
+            if (!CanPass(tile->GetPassable(D_RIGHT), Passable::AIR))
+            {
+                cell.SetUnpassable(AtmosGrid::Cell::RIGHT);
+            }
+            if (!CanPass(tile->GetPassable(D_ALL), Passable::AIR))
+            {
+                cell.SetUnpassable(AtmosGrid::Cell::CENTER);
+            }
+
+            if (tile->GetTurf()->GetAtmosState() == SPACE)
+            {
+                cell.flags |= AtmosGrid::Cell::SPACE;
+            }
+
+            AtmosHolder* holder = tile->GetAtmosHolder();
+
+            cell.energy = holder->GetEnergy();
+
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                cell.gases[i] = holder->GetGase(i);
+            }
+        }
+    }
+}
+
+void Atmosphere::UnloadDataFromGrid()
+{
+    auto& squares = map_->GetSquares();
+    for (int y = 0; y < map_->GetHeight(); ++y)
+    {
+        for (int x = 0; x < map_->GetWidth(); ++x)
+        {
+            auto tile = squares[y][x][0];
+
+            AtmosGrid::Cell& cell = grid_->At(x, y);
+
+
+            AtmosHolder* holder = tile->GetAtmosHolder();
+            holder->Truncate();
+            if (cell.flags & AtmosGrid::Cell::SPACE)
+            {
+                continue;
+            }
+
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                holder->AddGase(i, cell.gases[i]);
+            }
+
+            holder->AddEnergy(cell.energy);
         }
     }
 }

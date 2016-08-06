@@ -9,6 +9,7 @@
 
 class SyncRandom;
 class IMapMaster;
+class AtmosGrid;
 
 class Atmosphere : public IAtmosphere
 {
@@ -18,6 +19,10 @@ public:
     virtual void Process() override;
     virtual void ProcessMove() override;
 private:
+    AtmosGrid* grid_;
+    void LoadDataToGrid();
+    void UnloadDataFromGrid();
+
     void ProcessTile(size_t x, size_t y, size_t z); 
     void ProcessTileMove(size_t x, size_t y, size_t z);
 
