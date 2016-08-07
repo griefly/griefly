@@ -42,7 +42,7 @@ class SyncRandom;
 class MapMaster : public IMapMaster
 {
 public:
-    MapMaster(SyncRandom* sync_random);
+    MapMaster(SyncRandom* sync_random, TextPainter* texts);
     ~MapMaster();
 
     typedef IdPtr<CubeTile> SqType;

@@ -96,16 +96,16 @@ Game::~Game()
 void Game::InitGlobalObjects()
 {
     qDebug() << "Begin init global objects";
+    TextPainter* texts = new TextPainter;
+    texts_ = texts;
     sync_random_ = new SyncRandom;
     qDebug() << "Begin master load";
-    map_ = new MapMaster(sync_random_);
+    map_ = new MapMaster(sync_random_, texts);
     qDebug() << "End master load";
     factory_ = new ObjectFactory(this);
     id_ptr_id_table = &(factory_->GetIdTable());
     Chat* chat = new Chat(this);
     chat_ = chat;
-    TextPainter* texts = new TextPainter;
-    texts_ = texts;
     names_ = new Names(sync_random_);
     qDebug() << "End init global objects";
 
@@ -317,14 +317,6 @@ void Game::InitWorld(int id, std::string map_name)
         ss << "Average CPU load: " << sum / cpu_loads_.size() << "%";
         *str = ss.str();
     }).SetFreq(1000);
-
-    GetTexts()["Sync"].SetUpdater
-    ([&](std::string* str)
-    {
-        std::stringstream ss;
-        ss << "Hash: " << GetFactory().GetLastHash();
-        *str = ss.str();
-    });
 
     GetTexts()["Tick"].SetUpdater
     ([&](std::string* str)

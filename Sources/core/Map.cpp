@@ -100,9 +100,9 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
     atmosphere_->Resize(new_map_x, new_map_y, new_map_z);
 }
 
-MapMaster::MapMaster(SyncRandom* sync_random)
+MapMaster::MapMaster(SyncRandom* sync_random, TextPainter* texts)
     : losf_(this),
-      atmosphere_(new Atmosphere(sync_random, this))
+      atmosphere_(new Atmosphere(sync_random, this, texts))
 {
     visible_points_ = new std::list<PosPoint>;
 }
