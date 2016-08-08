@@ -117,12 +117,6 @@ void MainForm::addSystemText(QString key, QString text)
     {
         texts_.remove(key);
     }
-
-    ui->mainTabTextBrowser->clear();
-    for (auto it = texts_.begin(); it != texts_.end(); ++it)
-    {
-        ui->mainTabTextBrowser->insertHtml(*it + "<br>");
-    }
 }
 
 void MainForm::resizeEvent(QResizeEvent* event) {
@@ -161,6 +155,21 @@ void MainForm::startGameLoop(int id, QString map)
 
     connect(this, &MainForm::closing, game, &Game::endProcess);
     connect(this, &MainForm::generateUnsync, game, &Game::generateUnsync);
+
+
+    QTimer text_updater;
+    text_updater.setInterval(500);
+    connect(&text_updater, &QTimer::timeout,
+    [&]()
+    {
+        ui->mainTabTextBrowser->clear();
+        for (auto it = texts_.begin(); it != texts_.end(); ++it)
+        {
+            ui->mainTabTextBrowser->insertHtml(*it + "<br>");
+        }
+    });
+
+    text_updater.start();
 
     QTime fps_timer;
     fps_timer.start();

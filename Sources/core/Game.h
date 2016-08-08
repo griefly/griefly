@@ -95,6 +95,15 @@ private:
 
     int current_connections_;
 
+    // Perfomance
+    qint64 process_messages_ns_;
+    qint64 foreach_process_ns_;
+    qint64 force_process_ns_;
+    qint64 atmos_process_ns_;
+    qint64 deletion_process_ns_;
+    qint64 update_visibility_ns_;
+    qint64 frame_generation_ns_;
+
     QThread thread_;
 
     IMapMaster* map_;

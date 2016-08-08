@@ -43,6 +43,14 @@ int ping_send;
 
 Game::Game()
 {
+    process_messages_ns_ = 0;
+    foreach_process_ns_ = 0;
+    force_process_ns_ = 0;
+    atmos_process_ns_ = 0;
+    deletion_process_ns_ = 0;
+    update_visibility_ns_ = 0;
+    frame_generation_ns_ = 0;
+
     auto_player_ = false;
     cpu_load_ = 0.0f;
 
@@ -166,9 +174,24 @@ void Game::Process()
 
         if (process_in_)
         {
+            QElapsedTimer timer;
+
+            timer.start();
             ProcessBroadcastedMessages();
+            process_messages_ns_ += timer.nsecsElapsed();
+            process_messages_ns_ /= 2;
+
+            timer.start();
             GetFactory().ForeachProcess();
+            foreach_process_ns_ += timer.nsecsElapsed();
+            foreach_process_ns_ /= 2;
+
+            timer.start();
             ForceManager::Get().Process();
+            force_process_ns_ += timer.nsecsElapsed();
+            force_process_ns_ /= 2;
+
+            timer.start();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
             {
                 GetMap().GetAtmosphere().Process();
@@ -177,12 +200,24 @@ void Game::Process()
             {
                 GetMap().GetAtmosphere().ProcessMove();
             }
+            atmos_process_ns_ += timer.nsecsElapsed();
+            atmos_process_ns_ /= 2;
+
+            timer.start();
             GetFactory().ProcessDeletion();
+            deletion_process_ns_ += timer.nsecsElapsed();
+            deletion_process_ns_ /= 2;
 
+            timer.start();
             UpdateVisible();
+            update_visibility_ns_ += timer.nsecsElapsed();
+            update_visibility_ns_ /= 2;
 
+            timer.start();
             GenerateFrame();
             GetTexts().Process();
+            frame_generation_ns_ += timer.nsecsElapsed();
+            frame_generation_ns_ /= 2;
         }
 
         if (fps_timer.elapsed() >= 1000)
@@ -341,6 +376,76 @@ void Game::InitWorld(int id, std::string map_name)
         ss << "Ping: " << current_ping_ << "ms";
         *str = ss.str();
     });
+
+    GetTexts()["ProcessMessages"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Process messages: "
+           << (process_messages_ns_ * 1.0) / 1000000.0
+           << " ms";
+        *str = ss.str();
+    }).SetFreq(1000);
+
+    GetTexts()["ProcessForeach"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Process objects: "
+           << (foreach_process_ns_ * 1.0) / 1000000.0
+           << " ms";
+        *str = ss.str();
+    }).SetFreq(1000);
+
+    GetTexts()["ProcessForce"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Process force movement: "
+           << (force_process_ns_ * 1.0) / 1000000.0
+           << " ms";
+        *str = ss.str();
+    }).SetFreq(1000);
+
+    GetTexts()["ProcessAtmos"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Process atmos: "
+           << (atmos_process_ns_ * 1.0) / 1000000.0
+           << " ms";
+        *str = ss.str();
+    }).SetFreq(1000);
+
+    GetTexts()["ProcessDelete"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Process deletion: "
+           << (deletion_process_ns_ * 1.0) / 1000000.0
+           << " ms";
+        *str = ss.str();
+    }).SetFreq(1000);
+
+    GetTexts()["UpdateVisibility"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Update visibility: "
+           << (update_visibility_ns_ * 1.0) / 1000000.0
+           << " ms";
+        *str = ss.str();
+    }).SetFreq(1000);
+
+    GetTexts()["FrameGeneration"].SetUpdater
+    ([&](std::string* str)
+    {
+        std::stringstream ss;
+        ss << "Frame generation: "
+           << (frame_generation_ns_ * 1.0) / 1000000.0
+           << " ms";
+        *str = ss.str();
+    }).SetFreq(1000);
 
     thread_.start();
 }
