@@ -163,23 +163,40 @@ void MainForm::startGameLoop(int id, QString map)
     [&]()
     {
         ui->mainTabTextBrowser->clear();
+        ui->performanceTextBrowser->clear();
         for (auto it = texts_.begin(); it != texts_.end(); ++it)
         {
+            // TODO: constants?
+            if (it.key().startsWith("{Perf}"))
+            {
+                ui->performanceTextBrowser->insertHtml(*it + "<br>");
+                continue;
+            }
             ui->mainTabTextBrowser->insertHtml(*it + "<br>");
         }
     });
 
     text_updater.start();
 
-    QTime fps_timer;
+    QElapsedTimer fps_timer;
     fps_timer.start();
     int fps_counter = 0;
+
+    QElapsedTimer process_performance;
+    qint64 max_process_time = 0;
+
     while (true)
     {
         ++fps_counter;
 
+        process_performance.start();
         GetRepresentation().Process();
         GetScreen().Swap();
+        qint64 process_time = process_performance.nsecsElapsed();
+        if (process_time > max_process_time)
+        {
+            max_process_time = process_time;
+        }
 
         if (isHidden())
         {
@@ -189,6 +206,12 @@ void MainForm::startGameLoop(int id, QString map)
         if (fps_timer.elapsed() > 1000)
         {
             addSystemText("FPS", "FPS: " + QString::number(fps_counter));
+            addSystemText(
+                "{Perf}Represent",
+                  "Represent max: "
+                + QString::number(max_process_time / 1e6)
+                + " ms");
+            max_process_time = 0;
             fps_timer.restart();
             fps_counter = 0;
         }

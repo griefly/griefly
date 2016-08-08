@@ -21,7 +21,7 @@ Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
     unload_grid_ns_ = 0;
     movement_processing_ns_ = 0;
 
-    (*texts_)["AtmosGridProcessing"].SetUpdater
+    (*texts_)["{Perf}AtmosGridProcessing"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -31,7 +31,7 @@ Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
         *str = ss.str();
     }).SetFreq(1000);
 
-    (*texts_)["AtmosGridLoad"].SetUpdater
+    (*texts_)["{Perf}AtmosGridLoad"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -41,7 +41,7 @@ Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
         *str = ss.str();
     }).SetFreq(1000);
 
-    (*texts_)["AtmosGridUnload"].SetUpdater
+    (*texts_)["{Perf}AtmosGridUnload"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -51,7 +51,7 @@ Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
         *str = ss.str();
     }).SetFreq(1000);
 
-    (*texts_)["AtmosMove"].SetUpdater
+    (*texts_)["{Perf}AtmosMove"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;

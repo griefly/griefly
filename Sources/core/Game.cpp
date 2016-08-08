@@ -377,7 +377,7 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     });
 
-    GetTexts()["ProcessMessages"].SetUpdater
+    GetTexts()["{Perf}ProcessMessages"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -387,7 +387,7 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     }).SetFreq(1000);
 
-    GetTexts()["ProcessForeach"].SetUpdater
+    GetTexts()["{Perf}ProcessForeach"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -397,7 +397,7 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     }).SetFreq(1000);
 
-    GetTexts()["ProcessForce"].SetUpdater
+    GetTexts()["{Perf}ProcessForce"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -407,7 +407,7 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     }).SetFreq(1000);
 
-    GetTexts()["ProcessAtmos"].SetUpdater
+    GetTexts()["{Perf}ProcessAtmos"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -417,7 +417,7 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     }).SetFreq(1000);
 
-    GetTexts()["ProcessDelete"].SetUpdater
+    GetTexts()["{Perf}ProcessDelete"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -427,7 +427,7 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     }).SetFreq(1000);
 
-    GetTexts()["UpdateVisibility"].SetUpdater
+    GetTexts()["{Perf}UpdateVisibility"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
@@ -437,7 +437,7 @@ void Game::InitWorld(int id, std::string map_name)
         *str = ss.str();
     }).SetFreq(1000);
 
-    GetTexts()["FrameGeneration"].SetUpdater
+    GetTexts()["{Perf}FrameGeneration"].SetUpdater
     ([&](std::string* str)
     {
         std::stringstream ss;
