@@ -211,6 +211,13 @@ void MainForm::startGameLoop(int id, QString map)
                   "Represent max: "
                 + QString::number(max_process_time / 1e6)
                 + " ms");
+            qint64 mutex_ns = GetRepresentation().GetPerformance().mutex_ns;
+            addSystemText(
+                "{Perf}RepresentMutex",
+                  "Represent mutex lock max: "
+                + QString::number(mutex_ns / 1e6)
+                + " ms");
+            GetRepresentation().ResetPerformance();
             max_process_time = 0;
             fps_timer.restart();
             fps_counter = 0;

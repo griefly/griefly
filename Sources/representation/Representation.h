@@ -47,6 +47,15 @@ public:
         std::string name;
     };
 
+    struct Performance
+    {
+        QElapsedTimer timer;
+        qint64 mutex_ns;
+    };
+
+    const Performance& GetPerformance() { return performance_; }
+    void ResetPerformance();
+
     void AddToNewFrame(const InterfaceUnit& unit);
     void AddToNewFrame(const Entity& ent);
     void AddToNewFrame(const Sound& sound);
@@ -60,6 +69,8 @@ public:
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);
 private:
+    Performance performance_;
+
     QElapsedTimer autoplay_timer_;
     bool autoplay_;
 

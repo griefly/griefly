@@ -26,6 +26,8 @@ Representation::Representation()
     current_frame_id_ = 1;
     pixel_movement_tick_.start();
 
+    ResetPerformance();
+
     autoplay_ = false;
     if (GetParamsHolder().GetParamBool("-auto"))
     {
@@ -45,6 +47,11 @@ Representation::Representation()
     std::cout << "Begin load resources" << std::endl;
     LoadImages();
     LoadSounds();
+}
+
+void Representation::ResetPerformance()
+{
+    performance_.mutex_ns = 0;
 }
 
 void Representation::AddToNewFrame(const Representation::InterfaceUnit &unit)
@@ -179,7 +186,10 @@ Representation::InterfaceUnit::InterfaceUnit()
 
 void Representation::Process()
 {
+    performance_.timer.start();
     QMutexLocker lock(&mutex_);
+    performance_.mutex_ns
+        = qMax(performance_.mutex_ns, performance_.timer.nsecsElapsed());
 
     SynchronizeViews();
 
