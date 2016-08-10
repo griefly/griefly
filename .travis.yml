@@ -1,12 +1,11 @@
 language: cpp
-go: 
-  - tip
 sudo: required
 dist: trusty
 compiler: gcc
 before_install:
   - export CXX="g++-4.9"
 install:
+  - eval "$(gimme 1.6)"
   - make travis-get-deps
 before_script:
   - "export DISPLAY=:99.0"
