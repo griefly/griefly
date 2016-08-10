@@ -1,4 +1,6 @@
 language: cpp
+go: 
+  - tip
 sudo: required
 dist: trusty
 compiler: gcc
