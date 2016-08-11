@@ -22,7 +22,7 @@ public:
         int diffs[GASES_NUM];
         int energy;
         char flags;
-
+        int pressure;
 
         Cell()
         {
@@ -33,6 +33,7 @@ public:
             }
             flags = FULL;
             energy = 0;
+            pressure = 0;
         }
         char IsPassable(char dir)
         {

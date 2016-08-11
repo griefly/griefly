@@ -32,14 +32,9 @@ private:
 
     void ProcessTileMove(size_t x, size_t y, size_t z);
 
-    void ShuffleX();
-    void ShuffleY();
-    void ShuffleDir();
-    std::vector<size_t> x_shuffle_;
-    std::vector<size_t> y_shuffle_;
-    size_t z_size_;
-
-    std::array<Dir, 4> dir_shuffle_;
+    int x_size_;
+    int y_size_;
+    int z_size_;
 
     SyncRandom* random_;
     IMapMaster* map_;

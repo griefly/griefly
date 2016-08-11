@@ -21,6 +21,10 @@ Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
     unload_grid_ns_ = 0;
     movement_processing_ns_ = 0;
 
+    x_size_ = 0;
+    y_size_ = 0;
+    z_size_ = 0;
+
     (*texts_)["{Perf}AtmosGridProcessing"].SetUpdater
     ([&](std::string* str)
     {
@@ -68,25 +72,12 @@ Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
 
 void Atmosphere::Resize(size_t x, size_t y, size_t z)
 {
-    x_shuffle_.resize(x);
-    y_shuffle_.resize(y);
+    x_size_ = x;
+    y_size_ = y;
     z_size_ = z;
 
-    for (size_t i = 0; i < dir_shuffle_.size(); ++i)
-    {
-        dir_shuffle_[i] = i;
-    }
-    for (size_t i = 0; i < x_shuffle_.size(); ++i)
-    {
-        x_shuffle_[i] = i;
-    }
-    for (size_t i = 0; i < y_shuffle_.size(); ++i)
-    {
-        y_shuffle_[i] = i;
-    }
-
     delete grid_;
-    grid_ = new AtmosGrid(x, y);
+    grid_ = new AtmosGrid(x_size_, y_size_);
 }
 
 void Atmosphere::Process()
@@ -101,32 +92,6 @@ void Atmosphere::Process()
     timer.start();
     UnloadDataFromGrid();
     unload_grid_ns_ = (unload_grid_ns_ + timer.nsecsElapsed()) / 2;
-}
-
-void Atmosphere::ProcessMove()
-{
-    QElapsedTimer timer;
-    timer.start();
-    // TODO: this takes abou 70% of atmos processing time
-    // Some wind variable for each tile?
-    for (size_t z_counter = 0; z_counter < z_size_; ++z_counter)
-    {
-       // ShuffleX();
-       // ShuffleY();
-       // ShuffleDir();
-        for (size_t x_sh = 0; x_sh < x_shuffle_.size(); ++x_sh)
-        {
-            size_t x_counter = x_sh;//x_shuffle_[x_sh];
-            for (size_t y_sh = 0; y_sh < y_shuffle_.size(); ++y_sh)
-            {
-                size_t y_counter = y_sh;//y_shuffle_[y_sh];
-
-                ProcessTileMove(x_counter, y_counter, z_counter);
-            }
-        }
-    }
-    movement_processing_ns_
-        = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
 }
 
 void Atmosphere::LoadDataToGrid()
@@ -204,6 +169,8 @@ void Atmosphere::UnloadDataFromGrid()
             }
 
             holder->AddEnergy(cell.energy);
+
+            cell.pressure = holder->GetPressure();
         }
     }
 }
@@ -211,14 +178,10 @@ void Atmosphere::UnloadDataFromGrid()
 const unsigned int PRESSURE_MOVE_BORDER = 1000;
 
 void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
-{
-    auto tile = map_->GetSquares()[x][y][z];
-    
-    if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
-    {
-        return;
-    }
-    if (tile->GetTurf()->GetAtmosState() == SPACE)
+{   
+    AtmosGrid::Cell& cell = grid_->At(x, y);
+
+    if (cell.flags & AtmosGrid::Cell::SPACE)
     {
         return;
     }
@@ -226,10 +189,9 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
     int max_diff = 0;
     Dir dir;
 
-    for (size_t d_sh = 0; d_sh < dir_shuffle_.size(); ++d_sh)
+    auto tile = map_->GetSquares()[x][y][z];
+    for (Dir local = 0; local < 4; ++local)
     {
-        Dir local = d_sh;
-
         auto neighbour = tile->GetNeighbourImpl(local);
         int tile_pressure = tile->GetAtmosHolder()->GetPressure();
         int neighbour_pressure = neighbour->GetAtmosHolder()->GetPressure();
@@ -276,38 +238,22 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
     }
 }
 
-void Atmosphere::ShuffleX()
+void Atmosphere::ProcessMove()
 {
-    for (size_t i = 0; i < x_shuffle_.size(); ++i)
+    QElapsedTimer timer;
+    timer.start();
+    // TODO: this takes abou 70% of atmos processing time
+    // Some wind variable for each tile?
+    for (int z = 0; z < z_size_; ++z)
     {
-        x_shuffle_[i] = i;
+        for (int x = 0; x < x_size_; ++x)
+        {
+            for (int y = 0; y < y_size_; ++y)
+            {
+                ProcessTileMove(x, y, z);
+            }
+        }
     }
-    std::random_shuffle(
-        x_shuffle_.begin(),
-        x_shuffle_.end(),
-        [&](int v) { return random_->RandomShuffle(v); });
-}
-
-void Atmosphere::ShuffleY()
-{
-    for (size_t i = 0; i < y_shuffle_.size(); ++i)
-    {
-        y_shuffle_[i] = i;
-    }
-    std::random_shuffle(
-        y_shuffle_.begin(),
-        y_shuffle_.end(),
-        [&](int v) { return random_->RandomShuffle(v); });
-}
-
-void Atmosphere::ShuffleDir()
-{
-    for (size_t i = 0; i < dir_shuffle_.size(); ++i)
-    {
-        dir_shuffle_[i] = i;
-    }
-    std::random_shuffle(
-        dir_shuffle_.begin(),
-        dir_shuffle_.end(),
-        [&](int v) { return random_->RandomShuffle(v); });
+    movement_processing_ns_
+        = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
 }
