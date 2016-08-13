@@ -2,9 +2,8 @@
 
 #include <QDebug>
 
-#include "AtmosHolder.h"
+#include "AtmosConstants.h"
 #include "KVAbort.h"
-
 #include "Interfaces.h"
 
 class AtmosGrid
@@ -20,9 +19,10 @@ public:
         static const IAtmosphere::Flags CENTER = 16;
         static const IAtmosphere::Flags SPACE = 32;
 
-        int gases[GASES_NUM];
+        unsigned int gases[GASES_NUM];
         int diffs[GASES_NUM];
-        int energy;
+        unsigned int energy;
+        unsigned int energy_diff;
         IAtmosphere::Flags flags;
         int pressure;
 
@@ -35,6 +35,7 @@ public:
             }
             flags = FULL;
             energy = 0;
+            energy_diff = 0;
             pressure = 0;
         }
         char IsPassable(char dir)
