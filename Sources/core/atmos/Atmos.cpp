@@ -102,40 +102,9 @@ void Atmosphere::LoadDataToGrid()
         for (int x = 0; x < map_->GetWidth(); ++x)
         {
             auto tile = squares[y][x][0];
-
-            AtmosGrid::Cell& cell = grid_->At(x, y);
-            cell.ResetPassable();
-
-            if (!CanPass(tile->GetPassable(D_UP), Passable::AIR))
-            {
-                cell.SetUnpassable(AtmosGrid::Cell::UP);
-            }
-            if (!CanPass(tile->GetPassable(D_DOWN), Passable::AIR))
-            {
-                cell.SetUnpassable(AtmosGrid::Cell::DOWN);
-            }
-            if (!CanPass(tile->GetPassable(D_LEFT), Passable::AIR))
-            {
-                cell.SetUnpassable(AtmosGrid::Cell::LEFT);
-            }
-            if (!CanPass(tile->GetPassable(D_RIGHT), Passable::AIR))
-            {
-                cell.SetUnpassable(AtmosGrid::Cell::RIGHT);
-            }
-            if (!CanPass(tile->GetPassable(D_ALL), Passable::AIR))
-            {
-                cell.SetUnpassable(AtmosGrid::Cell::CENTER);
-            }
-
-            if (tile->GetTurf()->GetAtmosState() == SPACE)
-            {
-                cell.flags |= AtmosGrid::Cell::SPACE;
-            }
-
             AtmosHolder* holder = tile->GetAtmosHolder();
-
+            AtmosGrid::Cell& cell = grid_->At(x, y);
             cell.energy = holder->GetEnergy();
-
             for (int i = 0; i < GASES_NUM; ++i)
             {
                 cell.gases[i] = holder->GetGase(i);
@@ -255,5 +224,11 @@ void Atmosphere::ProcessMove()
         }
     }
     movement_processing_ns_
-        = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
+            = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
+}
+
+void Atmosphere::SetFlags(size_t x, size_t y, size_t z, IAtmosphere::Flags flags)
+{
+    // TODO: fix grid x and y
+    grid_->At(y, x).flags = flags;
 }

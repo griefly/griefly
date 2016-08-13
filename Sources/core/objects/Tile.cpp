@@ -6,6 +6,7 @@
 #include "OnMapObject.h"
 #include "Tile.h"
 #include "Movable.h"
+#include "../atmos/AtmosGrid.h"
 
 CubeTile::CubeTile(size_t id) : IOnMapBase(id)
 {
@@ -291,6 +292,7 @@ bool CubeTile::AddItem(IdPtr<IOnMapBase> item_raw)
     sum_passable_left_ = std::min(sum_passable_left_, item->GetPassable(D_LEFT));
     sum_passable_right_ = std::min(sum_passable_right_, item->GetPassable(D_RIGHT));
 
+    UpdateAtmosPassable();
     return true;
 }
 bool CubeTile::RemoveItem(IdPtr<IOnMapBase> item_raw)
@@ -374,6 +376,8 @@ void CubeTile::UpdatePassable()
         sum_passable_left_ = std::min(sum_passable_left_, (*it)->GetPassable(D_LEFT));
         sum_passable_right_ = std::min(sum_passable_right_, (*it)->GetPassable(D_RIGHT));
     }
+
+    UpdateAtmosPassable();
 }
 
 bool CubeTile::IsTransparent() const
@@ -417,4 +421,36 @@ void CubeTile::ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
 void CubeTile::LoadInMap()
 {
     GetGame().GetMap().GetSquares()[posx_][posy_][posz_] = GetId();
+}
+
+void CubeTile::UpdateAtmosPassable()
+{
+    const Dir dirs[5]
+        = { D_ALL,
+            D_UP,
+            D_DOWN,
+            D_LEFT,
+            D_RIGHT };
+    const IAtmosphere::Flags bit_dirs[5]
+        = { AtmosGrid::Cell::CENTER,
+            AtmosGrid::Cell::UP,
+            AtmosGrid::Cell::DOWN,
+            AtmosGrid::Cell::LEFT,
+            AtmosGrid::Cell::RIGHT };
+
+    IAtmosphere::Flags flags = 0;
+    for (int i = 0; i < 5; ++i)
+    {
+        if (!CanPass(GetPassable(dirs[i]), Passable::AIR))
+        {
+            flags |= bit_dirs[i];
+        }
+    }
+
+    if (turf_ && turf_->GetAtmosState() == SPACE)
+    {
+        flags |= AtmosGrid::Cell::SPACE;
+    }
+
+    GetGame().GetMap().GetAtmosphere().SetFlags(posx_, posy_, posz_, flags);
 }

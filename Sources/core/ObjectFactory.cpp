@@ -213,6 +213,16 @@ void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
     qDebug() << "SET MOB END" << game_->GetMob().Id();
     game_->ChangeMob(game_->GetMob());
     is_world_generating_ = false;
+
+    auto& squares = game_->GetMap().GetSquares();
+    for (int y = 0; y < game_->GetMap().GetHeight(); ++y)
+    {
+        for (int x = 0; x < game_->GetMap().GetWidth(); ++x)
+        {
+            auto tile = squares[x][y][0];
+            tile->UpdateAtmosPassable();
+        }
+    }
 }
 
 void ObjectFactory::LoadFromMapGen(const std::string& name)

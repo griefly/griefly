@@ -5,23 +5,25 @@
 #include "AtmosHolder.h"
 #include "KVAbort.h"
 
+#include "Interfaces.h"
+
 class AtmosGrid
 {
 public:
     struct Cell
     {
-        static const char FULL = 0;
-        static const char UP = 1;
-        static const char DOWN = 2;
-        static const char LEFT = 4;
-        static const char RIGHT = 8;
-        static const char CENTER = 16;
-        static const char SPACE = 32;
+        static const IAtmosphere::Flags FULL = 0;
+        static const IAtmosphere::Flags UP = 1;
+        static const IAtmosphere::Flags DOWN = 2;
+        static const IAtmosphere::Flags LEFT = 4;
+        static const IAtmosphere::Flags RIGHT = 8;
+        static const IAtmosphere::Flags CENTER = 16;
+        static const IAtmosphere::Flags SPACE = 32;
 
         int gases[GASES_NUM];
         int diffs[GASES_NUM];
         int energy;
-        char flags;
+        IAtmosphere::Flags flags;
         int pressure;
 
         Cell()

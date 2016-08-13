@@ -19,6 +19,8 @@ public:
     virtual void Resize(size_t x, size_t y, size_t z) override;
     virtual void Process() override;
     virtual void ProcessMove() override;
+
+    virtual void SetFlags(size_t x, size_t y, size_t z, Flags flags) override;
 private:
     AtmosGrid* grid_;
     void LoadDataToGrid();

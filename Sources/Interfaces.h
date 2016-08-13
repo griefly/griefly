@@ -21,6 +21,9 @@ public:
     virtual void Resize(size_t x, size_t y, size_t z) = 0;
     virtual void Process() = 0;
     virtual void ProcessMove() = 0;
+
+    typedef char Flags;
+    virtual void SetFlags(size_t x, size_t y, size_t z, Flags flags) = 0;
 };
 
 class IMapMaster
