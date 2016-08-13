@@ -8,6 +8,7 @@
 
 class AtmosHolder
 {
+    friend class Atmosphere;
     friend std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
     friend std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder);
     friend unsigned int hash(const AtmosHolder& atmos_holder);
@@ -20,8 +21,8 @@ public:
         }
         data_.energy = 0;
         data_.pressure = 0;
-        temperature_ = 0;
-        volume_ = 1;
+        data_.temperature = 0;
+        data_.volume = 1;
         data_ptr_ = &data_;
     }
     void Connect(AtmosHolder* guest, 
@@ -41,12 +42,13 @@ public:
     void Truncate();
 
     void UpdateMacroParams();
+    void SetAtmosData(AtmosData* data)
+    {
+        data_ptr_ = data;
+    }
 private:
     AtmosData* data_ptr_;
     AtmosData data_;
-    
-    unsigned int volume_;
-    unsigned int temperature_;
 };
 
 std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
@@ -61,7 +63,7 @@ inline unsigned int hash(const AtmosHolder& atmos_holder)
     }
     retval += atmos_holder.data_ptr_->energy;
     retval += atmos_holder.data_ptr_->pressure;
-    retval += atmos_holder.volume_;
-    retval += atmos_holder.temperature_;
+    retval += atmos_holder.data_ptr_->volume;
+    retval += atmos_holder.data_ptr_->temperature;
     return retval;
 }

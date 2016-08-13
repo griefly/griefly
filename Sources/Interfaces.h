@@ -24,6 +24,7 @@ public:
 
     typedef char Flags;
     virtual void SetFlags(size_t x, size_t y, size_t z, Flags flags) = 0;
+    virtual void LoadGrid() = 0;
 };
 
 class IMapMaster

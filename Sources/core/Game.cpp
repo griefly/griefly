@@ -301,6 +301,7 @@ void Game::InitWorld(int id, std::string map_name)
             ChangeMob(newmob);
             GetFactory().SetPlayerId(id, newmob);
 
+            GetMap().GetAtmosphere().LoadGrid();
             GetMap().FillAtmosphere();
             qDebug() << "End fill atmpsphere";
 

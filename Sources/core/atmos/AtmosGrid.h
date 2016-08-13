@@ -19,24 +19,24 @@ public:
         static const IAtmosphere::Flags CENTER = 16;
         static const IAtmosphere::Flags SPACE = 32;
 
-        unsigned int gases[GASES_NUM];
+        AtmosData data;
+
         int diffs[GASES_NUM];
-        unsigned int energy;
         unsigned int energy_diff;
         IAtmosphere::Flags flags;
-        int pressure;
-
         Cell()
         {
             for (int i = 0; i < GASES_NUM; ++i)
             {
-                gases[i] = 0;
+                data.gases[i] = 0;
                 diffs[i] = 0;
             }
             flags = FULL;
-            energy = 0;
+            data.energy = 0;
             energy_diff = 0;
-            pressure = 0;
+            data.pressure = 0;
+            data.temperature = 0;
+            data.volume = 1;
         }
         char IsPassable(char dir)
         {

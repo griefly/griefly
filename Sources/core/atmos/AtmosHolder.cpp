@@ -2,7 +2,7 @@
 
 #include "../Constheader.h"
 
-std::array<unsigned int, GASES_NUM> loc_gases;
+unsigned int loc_gases[GASES_NUM];
 unsigned int loc_energy;
 
 void AtmosHolder::Connect(AtmosHolder* guest, int level_owner, int level_guest, int div)
@@ -70,53 +70,14 @@ void AtmosHolder::Connect(AtmosHolder* guest, int level_owner, int level_guest, 
     guest->UpdateMacroParams();
 }
 
-const unsigned int ENERGY_CONST = 100;
-
 void AtmosHolder::UpdateMacroParams()
 {
-    // E = (freedom / 2) * moles * T
-    // T = E / (... + ... + ...)
-
-    unsigned int sum = 0;
-    for (size_t i = 0; i < GASES_NUM; ++i)
-    {
-        sum += data_ptr_->gases[i] * GASES_FREEDOM[i];
-    }
-    sum /= 2;
-
-    if (sum == 0)
-    {
-        temperature_ = 0;
-    }
-    else
-    {
-        temperature_ = (data_ptr_->energy * ENERGY_CONST) / sum;
-     //   if (temperature_ == 0)
-     //       SYSTEM_STREAM << "Energy: " << energy_ << ", sum: " << sum << std::endl;
-    }
-
-    // PV = moles * T
-    // P = (moles * T) / V
-
-    sum = 0;
-    for (size_t i = 0; i < GASES_NUM; ++i)
-    {
-        sum += data_ptr_->gases[i];
-    }
-    
-    if (volume_ == 0)
-    {
-        data_ptr_->pressure = 0;
-    }
-    else
-    {
-        data_ptr_->pressure = (sum * temperature_) / volume_;
-    }
+    ::UpdateMacroParams(data_ptr_);
 }
 
 void AtmosHolder::SetVolume(unsigned int volume)
 {
-    volume_ = volume;
+    data_ptr_->volume = volume;
     UpdateMacroParams();
 }
 
@@ -142,11 +103,11 @@ unsigned int AtmosHolder::GetPressure()
 }
 unsigned int AtmosHolder::GetTemperature()
 {
-    return temperature_;
+    return data_ptr_->temperature;
 }
 unsigned int AtmosHolder::GetVolume()
 {
-    return volume_;
+    return data_ptr_->volume;
 }
 
 unsigned int AtmosHolder::GetGase(unsigned int gase)
@@ -188,8 +149,8 @@ std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holde
     }
     file << atmos_holder.data_ptr_->energy << " ";
     file << atmos_holder.data_ptr_->pressure << " ";
-    file << atmos_holder.volume_ << " ";
-    file << atmos_holder.temperature_ << " ";
+    file << atmos_holder.data_ptr_->volume << " ";
+    file << atmos_holder.data_ptr_->temperature << " ";
 
     return file;
 }
@@ -202,8 +163,8 @@ std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder)
     }
     file >> atmos_holder.data_ptr_->energy;
     file >> atmos_holder.data_ptr_->pressure;
-    file >> atmos_holder.volume_;
-    file >> atmos_holder.temperature_;
+    file >> atmos_holder.data_ptr_->volume;
+    file >> atmos_holder.data_ptr_->temperature;
 
     return file;
 }

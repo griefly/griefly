@@ -21,12 +21,11 @@ public:
     virtual void ProcessMove() override;
 
     virtual void SetFlags(size_t x, size_t y, size_t z, Flags flags) override;
+    virtual void LoadGrid() override;
 private:
     AtmosGrid* grid_;
-    void LoadDataToGrid();
     void UnloadDataFromGrid();
 
-    qint64 load_grid_ns_;
     qint64 unload_grid_ns_;
     qint64 grid_processing_ns_;
 
