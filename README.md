@@ -51,8 +51,9 @@ How to build everything on Linux
    built in `gopath/src/griefly-server` directory.
 
 **Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).  
-**Note:** gccgo is not supported! The current `FindGo.cmake` cannot parse the gccgo version string, so you will obtain an error. Use the official version instead.
- 
+**Note:** gccgo is not supported! The current `FindGo.cmake` cannot parse the gccgo version string, so you will obtain an error. Use the official version instead.  
+**Note:** There may be some issues with CMake 3.0.2, so try to update your CMake if issues appear.  
+
 How to start server
 -------------------
 
