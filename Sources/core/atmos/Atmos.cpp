@@ -99,65 +99,54 @@ const unsigned int PRESSURE_MOVE_BORDER = 1000;
 
 void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 {   
-    AtmosGrid::Cell& cell = grid_->At(x, y);
-
-    if (cell.flags & AtmosGrid::Cell::SPACE)
-    {
-        return;
-    }
-
-    int max_diff = 0;
-    Dir dir;
-
-    // TODO: it works really bad now, because it does not think about
-    // passable levels. It is needed to fix it (it may be slow, just temporarly
-    // solution)
-
     auto tile = map_->GetSquares()[x][y][z];
-    for (Dir local = 0; local < 4; ++local)
+
+    if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
     {
-        auto neighbour = tile->GetNeighbourImpl(local);
-        int tile_pressure = tile->GetAtmosHolder()->GetPressure();
-        int neighbour_pressure = neighbour->GetAtmosHolder()->GetPressure();
-        int local_diff = tile_pressure - neighbour_pressure;
-        if (local_diff > max_diff)
+        return;
+    }
+    if (tile->GetTurf()->GetAtmosState() == SPACE)
+    {
+        return;
+    }
+
+    for (Dir dir = 0; dir < 4; ++dir)
+    {
+        auto neighbour = tile->GetNeighbourImpl(dir);
+
+        if (!(   (   neighbour->GetTurf()->GetAtmosState() == NON_SIMULATED
+                  && PRESSURE_MOVE_BORDER < tile->GetAtmosHolder()->GetPressure())
+              || (neighbour->GetAtmosHolder()->GetPressure() + PRESSURE_MOVE_BORDER
+                  < tile->GetAtmosHolder()->GetPressure())))
         {
-            max_diff = local_diff;
-            dir = local;
+            continue;
         }
-    }
 
-    if (max_diff < PRESSURE_MOVE_BORDER)
-    {
-        return;
-    }
-
-    IdPtr<CubeTile> neighbour = tile->GetNeighbourImpl(dir);
-
-    if (!CanPass(tile->GetPassable(dir), Passable::AIR))
-    {
-        tile->BumpByGas(dir, true);
-        return;
-    }
-
-    if (   !CanPass(neighbour->GetPassable(D_ALL), Passable::AIR)
-        || !CanPass(neighbour->GetPassable(helpers::revert_dir(dir)), Passable::AIR))
-    {
-        neighbour->BumpByGas(dir);
-        return;
-    }
-
-    if (tile->GetInsideList().size())
-    {
-        auto i = tile->GetInsideList().rbegin();
-        while (   (i != tile->GetInsideList().rend())
-               && ((*i)->passable_level == Passable::EMPTY))
+        if (!CanPass(tile->GetPassable(dir), Passable::AIR))
         {
-            ++i;
+            tile->BumpByGas(dir, true);
+            continue;
         }
-        if (i != tile->GetInsideList().rend())
+
+        if (   !CanPass(neighbour->GetPassable(D_ALL), Passable::AIR)
+            || !CanPass(neighbour->GetPassable(helpers::revert_dir(dir)), Passable::AIR))
         {
-            (*i)->ApplyForce(DirToVDir[dir]);
+            neighbour->BumpByGas(dir);
+            continue;
+        }
+
+        if (tile->GetInsideList().size())
+        {
+            auto i = tile->GetInsideList().rbegin();
+            while (   (i != tile->GetInsideList().rend())
+                   && ((*i)->passable_level == Passable::EMPTY))
+            {
+                ++i;
+            }
+            if (i != tile->GetInsideList().rend())
+            {
+                (*i)->ApplyForce(DirToVDir[dir]);
+            }
         }
     }
 }
