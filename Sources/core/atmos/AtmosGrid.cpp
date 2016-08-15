@@ -14,12 +14,24 @@ void AtmosGrid::Process()
         {
             // UP
             Cell& current = cells_[pos];
+
+            if (current.flags & Cell::SPACE)
+            {
+                for (int gas = 0; gas < GASES_NUM; ++gas)
+                {
+                    current.data.gases[gas] = 0;
+                    current.data.energy = 0;
+                    current.data.pressure = 0;
+                }
+            }
+
             if (!current.IsPassable(Cell::CENTER))
             {
                 // TODO: if something still here
                 ++pos;
                 continue;
             }
+
             // TODO: not 5 tiles as whole
             // TODO: use diffs
             if (current.IsPassable(Cell::UP))
@@ -30,14 +42,14 @@ void AtmosGrid::Process()
                 {
                     for (int gas = 0; gas < GASES_NUM; ++gas)
                     {
-                        int sum = current.gases[gas] + nearby.gases[gas];
-                        current.gases[gas] = sum / 2;
-                        nearby.gases[gas] = sum - current.gases[gas];
+                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
+                        current.data.gases[gas] = sum / 2;
+                        nearby.data.gases[gas] = sum - current.data.gases[gas];
                     }
 
-                    int sum = current.energy + nearby.energy;
-                    current.energy = sum / 2;
-                    nearby.energy = sum - current.energy;
+                    int sum = current.data.energy + nearby.data.energy;
+                    current.data.energy = sum / 2;
+                    nearby.data.energy = sum - current.data.energy;
                 }
             }
             if (current.IsPassable(Cell::LEFT))
@@ -48,14 +60,14 @@ void AtmosGrid::Process()
                 {
                     for (int gas = 0; gas < GASES_NUM; ++gas)
                     {
-                        int sum = current.gases[gas] + nearby.gases[gas];
-                        current.gases[gas] = sum / 2;
-                        nearby.gases[gas] = sum - current.gases[gas];
+                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
+                        current.data.gases[gas] = sum / 2;
+                        nearby.data.gases[gas] = sum - current.data.gases[gas];
                     }
 
-                    int sum = current.energy + nearby.energy;
-                    current.energy = sum / 2;
-                    nearby.energy = sum - current.energy;
+                    int sum = current.data.energy + nearby.data.energy;
+                    current.data.energy = sum / 2;
+                    nearby.data.energy = sum - current.data.energy;
                 }
             }
             if (current.IsPassable(Cell::RIGHT))
@@ -66,14 +78,14 @@ void AtmosGrid::Process()
                 {
                     for (int gas = 0; gas < GASES_NUM; ++gas)
                     {
-                        int sum = current.gases[gas] + nearby.gases[gas];
-                        current.gases[gas] = sum / 2;
-                        nearby.gases[gas] = sum - current.gases[gas];
+                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
+                        current.data.gases[gas] = sum / 2;
+                        nearby.data.gases[gas] = sum - current.data.gases[gas];
                     }
 
-                    int sum = current.energy + nearby.energy;
-                    current.energy = sum / 2;
-                    nearby.energy = sum - current.energy;
+                    int sum = current.data.energy + nearby.data.energy;
+                    current.data.energy = sum / 2;
+                    nearby.data.energy = sum - current.data.energy;
                 }
             }
             if (current.IsPassable(Cell::DOWN))
@@ -84,16 +96,17 @@ void AtmosGrid::Process()
                 {
                     for (int gas = 0; gas < GASES_NUM; ++gas)
                     {
-                        int sum = current.gases[gas] + nearby.gases[gas];
-                        current.gases[gas] = sum / 2;
-                        nearby.gases[gas] = sum - current.gases[gas];
+                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
+                        current.data.gases[gas] = sum / 2;
+                        nearby.data.gases[gas] = sum - current.data.gases[gas];
                     }
 
-                    int sum = current.energy + nearby.energy;
-                    current.energy = sum / 2;
-                    nearby.energy = sum - current.energy;
+                    int sum = current.data.energy + nearby.data.energy;
+                    current.data.energy = sum / 2;
+                    nearby.data.energy = sum - current.data.energy;
                 }
             }
+
             ++pos;
         }
         // TODO: right line

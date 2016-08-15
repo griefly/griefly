@@ -3,7 +3,7 @@
 #include "Item.h"
 #include "Projectiles.h"
 #include "AmmunitionBoxes.h"
-#include "Projectiletypes.h"
+#include "ProjectileTypes.h"
 #include "../Game.h"
 
 class Gun: public Item

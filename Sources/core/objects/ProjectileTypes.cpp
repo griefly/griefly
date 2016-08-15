@@ -1,4 +1,4 @@
-#include "Projectiletypes.h"
+#include "ProjectileTypes.h"
 
 Bullet::Bullet(size_t id) : Projectile(id)
 {

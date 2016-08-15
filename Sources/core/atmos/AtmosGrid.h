@@ -2,38 +2,41 @@
 
 #include <QDebug>
 
-#include "AtmosHolder.h"
+#include "AtmosConstants.h"
 #include "KVAbort.h"
+#include "Interfaces.h"
 
 class AtmosGrid
 {
 public:
     struct Cell
     {
-        static const char FULL = 0;
-        static const char UP = 1;
-        static const char DOWN = 2;
-        static const char LEFT = 4;
-        static const char RIGHT = 8;
-        static const char CENTER = 16;
-        static const char SPACE = 32;
+        static const IAtmosphere::Flags FULL = 0;
+        static const IAtmosphere::Flags UP = 1;
+        static const IAtmosphere::Flags DOWN = 2;
+        static const IAtmosphere::Flags LEFT = 4;
+        static const IAtmosphere::Flags RIGHT = 8;
+        static const IAtmosphere::Flags CENTER = 16;
+        static const IAtmosphere::Flags SPACE = 32;
 
-        int gases[GASES_NUM];
+        AtmosData data;
+
         int diffs[GASES_NUM];
-        int energy;
-        char flags;
-        int pressure;
-
+        unsigned int energy_diff;
+        IAtmosphere::Flags flags;
         Cell()
         {
             for (int i = 0; i < GASES_NUM; ++i)
             {
-                gases[i] = 0;
+                data.gases[i] = 0;
                 diffs[i] = 0;
             }
             flags = FULL;
-            energy = 0;
-            pressure = 0;
+            data.energy = 0;
+            energy_diff = 0;
+            data.pressure = 0;
+            data.temperature = 0;
+            data.volume = 1;
         }
         char IsPassable(char dir)
         {

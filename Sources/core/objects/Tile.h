@@ -107,6 +107,8 @@ public:
 
     typedef std::vector<IdPtr<IOnMapObject>> InsideType;
     InsideType& GetInsideList() { return inside_list_; }
+
+    void UpdateAtmosPassable();
 protected:
     virtual size_t GetItemImpl(unsigned int hash) override;
 private:
@@ -132,6 +134,6 @@ private:
     PassableLevel KV_SAVEBLE(sum_passable_right_);
 
     KV_ON_LOAD_CALL(LoadInMap);
-    void LoadInMap(); // TODO
+    void LoadInMap();
 };
 ADD_TO_TYPELIST(CubeTile);

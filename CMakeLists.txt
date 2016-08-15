@@ -67,7 +67,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Golang search
 #
 ###########################
-find_package(Go REQUIRED)
+find_package(Go 1.5 REQUIRED)
 if(GO_FOUND)
     message(STATUS "Go has been found, version: ${GO_VERSION}")
 else()
