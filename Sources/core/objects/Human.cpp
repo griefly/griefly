@@ -88,9 +88,119 @@ bool Human::TryMove(Dir direct)
         if (pulled_object_)
         {
             if (!CanTouch(pulled_object_))
+            {
+                int x = (pulled_object_->GetTile()->GetX() - GetTile()->GetX());
+                int y = (pulled_object_->GetTile()->GetY() - GetTile()->GetY());
+                if (std::abs(x) + std::abs(y) >= 3)
                 {
-                    pulled_object_->TryMove(direct);
+                    switch(direct)
+                    {
+                    case D_UP:
+                    if(x > 0)
+                    {
+                        if(!pulled_object_->TryMove(direct))
+                        {
+                            pulled_object_ = 0;
+                        }
+                        if(!pulled_object_->TryMove(D_RIGHT))
+                        {
+                            pulled_object_ = 0;
+                        }
+                    }
+                    else
+                    {
+                        if(!pulled_object_->TryMove(direct))
+                        {
+                            pulled_object_ = 0;
+                        }
+                        if(!pulled_object_->TryMove(D_LEFT))
+                        {
+                            pulled_object_ = 0;
+                        }
+                    }
+                    break;                   
+                    case D_DOWN:
+                    if(x > 0)
+                    {
+                        if(!pulled_object_->TryMove(direct))
+                        {
+                            pulled_object_ = 0;
+                        }
+                        if(!pulled_object_->TryMove(D_RIGHT))
+                        {
+                            pulled_object_ = 0;
+                        }
+                    }
+                    else
+                    {
+                        if(!pulled_object_->TryMove(direct))
+                        {
+                            pulled_object_ = 0;
+                        }
+                        if(!pulled_object_->TryMove(D_LEFT))
+                        {
+                            pulled_object_ = 0;
+                        }
+                    }
+                    break;
+                    case D_LEFT:
+                    if(y > 0)
+                    {
+                        if(!pulled_object_->TryMove(direct))
+                        {
+                            pulled_object_ = 0;
+                        }
+                        if(!pulled_object_->TryMove(D_DOWN))
+                        {
+                            pulled_object_ = 0;
+                        }
+                    }
+                    else
+                    {
+                        if(!pulled_object_->TryMove(direct))
+                        {
+                            pulled_object_ = 0;
+                        }
+                        if(!pulled_object_->TryMove(D_UP))
+                        {
+                            pulled_object_ = 0;
+                        }
+                    }
+                    break;
+                    case D_RIGHT:
+                    if(x > 0)
+                    {
+                        if(!pulled_object_->TryMove(direct))
+                        {
+                            pulled_object_ = 0;
+                        }
+                        if(!pulled_object_->TryMove(D_DOWN))
+                        {
+                            pulled_object_ = 0;
+                        }
+                    }
+                    else
+                    {
+                        if(!pulled_object_->TryMove(direct))
+                        {
+                            pulled_object_ = 0;
+                        }
+                        if(!pulled_object_->TryMove(D_UP))
+                        {
+                            pulled_object_ = 0;
+                        }
+                    }
+                    break; 
+                    }
                 }
+                else
+                {
+                    if(!pulled_object_->TryMove(direct))
+                    {
+                        pulled_object_ = 0;
+                    }
+                }
+            }
         }
     }
     return false;
