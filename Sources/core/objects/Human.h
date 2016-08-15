@@ -42,8 +42,8 @@ public:
 
     int GetHealth() { return health_; }
 
-    void RotationAction(IdPtr<IMovable> item);
-    void PullAction(IdPtr<IMovable> item);
+    void RotationAction(IdPtr<IOnMapBase> item);
+    void PullAction(IdPtr<IOnMapBase> item);
 protected:
     int KV_SAVEBLE(attack_cooldown_);
 

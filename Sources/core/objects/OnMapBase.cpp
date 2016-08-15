@@ -29,7 +29,6 @@ IdPtr<CubeTile> IOnMapBase::GetTile()
     }
 }
 
-
 void IOnMapBase::SetTurf(IdPtr<ITurf> turf)
 {
     if (owner.IsValid())
