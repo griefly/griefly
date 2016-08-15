@@ -13,6 +13,19 @@ IdPtr<ITurf> IOnMapBase::GetTurf()
     return 0;
 }
 
+IdPtr<CubeTile> IOnMapBase::GetTile(IdPtr<IOnMapBase> item)
+{
+    if(!item->GetOwner())
+    {
+          return item;
+    }
+    else
+    {
+          return GetTile(item->GetOwner());
+    }
+}
+
+
 void IOnMapBase::SetTurf(IdPtr<ITurf> turf)
 {
     if (owner.IsValid())

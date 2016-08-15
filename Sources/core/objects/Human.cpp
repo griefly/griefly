@@ -39,6 +39,8 @@ Human::Human(size_t id) : IMob(id)
     dead_ = false;
     lying_ = false;
     health_ = 100;
+
+    pulled_object_ = 0;
 }
 
 void Human::AfterWorldCreation()
@@ -83,6 +85,13 @@ bool Human::TryMove(Dir direct)
             PlaySoundIfVisible("glass_step.ogg", GetOwner().Id());
         }
         return true;
+        if (pulled_object_)
+        {
+            if(!CanTouch(pulled_object_))
+                {
+                    pulled_object_->TryMove(direct);
+                }
+        }
     }
     return false;
 }
@@ -221,6 +230,13 @@ void Human::Process()
 {
     IMob::Process();
     Live();
+    if (pulled_object_)
+    {
+        if (!CanTouch(pulled_object_))
+        {
+            pulled_object_ = 0;
+        }
+    }
 }
 
 void Human::SetLying(bool value)
@@ -481,6 +497,22 @@ void Human::Bump(IdPtr<IMovable> item)
     }
     IMovable::Bump(item);
 }
+
+void Human::RotationAction(IdPtr<IMovable> item)
+{
+    if (!item->anchored)
+    {
+        if (IdPtr<Projectile> projectile = item)
+        {
+            return;
+        }
+        else
+        {
+            item->Rotate(item->GetDir() + 1 % 4);
+        }
+    }
+}
+
 
 CaucasianHuman::CaucasianHuman(size_t id) : Human(id)
 {
