@@ -87,7 +87,7 @@ bool Human::TryMove(Dir direct)
         return true;
         if (pulled_object_)
         {
-            if(!CanTouch(pulled_object_))
+            if (!CanTouch(pulled_object_))
                 {
                     pulled_object_->TryMove(direct);
                 }
@@ -510,6 +510,13 @@ void Human::RotationAction(IdPtr<IMovable> item)
         {
             item->Rotate(item->GetDir() + 1 % 4);
         }
+    }
+}
+void Human::PullAction(IdPtr<IMovable> item)
+{
+    if (CanTouch(item))
+    {
+        pulled_object_ = item;
     }
 }
 
