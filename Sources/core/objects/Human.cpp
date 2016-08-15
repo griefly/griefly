@@ -101,10 +101,12 @@ bool Human::TryMove(Dir direct)
                         if(!pulled_object_->TryMove(direct))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                         if(!pulled_object_->TryMove(D_RIGHT))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                     }
                     else
@@ -112,10 +114,12 @@ bool Human::TryMove(Dir direct)
                         if(!pulled_object_->TryMove(direct))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                         if(!pulled_object_->TryMove(D_LEFT))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                     }
                     break;                   
@@ -125,10 +129,12 @@ bool Human::TryMove(Dir direct)
                         if(!pulled_object_->TryMove(direct))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                         if(!pulled_object_->TryMove(D_RIGHT))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                     }
                     else
@@ -136,10 +142,12 @@ bool Human::TryMove(Dir direct)
                         if(!pulled_object_->TryMove(direct))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                         if(!pulled_object_->TryMove(D_LEFT))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                     }
                     break;
@@ -149,10 +157,12 @@ bool Human::TryMove(Dir direct)
                         if(!pulled_object_->TryMove(direct))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                         if(!pulled_object_->TryMove(D_DOWN))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                     }
                     else
@@ -160,10 +170,12 @@ bool Human::TryMove(Dir direct)
                         if(!pulled_object_->TryMove(direct))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                         if(!pulled_object_->TryMove(D_UP))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                     }
                     break;
@@ -173,10 +185,12 @@ bool Human::TryMove(Dir direct)
                         if(!pulled_object_->TryMove(direct))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                         if(!pulled_object_->TryMove(D_DOWN))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                     }
                     else
@@ -184,10 +198,12 @@ bool Human::TryMove(Dir direct)
                         if(!pulled_object_->TryMove(direct))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                         if(!pulled_object_->TryMove(D_UP))
                         {
                             pulled_object_ = 0;
+                            break;
                         }
                     }
                     break; 
