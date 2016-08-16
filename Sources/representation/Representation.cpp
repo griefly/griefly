@@ -86,25 +86,28 @@ void Representation::Swap()
     new_frame_->units.clear();
 }
 
-const int SUPPORTED_KEYS_SIZE = 7;
+const int SUPPORTED_KEYS_SIZE = 8;
 const Qt::Key SUPPORTED_KEYS[SUPPORTED_KEYS_SIZE]
     = { Qt::Key_Up, Qt::Key_Down, Qt::Key_Left, Qt::Key_Right,
-        Qt::Key_Control, Qt::Key_Alt, Qt::Key_Shift };
+        Qt::Key_Control, Qt::Key_Alt, Qt::Key_Shift, Qt::Key_R };
 
 const int NUMPAD_KEYS_SIZE = 4;
-const Qt::Key NUMPAD_KEYS[]
+const Qt::Key NUMPAD_KEYS[NUMPAD_KEYS_SIZE]
     = { Qt::Key_8, Qt::Key_2, Qt::Key_4, Qt::Key_6 };
 
 const int TEXT_NUMPAD_SIZE = 4;
-const char* const TEXT_NUMPAD[4]
+const char* const TEXT_NUMPAD[TEXT_NUMPAD_SIZE]
     = { Input::MOVE_UP, Input::MOVE_DOWN, Input::MOVE_LEFT, Input::MOVE_RIGHT };
 
 const int TEXT_KEYS_SIZE = 4;
-const char* const TEXT_KEYS[4]
+const char* const TEXT_KEYS[TEXT_KEYS_SIZE]
     = { Input::MOVE_UP, Input::MOVE_DOWN, Input::MOVE_LEFT, Input::MOVE_RIGHT };
 
 void Representation::HandleKeyboardDown(QKeyEvent* event)
 {
+    // TODO: language layouts (for example, russian) does not
+    // work properly
+
     if (autoplay_ == false)
     {
         const int MESSAGE_INTERVAL = 33;
@@ -146,6 +149,9 @@ void Representation::HandleKeyboardDown(QKeyEvent* event)
         {
             continue;
         }
+
+        keys_state_[SUPPORTED_KEYS[i]] = true;
+
         if (i < TEXT_KEYS_SIZE)
         {
             text = TEXT_KEYS[i];
@@ -160,9 +166,15 @@ void Representation::HandleKeyboardDown(QKeyEvent* event)
     Network2::GetInstance().SendOrdinaryMessage(text);
 }
 
-void Representation::HandleKeyboardUp(QKeyEvent *event)
+void Representation::HandleKeyboardUp(QKeyEvent* event)
 {
-
+    for (int i = 0; i < SUPPORTED_KEYS_SIZE; ++i)
+    {
+        if (event->key() == SUPPORTED_KEYS[i])
+        {
+            keys_state_[SUPPORTED_KEYS[i]] = false;
+        }
+    }
 }
 
 void Representation::HandleInput()
@@ -302,7 +314,25 @@ void Representation::Click(int x, int y)
 
     if (id_to_send != -1)
     {
-        Message2 msg = Network2::MakeClickMessage(id_to_send, Click::LCLICK);
+        QString message = Click::LEFT;
+        if (keys_state_[Qt::Key_Control])
+        {
+            message = Click::LEFT_CONTROL;
+        }
+        else if (keys_state_[Qt::Key_Alt])
+        {
+            message = Click::LEFT_ALT;
+        }
+        else if (keys_state_[Qt::Key_Shift])
+        {
+            message = Click::LEFT_SHIFT;
+        }
+        else if (keys_state_[Qt::Key_R])
+        {
+            message = Click::LEFT_R;
+        }
+
+        Message2 msg = Network2::MakeClickMessage(id_to_send, message);
         Network2::GetInstance().SendMsg(msg);
     }
 }

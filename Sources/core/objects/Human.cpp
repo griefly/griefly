@@ -145,8 +145,36 @@ void Human::processGUImsg(const Message2 &msg)
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
     {
+        // TODO: shorter cd when shooting with weapons
+        const int ATTACK_CD = 6;
+        if ((MAIN_TICK - attack_cooldown_) < ATTACK_CD)
+        {
+            return;
+        }
+        attack_cooldown_ = MAIN_TICK;
+
+        IdPtr<IOnMapObject> object = Network2::ExtractObjId(obj);
+        if (!object)
+        {
+            return;
+        }
+
         QString action = Network2::ExtractAction(obj);
-        if (action != Click::LCLICK)
+        if (action == Click::LEFT_SHIFT)
+        {
+            if (IdPtr<Human> human = object)
+            {
+                GetGame().GetChat().PostSimpleText(
+                    name + " looks at " + human->name,
+                    GetOwner().Id());
+                return;
+            }
+            GetGame().GetChat().PostSimpleText(
+                name + " looks at the " + object->name,
+                GetOwner().Id());
+            return;
+        }
+        if (action != Click::LEFT)
         {
             qDebug() << "Unknown action: " << action;
             return;
@@ -155,50 +183,43 @@ void Human::processGUImsg(const Message2 &msg)
         {
             return;
         }
-        const int ATTACK_CD = 10;
-        if ((MAIN_TICK - attack_cooldown_) < ATTACK_CD)
+
+        if (object->GetOwner())
         {
-            return;
-        }
-        // TODO shorter cd when shooting with weapons
-        attack_cooldown_ = MAIN_TICK;
-        IdPtr<IOnMapObject> item = Network2::ExtractObjId(obj);
-        if (item && item->GetOwner())
-        {
-            if (CanTouch(item))
+            if (CanTouch(object))
             {
                 //SYSTEM_STREAM << "And we can touch it!" << std::endl;
                 if(!interface_.GetActiveHand().Get())
                 {
-                    interface_.Pick(item);
+                    interface_.Pick(object);
                     if (interface_.GetActiveHand().Get())
                     {
-                        if (!item->GetOwner()->RemoveItem(item))
+                        if (!object->GetOwner()->RemoveItem(object))
                         {
                             SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
                         }
-                        item->SetOwner(GetId());
+                        object->SetOwner(GetId());
                     }
                     else
                     {
                         interface_.Pick(0);
-                        item->AttackBy(0);
+                        object->AttackBy(0);
                     }
                 }
                 else
                 {
                     if (GetLying() == false)
                     {
-                        item->AttackBy(interface_.GetActiveHand().Get());
+                        object->AttackBy(interface_.GetActiveHand().Get());
                     }
                 }
                 
             }
             else if (IdPtr<Gun> tool = interface_.GetActiveHand().Get())
             {
-                if (GetLying() == false && Gun::Targetable(item))
+                if (GetLying() == false && Gun::Targetable(object))
                 {
-                    tool->Shoot(tool->TargetTileLoc(item));
+                    tool->Shoot(tool->TargetTileLoc(object));
                 }
             }
         }

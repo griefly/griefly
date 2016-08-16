@@ -6,6 +6,7 @@
 #include "View2.h"
 #include "ViewInfo.h"
 
+#include <QMap>
 #include <QMutex>
 #include <QKeyEvent>
 #include <QElapsedTimer>
@@ -69,6 +70,8 @@ public:
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);
 private:
+    QMap<Qt::Key, bool> keys_state_;
+
     Performance performance_;
 
     QElapsedTimer autoplay_timer_;
