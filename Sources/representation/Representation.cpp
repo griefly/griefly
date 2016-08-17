@@ -86,8 +86,28 @@ void Representation::Swap()
     new_frame_->units.clear();
 }
 
+const int SUPPORTED_KEYS_SIZE = 8;
+const Qt::Key SUPPORTED_KEYS[SUPPORTED_KEYS_SIZE]
+    = { Qt::Key_Up, Qt::Key_Down, Qt::Key_Left, Qt::Key_Right,
+        Qt::Key_Control, Qt::Key_Alt, Qt::Key_Shift, Qt::Key_R };
+
+const int NUMPAD_KEYS_SIZE = 4;
+const Qt::Key NUMPAD_KEYS[NUMPAD_KEYS_SIZE]
+    = { Qt::Key_8, Qt::Key_2, Qt::Key_4, Qt::Key_6 };
+
+const int TEXT_NUMPAD_SIZE = 4;
+const char* const TEXT_NUMPAD[TEXT_NUMPAD_SIZE]
+    = { Input::MOVE_UP, Input::MOVE_DOWN, Input::MOVE_LEFT, Input::MOVE_RIGHT };
+
+const int TEXT_KEYS_SIZE = 4;
+const char* const TEXT_KEYS[TEXT_KEYS_SIZE]
+    = { Input::MOVE_UP, Input::MOVE_DOWN, Input::MOVE_LEFT, Input::MOVE_RIGHT };
+
 void Representation::HandleKeyboardDown(QKeyEvent* event)
 {
+    // TODO: language layouts (for example, russian) does not
+    // work properly
+
     if (autoplay_ == false)
     {
         const int MESSAGE_INTERVAL = 33;
@@ -98,69 +118,63 @@ void Representation::HandleKeyboardDown(QKeyEvent* event)
         message_sending_interval_.restart();
     }
 
-    std::string text;
+    if (!event)
+    {
+        int val = rand();
+        const char* const text = TEXT_KEYS[val % TEXT_KEYS_SIZE];
+        Network2::GetInstance().SendOrdinaryMessage(text);
+        return;
+    }
 
-    int val = rand();
+    QString text;
 
-    if ((!event && (val % 100 == 1)) || (event && event->key() == Qt::Key_8) && (event->modifiers() == Qt::KeypadModifier))
+    if (event->modifiers() == Qt::KeypadModifier)
     {
-        text = Input::MOVE_UP;
+        for (int i = 0; i < NUMPAD_KEYS_SIZE; ++i)
+        {
+            if (event->key() != NUMPAD_KEYS[i])
+            {
+                continue;
+            }
+            if (i < TEXT_NUMPAD_SIZE)
+            {
+                text = TEXT_NUMPAD[i];
+            }
+        }
     }
-    else if ((!event && (val % 100 == 2)) || (event && event->key() == Qt::Key_2) && (event->modifiers() == Qt::KeypadModifier))
+
+    for (int i = 0; i < SUPPORTED_KEYS_SIZE; ++i)
     {
-        text = Input::MOVE_DOWN;
+        if (event->key() != SUPPORTED_KEYS[i])
+        {
+            continue;
+        }
+
+        keys_state_[SUPPORTED_KEYS[i]] = true;
+
+        if (i < TEXT_KEYS_SIZE)
+        {
+            text = TEXT_KEYS[i];
+        }
     }
-    else if ((!event && (val % 100 == 3)) || (event && event->key() == Qt::Key_6) && (event->modifiers() == Qt::KeypadModifier))
-    {
-        text = Input::MOVE_RIGHT;
-    }
-    else if ((!event && (val % 100 == 4)) || (event && event->key() == Qt::Key_4) && (event->modifiers() == Qt::KeypadModifier))
-    {
-        text = Input::MOVE_LEFT;
-    }
-    else if ((!event && (val % 100 == 5)) || (event && event->key() == Qt::Key_Up))
-    {
-        text = Input::MOVE_UP;
-    }
-    else if ((!event && (val % 100 == 6)) || (event && event->key() == Qt::Key_Down))
-    {
-        text = Input::MOVE_DOWN;
-    }
-    else if ((!event && (val % 100 == 7)) || (event && event->key() == Qt::Key_Right))
-    {
-        text = Input::MOVE_RIGHT;
-    }
-    else if ((!event&& (val % 100 == 8)) || (event && event->key() == Qt::Key_Left))
-    {
-        text = Input::MOVE_LEFT;
-    }
-    else if ((!event && (val % 100 == 9)) || (event && event->key() == Qt::Key_Q))
-    {
-        text = Input::KEY_Q;
-    }
-    else if ((!event && (val % 100 == 10)) || (event && event->key() == Qt::Key_W))
-    {
-        text = Input::KEY_W;
-    }
-    else if ((!event && (val % 100 == 11)) || (event && event->key() == Qt::Key_E))
-    {
-        text = Input::KEY_E;
-    }
-    else if ((!event && (val % 100 == 12)) || (event && event->key() == Qt::Key_R))
-    {
-        text = Input::KEY_R;
-    }
-    else
+
+    if (text.isEmpty())
     {
         return;
     }
 
-    Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(text));
+    Network2::GetInstance().SendOrdinaryMessage(text);
 }
 
-void Representation::HandleKeyboardUp(QKeyEvent *event)
+void Representation::HandleKeyboardUp(QKeyEvent* event)
 {
-
+    for (int i = 0; i < SUPPORTED_KEYS_SIZE; ++i)
+    {
+        if (event->key() == SUPPORTED_KEYS[i])
+        {
+            keys_state_[SUPPORTED_KEYS[i]] = false;
+        }
+    }
 }
 
 void Representation::HandleInput()
@@ -300,7 +314,25 @@ void Representation::Click(int x, int y)
 
     if (id_to_send != -1)
     {
-        Message2 msg = Network2::MakeClickMessage(id_to_send, Click::LCLICK);
+        QString message = Click::LEFT;
+        if (keys_state_[Qt::Key_Control])
+        {
+            message = Click::LEFT_CONTROL;
+        }
+        else if (keys_state_[Qt::Key_Alt])
+        {
+            message = Click::LEFT_ALT;
+        }
+        else if (keys_state_[Qt::Key_Shift])
+        {
+            message = Click::LEFT_SHIFT;
+        }
+        else if (keys_state_[Qt::Key_R])
+        {
+            message = Click::LEFT_R;
+        }
+
+        Message2 msg = Network2::MakeClickMessage(id_to_send, message);
         Network2::GetInstance().SendMsg(msg);
     }
 }
