@@ -177,6 +177,11 @@ void Representation::HandleKeyboardUp(QKeyEvent* event)
     }
 }
 
+void Representation::ResetKeysState()
+{
+    keys_state_.clear();
+}
+
 void Representation::HandleInput()
 {
     QCoreApplication::processEvents(QEventLoop::AllEvents, 40);

@@ -57,6 +57,11 @@ void QtOpenGL::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+void QtOpenGL::focusOutEvent(QFocusEvent *event)
+{
+    emit focusLost();
+}
+
 void QtOpenGL::initializeGL()
 {
     glMatrixMode(GL_PROJECTION);

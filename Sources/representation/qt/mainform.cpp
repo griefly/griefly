@@ -68,16 +68,24 @@ MainForm::MainForm(QWidget *parent) :
 
     ui->widget->hide();
 
-    connect(&Network2::GetInstance(), &Network2::connectionSuccess, this, &MainForm::startGameLoop);
-    connect(&Network2::GetInstance(), &Network2::connectionFailed, this, &MainForm::connectionFailed);
+    connect(&Network2::GetInstance(), &Network2::connectionSuccess,
+            this, &MainForm::startGameLoop);
+    connect(&Network2::GetInstance(), &Network2::connectionFailed,
+            this, &MainForm::connectionFailed);
 
-    connect(&Network2::GetInstance(), &Network2::mapSendingStarted, this, &MainForm::uploadStarted);
-    connect(&Network2::GetInstance(), &Network2::mapSendingFinished, this, &MainForm::uploadFinished);
+    connect(&Network2::GetInstance(), &Network2::mapSendingStarted,
+            this, &MainForm::uploadStarted);
+    connect(&Network2::GetInstance(), &Network2::mapSendingFinished,
+            this, &MainForm::uploadFinished);
 
 
-    connect(this, &MainForm::autoConnect, this, &MainForm::on_lineEdit_returnPressed);
-    connect(ui->widget, &QtOpenGL::enterPressed, this, &MainForm::setFocusOnLineEdit);
-    connect(ui->widget, &QtOpenGL::f2Pressed, this, &MainForm::oocPrefixToLineEdit);
+    connect(this, &MainForm::autoConnect,
+            this, &MainForm::on_lineEdit_returnPressed);
+
+    connect(ui->widget, &QtOpenGL::enterPressed,
+            this, &MainForm::setFocusOnLineEdit);
+    connect(ui->widget, &QtOpenGL::f2Pressed,
+            this, &MainForm::oocPrefixToLineEdit);
 
     connect(ui->lineEdit, &GamingLineEdit::keyToPass, ui->widget, &QtOpenGL::handlePassedKey);
 
@@ -142,14 +150,23 @@ void MainForm::startGameLoop(int id, QString map)
     }
 
     SetRepresentation(new Representation);
+    connect(ui->widget, &QtOpenGL::focusLost,
+    []()
+    {
+        GetRepresentation().ResetKeysState();
+    });
 
     Game* game = new Game;
 
-    connect(game, &Game::insertHtmlIntoChat, this, &MainForm::insertHtmlIntoChat);
-    connect(game, &Game::addSystemText, this, &MainForm::addSystemText);
-    connect(game, &Game::playMusic, this, &MainForm::playMusic);
+    connect(game, &Game::insertHtmlIntoChat,
+            this, &MainForm::insertHtmlIntoChat);
+    connect(game, &Game::addSystemText,
+            this, &MainForm::addSystemText);
+    connect(game, &Game::playMusic,
+            this, &MainForm::playMusic);
 
-    connect(game, &Game::sendMap, &Network2::GetInstance(), &Network2::sendMap);
+    connect(game, &Game::sendMap,
+            &Network2::GetInstance(), &Network2::sendMap);
 
     game->InitWorld(id, map.toStdString());
 
