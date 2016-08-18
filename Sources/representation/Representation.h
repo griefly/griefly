@@ -69,6 +69,7 @@ public:
 
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);
+    void ResetKeysState();
 private:
     QMap<Qt::Key, bool> keys_state_;
 
