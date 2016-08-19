@@ -74,7 +74,7 @@ public:
     }
     Cell& At(int x, int y)
     {
-        return cells_[x + y * width_];
+        return cells_[y + x * height_];
     }
     void Process();
 

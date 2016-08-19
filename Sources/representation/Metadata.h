@@ -62,11 +62,11 @@ public:
     }
     void Init(const std::string& file_name, int width, int height);
 
-    void InitWithoutMetadata();
-
     const SpriteMetadata& GetSpriteMetadata(const std::string& name);
     bool IsValidState(const std::string& name);
 private:
+    void InitWithoutMetadata();
+
     bool valid_;
 
     std::string dmi_version_;
@@ -74,8 +74,8 @@ private:
     png_uint_32 total_width_;
     png_uint_32 total_height_;
 
-	size_t width_;
-	size_t height_;
+    size_t width_;
+    size_t height_;
 
     bool ParseDescription(std::stringstream& desc);
     void MakeSequence();

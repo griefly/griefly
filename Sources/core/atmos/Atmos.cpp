@@ -173,8 +173,7 @@ void Atmosphere::ProcessMove()
 
 void Atmosphere::SetFlags(size_t x, size_t y, size_t z, IAtmosphere::Flags flags)
 {
-    // TODO: fix grid x and y
-    grid_->At(y, x).flags = flags;
+    grid_->At(x, y).flags = flags;
 }
 
 void Atmosphere::LoadGrid()
@@ -189,7 +188,7 @@ void Atmosphere::LoadGrid()
                 auto& tile = squares[x][y][z];
                 tile->UpdateAtmosPassable();
                 AtmosHolder* holder = tile->GetAtmosHolder();
-                AtmosGrid::Cell& cell = grid_->At(y, x);
+                AtmosGrid::Cell& cell = grid_->At(x, y);
 
                 cell.data = holder->data_;
                 holder->SetAtmosData(&cell.data);

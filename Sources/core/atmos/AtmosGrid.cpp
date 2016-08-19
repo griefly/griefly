@@ -3,8 +3,6 @@
 void AtmosGrid::Process()
 {
     // TODO: upper line
-    // TODO: check order (height_/width_ mismatch), because
-    // map looks like map[x][y]
     int pos = width_;
     for (int line = 1; line < height_ - 1; ++line)
     {
