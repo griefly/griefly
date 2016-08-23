@@ -72,6 +72,9 @@ public:
     {
         delete[] cells_;
     }
+
+    Cell& Get(int pos, IAtmosphere::Flags dir);
+
     Cell& At(int x, int y)
     {
         return cells_[y + x * height_];
