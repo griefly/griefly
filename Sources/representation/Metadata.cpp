@@ -1,11 +1,20 @@
 #include "Metadata.h"
 
 #include <fstream>
+#include <sstream>
+#include <string>
+
+#include <QDebug>
 
 #include <png.h>
 
 #include "KVAbort.h"
-#include "core/Constheader.h"
+
+QDebug operator<<(QDebug debug, const std::string& string)
+{
+    debug << QString::fromStdString(string);
+    return debug;
+}
 
 const ImageMetadata::SpriteMetadata& 
     ImageMetadata::GetSpriteMetadata(const std::string& name)
@@ -32,7 +41,7 @@ void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
 
 void ImageMetadata::Init(const std::string& name, int width, int height)
 {   
-    SYSTEM_STREAM << "Begin to init metadata for " << name << std::endl;
+    qDebug() << "Begin to init metadata for " << name;
     png_byte pngsig[PNGSIGSIZE];
 
     width_ = width;
@@ -42,7 +51,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     source.open(name, std::fstream::binary);
     if (source.fail()) 
     {
-        SYSTEM_STREAM << "ERROR: Fail to open smth" << std::endl;
+        qDebug() << "ERROR: Fail to open smth";
         return;
     }
 
@@ -50,8 +59,8 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
 
     if (source.fail()) 
     {
-        SYSTEM_STREAM << "ERROR: Fail to read smth" << std::endl;
-        SYSTEM_STREAM << source.bad() << " " << source.fail() << " " << source.eof() << std::endl;
+        qDebug() << "ERROR: Fail to read smth";
+        qDebug() << source.bad() << " " << source.fail() << " " << source.eof();
         kv_abort();
         return;
     }
@@ -60,7 +69,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
 
     if (is_png)
     {
-        SYSTEM_STREAM << "ERROR: Data is not valid PNG-data: " << is_png << std::endl;
+        qDebug() << "ERROR: Data is not valid PNG-data: " << is_png;
         InitWithoutMetadata();
         return;
     }
@@ -68,14 +77,14 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!pngPtr) 
     {
-        SYSTEM_STREAM << "ERROR: Couldn't initialize png read struct" << std::endl;
+        qDebug() << "ERROR: Couldn't initialize png read struct";
         return;
     }
 
     png_infop infoPtr = png_create_info_struct(pngPtr);
     if (!infoPtr) 
     {
-        std::cerr << "ERROR: Couldn't initialize png info struct" << std::endl;
+        qDebug() << "ERROR: Couldn't initialize png info struct";
         png_destroy_read_struct(&pngPtr, static_cast<png_infopp>(0), static_cast<png_infopp>(0));
         return;
     }
@@ -95,12 +104,12 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     {
         for (int i = 0; i < num_text; ++i)
         {
-           /* SYSTEM_STREAM << "BEGIN KEY " << i << std::endl;
-            SYSTEM_STREAM << text_ptr[i].key << std::endl;
-            SYSTEM_STREAM << "END KEY " << i << std::endl;
-            SYSTEM_STREAM << "BEGIN TEXT " << i << std::endl;
-            SYSTEM_STREAM << text_ptr[i].text << std::endl;
-            SYSTEM_STREAM << "END TEXT " << i << std::endl;
+           /* qDebug() << "BEGIN KEY " << i << std::endl;
+            qDebug() << text_ptr[i].key << std::endl;
+            qDebug() << "END KEY " << i << std::endl;
+            qDebug() << "BEGIN TEXT " << i << std::endl;
+            qDebug() << text_ptr[i].text << std::endl;
+            qDebug() << "END TEXT " << i << std::endl;
             */
             std::string string_key = std::string(text_ptr[i].key);
             if (string_key == "Description")
@@ -115,7 +124,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     //SDL_Delay(100000);
     png_destroy_read_struct(&pngPtr, &infoPtr, static_cast<png_infopp>(0));
     source.close();
-    SYSTEM_STREAM << "End load metadata for " << name << std::endl;
+    qDebug() << "End load metadata for " << name;
 
     if (!Valid())
     {
@@ -125,7 +134,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
 
 void ImageMetadata::InitWithoutMetadata()
 {
-    SYSTEM_STREAM << "Fail metadata load, try without it" << std::endl;
+    qDebug() << "Fail metadata load, try without it";
     metadata_[""].first_frame_pos = 0;
 
     metadata_[""].frames_sequence.push_back(0);
@@ -138,80 +147,80 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
     desc >> loc;
     if (loc != "#")
     {
-        SYSTEM_STREAM << "Fail to read '#' from .dmi file" << std::endl;
+        qDebug() << "Fail to read '#' from .dmi file";
         return false;
     }
     loc.clear();
     desc >> loc;
     if (loc != "BEGIN")
     {
-        SYSTEM_STREAM << "Fail to read 'BEGIN' from .dmi file" << std::endl;
+        qDebug() << "Fail to read 'BEGIN' from .dmi file";
         return false;
     }
     loc.clear();
     desc >> loc;
     if (loc != "DMI")
     {
-        SYSTEM_STREAM << "Fail to read 'DMI' from .dmi file" << std::endl;
+        qDebug() << "Fail to read 'DMI' from .dmi file";
         return false;
     }
     loc.clear();
     desc >> loc;
     if (loc != "version")
     {
-        SYSTEM_STREAM << "Fail to read 'version' from .dmi file" << std::endl;
+        qDebug() << "Fail to read 'version' from .dmi file";
         return false;
     }
     loc.clear();
     desc >> loc;
     if (loc != "=")
     {
-        SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+        qDebug() << "Fail to read '=' from .dmi file";
         return false;
     }
     loc.clear();
     ////////////
     desc >> dmi_version_;
-    SYSTEM_STREAM << "Read version: " << dmi_version_ << std::endl;
+    qDebug() << "Read version: " << dmi_version_;
     ////////////
     desc >> loc;
     if (loc != "width")
     {
-        SYSTEM_STREAM << "Fail to read 'width' from .dmi file" << std::endl;
+        qDebug() << "Fail to read 'width' from .dmi file";
         return false;
     }
     loc.clear();
     desc >> loc;
     if (loc != "=")
     {
-        SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+        qDebug() << "Fail to read '=' from .dmi file";
         return false;
     }
     loc.clear();
     
     //////////////
     desc >> width_;
-    SYSTEM_STREAM << "Read width: " << width_ << std::endl;
+    qDebug() << "Read width: " << width_;
     /////////////
 
     desc >> loc;
     if (loc != "height")
     {
-        SYSTEM_STREAM << "Fail to read 'height' from .dmi file" << std::endl;
+        qDebug() << "Fail to read 'height' from .dmi file";
         return false;
     }
     loc.clear();
     desc >> loc;
     if (loc != "=")
     {
-        SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+        qDebug() << "Fail to read '=' from .dmi file";
         return false;
     }
     loc.clear();
     
     /////////////
     desc >> height_;
-    SYSTEM_STREAM << "Read height: " << height_ << std::endl;
+    qDebug() << "Read height: " << height_;
     ////////////
     
     desc >> loc;
@@ -225,7 +234,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> loc;
             if (loc != "=")
             {
-                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                qDebug() << "Fail to read '=' from .dmi file";
                 return false;
             }
             std::string whole_str = "";
@@ -241,10 +250,10 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 whole_str += loc;
             }
             loc = whole_str;
-            SYSTEM_STREAM << "New state: " << loc << std::endl;
+            qDebug() << "New state: " << loc;
             current_state = loc.substr(1, loc.length() - 2);
             metadata_[current_state].first_frame_pos = first_frame_pos;
-          //  SYSTEM_STREAM << "First frame position: " << first_frame_pos << std::endl;
+          //  qDebug() << "First frame position: " << first_frame_pos << std::endl;
         }
         else if (loc == "dirs")
         {
@@ -252,18 +261,18 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> loc;
             if (loc != "=")
             {
-                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                qDebug() << "Fail to read '=' from .dmi file";
                 return false;
             }
             loc.clear();
 
             size_t dirs;
             desc >> dirs;
-      //      SYSTEM_STREAM << "Dirs: " << dirs << std::endl;
+      //      qDebug() << "Dirs: " << dirs << std::endl;
 
             if (current_state == "###")
             {
-                SYSTEM_STREAM << "Dirs without state" << std::endl;
+                qDebug() << "Dirs without state";
                 return false;
             }
             metadata_[current_state].dirs = dirs;
@@ -274,18 +283,18 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> loc;
             if (loc != "=")
             {
-                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                qDebug() << "Fail to read '=' from .dmi file";
                 return false;
             }
             loc.clear();
 
             size_t frames;
             desc >> frames;
-      //      SYSTEM_STREAM << "Frames: " << frames << std::endl;
+      //      qDebug() << "Frames: " << frames << std::endl;
 
             if (current_state == "###")
             {
-                SYSTEM_STREAM << "Frames without state" << std::endl;
+                qDebug() << "Frames without state";
                 return false;
             }
             metadata_[current_state].frames_data.resize(frames);
@@ -297,14 +306,14 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> loc;
             if (loc != "=")
             {
-                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                qDebug() << "Fail to read '=' from .dmi file";
                 return false;
             }
             loc.clear();
 
             if (current_state == "###")
             {
-                SYSTEM_STREAM << "Delay without state" << std::endl;
+                qDebug() << "Delay without state";
                 return false;
             }
 
@@ -312,20 +321,20 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             {
                 size_t value;
                 desc >> value;
-         //       SYSTEM_STREAM << "Delay " << i << " is: " << value << std::endl;
+         //       qDebug() << "Delay " << i << " is: " << value << std::endl;
                 metadata_[current_state].frames_data[i].delay = value;
 
                 char comma;
                 desc >> comma;
                 if (comma != ',')
                 {
-                    SYSTEM_STREAM << "Fail to read ',' from .dmi file" << std::endl;
+                    qDebug() << "Fail to read ',' from .dmi file";
                     return false;
                 }
             }
             size_t value;
             desc >> value;
-     //       SYSTEM_STREAM << "Last delay is: " << value << std::endl;
+     //       qDebug() << "Last delay is: " << value << std::endl;
             metadata_[current_state].frames_data
                 [metadata_[current_state].frames_data.size() - 1]
                     .delay = value;
@@ -336,20 +345,20 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> loc;
             if (loc != "=")
             {
-                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                qDebug() << "Fail to read '=' from .dmi file";
                 return false;
             }
             loc.clear();
 
             if (current_state == "###")
             {
-                SYSTEM_STREAM << "Rewind without state" << std::endl;
+                qDebug() << "Rewind without state";
                 return false;
             }
 
             size_t rewind;
             desc >> rewind;
-     //       SYSTEM_STREAM << "Rewind is: " << rewind << std::endl;
+     //       qDebug() << "Rewind is: " << rewind << std::endl;
             metadata_[current_state].rewind = rewind ? true : false;
         }
         else if (loc == "loop")
@@ -358,20 +367,20 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> loc;
             if (loc != "=")
             {
-                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                qDebug() << "Fail to read '=' from .dmi file";
                 return false;
             }
             loc.clear();
 
             if (current_state == "###")
             {
-                SYSTEM_STREAM << "Loop without state" << std::endl;
+                qDebug() << "Loop without state";
                 return false;
             }
 
             int loop;
             desc >> loop;
-       //     SYSTEM_STREAM << "Loop is: " << loop << std::endl;
+       //     qDebug() << "Loop is: " << loop << std::endl;
             metadata_[current_state].loop = loop;
         }
         else if (loc == "hotspot")
@@ -380,14 +389,14 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> loc;
             if (loc != "=")
             {
-                SYSTEM_STREAM << "Fail to read '=' from .dmi file" << std::endl;
+                qDebug() << "Fail to read '=' from .dmi file";
                 return false;
             }
             loc.clear();
 
             if (current_state == "###")
             {
-                SYSTEM_STREAM << "Hotspot without state" << std::endl;
+                qDebug() << "Hotspot without state";
                 return false;
             }
             
@@ -399,7 +408,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> comma;
             if (comma != ',')
             {
-                SYSTEM_STREAM << "Fail to read ',' from .dmi file" << std::endl;
+                qDebug() << "Fail to read ',' from .dmi file";
                 return false;
             }
 
@@ -409,7 +418,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             desc >> comma;
             if (comma != ',')
             {
-                SYSTEM_STREAM << "Fail to read ',' from .dmi file" << std::endl;
+                qDebug() << "Fail to read ',' from .dmi file";
                 return false;
             }
 
@@ -419,7 +428,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         }
         else
         {
-            SYSTEM_STREAM << "Unknown param: " << loc << std::endl;
+            qDebug() << "Unknown param: " << loc;
             kv_abort();
             return false;
         }
@@ -427,28 +436,28 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         desc >> loc;
     }
 
-    SYSTEM_STREAM << "End of states" << std::endl;
+    qDebug() << "End of states";
 
     loc.clear();
     desc >> loc;
     if (loc != "END")
     {
-        SYSTEM_STREAM << "Fail to read 'END' from .dmi file" << std::endl;
+        qDebug() << "Fail to read 'END' from .dmi file";
         return false;
     }
     loc.clear();
     desc >> loc;
     if (loc != "DMI")
     {
-        SYSTEM_STREAM << "Fail to read 'DMI' from .dmi file" << std::endl;
+        qDebug() << "Fail to read 'DMI' from .dmi file";
         return false;
     }
 
-    SYSTEM_STREAM << "Begin make sequence" << std::endl;
+    qDebug() << "Begin make sequence";
 
     MakeSequence();
 
-    SYSTEM_STREAM << "End make sequence" << std::endl;
+    qDebug() << "End make sequence";
 
     valid_ = true;
     return true;
@@ -458,7 +467,7 @@ void ImageMetadata::MakeSequence()
 {
     for (auto it = metadata_.begin(); it != metadata_.end(); ++it)
     {
-       // SYSTEM_STREAM << "Sequence for: " << it->first << std::endl;
+       // qDebug() << "Sequence for: " << it->first << std::endl;
         auto& metadata = it->second.frames_data;
         auto& sequence = it->second.frames_sequence;
         int local_loop = it->second.loop;
