@@ -1,24 +1,5 @@
 #include "AtmosGrid.h"
 
-AtmosGrid::Cell& AtmosGrid::Get(int pos, IAtmosphere::Flags dir)
-{
-    // TODO: Boundaries check?
-
-    switch (dir)
-    {
-    case Cell::DOWN:  return cells_[pos + 1];
-    case Cell::UP:    return cells_[pos - 1];
-    case Cell::RIGHT: return cells_[pos + width_];
-    case Cell::LEFT:  return cells_[pos - width_];
-    default: break;
-    }
-
-    qDebug() << "AtmosGrid::Get, Unknown dir:" << dir;
-    kv_abort();
-    // Not reachable
-    return cells_[pos];
-}
-
 void AtmosGrid::Process()
 {
     // TODO: upper line
