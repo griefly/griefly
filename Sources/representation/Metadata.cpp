@@ -51,7 +51,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     source.open(name, std::fstream::binary);
     if (source.fail()) 
     {
-        qDebug() << "ERROR: Fail to open smth";
+        qDebug() << "Metadata error: Fail to open file";
         return;
     }
 
@@ -59,8 +59,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
 
     if (source.fail()) 
     {
-        qDebug() << "ERROR: Fail to read smth";
-        qDebug() << source.bad() << " " << source.fail() << " " << source.eof();
+        qDebug() << "Metadata error: Fail to read smth";
         kv_abort();
         return;
     }
@@ -69,7 +68,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
 
     if (is_png)
     {
-        qDebug() << "ERROR: Data is not valid PNG-data: " << is_png;
+        qDebug() << "Metadata error: Data is not valid PNG-data: " << is_png;
         InitWithoutMetadata();
         return;
     }
@@ -77,14 +76,14 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!pngPtr) 
     {
-        qDebug() << "ERROR: Couldn't initialize png read struct";
+        qDebug() << "Metadata error: Couldn't initialize png read struct";
         return;
     }
 
     png_infop infoPtr = png_create_info_struct(pngPtr);
     if (!infoPtr) 
     {
-        qDebug() << "ERROR: Couldn't initialize png info struct";
+        qDebug() << "Metadata error: Couldn't initialize png info struct";
         png_destroy_read_struct(&pngPtr, static_cast<png_infopp>(0), static_cast<png_infopp>(0));
         return;
     }
