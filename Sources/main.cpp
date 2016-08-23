@@ -34,6 +34,8 @@ int main(int argc, char *argv[])
     if (app.arguments().contains("--run-tests"))
     {
         ::testing::InitGoogleMock(&argc, argv);
+        // Supressing deathtests thread warning
+        ::testing::FLAGS_gtest_death_test_style = "threadsafe";
         return RUN_ALL_TESTS();
     }
 #else
