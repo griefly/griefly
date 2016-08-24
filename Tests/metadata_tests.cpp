@@ -12,8 +12,10 @@ TEST(ImageMetadata, Constructor)
 TEST(ImageMetadata, Init)
 {
     ImageMetadata metadata;
-    metadata.Init("icons/human.dmi", 0, 0);
+    metadata.Init("I do not exist", 0, 0);
+    ASSERT_FALSE(metadata.Valid());
 
+    metadata.Init("icons/human.dmi", 0, 0);
     ASSERT_TRUE(metadata.Valid());
     ASSERT_EQ(metadata.GetW(), 32);
     ASSERT_EQ(metadata.GetH(), 32);
