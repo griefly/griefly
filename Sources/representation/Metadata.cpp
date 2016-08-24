@@ -33,16 +33,15 @@ bool ImageMetadata::IsValidState(const std::string& name)
 
 const int PNGSIGSIZE = 8;
 
-void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
-    png_voidp a = png_get_io_ptr(pngPtr);
-    (static_cast<std::istream*>(a))->
-        read(reinterpret_cast<char*>(data), length);
+void UserReadData(png_structp png_ptr, png_bytep data, png_size_t length) {
+    png_voidp io_ptr = png_get_io_ptr(png_ptr);
+    std::istream* stream = static_cast<std::istream*>(io_ptr);
+    stream->read(reinterpret_cast<char*>(data), length);
 }
 
 void ImageMetadata::Init(const std::string& name, int width, int height)
 {   
     qDebug() << "Begin to init metadata for " << name;
-    png_byte pngsig[PNGSIGSIZE];
 
     width_ = width;
     height_ = height;
@@ -55,6 +54,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
         return;
     }
 
+    png_byte pngsig[PNGSIGSIZE];
     source.read(reinterpret_cast<char*>(pngsig), PNGSIGSIZE);
 
     if (source.fail()) 
@@ -73,43 +73,36 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
         return;
     }
 
-    png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    if (!pngPtr) 
+    png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (!png_ptr)
     {
         qDebug() << "Metadata error: Couldn't initialize png read struct";
         return;
     }
 
-    png_infop infoPtr = png_create_info_struct(pngPtr);
-    if (!infoPtr) 
+    png_infop info_ptr = png_create_info_struct(png_ptr);
+    if (!info_ptr)
     {
         qDebug() << "Metadata error: Couldn't initialize png info struct";
-        png_destroy_read_struct(&pngPtr, static_cast<png_infopp>(0), static_cast<png_infopp>(0));
+        png_destroy_read_struct(&png_ptr, static_cast<png_infopp>(0), static_cast<png_infopp>(0));
         return;
     }
 
-    png_set_read_fn(pngPtr, static_cast<png_voidp>(&source), userReadData);
+    png_set_read_fn(png_ptr, static_cast<png_voidp>(&source), &UserReadData);
 
-    png_set_sig_bytes(pngPtr, PNGSIGSIZE);
-    png_read_info(pngPtr, infoPtr);
+    png_set_sig_bytes(png_ptr, PNGSIGSIZE);
+    png_read_info(png_ptr, info_ptr);
 
-    png_get_IHDR(pngPtr, infoPtr, &total_width_, &total_height_, 0, 0, 0, 0, 0);
+    png_get_IHDR(png_ptr, info_ptr, &total_width_, &total_height_, 0, 0, 0, 0, 0);
 
 
     png_textp text_ptr;
     int num_text;
 
-    if (png_get_text(pngPtr, infoPtr, &text_ptr, &num_text) > 0)
+    if (png_get_text(png_ptr, info_ptr, &text_ptr, &num_text) > 0)
     {
         for (int i = 0; i < num_text; ++i)
         {
-           /* qDebug() << "BEGIN KEY " << i << std::endl;
-            qDebug() << text_ptr[i].key << std::endl;
-            qDebug() << "END KEY " << i << std::endl;
-            qDebug() << "BEGIN TEXT " << i << std::endl;
-            qDebug() << text_ptr[i].text << std::endl;
-            qDebug() << "END TEXT " << i << std::endl;
-            */
             std::string string_key = std::string(text_ptr[i].key);
             if (string_key == "Description")
             {
@@ -120,8 +113,8 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
             }
         }
     }
-    //SDL_Delay(100000);
-    png_destroy_read_struct(&pngPtr, &infoPtr, static_cast<png_infopp>(0));
+
+    png_destroy_read_struct(&png_ptr, &info_ptr, static_cast<png_infopp>(0));
     source.close();
     qDebug() << "End load metadata for " << name;
 
@@ -252,7 +245,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             qDebug() << "New state: " << loc;
             current_state = loc.substr(1, loc.length() - 2);
             metadata_[current_state].first_frame_pos = first_frame_pos;
-          //  qDebug() << "First frame position: " << first_frame_pos << std::endl;
         }
         else if (loc == "dirs")
         {
@@ -267,7 +259,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             size_t dirs;
             desc >> dirs;
-      //      qDebug() << "Dirs: " << dirs << std::endl;
 
             if (current_state == "###")
             {
@@ -289,7 +280,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             size_t frames;
             desc >> frames;
-      //      qDebug() << "Frames: " << frames << std::endl;
 
             if (current_state == "###")
             {
@@ -320,7 +310,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             {
                 size_t value;
                 desc >> value;
-         //       qDebug() << "Delay " << i << " is: " << value << std::endl;
                 metadata_[current_state].frames_data[i].delay = value;
 
                 char comma;
@@ -333,7 +322,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             }
             size_t value;
             desc >> value;
-     //       qDebug() << "Last delay is: " << value << std::endl;
             metadata_[current_state].frames_data
                 [metadata_[current_state].frames_data.size() - 1]
                     .delay = value;
@@ -357,7 +345,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             size_t rewind;
             desc >> rewind;
-     //       qDebug() << "Rewind is: " << rewind << std::endl;
             metadata_[current_state].rewind = rewind ? true : false;
         }
         else if (loc == "loop")
@@ -379,7 +366,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
 
             int loop;
             desc >> loop;
-       //     qDebug() << "Loop is: " << loop << std::endl;
             metadata_[current_state].loop = loop;
         }
         else if (loc == "hotspot")
@@ -466,12 +452,13 @@ void ImageMetadata::MakeSequence()
 {
     for (auto it = metadata_.begin(); it != metadata_.end(); ++it)
     {
-       // qDebug() << "Sequence for: " << it->first << std::endl;
         auto& metadata = it->second.frames_data;
         auto& sequence = it->second.frames_sequence;
         int local_loop = it->second.loop;
         if (it->second.loop == -1 || it->second.loop == 0)
+        {
             local_loop = 1;
+        }
 
         for (int loop_i = 0; loop_i < local_loop; ++loop_i)
         {
@@ -483,7 +470,9 @@ void ImageMetadata::MakeSequence()
             {
                 int from = metadata.size() - 2;
                 if (from < 0)
+                {
                     from = 0;
+                }
                 for (size_t i = from; i > 0; --i)
                 {
                     sequence.push_back(i);
@@ -491,6 +480,8 @@ void ImageMetadata::MakeSequence()
             }
         }
         if (!(it->second.loop == -1 || it->second.loop == 0))
+        {
             sequence.push_back(-1);
+        }
     }
 }
