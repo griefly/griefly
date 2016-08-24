@@ -61,7 +61,6 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     {
         qDebug() << "Metadata error: Fail to read png signature";
         kv_abort();
-        return;
     }
 
     int is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);

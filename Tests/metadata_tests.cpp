@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include "representation/Metadata.h"
+
+using ::testing::internal::CaptureStderr;
+using ::testing::internal::GetCapturedStderr;
+using ::testing::HasSubstr;
 
 TEST(ImageMetadata, Constructor)
 {
@@ -21,10 +26,26 @@ TEST(ImageMetadataDeathTest, Death)
 TEST(ImageMetadata, Init)
 {
     ImageMetadata metadata;
-    metadata.Init("I do not exist", 0, 0);
+
+    {
+        CaptureStderr();
+        metadata.Init("I do not exist", 0, 0);
+        std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Fail to open file"));
+    }
+
     ASSERT_FALSE(metadata.Valid());
 
-    metadata.Init("icons/human.dmi", 0, 0);
+    {
+        CaptureStderr();
+        metadata.Init("icons/human.dmi", 0, 0);
+        std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Begin to init metadata for"));
+        ASSERT_THAT(output, HasSubstr("Read width:  32"));
+        ASSERT_THAT(output, HasSubstr("caucasian3_f_s"));
+        ASSERT_THAT(output, HasSubstr("Begin make sequence"));
+    }
+
     ASSERT_TRUE(metadata.Valid());
     ASSERT_EQ(metadata.GetW(), 32);
     ASSERT_EQ(metadata.GetH(), 32);
@@ -46,3 +67,49 @@ TEST(ImageMetadata, Init)
     ASSERT_EQ(sprite.frames_sequence.size(), 1);
     ASSERT_EQ(sprite.frames_sequence[0], 0);
 }
+
+TEST(ImageMetadata, InitWithoutMetadata)
+{
+    {
+        ImageMetadata metadata;
+
+        CaptureStderr();
+        metadata.Init("icons/rock.png", 0, 0);
+        std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Fail metadata load, try without it"));
+
+        ASSERT_TRUE(metadata.Valid());
+        ASSERT_TRUE(metadata.IsValidState(""));
+
+        const ImageMetadata::SpriteMetadata& sprite
+            = metadata.GetSpriteMetadata("");
+        ASSERT_EQ(sprite.dirs, 1);
+        ASSERT_EQ(sprite.first_frame_pos, 0);
+        ASSERT_EQ(sprite.frames_data.size(), 1);
+        ASSERT_EQ(sprite.frames_data[0].delay, 0);
+        ASSERT_EQ(sprite.frames_sequence.size(), 1);
+        ASSERT_EQ(sprite.frames_sequence[0], 0);
+    }
+    {
+        ImageMetadata metadata;
+
+        CaptureStderr();
+        metadata.Init("icons/login_screen.jpg", 0, 0);
+        std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Fail metadata load, try without it"));
+        ASSERT_THAT(output, HasSubstr("Data is not valid PNG-data"));
+
+        ASSERT_TRUE(metadata.Valid());
+        ASSERT_TRUE(metadata.IsValidState(""));
+
+        const ImageMetadata::SpriteMetadata& sprite
+            = metadata.GetSpriteMetadata("");
+        ASSERT_EQ(sprite.dirs, 1);
+        ASSERT_EQ(sprite.first_frame_pos, 0);
+        ASSERT_EQ(sprite.frames_data.size(), 1);
+        ASSERT_EQ(sprite.frames_data[0].delay, 0);
+        ASSERT_EQ(sprite.frames_sequence.size(), 1);
+        ASSERT_EQ(sprite.frames_sequence[0], 0);
+    }
+}
+
