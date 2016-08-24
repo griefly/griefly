@@ -9,6 +9,15 @@ TEST(ImageMetadata, Constructor)
     ASSERT_FALSE(metadata.IsValidState("state"));
 }
 
+TEST(ImageMetadataDeathTest, Death)
+{
+    ImageMetadata metadata;
+    ASSERT_DEATH(
+    {
+        metadata.Init("icons/empty_file.png", 0, 0);
+    }, "Fail to read png signature");
+}
+
 TEST(ImageMetadata, Init)
 {
     ImageMetadata metadata;

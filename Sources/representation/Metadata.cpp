@@ -59,7 +59,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
 
     if (source.fail()) 
     {
-        qDebug() << "Metadata error: Fail to read smth";
+        qDebug() << "Metadata error: Fail to read png signature";
         kv_abort();
         return;
     }
