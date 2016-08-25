@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include "Params.h"
+
+using ::testing::internal::CaptureStderr;
+using ::testing::internal::GetCapturedStderr;
+using ::testing::HasSubstr;
 
 TEST(Params, Basics)
 {
@@ -29,8 +34,21 @@ TEST(Params, Basics)
     ASSERT_EQ(params.GetParam<std::string>("var2"), "text");
     ASSERT_EQ(params.GetParam<std::string>("var3"), "3");
     ASSERT_EQ(params.GetParam<int>("var3"), 3);
-    ASSERT_EQ(params.GetParam<std::string>("donot"), "");
-    ASSERT_EQ(params.GetParam<int>("donot"), 0);
+
+    {
+        CaptureStderr();
+        ASSERT_EQ(params.GetParam<std::string>("donot"), "");
+        std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Cannot find param"));
+        ASSERT_THAT(output, HasSubstr("donot"));
+    }
+    {
+        CaptureStderr();
+        ASSERT_EQ(params.GetParam<int>("donot"), 0);
+        std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Cannot find param"));
+        ASSERT_THAT(output, HasSubstr("donot"));
+    }
 
     for (int i = 0; i < ARGC; ++i)
     {
