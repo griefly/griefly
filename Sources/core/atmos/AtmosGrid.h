@@ -54,9 +54,9 @@ public:
         {
             for (int gas = 0; gas < GASES_NUM; ++gas)
             {
-                this->data.gases[gas] = 0;
-                this->data.energy = 0;
-                this->data.pressure = 0;
+                data.gases[gas] = 0;
+                data.energy = 0;
+                data.pressure = 0;
             }
         }
     };
