@@ -20,7 +20,6 @@ void ParamsHolder::ParseParams(int argc, char* argv[])
             value = "";
         }
         params_[key] = value;
-        //SYSTEM_STREAM << "New param: key: " << key << " value: " << value << std::endl;
     }
 }
 
