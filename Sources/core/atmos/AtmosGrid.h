@@ -38,17 +38,26 @@ public:
             data.temperature = 0;
             data.volume = 1;
         }
-        char IsPassable(char dir)
+        inline char IsPassable(char dir)
         {
             return ~flags & dir;
         }
-        void SetUnpassable(char dir)
+        inline void SetUnpassable(char dir)
         {
             flags |= dir;
         }
-        void ResetPassable()
+        inline void ResetPassable()
         {
             flags = FULL;
+        }
+        inline void Truncate()
+        {
+            for (int gas = 0; gas < GASES_NUM; ++gas)
+            {
+                this->data.gases[gas] = 0;
+                this->data.energy = 0;
+                this->data.pressure = 0;
+            }
         }
     };
     AtmosGrid(int width, int height)
@@ -91,7 +100,7 @@ public:
         // Not reachable
         return cells_[pos];
     }
-    Cell& At(int x, int y)
+    inline Cell& At(int x, int y)
     {
         return cells_[y + x * height_];
     }

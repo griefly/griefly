@@ -15,12 +15,7 @@ void AtmosGrid::Process()
 
             if (current.flags & Cell::SPACE)
             {
-                for (int gas = 0; gas < GASES_NUM; ++gas)
-                {
-                    current.data.gases[gas] = 0;
-                    current.data.energy = 0;
-                    current.data.pressure = 0;
-                }
+                current.Truncate();
             }
 
             if (!current.IsPassable(Cell::CENTER))
