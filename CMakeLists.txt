@@ -203,8 +203,6 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 endif()
 
-add_definitions(-DDEFINED_VERSION=${CLIENT_VERSION})
-
 #SET(CMAKE_EXE_LINKER_FLAGS "/DEBUG")
 
 ###
@@ -267,6 +265,13 @@ qt5_use_modules(KVEngine Core)
 qt5_use_modules(KVEngine Network)
 qt5_use_modules(KVEngine Widgets)
 qt5_use_modules(KVEngine OpenGL)
+
+# Add version define
+set_property(
+    SOURCE "${SOURCE_DIR}Version.cpp"
+    APPEND
+    PROPERTY COMPILE_DEFINITIONS
+    DEFINED_VERSION=${CLIENT_VERSION})
 
 # Add GTEST lib
 if(BUILD_TESTS)
