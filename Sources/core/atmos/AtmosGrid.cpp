@@ -44,6 +44,8 @@ void AtmosGrid::Process()
             const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
                 = { Cell::RIGHT, Cell::DOWN, Cell::UP, Cell::LEFT };
 
+            bool connections[DIRS_SIZE];
+            Cell* cells[DIRS_SIZE];
             for (int dir = 0; dir < DIRS_SIZE; ++dir)
             {
                 if (current.IsPassable(DIRS[dir]))
@@ -52,17 +54,30 @@ void AtmosGrid::Process()
                     if (   nearby.IsPassable(REVERT_DIRS[dir])
                         && nearby.IsPassable(Cell::CENTER))
                     {
-                        for (int gas = 0; gas < GASES_NUM; ++gas)
-                        {
-                            int sum = current.data.gases[gas] + nearby.data.gases[gas];
-                            current.data.gases[gas] = sum / 2;
-                            nearby.data.gases[gas] = sum - current.data.gases[gas];
-                        }
-
-                        int sum = current.data.energy + nearby.data.energy;
-                        current.data.energy = sum / 2;
-                        nearby.data.energy = sum - current.data.energy;
+                        connections[dir] = true;
+                        cells[dir] = &nearby;
+                        continue;
                     }
+                }
+                connections[dir] = false;
+                cells[dir] = nullptr;
+            }
+
+            for (int dir = 0; dir < DIRS_SIZE; ++dir)
+            {
+                if (connections[dir])
+                {
+                    Cell& nearby = *cells[dir];
+                    for (int gas = 0; gas < GASES_NUM; ++gas)
+                    {
+                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
+                        current.data.gases[gas] = sum / 2;
+                        nearby.data.gases[gas] = sum - current.data.gases[gas];
+                    }
+
+                    int sum = current.data.energy + nearby.data.energy;
+                    current.data.energy = sum / 2;
+                    nearby.data.energy = sum - current.data.energy;
                 }
             }
             ++pos;
