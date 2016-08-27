@@ -2,15 +2,25 @@
 
 void AtmosGrid::Process()
 {
-    // TODO: upper line
-    int pos = width_;
-    for (int line = 1; line < height_ - 1; ++line)
+    int pos = 0;
+
+    // Left border line
+    for (; pos < height_; ++pos)
     {
-        // TODO: left line
-        ++pos;
-        for (int i = 1; i < width_ - 1; ++i)
+        Cell& current = cells_[pos];
+        current.Truncate();
+    }
+
+    for (int line = 1; line < width_ - 1; ++line)
+    {
+        // Upper border line
         {
-            // UP
+            Cell& current = cells_[pos];
+            current.Truncate();
+        }
+        ++pos;
+        for (int i = 1; i < height_ - 1; ++i)
+        {
             Cell& current = cells_[pos];
 
             if (current.flags & Cell::SPACE)
@@ -57,8 +67,18 @@ void AtmosGrid::Process()
             }
             ++pos;
         }
-        // TODO: right line
+        // Lower border line
+        {
+            Cell& current = cells_[pos];
+            current.Truncate();
+        }
         ++pos;
     }
-    // TODO: lower line
+
+    // Right border line
+    for (int i = 0; i < height_; ++i, ++pos)
+    {
+        Cell& current = cells_[pos];
+        current.Truncate();
+    }
 }

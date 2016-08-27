@@ -55,9 +55,8 @@ public:
             for (int gas = 0; gas < GASES_NUM; ++gas)
             {
                 data.gases[gas] = 0;
-                data.energy = 0;
-                data.pressure = 0;
             }
+            data.energy = 0;
         }
     };
     AtmosGrid(int width, int height)
