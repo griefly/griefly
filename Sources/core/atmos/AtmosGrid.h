@@ -22,7 +22,7 @@ public:
         AtmosData data;
 
         int diffs[GASES_NUM];
-        unsigned int energy_diff;
+        int energy_diff;
         IAtmosphere::Flags flags;
         Cell()
         {

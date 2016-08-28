@@ -2,8 +2,8 @@
 
 #include "../Constheader.h"
 
-unsigned int loc_gases[GASES_NUM];
-unsigned int loc_energy;
+int loc_gases[GASES_NUM];
+int loc_energy;
 
 void AtmosHolder::Connect(AtmosHolder* guest, int level_owner, int level_guest, int div)
 {
@@ -34,27 +34,27 @@ void AtmosHolder::Connect(AtmosHolder* guest, int level_owner, int level_guest, 
 
     for (size_t i = 0; i < GASES_NUM; ++i)
     {
-        unsigned int gase_owner = (data_ptr_->gases[i] * level_owner) / MAX_GAS_LEVEL;
+        int gase_owner = (data_ptr_->gases[i] * level_owner) / MAX_GAS_LEVEL;
         data_ptr_->gases[i] -= gase_owner;
 
-        unsigned int gase_guest = (guest->data_ptr_->gases[i] * level_guest) / MAX_GAS_LEVEL;
+        int gase_guest = (guest->data_ptr_->gases[i] * level_guest) / MAX_GAS_LEVEL;
         guest->data_ptr_->gases[i] -= gase_guest;
 
         loc_gases[i] = gase_owner + gase_guest;
     }
     
-    unsigned int energy_owner = (data_ptr_->energy * level_owner) / MAX_GAS_LEVEL;
+    int energy_owner = (data_ptr_->energy * level_owner) / MAX_GAS_LEVEL;
     data_ptr_->energy -= energy_owner;
 
-    unsigned int energy_guest = (guest->data_ptr_->energy * level_guest) / MAX_GAS_LEVEL;
+    int energy_guest = (guest->data_ptr_->energy * level_guest) / MAX_GAS_LEVEL;
     guest->data_ptr_->energy -= energy_guest;
 
     loc_energy = energy_owner + energy_guest;
 
     for (size_t i = 0; i < GASES_NUM; ++i)
     {
-        unsigned int gase_owner = (loc_gases[i] * div) / MAX_GAS_LEVEL;
-        unsigned int gase_guest = loc_gases[i] - gase_owner;
+        int gase_owner = (loc_gases[i] * div) / MAX_GAS_LEVEL;
+        int gase_guest = loc_gases[i] - gase_owner;
 
         data_ptr_->gases[i] += gase_owner;
         guest->data_ptr_->gases[i] += gase_guest;
@@ -75,13 +75,13 @@ void AtmosHolder::UpdateMacroParams()
     ::UpdateMacroParams(data_ptr_);
 }
 
-void AtmosHolder::SetVolume(unsigned int volume)
+void AtmosHolder::SetVolume(int volume)
 {
     data_ptr_->volume = volume;
     UpdateMacroParams();
 }
 
-void AtmosHolder::AddGase(unsigned int gase, unsigned int amount)
+void AtmosHolder::AddGase(int gase, int amount)
 {
     data_ptr_->gases[gase] += amount;
     UpdateMacroParams();
@@ -93,39 +93,39 @@ void AtmosHolder::AddEnergy(int energy)
     UpdateMacroParams();
 }
 
-unsigned int AtmosHolder::GetEnergy()
+int AtmosHolder::GetEnergy()
 {
     return data_ptr_->energy;
 }
-unsigned int AtmosHolder::GetPressure()
+int AtmosHolder::GetPressure()
 {
     return data_ptr_->pressure;
 }
-unsigned int AtmosHolder::GetTemperature()
+int AtmosHolder::GetTemperature()
 {
     return data_ptr_->temperature;
 }
-unsigned int AtmosHolder::GetVolume()
+int AtmosHolder::GetVolume()
 {
     return data_ptr_->volume;
 }
 
-unsigned int AtmosHolder::GetGase(unsigned int gase)
+int AtmosHolder::GetGase(int gase)
 {
     return data_ptr_->gases[gase];
 }
 
-unsigned int AtmosHolder::RemoveGase(unsigned int gase, unsigned int amount)
+int AtmosHolder::RemoveGase(int gase, int amount)
 {
-    unsigned int retval = amount;
-    if (amount > data_ptr_->gases[gase])
+    int retval = amount;
+    if (static_cast<int>(amount) > data_ptr_->gases[gase])
     {
         retval = data_ptr_->gases[gase];
         data_ptr_->gases[gase] = 0;
         UpdateMacroParams();
         return retval;
     }
-    data_ptr_->gases[gase] -= amount;
+    data_ptr_->gases[gase] -= static_cast<int>(amount);
     UpdateMacroParams();
     return retval;
 }

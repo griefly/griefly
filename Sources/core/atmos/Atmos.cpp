@@ -89,13 +89,31 @@ void Atmosphere::UnloadDataFromGrid()
             for (int y = 0; y < y_size_; ++y)
             {
                 AtmosGrid::Cell& cell = grid_->At(x, y);
+
+                for (int i = 0; i < GASES_NUM; ++i)
+                {
+                    cell.data.gases[i] += cell.diffs[i];
+                    cell.diffs[i] = 0;
+                }
+                cell.data.energy += cell.energy_diff;
+                cell.energy_diff = 0;
+
+                if (cell.flags & AtmosGrid::Cell::SPACE)
+                {
+                    for (int i = 0; i < GASES_NUM; ++i)
+                    {
+                        cell.data.gases[i] /= 2;
+                    }
+                    cell.data.energy /= 2;
+                }
+
                 UpdateMacroParams(&cell.data);
             }
         }
     }
 }
 
-const unsigned int PRESSURE_MOVE_BORDER = 1000;
+const int PRESSURE_MOVE_BORDER = 1000;
 
 void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 {   
