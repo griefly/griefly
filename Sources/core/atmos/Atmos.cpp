@@ -102,9 +102,11 @@ void Atmosphere::UnloadDataFromGrid()
                 {
                     for (int i = 0; i < GASES_NUM; ++i)
                     {
-                        cell.data.gases[i] /= 2;
+                        cell.data.gases[i] *= 4;
+                        cell.data.gases[i] /= 5;
                     }
-                    cell.data.energy /= 2;
+                    cell.data.energy *= 4;
+                    cell.data.energy /= 5;
                 }
 
                 UpdateMacroParams(&cell.data);
@@ -120,10 +122,6 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
     auto tile = map_->GetSquares()[x][y][z];
 
     if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
-    {
-        return;
-    }
-    if (tile->GetTurf()->GetAtmosState() == SPACE)
     {
         return;
     }

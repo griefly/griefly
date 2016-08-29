@@ -5,7 +5,7 @@
 Table::Table(size_t id) : IMovable(id)
 {
     anchored = true;
-    v_level = 5;
+    v_level = 4;
     SetPassable(D_ALL, Passable::SMALL_CREATURE);
     SetSprite(""); 
     material_ = "";

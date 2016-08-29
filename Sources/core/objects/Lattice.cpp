@@ -14,6 +14,7 @@ Lattice::Lattice(size_t id) : Structure(id)
     SetState("latticefull");
 
     v_level = 1;
+    anchored = true;
 
     name = "Lattice";
 }
