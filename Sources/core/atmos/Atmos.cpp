@@ -66,7 +66,7 @@ void Atmosphere::Resize(size_t x, size_t y, size_t z)
     z_size_ = z;
 
     delete grid_;
-    grid_ = new AtmosGrid(x_size_, y_size_);
+    grid_ = new AtmosGrid(random_, x_size_, y_size_);
 }
 
 void Atmosphere::Process()

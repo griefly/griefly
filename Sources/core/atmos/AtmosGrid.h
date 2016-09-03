@@ -59,8 +59,9 @@ public:
             data.energy = 0;
         }
     };
-    AtmosGrid(int width, int height)
-        : width_(width),
+    AtmosGrid(SyncRandom* random, int width, int height)
+        : random_(random),
+          width_(width),
           height_(height),
           length_(width_ * height_)
     {
@@ -106,6 +107,8 @@ public:
     void Process();
 
 private:
+    SyncRandom* random_;
+
     int width_;
     int height_;
     int length_;
