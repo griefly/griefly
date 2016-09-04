@@ -37,3 +37,8 @@ void AtmosTool::AttackBy(IdPtr<Item> item)
         }
     }
 }
+
+RemoteAtmosTool::RemoteAtmosTool(size_t id) : AtmosTool(id)
+{
+    name = "Remote atmos tool";
+}

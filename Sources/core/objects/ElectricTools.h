@@ -15,5 +15,13 @@ public:
 
     virtual void AttackBy(IdPtr<Item> item) override;
 };
-
 ADD_TO_TYPELIST(AtmosTool)
+
+class RemoteAtmosTool: public AtmosTool
+{
+public:
+    DECLARE_SAVED(RemoteAtmosTool, AtmosTool);
+    DECLARE_GET_TYPE_ITEM(RemoteAtmosTool);
+    RemoteAtmosTool(size_t id);
+};
+ADD_TO_TYPELIST(RemoteAtmosTool)
