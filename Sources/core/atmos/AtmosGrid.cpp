@@ -43,6 +43,31 @@ void AtmosGrid::Process()
             const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
                 = { Cell::RIGHT, Cell::DOWN, Cell::UP, Cell::LEFT };
 
+            /*const int DIRS_SIZE = 4;
+
+            const IAtmosphere::Flags DIRS_DATA_LR[DIRS_SIZE]
+                = { Cell::LEFT, Cell::RIGHT };
+            const IAtmosphere::Flags REVERT_DIRS_DATA_LR[DIRS_SIZE]
+                = { Cell::RIGHT, Cell::LEFT };
+
+            const IAtmosphere::Flags DIRS_DATA_UD[DIRS_SIZE]
+                = { Cell::LEFT, Cell::UP, Cell::DOWN, Cell::RIGHT };
+            const IAtmosphere::Flags REVERT_DIRS_DATA_UD[DIRS_SIZE]
+                = { Cell::RIGHT, Cell::DOWN, Cell::UP, Cell::LEFT };
+
+            const IAtmosphere::Flags* DIRS;
+            const IAtmosphere::Flags* REVERT_DIRS;
+            if ((MAIN_TICK / 2) % 2 == 0)
+            {
+                DIRS = DIRS_DATA_LR;
+                REVERT_DIRS = REVERT_DIRS_DATA_LR;
+            }
+            else
+            {
+                DIRS = DIRS_DATA_UD;
+                REVERT_DIRS = REVERT_DIRS_DATA_UD;
+            }*/
+
             Cell* near_cells[DIRS_SIZE];
             int near_size = 0;
             int gases_sums[GASES_NUM];
@@ -125,5 +150,36 @@ void AtmosGrid::Process()
     {
         Cell& current = cells_[pos];
         current.Truncate();
+    }
+
+    Finalize();
+}
+
+void AtmosGrid::Finalize()
+{
+    for (int pos = 0; pos < length_; ++pos)
+    {
+        Cell& cell = cells_[pos];
+
+        for (int i = 0; i < GASES_NUM; ++i)
+        {
+            cell.data.gases[i] += cell.diffs[i];
+            cell.diffs[i] = 0;
+        }
+        cell.data.energy += cell.energy_diff;
+        cell.energy_diff = 0;
+
+        if (cell.flags & AtmosGrid::Cell::SPACE)
+        {
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                cell.data.gases[i] *= 4;
+                cell.data.gases[i] /= 5;
+            }
+            cell.data.energy *= 4;
+            cell.data.energy /= 5;
+        }
+
+        UpdateMacroParams(&cell.data);
     }
 }

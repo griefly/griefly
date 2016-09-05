@@ -24,11 +24,8 @@ public:
     virtual void LoadGrid() override;
 private:
     AtmosGrid* grid_;
-    void UnloadDataFromGrid();
 
-    qint64 unload_grid_ns_;
     qint64 grid_processing_ns_;
-
     qint64 movement_processing_ns_;
 
     void ProcessTileMove(size_t x, size_t y, size_t z);
