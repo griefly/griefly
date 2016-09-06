@@ -247,6 +247,15 @@ add_custom_target(Metadata ALL DEPENDS AutogenMetadata.cpp)
 
 list(APPEND SOURCES "${CMAKE_BINARY_DIR}/AutogenMetadata.cpp")
 
+# Version.cpp generation
+add_custom_command(
+    OUTPUT Version.${CLIENT_VERSION}.cpp
+    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/version.py ${CLIENT_VERSION}
+)
+add_custom_target(Version ALL DEPENDS Version.${CLIENT_VERSION}.cpp)
+
+list(APPEND SOURCES "${CMAKE_BINARY_DIR}/Version.${CLIENT_VERSION}.cpp")
+
 qt5_wrap_ui(FORMS_HEADERS ${FORMS})
 
 add_executable(KVEngine WIN32 ${SOURCES} ${HEADERS} ${FORMS_HEADERS} ${TESTS})
@@ -267,11 +276,11 @@ qt5_use_modules(KVEngine Widgets)
 qt5_use_modules(KVEngine OpenGL)
 
 # Add version define
-set_property(
-    SOURCE "${SOURCE_DIR}Version.cpp"
-    APPEND
-    PROPERTY COMPILE_DEFINITIONS
-    DEFINED_VERSION=${CLIENT_VERSION})
+# set_property(
+#    SOURCE "${SOURCE_DIR}Version.cpp"
+#    APPEND
+#    PROPERTY COMPILE_DEFINITIONS
+#    DEFINED_VERSION=${CLIENT_VERSION})
 
 # Add GTEST lib
 if(BUILD_TESTS)
