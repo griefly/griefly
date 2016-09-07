@@ -6,7 +6,8 @@ if len(sys.argv) < 2:
     print("Version argument is missing!")
     exit(-1)
 
-with open("Version." + sys.argv[1] + ".cpp", "w") as autogen_file:
+print("Generating 'Version.cpp'...")
+with open("Version.cpp", "w") as autogen_file:
     print('#include "Version.h"', file = autogen_file)
     print('', file = autogen_file)
     print('const char* get_game_version()', file = autogen_file)
