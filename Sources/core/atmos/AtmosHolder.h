@@ -29,15 +29,15 @@ public:
                  int level_owner = MAX_GAS_LEVEL, int level_guest = MAX_GAS_LEVEL,
                  int div = MAX_GAS_LEVEL / 2 /*100% - owner take all*/);
     void AddEnergy(int energy);
-    void AddGase(unsigned int gase, unsigned int amount);
-    void SetVolume(unsigned int volume);
-    unsigned int GetEnergy();
-    unsigned int GetPressure();
-    unsigned int GetTemperature();
-    unsigned int GetVolume();
-    unsigned int GetGase(unsigned int gase);
+    void AddGase(int gase, int amount);
+    void SetVolume(int volume);
+    int GetEnergy();
+    int GetPressure();
+    int GetTemperature();
+    int GetVolume();
+    int GetGase(int gase);
     
-    unsigned int RemoveGase(unsigned int gase, unsigned int amount);
+    int RemoveGase(int gase, int amount);
 
     void Truncate();
 

@@ -2,26 +2,27 @@
 
 void AtmosGrid::Process()
 {
-    // TODO: upper line
-    int pos = width_;
-    for (int line = 1; line < height_ - 1; ++line)
-    {
-        // TODO: left line
-        ++pos;
-        for (int i = 1; i < width_ - 1; ++i)
-        {
-            // UP
-            Cell& current = cells_[pos];
+    int pos = 0;
 
-            if (current.flags & Cell::SPACE)
-            {
-                for (int gas = 0; gas < GASES_NUM; ++gas)
-                {
-                    current.data.gases[gas] = 0;
-                    current.data.energy = 0;
-                    current.data.pressure = 0;
-                }
-            }
+    // Left border line
+    for (; pos < height_; ++pos)
+    {
+        Cell& current = cells_[pos];
+        current.Truncate();
+    }
+
+    for (int line = 1; line < width_ - 1; ++line)
+    {
+        // Upper border line
+        {
+            Cell& current = cells_[pos];
+            current.Truncate();
+        }
+        ++pos;
+        for (int column = 1; column < height_ - 1; ++column)
+        {
+
+            Cell& current = cells_[pos];
 
             if (!current.IsPassable(Cell::CENTER))
             {
@@ -30,85 +31,155 @@ void AtmosGrid::Process()
                 continue;
             }
 
-            // TODO: not 5 tiles as whole
-            // TODO: use diffs
-            if (current.IsPassable(Cell::UP))
+            if (((column + line) % 2) == (MAIN_TICK % 2))
             {
-                Cell& nearby = cells_[pos - 1];
-                if (   nearby.IsPassable(Cell::DOWN)
-                    && nearby.IsPassable(Cell::CENTER))
-                {
-                    for (int gas = 0; gas < GASES_NUM; ++gas)
-                    {
-                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
-                        current.data.gases[gas] = sum / 2;
-                        nearby.data.gases[gas] = sum - current.data.gases[gas];
-                    }
+                ++pos;
+                continue;
+            }
 
-                    int sum = current.data.energy + nearby.data.energy;
-                    current.data.energy = sum / 2;
-                    nearby.data.energy = sum - current.data.energy;
+            const int DIRS_SIZE = 4;
+            const IAtmosphere::Flags DIRS[DIRS_SIZE]
+                = { Cell::LEFT, Cell::UP, Cell::DOWN, Cell::RIGHT };
+            const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
+                = { Cell::RIGHT, Cell::DOWN, Cell::UP, Cell::LEFT };
+
+            /*const int DIRS_SIZE = 4;
+
+            const IAtmosphere::Flags DIRS_DATA_LR[DIRS_SIZE]
+                = { Cell::LEFT, Cell::RIGHT };
+            const IAtmosphere::Flags REVERT_DIRS_DATA_LR[DIRS_SIZE]
+                = { Cell::RIGHT, Cell::LEFT };
+
+            const IAtmosphere::Flags DIRS_DATA_UD[DIRS_SIZE]
+                = { Cell::LEFT, Cell::UP, Cell::DOWN, Cell::RIGHT };
+            const IAtmosphere::Flags REVERT_DIRS_DATA_UD[DIRS_SIZE]
+                = { Cell::RIGHT, Cell::DOWN, Cell::UP, Cell::LEFT };
+
+            const IAtmosphere::Flags* DIRS;
+            const IAtmosphere::Flags* REVERT_DIRS;
+            if ((MAIN_TICK / 2) % 2 == 0)
+            {
+                DIRS = DIRS_DATA_LR;
+                REVERT_DIRS = REVERT_DIRS_DATA_LR;
+            }
+            else
+            {
+                DIRS = DIRS_DATA_UD;
+                REVERT_DIRS = REVERT_DIRS_DATA_UD;
+            }*/
+
+            Cell* near_cells[DIRS_SIZE];
+            int near_size = 0;
+            int gases_sums[GASES_NUM];
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                gases_sums[i] = 0;
+            }
+            int energy_sum = 0;
+
+            for (int dir = 0; dir < DIRS_SIZE; ++dir)
+            {
+                if (current.IsPassable(DIRS[dir]))
+                {
+                    Cell& nearby = Get(pos, DIRS[dir]);
+                    if (   nearby.IsPassable(REVERT_DIRS[dir])
+                        && nearby.IsPassable(Cell::CENTER))
+                    {
+                        near_cells[dir] = &nearby;
+                        for (int i = 0; i < GASES_NUM; ++i)
+                        {
+                            gases_sums[i] += nearby.data.gases[i];
+                        }
+                        energy_sum += nearby.data.energy;
+                        ++near_size;
+                        continue;
+                    }
+                }
+                near_cells[dir] = nullptr;
+            }
+
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                gases_sums[i] += current.data.gases[i];
+            }
+            energy_sum += current.data.energy;
+
+            int gases_average[GASES_NUM];
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                gases_average[i] = gases_sums[i] / (near_size + 1);
+            }
+            int energy_average = energy_sum / (near_size + 1);
+
+            for (int dir = 0; dir < DIRS_SIZE; ++dir)
+            {
+                if (near_cells[dir])
+                {
+                    Cell& nearby = *near_cells[dir];
+                    for (int i = 0; i < GASES_NUM; ++i)
+                    {
+                        int diff = gases_average[i] - nearby.data.gases[i];
+                        nearby.diffs[i] += diff;
+                    }
+                    int diff = energy_average - nearby.data.energy;
+                    nearby.energy_diff += diff;
                 }
             }
-            if (current.IsPassable(Cell::LEFT))
-            {
-                Cell& nearby = cells_[pos - width_];
-                if (   nearby.IsPassable(Cell::RIGHT)
-                    && nearby.IsPassable(Cell::CENTER))
-                {
-                    for (int gas = 0; gas < GASES_NUM; ++gas)
-                    {
-                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
-                        current.data.gases[gas] = sum / 2;
-                        nearby.data.gases[gas] = sum - current.data.gases[gas];
-                    }
 
-                    int sum = current.data.energy + nearby.data.energy;
-                    current.data.energy = sum / 2;
-                    nearby.data.energy = sum - current.data.energy;
-                }
-            }
-            if (current.IsPassable(Cell::RIGHT))
+            for (int i = 0; i < GASES_NUM; ++i)
             {
-                Cell& nearby = cells_[pos + width_];
-                if (   nearby.IsPassable(Cell::LEFT)
-                    && nearby.IsPassable(Cell::CENTER))
-                {
-                    for (int gas = 0; gas < GASES_NUM; ++gas)
-                    {
-                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
-                        current.data.gases[gas] = sum / 2;
-                        nearby.data.gases[gas] = sum - current.data.gases[gas];
-                    }
-
-                    int sum = current.data.energy + nearby.data.energy;
-                    current.data.energy = sum / 2;
-                    nearby.data.energy = sum - current.data.energy;
-                }
+                int remains = (gases_sums[i] - gases_average[i] * near_size);
+                int diff = remains - current.data.gases[i];
+                current.diffs[i] += diff;
             }
-            if (current.IsPassable(Cell::DOWN))
-            {
-                Cell& nearby = cells_[pos + 1];
-                if (   nearby.IsPassable(Cell::UP)
-                    && nearby.IsPassable(Cell::CENTER))
-                {
-                    for (int gas = 0; gas < GASES_NUM; ++gas)
-                    {
-                        int sum = current.data.gases[gas] + nearby.data.gases[gas];
-                        current.data.gases[gas] = sum / 2;
-                        nearby.data.gases[gas] = sum - current.data.gases[gas];
-                    }
-
-                    int sum = current.data.energy + nearby.data.energy;
-                    current.data.energy = sum / 2;
-                    nearby.data.energy = sum - current.data.energy;
-                }
-            }
+            int diff = (energy_sum - energy_average * near_size) - current.data.energy;
+            current.energy_diff += diff;
 
             ++pos;
         }
-        // TODO: right line
+        // Lower border line
+        {
+            Cell& current = cells_[pos];
+            current.Truncate();
+        }
         ++pos;
     }
-    // TODO: lower line
+
+    // Right border line
+    for (int i = 0; i < height_; ++i, ++pos)
+    {
+        Cell& current = cells_[pos];
+        current.Truncate();
+    }
+
+    Finalize();
+}
+
+void AtmosGrid::Finalize()
+{
+    for (int pos = 0; pos < length_; ++pos)
+    {
+        Cell& cell = cells_[pos];
+
+        for (int i = 0; i < GASES_NUM; ++i)
+        {
+            cell.data.gases[i] += cell.diffs[i];
+            cell.diffs[i] = 0;
+        }
+        cell.data.energy += cell.energy_diff;
+        cell.energy_diff = 0;
+
+        if (cell.flags & AtmosGrid::Cell::SPACE)
+        {
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                cell.data.gases[i] *= 4;
+                cell.data.gases[i] /= 5;
+            }
+            cell.data.energy *= 4;
+            cell.data.energy /= 5;
+        }
+
+        UpdateMacroParams(&cell.data);
+    }
 }

@@ -189,6 +189,12 @@ if(NOT CLIENT_VERSION)
 endif()
 message(STATUS ${CLIENT_VERSION})
 
+# Version.cpp generation
+execute_process(
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/version.py ${CLIENT_VERSION}
+)
+
 ###
 ### End checking build version
 ##########################################
@@ -203,20 +209,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 endif()
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "-DDEFINED_VERSION=\"${CLIENT_VERSION}\" ${CMAKE_CXX_FLAGS}")
-else()
-    set(CMAKE_CXX_FLAGS "/DDEFINED_VERSION=\"${CLIENT_VERSION}\" ${CMAKE_CXX_FLAGS}")
-endif()
-
 #SET(CMAKE_EXE_LINKER_FLAGS "/DEBUG")
-
-# Executable suffix helper
-if(WIN32)
-    set(EXECUTABLE_SUFFIX ".exe")
-else()
-    set(EXECUTABLE_SUFFIX "")
-endif()
 
 ###
 ### Global compiler glags have been setted
@@ -259,6 +252,7 @@ add_custom_command(
 add_custom_target(Metadata ALL DEPENDS AutogenMetadata.cpp)
 
 list(APPEND SOURCES "${CMAKE_BINARY_DIR}/AutogenMetadata.cpp")
+list(APPEND SOURCES "${CMAKE_BINARY_DIR}/Version.cpp")
 
 qt5_wrap_ui(FORMS_HEADERS ${FORMS})
 
@@ -285,7 +279,9 @@ if(BUILD_TESTS)
                         "${gmock_SOURCE_DIR}/include")
     target_link_libraries(KVEngine gtest)
     target_link_libraries(KVEngine gmock)
-    set_target_properties(KVEngine PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:CONSOLE")
+    if(MSVC)
+        set_target_properties(KVEngine PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:CONSOLE")
+    endif()
 endif()
 
 # Add opengl lib
@@ -378,11 +374,11 @@ file(GLOB_RECURSE GOFILES "${SERVER_DIR}/*.go")
 
 
 add_custom_command(
-    OUTPUT ${SERVER_DIR}/griefly-server${EXECUTABLE_SUFFIX}
+    OUTPUT ${SERVER_DIR}/griefly-server${CMAKE_EXECUTABLE_SUFFIX}
     WORKING_DIRECTORY ${SERVER_DIR}
     COMMAND ${CMAKE_COMMAND} -E env GOPATH=${GOPATH} GO15VENDOREXPERIMENT=1 ${GO_EXECUTABLE} build -ldflags "-X main.clientVersionBuild=${CLIENT_VERSION}"
     DEPENDS ${GOFILES})
-add_custom_target(GoServer ALL DEPENDS ${SERVER_DIR}/griefly-server${EXECUTABLE_SUFFIX})
+add_custom_target(GoServer ALL DEPENDS ${SERVER_DIR}/griefly-server${CMAKE_EXECUTABLE_SUFFIX})
 
 ###
 ### End building server

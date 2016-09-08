@@ -35,10 +35,14 @@ TEST(IdPtrDeathTest, Death)
     }, "Id table lookup fail");
 }
 
-TEST(IdPtr, Constructors)
+class IdPtrTest : public ::testing::Test
 {
-    TempTable table;
+private:
+    TempTable table_;
+};
 
+TEST_F(IdPtrTest, Constructors)
+{
     IdPtr<IMainObject> object(40);
     ASSERT_EQ(object.Id(), 40);
 
@@ -62,10 +66,8 @@ TEST(IdPtr, Constructors)
     ASSERT_EQ(from_other.Id(), 33);
 }
 
-TEST(IdPtr, EqualOperator)
+TEST_F(IdPtrTest, EqualOperator)
 {
-    TempTable table;
-
     IdPtr<IMainObject> object(23);
     ASSERT_TRUE(object == object);
     ASSERT_FALSE(object != object);
@@ -83,10 +85,8 @@ TEST(IdPtr, EqualOperator)
     ASSERT_FALSE(object2 != object);
 }
 
-TEST(IdPtr, Dereference)
+TEST_F(IdPtrTest, Dereference)
 {
-    TempTable table;
-
     IMainObject object(42);
     (*id_ptr_id_table)[42].object = &object;
 
@@ -104,10 +104,8 @@ TEST(IdPtr, Dereference)
     ASSERT_EQ(ptr.operator*(), ptr.operator->());
 }
 
-TEST(IdPtr, Validating)
+TEST_F(IdPtrTest, Validating)
 {
-    TempTable table;
-
     IMainObject object(42);
     (*id_ptr_id_table)[42].object = &object;
 
@@ -126,10 +124,8 @@ TEST(IdPtr, Validating)
     ASSERT_FALSE(ptr.IsValid());
 }
 
-TEST(IdPtr, SaveAndLoad)
+TEST_F(IdPtrTest, SaveAndLoad)
 {
-    TempTable table;
-
     IdPtr<IMainObject> ptr(93);
     std::stringstream str;
     str << ptr;

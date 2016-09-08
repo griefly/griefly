@@ -14,7 +14,6 @@
 #include "Params.h"
 
 #include "objects/Mob.h"
-#include "representation/Utils.h"
 #include "representation/Chat.h"
 #include "Names.h"
 #include "objects/Movable.h"
@@ -38,6 +37,7 @@
 #include <QByteArray>
 #include <QUuid>
 #include <QElapsedTimer>
+#include <QFileInfo>
 
 int ping_send;
 
@@ -268,8 +268,14 @@ void Game::InitWorld(int id, std::string map_name)
     std::cout << "Begin choose map" << std::endl;
     if (map_name == "no_map")
     {
-        if (   GetParamsHolder().GetParamBool("mapgen_name")
-            && utils::IsFileExist(GetParamsHolder().GetParam<std::string>("mapgen_name")))
+        if (!GetParamsHolder().GetParamBool("mapgen_name"))
+        {
+            qDebug() << "No mapgen param";
+            return;
+        }
+
+        QString mapgen_name = QString::fromStdString(GetParamsHolder().GetParam<std::string>("mapgen_name"));
+        if (QFileInfo::exists(mapgen_name))
         {
             srand(QTime::currentTime().msecsSinceStartOfDay());
 
@@ -308,7 +314,7 @@ void Game::InitWorld(int id, std::string map_name)
         }
         else
         {
-            qDebug() << "No mapgen param";
+            qDebug() << "Mapgen file does not exist" << mapgen_name;
             return;
         }
     }

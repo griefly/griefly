@@ -19,7 +19,7 @@
 #include "../Game.h"
 #include "Gun.h"
 #include "Weapons.h"
-
+#include "ElectricTools.h"
 
 Human::Human(size_t id) : IMob(id)
 {
@@ -502,6 +502,17 @@ void Human::processGUImsg(const Message2 &msg)
                 {
                     tool->Shoot(tool->TargetTileLoc(object));
                 }
+            }
+            else if (  IdPtr<RemoteAtmosTool> tool
+                     = interface_.GetActiveHand().Get())
+            {
+                IdPtr<CubeTile> tile = object->GetOwner();
+                if (!tile)
+                {
+                    return;
+                }
+                GetGame().GetChat().PostTextFor(
+                    AtmosTool::GetInfo(*tile->GetAtmosHolder()), GetId());
             }
         }
     }

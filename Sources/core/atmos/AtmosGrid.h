@@ -22,7 +22,7 @@ public:
         AtmosData data;
 
         int diffs[GASES_NUM];
-        unsigned int energy_diff;
+        int energy_diff;
         IAtmosphere::Flags flags;
         Cell()
         {
@@ -38,21 +38,30 @@ public:
             data.temperature = 0;
             data.volume = 1;
         }
-        char IsPassable(char dir)
+        inline char IsPassable(char dir)
         {
             return ~flags & dir;
         }
-        void SetUnpassable(char dir)
+        inline void SetUnpassable(char dir)
         {
             flags |= dir;
         }
-        void ResetPassable()
+        inline void ResetPassable()
         {
             flags = FULL;
         }
+        inline void Truncate()
+        {
+            for (int gas = 0; gas < GASES_NUM; ++gas)
+            {
+                data.gases[gas] = 0;
+            }
+            data.energy = 0;
+        }
     };
-    AtmosGrid(int width, int height)
-        : width_(width),
+    AtmosGrid(SyncRandom* random, int width, int height)
+        : random_(random),
+          width_(width),
           height_(height),
           length_(width_ * height_)
     {
@@ -72,13 +81,35 @@ public:
     {
         delete[] cells_;
     }
-    Cell& At(int x, int y)
+
+    inline Cell& Get(int pos, IAtmosphere::Flags dir)
+    {
+        // TODO: Boundaries check?
+
+        switch (dir)
+        {
+        case Cell::DOWN:  return cells_[pos + 1];
+        case Cell::UP:    return cells_[pos - 1];
+        case Cell::RIGHT: return cells_[pos + width_];
+        case Cell::LEFT:  return cells_[pos - width_];
+        default: break;
+        }
+
+        qDebug() << "AtmosGrid::Get, Unknown dir:" << dir;
+        kv_abort();
+        // Not reachable
+        return cells_[pos];
+    }
+    inline Cell& At(int x, int y)
     {
         return cells_[y + x * height_];
     }
     void Process();
+    void Finalize();
 
 private:
+    SyncRandom* random_;
+
     int width_;
     int height_;
     int length_;
