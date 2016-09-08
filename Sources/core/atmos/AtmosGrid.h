@@ -105,9 +105,10 @@ public:
         return cells_[y + x * height_];
     }
     void Process();
+private:
+    void Prepare(int stage);
     void Finalize();
 
-private:
     SyncRandom* random_;
 
     int width_;
