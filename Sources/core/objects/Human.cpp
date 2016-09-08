@@ -78,6 +78,21 @@ void Human::GenerateInterfaceForFrame()
 
 bool Human::TryMove(Dir direct)
 {
+    Dir pulled_object_move;
+    if (pulled_object_)
+        {
+            if (!CanTouch(pulled_object_))
+            {
+                pulled_object_ = 0;
+            }
+            else
+            {
+                VDir pos;
+                pos.x = GetX() - pulled_object_->GetX();
+                pos.y = GetY() - pulled_object_->GetY();
+                pulled_object_move = VDirToDir(pos);
+            }
+        }
     if (IMob::TryMove(direct))
     {   
         if (owner->GetItem<Shard>().IsValid())
@@ -86,271 +101,10 @@ bool Human::TryMove(Dir direct)
         }
         if (pulled_object_)
         {
-            if (!CanTouch(pulled_object_))
+            if(!pulled_object_->TryMove(pulled_object_move))
             {
-                int x = (GetRoot()->GetX() - pulled_object_->GetRoot()->GetX());
-                int y = (GetRoot()->GetY() - pulled_object_->GetRoot()->GetY() );
-                if (std::abs(x) + std::abs(y) >= 3)
-                {
-                    switch(direct)
-                    {
-                    case D_UP:
-                    if (x > 0)
-                    {
-                        if (CanPass(pulled_object_->GetRoot()->GetPassable(direct), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(helpers::revert_dir(direct)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(direct);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(D_RIGHT))
-                            {
-                                pulled_object_ = 0;
-                                break;
-                            }
-                        }
-                        else if (CanPass(pulled_object_->GetRoot()->GetPassable(D_RIGHT), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(D_RIGHT)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(D_RIGHT)->GetPassable(helpers::revert_dir(D_RIGHT)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(D_RIGHT);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(direct))
-                            {
-                                pulled_object_ = 0;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            pulled_object_ = 0;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if (CanPass(pulled_object_->GetRoot()->GetPassable(direct), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(helpers::revert_dir(direct)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(direct);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(D_LEFT))
-                            {
-                                pulled_object_ = 0;
-                                break;
-                            }
-                        }
-                        else if (CanPass(pulled_object_->GetRoot()->GetPassable(D_LEFT), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(D_LEFT)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(D_LEFT)->GetPassable(helpers::revert_dir(D_LEFT)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(D_LEFT);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(direct))
-                            {
-                                pulled_object_ = 0;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            pulled_object_ = 0;
-                            break;
-                        }
-                    }
-                    break;
-                    case D_DOWN:
-                    if(x > 0)
-                    {
-                        if (CanPass(pulled_object_->GetRoot()->GetPassable(direct), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(helpers::revert_dir(direct)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(direct);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(D_RIGHT))
-                            {
-                                pulled_object_ = 0;
-                                break;
-                            }
-                        }
-                        else if (CanPass(pulled_object_->GetRoot()->GetPassable(D_RIGHT), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(D_RIGHT)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(D_RIGHT)->GetPassable(helpers::revert_dir(D_RIGHT)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(D_RIGHT);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(direct))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else
-                        {
-                            pulled_object_ = 0;
-                        }
-                    }
-                    else
-                    {
-                        if (CanPass(pulled_object_->GetRoot()->GetPassable(direct), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(helpers::revert_dir(direct)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(direct);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(D_LEFT))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else if (CanPass(pulled_object_->GetRoot()->GetPassable(D_LEFT), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(D_LEFT)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(D_LEFT)->GetPassable(helpers::revert_dir(D_LEFT)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(D_LEFT);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(direct))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else
-                        {
-                            pulled_object_ = 0;
-                        }
-                    }
-                    break;
-                    case D_LEFT:
-                    if(y > 0)
-                    {
-                        if (CanPass(pulled_object_->GetRoot()->GetPassable(direct), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(helpers::revert_dir(direct)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(direct);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());;
-                            if(!pulled_object_->TryMove(D_DOWN))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else if (CanPass(pulled_object_->GetRoot()->GetPassable(D_DOWN), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(D_DOWN)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(D_DOWN)->GetPassable(helpers::revert_dir(D_DOWN)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(D_DOWN);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(direct))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else
-                        {
-                            pulled_object_ = 0;
-                        }
-                    }
-                    else
-                    {
-                        if (CanPass(pulled_object_->GetRoot()->GetPassable(direct), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(helpers::revert_dir(direct)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(direct);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(D_UP))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else if (CanPass(pulled_object_->GetRoot()->GetPassable(D_UP), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(D_UP)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(D_UP)->GetPassable(helpers::revert_dir(D_UP)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(D_UP);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(direct))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else
-                        {
-                            pulled_object_ = 0;
-                        }
-                    }
-                    break;
-                    case D_RIGHT:
-                    if(y > 0)
-                    {
-                        if (CanPass(pulled_object_->GetRoot()->GetPassable(direct), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(helpers::revert_dir(direct)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(direct);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(D_DOWN))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else if (CanPass(pulled_object_->GetRoot()->GetPassable(D_DOWN), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(D_DOWN)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(D_DOWN)->GetPassable(helpers::revert_dir(D_DOWN)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(D_DOWN);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(direct))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else
-                        {
-                            pulled_object_ = 0;
-                        }
-                    }
-                    else
-                    {
-                        if (CanPass(pulled_object_->GetRoot()->GetPassable(direct), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(direct)->GetPassable(helpers::revert_dir(direct)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(direct);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(D_UP))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else if (CanPass(pulled_object_->GetRoot()->GetPassable(D_UP), pulled_object_->passable_level) || CanPass(pulled_object_->GetRoot()->GetNeighbour(D_UP)->GetPassable(D_ALL), pulled_object_->passable_level)
-|| CanPass(pulled_object_->GetRoot()->GetNeighbour(D_UP)->GetPassable(helpers::revert_dir(D_UP)), pulled_object_->passable_level))
-                        {
-                            auto new_owner = pulled_object_->GetRoot()->GetNeighbour(D_UP);
-                            pulled_object_->GetRoot()->RemoveItem(pulled_object_->GetId());
-                            new_owner->AddItem(pulled_object_->GetId());
-                            if(!pulled_object_->TryMove(direct))
-                            {
-                                pulled_object_ = 0;
-                            }
-                        }
-                        else
-                        {
-                            pulled_object_ = 0;
-                        }
-                    }
-                    break;
-                    }
-                }
-                else
-                {
-                    if(!pulled_object_->TryMove(direct))
-                    {
-                        pulled_object_ = 0;
-                    }
-                }
-            }        
+                pulled_object_ = 0;
+            }       
         }
         return true;
     }
@@ -805,7 +559,7 @@ void Human::Bump(IdPtr<IMovable> item)
 
 void Human::RotationAction(IdPtr<IOnMapBase> item)
 {
-    if(IdPtr<IMovable> movable = item)
+    if (IdPtr<IMovable> movable = item)
     {
         if (!movable->anchored)
         {
@@ -813,10 +567,7 @@ void Human::RotationAction(IdPtr<IOnMapBase> item)
             {
                 return;
             }
-            else
-            {
-                movable->Rotate(movable->GetDir() + 1 % 4);
-            }
+            movable->Rotate((movable->GetDir() + 1) % 4);
         }
     }
 }

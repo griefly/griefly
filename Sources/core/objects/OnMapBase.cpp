@@ -13,7 +13,7 @@ IdPtr<ITurf> IOnMapBase::GetTurf()
     return 0;
 }
 
-IdPtr<CubeTile> IOnMapBase::GetRoot()
+IdPtr<IOnMapBase> IOnMapBase::GetRoot()
 {
     if (!GetOwner().IsValid())
     {

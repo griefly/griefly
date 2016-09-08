@@ -147,7 +147,7 @@ public:
     virtual void UpdatePassable() {}
     virtual IdPtr<ITurf> GetTurf();
     virtual void SetTurf(IdPtr<ITurf> turf);
-    IdPtr<CubeTile> GetRoot();
+    IdPtr<IOnMapBase> GetRoot();
 protected:
     bool KV_SAVEBLE(is_strong_owner);
     IdPtr<IOnMapBase> KV_SAVEBLE(owner);
