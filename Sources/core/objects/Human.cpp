@@ -80,19 +80,19 @@ bool Human::TryMove(Dir direct)
 {
     Dir pulled_object_move;
     if (pulled_object_)
+    {
+        if (!CanTouch(pulled_object_))
         {
-            if (!CanTouch(pulled_object_))
-            {
-                pulled_object_ = 0;
-            }
-            else
-            {
-                VDir pos;
-                pos.x = GetX() - pulled_object_->GetX();
-                pos.y = GetY() - pulled_object_->GetY();
-                pulled_object_move = VDirToDir(pos);
-            }
+            pulled_object_ = 0;
         }
+        else
+        {
+            VDir pos;
+            pos.x = GetX() - pulled_object_->GetX();
+            pos.y = GetY() - pulled_object_->GetY();
+            pulled_object_move = VDirToDir(pos);
+        }
+    }
     if (IMob::TryMove(direct))
     {   
         if (owner->GetItem<Shard>().IsValid())
@@ -203,9 +203,8 @@ void Human::processGUImsg(const Message2 &msg)
             PullAction(object);
             return;
         }
-        if (action == Click::LEFT_ALT)
+        if (action == Click::LEFT_R)
         {
-            std::cout << "here2" << std::endl;
             RotationAction(object);
             return;
         }
@@ -292,7 +291,6 @@ void Human::Process()
     {
         if (!CanTouch(pulled_object_))
         {
-            std::cout << "True" << std::endl;
             pulled_object_ = 0;
         }
     }
@@ -574,7 +572,7 @@ void Human::RotationAction(IdPtr<IOnMapBase> item)
 
 void Human::PullAction(IdPtr<IOnMapBase> item)
 {
-    if(IdPtr<IMovable> movable = item)
+    if (IdPtr<IMovable> movable = item)
     {
         if (CanTouch(movable))
         {
