@@ -2,6 +2,12 @@
 
 void AtmosGrid::Process()
 {
+    Prepare(0);
+    Finalize();
+}
+
+void AtmosGrid::Prepare(int stage)
+{
     int pos = 0;
 
     // Left border line
@@ -151,8 +157,6 @@ void AtmosGrid::Process()
         Cell& current = cells_[pos];
         current.Truncate();
     }
-
-    Finalize();
 }
 
 void AtmosGrid::Finalize()
