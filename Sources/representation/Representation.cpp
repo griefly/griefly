@@ -319,14 +319,13 @@ void Representation::Click(int x, int y)
 
     if (id_to_send != -1)
     {
+        // Alt key is disabled on purpose
+        // Alt key + click is some default action on Ubuntu,
+        // so it is bad to use it
         QString message = Click::LEFT;
         if (keys_state_[Qt::Key_Control])
         {
             message = Click::LEFT_CONTROL;
-        }
-        else if (keys_state_[Qt::Key_Alt])
-        {
-            message = Click::LEFT_ALT;
         }
         else if (keys_state_[Qt::Key_Shift])
         {

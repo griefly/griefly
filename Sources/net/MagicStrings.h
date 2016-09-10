@@ -2,7 +2,6 @@
 
 namespace Net
 {
-    //const char* const SIGNAL = "signal";
     const char* const NEXTTICK = "nexttick";
     const char* const END = "end";
     const char* const HASH = "hash";
@@ -39,7 +38,6 @@ namespace Click
 {
     const char* const LEFT = "lclick";
     const char* const LEFT_SHIFT = "lshclick";
-    const char* const LEFT_ALT = "laltclick";
     const char* const LEFT_CONTROL = "lctrlclick";
     const char* const LEFT_R = "lrclick";
 }
