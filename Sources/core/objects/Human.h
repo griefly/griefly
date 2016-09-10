@@ -44,6 +44,7 @@ public:
 
     void RotationAction(IdPtr<IOnMapBase> item);
     void PullAction(IdPtr<IOnMapBase> item);
+    void SetPullToNull();
 protected:
     int KV_SAVEBLE(attack_cooldown_);
 

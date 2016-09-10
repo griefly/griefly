@@ -56,6 +56,12 @@ void HumanInterface::InitSlots()
     lay_.GetView()->SetState("rest0");
     lay_.SetName(HumanInterfacePlaces::LAY);
 
+    stop_pull_.SetPos(15,12);
+    stop_pull_.GetView()->SetSprite("icons/screen_midnight.dmi");
+    stop_pull_.GetView()->SetState("pull");
+    stop_pull_.SetName(HumanInterfacePlaces::STOP_PULL);
+    pulling_ = false;
+
     if (IdPtr<Human> owner = owner_)
     {
         owner->UpdateOverlays();
@@ -84,6 +90,19 @@ Slot<Item>& HumanInterface::GetActiveHand()
         return r_hand_;
     else
         return l_hand_;
+}
+
+void HumanInterface::UpdatePulling(bool isPulling)
+{
+    pulling_ = isPulling;
+}
+
+void HumanInterface::StopPulling()
+{
+    if (IdPtr<Human> owner = owner_)
+    {
+        owner->SetPullToNull();
+    }
 }
 
 void HumanInterface::UpdateLaying()
@@ -221,6 +240,10 @@ void HumanInterface::HandleClick(const std::string& place)
     {
         ApplyActiveHandOnSlot(&uniform_);
     }
+    else if (place == HumanInterfacePlaces::STOP_PULL)
+    {
+        StopPulling();
+    }
     else if (place == HumanInterfacePlaces::DROP)
     {
         //qDebug() << "Drop";
@@ -281,6 +304,10 @@ void HumanInterface::Draw()
     swap_.Draw(helpers::dir_to_byond(active_hand_ ? D_UP : D_DOWN));
     health_.Draw();
     lay_.Draw();
+    if (pulling_)
+    {
+        stop_pull_.Draw();
+    }
 }
 
 unsigned int HumanInterface::hash() const

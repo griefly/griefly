@@ -78,19 +78,18 @@ void Human::GenerateInterfaceForFrame()
 
 bool Human::TryMove(Dir direct)
 {
-    Dir pulled_object_move;
+    VDir pos;
     if (pulled_object_)
     {
         if (!CanTouch(pulled_object_))
         {
             pulled_object_ = 0;
+            interface_.UpdatePulling(false);
         }
         else
         {
-            VDir pos;
             pos.x = GetX() - pulled_object_->GetX();
             pos.y = GetY() - pulled_object_->GetY();
-            pulled_object_move = VDirToDir(pos);
         }
     }
     if (IMob::TryMove(direct))
@@ -99,11 +98,12 @@ bool Human::TryMove(Dir direct)
         {
             PlaySoundIfVisible("glass_step.ogg", GetOwner().Id());
         }
-        if (pulled_object_)
+        if (pulled_object_ && !(std::abs(pos.x) + std::abs(pos.y) >= 2))
         {
-            if(!pulled_object_->TryMove(pulled_object_move))
+            if(!pulled_object_->TryMove(VDirToDir(pos)))
             {
                 pulled_object_ = 0;
+                interface_.UpdatePulling(false);
             }       
         }
         return true;
@@ -292,6 +292,7 @@ void Human::Process()
         if (!CanTouch(pulled_object_))
         {
             pulled_object_ = 0;
+            interface_.UpdatePulling(false);
         }
     }
 }
@@ -581,8 +582,15 @@ void Human::PullAction(IdPtr<IOnMapBase> item)
                 return;
             }
             pulled_object_ = movable;
+            interface_.UpdatePulling(true);
         }
     }
+}
+
+void Human::SetPullToNull()
+{
+    pulled_object_ = 0;
+    interface_.UpdatePulling(false);
 }
 
 CaucasianHuman::CaucasianHuman(size_t id) : Human(id)

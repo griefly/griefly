@@ -24,6 +24,7 @@ namespace HumanInterfacePlaces
     const std::string UNIFORM = "UNIFORM";
     const std::string FEET = "FEET";
     const std::string DROP = "DROP";
+    const std::string STOP_PULL = "STOP_PULL";
     const std::string SWAP = "SWAP";
     const std::string LAY = "SWITCH_LAY";
 }
@@ -56,6 +57,8 @@ public:
 
     void UpdateHealth();
     void UpdateLaying();
+    void UpdatePulling(bool isPulling);
+    void StopPulling();
 
 public:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
@@ -63,9 +66,11 @@ public:
     IdPtr<IOnMapObject> owner_;
 
     bool active_hand_;
+    bool pulling_;
 
     Slot<Item> drop_;
     Slot<Item> swap_;
+    Slot<Item> stop_pull_;
 
     Slot<Item> health_;
 
