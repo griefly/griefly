@@ -23,7 +23,7 @@ Door::Door(size_t id) : IOnMapObject(id)
 
 void Door::Open()
 {
-    if (!CheckState(CLOSED))
+    if (!IsState(CLOSED))
     {
         return;
     }
@@ -36,7 +36,7 @@ void Door::Open()
 
 void Door::Close()
 {
-    if (!CheckState(OPEN))
+    if (!IsState(OPEN))
     {
         return;
     }
@@ -49,7 +49,7 @@ void Door::Close()
 
 void Door::Process()
 {
-    if (CheckState(OPENING))
+    if (IsState(OPENING))
     {
         if (MAIN_TICK - last_tick_ > 11)
         {
@@ -60,7 +60,7 @@ void Door::Process()
         }
         return;
     }
-    if (CheckState(CLOSING))
+    if (IsState(CLOSING))
     {
         if (MAIN_TICK - last_tick_ > 11)
         {
@@ -71,7 +71,7 @@ void Door::Process()
         }
         return;
     }
-    if (CheckState(OPEN))
+    if (IsState(OPEN))
     {
         if (MAIN_TICK - last_tick_ > 50)
         {
@@ -82,9 +82,9 @@ void Door::Process()
 
 void Door::Bump(IdPtr<IMovable> item)
 {
-    if (IdPtr<IMob> m = item)
+    if (IdPtr<IMob> mob = item)
     {
-        if (CheckState(CLOSED))
+        if (IsState(CLOSED))
         {
             Open();
         }
@@ -93,13 +93,13 @@ void Door::Bump(IdPtr<IMovable> item)
 
 void Door::Weld()
 {
-    if (   !CheckState(CLOSED)
-        && !CheckState(WELDED))
+    if (   !IsState(CLOSED)
+        && !IsState(WELDED))
     {
         return;
     }
 
-    if (CheckState(WELDED))
+    if (IsState(WELDED))
     {
         SetState("door_closed");
         door_state_ = CLOSED;
@@ -115,9 +115,9 @@ void Door::Weld()
 
 void Door::AttackBy(IdPtr<Item> item)
 {
-    if (IdPtr<Weldingtool> w = item)
+    if (IdPtr<Weldingtool> welding_tool = item)
     {
-        if ((CheckState(CLOSED) || CheckState(WELDED)) && w->Working())
+        if ((IsState(CLOSED) || IsState(WELDED)) && welding_tool->Working())
         {
             Weld();
         }
@@ -125,11 +125,11 @@ void Door::AttackBy(IdPtr<Item> item)
     }
 
 
-    if (CheckState(OPEN))
+    if (IsState(OPEN))
     {
         Close();
     }
-    else if (CheckState(CLOSED))
+    else if (IsState(CLOSED))
     {
         Open();
     }
@@ -149,7 +149,7 @@ NontransparentDoor::NontransparentDoor(size_t id) : Door(id)
 
 void NontransparentDoor::Open()
 {
-    if (!CheckState(CLOSED))
+    if (!IsState(CLOSED))
     {
         return;
     }
@@ -159,7 +159,7 @@ void NontransparentDoor::Open()
 
 void NontransparentDoor::Close()
 {
-    if (!CheckState(OPEN))
+    if (!IsState(OPEN))
     {
         return;
     }
@@ -205,7 +205,7 @@ void GlassDoor::AfterWorldCreation()
 
 void GlassDoor::Open()
 {
-    if (!CheckState(CLOSED))
+    if (!IsState(CLOSED))
     {
         return;
     }
@@ -218,7 +218,7 @@ void GlassDoor::Open()
 
 void GlassDoor::Close()
 {
-    if (!CheckState(OPEN))
+    if (!IsState(OPEN))
     {
         return;
     }
@@ -231,7 +231,7 @@ void GlassDoor::Close()
 
 void GlassDoor::Process()
 {
-    if (CheckState(OPENING))
+    if (IsState(OPENING))
     {
         if (MAIN_TICK - last_tick_ > 9)
         {
@@ -242,7 +242,7 @@ void GlassDoor::Process()
         }
         return;
     }
-    if (CheckState(CLOSING))
+    if (IsState(CLOSING))
     {
         if (MAIN_TICK - last_tick_ > 9)
         {
@@ -253,7 +253,7 @@ void GlassDoor::Process()
         }
         return;
     }
-    if (CheckState(OPEN))
+    if (IsState(OPEN))
     {
         if (MAIN_TICK - last_tick_ > 50)
         {
@@ -264,9 +264,9 @@ void GlassDoor::Process()
 
 void GlassDoor::Bump(IdPtr<IMovable> item)
 {
-    if (IdPtr<IMob> m = item)
+    if (IdPtr<IMob> mob = item)
     {
-        if (CheckState(CLOSED))
+        if (IsState(CLOSED))
         {
             Open();
         }
@@ -275,7 +275,7 @@ void GlassDoor::Bump(IdPtr<IMovable> item)
 
 void GlassDoor::AttackBy(IdPtr<Item> item)
 {
-    if (CheckState(OPEN))
+    if (IsState(OPEN))
     {
         Close();
     }

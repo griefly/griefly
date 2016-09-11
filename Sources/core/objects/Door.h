@@ -20,7 +20,7 @@ public:
     virtual void Process() override;
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
-    bool CheckState(STATE state) { return state == door_state_ ; };
+    bool IsState(STATE state) const { return state == door_state_ ; };
     void Weld();
 private:
     int KV_SAVEBLE(door_state_);
@@ -86,7 +86,7 @@ public:
     virtual void Process() override;
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
-    bool CheckState(STATE state) { return state == door_state_; };
+    bool IsState(STATE state) const { return state == door_state_; };
 private:
     int KV_SAVEBLE(door_state_);
     size_t KV_SAVEBLE(last_tick_);
