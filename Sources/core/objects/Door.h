@@ -10,19 +10,19 @@ public:
     DECLARE_GET_TYPE_ITEM(Door);
     Door(size_t id);
     
+    enum STATE
+    {
+        OPEN, CLOSED, OPENING, CLOSING, WELDED  
+    };
+
     virtual void Open();
     virtual void Close();
     virtual void Process() override;
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
-    bool IsOpen() const { return door_state_ == OPEN; }
-    bool IsClosed() const { return door_state_ == CLOSED; }
+    bool CheckState(STATE state) { return state == door_state_ ; };
     void Weld();
 private:
-    enum STATE
-    {
-        OPEN, CLOSED, OPENING, CLOSING, WELDED  
-    };
     int KV_SAVEBLE(door_state_);
     size_t KV_SAVEBLE(last_tick_);
 };
@@ -76,17 +76,18 @@ public:
 
     virtual void AfterWorldCreation() override;
 
+    enum STATE
+    {
+        OPEN, CLOSED, OPENING, CLOSING  
+    };
+
     virtual void Open();
     virtual void Close();
     virtual void Process() override;
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
-    bool IsOpen() const { return door_state_ == OPEN; }
+    bool CheckState(STATE state) { return state == door_state_; };
 private:
-    enum STATE
-    {
-        OPEN, CLOSED, OPENING, CLOSING
-    };
     int KV_SAVEBLE(door_state_);
     size_t KV_SAVEBLE(last_tick_);
 
