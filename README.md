@@ -23,7 +23,7 @@ How to build everything on Windows
 ----------------------------------
 _If you have any issues during the build process please report them_   
 
-It should be possible to build everything without Qt Cretor, but the guide assumes that Qt Creator is used.  
+It should be possible to build everything without Qt Creator, but the guide assumes that Qt Creator is used.  
 
 1. All tools and libs from the depencies list should be available on your machine
 2. Open CMakeLists.txt in Qt Creator  
