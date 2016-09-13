@@ -370,7 +370,7 @@ std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
     interf.lay_.operator<<(file) << " ";
     interf.stop_pull_.operator<<(file) << " ";
     file << interf.active_hand_ << " ";
-    file << interf.pulling_ <<" ";
+    file << interf.pulling_ << " ";
     file << interf.owner_ << " ";
     return file;
 }
