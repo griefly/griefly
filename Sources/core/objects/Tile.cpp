@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <cassert>
 
 #include "../Helpers.h"
 #include "../Map.h"

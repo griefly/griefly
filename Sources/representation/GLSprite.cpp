@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <cassert>
 
 #include "GLSprite.h"
 #include "core/Constheader.h"

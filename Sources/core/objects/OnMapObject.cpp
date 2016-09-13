@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <cassert>
 
 #include "OnMapObject.h"
 #include "../Map.h"

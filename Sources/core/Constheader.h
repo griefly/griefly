@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include <stdio.h>
+#include <cstdio>
 #include <vector>
 #include <iostream>
 #include <fstream>

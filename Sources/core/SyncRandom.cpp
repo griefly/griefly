@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 SyncRandom::SyncRandom()
     : seed_(rand()),
