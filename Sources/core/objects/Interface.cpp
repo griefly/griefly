@@ -324,6 +324,8 @@ unsigned int HumanInterface::hash() const
     hash += swap_.hash_member();
     hash += health_.hash_member();
     hash += lay_.hash_member();
+    hash += stop_pull_.hash_member();
+    hash += pulling_;
     hash += owner_.Id();
     return hash;
 }
@@ -366,7 +368,9 @@ std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
     interf.swap_.operator<<(file) << " ";
     interf.health_.operator<<(file) << " ";
     interf.lay_.operator<<(file) << " ";
+    interf.stop_pull_.operator<<(file) << " ";
     file << interf.active_hand_ << " ";
+    file << interf.pulling_ <<" ";
     file << interf.owner_ << " ";
     return file;
 }
@@ -382,7 +386,9 @@ std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
     interf.swap_.operator>>(file);
     interf.health_.operator>>(file);
     interf.lay_.operator>>(file);
+    interf.stop_pull_.operator>>(file);
     file >> interf.active_hand_;
     file >> interf.owner_;
+    file >> interf.pulling_;
     return file;
 }
