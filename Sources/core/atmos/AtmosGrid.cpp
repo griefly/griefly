@@ -74,7 +74,7 @@ void AtmosGrid::Prepare(int stage)
                 REVERT_DIRS = REVERT_DIRS_DATA_UD;
             }*/
 
-            Cell* near_cells[DIRS_SIZE];
+            Cell* near_cells[DIRS_SIZE + 1];
             int near_size = 0;
             int gases_sums[GASES_NUM];
             for (int i = 0; i < GASES_NUM; ++i)
@@ -112,6 +112,7 @@ void AtmosGrid::Prepare(int stage)
                 gases_sums[i] += current.data.gases[i];
             }
             energy_sum += current.data.energy;
+            near_cells[DIRS_SIZE] = &current;
 
             int gases_average[GASES_NUM];
             for (int i = 0; i < GASES_NUM; ++i)
@@ -120,7 +121,7 @@ void AtmosGrid::Prepare(int stage)
             }
             int energy_average = energy_sum / (near_size + 1);
 
-            for (int dir = 0; dir < DIRS_SIZE; ++dir)
+            for (int dir = 0; dir < DIRS_SIZE + 1; ++dir)
             {
                 if (near_cells[dir])
                 {
@@ -134,14 +135,6 @@ void AtmosGrid::Prepare(int stage)
                     nearby.energy_diff += diff;
                 }
             }
-
-            for (int i = 0; i < GASES_NUM; ++i)
-            {
-                int diff = gases_average[i] - current.data.gases[i];
-                current.diffs[i] += diff;
-            }
-            int diff = energy_average - current.data.energy;
-            current.energy_diff += diff;
 
             ++pos;
         }
