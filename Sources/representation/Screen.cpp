@@ -1,6 +1,6 @@
 #include "Screen.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include "Params.h"
 #include "qt/qtopengl.h"

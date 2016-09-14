@@ -1,7 +1,7 @@
-#include <math.h>
+#include <cmath>
 #include <sstream>
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 
 #include <QDebug>
 

@@ -1,6 +1,6 @@
-#include <KVAbort.h>
+#include "KVAbort.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #ifdef _BUILD_COVER
 extern "C" void __gcov_flush();
