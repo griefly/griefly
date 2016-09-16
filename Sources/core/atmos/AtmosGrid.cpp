@@ -6,6 +6,54 @@ void AtmosGrid::Process()
     Finalize();
 }
 
+const int DIRS_SIZE = 4;
+
+inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
+{
+    int near_size = 0;
+    int gases_sums[GASES_NUM];
+    for (int i = 0; i < GASES_NUM; ++i)
+    {
+        gases_sums[i] = 0;
+    }
+    int energy_sum = 0;
+
+    for (int dir = 0; dir < DIRS_SIZE + 1; ++dir)
+    {
+        if (AtmosGrid::Cell* nearby = near_cells[dir])
+        {
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                gases_sums[i] += nearby->data.gases[i];
+            }
+            energy_sum += nearby->data.energy;
+            ++near_size;
+        }
+    }
+
+    int gases_average[GASES_NUM];
+    for (int i = 0; i < GASES_NUM; ++i)
+    {
+        gases_average[i] = gases_sums[i] / near_size;
+    }
+    int energy_average = energy_sum / near_size;
+
+    for (int dir = 0; dir < DIRS_SIZE + 1; ++dir)
+    {
+        if (near_cells[dir])
+        {
+            AtmosGrid::Cell& nearby = *near_cells[dir];
+            for (int i = 0; i < GASES_NUM; ++i)
+            {
+                int diff = gases_average[i] - nearby.data.gases[i];
+                nearby.diffs[i] += diff;
+            }
+            int diff = energy_average - nearby.data.energy;
+            nearby.energy_diff += diff;
+        }
+    }
+}
+
 void AtmosGrid::Prepare(int stage)
 {
     int pos = 0;
@@ -43,7 +91,6 @@ void AtmosGrid::Prepare(int stage)
                 continue;
             }
 
-            const int DIRS_SIZE = 4;
             const IAtmosphere::Flags DIRS[DIRS_SIZE]
                 = { Cell::LEFT, Cell::UP, Cell::DOWN, Cell::RIGHT };
             const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
@@ -75,16 +122,6 @@ void AtmosGrid::Prepare(int stage)
             }*/
 
             Cell* near_cells[DIRS_SIZE + 1];
-            int near_size = 0;
-            int gases_sums[GASES_NUM];
-            for (int i = 0; i < GASES_NUM; ++i)
-            {
-                gases_sums[i] = 0;
-            }
-            int energy_sum = 0;
-
-            // TODO: function which will operate under
-            // 5 cells
 
             for (int dir = 0; dir < DIRS_SIZE; ++dir)
             {
@@ -95,46 +132,14 @@ void AtmosGrid::Prepare(int stage)
                         && nearby.IsPassable(Cell::CENTER))
                     {
                         near_cells[dir] = &nearby;
-                        for (int i = 0; i < GASES_NUM; ++i)
-                        {
-                            gases_sums[i] += nearby.data.gases[i];
-                        }
-                        energy_sum += nearby.data.energy;
-                        ++near_size;
                         continue;
                     }
                 }
                 near_cells[dir] = nullptr;
             }
-
-            for (int i = 0; i < GASES_NUM; ++i)
-            {
-                gases_sums[i] += current.data.gases[i];
-            }
-            energy_sum += current.data.energy;
             near_cells[DIRS_SIZE] = &current;
 
-            int gases_average[GASES_NUM];
-            for (int i = 0; i < GASES_NUM; ++i)
-            {
-                gases_average[i] = gases_sums[i] / (near_size + 1);
-            }
-            int energy_average = energy_sum / (near_size + 1);
-
-            for (int dir = 0; dir < DIRS_SIZE + 1; ++dir)
-            {
-                if (near_cells[dir])
-                {
-                    Cell& nearby = *near_cells[dir];
-                    for (int i = 0; i < GASES_NUM; ++i)
-                    {
-                        int diff = gases_average[i] - nearby.data.gases[i];
-                        nearby.diffs[i] += diff;
-                    }
-                    int diff = energy_average - nearby.data.energy;
-                    nearby.energy_diff += diff;
-                }
-            }
+            ProcessFiveCells(near_cells);
 
             ++pos;
         }
