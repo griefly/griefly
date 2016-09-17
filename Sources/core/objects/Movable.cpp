@@ -5,7 +5,7 @@
 
 #include "../Game.h"
 
-#include <assert.h>
+#include <cassert>
 
 IMovable::IMovable(size_t id) : IOnMapObject(id)
 {
