@@ -13,10 +13,10 @@ Closet::Closet(size_t id)
     open_ = false;
 
     SetPassable(D_ALL, Passable::AIR);
-    SetPassable(D_UP, Passable::AIR);
-    SetPassable(D_DOWN, Passable::AIR);
-    SetPassable(D_LEFT, Passable::AIR);
-    SetPassable(D_RIGHT, Passable::AIR);
+    SetPassable(D_UP, Passable::FULL);
+    SetPassable(D_DOWN, Passable::FULL);
+    SetPassable(D_LEFT, Passable::FULL);
+    SetPassable(D_RIGHT, Passable::FULL);
 
     SetSprite("icons/closet.dmi");
     SetState("closed");
@@ -71,6 +71,11 @@ void Closet::Bump(IdPtr<IMovable> item)
         return;
     }
     IMovable::Bump(item);
+}
+
+IdPtr<IOnMapBase> Closet::GetNeighbour(Dir direct) const
+{
+    return GetId();
 }
 
 bool Closet::AddItem(IdPtr<IOnMapBase> item)
@@ -148,10 +153,10 @@ void Closet::Close()
 
     open_ = false;
     SetPassable(D_ALL, Passable::AIR);
-    SetPassable(D_UP, Passable::AIR);
-    SetPassable(D_DOWN, Passable::AIR);
-    SetPassable(D_LEFT, Passable::AIR);
-    SetPassable(D_RIGHT, Passable::AIR);
+    SetPassable(D_UP, Passable::FULL);
+    SetPassable(D_DOWN, Passable::FULL);
+    SetPassable(D_LEFT, Passable::FULL);
+    SetPassable(D_RIGHT, Passable::FULL);
     SetState("closed");
 
     PlaySoundIfVisible("click.ogg", owner.Id());
