@@ -83,8 +83,7 @@ bool Human::TryMove(Dir direct)
     {
         if (!CanTouch(pulled_object_))
         {
-            pulled_object_ = 0;
-            interface_.UpdatePulling(false);
+            StopPull();
         }
         else
         {
@@ -98,9 +97,9 @@ bool Human::TryMove(Dir direct)
         {
             PlaySoundIfVisible("glass_step.ogg", GetOwner().Id());
         }
-        if (pulled_object_ && !(std::abs(pos.x) + std::abs(pos.y) >= 2))
+        if (pulled_object_ && std::abs(pos.x) + std::abs(pos.y) < 2)
         {
-            if(!pulled_object_->TryMove(VDirToDir(pos)))
+            if (!pulled_object_->TryMove(VDirToDir(pos)))
             {
                 pulled_object_ = 0;
                 interface_.UpdatePulling(false);
@@ -291,8 +290,7 @@ void Human::Process()
     {
         if (!CanTouch(pulled_object_))
         {
-            pulled_object_ = 0;
-            interface_.UpdatePulling(false);
+            StopPull();
         }
     }
 }
@@ -587,7 +585,7 @@ void Human::PullAction(IdPtr<IOnMapBase> item)
     }
 }
 
-void Human::SetPullToNull()
+void Human::StopPull()
 {
     pulled_object_ = 0;
     interface_.UpdatePulling(false);

@@ -92,16 +92,16 @@ Slot<Item>& HumanInterface::GetActiveHand()
         return l_hand_;
 }
 
-void HumanInterface::UpdatePulling(bool isPulling)
+void HumanInterface::UpdatePulling(bool is_pulling)
 {
-    pulling_ = isPulling;
+    pulling_ = is_pulling;
 }
 
 void HumanInterface::StopPulling()
 {
     if (IdPtr<Human> owner = owner_)
     {
-        owner->SetPullToNull();
+        owner->StopPull();
     }
 }
 
@@ -388,7 +388,7 @@ std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
     interf.lay_.operator>>(file);
     interf.stop_pull_.operator>>(file);
     file >> interf.active_hand_;
-    file >> interf.owner_;
     file >> interf.pulling_;
+    file >> interf.owner_;
     return file;
 }

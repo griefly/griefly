@@ -57,7 +57,7 @@ public:
 
     void UpdateHealth();
     void UpdateLaying();
-    void UpdatePulling(bool isPulling);
+    void UpdatePulling(bool is_pulling);
     void StopPulling();
 
 public:
