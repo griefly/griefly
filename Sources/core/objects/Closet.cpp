@@ -153,10 +153,6 @@ void Closet::Close()
 
     open_ = false;
     SetPassable(D_ALL, Passable::AIR);
-    SetPassable(D_UP, Passable::FULL);
-    SetPassable(D_DOWN, Passable::FULL);
-    SetPassable(D_LEFT, Passable::FULL);
-    SetPassable(D_RIGHT, Passable::FULL);
     SetState("closed");
 
     PlaySoundIfVisible("click.ogg", owner.Id());
@@ -172,10 +168,6 @@ void Closet::Open()
 
     open_ = true;
     SetPassable(D_ALL, Passable::FULL);
-    SetPassable(D_UP, Passable::FULL);
-    SetPassable(D_DOWN, Passable::FULL);
-    SetPassable(D_LEFT, Passable::FULL);
-    SetPassable(D_RIGHT, Passable::FULL);
     SetState("open");
 
     PlaySoundIfVisible("click.ogg", owner.Id());
