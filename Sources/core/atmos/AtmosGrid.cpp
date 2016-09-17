@@ -73,7 +73,7 @@ void AtmosGrid::Prepare(int stage)
             current.Truncate();
         }
         ++pos;
-        for (int column = 1; column < height_ - 1; ++column)
+        for (int column = 1; column < height_ - 1; ++column, ++pos)
         {
 
             Cell& current = cells_[pos];
@@ -81,13 +81,11 @@ void AtmosGrid::Prepare(int stage)
             if (!current.IsPassable(Cell::CENTER))
             {
                 // TODO: if something still here
-                ++pos;
                 continue;
             }
 
             if (((column + line) % 2) == (MAIN_TICK % 2))
             {
-                ++pos;
                 continue;
             }
 
@@ -140,8 +138,6 @@ void AtmosGrid::Prepare(int stage)
             near_cells[DIRS_SIZE] = &current;
 
             ProcessFiveCells(near_cells);
-
-            ++pos;
         }
         // Lower border line
         {
