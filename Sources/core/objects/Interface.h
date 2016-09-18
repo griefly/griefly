@@ -58,7 +58,6 @@ public:
     void UpdateHealth();
     void UpdateLaying();
     void UpdatePulling(bool is_pulling);
-    void StopPulling();
 
 public:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
@@ -82,6 +81,8 @@ public:
     Slot<Item> suit_;
     Slot<Item> uniform_;
     Slot<Item> feet_;
+private:
+    void StopPull();
 };
 
 std::ostream& operator<<(std::stringstream& file, HumanInterface& interf);

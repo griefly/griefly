@@ -97,7 +97,7 @@ void HumanInterface::UpdatePulling(bool is_pulling)
     pulling_ = is_pulling;
 }
 
-void HumanInterface::StopPulling()
+void HumanInterface::StopPull()
 {
     if (IdPtr<Human> owner = owner_)
     {
@@ -242,7 +242,7 @@ void HumanInterface::HandleClick(const std::string& place)
     }
     else if (place == HumanInterfacePlaces::STOP_PULL)
     {
-        StopPulling();
+        StopPull();
     }
     else if (place == HumanInterfacePlaces::DROP)
     {
