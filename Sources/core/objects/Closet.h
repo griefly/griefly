@@ -24,6 +24,7 @@ public:
     virtual void AfterWorldCreation() override;
 
     virtual void Delete() override;
+    virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const override;
     // TODO: ForEach (?)
 protected:
     virtual void Open();
