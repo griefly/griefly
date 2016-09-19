@@ -47,11 +47,6 @@ public:
     {
         return transparent;
     }
-    virtual void Process() override
-    {
-        ProcessPhysics();
-    }
-    virtual void ProcessPhysics();
     
     virtual void Delete() override;
     virtual void Represent() override;

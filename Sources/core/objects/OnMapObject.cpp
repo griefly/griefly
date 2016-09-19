@@ -30,21 +30,6 @@ void IOnMapObject::Represent()
     GetRepresentation().AddToNewFrame(ent);
 }
 
-void IOnMapObject::ProcessPhysics()
-{
-    if (owner->IsStrongOwner())
-    {
-        return;
-    }
-    auto down = owner->GetNeighbour(D_ZDOWN);
-    if (    down.IsValid() 
-        && (CanPass(down->GetPassable(D_ZUP), passable_level)) 
-        && (CanPass(down->GetPassable(D_ALL), passable_level)) )
-    {
-        owner->RemoveItem(GetId());
-        down->AddItem(GetId());
-    }
-}
 void IOnMapObject::Delete()
 {
     IOnMapBase::Delete();

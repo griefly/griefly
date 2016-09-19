@@ -29,7 +29,6 @@ Human::Human(size_t id) : IMob(id)
     SetState("african1_m_s");
     SetPassable(D_ALL, Passable::BIG_ITEM);
     v_level = 9;
-    is_strong_owner = true;
     attack_cooldown_ = 0;
     name = "Morgan James";
     passable_level = Passable::BIG_CREATURE;

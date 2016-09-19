@@ -56,8 +56,3 @@ void IMob::processGUImsg(const Message2 &msg)
         TryMove(D_RIGHT);
     }
 }
-
-void IMob::ProcessPhysics()
-{
-    IMessageReceiver::ProcessPhysics();
-}

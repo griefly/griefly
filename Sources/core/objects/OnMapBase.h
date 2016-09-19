@@ -31,7 +31,7 @@ class IOnMapBase: public IDraw
 public:
     DECLARE_SAVED(IOnMapBase, IDraw);
     DECLARE_GET_TYPE_ITEM(IOnMapBase);
-    IOnMapBase(size_t id) : IDraw(id) {owner = 0; is_strong_owner = false;}
+    IOnMapBase(size_t id) : IDraw(id) {owner = 0;}
     virtual bool IsVisibleByPlayer() const
     {
         return true;
@@ -127,10 +127,6 @@ public:
     {
         return owner;
     }
-    bool IsStrongOwner() const
-    {
-        return is_strong_owner;
-    }
 
     virtual int GetX() const
     {
@@ -148,7 +144,6 @@ public:
     virtual IdPtr<ITurf> GetTurf();
     virtual void SetTurf(IdPtr<ITurf> turf);
 protected:
-    bool KV_SAVEBLE(is_strong_owner);
     IdPtr<IOnMapBase> KV_SAVEBLE(owner);
     virtual size_t GetItemImpl(unsigned int hash) { return 0; }
 };

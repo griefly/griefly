@@ -18,8 +18,6 @@ public:
     virtual void DeinitGUI(){}
     virtual void GenerateInterfaceForFrame();
     virtual void processGUImsg(const Message2& msg) override;
-    
-    virtual void ProcessPhysics() override;
 
     virtual InterfaceBase* GetInterface() { return nullptr; }
 
