@@ -13,6 +13,15 @@ IdPtr<ITurf> IOnMapBase::GetTurf()
     return 0;
 }
 
+IdPtr<IOnMapBase> IOnMapBase::GetRoot()
+{
+    if (!GetOwner().IsValid())
+    {
+        return GetId();
+    }
+    return GetOwner()->GetRoot();
+}
+
 void IOnMapBase::SetTurf(IdPtr<ITurf> turf)
 {
     if (owner.IsValid())
