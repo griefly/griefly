@@ -38,6 +38,7 @@ void HumanInterface::InitSlots()
     active_hand_ = true;
 
     drop_.SetPos(7, 15);
+    drop_.GetView()->SetSprite("icons/screen1_old.dmi");
     drop_.GetView()->SetState("act_drop");
     drop_.SetName(HumanInterfacePlaces::DROP);
 
@@ -56,9 +57,9 @@ void HumanInterface::InitSlots()
     lay_.GetView()->SetState("rest0");
     lay_.SetName(HumanInterfacePlaces::LAY);
 
-    stop_pull_.SetPos(15,12);
-    stop_pull_.GetView()->SetSprite("icons/screen_midnight.dmi");
-    stop_pull_.GetView()->SetState("pull");
+    stop_pull_.SetPos(8, 15);
+    stop_pull_.GetView()->SetSprite("icons/screen1_old.dmi");
+    stop_pull_.GetView()->SetState("pull0");
     stop_pull_.SetName(HumanInterfacePlaces::STOP_PULL);
     pulling_ = false;
 
@@ -95,6 +96,8 @@ Slot<Item>& HumanInterface::GetActiveHand()
 void HumanInterface::UpdatePulling(bool is_pulling)
 {
     pulling_ = is_pulling;
+    std::string state = pulling_ ? "pull1" : "pull0";
+    stop_pull_.GetView()->SetState(state);
 }
 
 void HumanInterface::StopPull()
@@ -304,10 +307,7 @@ void HumanInterface::Draw()
     swap_.Draw(helpers::dir_to_byond(active_hand_ ? D_UP : D_DOWN));
     health_.Draw();
     lay_.Draw();
-    if (pulling_)
-    {
-        stop_pull_.Draw();
-    }
+    stop_pull_.Draw();
 }
 
 unsigned int HumanInterface::hash() const

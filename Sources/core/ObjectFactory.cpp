@@ -301,8 +301,6 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
             std::stringstream local_variable;
             local_variable << it->second;
 
-            qDebug() << it->first.c_str();
-
             get_setters_for_types()[t_item][it->first](i.operator*(), local_variable);
         }
 

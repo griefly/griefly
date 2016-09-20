@@ -100,8 +100,8 @@ bool Human::TryMove(Dir direct)
         {
             if (!pulled_object_->TryMove(VDirToDir(pos)))
             {
-                 StopPull();
-            }       
+                StopPull();
+            }
         }
         return true;
     }
