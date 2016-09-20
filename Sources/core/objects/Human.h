@@ -41,6 +41,10 @@ public:
     void UpdateOverlays();
 
     int GetHealth() { return health_; }
+
+    void RotationAction(IdPtr<IOnMapBase> item);
+    void PullAction(IdPtr<IOnMapBase> item);
+    void StopPull();
 protected:
     int KV_SAVEBLE(attack_cooldown_);
 
@@ -52,6 +56,8 @@ protected:
     bool KV_SAVEBLE(dead_);
 
     int KV_SAVEBLE(health_);
+
+    IdPtr<IMovable> KV_SAVEBLE(pulled_object_);
 };
 ADD_TO_TYPELIST(Human);
 

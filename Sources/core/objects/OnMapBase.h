@@ -142,6 +142,7 @@ public:
     virtual void UpdatePassable() {}
     virtual IdPtr<ITurf> GetTurf();
     virtual void SetTurf(IdPtr<ITurf> turf);
+    IdPtr<IOnMapBase> GetRoot();
 protected:
     IdPtr<IOnMapBase> KV_SAVEBLE(owner);
     virtual size_t GetItemImpl(unsigned int hash) { return 0; }

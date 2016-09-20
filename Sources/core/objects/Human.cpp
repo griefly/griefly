@@ -38,6 +38,8 @@ Human::Human(size_t id) : IMob(id)
     dead_ = false;
     lying_ = false;
     health_ = 100;
+
+    pulled_object_ = 0;
 }
 
 void Human::AfterWorldCreation()
@@ -75,11 +77,31 @@ void Human::GenerateInterfaceForFrame()
 
 bool Human::TryMove(Dir direct)
 {
+    VDir pos;
+    if (pulled_object_)
+    {
+        if (!CanTouch(pulled_object_))
+        {
+            StopPull();
+        }
+        else
+        {
+            pos.x = GetX() - pulled_object_->GetX();
+            pos.y = GetY() - pulled_object_->GetY();
+        }
+    }
     if (IMob::TryMove(direct))
     {   
         if (owner->GetItem<Shard>().IsValid())
         {
             PlaySoundIfVisible("glass_step.ogg", GetOwner().Id());
+        }
+        if (pulled_object_ && ((std::abs(pos.x) + std::abs(pos.y)) < 2))
+        {
+            if (!pulled_object_->TryMove(VDirToDir(pos)))
+            {
+                 StopPull();
+            }       
         }
         return true;
     }
@@ -173,6 +195,16 @@ void Human::processGUImsg(const Message2 &msg)
                 GetOwner().Id());
             return;
         }
+        if (action == Click::LEFT_CONTROL)
+        {
+            PullAction(object);
+            return;
+        }
+        if (action == Click::LEFT_R)
+        {
+            RotationAction(object);
+            return;
+        }
         if (action != Click::LEFT)
         {
             qDebug() << "Unknown action: " << action;
@@ -252,6 +284,13 @@ void Human::Process()
 {
     IMob::Process();
     Live();
+    if (pulled_object_)
+    {
+        if (!CanTouch(pulled_object_))
+        {
+            StopPull();
+        }
+    }
 }
 
 void Human::SetLying(bool value)
@@ -511,6 +550,43 @@ void Human::Bump(IdPtr<IMovable> item)
         return;
     }
     IMovable::Bump(item);
+}
+
+void Human::RotationAction(IdPtr<IOnMapBase> item)
+{
+    if (IdPtr<IMovable> movable = item)
+    {
+        if (!movable->anchored)
+        {
+            if (IdPtr<Projectile> projectile = movable)
+            {
+                return;
+            }
+            movable->Rotate((movable->GetDir() + 1) % 4);
+        }
+    }
+}
+
+void Human::PullAction(IdPtr<IOnMapBase> item)
+{
+    if (IdPtr<IMovable> movable = item)
+    {
+        if (CanTouch(movable))
+        {
+            if (IdPtr<Projectile> projectile = movable)
+            {
+                return;
+            }
+            pulled_object_ = movable;
+            interface_.UpdatePulling(true);
+        }
+    }
+}
+
+void Human::StopPull()
+{
+    pulled_object_ = 0;
+    interface_.UpdatePulling(false);
 }
 
 CaucasianHuman::CaucasianHuman(size_t id) : Human(id)
