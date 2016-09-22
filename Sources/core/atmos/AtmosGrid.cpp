@@ -52,6 +52,13 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
             nearby.energy_diff += diff;
         }
     }
+
+    AtmosGrid::Cell& nearby = *near_cells[DIRS_SIZE];
+    for (int i = 0; i < GASES_NUM; ++i)
+    {
+        nearby.diffs[i] += gases_sums[i] % near_size;
+    }
+    nearby.energy_diff += energy_sum % near_size;
 }
 
 void AtmosGrid::Prepare(int stage)
