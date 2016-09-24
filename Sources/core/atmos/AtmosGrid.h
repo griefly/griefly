@@ -21,19 +21,15 @@ public:
 
         AtmosData data;
 
-        int diffs[GASES_NUM];
-        int energy_diff;
         IAtmosphere::Flags flags;
         Cell()
         {
             for (int i = 0; i < GASES_NUM; ++i)
             {
                 data.gases[i] = 0;
-                diffs[i] = 0;
             }
             flags = FULL;
             data.energy = 0;
-            energy_diff = 0;
             data.pressure = 0;
             data.temperature = 0;
             data.volume = 1;
