@@ -3,6 +3,7 @@
 void AtmosGrid::Process()
 {
     Prepare(0);
+    Prepare(1);
     Finalize();
 }
 
@@ -98,40 +99,15 @@ void AtmosGrid::Prepare(int stage)
                 continue;
             }
 
-            /*if (((column + line) % 2) == (MAIN_TICK % 2))
+            if (((column + line) % 2) == ((MAIN_TICK + stage) % 2))
             {
                 continue;
-            }*/
+            }
 
             const IAtmosphere::Flags DIRS[DIRS_SIZE]
                 = { Cell::LEFT, Cell::UP, Cell::DOWN, Cell::RIGHT };
             const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
                 = { Cell::RIGHT, Cell::DOWN, Cell::UP, Cell::LEFT };
-
-            /*const int DIRS_SIZE = 4;
-
-            const IAtmosphere::Flags DIRS_DATA_LR[DIRS_SIZE]
-                = { Cell::LEFT, Cell::RIGHT };
-            const IAtmosphere::Flags REVERT_DIRS_DATA_LR[DIRS_SIZE]
-                = { Cell::RIGHT, Cell::LEFT };
-
-            const IAtmosphere::Flags DIRS_DATA_UD[DIRS_SIZE]
-                = { Cell::LEFT, Cell::UP, Cell::DOWN, Cell::RIGHT };
-            const IAtmosphere::Flags REVERT_DIRS_DATA_UD[DIRS_SIZE]
-                = { Cell::RIGHT, Cell::DOWN, Cell::UP, Cell::LEFT };
-
-            const IAtmosphere::Flags* DIRS;
-            const IAtmosphere::Flags* REVERT_DIRS;
-            if ((MAIN_TICK / 2) % 2 == 0)
-            {
-                DIRS = DIRS_DATA_LR;
-                REVERT_DIRS = REVERT_DIRS_DATA_LR;
-            }
-            else
-            {
-                DIRS = DIRS_DATA_UD;
-                REVERT_DIRS = REVERT_DIRS_DATA_UD;
-            }*/
 
             Cell* near_cells[DIRS_SIZE + 1];
 
