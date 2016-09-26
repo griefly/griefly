@@ -3,7 +3,14 @@
 void AtmosGrid::Process()
 {
     Prepare(0);
-    Prepare(1);
+    //Prepare(1);
+    //Prepare(2);
+    //Prepare(3);
+    //Prepare(4);
+
+    // TODO: thin coridors
+    // TODO: weird behaviour on left depressurization
+
     Finalize();
 }
 
@@ -99,7 +106,7 @@ void AtmosGrid::Prepare(int stage)
                 continue;
             }
 
-            if (((column + line) % 2) == ((MAIN_TICK + stage) % 2))
+            if (((column + (line * 2)) % 5) == ((MAIN_TICK + stage) % 5))
             {
                 continue;
             }
