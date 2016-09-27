@@ -3,9 +3,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QStyleFactory>
-#include <QtDebug>
-#include <QFile>
-#include <QTextStream>
+
 
 #include "representation/qt/mainform.h"
 #include "representation/qt/mapeditorform.h"
@@ -21,33 +19,7 @@
 
 #include "core/FastIsType.h"
 #include "AutogenMetadata.h"
-
-QFile logs("error.log");
-
-void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
-{
-    QTextStream logstream(&logs);
-    QString datetime = QDateTime::currentDateTime().toString();
-    switch (type) {
-    case QtDebugMsg:
-        logstream << "Debug, " << datetime << ": " << msg << " " << context.file << " " << context.line << " " << context.function << endl;
-        break;
-    case QtWarningMsg:
-        logstream << "Warning, " << datetime << ": " << msg << " " << context.file << " " << context.line << " " << context.function << endl;
-        break;
-    case QtCriticalMsg:
-        logstream << "Critical, " << datetime << ": " << msg << " " << context.file << " " << context.line << " " << context.function << endl;
-        break;
-    case QtFatalMsg:
-        logstream << "Fatal, " << datetime << ": " << msg << " " << context.file << " " << context.line << " " << context.function << endl;
-        abort();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 5, 0)
-    case QtInfoMsg:
-        logstream << "Info, "  << datetime << ": " << msg << " " << context.file << " " << context.line << " " << context.function << endl;
-        break;
-#endif // QT_VERSION
-	}
-}
+#include "Log.h"
 
 int main(int argc, char *argv[])
 {
@@ -79,8 +51,7 @@ int main(int argc, char *argv[])
     app.setStyle(QStyleFactory::create("fusion"));
     if(GetParamsHolder().GetParamBool("-output_redirect"))
     {
-        logs.open(QIODevice::WriteOnly | QIODevice::Append);
-        qInstallMessageHandler(myMessageOutput);
+        InstallMessageHandler();
     }
     if (!GetParamsHolder().GetParamBool("-editor"))
     {
