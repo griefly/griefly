@@ -90,7 +90,6 @@ int main(int argc, char *argv[])
     }
     MapEditorForm editor_form;
     editor_form.show();
-        
     return app.exec();
     // LCOV_EXCL_STOP
 }
