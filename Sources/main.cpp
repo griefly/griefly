@@ -22,7 +22,7 @@
 #include "core/FastIsType.h"
 #include "AutogenMetadata.h"
 
-QFile logs("error log");
+QFile logs("error.log");
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
