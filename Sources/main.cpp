@@ -4,7 +4,6 @@
 #include <QDesktopWidget>
 #include <QStyleFactory>
 
-
 #include "representation/qt/mainform.h"
 #include "representation/qt/mapeditorform.h"
 
