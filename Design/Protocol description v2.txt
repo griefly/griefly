@@ -59,6 +59,8 @@ Size < 512
 4 - RESTART ROUND
 (empty)
 
+5 - NEXTTICK
+(empty)
 
 MESSAGES TO CLIENT FROM SERVER:
 
@@ -128,8 +130,8 @@ Size < 2 * 1024
 
 1003 - some complicated gui message (not used currently)
 
-1004 - mouse click
-{"obj":42}
+1004 - action over object
+{"action":"rclick", "obj":42}
 Size < 512
 
 1005 - ooc message
@@ -320,6 +322,15 @@ if from ADMIN CLIENT:
  409 SERVER IS RESTARTING
 
 restart server (basically, break all connections)  
+
+6.
+5 - NEXTTICK
+
+from ADMIN CLIENT to SERVER
+if from non ADMIN client then do nothing
+if from ADMIN CLIENT:
+
+the server should perform NEW_TICK event (send NEW_TICK to every client even if time has not yet come). 
 
 ///////////////
 END OF ACTIVE CONNECTION STAGE
