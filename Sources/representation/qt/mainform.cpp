@@ -78,10 +78,6 @@ MainForm::MainForm(QWidget *parent) :
     connect(&Network2::GetInstance(), &Network2::mapSendingFinished,
             this, &MainForm::uploadFinished);
 
-
-    connect(this, &MainForm::autoConnect,
-            this, &MainForm::on_lineEdit_returnPressed);
-
     connect(ui->widget, &QtOpenGL::enterPressed,
             this, &MainForm::setFocusOnLineEdit);
     connect(ui->widget, &QtOpenGL::f2Pressed,
@@ -89,14 +85,7 @@ MainForm::MainForm(QWidget *parent) :
 
     connect(ui->lineEdit, &GamingLineEdit::keyToPass, ui->widget, &QtOpenGL::handlePassedKey);
 
-    if (GetParamsHolder().GetParamBool("-auto_connect"))
-    {
-        activeTimer = new QTimer(this);
-        activeTimer->setInterval(1 * 1000);
-        activeTimer->setSingleShot(true);
-        connect(activeTimer, &QTimer::timeout, this, &MainForm::helperAutoConnect);
-        activeTimer->start();
-    }
+    QTimer::singleShot(0, Qt::PreciseTimer, this, &MainForm::connectToHost);
 
     map_sending_ = false;
 }
@@ -104,13 +93,6 @@ MainForm::MainForm(QWidget *parent) :
 void MainForm::setFocusOnLineEdit()
 {
     ui->lineEdit->setFocus();
-}
-
-void MainForm::helperAutoConnect()
-{
-    ui->lineEdit->setText("/connect");
-
-    emit autoConnect();
 }
 
 MainForm::~MainForm()
@@ -354,7 +336,7 @@ void MainForm::closeEvent(QCloseEvent* event)
     event->accept();
 }
 
-void MainForm::ConnectToHost()
+void MainForm::connectToHost()
 {
     std::string adrs = "127.0.0.1";
     if (GetParamsHolder().GetParamBool("ip"))
@@ -401,20 +383,6 @@ bool IsOOCMessage(const QString& text)
 
 void MainForm::on_lineEdit_returnPressed()
 {
-    static bool connected = false;
-    if (!connected && ui->lineEdit->text().toStdString() == "/connect")
-    {
-        connected = true;
-        ui->lineEdit->clear();
-        ConnectToHost();
-        return;
-    }
-
-    if (!connected)
-    {
-        return;
-    }
-
     if (ui->lineEdit->text() == "/generate_unsync")
     {
         qDebug() << "Unsync signal will be sended to the core...";

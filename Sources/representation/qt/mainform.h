@@ -39,12 +39,12 @@ protected:
 private slots:
     void setFocusOnLineEdit();
 
-    void helperAutoConnect();
     void on_lineEdit_returnPressed();
 
     void on_splitter_splitterMoved(int pos, int index);
+
+    void connectToHost();
 signals:
-    void autoConnect();
     void closing();
     void generateUnsync();
 private:
@@ -52,10 +52,6 @@ private:
     bool map_sending_;
 
     void RemoveFirstBlockFromTextEditor();
-
-    void ConnectToHost();
-
-    QTimer* activeTimer;
 
     int left_column;
     int right_column;
