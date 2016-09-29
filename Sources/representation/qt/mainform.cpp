@@ -85,7 +85,7 @@ MainForm::MainForm(QWidget *parent) :
 
     connect(ui->lineEdit, &GamingLineEdit::keyToPass, ui->widget, &QtOpenGL::handlePassedKey);
 
-    QTimer::singleShot(0, Qt::PreciseTimer, this, &MainForm::connectToHost);
+    QTimer::singleShot(0, Qt::PreciseTimer, this, SLOT(connectToHost()));
 
     map_sending_ = false;
 }
