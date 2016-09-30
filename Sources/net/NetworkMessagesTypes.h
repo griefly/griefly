@@ -7,6 +7,7 @@ namespace MessageType
     const int EXIT_CLIENT = 2;
     const int HASH_MESSAGE = 3;
     const int RESTART_ROUND = 4;
+    const int NEXT_TICK = 5;
 
     // MESSAGES TO CLIENT FROM SERVER:
 

@@ -383,42 +383,48 @@ bool IsOOCMessage(const QString& text)
 
 void MainForm::on_lineEdit_returnPressed()
 {
-    if (ui->lineEdit->text() == "/generate_unsync")
-    {
-        qDebug() << "Unsync signal will be sended to the core...";
-        ui->lineEdit->clear();
-        emit generateUnsync();
-        return;
-    }
-    if (ui->lineEdit->text() == "/restart_round")
-    {
-        qDebug() << "Restart round message will be sended to the server...";
-        ui->lineEdit->clear();
-        Message2 msg;
-        msg.type = MessageType::RESTART_ROUND;
-        Network2::GetInstance().SendMsg(msg);
-        return;
-    }
-    Message2 msg;
-
     QString text = ui->lineEdit->text();
+    ui->lineEdit->clear();
     if (text.length() == 0)
     {
         return;
     }
 
-    QJsonObject object;
+    if (text == "/generate_unsync")
+    {
+        qDebug() << "Unsync signal will be sended to the core...";
+        emit generateUnsync();
+        return;
+    }
+    if (text == "/restart_round")
+    {
+        qDebug() << "Restart round message will be sended to the server...";
+        Message2 message;
+        message.type = MessageType::RESTART_ROUND;
+        Network2::GetInstance().SendMsg(message);
+        return;
+    }
+    if (text == "/next_tick")
+    {
+        qDebug() << "Nexttick message will be sended to the server...";
+        Message2 message;
+        message.type = MessageType::NEXT_TICK;
+        Network2::GetInstance().SendMsg(message);
+        return;
+    }
 
-    msg.type = MessageType::MESSAGE;
+    Message2 message;
+    message.type = MessageType::MESSAGE;
+    QJsonObject object;
     if (IsOOCMessage(text))
     {
-        msg.type = MessageType::OOC_MESSAGE;
+        message.type = MessageType::OOC_MESSAGE;
         object["login"] = QString("");
-        object["text"] = ui->lineEdit->text().mid(3).trimmed();
+        object["text"] = text.mid(3).trimmed();
     }
     else
     {
-        object["text"] = ui->lineEdit->text();
+        object["text"] = text;
     }
 
     if (object["text"].toString().length() == 0)
@@ -427,13 +433,9 @@ void MainForm::on_lineEdit_returnPressed()
     }
 
     QJsonDocument doc(object);
-    msg.json = doc.toJson();
+    message.json = doc.toJson();
 
-    Network2::GetInstance().SendMsg(msg);
-
-    ui->lineEdit->clear();
-
-    //ui->widget->setFocus();
+    Network2::GetInstance().SendMsg(message);
 }
 
 void MainForm::on_splitter_splitterMoved(int pos, int index)
