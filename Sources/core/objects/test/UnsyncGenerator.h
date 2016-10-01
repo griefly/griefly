@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MainObject.h"
+#include "../MainObject.h"
 
 class UnsyncGenerator: public IMainObject
 {

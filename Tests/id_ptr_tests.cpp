@@ -3,7 +3,7 @@
 #include "core/Idptr.h"
 
 #include "core/objects/MainObject.h"
-#include "core/objects/UnsyncGenerator.h"
+#include "core/objects/test/UnsyncGenerator.h"
 
 class TempTable
 {

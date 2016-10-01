@@ -3,7 +3,7 @@
 #include <list>
 
 #include "objects/Mob.h"
-#include "objects/UnsyncGenerator.h"
+#include "objects/test/UnsyncGenerator.h"
 
 #include "SyncRandom.h"
 #include "Names.h"

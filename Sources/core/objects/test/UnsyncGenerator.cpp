@@ -2,7 +2,7 @@
 
 #include <QUuid>
 
-#include "../Game.h"
+#include "../../Game.h"
 
 UnsyncGenerator::UnsyncGenerator(size_t id) : IMainObject(id)
 {

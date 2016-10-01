@@ -21,7 +21,7 @@
 #include "objects/LoginMob.h"
 #include "objects/Lobby.h"
 #include "objects/SpawnPoints.h"
-#include "objects/UnsyncGenerator.h"
+#include "objects/test/UnsyncGenerator.h"
 
 #include "AutogenMetadata.h"
 
