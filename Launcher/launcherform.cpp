@@ -145,7 +145,7 @@ void LauncherForm::on_connectPushButton_clicked()
     }
     args.push_back("port=" + ui->portLineEdit->text());
     args.push_back("-auto_connect");
-    args.push_back("mapgen_name=brig_small.gen");
+    args.push_back("mapgen_name=maps/brig_small.gen");
 
     QString custom_args = ui->customArgsLineEdit->text();
     args.append(custom_args.split(" "));

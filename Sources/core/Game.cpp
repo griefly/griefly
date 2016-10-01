@@ -261,16 +261,17 @@ void Game::InitWorld(int id, std::string map_name)
 {   
     InitSettersForTypes();
 
-    std::cout << "Begin init world" << std::endl;
+    qDebug() << "Begin init world";
 
     InitGlobalObjects();
 
-    std::cout << "Begin choose map" << std::endl;
+    qDebug() << "Begin choose map";
     if (map_name == "no_map")
     {
         if (!GetParamsHolder().GetParamBool("mapgen_name"))
         {
-            qDebug() << "No mapgen param";
+            qDebug() << "No mapgen param!";
+            kv_abort();
             return;
         }
 
@@ -314,7 +315,8 @@ void Game::InitWorld(int id, std::string map_name)
         }
         else
         {
-            qDebug() << "Mapgen file does not exist" << mapgen_name;
+            qDebug() << "Mapgen file does not exist!" << mapgen_name;
+            kv_abort();
             return;
         }
     }
