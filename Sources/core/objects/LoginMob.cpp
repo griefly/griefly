@@ -105,6 +105,14 @@ void LoginMob::processGUImsg(const Message2& msg)
             //ghost->name = name;
             GetGame().GetFactory().SetPlayerId(net_id, human.Id());
 
+            if (tiles.empty())
+            {
+                auto& map = GetGame().GetMap();
+                int x = map.GetWidth() / 2;
+                int y = map.GetHeight() / 2;
+                int z = map.GetDepth() / 2;
+                tiles.push_back(map.GetSquares()[x][y][z]);
+            }
             tiles[0]->AddItem(human);
             if (GetId() == GetGame().GetMob().Id())
             {
