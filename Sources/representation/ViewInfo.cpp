@@ -64,6 +64,10 @@ std::ostream& operator<<(std::stringstream& file, ViewInfo::FramesetInfo& frames
     file << " ";
     file << frameset_info.angle_;
     file << " ";
+    file << frameset_info.shift_x_;
+    file << " ";
+    file << frameset_info.shift_y_;
+    file << " ";
     return file;
 }
 std::istream& operator>>(std::stringstream& file, ViewInfo::FramesetInfo& frameset_info)
@@ -71,6 +75,8 @@ std::istream& operator>>(std::stringstream& file, ViewInfo::FramesetInfo& frames
     WrapReadMessage(file, frameset_info.sprite_name_);
     WrapReadMessage(file, frameset_info.state_);
     file >> frameset_info.angle_;
+    file >> frameset_info.shift_x_;
+    file >> frameset_info.shift_y_;
     return file;
 }
 
@@ -90,6 +96,14 @@ bool ViewInfo::FramesetInfo::IsSameSprites(
     {
         return false;
     }
+    if (left.shift_x_ != right.shift_x_)
+    {
+        return false;
+    }
+    if (left.shift_y_ != right.shift_y_)
+    {
+        return false;
+    }
     return true;
 }
 
@@ -98,11 +112,19 @@ ViewInfo::FramesetInfo::FramesetInfo()
     sprite_name_ = "";
     state_ = "";
     angle_ = 0;
+    shift_x_ = 0;
+    shift_y_ = 0;
 }
 
 void ViewInfo::FramesetInfo::SetAngle(int angle)
 {
     angle_ = angle;
+}
+
+void ViewInfo::FramesetInfo::SetShift(int shift_x, int shift_y)
+{
+    shift_x_ = shift_x;
+    shift_y_ = shift_y;
 }
 
 void ViewInfo::FramesetInfo::SetSprite(const std::string& name)
@@ -163,19 +185,25 @@ void ViewInfo::SetAngle(int angle)
     angle_ = angle;
 }
 
-void ViewInfo::AddOverlay(const std::string& sprite, const std::string& state)
+ViewInfo::FramesetInfo& ViewInfo::AddOverlay(
+    const std::string& sprite,
+    const std::string& state)
 {
-    FramesetInfo f;
-    f.SetSprite(sprite);
-    f.SetState(state);
-    overlays_.push_back(f);
+    FramesetInfo frameset;
+    frameset.SetSprite(sprite);
+    frameset.SetState(state);
+    overlays_.push_back(frameset);
+    return overlays_.back();
 }
-void ViewInfo::AddUnderlay(const std::string& sprite, const std::string& state)
+ViewInfo::FramesetInfo& ViewInfo::AddUnderlay(
+    const std::string& sprite,
+    const std::string& state)
 {
-    FramesetInfo f;
-    f.SetSprite(sprite);
-    f.SetState(state);
-    underlays_.push_back(f);
+    FramesetInfo frameset;
+    frameset.SetSprite(sprite);
+    frameset.SetState(state);
+    underlays_.push_back(frameset);
+    return underlays_.back();
 }
 
 void ViewInfo::RemoveOverlays()

@@ -456,12 +456,12 @@ void Human::AttackBy(IdPtr<Item> item)
     std::stringstream conv;
     conv << "floor" << blood_value;
 
-    if (IdPtr<Floor> f = GetTurf())
+    if (IdPtr<Floor> floor = GetTurf())
     {
-        if (!f->bloody)
+        if (!floor->bloody)
         {
-            f->GetView()->AddOverlay("icons/blood.dmi", conv.str());
-            f->bloody = true;
+            floor->GetView()->AddOverlay("icons/blood.dmi", conv.str());
+            floor->bloody = true;
         }
     }
 }

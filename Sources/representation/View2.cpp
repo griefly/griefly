@@ -185,8 +185,11 @@ void View2::Draw(int x_shift, int y_shift, size_t shift)
 {
     for (int i = underlays_.size() - 1; i >= 0; --i)
     {
-        int sum_angle = info_.GetAngle() + info_.GetUnderlays()[i].GetAngle();
-        underlays_[i].Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle);
+        const auto& underlay = info_.GetUnderlays()[i];
+        int sum_angle = info_.GetAngle() + underlay.GetAngle();
+        int sum_x = GetX() + x_shift + underlay.GetShiftX();
+        int sum_y = GetY() + y_shift + underlay.GetShiftY();
+        underlays_[i].Draw(shift, sum_x, sum_y, sum_angle);
     }
     {
         int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
@@ -194,8 +197,11 @@ void View2::Draw(int x_shift, int y_shift, size_t shift)
     }
     for (int i = 0; i < static_cast<int>(overlays_.size()); ++i)
     {
-        int sum_angle = info_.GetAngle() + info_.GetOverlays()[i].GetAngle();
-        overlays_[i].Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle);
+        const auto& overlay = info_.GetOverlays()[i];
+        int sum_angle = info_.GetAngle() + overlay.GetAngle();
+        int sum_x = GetX() + x_shift + overlay.GetShiftX();
+        int sum_y = GetY() + y_shift + overlay.GetShiftY();
+        overlays_[i].Draw(shift, sum_x, sum_y, sum_angle);
     }
 }
 

@@ -42,19 +42,25 @@ public:
         void SetSprite(const std::string& name);
         void SetState(const std::string& state);
         void SetAngle(int angle);
+        void SetShift(int shift_x, int shift_y);
+
         const std::string& GetState() const { return state_; }
         const std::string& GetSprite() const { return sprite_name_; }
         int GetAngle() const { return angle_; }
+        int GetShiftX() const { return shift_x_; }
+        int GetShiftY() const { return shift_y_; }
     private:
         std::string sprite_name_;
         int angle_;
         std::string state_;
+        int shift_x_;
+        int shift_y_;
     };
 
     ViewInfo();
 
-    void AddOverlay(const std::string& sprite, const std::string& state);
-    void AddUnderlay(const std::string& sprite, const std::string& state);
+    FramesetInfo& AddOverlay(const std::string& sprite, const std::string& state);
+    FramesetInfo& AddUnderlay(const std::string& sprite, const std::string& state);
 
     void RemoveOverlays();
     void RemoveUnderlays();
@@ -90,5 +96,11 @@ inline unsigned int hash(const ViewInfo& view_info)
 
 inline unsigned int hash(const ViewInfo::FramesetInfo& frameset_info)
 {
-    return hash(frameset_info.sprite_name_) + hash(frameset_info.state_) + frameset_info.angle_;
+    unsigned int loc = 0;
+    loc += hash(frameset_info.sprite_name_);
+    loc += hash(frameset_info.state_);
+    loc += frameset_info.angle_;
+    loc += frameset_info.shift_x_;
+    loc += frameset_info.shift_y_;
+    return loc;
 }
