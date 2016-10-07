@@ -30,24 +30,14 @@ void PressureIndicator::SetNumber(int number)
         number = 0;
     }
 
-    std::string first;
-    std::string second;
+    static const std::string NUMBERS[10] =
+        { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+    static const std::string SPRITE = "icons/numbers.dmi";
 
-    // TODO: pick from array
-    {
-        int first_digit = number / 10;
-        std::stringstream converter;
-        converter << first_digit;
-        converter >> first;
-    }
+    int first_digit = number / 10;
+    int second_digit = number % 10;
 
-    {
-        int second_digit = number % 10;
-        std::stringstream converter;
-        converter << second_digit;
-        converter >> second;
-    }
     view_.RemoveOverlays();
-    view_.AddOverlay("icons/numbers.dmi", first).SetShift(-7, 0);
-    view_.AddOverlay("icons/numbers.dmi", second).SetShift(7, 0);
+    view_.AddOverlay(SPRITE, NUMBERS[first_digit]).SetShift(-7, 0);
+    view_.AddOverlay(SPRITE, NUMBERS[second_digit]).SetShift(7, 0);
 }
