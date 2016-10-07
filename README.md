@@ -39,8 +39,8 @@ It should be possible to build everything without Qt Creator, but the guide assu
   If you cannot open the environment variables table (Qt Creator 3.\* does not allow that before successfull CMake generation) or prefer usual variables in CMake (Qt Creator 4.\* allows to use them in convenient way) then you can set them as `-DVARIABLE=VALUE` (e.g. `-DSFML_ROOT=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3`)
 4. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
 5. Build the project.  
-   Client executables will appear in the `Exec` folder, and the server executable will appear in the `griefly-server` folder.  
-   Client executables depend from various dlls (Qt, SFML), so it is needed to manually place them to the `Exec` folder.
+   Client executables will appear in the `exec` folder, and the server executable will appear in the `griefly-server` folder.  
+   Client executables depend from various dlls (Qt, SFML), so it is needed to manually place them to the `exec` folder.
 
 **Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).
 
@@ -48,7 +48,7 @@ How to build everything on Linux
 --------------------------------
 
 1. Install dependencies. Look at `travis-get-deps` rule in Makefile for clues.
-2. `make`. Built project will be placed under `Exec` directory. Server will be
+2. `make`. Built project will be placed under `exec` directory. Server will be
    built in `gopath/src/griefly-server` directory.
 
 **Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).  

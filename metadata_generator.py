@@ -59,7 +59,7 @@ def path_equal(path1, path2):
     return os.path.abspath(path1) == os.path.abspath(path2)
 
 def main():
-    dir_name = "Sources"
+    dir_name = "sources"
     json_name = "metadata.json"
 
     if len(sys.argv) > 3:
