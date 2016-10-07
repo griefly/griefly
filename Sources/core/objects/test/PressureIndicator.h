@@ -9,5 +9,8 @@ public:
     DECLARE_GET_TYPE_ITEM(PressureIndicator);
     PressureIndicator(size_t id);
     virtual void Process() override;
+    virtual void AfterWorldCreation() override;
+private:
+    void SetNumber(int number);
 };
 ADD_TO_TYPELIST(PressureIndicator);
