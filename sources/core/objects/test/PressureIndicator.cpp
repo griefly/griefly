@@ -1,5 +1,7 @@
 #include "PressureIndicator.h"
 
+#include "../Tile.h"
+
 PressureIndicator::PressureIndicator(size_t id) : IOnMapObject(id)
 {
     v_level = 11;
@@ -10,7 +12,11 @@ PressureIndicator::PressureIndicator(size_t id) : IOnMapObject(id)
 
 void PressureIndicator::Process()
 {
-    SetNumber((MAIN_TICK / 10) % 100);
+    if (IdPtr<CubeTile> tile = GetRoot())
+    {
+        AtmosHolder* holder = tile->GetAtmosHolder();
+        SetNumber(holder->GetPressure() / 1000);
+    }
 }
 
 void PressureIndicator::AfterWorldCreation()
