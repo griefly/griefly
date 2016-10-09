@@ -11,13 +11,13 @@ Dependencies
 -------------
 1. Some C++ compiler (it works at least with compiler from **Visual Studio 2012** and **g++**)
 2. Qt5 (e.g., **Desktop Qt 5.4.0 MSVC2012 OpenGL 32bit**). Qt Creator is optional, but desired
-3. SFML 2.3
+3. SFML 2.*
 4. libpng
 5. zlib
 6. Python 2.7
-7. Go 1.6+ (https://golang.org/dl/)
+7. Golang 1.5+ (https://golang.org/dl/)
 8. Git
-9. CMake 2.8
+9. CMake 3.*
 
 How to build everything on Windows
 ----------------------------------
@@ -66,7 +66,7 @@ How to run game without launcher
 Pass those command line parameters to `KVEngine` or `KVEngine.exe`:
 
 First (master) client:  
-`mapgen_name=brig_small.gen -auto_connect login=<admin login> password=<admin password>`  
+`mapgen_name=maps/brig_small.gen -auto_connect login=<admin login> password=<admin password>`  
 where `login` and `password` params values should match values in an auth database (by default `griefly-server/db/auth.json`)  
 Other clients:  
 `-auto_connect login=Guest`
