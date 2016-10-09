@@ -74,7 +74,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         IOnMapObject* bloc = CastTo<IOnMapObject>(loc);
         if (!bloc)
         {
-            //delete loc;
+            qDebug() << QString::fromStdString(it->first);
             continue;
         }
         bool is_turf = false;
@@ -90,6 +90,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         if (   view_info->GetBaseFrameset().GetSprite() == ""
             || view_info->GetBaseFrameset().GetState() == "")
         {
+            qDebug() << "EMPTY frameset:" << QString::fromStdString(it->first);
             continue;
         }
 
@@ -100,6 +101,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         if (view.GetBaseFrameset().GetMetadata() == nullptr)
         {
+            qDebug() << "EMPTY metadata:" << QString::fromStdString(it->first);
             continue;
         }
 
