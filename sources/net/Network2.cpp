@@ -358,7 +358,7 @@ void SocketHandler::socketConnected()
     obj["password"] = password_;
 
     // It is compile time macro with version (/D or -D)
-    obj["game_version"] = QString(get_game_version());
+    obj["game_version"] = QString(GetGameVersion());
 
     bool is_guest = (login_ == "Guest");
     obj["guest"] = is_guest;
