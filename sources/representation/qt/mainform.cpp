@@ -404,12 +404,29 @@ void MainForm::on_lineEdit_returnPressed()
         Network2::GetInstance().SendMsg(message);
         return;
     }
-    if (text == "/next_tick")
+    if (text.startsWith("/next_tick"))
     {
-        qDebug() << "Nexttick message will be sended to the server...";
+        QStringList list = text.split(" ");
+        int count = 1;
+        if (list.size() >= 2)
+        {
+            QString number = list.at(1);
+            bool ok = false;
+            count = number.toInt(&ok);
+            if (!ok)
+            {
+                count = 1;
+            }
+        }
+        qDebug() <<
+            QString("%1 nexttick messages will be sended to the server...")
+                .arg(count);
         Message2 message;
         message.type = MessageType::NEXT_TICK;
-        Network2::GetInstance().SendMsg(message);
+        for (int i = 0; i < count; ++i)
+        {
+            Network2::GetInstance().SendMsg(message);
+        }
         return;
     }
 
