@@ -1262,7 +1262,7 @@ PressureIndicator 24 13 0 1 5 dMove 0
 MetalWall 24 14 0 1 5 dMove 0  
 PressureIndicator 24 14 0 1 5 dMove 0  
 Plating 24 15 0 1 5 dMove 0  
-Door 24 15 0 0 
+Door 24 15 0 1 5 dMove 0  
 MetalWall 24 16 0 1 5 dMove 0  
 PressureIndicator 24 16 0 1 5 dMove 0  
 Space 24 17 0 1 5 dMove 0  
@@ -1933,6 +1933,7 @@ MetalWall 34 14 0 1 5 dMove 0
 PressureIndicator 34 14 0 1 5 dMove 0  
 Plating 34 15 0 1 5 dMove 0  
 PressureIndicator 34 15 0 1 5 dMove 0  
+RemoteDoorOpener 34 15 0 0 
 MetalWall 34 16 0 1 5 dMove 0  
 PressureIndicator 34 16 0 1 5 dMove 0  
 MetalWall 34 17 0 1 5 dMove 0  

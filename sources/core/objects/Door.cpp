@@ -1,10 +1,13 @@
 #include "Door.h"
 
 #include "representation/Sound.h"
+
 #include "Movable.h"
 #include "Mob.h"
 #include "Item.h"
 #include "Weldingtool.h"
+
+#include "test/RemoteDoorOpener.h"
 
 Door::Door(size_t id) : IOnMapObject(id)
 {
@@ -124,6 +127,11 @@ void Door::AttackBy(IdPtr<Item> item)
         return;
     }
 
+    if (IdPtr<RemoteDoorOpener> opener = item)
+    {
+        opener->SetDoor(GetId());
+        return;
+    }
 
     if (IsState(OPEN))
     {
