@@ -1921,7 +1921,7 @@ Space 34 7 0 1 5 dMove 0
 Space 34 8 0 1 5 dMove 0  
 Space 34 9 0 1 5 dMove 0  
 PressureIndicator 34 9 0 1 5 dMove 0  
-Space 34 10 0 1 5 dMove 0  
+MetalWall 34 10 0 1 5 dMove 0  
 PressureIndicator 34 10 0 1 5 dMove 0  
 MetalWall 34 11 0 1 5 dMove 0  
 PressureIndicator 34 11 0 1 5 dMove 0  
@@ -1933,7 +1933,7 @@ MetalWall 34 14 0 1 5 dMove 0
 PressureIndicator 34 14 0 1 5 dMove 0  
 Plating 34 15 0 1 5 dMove 0  
 PressureIndicator 34 15 0 1 5 dMove 0  
-RemoteDoorOpener 34 15 0 0 
+RemoteDoorOpener 34 15 0 1 5 dMove 0  
 MetalWall 34 16 0 1 5 dMove 0  
 PressureIndicator 34 16 0 1 5 dMove 0  
 MetalWall 34 17 0 1 5 dMove 0  
@@ -1989,9 +1989,9 @@ Space 35 7 0 1 5 dMove 0
 Space 35 8 0 1 5 dMove 0  
 Space 35 9 0 1 5 dMove 0  
 PressureIndicator 35 9 0 1 5 dMove 0  
-Space 35 10 0 1 5 dMove 0  
+MetalWall 35 10 0 1 5 dMove 0  
 PressureIndicator 35 10 0 1 5 dMove 0  
-MetalWall 35 11 0 1 5 dMove 0  
+Plating 35 11 0 1 5 dMove 0  
 PressureIndicator 35 11 0 1 5 dMove 0  
 Plating 35 12 0 1 5 dMove 0  
 PressureIndicator 35 12 0 1 5 dMove 0  
@@ -2009,7 +2009,7 @@ Plating 35 17 0 1 5 dMove 0
 PressureIndicator 35 17 0 1 5 dMove 0  
 Plating 35 18 0 1 5 dMove 0  
 PressureIndicator 35 18 0 1 5 dMove 0  
-Plating 35 19 0 1 5 dMove 0  
+MetalWall 35 19 0 0 
 PressureIndicator 35 19 0 1 5 dMove 0  
 Plating 35 20 0 1 5 dMove 0  
 PressureIndicator 35 20 0 1 5 dMove 0  
@@ -2021,8 +2021,9 @@ Plating 35 23 0 1 5 dMove 0
 PressureIndicator 35 23 0 1 5 dMove 0  
 Plating 35 24 0 1 5 dMove 0  
 PressureIndicator 35 24 0 1 5 dMove 0  
-MetalWall 35 25 0 1 5 dMove 0  
+Plating 35 25 0 1 5 dMove 0  
 PressureIndicator 35 25 0 1 5 dMove 0  
+Door 35 25 0 1 5 dMove 0  
 Space 35 26 0 1 5 dMove 0  
 Space 35 27 0 1 5 dMove 0  
 Space 35 28 0 1 5 dMove 0  
@@ -2058,7 +2059,7 @@ Space 36 7 0 1 5 dMove 0
 Space 36 8 0 1 5 dMove 0  
 Space 36 9 0 1 5 dMove 0  
 PressureIndicator 36 9 0 1 5 dMove 0  
-Space 36 10 0 1 5 dMove 0  
+MetalWall 36 10 0 1 5 dMove 0  
 PressureIndicator 36 10 0 1 5 dMove 0  
 MetalWall 36 11 0 1 5 dMove 0  
 PressureIndicator 36 11 0 1 5 dMove 0  
