@@ -9,6 +9,8 @@
 class AtmosGrid
 {
 public:
+    static const int DIRS_SIZE = 4;
+
     struct Cell
     {
         static const IAtmosphere::Flags FULL = 0;
@@ -21,12 +23,18 @@ public:
 
         AtmosData data;
 
+        int flows[DIRS_SIZE];
+
         IAtmosphere::Flags flags;
         Cell()
         {
             for (int i = 0; i < GASES_NUM; ++i)
             {
                 data.gases[i] = 0;
+            }
+            for (int i = 0; i < DIRS_SIZE; ++i)
+            {
+                flows[i] = 0;
             }
             flags = FULL;
             data.energy = 0;

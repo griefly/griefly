@@ -14,8 +14,6 @@ void AtmosGrid::Process()
     Finalize();
 }
 
-const int DIRS_SIZE = 4;
-
 inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
 {
     int near_size = 0;
@@ -26,7 +24,7 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
     }
     int energy_sum = 0;
 
-    for (int dir = 0; dir < DIRS_SIZE + 1; ++dir)
+    for (int dir = 0; dir < AtmosGrid::DIRS_SIZE + 1; ++dir)
     {
         if (AtmosGrid::Cell* nearby = near_cells[dir])
         {
@@ -49,7 +47,7 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
     int energy_average = energy_sum / near_size;
     int energy_remains = energy_sum % near_size;
 
-    for (int dir = DIRS_SIZE; dir >= 0; --dir)
+    for (int dir = AtmosGrid::DIRS_SIZE; dir >= 0; --dir)
     {
         if (near_cells[dir])
         {
@@ -57,24 +55,14 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
             for (int i = 0; i < GASES_NUM; ++i)
             {
                 int diff = gases_average[i] - nearby.data.gases[i];
-               /* if (gases_remains[i])
-                {
-                    diff += 1;
-                    gases_remains[i] -= 1;
-                }*/
 
                 nearby.data.gases[i] += diff;
             }
             int diff = energy_average - nearby.data.energy;
-           /* if (energy_remains)
-            {
-                diff += 1;
-                energy_remains -= 1;
-            }*/
             nearby.data.energy += diff;
         }
     }
-    AtmosGrid::Cell& nearby = *near_cells[DIRS_SIZE];
+    AtmosGrid::Cell& nearby = *near_cells[AtmosGrid::DIRS_SIZE];
     for (int i = 0; i < GASES_NUM; ++i)
     {
         nearby.data.gases[i] += gases_remains[i];
@@ -173,6 +161,11 @@ void AtmosGrid::Finalize()
             }
             cell.data.energy *= 4;
             cell.data.energy /= 5;
+        }
+
+        for (int i = 0; i < DIRS_SIZE; ++i)
+        {
+            cell.flows[i] = 0;
         }
 
         UpdateMacroParams(&cell.data);
