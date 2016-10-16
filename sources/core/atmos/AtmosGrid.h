@@ -8,7 +8,7 @@
 
 namespace atmos
 {
-   const int DIRS_SIZE = 4;
+    const int DIRS_SIZE = 4;
 
     const IAtmosphere::Flags FULL = 0;
     const IAtmosphere::Flags UP = 1;
@@ -22,6 +22,8 @@ namespace atmos
         = { LEFT, UP, DOWN, RIGHT };
     const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
         = { RIGHT, DOWN, UP, LEFT };
+    const int REVERT_DIRS_INDEXES[DIRS_SIZE]
+        = { 3, 2, 1, 0 };
 }
 
 class AtmosGrid

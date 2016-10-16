@@ -44,28 +44,29 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
     int energy_average = energy_sum / near_size;
     int energy_remains = energy_sum % near_size;
 
-    for (int dir = atmos::DIRS_SIZE; dir >= 0; --dir)
+    AtmosGrid::Cell& center = *near_cells[atmos::DIRS_SIZE];
+
+    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
-        // TODO: flows generation here
-        // from center to nearby tiles
         if (near_cells[dir])
         {
             AtmosGrid::Cell& nearby = *near_cells[dir];
             for (int i = 0; i < GASES_NUM; ++i)
             {
                 int diff = gases_average[i] - nearby.data.gases[i];
-                nearby.data.gases[i] += diff;
+                nearby.flows[atmos::REVERT_DIRS_INDEXES[dir]] += diff;
+                center.flows[dir] -= diff;
+                nearby.data.gases[i] = gases_average[i];
             }
-            int diff = energy_average - nearby.data.energy;
-            nearby.data.energy += diff;
+            nearby.data.energy = energy_average;
         }
     }
-    AtmosGrid::Cell& nearby = *near_cells[atmos::DIRS_SIZE];
+
     for (int i = 0; i < GASES_NUM; ++i)
     {
-        nearby.data.gases[i] += gases_remains[i];
+        center.data.gases[i] = gases_average[i] + gases_remains[i];
     }
-    nearby.data.energy += energy_remains;
+    center.data.energy = energy_average + energy_remains;
 }
 
 void AtmosGrid::Prepare(int stage)
@@ -156,6 +157,7 @@ void AtmosGrid::Finalize()
             cell.data.energy /= 5;
         }
 
+        // TODO: flow movement
         for (int i = 0; i < atmos::DIRS_SIZE; ++i)
         {
             cell.flows[i] = 0;
