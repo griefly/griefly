@@ -6,24 +6,32 @@
 #include "KVAbort.h"
 #include "Interfaces.h"
 
+namespace atmos
+{
+   const int DIRS_SIZE = 4;
+
+    const IAtmosphere::Flags FULL = 0;
+    const IAtmosphere::Flags UP = 1;
+    const IAtmosphere::Flags DOWN = 2;
+    const IAtmosphere::Flags LEFT = 4;
+    const IAtmosphere::Flags RIGHT = 8;
+    const IAtmosphere::Flags CENTER = 16;
+    const IAtmosphere::Flags SPACE = 32;
+
+    const IAtmosphere::Flags DIRS[DIRS_SIZE]
+        = { LEFT, UP, DOWN, RIGHT };
+    const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
+        = { RIGHT, DOWN, UP, LEFT };
+}
+
 class AtmosGrid
 {
 public:
-    static const int DIRS_SIZE = 4;
-
     struct Cell
     {
-        static const IAtmosphere::Flags FULL = 0;
-        static const IAtmosphere::Flags UP = 1;
-        static const IAtmosphere::Flags DOWN = 2;
-        static const IAtmosphere::Flags LEFT = 4;
-        static const IAtmosphere::Flags RIGHT = 8;
-        static const IAtmosphere::Flags CENTER = 16;
-        static const IAtmosphere::Flags SPACE = 32;
-
         AtmosData data;
 
-        int flows[DIRS_SIZE];
+        int flows[atmos::DIRS_SIZE];
 
         IAtmosphere::Flags flags;
         Cell()
@@ -32,11 +40,11 @@ public:
             {
                 data.gases[i] = 0;
             }
-            for (int i = 0; i < DIRS_SIZE; ++i)
+            for (int i = 0; i < atmos::DIRS_SIZE; ++i)
             {
                 flows[i] = 0;
             }
-            flags = FULL;
+            flags = atmos::FULL;
             data.energy = 0;
             data.pressure = 0;
             data.temperature = 0;
@@ -52,7 +60,7 @@ public:
         }
         inline void ResetPassable()
         {
-            flags = FULL;
+            flags = atmos::FULL;
         }
         inline void Truncate()
         {
@@ -92,10 +100,10 @@ public:
 
         switch (dir)
         {
-        case Cell::DOWN:  return cells_[pos + 1];
-        case Cell::UP:    return cells_[pos - 1];
-        case Cell::RIGHT: return cells_[pos + width_];
-        case Cell::LEFT:  return cells_[pos - width_];
+        case atmos::DOWN:  return cells_[pos + 1];
+        case atmos::UP:    return cells_[pos - 1];
+        case atmos::RIGHT: return cells_[pos + width_];
+        case atmos::LEFT:  return cells_[pos - width_];
         default: break;
         }
 

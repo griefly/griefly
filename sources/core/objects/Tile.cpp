@@ -432,11 +432,11 @@ void CubeTile::UpdateAtmosPassable()
             D_LEFT,
             D_RIGHT };
     const IAtmosphere::Flags bit_dirs[5]
-        = { AtmosGrid::Cell::CENTER,
-            AtmosGrid::Cell::UP,
-            AtmosGrid::Cell::DOWN,
-            AtmosGrid::Cell::LEFT,
-            AtmosGrid::Cell::RIGHT };
+        = { atmos::CENTER,
+            atmos::UP,
+            atmos::DOWN,
+            atmos::LEFT,
+            atmos::RIGHT };
 
     IAtmosphere::Flags flags = 0;
     for (int i = 0; i < 5; ++i)
@@ -449,7 +449,7 @@ void CubeTile::UpdateAtmosPassable()
 
     if (turf_ && turf_->GetAtmosState() == SPACE)
     {
-        flags |= AtmosGrid::Cell::SPACE;
+        flags |= atmos::SPACE;
     }
 
     GetGame().GetMap().GetAtmosphere().SetFlags(posx_, posy_, posz_, flags);
