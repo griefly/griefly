@@ -78,7 +78,34 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
         return;
     }
 
-    for (Dir dir = 0; dir < 4; ++dir)
+    AtmosGrid::Cell& cell = grid_->At(x, y);
+
+    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
+    {
+        // TODO: maximum from 4 flows
+        int flow = cell.flows[dir];
+        cell.flows[dir] = 0;
+        if (flow > -20)
+        {
+            continue;
+        }
+
+        if (tile->GetInsideList().size())
+        {
+            auto i = tile->GetInsideList().rbegin();
+            while (   (i != tile->GetInsideList().rend())
+                   && ((*i)->passable_level == Passable::EMPTY))
+            {
+                ++i;
+            }
+            if (i != tile->GetInsideList().rend())
+            {
+                (*i)->ApplyForce(DirToVDir[atmos::INDEXES_TO_DIRS[dir]]);
+            }
+        }
+    }
+
+    /*for (Dir dir = 0; dir < 4; ++dir)
     {
         auto neighbour = tile->GetNeighbourImpl(dir);
 
@@ -116,7 +143,7 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
                 (*i)->ApplyForce(DirToVDir[dir]);
             }
         }
-    }
+    }*/
 }
 
 void Atmosphere::ProcessMove()

@@ -157,12 +157,6 @@ void AtmosGrid::Finalize()
             cell.data.energy /= 5;
         }
 
-        // TODO: flow movement
-        for (int i = 0; i < atmos::DIRS_SIZE; ++i)
-        {
-            cell.flows[i] = 0;
-        }
-
         UpdateMacroParams(&cell.data);
     }
 }

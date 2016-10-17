@@ -24,6 +24,9 @@ namespace atmos
         = { RIGHT, DOWN, UP, LEFT };
     const int REVERT_DIRS_INDEXES[DIRS_SIZE]
         = { 3, 2, 1, 0 };
+
+    const Dir INDEXES_TO_DIRS[DIRS_SIZE]
+        = { D_LEFT, D_UP, D_DOWN, D_RIGHT };
 }
 
 class AtmosGrid
