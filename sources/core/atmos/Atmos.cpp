@@ -80,28 +80,37 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 
     AtmosGrid::Cell& cell = grid_->At(x, y);
 
+    int max_flow = 0;
+    int max_dir = -1;
+
     for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
-        // TODO: maximum from 4 flows
         int flow = cell.flows[dir];
         cell.flows[dir] = 0;
-        if (flow > -20)
+        if (flow < max_flow)
         {
-            continue;
+            max_flow = flow;
+            max_dir = dir;
         }
+    }
 
-        if (tile->GetInsideList().size())
+    // TODO: constant
+    if (max_flow > -15)
+    {
+        return;
+    }
+
+    if (tile->GetInsideList().size())
+    {
+        auto i = tile->GetInsideList().rbegin();
+        while (   (i != tile->GetInsideList().rend())
+               && ((*i)->passable_level == Passable::EMPTY))
         {
-            auto i = tile->GetInsideList().rbegin();
-            while (   (i != tile->GetInsideList().rend())
-                   && ((*i)->passable_level == Passable::EMPTY))
-            {
-                ++i;
-            }
-            if (i != tile->GetInsideList().rend())
-            {
-                (*i)->ApplyForce(DirToVDir[atmos::INDEXES_TO_DIRS[dir]]);
-            }
+            ++i;
+        }
+        if (i != tile->GetInsideList().rend())
+        {
+            (*i)->ApplyForce(DirToVDir[atmos::INDEXES_TO_DIRS[max_dir]]);
         }
     }
 
