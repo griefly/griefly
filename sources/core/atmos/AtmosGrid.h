@@ -117,6 +117,11 @@ public:
         // Not reachable
         return cells_[pos];
     }
+    inline Cell& Get(int x, int y, IAtmosphere::Flags dir)
+    {
+        return Get(y + x * height_, dir);
+    }
+
     inline Cell& At(int x, int y)
     {
         return cells_[y + x * height_];

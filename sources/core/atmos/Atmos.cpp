@@ -68,6 +68,7 @@ void Atmosphere::Process()
 }
 
 const int PRESSURE_MOVE_BORDER = 1000;
+const int FLOW_MOVE_BORDER = -15;
 
 void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 {   
@@ -94,26 +95,22 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
         }
     }
 
-    // TODO: constant
-    if (max_flow > -15)
+    if (max_flow <= FLOW_MOVE_BORDER)
     {
-        return;
-    }
-
-    if (tile->GetInsideList().size())
-    {
-        auto i = tile->GetInsideList().rbegin();
-        while (   (i != tile->GetInsideList().rend())
-               && ((*i)->passable_level == Passable::EMPTY))
+        if (tile->GetInsideList().size())
         {
-            ++i;
-        }
-        if (i != tile->GetInsideList().rend())
-        {
-            (*i)->ApplyForce(DirToVDir[atmos::INDEXES_TO_DIRS[max_dir]]);
+            auto i = tile->GetInsideList().rbegin();
+            while (   (i != tile->GetInsideList().rend())
+                   && ((*i)->passable_level == Passable::EMPTY))
+            {
+                ++i;
+            }
+            if (i != tile->GetInsideList().rend())
+            {
+                (*i)->ApplyForce(DirToVDir[atmos::INDEXES_TO_DIRS[max_dir]]);
+            }
         }
     }
-
     /*for (Dir dir = 0; dir < 4; ++dir)
     {
         auto neighbour = tile->GetNeighbourImpl(dir);
