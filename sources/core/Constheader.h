@@ -53,7 +53,7 @@ struct PosPoint
     int posz;
 };
 
-inline bool NonZero(const VDir& vdir)
+inline bool IsNonZero(const VDir& vdir)
 {
     return    vdir.x
            || vdir.y

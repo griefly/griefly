@@ -81,21 +81,21 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
 
     AtmosGrid::Cell& cell = grid_->At(x, y);
 
-    int max_flow = 0;
-    int max_dir = -1;
+    VDir force;
 
     for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
         int flow = cell.flows[dir];
         cell.flows[dir] = 0;
-        if (flow < max_flow)
+        if (flow  <= FLOW_MOVE_BORDER)
         {
-            max_flow = flow;
-            max_dir = dir;
+            VDir local = DirToVDir[atmos::INDEXES_TO_DIRS[dir]];
+            force.x += local.x;
+            force.y += local.y;
         }
     }
 
-    if (max_flow <= FLOW_MOVE_BORDER)
+    if (IsNonZero(force))
     {
         if (tile->GetInsideList().size())
         {
@@ -107,7 +107,7 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
             }
             if (i != tile->GetInsideList().rend())
             {
-                (*i)->ApplyForce(DirToVDir[atmos::INDEXES_TO_DIRS[max_dir]]);
+                (*i)->ApplyForce(force);
             }
         }
     }
@@ -156,8 +156,7 @@ void Atmosphere::ProcessMove()
 {
     QElapsedTimer timer;
     timer.start();
-    // TODO: this takes abou 70% of atmos processing time
-    // Some wind variable for each tile?
+
     for (int z = 0; z < z_size_; ++z)
     {
         for (int x = 0; x < x_size_; ++x)

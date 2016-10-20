@@ -46,7 +46,7 @@ void IMovable::ProcessForce()
 
     TryMove(step);
 
-    if (!NonZero(force_))
+    if (!IsNonZero(force_))
     {
         return;
     }
@@ -59,9 +59,9 @@ void IMovable::ProcessForce()
 
 void IMovable::ApplyForce(VDir force)
 {
-    if (!NonZero(force))
+    if (!IsNonZero(force))
         return;
-    if (!NonZero(force_))
+    if (!IsNonZero(force_))
         ForceManager::Get().Add(GetId());
 
     force_.x += force.x;
@@ -71,7 +71,7 @@ void IMovable::ApplyForce(VDir force)
 
 void IMovable::LoadInForceManager()
 {
-    if (NonZero(force_))
+    if (IsNonZero(force_))
     {
         ForceManager::Get().Add(GetId());
     }
@@ -201,7 +201,7 @@ void ForceManager::Process()
         {
             continue;
         }
-        if (!NonZero((*movable)->force_))
+        if (!IsNonZero((*movable)->force_))
         {
             continue;
         }
@@ -225,7 +225,7 @@ void ForceManager::Process()
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
         if (   !(*movable)
-            || !NonZero((*movable)->force_))
+            || !IsNonZero((*movable)->force_))
         {
             continue;
         }
@@ -239,7 +239,7 @@ void ForceManager::Clear()
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
         if (   !(*movable)
-            || !NonZero((*movable)->force_))
+            || !IsNonZero((*movable)->force_))
         {
             to_remove.push_back(*movable);
         }
