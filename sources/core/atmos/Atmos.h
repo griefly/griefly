@@ -28,7 +28,7 @@ private:
     qint64 grid_processing_ns_;
     qint64 movement_processing_ns_;
 
-    void ProcessTileMove(size_t x, size_t y, size_t z);
+    void ProcessTileMove(int x, int y, int z);
 
     int x_size_;
     int y_size_;

@@ -70,7 +70,7 @@ void Atmosphere::Process()
 const int PRESSURE_MOVE_BORDER = 1000;
 const int FLOW_MOVE_BORDER = -15;
 
-void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
+void Atmosphere::ProcessTileMove(int x, int y, int z)
 {   
     auto tile = map_->GetSquares()[x][y][z];
 
@@ -111,45 +111,50 @@ void Atmosphere::ProcessTileMove(size_t x, size_t y, size_t z)
             }
         }
     }
-    /*for (Dir dir = 0; dir < 4; ++dir)
+
+    // TODO: borders
+    if (x == 0 || x >= x_size_ - 1)
     {
-        auto neighbour = tile->GetNeighbourImpl(dir);
+        return;
+    }
+    if (y == 0 || y >= y_size_ - 1)
+    {
+        return;
+    }
 
-        if (!(   (   neighbour->GetTurf()->GetAtmosState() == NON_SIMULATED
-                  && PRESSURE_MOVE_BORDER < tile->GetAtmosHolder()->GetPressure())
-              || (neighbour->GetAtmosHolder()->GetPressure() + PRESSURE_MOVE_BORDER
-                  < tile->GetAtmosHolder()->GetPressure())))
-        {
-            continue;
-        }
+    if (!cell.IsPassable(atmos::CENTER))
+    {
+        return;
+    }
 
-        if (!CanPass(tile->GetPassable(dir), Passable::AIR))
+    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
+    {
+        AtmosGrid::Cell& nearby = grid_->Get(x, y, atmos::DIRS[dir]);
+        if (  (nearby.data.pressure + PRESSURE_MOVE_BORDER)
+            < cell.data.pressure)
         {
-            tile->BumpByGas(dir, true);
-            continue;
-        }
-
-        if (   !CanPass(neighbour->GetPassable(D_ALL), Passable::AIR)
-            || !CanPass(neighbour->GetPassable(helpers::revert_dir(dir)), Passable::AIR))
-        {
-            neighbour->BumpByGas(dir);
-            continue;
-        }
-
-        if (tile->GetInsideList().size())
-        {
-            auto i = tile->GetInsideList().rbegin();
-            while (   (i != tile->GetInsideList().rend())
-                   && ((*i)->passable_level == Passable::EMPTY))
+            if (!cell.IsPassable(atmos::DIRS[dir]))
             {
-                ++i;
-            }
-            if (i != tile->GetInsideList().rend())
-            {
-                (*i)->ApplyForce(DirToVDir[dir]);
+                Dir bump_dir = atmos::INDEXES_TO_DIRS[dir];
+                tile->BumpByGas(bump_dir, true);
+                continue;
             }
         }
-    }*/
+        else if (  (cell.data.pressure + PRESSURE_MOVE_BORDER)
+                 < nearby.data.pressure)
+        {
+            if (nearby.IsPassable(atmos::REVERT_DIRS[dir]))
+            {
+                if (!cell.IsPassable(atmos::DIRS[dir]))
+                {
+                    Dir revert_dir = atmos::REVERT_DIRS_INDEXES[dir];
+                    Dir bump_dir = atmos::INDEXES_TO_DIRS[revert_dir];
+                    tile->BumpByGas(bump_dir, true);
+                    continue;
+                }
+            }
+        }
+    }
 }
 
 void Atmosphere::ProcessMove()
