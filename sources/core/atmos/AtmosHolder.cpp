@@ -168,3 +168,12 @@ std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder)
 
     return file;
 }
+
+
+void AddDefaultValues(AtmosHolder *holder)
+{
+    holder->AddGase(NYTROGEN, 750);
+    holder->AddGase(OXYGEN, 230);
+    holder->AddGase(CO2, 1);
+    holder->AddEnergy(1000);
+}

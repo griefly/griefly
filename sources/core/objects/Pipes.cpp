@@ -15,6 +15,8 @@ PipeBase::PipeBase(size_t id) : IMovable(id)
     //SetState("intact");
 
     name = "Please do not create me";
+
+    AddDefaultValues(&atmos_holder_);
 }
 
 void PipeBase::AttackBy(IdPtr<Item> item)

@@ -17,19 +17,22 @@
 void MapMaster::FillAtmosphere()
 {
     for (int z = 0; z < GetDepth(); ++z)
+    {
         for (int x = 0; x < GetWidth(); ++x)
+        {
             for (int y = 0; y < GetHeight(); ++y)
+            {
                 if (   squares_[x][y][z]->GetTurf()
                     && squares_[x][y][z]->GetTurf()->GetAtmosState() != SPACE
-                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != NON_SIMULATED
-                    && CanPass(squares_[x][y][z]->GetPassable(D_ALL), Passable::AIR))
+                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != NON_SIMULATED)
                 {
-                    auto a = squares_[x][y][z]->GetAtmosHolder();
-                    a->AddGase(NYTROGEN, 750);
-                    a->AddGase(OXYGEN, 230);
-                    a->AddGase(CO2, 1);
-                    a->AddEnergy(1000);
+                    // It is not passable then still fill with air cause of doors
+                    auto holder = squares_[x][y][z]->GetAtmosHolder();
+                    AddDefaultValues(holder);
                 }
+            }
+        }
+    }
 }
 
 void MapMaster::Represent()

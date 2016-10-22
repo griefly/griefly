@@ -67,3 +67,5 @@ inline unsigned int hash(const AtmosHolder& atmos_holder)
     retval += atmos_holder.data_ptr_->temperature;
     return retval;
 }
+
+void AddDefaultValues(AtmosHolder* holder);
