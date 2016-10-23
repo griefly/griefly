@@ -30,7 +30,7 @@ void IMob::Delete()
     IOnMapObject::Delete();
 }
 
-void IMob::processGUImsg(const Message2 &msg)
+void IMob::ProcessMessage(const Message2 &msg)
 {
     if (msg.type != MessageType::ORDINARY)
     {

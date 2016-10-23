@@ -108,18 +108,15 @@ bool Human::TryMove(Dir direct)
     return false;
 }
 
-void Human::processGUImsg(const Message2 &msg)
+void Human::ProcessMessage(const Message2 &msg)
 {
     QJsonObject obj = Network2::ParseJson(msg);
 
-
- //   IMob::processGUImsg(msg);
-    if (    msg.type == MessageType::ORDINARY
-         && !lying_
-         && Friction::CombinedFriction(GetTurf())
-        )
+    if (   msg.type == MessageType::ORDINARY
+        && !lying_
+        && Friction::CombinedFriction(GetTurf()))
     {
-        if (std::abs(force_.x) + std::abs(force_.y) + std::abs(force_.z) < 4)
+        if (qAbs(force_.x) + qAbs(force_.y) + qAbs(force_.z) < 4)
         {
             if (Network2::IsKey(obj, Input::MOVE_UP))
             {
@@ -373,6 +370,11 @@ void Human::Live()
     {
         OnDeath();
     }
+}
+
+IdPtr<IOnMapBase> Human::GetNeighbour(Dir) const
+{
+    return GetId();
 }
 
 void Human::OnDeath()

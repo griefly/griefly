@@ -333,7 +333,17 @@ unsigned int HumanInterface::hash() const
 void HumanInterface::Pick(IdPtr<Item> item)
 {
     if (GetActiveHand().Get())
+    {
         return;
+    }
+
+    {
+        // Disable movement
+        VDir force = item->force_;
+        VDir revert_force(-1 * force.x, -1 * force.y, -1 * force.z);
+        item->ApplyForce(revert_force);
+    }
+
     GetActiveHand().Set(item);
     if (IdPtr<Human> owner = owner_)
     {

@@ -86,9 +86,9 @@ void Ghost::CalculateVisible(std::list<PosPoint>* visible_list)
     }
 }
 
-void Ghost::processGUImsg(const Message2& msg)
+void Ghost::ProcessMessage(const Message2& msg)
 {
-    IMob::processGUImsg(msg);
+    IMob::ProcessMessage(msg);
 }
 
 void Ghost::InitGUI()

@@ -14,9 +14,11 @@ public:
     virtual void DeinitGUI() override;
     virtual void InitGUI() override;
     virtual void GenerateInterfaceForFrame() override;
-    virtual void processGUImsg(const Message2& msg) override;
+    virtual void ProcessMessage(const Message2& msg) override;
     virtual void Process() override;
     virtual void Live();
+
+    virtual IdPtr<IOnMapBase> GetNeighbour(Dir) const;
 
     virtual void OnDeath();
 

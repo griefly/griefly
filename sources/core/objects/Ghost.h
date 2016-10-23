@@ -11,7 +11,7 @@ public:
     virtual void AfterWorldCreation() override;
     virtual void Represent() override;
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;
-    virtual void processGUImsg(const Message2& msg) override;
+    virtual void ProcessMessage(const Message2& msg) override;
 
     virtual void InitGUI() override;
     virtual void DeinitGUI() override;

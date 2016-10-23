@@ -775,7 +775,7 @@ void Game::ProcessBroadcastedMessages()
 
          if (game_object.IsValid())
          {
-             game_object->processGUImsg(*it);
+             game_object->ProcessMessage(*it);
          }
          else
          {

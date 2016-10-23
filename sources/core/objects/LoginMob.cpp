@@ -69,7 +69,7 @@ const std::string JANITOR_TEXT =
         " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all security."
         " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
 
-void LoginMob::processGUImsg(const Message2& msg)
+void LoginMob::ProcessMessage(const Message2& msg)
 {
     QJsonObject obj = Network2::ParseJson(msg);
 

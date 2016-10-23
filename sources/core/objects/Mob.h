@@ -17,7 +17,7 @@ public:
     virtual void InitGUI(){}
     virtual void DeinitGUI(){}
     virtual void GenerateInterfaceForFrame();
-    virtual void processGUImsg(const Message2& msg) override;
+    virtual void ProcessMessage(const Message2& msg) override;
 
     virtual InterfaceBase* GetInterface() { return nullptr; }
 
