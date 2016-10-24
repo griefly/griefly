@@ -19,7 +19,7 @@ TEST(ImageMetadataDeathTest, Death)
     ImageMetadata metadata;
     ASSERT_DEATH(
     {
-        metadata.Init("icons/empty_file.png", 0, 0);
+        metadata.Init("icons/test/empty_file.png", 0, 0);
     }, "Fail to read png signature");
 }
 
@@ -38,22 +38,22 @@ TEST(ImageMetadata, Init)
 
     {
         CaptureStderr();
-        metadata.Init("icons/human.dmi", 0, 0);
+        metadata.Init("icons/test/test1.dmi", 0, 0);
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Begin to init metadata for"));
         ASSERT_THAT(output, HasSubstr("Read width:  32"));
-        ASSERT_THAT(output, HasSubstr("caucasian3_f_s"));
+        ASSERT_THAT(output, HasSubstr("state1"));
         ASSERT_THAT(output, HasSubstr("Begin make sequence"));
     }
 
     ASSERT_TRUE(metadata.Valid());
     ASSERT_EQ(metadata.GetW(), 32);
     ASSERT_EQ(metadata.GetH(), 32);
-    ASSERT_TRUE(metadata.IsValidState("asian1_m_s"));
+    ASSERT_TRUE(metadata.IsValidState("state2"));
     ASSERT_FALSE(metadata.IsValidState("nonvalidstate"));
 
     const ImageMetadata::SpriteMetadata& sprite
-        = metadata.GetSpriteMetadata("asian1_m_s");
+        = metadata.GetSpriteMetadata("state2");
     ASSERT_EQ(sprite.dirs, 4);
     ASSERT_EQ(sprite.rewind, false);
     ASSERT_EQ(sprite.loop, -1);
@@ -61,7 +61,7 @@ TEST(ImageMetadata, Init)
     {
         ASSERT_EQ(sprite.hotspot[i], -1);
     }
-    ASSERT_EQ(sprite.first_frame_pos, 41);
+    ASSERT_EQ(sprite.first_frame_pos, 1);
     ASSERT_EQ(sprite.frames_data.size(), 1);
     ASSERT_EQ(sprite.frames_data[0].delay, 0);
     ASSERT_EQ(sprite.frames_sequence.size(), 1);
@@ -74,7 +74,7 @@ TEST(ImageMetadata, InitWithoutMetadata)
         ImageMetadata metadata;
 
         CaptureStderr();
-        metadata.Init("icons/rock.png", 0, 0);
+        metadata.Init("icons/test/no_metadata.png", 0, 0);
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Fail metadata load, try without it"));
 
@@ -94,7 +94,7 @@ TEST(ImageMetadata, InitWithoutMetadata)
         ImageMetadata metadata;
 
         CaptureStderr();
-        metadata.Init("icons/login_screen.jpg", 0, 0);
+        metadata.Init("icons/test/not_png.jpg", 0, 0);
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Fail metadata load, try without it"));
         ASSERT_THAT(output, HasSubstr("Data is not valid PNG-data"));
