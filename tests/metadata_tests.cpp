@@ -50,6 +50,7 @@ TEST(ImageMetadata, Init)
     ASSERT_EQ(metadata.GetW(), 32);
     ASSERT_EQ(metadata.GetH(), 32);
     ASSERT_TRUE(metadata.IsValidState("state2"));
+    ASSERT_TRUE(metadata.IsValidState("state with spaces"));
     ASSERT_FALSE(metadata.IsValidState("nonvalidstate"));
 
     const ImageMetadata::SpriteMetadata& sprite
@@ -66,6 +67,48 @@ TEST(ImageMetadata, Init)
     ASSERT_EQ(sprite.frames_data[0].delay, 0);
     ASSERT_EQ(sprite.frames_sequence.size(), 1);
     ASSERT_EQ(sprite.frames_sequence[0], 0);
+}
+
+TEST(ImageMetadata, InitAnimated)
+{
+    ImageMetadata metadata;
+
+    {
+        CaptureStderr();
+        metadata.Init("icons/test/test1.dmi", 0, 0);
+        std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Begin to init metadata for"));
+        ASSERT_THAT(output, HasSubstr("Read width:  32"));
+        ASSERT_THAT(output, HasSubstr("animated"));
+        ASSERT_THAT(output, HasSubstr("Begin make sequence"));
+    }
+
+    ASSERT_TRUE(metadata.Valid());
+    ASSERT_EQ(metadata.GetW(), 32);
+    ASSERT_EQ(metadata.GetH(), 32);
+    ASSERT_TRUE(metadata.IsValidState("animated"));
+
+    const ImageMetadata::SpriteMetadata& sprite
+        = metadata.GetSpriteMetadata("animated");
+    ASSERT_EQ(sprite.dirs, 1);
+    ASSERT_EQ(sprite.rewind, true);
+    ASSERT_EQ(sprite.loop, 4);
+    for (int i = 0; i < 3; ++i)
+    {
+        ASSERT_EQ(sprite.hotspot[i], -1);
+    }
+    ASSERT_EQ(sprite.first_frame_pos, 6);
+    ASSERT_EQ(sprite.frames_data.size(), 4);
+    ASSERT_EQ(sprite.frames_data[0].delay, 1);
+    ASSERT_EQ(sprite.frames_data[1].delay, 3);
+    ASSERT_EQ(sprite.frames_data[2].delay, 2);
+    ASSERT_EQ(sprite.frames_data[3].delay, 10);
+    ASSERT_EQ(sprite.frames_sequence.size(), 25);
+    ASSERT_EQ(sprite.frames_sequence[0], 0);
+    ASSERT_EQ(sprite.frames_sequence[4], 2);
+    ASSERT_EQ(sprite.frames_sequence[24], -1);
+    ASSERT_EQ(sprite.frames_sequence[13], 1);
+    ASSERT_EQ(sprite.frames_sequence[15], 3);
 }
 
 TEST(ImageMetadata, InitWithoutMetadata)
