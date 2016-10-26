@@ -26,7 +26,6 @@ TEST(ImageMetadataDeathTest, Death)
 TEST(ImageMetadata, Init)
 {
     ImageMetadata metadata;
-
     {
         CaptureStderr();
         metadata.Init("I do not exist", 0, 0);
@@ -72,7 +71,6 @@ TEST(ImageMetadata, Init)
 TEST(ImageMetadata, InitAnimated)
 {
     ImageMetadata metadata;
-
     {
         CaptureStderr();
         metadata.Init("icons/test/test1.dmi", 0, 0);
@@ -109,6 +107,36 @@ TEST(ImageMetadata, InitAnimated)
     ASSERT_EQ(sprite.frames_sequence[24], -1);
     ASSERT_EQ(sprite.frames_sequence[13], 1);
     ASSERT_EQ(sprite.frames_sequence[15], 3);
+}
+
+TEST(ImageMetadata, InitHotspot)
+{
+    ImageMetadata metadata;
+    {
+        CaptureStderr();
+        metadata.Init("icons/test/hotspot.dmi", 0, 0);
+        std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Read width:  32"));
+        ASSERT_THAT(output, HasSubstr("hotspot"));
+    }
+    ASSERT_TRUE(metadata.Valid());
+    ASSERT_EQ(metadata.GetW(), 32);
+    ASSERT_EQ(metadata.GetH(), 32);
+    ASSERT_TRUE(metadata.IsValidState("hotspot"));
+
+    const ImageMetadata::SpriteMetadata& sprite
+        = metadata.GetSpriteMetadata("hotspot");
+    ASSERT_EQ(sprite.dirs, 1);
+    ASSERT_EQ(sprite.rewind, false);
+    ASSERT_EQ(sprite.loop, -1);
+    ASSERT_EQ(sprite.hotspot[0], 13);
+    ASSERT_EQ(sprite.hotspot[1], 9);
+    ASSERT_EQ(sprite.hotspot[2], 1);
+    ASSERT_EQ(sprite.first_frame_pos, 0);
+    ASSERT_EQ(sprite.frames_data.size(), 1);
+    ASSERT_EQ(sprite.frames_data[0].delay, 0);
+    ASSERT_EQ(sprite.frames_sequence.size(), 1);
+    ASSERT_EQ(sprite.frames_sequence[0], 0);
 }
 
 TEST(ImageMetadata, InitWithoutMetadata)
