@@ -14,13 +14,22 @@ TEST(ImageMetadata, Constructor)
     ASSERT_FALSE(metadata.IsValidState("state"));
 }
 
-TEST(ImageMetadataDeathTest, Death)
+TEST(ImageMetadataDeathTest, PngSignatureMissing)
 {
     ImageMetadata metadata;
     ASSERT_DEATH(
     {
         metadata.Init("icons/test/empty_file.png", 0, 0);
     }, "Fail to read png signature");
+}
+
+TEST(ImageMetadataDeathTest, UnknownParam)
+{
+    ImageMetadata metadata;
+    ASSERT_DEATH(
+    {
+        metadata.Init("icons/test/unknown_param.dmi", 0, 0);
+    }, "Unknown param:  \"unknown\"");
 }
 
 TEST(ImageMetadata, Init)
