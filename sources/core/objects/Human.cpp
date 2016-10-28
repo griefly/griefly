@@ -491,7 +491,8 @@ void Human::CalculateVisible(std::list<PosPoint>* visible_list)
 {
     if (health_ >= 0)
     {
-        GetGame().GetMap().CalculateVisisble(visible_list,
+        GetGame().GetMap().CalculateVisisble(
+            visible_list,
             GetX(),
             GetY(),
             GetZ());
@@ -503,25 +504,10 @@ void Human::Bump(IdPtr<IMovable> item)
     if (IdPtr<Projectile> projectile = item)
     {
         health_ -= projectile->GetDamage();
-        // TODO: Maybe this is not necessary don't remember
-        // if this can be found in original ss13
         GetGame().GetChat().PostSimpleText(
             name + " got hit by a " + projectile->name + "!", GetRoot().Id());
-        unsigned int value = GetRand() % 3;
-        std::string snd;
-        if (value == 0)
-        {
-            snd = "genhit1.ogg";
-        }
-        if (value == 1)
-        {
-            snd = "genhit2.ogg";
-        }
-        if (value == 2)
-        {
-            snd = "genhit3.ogg";
-        }
-        PlaySoundIfVisible(snd, owner.Id());
+
+        // TODO (?): sound
 
         if ((GetRand() % 3) != 0)
         {
