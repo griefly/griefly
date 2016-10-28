@@ -62,19 +62,27 @@ void Projectile::Process()
 
 bool Projectile::CheckPassable()
 {
-    auto tile = GetOwner();
-    if (IdPtr<Human> human = tile->GetItem<Human>())
+    if (CheckHumanTile())
     {
-        human->Bump(GetId());
-        Delete();
         return false;
     }
-
     if (IMovable::CheckPassable())
     {
         return true;
     }
     Delete();
+    return false;
+}
+
+bool Projectile::CheckHumanTile()
+{
+    auto tile = GetOwner();
+    if (IdPtr<Human> human = tile->GetItem<Human>())
+    {
+        human->Bump(GetId());
+        Delete();
+        return true;
+    }
     return false;
 }
 

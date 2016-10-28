@@ -17,6 +17,8 @@ public:
     DECLARE_SAVED(Laser, Projectile);
     DECLARE_GET_TYPE_ITEM(Laser);
     Laser(size_t id);
+
+    virtual bool CheckPassable() override;
 };
 ADD_TO_TYPELIST(Laser);
 

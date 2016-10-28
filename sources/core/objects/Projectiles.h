@@ -20,8 +20,10 @@ public:
     virtual void ProcessForce() override {}
     void MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2);
     int GetDamage();
-    virtual bool CheckPassable();
+    virtual bool CheckPassable() override;
 protected:
+    bool CheckHumanTile();
+
     int KV_SAVEBLE(damage_);
 private:
     bool ProcessMovement();
