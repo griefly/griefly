@@ -337,6 +337,7 @@ void HumanInterface::Pick(IdPtr<Item> item)
         return;
     }
 
+    if (item.IsValid())
     {
         // Disable movement
         VDir force = item->force_;
@@ -345,10 +346,7 @@ void HumanInterface::Pick(IdPtr<Item> item)
     }
 
     GetActiveHand().Set(item);
-    if (IdPtr<Human> owner = owner_)
-    {
-        owner->UpdateOverlays();
-    }
+    owner_->UpdateOverlays();
 }
 
 void HumanInterface::Drop()

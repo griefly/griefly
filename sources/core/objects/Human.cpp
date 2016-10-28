@@ -172,7 +172,7 @@ void Human::ProcessMessage(const Message2 &msg)
         attack_cooldown_ = MAIN_TICK;
 
         IdPtr<IOnMapObject> object = Network2::ExtractObjId(obj);
-        if (!object)
+        if (!object.IsValid())
         {
             return;
         }
@@ -212,7 +212,7 @@ void Human::ProcessMessage(const Message2 &msg)
             return;
         }
 
-        if (object->GetOwner())
+        if (IdPtr<IOnMapBase> object_owner = object->GetOwner())
         {
             if (CanTouch(object))
             {
@@ -222,9 +222,11 @@ void Human::ProcessMessage(const Message2 &msg)
                     interface_.Pick(object);
                     if (interface_.GetActiveHand().Get())
                     {
-                        if (!object->GetOwner()->RemoveItem(object))
+                        if (!object_owner->RemoveItem(object))
                         {
-                            SYSTEM_STREAM << "CANNOT DELETE ITEM WTF" << std::endl;
+                            qDebug() << "Unable to RemoveItem from owner during"
+                                        " the pick phase!";
+                            kv_abort();
                         }
                         object->SetOwner(GetId());
                     }

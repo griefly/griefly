@@ -29,6 +29,8 @@ namespace HumanInterfacePlaces
     const std::string LAY = "SWITCH_LAY";
 }
 
+class Human;
+
 class HumanInterface: public InterfaceBase
 {
 public:
@@ -62,7 +64,7 @@ public:
 public:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
 
-    IdPtr<IOnMapObject> owner_;
+    IdPtr<Human> owner_;
 
     bool active_hand_;
     bool pulling_;
