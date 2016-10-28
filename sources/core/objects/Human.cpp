@@ -500,37 +500,28 @@ void Human::CalculateVisible(std::list<PosPoint>* visible_list)
 
 void Human::Bump(IdPtr<IMovable> item)
 {
-    if(IdPtr<Projectile> projectile = item)
+    if (IdPtr<Projectile> projectile = item)
     {
-        bool damaged = false;
-        if (projectile.IsValid())
+        health_ -= projectile->GetDamage();
+        // TODO: Maybe this is not necessary don't remember
+        // if this can be found in original ss13
+        GetGame().GetChat().PostSimpleText(
+            name + " got hit by a " + projectile->name + "!", GetRoot().Id());
+        unsigned int value = GetRand() % 3;
+        std::string snd;
+        if (value == 0)
         {
-            health_ -= projectile->GetDamage();
-            if (IdPtr<Bullet> bullet = projectile)
-            {
-                GetGame().GetChat().PostSimpleText(name + " got hit by a bullet!", owner->GetId());    // TODO maybe this is not necessary don't remember if this can be found in original ss13
-                unsigned int value = GetRand() % 3;
-                std::string snd;
-                if (value == 0)
-                {
-                    snd = "genhit1.ogg";
-                }
-                if (value == 1)
-                {
-                    snd = "genhit2.ogg";
-                }
-                if (value == 2)
-                {
-                    snd = "genhit3.ogg";
-                }
-                PlaySoundIfVisible(snd, owner.Id());
-            }
-            damaged = true;
+            snd = "genhit1.ogg";
         }
-        if (!damaged)
+        if (value == 1)
         {
-            return;
+            snd = "genhit2.ogg";
         }
+        if (value == 2)
+        {
+            snd = "genhit3.ogg";
+        }
+        PlaySoundIfVisible(snd, owner.Id());
 
         if ((GetRand() % 3) != 0)
         {
@@ -541,12 +532,12 @@ void Human::Bump(IdPtr<IMovable> item)
         std::stringstream conv;
         conv << "floor" << blood_value;
 
-        if (IdPtr<Floor> f = GetTurf())
+        if (IdPtr<Floor> floor = GetTurf())
         {
-            if (!f->bloody)
+            if (!floor->bloody)
             {
-                f->GetView()->AddOverlay("icons/blood.dmi", conv.str());
-                f->bloody = true;
+                floor->GetView()->AddOverlay("icons/blood.dmi", conv.str());
+                floor->bloody = true;
             }
         }
         return;

@@ -49,36 +49,51 @@ Projectile::Projectile(size_t id) : IMovable(id)
 }
 void Projectile::Process()
 {
-    if (movement_.size() == 0)
-    {
-        qDebug() << "Trajectory for the projectile is empty, critical error!";
-        kv_abort();
-    }
-    Dir step =  movement_[current_step_];
-    Rotate(step);
-    if(!CheckPassable())
+    Dir old_dir = GetDir();
+    if (!ProcessMovement())
     {
         return;
     }
-    current_step_ = (current_step_ + 1) % movement_.size();
-    MainMove();
+    if (GetDir() != old_dir)
+    {
+        ProcessMovement();
+    }
 }
 
 bool Projectile::CheckPassable()
 {
     auto tile = GetOwner();
-    if (!CanPass(tile->GetPassable(D_ALL), passable_level))
+    if (IdPtr<Human> human = tile->GetItem<Human>())
     {
-        tile->Bump(GetId());
+        human->Bump(GetId());
         Delete();
         return false;
     }
+
     if (IMovable::CheckPassable())
     {
         return true;
     }
     Delete();
     return false;
+}
+
+bool Projectile::ProcessMovement()
+{
+    if (movement_.size() == 0)
+    {
+        qDebug() << "Trajectory for the projectile is empty, critical error!";
+        kv_abort();
+    }
+    Dir step = movement_[current_step_];
+    Rotate(step);
+    if(!CheckPassable())
+    {
+        return false;
+    }
+    current_step_ = (current_step_ + 1) % movement_.size();
+    MainMove();
+    return true;
 }
 
 void Projectile::MakeMovementPattern(VDir target, Dir facing)

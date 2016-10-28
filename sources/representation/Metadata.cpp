@@ -416,7 +416,6 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             // to detect unknon params in DMI format
             qDebug() << "Unknown param: " << loc;
             kv_abort();
-            return false;
         }
         loc.clear();
         desc >> loc;

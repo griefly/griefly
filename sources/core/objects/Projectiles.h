@@ -24,6 +24,8 @@ public:
 protected:
     int KV_SAVEBLE(damage_);
 private:
+    bool ProcessMovement();
+
     int KV_SAVEBLE(current_step_);
     std::vector<Dir> KV_SAVEBLE(movement_);
 };
