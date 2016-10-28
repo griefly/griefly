@@ -79,7 +79,7 @@ protected:
         if (!retval.IsValid())
         {
             qDebug() << "Unable to cast object: " << QString::fromStdString(type);
-            kv_abort();
+            KvAbort();
         }
         return retval;
     }

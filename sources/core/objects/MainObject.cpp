@@ -46,7 +46,7 @@ void IMainObject::SetFreq(int freq)
     if (game_ == nullptr)
     {
         qDebug() << "SetFreq is called in constructor";
-        kv_abort();
+        KvAbort();
     }
 
     how_often_ = freq;
@@ -55,7 +55,7 @@ void IMainObject::SetFreq(int freq)
     if (!GetId())
     {
         qDebug() << "GetId() is zero";
-        kv_abort();
+        KvAbort();
     }
 
     if (how_often_ != 0)
@@ -69,7 +69,7 @@ const IGame& IMainObject::GetGame() const
     if (game_ == nullptr)
     {
         qDebug() << "IMainObject::GetGame() is called during construction of object";
-        kv_abort();
+        KvAbort();
     }
     return *game_;
 }
@@ -84,7 +84,7 @@ IGame& IMainObject::GetGame()
     if (game_ == nullptr)
     {
         qDebug() << "IMainObject::GetGame() is called during construction of object";
-        kv_abort();
+        KvAbort();
     }
     return *game_;
 }

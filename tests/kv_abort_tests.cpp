@@ -6,6 +6,6 @@ TEST(KvAbortDeathTest, Basics)
 {
     ASSERT_DEATH(
     {
-        kv_abort();
+        KvAbort();
     }, "");
 }

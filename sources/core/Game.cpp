@@ -271,7 +271,7 @@ void Game::InitWorld(int id, std::string map_name)
         if (!GetParamsHolder().GetParamBool("mapgen_name"))
         {
             qDebug() << "No mapgen param!";
-            kv_abort();
+            KvAbort();
             return;
         }
 
@@ -316,7 +316,7 @@ void Game::InitWorld(int id, std::string map_name)
         else
         {
             qDebug() << "Mapgen file does not exist!" << mapgen_name;
-            kv_abort();
+            KvAbort();
             return;
         }
     }
@@ -329,7 +329,7 @@ void Game::InitWorld(int id, std::string map_name)
         if (map_data.length() == 0)
         {
             qDebug() << "An empty map received";
-            kv_abort();
+            KvAbort();
         }
         std::stringstream ss;
         ss.write(map_data.data(), map_data.length());
@@ -540,7 +540,7 @@ void Game::ProcessInputMessages()
             if (tick != MAIN_TICK)
             {
                 qDebug() << "Tick mismatch! " << tick << " " << MAIN_TICK;
-                kv_abort();
+                KvAbort();
             }
             unsigned int hash = GetFactory().Hash();
 
@@ -780,7 +780,7 @@ void Game::ProcessBroadcastedMessages()
          else
          {
              qDebug() << "Game object is not valid: " << net_id;
-             kv_abort();
+             KvAbort();
          }
     }
     messages_to_process_.clear();
@@ -791,6 +791,6 @@ void Game::CheckMessagesOrderCorrectness()
     if (!messages_to_process_.empty())
     {
         qDebug() << "CheckMessagesOrderCorrectness fail";
-        kv_abort();
+        KvAbort();
     }
 }

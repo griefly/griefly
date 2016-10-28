@@ -60,7 +60,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     if (source.fail()) 
     {
         qDebug() << "Metadata error: Fail to read png signature";
-        kv_abort();
+        KvAbort();
     }
 
     int is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
@@ -415,7 +415,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             // That happens quite oftern so it is needed
             // to detect unknon params in DMI format
             qDebug() << "Unknown param: " << loc;
-            kv_abort();
+            KvAbort();
         }
         loc.clear();
         desc >> loc;

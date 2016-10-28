@@ -91,7 +91,7 @@ bool Projectile::ProcessMovement()
     if (movement_.size() == 0)
     {
         qDebug() << "Trajectory for the projectile is empty, critical error!";
-        kv_abort();
+        KvAbort();
     }
     Dir step = movement_[current_step_];
     Rotate(step);
@@ -211,7 +211,7 @@ void Projectile::MakeMovementPattern(VDir target, Dir facing)
     else
     {
         qDebug() << "Critical error, MakeMovementPattern has reached unreachable place";
-        kv_abort();
+        KvAbort();
     }
 }
 void Projectile::MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2)

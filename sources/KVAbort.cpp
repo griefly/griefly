@@ -10,7 +10,7 @@ void kv_abort()
     abort();
 }
 #else
-void kv_abort()
+void KvAbort()
 {
     abort();
 }

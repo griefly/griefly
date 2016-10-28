@@ -190,7 +190,7 @@ private:
         {
             qDebug() << "Id table lookup fail, id: "
                      << id << ", size: " << id_ptr_id_table->size();
-            kv_abort();
+            KvAbort();
         }
         return (*id_ptr_id_table)[id].object;
     }

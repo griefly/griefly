@@ -159,7 +159,7 @@ void ObjectFactory::Save(std::stringstream& savefile)
     if (objects_table_.empty())
     {
         qDebug() << "Trying to save empty world!";
-        kv_abort();
+        KvAbort();
     }
 
     auto it = ++objects_table_.begin();
@@ -189,7 +189,7 @@ void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
         if(savefile.fail())
         {
             qDebug() << "Error! " << j << "\n";
-            kv_abort();
+            KvAbort();
         }
         std::string type;
         savefile >> type;
@@ -284,7 +284,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
         if (!i.IsValid())
         {
             qDebug() << "Unable to cast: " << QString::fromStdString(t_item);
-            kv_abort();
+            KvAbort();
         }
         //qDebug() << "Success!";
 
@@ -388,7 +388,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
     if (item == 0)
     {
         qDebug() << "Unable to create object: " << QString::fromStdString(type);
-        kv_abort();
+        KvAbort();
     }
     item->SetGame(game_);
 
@@ -410,7 +410,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
         else if (!owner->AddItem(item->GetId()))
         {
             qDebug() << "AddItem failed";
-            kv_abort();
+            KvAbort();
         }
     }
 
