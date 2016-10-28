@@ -4,7 +4,7 @@
 
 #ifdef _BUILD_COVER
 extern "C" void __gcov_flush();
-void kv_abort()
+void KvAbort()
 {
     __gcov_flush();
     abort();
