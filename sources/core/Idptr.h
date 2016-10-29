@@ -195,7 +195,7 @@ private:
         return (*id_ptr_id_table)[id].object;
     }
     // Dynamic memory allocation is disabled
-    static void* operator new(quint32);
+    static void* operator new(size_t);
 };
 
 template<typename T>

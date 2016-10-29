@@ -8,7 +8,7 @@ static_assert(
     "Unsupported platform, sizeof(unsigned int) should be 4!");
 static_assert(
     sizeof(char) == 1,
-    "Unsupported platform, sizeo(char) should be 1!");
+    "Unsupported platform, sizeof(char) should be 1!");
 static_assert(
     sizeof(bool) == 1,
     "Unsupported platform, sizeof(bool) should be 1!");
