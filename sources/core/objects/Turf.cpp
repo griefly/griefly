@@ -2,7 +2,7 @@
 
 #include "Lattice.h"
 
-ITurf::ITurf(size_t id) : IOnMapObject(id)
+ITurf::ITurf(quint32 id) : IOnMapObject(id)
 {
     friction_ = Friction::BASE_FRICTION;
     atmos_state_ = SIMULATED;

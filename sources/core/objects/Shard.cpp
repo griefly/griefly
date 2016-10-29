@@ -2,7 +2,7 @@
 
 #include "../SyncRandom.h"
 
-Shard::Shard(size_t id) : Item(id)
+Shard::Shard(quint32 id) : Item(id)
 {
     SetSprite("icons/shards.dmi");
     SetState("medium");

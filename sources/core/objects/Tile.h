@@ -19,12 +19,12 @@ std::iostream& operator<<(std::iostream& file, std::vector<IdPtr<T>>& content)
 template<class T>
 std::iostream& operator>>(std::iostream& file, std::vector<IdPtr<T>>& content)
 {
-    size_t size;
+    quint32 size;
     file >> size;
     content.reserve(size);
 
     unsigned int local_id;
-    for (size_t i = 0; i < size; ++i)
+    for (quint32 i = 0; i < size; ++i)
     {
         file >> local_id;
         content.push_back(local_id);
@@ -39,7 +39,7 @@ class CubeTile: public IOnMapBase
 public:
     DECLARE_SAVED(CubeTile, IOnMapBase);
     DECLARE_GET_TYPE_ITEM(CubeTile);
-    CubeTile(size_t id);
+    CubeTile(quint32 id);
     virtual bool AddItem(IdPtr<IOnMapBase> item) override;
     virtual bool RemoveItem(IdPtr<IOnMapBase> item) override;
     virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const override;
@@ -110,7 +110,7 @@ public:
 
     void UpdateAtmosPassable();
 protected:
-    virtual size_t GetItemImpl(unsigned int hash) override;
+    virtual quint32 GetItemImpl(unsigned int hash) override;
 private:
     bool CanTouch(IdPtr<IOnMapBase> item, Dir dir) const;
     bool CanTouch(IdPtr<IOnMapBase> item, Dir first_dir, Dir second_dir) const;

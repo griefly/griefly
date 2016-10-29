@@ -11,7 +11,7 @@ class Gun: public Item
 public:
     DECLARE_SAVED(Gun, Item);
     DECLARE_GET_TYPE_ITEM(Gun);
-    Gun(size_t id);
+    Gun(quint32 id);
     virtual void Shoot(VDir target);
     bool AddAmmo();
     bool UseAmmo();   

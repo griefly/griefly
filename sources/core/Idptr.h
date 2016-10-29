@@ -27,7 +27,7 @@ struct IdPtrBase
 {
 protected:
     mutable IMainObject* casted_;
-    size_t id_;
+    quint32 id_;
 };
 
 template<class T>
@@ -45,7 +45,7 @@ public:
         id_ = 0;
         casted_ = nullptr;
     }
-    IdPtr(size_t id)
+    IdPtr(quint32 id)
     {
         *this = id;
     }
@@ -70,7 +70,7 @@ public:
         return !operator==(other);
     }
 
-    IdPtr& operator=(size_t id)
+    IdPtr& operator=(quint32 id)
     {
         id_ = id;
         casted_ = nullptr;
@@ -154,7 +154,7 @@ public:
         }
         return nullptr;
     }
-    size_t Id() const
+    quint32 Id() const
     {
         return id_;
     }
@@ -184,7 +184,7 @@ private:
         }
     }
 
-    static IMainObject* GetFromIdTable(size_t id)
+    static IMainObject* GetFromIdTable(quint32 id)
     {
         if (id >= id_ptr_id_table->size())
         {
@@ -195,7 +195,7 @@ private:
         return (*id_ptr_id_table)[id].object;
     }
     // Dynamic memory allocation is disabled
-    static void* operator new(size_t);
+    static void* operator new(quint32);
 };
 
 template<typename T>

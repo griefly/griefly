@@ -2,7 +2,7 @@
 
 #include "Lobby.h"
 
-SpawnPoint::SpawnPoint(size_t id) : IOnMapObject(id)
+SpawnPoint::SpawnPoint(quint32 id) : IOnMapObject(id)
 {
     SetSprite("icons/screen1.dmi");
     SetState("x");

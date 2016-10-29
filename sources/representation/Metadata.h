@@ -6,6 +6,8 @@
 
 #include <png.h>
 
+#include <qglobal.h>
+
 class ImageMetadata
 {
 public:
@@ -33,20 +35,20 @@ public:
                 state_h = 0; TODO */
             }
 
-            size_t delay;
-         /*   size_t state_w;
-            size_t state_h;*/
+            quint32 delay;
+         /*   quint32 state_w;
+            quint32 state_h;*/
         };
         std::vector<FrameMetadata> frames_data;
 
         std::vector<int> frames_sequence;
         
-        size_t dirs;
+        quint32 dirs;
         bool rewind;
         int loop;
         int hotspot[3];
 
-        size_t first_frame_pos;
+        quint32 first_frame_pos;
     };
     bool Valid() const
     {
@@ -74,8 +76,8 @@ private:
     png_uint_32 total_width_;
     png_uint_32 total_height_;
 
-    size_t width_;
-    size_t height_;
+    quint32 width_;
+    quint32 height_;
 
     bool ParseDescription(std::stringstream& desc);
     void MakeSequence();

@@ -7,7 +7,7 @@
 
 #include "../Game.h"
 
-Item::Item(size_t id) : IMovable(id)
+Item::Item(quint32 id) : IMovable(id)
 {
     passable_level = Passable::SMALL_ITEM;
 
@@ -19,7 +19,7 @@ Item::Item(size_t id) : IMovable(id)
     SetSprite("icons/items.dmi");
 }
 
-Screwdriver::Screwdriver(size_t id) : Item(id)
+Screwdriver::Screwdriver(quint32 id) : Item(id)
 {
     damage = 5;
     SetState("screwdriver");
@@ -40,7 +40,7 @@ void Screwdriver::AfterWorldCreation()
     SetState(converter.str());
 }
 
-Wirecutters::Wirecutters(size_t id) : Item(id)
+Wirecutters::Wirecutters(quint32 id) : Item(id)
 {
     SetState("cutters");
 
@@ -49,7 +49,7 @@ Wirecutters::Wirecutters(size_t id) : Item(id)
     name = "Wirecutters";
 }
 
-Crowbar::Crowbar(size_t id) : Item(id)
+Crowbar::Crowbar(quint32 id) : Item(id)
 {
     SetState("crowbar");
 
@@ -58,7 +58,7 @@ Crowbar::Crowbar(size_t id) : Item(id)
     name = "Crowbar";
 }
 
-Wrench::Wrench(size_t id) : Item(id)
+Wrench::Wrench(quint32 id) : Item(id)
 {
     SetState("wrench");
 
@@ -66,7 +66,7 @@ Wrench::Wrench(size_t id) : Item(id)
 
     name = "Wrench";
 }
-BulletCasing::BulletCasing(size_t id) : Item(id)
+BulletCasing::BulletCasing(quint32 id) : Item(id)
 {
     SetSprite("icons/ammo.dmi");
     SetState("s-casing");

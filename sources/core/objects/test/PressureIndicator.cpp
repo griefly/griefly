@@ -2,7 +2,7 @@
 
 #include "../Tile.h"
 
-PressureIndicator::PressureIndicator(size_t id) : IOnMapObject(id)
+PressureIndicator::PressureIndicator(quint32 id) : IOnMapObject(id)
 {
     v_level = 11;
     name = "Pressure indicator";

@@ -31,20 +31,20 @@ std::istream& operator>>(std::stringstream& file, ViewInfo& view_info)
 {
     WrapReadMessage(file, view_info.base_frameset_);
 
-    size_t u_size;
+    quint32 u_size;
     file >> u_size;
     view_info.underlays_.resize(u_size);
-    for (size_t i = 0; i < u_size; ++i)
+    for (quint32 i = 0; i < u_size; ++i)
     {
         ViewInfo::FramesetInfo f;
         WrapReadMessage(file, f);
         view_info.underlays_[i] = f;
     }
 
-    size_t o_size;
+    quint32 o_size;
     file >> o_size;
     view_info.overlays_.resize(o_size);
-    for (size_t i = 0; i < o_size; ++i)
+    for (quint32 i = 0; i < o_size; ++i)
     {
         ViewInfo::FramesetInfo f;
         WrapReadMessage(file, f);

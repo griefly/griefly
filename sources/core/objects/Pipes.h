@@ -12,7 +12,7 @@ class PipeBase: public IMovable
 public:
     DECLARE_SAVED(PipeBase, IMovable);
     DECLARE_GET_TYPE_ITEM(PipeBase);
-    PipeBase(size_t id);
+    PipeBase(quint32 id);
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) { return false; }
     virtual bool CanTransferGas(Dir dir) const { return false; }
@@ -29,7 +29,7 @@ class Pipe: public PipeBase
 public:
     DECLARE_SAVED(Pipe, PipeBase);
     DECLARE_GET_TYPE_ITEM(Pipe);
-    Pipe(size_t id);
+    Pipe(quint32 id);
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override { return true; }
@@ -46,7 +46,7 @@ class Manifold: public PipeBase
 public:
     DECLARE_SAVED(Manifold, PipeBase);
     DECLARE_GET_TYPE_ITEM(Manifold);
-    Manifold(size_t id);
+    Manifold(quint32 id);
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override;
@@ -66,7 +66,7 @@ class Valve: public Pipe
 public:
     DECLARE_SAVED(Valve, Pipe);
     DECLARE_GET_TYPE_ITEM(Valve);
-    Valve(size_t id);
+    Valve(quint32 id);
     virtual bool CanTransferGas(Dir dir) const override;
     virtual void Process() override;
     virtual void AttackBy(IdPtr<Item> item) override;
@@ -80,7 +80,7 @@ class Vent: public PipeBase
 public:
     DECLARE_SAVED(Vent, PipeBase);
     DECLARE_GET_TYPE_ITEM(Vent);
-    Vent(size_t id);
+    Vent(quint32 id);
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
     virtual bool CanTransferGas(Dir dir) const override { return true; }
@@ -97,7 +97,7 @@ class Connector: public PipeBase
 public:
     DECLARE_SAVED(Connector, PipeBase);
     DECLARE_GET_TYPE_ITEM(Connector);
-    Connector(size_t id);
+    Connector(quint32 id);
     void ConnectToGasTank(IdPtr<GasTank> tank);
     void DisconnectFromGasTank();
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
@@ -115,7 +115,7 @@ class PipePump: public Pipe
 public:
     DECLARE_SAVED(PipePump, Pipe);
     DECLARE_GET_TYPE_ITEM(PipePump);
-    PipePump(size_t id);
+    PipePump(quint32 id);
     virtual bool CanTransferGas(Dir dir) const override;
     virtual void Process() override;
 public:

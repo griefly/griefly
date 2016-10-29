@@ -9,7 +9,7 @@ public:
     DECLARE_SAVED(IMessageReceiver, IMovable);
     DECLARE_GET_TYPE_ITEM(IMessageReceiver);
     virtual void ProcessMessage(const Message2& msg){}
-    IMessageReceiver(size_t id) : IMovable(id) {}
+    IMessageReceiver(quint32 id) : IMovable(id) {}
 };
 
 ADD_TO_TYPELIST(IMessageReceiver);

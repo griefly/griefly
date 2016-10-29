@@ -16,7 +16,7 @@ struct FakeParamClass {};
 #define DECLARE_SAVED(thisclass, masterclass)  \
     friend void InitSettersForTypes();\
          typedef thisclass THIS_CLASS_TYPE;      \
-    static IMainObject* _Z_creator(size_t id) { return new thisclass(id); };\
+    static IMainObject* _Z_creator(quint32 id) { return new thisclass(id); };\
     static IMainObject* _Z_creatorSaved() { return new thisclass(nouse);}; \
         static const int THIS_COUNTER = __COUNTER__;           \
 template<int num> __forceinline void KV_SAVE_FUNC(std::stringstream& file, FakeParamClass<num>){};     \

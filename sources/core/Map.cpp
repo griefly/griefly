@@ -193,7 +193,7 @@ bool MapMaster::IsTransparent(int posx, int posy, int posz)
     return squares_[posx][posy][posz]->IsTransparent();
 }
 
-bool MapMaster::IsTileVisible(size_t tile_id)
+bool MapMaster::IsTileVisible(quint32 tile_id)
 {
     auto l = GetVisiblePoints();
     if (!l)

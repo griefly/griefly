@@ -9,7 +9,7 @@
 
 #include "representation/Sound.h"
 
-Girder::Girder(size_t id) : Structure(id)
+Girder::Girder(quint32 id) : Structure(id)
 {
     SetSprite("icons/structures.dmi");
     SetState("girder");

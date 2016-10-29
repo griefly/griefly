@@ -4,7 +4,7 @@
 #include "../Game.h"
 #include "representation/Representation.h"
 
-void IMainObject::PlaySoundIfVisible(const std::string& name, size_t tile_id)
+void IMainObject::PlaySoundIfVisible(const std::string& name, quint32 tile_id)
 {
     if (GetGame().GetMap().IsTileVisible(tile_id))
     {
@@ -94,12 +94,12 @@ unsigned int IMainObject::GetRand()
     return GetGame().GetRandom().GetRand();
 }
 
-size_t IMainObject::CreateImpl(const std::string& type, size_t owner)
+quint32 IMainObject::CreateImpl(const std::string& type, quint32 owner)
 {
     return GetFactory().CreateImpl(type, owner);
 }
 
-void IMainObject::SetId(size_t id)
+void IMainObject::SetId(quint32 id)
 {
     id_ = id;
     SetFreq(GetFreq());

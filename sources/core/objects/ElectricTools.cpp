@@ -6,7 +6,7 @@
 #include "Tile.h"
 #include "../Game.h"
 
-AtmosTool::AtmosTool(size_t id) : Item(id)
+AtmosTool::AtmosTool(quint32 id) : Item(id)
 {
     SetSprite("icons/device.dmi");
     SetState("atmos");
@@ -20,7 +20,7 @@ std::string AtmosTool::GetInfo(AtmosHolder &holder)
     ss << "Volume: " << holder.GetVolume() << std::endl;
     ss << "Temperature: " << holder.GetTemperature() << std::endl;
     ss << "Pressure: " << holder.GetPressure() << std::endl;
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         ss << GASES_NAME[i] << ": " << holder.GetGase(i) << std::endl;
     }
@@ -38,7 +38,7 @@ void AtmosTool::AttackBy(IdPtr<Item> item)
     }
 }
 
-RemoteAtmosTool::RemoteAtmosTool(size_t id) : AtmosTool(id)
+RemoteAtmosTool::RemoteAtmosTool(quint32 id) : AtmosTool(id)
 {
     name = "Remote atmos tool";
 }

@@ -3,7 +3,7 @@
 #include "Weldingtool.h"
 #include "representation/Sound.h"
 
-FuelTank::FuelTank(size_t id)
+FuelTank::FuelTank(quint32 id)
     : Tank(id)
 {
     name = "Fueltank";
@@ -27,7 +27,7 @@ void FuelTank::AttackBy(IdPtr<Item> item)
     }
 }
 
-WaterTank::WaterTank(size_t id)
+WaterTank::WaterTank(quint32 id)
     : Tank(id)
 {
     name = "Watertank";

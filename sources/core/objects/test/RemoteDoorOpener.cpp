@@ -1,6 +1,6 @@
 #include "RemoteDoorOpener.h"
 
-RemoteDoorOpener::RemoteDoorOpener(size_t id)
+RemoteDoorOpener::RemoteDoorOpener(quint32 id)
     : Item(id)
 {
     SetSprite("icons/device.dmi");

@@ -8,7 +8,7 @@
 #include "../ObjectFactory.h"
 #include "../Game.h"
 
-Space::Space(size_t id) : ITurf(id)
+Space::Space(quint32 id) : ITurf(id)
 {
     SetAtmosState(SPACE);
 
@@ -25,7 +25,7 @@ Space::Space(size_t id) : ITurf(id)
 void Space::AfterWorldCreation()
 {
     std::stringstream conv;
-    size_t value = GetRand() % 25 + 1;
+    quint32 value = GetRand() % 25 + 1;
     conv << value;
     SetState(conv.str());
 }

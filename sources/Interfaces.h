@@ -18,12 +18,12 @@ class IAtmosphere
 public:
     virtual ~IAtmosphere() { }
 
-    virtual void Resize(size_t x, size_t y, size_t z) = 0;
+    virtual void Resize(quint32 x, quint32 y, quint32 z) = 0;
     virtual void Process() = 0;
     virtual void ProcessMove() = 0;
 
     typedef char Flags;
-    virtual void SetFlags(size_t x, size_t y, size_t z, Flags flags) = 0;
+    virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) = 0;
     virtual void LoadGrid() = 0;
 };
 
@@ -48,7 +48,7 @@ public:
     virtual IAtmosphere& GetAtmosphere() = 0;
     virtual void FillAtmosphere() = 0;
     virtual void CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) = 0;
-    virtual bool IsTileVisible(size_t tile_id) = 0;
+    virtual bool IsTileVisible(quint32 tile_id) = 0;
 
     virtual bool IsTransparent(int posx, int posy, int posz = 0) = 0;
 
@@ -68,25 +68,25 @@ public:
     virtual unsigned int Hash() = 0;
 
     virtual void Save(std::stringstream& str) = 0;
-    virtual void Load(std::stringstream& str, size_t real_this_mob) = 0;
+    virtual void Load(std::stringstream& str, quint32 real_this_mob) = 0;
 
     virtual void LoadFromMapGen(const std::string& name) = 0;
 
     virtual void BeginWorldCreation() = 0;
     virtual void FinishWorldCreation() = 0;
 
-    virtual size_t CreateImpl(const std::string& type, size_t owner = 0) = 0;
+    virtual quint32 CreateImpl(const std::string& type, quint32 owner = 0) = 0;
 
-    virtual void DeleteLater(size_t id) = 0;
+    virtual void DeleteLater(quint32 id) = 0;
     virtual void ProcessDeletion() = 0;
 
-    virtual void AddProcessingItem(size_t item) = 0;
+    virtual void AddProcessingItem(quint32 item) = 0;
 
     virtual void ClearProcessing() = 0;
 
-    virtual void SetPlayerId(size_t net_id, size_t real_id) = 0;
-    virtual size_t GetPlayerId(size_t net_id) = 0;
-    virtual size_t GetNetId(size_t real_id) = 0;
+    virtual void SetPlayerId(quint32 net_id, quint32 real_id) = 0;
+    virtual quint32 GetPlayerId(quint32 net_id) = 0;
+    virtual quint32 GetNetId(quint32 real_id) = 0;
 };
 
 class IChat
@@ -97,10 +97,10 @@ public:
     virtual void PostTextFor(const std::string& str, IdPtr<IOnMapBase> owner) = 0;
     virtual void PostText(const std::string& str) = 0;
     virtual void PostOOCText(const std::string& who, const std::string& str) = 0;
-    virtual void PostSimpleText(const std::string& str, size_t tile_id) = 0;
+    virtual void PostSimpleText(const std::string& str, quint32 tile_id) = 0;
     virtual void PostDamage(const std::string& by, const std::string& who,
-                            const std::string& object, size_t tile_id) = 0;
-    virtual void PostWords(const std::string& who, const std::string& text, size_t tile_id) = 0;
+                            const std::string& object, quint32 tile_id) = 0;
+    virtual void PostWords(const std::string& who, const std::string& text, quint32 tile_id) = 0;
 };
 
 class IGame
@@ -118,11 +118,11 @@ public:
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) = 0;
 
-    virtual void SetUnsyncGenerator(size_t generator) = 0;
+    virtual void SetUnsyncGenerator(quint32 generator) = 0;
 
     virtual void ChangeMob(IdPtr<IMob> new_mob) = 0;
     virtual IdPtr<IMob> GetMob() = 0;
-    virtual void SetMob(size_t new_mob) = 0;
+    virtual void SetMob(quint32 new_mob) = 0;
 
     virtual void AddSound(const std::string& name) = 0;
     virtual void PlayMusic(const std::string& name, float volume) = 0;

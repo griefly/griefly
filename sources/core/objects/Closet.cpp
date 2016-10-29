@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "representation/Sound.h"
 
-Closet::Closet(size_t id)
+Closet::Closet(quint32 id)
     : IMovable(id)
 {
     v_level = 4;
@@ -174,7 +174,7 @@ void Closet::Open()
 }
 
 
-SecurityLocker::SecurityLocker(size_t id) : Closet(id)
+SecurityLocker::SecurityLocker(quint32 id) : Closet(id)
 {
     locked_ = true;
     SetState("secure1");

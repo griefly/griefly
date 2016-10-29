@@ -41,10 +41,10 @@ public:
     virtual SyncRandom& GetRandom() override;
     virtual Names& GetNames() override;
 
-    virtual void SetUnsyncGenerator(size_t generator) override;
+    virtual void SetUnsyncGenerator(quint32 generator) override;
     virtual void ChangeMob(IdPtr<IMob> new_mob) override;
     virtual IdPtr<IMob> GetMob() override;
-    virtual void SetMob(size_t new_mob) override;
+    virtual void SetMob(quint32 new_mob) override;
 public slots:
     void process();
     void endProcess();
@@ -90,7 +90,7 @@ private:
     bool ping_send_is_requested_;
     bool process_in_;
     std::string adrs_;
-    size_t creator_;
+    quint32 creator_;
     bool auto_player_;
 
     int current_connections_;

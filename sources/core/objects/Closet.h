@@ -10,7 +10,7 @@ class Closet: public IMovable
 public:
     DECLARE_SAVED(Closet, IMovable);
     DECLARE_GET_TYPE_ITEM(Closet);
-    Closet(size_t id);
+    Closet(quint32 id);
 
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Bump(IdPtr<IMovable> item) override;
@@ -41,7 +41,7 @@ class SecurityLocker: public Closet
 public:
     DECLARE_SAVED(SecurityLocker, Closet);
     DECLARE_GET_TYPE_ITEM(SecurityLocker);
-    SecurityLocker(size_t id);
+    SecurityLocker(quint32 id);
     virtual void AttackBy(IdPtr<Item> item) override;
 protected:
     virtual void Lock();

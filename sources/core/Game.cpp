@@ -70,7 +70,7 @@ Game::Game()
 
     const int MESSAGES_LOG_SIZE = 2 * 1024;
     messages_log_.resize(MESSAGES_LOG_SIZE);
-    for (size_t i = 0; i < messages_log_.size(); ++i)
+    for (quint32 i = 0; i < messages_log_.size(); ++i)
     {
         messages_log_[i].type = 0;
         messages_log_[i].json = "(empty)";
@@ -288,7 +288,7 @@ void Game::InitWorld(int id, std::string map_name)
 
             if (GetParamsHolder().GetParamBool("-unsync_generation"))
             {
-                size_t unsync_generator
+                quint32 unsync_generator
                     = GetFactory().CreateImpl(UnsyncGenerator::T_ITEM_S());
                 SetUnsyncGenerator(unsync_generator);
             }
@@ -303,7 +303,7 @@ void Game::InitWorld(int id, std::string map_name)
                 }
             }
 
-            size_t newmob = GetFactory().CreateImpl(LoginMob::T_ITEM_S());
+            quint32 newmob = GetFactory().CreateImpl(LoginMob::T_ITEM_S());
 
             ChangeMob(newmob);
             GetFactory().SetPlayerId(id, newmob);
@@ -480,7 +480,7 @@ void Game::ProcessInputMessages()
             QJsonValue new_id_v = obj["id"];
             int new_id = new_id_v.toVariant().toInt();
 
-            size_t game_id = GetFactory().GetPlayerId(new_id);
+            quint32 game_id = GetFactory().GetPlayerId(new_id);
 
             if (game_id != 0)
             {
@@ -488,7 +488,7 @@ void Game::ProcessInputMessages()
                 continue;
             }
 
-            size_t newmob = GetFactory().CreateImpl(LoginMob::T_ITEM_S());
+            quint32 newmob = GetFactory().CreateImpl(LoginMob::T_ITEM_S());
 
             qDebug() << "New client " << newmob;
 
@@ -680,7 +680,7 @@ Names& Game::GetNames()
     return *names_;
 }
 
-void Game::SetUnsyncGenerator(size_t generator)
+void Game::SetUnsyncGenerator(quint32 generator)
 {
     unsync_generator_ = generator;
 }
@@ -715,7 +715,7 @@ IdPtr<IMob> Game::GetMob()
     return current_mob_;
 }
 
-void Game::SetMob(size_t new_mob)
+void Game::SetMob(quint32 new_mob)
 {
     current_mob_ = new_mob;
 }
@@ -766,7 +766,7 @@ void Game::ProcessBroadcastedMessages()
          QJsonObject obj = Network2::ParseJson(*it);
          QJsonValue v = obj["id"];
          int net_id = v.toVariant().toInt();
-         size_t game_id = GetFactory().GetPlayerId(net_id);
+         quint32 game_id = GetFactory().GetPlayerId(net_id);
          if (game_id == 0)
          {
              qDebug() << "Game id is 0";

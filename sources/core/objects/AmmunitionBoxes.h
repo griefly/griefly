@@ -7,7 +7,7 @@ class AmmunitionBox: public Item
 public:
     DECLARE_SAVED(AmmunitionBox, Item);
     DECLARE_GET_TYPE_ITEM(AmmunitionBox);
-    AmmunitionBox(size_t id);
+    AmmunitionBox(quint32 id);
     void RemoveBullet();
     bool CheckBullets();
 private:

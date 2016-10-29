@@ -105,7 +105,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
             continue;
         }
 
-        for (size_t dir = 0; dir < view.GetBaseFrameset().GetMetadata()->dirs; ++dir)
+        for (quint32 dir = 0; dir < view.GetBaseFrameset().GetMetadata()->dirs; ++dir)
         {
             int current_frame_pos = view.GetBaseFrameset().GetMetadata()->first_frame_pos + dir;
 
@@ -317,7 +317,7 @@ MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
     int current_y = map_editor_->GetPointer().first_posy;
     auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
 
-    if (entries.size() > static_cast<size_t>(current_index))
+    if (entries.size() > static_cast<quint32>(current_index))
     {
         return &entries[current_index];
     }

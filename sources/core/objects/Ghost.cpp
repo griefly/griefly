@@ -12,7 +12,7 @@
 
 #include "Human.h"
 
-Ghost::Ghost(size_t id) : IMob(id)
+Ghost::Ghost(quint32 id) : IMob(id)
 {
     tickSpeed = 1;
     pixSpeed = 2;
@@ -37,7 +37,7 @@ void Ghost::AfterWorldCreation()
 
 bool Ghost::IsMobGhost()
 {
-    static size_t mob_id = 0;
+    static quint32 mob_id = 0;
     static bool draw = true;
     if (!GetGame().GetMob())
     {
@@ -112,7 +112,7 @@ void Ghost::Process()
     --seconds_until_respawn_;
     if (seconds_until_respawn_ < 0)
     {
-        size_t net_id = GetGame().GetFactory().GetNetId(GetId());
+        quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
             auto login_mob = Create<IMob>(LoginMob::T_ITEM_S(), 0);

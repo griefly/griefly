@@ -67,7 +67,7 @@ SoundPlayer::SoundPlayer()
 
 sf::Sound* SoundPlayer::PlaySound(const std::string& name)
 {
-    size_t i;
+    quint32 i;
     for (i = 0; i < sounds_.size(); ++i)
     {
         if (sounds_[i].getStatus() == sf::SoundSource::Stopped)

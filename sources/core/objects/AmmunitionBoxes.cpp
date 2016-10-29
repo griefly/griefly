@@ -1,6 +1,6 @@
 #include "AmmunitionBoxes.h"
 
-AmmunitionBox::AmmunitionBox(size_t id) : Item(id)
+AmmunitionBox::AmmunitionBox(quint32 id) : Item(id)
 {
     SetSprite("icons/ammo.dmi");
     SetState("357");

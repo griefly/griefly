@@ -7,7 +7,7 @@ class Space: public ITurf
 public:
     DECLARE_SAVED(Space, ITurf);
     DECLARE_GET_TYPE_ITEM(Space);
-    Space(size_t id);
+    Space(quint32 id);
     virtual void AfterWorldCreation() override;
     virtual void AttackBy(IdPtr<Item> item) override;
 };

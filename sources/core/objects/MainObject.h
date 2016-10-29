@@ -24,7 +24,7 @@ public:
 #endif // _BUILD_TESTS
     virtual ~IMainObject() { }
 
-    void PlaySoundIfVisible(const std::string& name, size_t tile_id);
+    void PlaySoundIfVisible(const std::string& name, quint32 tile_id);
     void PlayMusic(const std::string& name, float volume = 100.0f);
 
     static const int THIS_COUNTER = __COUNTER__; 
@@ -37,7 +37,7 @@ public:
     }
 
     virtual void Delete();
-    IMainObject(size_t id) { id_ = id; how_often_ = 0; game_ = nullptr; }
+    IMainObject(quint32 id) { id_ = id; how_often_ = 0; game_ = nullptr; }
     IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
     virtual const std::string& T_ITEM() const
@@ -60,8 +60,8 @@ public:
     }       
     virtual void Process() { }
 
-    void SetId(size_t id);
-    size_t GetId() const { return id_; }
+    void SetId(quint32 id);
+    quint32 GetId() const { return id_; }
 
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
@@ -84,10 +84,10 @@ protected:
         return retval;
     }
 private:
-    size_t CreateImpl(const std::string& type, size_t owner = 0);
+    quint32 CreateImpl(const std::string& type, quint32 owner = 0);
 
     IGame* game_;
-    size_t id_;
+    quint32 id_;
     int how_often_;
 };
 ADD_TO_TYPELIST(IMainObject);

@@ -27,7 +27,7 @@ int GLSprite::H() const
     return h_;
 }
 
-const std::vector<GLuint>& GLSprite::operator[](size_t num) const
+const std::vector<GLuint>& GLSprite::operator[](quint32 num) const
 {
     return gl_sprites_[num];
 }
@@ -124,7 +124,7 @@ GLSprite::GLSprite(const std::string& name)
 GLSprite::~GLSprite()
 {
     MakeCurrentGLContext();
-    for (size_t i = 0; i < gl_sprites_.size(); ++i)
+    for (quint32 i = 0; i < gl_sprites_.size(); ++i)
         glDeleteTextures(gl_sprites_[i].size(), &gl_sprites_[i][0]);
     delete sdl_sprite_;
 }

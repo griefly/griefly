@@ -7,7 +7,7 @@ class Human: public IMob
 public:
     DECLARE_SAVED(Human, IMob);
     DECLARE_GET_TYPE_ITEM(Human);
-    Human(size_t id);
+    Human(quint32 id);
 
     virtual void AfterWorldCreation() override;
 
@@ -68,7 +68,7 @@ class CaucasianHuman: public Human
 public:
     DECLARE_SAVED(CaucasianHuman, Human);
     DECLARE_GET_TYPE_ITEM(CaucasianHuman);
-    CaucasianHuman(size_t id);
+    CaucasianHuman(quint32 id);
     virtual void AfterWorldCreation() override;
 
     virtual void OnDeath() override;

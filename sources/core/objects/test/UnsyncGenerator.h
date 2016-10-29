@@ -7,7 +7,7 @@ class UnsyncGenerator: public IMainObject
 public:
     DECLARE_SAVED(UnsyncGenerator, IMainObject);
     DECLARE_GET_TYPE_ITEM(UnsyncGenerator)
-    UnsyncGenerator(size_t id);
+    UnsyncGenerator(quint32 id);
     void PerformUnsync();
 private:
     std::string KV_SAVEBLE(unsync_string_);

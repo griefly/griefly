@@ -4,7 +4,7 @@
 
 #include "core/objects/MainObject.h"
 
-typedef IMainObject* (*item_creator)(size_t id);
+typedef IMainObject* (*item_creator)(quint32 id);
 typedef IMainObject* (*item_creator_saved)();
 
 std::unordered_map<std::string, item_creator>* items_creators();

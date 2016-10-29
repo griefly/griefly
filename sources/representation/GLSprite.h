@@ -14,7 +14,7 @@ class GLSprite
 public:
     GLSprite(const std::string& string);
     ~GLSprite();
-    const std::vector<GLuint>& operator[](size_t num) const;
+    const std::vector<GLuint>& operator[](quint32 num) const;
     bool Fail() const;
 
     // int becouse x or y could be negative, don't touch this

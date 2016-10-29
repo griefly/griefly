@@ -31,7 +31,7 @@ bool Network2::IsKey(const QJsonObject& json, const std::string& key)
     return false;
 }
 
-size_t Network2::ExtractObjId(const QJsonObject &json)
+quint32 Network2::ExtractObjId(const QJsonObject &json)
 {
     QJsonValue val = json["obj"];
 

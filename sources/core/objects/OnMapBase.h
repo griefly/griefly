@@ -30,7 +30,7 @@ class IOnMapBase: public IDraw
 public:
     DECLARE_SAVED(IOnMapBase, IDraw);
     DECLARE_GET_TYPE_ITEM(IOnMapBase);
-    IOnMapBase(size_t id) : IDraw(id) {owner = 0;}
+    IOnMapBase(quint32 id) : IDraw(id) {owner = 0;}
     virtual bool IsVisibleByPlayer() const
     {
         return true;
@@ -118,7 +118,7 @@ public:
     {
         return GetItemImpl(T::RT_ITEM_S());
     }
-    void SetOwner(size_t value)
+    void SetOwner(quint32 value)
     {
         owner = value;
     }
@@ -145,6 +145,6 @@ public:
     IdPtr<IOnMapBase> GetRoot();
 protected:
     IdPtr<IOnMapBase> KV_SAVEBLE(owner);
-    virtual size_t GetItemImpl(unsigned int hash) { return 0; }
+    virtual quint32 GetItemImpl(unsigned int hash) { return 0; }
 };
 ADD_TO_TYPELIST(IOnMapBase);

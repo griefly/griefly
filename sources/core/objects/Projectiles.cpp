@@ -11,12 +11,12 @@ std::ostream& operator<<(std::stringstream& file, const std::vector<Dir>& s)
 
 std::istream& operator>>(std::stringstream& file, std::vector<Dir>& s)
 {
-    size_t size;
+    quint32 size;
     file >> size;
     s.reserve(size);
 
     unsigned int local_id;
-    for (size_t i = 0; i < size; ++i)
+    for (quint32 i = 0; i < size; ++i)
     {
         file >> local_id;
         s.push_back(local_id);
@@ -36,7 +36,7 @@ unsigned int hash(const std::vector<Dir>& content)
 }
 
 
-Projectile::Projectile(size_t id) : IMovable(id)
+Projectile::Projectile(quint32 id) : IMovable(id)
 {
     SetPassable(D_ALL, Passable::FULL);
     damage_ = 0;

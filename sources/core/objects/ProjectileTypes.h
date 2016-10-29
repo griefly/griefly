@@ -7,7 +7,7 @@ class Bullet: public Projectile
 public:
     DECLARE_SAVED(Bullet, Projectile);
     DECLARE_GET_TYPE_ITEM(Bullet);
-    Bullet(size_t id);
+    Bullet(quint32 id);
 };
 ADD_TO_TYPELIST(Bullet);
 
@@ -16,7 +16,7 @@ class Laser: public Projectile
 public:
     DECLARE_SAVED(Laser, Projectile);
     DECLARE_GET_TYPE_ITEM(Laser);
-    Laser(size_t id);
+    Laser(quint32 id);
 
     virtual bool CheckPassable() override;
 };

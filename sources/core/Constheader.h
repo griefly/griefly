@@ -8,6 +8,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include <qglobal.h>
+
 const int SIZE_H_SQ = 11; // visible size const
 const int SIZE_W_SQ = 11;
 
@@ -94,6 +96,6 @@ const Dir DirToRDir[6] = {1, 0, 3, 2, 5, 4};
 
 const int MAX_LEVEL = 20;
 
-extern size_t MAIN_TICK;
+extern quint32 MAIN_TICK;
 
 const std::string RAW_DIR = "raw/";

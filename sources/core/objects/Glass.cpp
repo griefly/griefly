@@ -4,7 +4,7 @@
 #include "../Helpers.h"
 #include "Mob.h"
 
-FlatGlass::FlatGlass(size_t id) : Structure(id)
+FlatGlass::FlatGlass(quint32 id) : Structure(id)
 {
     transparent = true;
 
@@ -59,7 +59,7 @@ bool FlatGlass::Rotate(Dir dir)
     return true;
 }
 
-ReinforcedFlatGlass::ReinforcedFlatGlass(size_t id) : FlatGlass(id)
+ReinforcedFlatGlass::ReinforcedFlatGlass(quint32 id) : FlatGlass(id)
 {
     SetState("rwindow");
     name = "Reinforced window";

@@ -7,7 +7,7 @@ class PressureIndicator : public IOnMapObject
 public:
     DECLARE_SAVED(PressureIndicator, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(PressureIndicator);
-    PressureIndicator(size_t id);
+    PressureIndicator(quint32 id);
     virtual void Process() override;
     virtual void AfterWorldCreation() override;
 private:

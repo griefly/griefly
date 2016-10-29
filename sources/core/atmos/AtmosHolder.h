@@ -15,7 +15,7 @@ class AtmosHolder
 public:
     AtmosHolder()
     {
-        for (size_t i = 0; i < GASES_NUM; ++i)
+        for (quint32 i = 0; i < GASES_NUM; ++i)
         {
             data_.gases[i] = 0;
         }
@@ -57,7 +57,7 @@ std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holde
 inline unsigned int hash(const AtmosHolder& atmos_holder)
 {
     unsigned int retval = 0;
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         retval += atmos_holder.data_ptr_->gases[i];
     }

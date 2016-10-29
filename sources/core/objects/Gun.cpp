@@ -1,7 +1,7 @@
 #include "Gun.h"
 #include "Tile.h"
 
-Gun::Gun(size_t id) : Item(id)
+Gun::Gun(quint32 id) : Item(id)
 {
     SetSprite("icons/guns.dmi");
     ammunition_ = 1;

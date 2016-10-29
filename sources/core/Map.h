@@ -63,7 +63,7 @@ public:
 
     virtual void Represent() override;
 
-    virtual bool IsTileVisible(size_t tile_id) override;
+    virtual bool IsTileVisible(quint32 tile_id) override;
     virtual bool IsTransparent(int posx, int posy, int posz = 0) override;
 
     virtual void CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) override;

@@ -16,7 +16,7 @@
 
 const char* LOGIN_CLICK = "login_click";
 
-LoginMob::LoginMob(size_t id) : IMob(id)
+LoginMob::LoginMob(quint32 id) : IMob(id)
 {
     std::stringstream conv;
     conv << "LobbyPlayer" << id;
@@ -81,7 +81,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
             return;
         }
         qDebug() << "Begin human creation in LoginMob";
-        size_t net_id = GetGame().GetFactory().GetNetId(GetId());
+        quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
             IdPtr<Human> human;

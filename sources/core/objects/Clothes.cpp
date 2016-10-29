@@ -2,12 +2,12 @@
 
 #include "Slot.h"
 
-Cloth::Cloth(size_t id) : Item(id)
+Cloth::Cloth(quint32 id) : Item(id)
 {
     name = "SimpleCloth";
 }
 
-Armor::Armor(size_t id) : Cloth(id)
+Armor::Armor(quint32 id) : Cloth(id)
 {
     SetSprite("icons/suits.dmi");
     SetState("armor");
@@ -17,7 +17,7 @@ Armor::Armor(size_t id) : Cloth(id)
     name = "Armor";
 }
 
-Helmet::Helmet(size_t id) : Cloth(id)
+Helmet::Helmet(quint32 id) : Cloth(id)
 {
     SetSprite("icons/hats.dmi");
     SetState("helmet");
@@ -27,7 +27,7 @@ Helmet::Helmet(size_t id) : Cloth(id)
     name = "Armor";
 }
 
-EngineUniform::EngineUniform(size_t id) : Cloth(id)
+EngineUniform::EngineUniform(quint32 id) : Cloth(id)
 {
     SetSprite("icons/uniforms.dmi");
     SetState("engine");
@@ -37,7 +37,7 @@ EngineUniform::EngineUniform(size_t id) : Cloth(id)
     name = "Engine uniform";
 }
 
-RedUniform::RedUniform(size_t id) : Cloth(id)
+RedUniform::RedUniform(quint32 id) : Cloth(id)
 {
     SetSprite("icons/uniforms.dmi");
     SetState("red");
@@ -47,7 +47,7 @@ RedUniform::RedUniform(size_t id) : Cloth(id)
     name = "Red uniform";
 }
 
-JanitorUniform::JanitorUniform(size_t id) : Cloth(id)
+JanitorUniform::JanitorUniform(quint32 id) : Cloth(id)
 {
     SetSprite("icons/uniforms.dmi");
     SetState("janitor");
@@ -57,7 +57,7 @@ JanitorUniform::JanitorUniform(size_t id) : Cloth(id)
     name = "Janitor uniform";
 }
 
-ClownUniform::ClownUniform(size_t id) : Cloth(id)
+ClownUniform::ClownUniform(quint32 id) : Cloth(id)
 {
     SetSprite("icons/uniforms.dmi");
     SetState("clown");
@@ -67,7 +67,7 @@ ClownUniform::ClownUniform(size_t id) : Cloth(id)
     name = "Clown uniform";
 }
 
-OrangeBoots::OrangeBoots(size_t id) : Cloth(id)
+OrangeBoots::OrangeBoots(quint32 id) : Cloth(id)
 {
     SetSprite("icons/shoes.dmi");
     SetState("orange");

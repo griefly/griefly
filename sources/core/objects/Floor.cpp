@@ -9,7 +9,7 @@
 #include "../ObjectFactory.h"
 #include "../Game.h"
 
-Floor::Floor(size_t id) : ITurf(id)
+Floor::Floor(quint32 id) : ITurf(id)
 {
     transparent = true;
     SetPassable(D_ALL, Passable::FULL);
@@ -78,7 +78,7 @@ void Floor::SetOpen(bool o)
 }
 
 
-Plating::Plating(size_t id) : Floor(id)
+Plating::Plating(quint32 id) : Floor(id)
 {
     open_ = true;
     // For map editor

@@ -1,13 +1,13 @@
 #include "ProjectileTypes.h"
 
-Bullet::Bullet(size_t id) : Projectile(id)
+Bullet::Bullet(quint32 id) : Projectile(id)
 {
     damage_ = 20;
     SetState("bullet");
     name = "Bullet";
 }
 
-Laser::Laser(size_t id) : Projectile(id)
+Laser::Laser(quint32 id) : Projectile(id)
 {
     damage_ = 10;
     SetState("laser");

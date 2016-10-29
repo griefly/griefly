@@ -16,11 +16,11 @@ class Atmosphere : public IAtmosphere
 {
 public:
     Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter* texts);
-    virtual void Resize(size_t x, size_t y, size_t z) override;
+    virtual void Resize(quint32 x, quint32 y, quint32 z) override;
     virtual void Process() override;
     virtual void ProcessMove() override;
 
-    virtual void SetFlags(size_t x, size_t y, size_t z, Flags flags) override;
+    virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) override;
     virtual void LoadGrid() override;
 private:
     AtmosGrid* grid_;

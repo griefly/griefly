@@ -34,7 +34,7 @@ Chat::Chat(IGame* game)
     game_ = game;
 }
 
-void Chat::PostSimpleText(const std::string& str, size_t tile_id)
+void Chat::PostSimpleText(const std::string& str, quint32 tile_id)
 {
     if (!game_->GetMap().IsTileVisible(tile_id))
     {
@@ -44,7 +44,7 @@ void Chat::PostSimpleText(const std::string& str, size_t tile_id)
     emit insertHtmlIntoChat(QString::fromStdString(str));
 }
 
-void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, size_t tile_id)
+void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, quint32 tile_id)
 {
     if (!game_->GetMap().IsTileVisible(tile_id))
     {
@@ -66,7 +66,7 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
          + "</font>");
 }
 
-void Chat::PostWords(const std::string& who, const std::string& text, size_t tile_id)
+void Chat::PostWords(const std::string& who, const std::string& text, quint32 tile_id)
 {
     if (!game_->GetMap().IsTileVisible(tile_id))
     {

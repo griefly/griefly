@@ -2,7 +2,7 @@
 #include "Item.h"
 #include "Human.h"
 
-Table::Table(size_t id) : IMovable(id)
+Table::Table(quint32 id) : IMovable(id)
 {
     anchored = true;
     v_level = 4;
@@ -24,7 +24,7 @@ void Table::Delete()
 }
 void Table::NotifyNeighborhood(bool is_in_existence)
 {
-    size_t id = GetId();
+    quint32 id = GetId();
     if (is_in_existence)
     {
         id = 0;
@@ -63,7 +63,7 @@ void Table::NotifyNeighborhood(bool is_in_existence)
     }
     UpdateSprite(id);
 }
-void Table::UpdateSprite(size_t ignored_table)
+void Table::UpdateSprite(quint32 ignored_table)
 {
     int up = CheckTable(GetNeighbour(D_UP), ignored_table);
     int down = CheckTable(GetNeighbour(D_DOWN), ignored_table);
@@ -274,7 +274,7 @@ void Table::AttackBy(IdPtr<Item> item)
         }
     }
 }
-int Table::CheckTable(IdPtr<IOnMapBase> container, size_t ignored_table)
+int Table::CheckTable(IdPtr<IOnMapBase> container, quint32 ignored_table)
 {
     IdPtr<Table> table = container->GetItem<Table>();
     if (!table.IsValid())
@@ -288,7 +288,7 @@ int Table::CheckTable(IdPtr<IOnMapBase> container, size_t ignored_table)
     return 1;
 }
 
-MetalTable::MetalTable(size_t id) : Table(id)
+MetalTable::MetalTable(quint32 id) : Table(id)
 {
     SetSprite("icons/metaltables.dmi"); 
     material_ = "metal";

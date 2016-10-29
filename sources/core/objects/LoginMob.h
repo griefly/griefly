@@ -31,7 +31,7 @@ class LoginMob: public IMob
 public:
     DECLARE_SAVED(LoginMob, IMob);
     DECLARE_GET_TYPE_ITEM(LoginMob);
-    LoginMob(size_t id);
+    LoginMob(quint32 id);
     virtual void DeinitGUI() override;
     virtual void InitGUI() override;
     virtual void GenerateInterfaceForFrame() override;

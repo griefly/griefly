@@ -8,7 +8,7 @@
 #include "../Game.h"
 #include "representation/Sound.h"
 
-Lattice::Lattice(size_t id) : Structure(id)
+Lattice::Lattice(quint32 id) : Structure(id)
 {
     SetSprite("icons/structures.dmi");
     SetState("latticefull");

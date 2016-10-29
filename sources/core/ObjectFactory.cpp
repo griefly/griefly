@@ -63,8 +63,8 @@ void ObjectFactory::ForeachProcess()
 {
     UpdateProcessingItems();
 
-    size_t table_size = process_table_.size();
-    for (size_t i = 0; i < table_size; ++i)
+    quint32 table_size = process_table_.size();
+    for (quint32 i = 0; i < table_size; ++i)
     {
         if (!(   process_table_[i].IsValid()
               && process_table_[i]->GetFreq()))
@@ -112,7 +112,7 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile)
     savefile >> id_;
     SYSTEM_STREAM << "id_: " << id_ << std::endl;
     
-    size_t loc;
+    quint32 loc;
     savefile >> loc;
     SYSTEM_STREAM << "thisMob: " << loc << std::endl;
     
@@ -137,13 +137,13 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile)
     game_->GetMap().ResizeMap(x, y, z);
 
     // Load player table
-    size_t s;
+    quint32 s;
     savefile >> s;
-    for (size_t i = 0; i < s; ++i)
+    for (quint32 i = 0; i < s; ++i)
     {
-        size_t first;
+        quint32 first;
         savefile >> first;
-        size_t second;
+        quint32 second;
         savefile >> second;
 
         qDebug() << first;
@@ -177,7 +177,7 @@ void ObjectFactory::Save(std::stringstream& savefile)
 
 const int AVERAGE_BYTE_PER_TILE = 129 * 2;
 const long int UNCOMPRESS_LEN_DEFAULT = 50 * 50 * 5 * AVERAGE_BYTE_PER_TILE;
-void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
+void ObjectFactory::Load(std::stringstream& savefile, quint32 real_this_mob)
 {
     Clear();
 
@@ -201,7 +201,7 @@ void ObjectFactory::Load(std::stringstream& savefile, size_t real_this_mob)
 
         //SYSTEM_STREAM << "Line number: " << j << std::endl;
 
-        size_t id_loc;
+        quint32 id_loc;
         savefile >> id_loc;
         
         IMainObject* object = CreateVoid(type, id_loc);
@@ -236,7 +236,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
     sfile.seekg (0, std::ios::end);
     std::streamoff length = sfile.tellg();
     sfile.seekg (0, std::ios::beg);
-    char* buff = new char[static_cast<size_t>(length)];
+    char* buff = new char[static_cast<quint32>(length)];
 
     sfile.read(buff, length);
     sfile.close();
@@ -256,7 +256,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
     while (ss)
     {
         std::string t_item;
-        size_t x, y, z;
+        quint32 x, y, z;
         ss >> t_item;
         if (!ss)
         {
@@ -321,7 +321,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
     FinishWorldCreation();
 }
 
-IMainObject* ObjectFactory::NewVoidObject(const std::string& type, size_t id)
+IMainObject* ObjectFactory::NewVoidObject(const std::string& type, quint32 id)
 {
     //qDebug() << "NewVoidObject: " << QString::fromStdString(type);
     auto& il = (*items_creators());
@@ -342,8 +342,8 @@ IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
 
 void ObjectFactory::Clear()
 {
-    size_t table_size = objects_table_.size();
-    for (size_t i = 1; i < table_size; ++i)
+    quint32 table_size = objects_table_.size();
+    for (quint32 i = 1; i < table_size; ++i)
     {
         if (objects_table_[i].object != nullptr)
         {
@@ -372,8 +372,8 @@ void ObjectFactory::BeginWorldCreation()
 void ObjectFactory::FinishWorldCreation()
 {
     is_world_generating_ = false;
-    size_t table_size = objects_table_.size();
-    for (size_t i = 1; i < table_size; ++i)
+    quint32 table_size = objects_table_.size();
+    for (quint32 i = 1; i < table_size; ++i)
     {
         if (objects_table_[i].object != nullptr)
         {
@@ -382,7 +382,7 @@ void ObjectFactory::FinishWorldCreation()
     }
 }
 
-size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
+quint32 ObjectFactory::CreateImpl(const std::string &type, quint32 owner_id)
 {
     IMainObject* item = NewVoidObject(type, id_);
     if (item == 0)
@@ -397,7 +397,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
         objects_table_.resize(id_ * 2);
     }
     objects_table_[id_].object = item;
-    size_t retval = id_;
+    quint32 retval = id_;
     ++id_;
     IdPtr<IOnMapBase> owner = owner_id;
     if (owner.IsValid())
@@ -421,7 +421,7 @@ size_t ObjectFactory::CreateImpl(const std::string &type, size_t owner_id)
     return retval;
 }
 
-IMainObject* ObjectFactory::CreateVoid(const std::string &hash, size_t id_new)
+IMainObject* ObjectFactory::CreateVoid(const std::string &hash, quint32 id_new)
 {
     IMainObject* item = NewVoidObjectSaved(hash);
     item->SetGame(game_);
@@ -439,7 +439,7 @@ IMainObject* ObjectFactory::CreateVoid(const std::string &hash, size_t id_new)
     return item;
 }
 
-void ObjectFactory::DeleteLater(size_t id)
+void ObjectFactory::DeleteLater(quint32 id)
 {
     ids_to_delete_.push_back(objects_table_[id].object);
     objects_table_[id].object = nullptr;
@@ -457,8 +457,8 @@ void ObjectFactory::ProcessDeletion()
 unsigned int ObjectFactory::Hash()
 {
     unsigned int h = 0;
-    size_t table_size = objects_table_.size();
-    for (size_t i = 1; i < table_size; ++i)
+    quint32 table_size = objects_table_.size();
+    for (quint32 i = 1; i < table_size; ++i)
     {
         if (objects_table_[i].object != nullptr)
         {
@@ -481,11 +481,11 @@ unsigned int ObjectFactory::Hash()
     return h;
 }
 
-void ObjectFactory::SetPlayerId(size_t net_id, size_t real_id)
+void ObjectFactory::SetPlayerId(quint32 net_id, quint32 real_id)
 {
     players_table_[net_id] = real_id;
 }
-size_t ObjectFactory::GetPlayerId(size_t net_id)
+quint32 ObjectFactory::GetPlayerId(quint32 net_id)
 {
     auto it = players_table_.find(net_id);
     if (it != players_table_.end())
@@ -495,7 +495,7 @@ size_t ObjectFactory::GetPlayerId(size_t net_id)
     return 0;
 }
 
-size_t ObjectFactory::GetNetId(size_t real_id)
+quint32 ObjectFactory::GetNetId(quint32 real_id)
 {
     for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
         if (it->second == real_id)
@@ -503,7 +503,7 @@ size_t ObjectFactory::GetNetId(size_t real_id)
     return 0;
 }
 
-void ObjectFactory::AddProcessingItem(size_t item)
+void ObjectFactory::AddProcessingItem(quint32 item)
 {
     add_to_process_.push_back(item);
 }
@@ -511,8 +511,8 @@ void ObjectFactory::AddProcessingItem(size_t item)
 void ObjectFactory::ClearProcessing()
 {
     std::vector<IdPtr<IMainObject>> remove_from_process;
-    size_t table_size = process_table_.size();
-    for (size_t i = 0; i < table_size; ++i)
+    quint32 table_size = process_table_.size();
+    for (quint32 i = 0; i < table_size; ++i)
     {
         if (!(   process_table_[i].IsValid()
               && process_table_[i]->GetFreq()))

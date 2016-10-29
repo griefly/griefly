@@ -6,7 +6,7 @@
 
 #include "ElectricTools.h"
 
-PipeBase::PipeBase(size_t id) : IMovable(id)
+PipeBase::PipeBase(quint32 id) : IMovable(id)
 {
     anchored = true;
     v_level = 1;
@@ -69,7 +69,7 @@ void PipeBase::ProcessHelper(IdPtr<PipeBase>& connection, Dir dir)
 }
 
 
-Pipe::Pipe(size_t id) : PipeBase(id)
+Pipe::Pipe(quint32 id) : PipeBase(id)
 {
     SetState("intact");
 
@@ -140,7 +140,7 @@ void Pipe::GetTailAndHead(Dir dir, Dir* head, Dir* tail)
     *tail = DIRS_DATA[dir][1];
 }
 
-Manifold::Manifold(size_t id) : PipeBase(id)
+Manifold::Manifold(quint32 id) : PipeBase(id)
 {
     SetState("manifold");
     name = "Manifold";
@@ -235,7 +235,7 @@ void Manifold::GetConnectionsDirs(Dir dir, Dir *tail, Dir *left, Dir *right)
     }
 }
 
-Vent::Vent(size_t id) : PipeBase(id)
+Vent::Vent(quint32 id) : PipeBase(id)
 {
     SetSprite("icons/vent_pump.dmi");
 
@@ -290,7 +290,7 @@ void Vent::SetHidden(bool hidden)
     }
 }
 
-Valve::Valve(size_t id) : Pipe(id)
+Valve::Valve(quint32 id) : Pipe(id)
 {
     SetSprite("icons/digital_valve.dmi");
     SetState("valve0");
@@ -329,7 +329,7 @@ void Valve::AttackBy(IdPtr<Item> item)
     }
 }
 
-Connector::Connector(size_t id) : PipeBase(id)
+Connector::Connector(quint32 id) : PipeBase(id)
 {
     SetState("connector");
     v_level = 3;
@@ -384,7 +384,7 @@ void Connector::Process()
 }
 
 
-PipePump::PipePump(size_t id) : Pipe(id)
+PipePump::PipePump(quint32 id) : Pipe(id)
 {
     SetSprite("icons/pipes2.dmi");
     SetState("pipepump-run");

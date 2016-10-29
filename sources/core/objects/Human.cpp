@@ -21,7 +21,7 @@
 #include "Weapons.h"
 #include "ElectricTools.h"
 
-Human::Human(size_t id) : IMob(id)
+Human::Human(quint32 id) : IMob(id)
 {
     tickSpeed = 1;
     pixSpeed = 2;
@@ -149,7 +149,7 @@ void Human::ProcessMessage(const Message2 &msg)
         {
             if (text.find(str) == 0)
             {
-                size_t length = str.length();
+                quint32 length = str.length();
                 text.replace(0, length, name + " ");
                 GetGame().GetChat().PostSimpleText(text, owner.Id());
                 found = true;
@@ -381,7 +381,7 @@ IdPtr<IOnMapBase> Human::GetNeighbour(Dir) const
 
 void Human::OnDeath()
 {
-    size_t net_id = GetGame().GetFactory().GetNetId(GetId());
+    quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
     if (net_id)
     {
         auto ghost = Create<Ghost>(Ghost::T_ITEM_S());
@@ -570,7 +570,7 @@ void Human::StopPull()
     interface_.UpdatePulling(false);
 }
 
-CaucasianHuman::CaucasianHuman(size_t id) : Human(id)
+CaucasianHuman::CaucasianHuman(quint32 id) : Human(id)
 {
     SetState("caucasian2_m_s");
 }

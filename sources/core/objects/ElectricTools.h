@@ -9,7 +9,7 @@ class AtmosTool: public Item
 public:
     DECLARE_SAVED(AtmosTool, Item);
     DECLARE_GET_TYPE_ITEM(AtmosTool);
-    AtmosTool(size_t id);
+    AtmosTool(quint32 id);
 
     static std::string GetInfo(AtmosHolder& holder);
 
@@ -22,6 +22,6 @@ class RemoteAtmosTool: public AtmosTool
 public:
     DECLARE_SAVED(RemoteAtmosTool, AtmosTool);
     DECLARE_GET_TYPE_ITEM(RemoteAtmosTool);
-    RemoteAtmosTool(size_t id);
+    RemoteAtmosTool(quint32 id);
 };
 ADD_TO_TYPELIST(RemoteAtmosTool)

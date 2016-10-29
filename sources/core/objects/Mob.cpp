@@ -5,7 +5,7 @@
 #include "net/MagicStrings.h"
 #include "net/NetworkMessagesTypes.h"
 
-IMob::IMob(size_t id) : IMessageReceiver(id)
+IMob::IMob(quint32 id) : IMessageReceiver(id)
 {
     SetSprite("icons/ork.png");
 }

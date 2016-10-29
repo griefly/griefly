@@ -48,7 +48,7 @@ Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
     grid_ = nullptr;
 }
 
-void Atmosphere::Resize(size_t x, size_t y, size_t z)
+void Atmosphere::Resize(quint32 x, quint32 y, quint32 z)
 {
     x_size_ = x;
     y_size_ = y;
@@ -176,7 +176,7 @@ void Atmosphere::ProcessMove()
             = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
 }
 
-void Atmosphere::SetFlags(size_t x, size_t y, size_t z, IAtmosphere::Flags flags)
+void Atmosphere::SetFlags(quint32 x, quint32 y, quint32 z, IAtmosphere::Flags flags)
 {
     grid_->At(x, y).flags = flags;
 }

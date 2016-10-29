@@ -1,5 +1,5 @@
 #include "DrawInt.h"
 
-IDraw::IDraw(size_t id) : IMainObject(id)
+IDraw::IDraw(quint32 id) : IMainObject(id)
 {
 }

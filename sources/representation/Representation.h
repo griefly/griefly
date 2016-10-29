@@ -23,7 +23,7 @@ public:
         Entity();
 
         ViewInfo view;
-        size_t id;
+        quint32 id;
         int pos_x;
         int pos_y;
         int vlevel;
@@ -91,7 +91,7 @@ private:
 
     QElapsedTimer pixel_movement_tick_;
 
-    size_t current_frame_id_;
+    quint32 current_frame_id_;
 
     bool is_updated_;
 
@@ -115,10 +115,10 @@ private:
     struct ViewWithFrameId
     {
         View2 view;
-        size_t frame_id;
+        quint32 frame_id;
     };
 
-    std::unordered_map<size_t, ViewWithFrameId> views_;
+    std::unordered_map<quint32, ViewWithFrameId> views_;
     std::vector<View2> interface_views_;
 
     class Camera

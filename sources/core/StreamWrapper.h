@@ -19,14 +19,14 @@ inline std::stringstream& WrapWriteMessage(std::stringstream& file, T& to_write)
 
 inline std::stringstream& WrapWriteMessage(std::stringstream& file, const std::string& to_write)
 {
-    file << static_cast<size_t>(to_write.size()) << " ";
+    file << static_cast<quint32>(to_write.size()) << " ";
     file << to_write;
     return file;
 }
 
 inline std::stringstream& WrapWriteMessage(std::stringstream& file, std::string& to_write)
 {
-    file << static_cast<size_t>(to_write.size()) << " ";
+    file << static_cast<quint32>(to_write.size()) << " ";
     file << to_write;
     return file;
 }
@@ -54,7 +54,7 @@ inline std::stringstream& WrapReadMessage(std::stringstream& file, T& to_read)
 
 inline std::stringstream& WrapReadMessage(std::stringstream& file, std::string& to_read)
 {
-    size_t size;
+    quint32 size;
     file >> size;
 
     char c;
@@ -71,7 +71,7 @@ inline std::stringstream& WrapReadMessage(std::stringstream& file, std::string& 
         return file;
     }
     to_read.resize(size);
-    for (size_t i = 0; i < size; ++i)
+    for (quint32 i = 0; i < size; ++i)
     {
         char cr;
         file.get(cr);
@@ -88,14 +88,14 @@ inline std::stringstream& WrapReadMessage(
         std::stringstream& file,
         std::map<KeyType, ValueType>& to_read)
 {
-    size_t size;
+    quint32 size;
     file >> size;
     //qDebug() << size;
     if (size == 0)
     {
         return file;
     }
-    for (size_t i = 0; i < size; ++i)
+    for (quint32 i = 0; i < size; ++i)
     {
         KeyType key;
         WrapReadMessage(file, key);

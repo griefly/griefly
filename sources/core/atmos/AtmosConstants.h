@@ -1,5 +1,7 @@
 #pragma once
 
+#include <qglobal.h>
+
 const int OXYGEN = 0;
 const int OXYGEN_FREEDOM = 5;
 const int OXYGEN_WEIGHT = 16 * 2;
@@ -45,7 +47,7 @@ inline void UpdateMacroParams(AtmosData* data)
     // T = E / (... + ... + ...)
 
     int sum = 0;
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         sum += data->gases[i] * GASES_FREEDOM[i];
     }
@@ -64,7 +66,7 @@ inline void UpdateMacroParams(AtmosData* data)
     // P = (moles * T) / V
 
     sum = 0;
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         sum += data->gases[i];
     }

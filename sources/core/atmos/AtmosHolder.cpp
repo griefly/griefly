@@ -32,7 +32,7 @@ void AtmosHolder::Connect(AtmosHolder* guest, int level_owner, int level_guest, 
         div = 0;
     }
 
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         int gase_owner = (data_ptr_->gases[i] * level_owner) / MAX_GAS_LEVEL;
         data_ptr_->gases[i] -= gase_owner;
@@ -51,7 +51,7 @@ void AtmosHolder::Connect(AtmosHolder* guest, int level_owner, int level_guest, 
 
     loc_energy = energy_owner + energy_guest;
 
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         int gase_owner = (loc_gases[i] * div) / MAX_GAS_LEVEL;
         int gase_guest = loc_gases[i] - gase_owner;
@@ -132,7 +132,7 @@ int AtmosHolder::RemoveGase(int gase, int amount)
 
 void AtmosHolder::Truncate()
 {
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         data_ptr_->gases[i] = 0;
     }
@@ -143,7 +143,7 @@ void AtmosHolder::Truncate()
 
 std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder)
 {
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         file << atmos_holder.data_ptr_->gases[i] << " ";
     }
@@ -157,7 +157,7 @@ std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holde
 
 std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder)
 {
-    for (size_t i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < GASES_NUM; ++i)
     {
         file >> atmos_holder.data_ptr_->gases[i];
     }

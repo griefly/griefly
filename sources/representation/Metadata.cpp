@@ -216,7 +216,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
     
     desc >> loc;
     std::string current_state = "###";
-    size_t first_frame_pos = 0;
+    quint32 first_frame_pos = 0;
     while (loc != "#")
     {
         if (loc == "state")
@@ -256,7 +256,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             }
             loc.clear();
 
-            size_t dirs;
+            quint32 dirs;
             desc >> dirs;
 
             if (current_state == "###")
@@ -277,7 +277,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
             }
             loc.clear();
 
-            size_t frames;
+            quint32 frames;
             desc >> frames;
 
             if (current_state == "###")
@@ -305,9 +305,9 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 return false;
             }
 
-            for (size_t i = 0; i < metadata_[current_state].frames_data.size() - 1; ++i)
+            for (quint32 i = 0; i < metadata_[current_state].frames_data.size() - 1; ++i)
             {
-                size_t value;
+                quint32 value;
                 desc >> value;
                 metadata_[current_state].frames_data[i].delay = value;
 
@@ -319,7 +319,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                     return false;
                 }
             }
-            size_t value;
+            quint32 value;
             desc >> value;
             metadata_[current_state].frames_data
                 [metadata_[current_state].frames_data.size() - 1]
@@ -342,7 +342,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 return false;
             }
 
-            size_t rewind;
+            quint32 rewind;
             desc >> rewind;
             metadata_[current_state].rewind = rewind ? true : false;
         }
@@ -462,7 +462,7 @@ void ImageMetadata::MakeSequence()
 
         for (int loop_i = 0; loop_i < local_loop; ++loop_i)
         {
-            for (size_t i = 0; i < metadata.size(); ++i)
+            for (quint32 i = 0; i < metadata.size(); ++i)
             {
                 sequence.push_back(i);
             }
@@ -473,7 +473,7 @@ void ImageMetadata::MakeSequence()
                 {
                     from = 0;
                 }
-                for (size_t i = from; i > 0; --i)
+                for (quint32 i = from; i > 0; --i)
                 {
                     sequence.push_back(i);
                 }

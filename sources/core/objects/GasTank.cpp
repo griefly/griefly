@@ -9,7 +9,7 @@
 const int O2_TANK_AMOUNT = 10000;
 const int O2_TANK_ENERGY = 5000;
 
-GasTank::GasTank(size_t id)
+GasTank::GasTank(quint32 id)
     : IMovable(id)
 {
     name = "Oxygen tank";
@@ -83,7 +83,7 @@ void GasTank::Process()
     }
 }
 
-MagicGasTank::MagicGasTank(size_t id) : GasTank(id)
+MagicGasTank::MagicGasTank(quint32 id) : GasTank(id)
 {
     name = "Magic tank";
 }

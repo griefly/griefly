@@ -1,7 +1,7 @@
 #include "Weapons.h"
 #include "Tile.h"
 
-LaserGun::LaserGun(size_t id) : Gun(id)
+LaserGun::LaserGun(quint32 id) : Gun(id)
 {
     SetState("energykill100");
 
@@ -25,7 +25,7 @@ void LaserGun::Shoot(VDir target)
     }
     ShootImpl(target, snd, Laser::T_ITEM_S(), "");
 }
-Revolver::Revolver(size_t id) : Gun(id)
+Revolver::Revolver(quint32 id) : Gun(id)
 {
     SetState("revolver");
 

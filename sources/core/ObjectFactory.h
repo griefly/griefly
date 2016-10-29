@@ -20,34 +20,34 @@ public:
     virtual unsigned int Hash() override;
 
     virtual void Save(std::stringstream& str) override;
-    virtual void Load(std::stringstream& str, size_t real_this_mob) override;
+    virtual void Load(std::stringstream& str, quint32 real_this_mob) override;
     
     virtual void LoadFromMapGen(const std::string& name) override;
 
     virtual void BeginWorldCreation() override;
     virtual void FinishWorldCreation() override;
 
-    virtual size_t CreateImpl(const std::string& type, size_t owner = 0) override;
+    virtual quint32 CreateImpl(const std::string& type, quint32 owner = 0) override;
 
-    virtual void DeleteLater(size_t id) override;
+    virtual void DeleteLater(quint32 id) override;
     virtual void ProcessDeletion() override;
 
-    virtual void AddProcessingItem(size_t item) override;
+    virtual void AddProcessingItem(quint32 item) override;
 
     virtual void ClearProcessing() override;
 
-    virtual void SetPlayerId(size_t net_id, size_t real_id) override;
-    virtual size_t GetPlayerId(size_t net_id) override;
-    virtual size_t GetNetId(size_t real_id) override;
+    virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
+    virtual quint32 GetPlayerId(quint32 net_id) override;
+    virtual quint32 GetNetId(quint32 real_id) override;
 private:
     void Clear();
 
     void SaveMapHeader(std::stringstream& str);
     void LoadMapHeader(std::stringstream& savefile);
 
-    IMainObject* CreateVoid(const std::string& hash, size_t id_new);
+    IMainObject* CreateVoid(const std::string& hash, quint32 id_new);
 
-    static IMainObject* NewVoidObject(const std::string& type, size_t id);
+    static IMainObject* NewVoidObject(const std::string& type, quint32 id);
     static IMainObject* NewVoidObjectSaved(const std::string& type);
 
     IGame* game_;
@@ -68,8 +68,8 @@ private:
     unsigned int hash_last_;
     unsigned int hash_last_tick_;
 
-    size_t id_;
+    quint32 id_;
 
-    std::map<size_t, size_t> players_table_;
+    std::map<quint32, quint32> players_table_;
 
 };

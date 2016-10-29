@@ -8,7 +8,7 @@
 #include "Movable.h"
 #include "../atmos/AtmosGrid.h"
 
-CubeTile::CubeTile(size_t id) : IOnMapBase(id)
+CubeTile::CubeTile(quint32 id) : IOnMapBase(id)
 {
     turf_ = 0;
 
@@ -396,7 +396,7 @@ bool CubeTile::IsTransparent() const
     return true;
 }
 
-size_t CubeTile::GetItemImpl(unsigned int hash)
+quint32 CubeTile::GetItemImpl(unsigned int hash)
 {
     for (auto it = inside_list_.rbegin(); it != inside_list_.rend(); ++it)
     {

@@ -8,7 +8,7 @@
 #include "../Game.h"
 #include "Materials.h"
 
-Grille::Grille(size_t id) : Structure(id)
+Grille::Grille(quint32 id) : Structure(id)
 {
     transparent = true;
     SetPassable(D_ALL, Passable::AIR);

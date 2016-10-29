@@ -10,7 +10,7 @@ class GasTank: public IMovable
 public:
     DECLARE_SAVED(GasTank, IMovable);
     DECLARE_GET_TYPE_ITEM(GasTank);
-    GasTank(size_t id);
+    GasTank(quint32 id);
     virtual void AfterWorldCreation() override;
 
     virtual void AttackBy(IdPtr<Item> item) override;
@@ -31,7 +31,7 @@ class MagicGasTank: public GasTank
 public:
     DECLARE_SAVED(MagicGasTank, GasTank);
     DECLARE_GET_TYPE_ITEM(MagicGasTank);
-    MagicGasTank(size_t id);
+    MagicGasTank(quint32 id);
     virtual void AfterWorldCreation() override;
     virtual void Process() override;
 };

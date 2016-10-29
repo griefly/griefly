@@ -246,7 +246,7 @@ void MapEditor::LoadMapgen(const std::string &name)
     sfile.seekg (0, std::ios::end);
     std::streamoff length = sfile.tellg();
     sfile.seekg (0, std::ios::beg);
-    char* buff = new char[static_cast<size_t>(length)];
+    char* buff = new char[static_cast<quint32>(length)];
 
     sfile.read(buff, length);
     sfile.close();
@@ -263,7 +263,7 @@ void MapEditor::LoadMapgen(const std::string &name)
     while (ss)
     {
         std::string t_item;
-        size_t x, y, z;
+        quint32 x, y, z;
         ss >> t_item;
         if (!ss)
         {

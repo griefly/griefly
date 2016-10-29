@@ -1,6 +1,6 @@
 #include "Weldingtool.h"
 
-Weldingtool::Weldingtool(size_t id) : Item(id)
+Weldingtool::Weldingtool(quint32 id) : Item(id)
 {
     SetState("welder");
 

@@ -10,7 +10,7 @@ unsigned int hash(const std::vector<Dir>& content);
 class Projectile : public IMovable
 {
 public:
-    Projectile(size_t id);
+    Projectile(quint32 id);
     DECLARE_SAVED(Projectile, IMovable)	
     DECLARE_GET_TYPE_ITEM(Projectile)
     void MakeMovementPattern(VDir target, Dir facing);
