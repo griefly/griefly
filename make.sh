@@ -8,5 +8,5 @@ fi
 
 mkdir -p build
 cd build
-cmake ../ "$ARGS"
+cmake ../ $ARGS
 make && make install
