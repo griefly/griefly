@@ -2,6 +2,8 @@
 
 #include <qglobal.h>
 
+#include <vector>
+
 class FastSerializer
 {
 public:
@@ -12,23 +14,27 @@ public:
     {
         index_ = 0;
     }
-    quint32 GetSize()
+    quint32 GetIndex()
     {
-        return size_;
+        return index_;
     }
     char* GetData()
     {
-        return data_;
+        return data_.data();
     }
 
     void Write(bool value)
     {
         data_[index_] = value;
         ++index_;
+
+        if (index_ == data_.size())
+        {
+            data_.resize(data_.size() * 2);
+        }
     }
 
 private:
-    char* data_;
-    quint32 size_;
+    std::vector<char> data_;
     quint32 index_;
 };

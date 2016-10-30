@@ -16,14 +16,12 @@ static_assert(
 FastSerializer::FastSerializer()
 {
     const int DEFAULT_SIZE = 32 * 1024 * 1024;
-
-    data_ = new char[DEFAULT_SIZE];
-    size_ = DEFAULT_SIZE;
+    data_.resize(DEFAULT_SIZE);
 
     index_ = 0;
 }
 
 FastSerializer::~FastSerializer()
 {
-    delete[] data_;
+    // Nothing
 }
