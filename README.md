@@ -47,8 +47,8 @@ It should be possible to build everything without Qt Creator, but the guide assu
 How to build everything on Linux
 --------------------------------
 
-1. Install dependencies. Look at `travis-get-deps` rule in Makefile for clues.
-2. `make`. Built project will be placed under `exec` directory. Server will be
+1. Install dependencies. Look into `.travis.yml` file for clues.
+2. `./make.sh`. Built project will be placed under `exec` directory. Server will be
    built in `gopath/src/griefly-server` directory.
 
 **Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).  
