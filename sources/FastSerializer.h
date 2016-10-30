@@ -25,16 +25,20 @@ public:
 
     void Write(bool value)
     {
+        Preallocate(1);
         data_[index_] = value;
         ++index_;
+    }
 
-        if (index_ == data_.size())
+private:
+    void Preallocate(int size)
+    {
+        if ((index_ + size) > data_.size())
         {
             data_.resize(data_.size() * 2);
         }
     }
 
-private:
     std::vector<char> data_;
     quint32 index_;
 };
