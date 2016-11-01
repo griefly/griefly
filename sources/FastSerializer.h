@@ -56,17 +56,20 @@ public:
 
     void Write(const QString& value)
     {
-        const QByteArray data = value.toUtf8();
-        const int size = data.size();
+        const QChar* data = value.data();
+        const int size = value.size();
 
-        Preallocate(size + 4);
         Write(size);
+        Preallocate(size * 2);
 
-        void* dest = &(data_.data()[index_]);
-        const void* src = data.constData();
-        memcpy(dest, src, size);
+        for (int i = 0; i < size; ++i)
+        {
+            quint16 value = data[i].unicode();
+            data_[index_ + i * 2 + 0] = (value >> 0) & 0xFF;
+            data_[index_ + i * 2 + 1] = (value >> 8) & 0xFF;
+        }
 
-        index_ += size;
+        index_ += size * 2;
     }
 
 private:
