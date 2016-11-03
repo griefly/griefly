@@ -178,3 +178,28 @@ TEST(FastSerializer, WriteString)
     }
 }
 
+TEST(FastSerializer, ResetIndex)
+{
+    FastSerializer serializer;
+
+    ASSERT_EQ(serializer.GetIndex(), 0);
+    serializer.Write(42);
+    ASSERT_EQ(serializer.GetIndex(), 4);
+    serializer.ResetIndex();
+    ASSERT_EQ(serializer.GetIndex(), 0);
+}
+
+TEST(FastSerializer, BigData)
+{
+    FastSerializer serializer;
+
+    ASSERT_EQ(serializer.GetIndex(), 0);
+
+    const int BIG_DATA_SIZE = 1024 * 1024 * 128;
+    for (int i = 0; i < BIG_DATA_SIZE; ++i)
+    {
+        serializer.Write(true);
+    }
+    ASSERT_EQ(serializer.GetIndex(), BIG_DATA_SIZE);
+}
+
