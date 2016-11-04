@@ -1,10 +1,11 @@
 #pragma once
 
-#include <qglobal.h>
-
+#include <QDebug>
 #include <QString>
 
 #include <vector>
+
+#include "KVAbort.h"\
 
 class FastSerializer
 {
@@ -131,7 +132,8 @@ private:
     {
         if ((size + index_) > size_)
         {
-            qFatal("FastDeserializer: EnsureSize fail!");
+            qDebug() << "FastDeserializer: EnsureSize fail!";
+            KvAbort();
         }
     }
 

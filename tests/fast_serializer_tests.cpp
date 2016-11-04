@@ -208,3 +208,50 @@ TEST(FastSerializer, BigData)
     ASSERT_EQ(serializer.GetIndex(), BIG_DATA_SIZE);
 }
 
+TEST(FastDeserializer, Constructor)
+{
+    {
+        FastDeserializer deserializer(nullptr, 0);
+        EXPECT_TRUE(deserializer.IsEnd());
+    }
+    {
+        FastDeserializer deserializer(nullptr, 1);
+        EXPECT_FALSE(deserializer.IsEnd());
+    }
+}
+
+TEST(FastDeserializer, ReadBool)
+{
+    const char* const DATA = "\0134gkfo\0\01";
+    const int DATA_SIZE = 11;
+
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+
+    for (int i = 0; i < DATA_SIZE; ++i)
+    {
+        ASSERT_FALSE(deserializer.IsEnd());
+        bool value;
+        deserializer.Read(&value);
+        if (DATA[i] == '\0')
+        {
+            EXPECT_FALSE(value);
+        }
+        else
+        {
+            EXPECT_TRUE(value);
+        }
+    }
+
+    ASSERT_TRUE(deserializer.IsEnd());
+}
+
+
+
+
+
+
+
+
+
+
+
