@@ -82,7 +82,6 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
 {
     savefile << MAIN_TICK << std::endl;
     savefile << id_ << std::endl;
-    savefile << game_->GetMob().Id() << std::endl;
 
     // Random save
     savefile << game_->GetRandom().GetSeed() << std::endl;
@@ -111,10 +110,6 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile)
 
     savefile >> id_;
     SYSTEM_STREAM << "id_: " << id_ << std::endl;
-    
-    quint32 loc;
-    savefile >> loc;
-    SYSTEM_STREAM << "thisMob: " << loc << std::endl;
     
     unsigned int new_seed;
     unsigned int new_calls_counter;
