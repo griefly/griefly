@@ -84,3 +84,31 @@ private:
     std::vector<char> data_;
     quint32 index_;
 };
+
+class FastDeserializer
+{
+public:
+    FastDeserializer(const char* data, quint32 size)
+        : data_(data),
+          size_(size),
+          index_(0)
+    {
+        // Nothing
+    }
+private:
+    const char* const data_;
+    const quint32 size_;
+    quint32 index_;
+};
+
+
+
+
+
+
+
+
+
+
+
+

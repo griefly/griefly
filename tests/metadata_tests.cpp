@@ -19,7 +19,7 @@ TEST(ImageMetadataDeathTest, PngSignatureMissing)
     ImageMetadata metadata;
     ASSERT_DEATH(
     {
-        metadata.Init("icons/test/empty_file.png", 0, 0);
+        metadata.Init("test/icons/empty_file.png", 0, 0);
     }, "Fail to read png signature");
 }
 
@@ -28,7 +28,7 @@ TEST(ImageMetadataDeathTest, UnknownParam)
     ImageMetadata metadata;
     ASSERT_DEATH(
     {
-        metadata.Init("icons/test/unknown_param.dmi", 0, 0);
+        metadata.Init("test/icons/unknown_param.dmi", 0, 0);
     }, "Unknown param:  \"unknown\"");
 }
 
@@ -46,7 +46,7 @@ TEST(ImageMetadata, Init)
 
     {
         CaptureStderr();
-        metadata.Init("icons/test/test1.dmi", 0, 0);
+        metadata.Init("test/icons/test1.dmi", 0, 0);
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Begin to init metadata for"));
         ASSERT_THAT(output, HasSubstr("Read width:  32"));
@@ -82,7 +82,7 @@ TEST(ImageMetadata, InitAnimated)
     ImageMetadata metadata;
     {
         CaptureStderr();
-        metadata.Init("icons/test/test1.dmi", 0, 0);
+        metadata.Init("test/icons/test1.dmi", 0, 0);
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Begin to init metadata for"));
         ASSERT_THAT(output, HasSubstr("Read width:  32"));
@@ -123,7 +123,7 @@ TEST(ImageMetadata, InitHotspot)
     ImageMetadata metadata;
     {
         CaptureStderr();
-        metadata.Init("icons/test/hotspot.dmi", 0, 0);
+        metadata.Init("test/icons/hotspot.dmi", 0, 0);
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Read width:  32"));
         ASSERT_THAT(output, HasSubstr("hotspot"));
@@ -154,7 +154,7 @@ TEST(ImageMetadata, InitWithoutMetadata)
         ImageMetadata metadata;
 
         CaptureStderr();
-        metadata.Init("icons/test/no_metadata.png", 0, 0);
+        metadata.Init("test/icons/no_metadata.png", 0, 0);
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Fail metadata load, try without it"));
 
@@ -174,7 +174,7 @@ TEST(ImageMetadata, InitWithoutMetadata)
         ImageMetadata metadata;
 
         CaptureStderr();
-        metadata.Init("icons/test/not_png.jpg", 0, 0);
+        metadata.Init("test/icons/not_png.jpg", 0, 0);
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Fail metadata load, try without it"));
         ASSERT_THAT(output, HasSubstr("Data is not valid PNG-data"));

@@ -2,6 +2,8 @@
 
 #include "FastSerializer.h"
 
+#include <QFile>
+
 TEST(FastSerializer, Constructor)
 {
     FastSerializer serializer;
@@ -158,7 +160,10 @@ TEST(FastSerializer, WriteString)
 
     {
         // Cyrillic
-        QString value(QString::fromWCharArray(L"Привет, мир!"));
+        // Some issues with cyrillic text in code, so load it from a file
+        QFile file("test/text/cyrillic.txt");
+        ASSERT_TRUE(file.open(QIODevice::ReadOnly | QIODevice::Text));
+        QString value = file.readLine();
         serializer.Write(value);
         ASSERT_EQ(serializer.GetIndex(), 60);
         EXPECT_EQ(serializer.GetData()[32], '\x0C');
