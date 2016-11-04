@@ -22,7 +22,6 @@ static_assert(
 FastSerializer::FastSerializer()
     : index_(0)
 {
-    const int DEFAULT_SIZE = 32 * 1024 * 1024;
     data_.resize(DEFAULT_SIZE);
 }
 

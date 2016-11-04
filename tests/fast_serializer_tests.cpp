@@ -200,7 +200,7 @@ TEST(FastSerializer, BigData)
 
     ASSERT_EQ(serializer.GetIndex(), 0);
 
-    const int BIG_DATA_SIZE = 1024 * 1024 * 128;
+    const int BIG_DATA_SIZE = FastSerializer::DEFAULT_SIZE * 2;
     for (int i = 0; i < BIG_DATA_SIZE; ++i)
     {
         serializer.Write(true);

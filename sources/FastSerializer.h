@@ -9,6 +9,7 @@
 class FastSerializer
 {
 public:
+    static const int DEFAULT_SIZE = 32 * 1024 * 1024;
     FastSerializer();
     ~FastSerializer();
 
@@ -95,7 +96,45 @@ public:
     {
         // Nothing
     }
+    bool IsEnd()
+    {
+        if (index_ >= size_)
+        {
+            return true;
+        }
+        return false;
+    }
+    void Read(bool* value)
+    {
+        EnsureSize(1);
+
+        *value = data_[index_];
+        ++index_;
+    }
+
+    void Read(qint32* value)
+    {
+        EnsureSize(4);
+
+        *value = 0;
+
+        *value |= static_cast<qint32>(data_[index_ + 0]) << 0;
+        *value |= static_cast<qint32>(data_[index_ + 1]) << 8;
+        *value |= static_cast<qint32>(data_[index_ + 2]) << 16;
+        *value |= static_cast<qint32>(data_[index_ + 3]) << 24;
+
+        index_ += 4;
+    }
+
 private:
+    void EnsureSize(int size)
+    {
+        if ((size + index_) > size_)
+        {
+            qFatal("FastDeserializer: EnsureSize fail!");
+        }
+    }
+
     const char* const data_;
     const quint32 size_;
     quint32 index_;
