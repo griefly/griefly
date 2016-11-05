@@ -208,6 +208,19 @@ TEST(FastSerializer, BigData)
     ASSERT_EQ(serializer.GetIndex(), BIG_DATA_SIZE);
 }
 
+TEST(FastDeserializerDeathTest, EnsureSizeFail)
+{
+    FastDeserializer deserializer("\0\0", 2);
+\
+    ASSERT_DEATH(
+    {
+        bool value;
+        deserializer.Read(&value);
+        deserializer.Read(&value);
+        deserializer.Read(&value);
+    }, "FastDeserializer: EnsureSize fail!");
+}
+
 TEST(FastDeserializer, Constructor)
 {
     {
@@ -244,14 +257,5 @@ TEST(FastDeserializer, ReadBool)
 
     ASSERT_TRUE(deserializer.IsEnd());
 }
-
-
-
-
-
-
-
-
-
 
 
