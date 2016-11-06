@@ -73,7 +73,8 @@ public:
 
         index_ += size * 2;
     }
-
+    // Removed
+    void Write(const char* value);
 private:
     void Preallocate(int size)
     {

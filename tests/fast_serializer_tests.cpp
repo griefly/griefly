@@ -363,3 +363,56 @@ TEST(FastDeserializer, ReadString)
 
     ASSERT_TRUE(deserializer.IsEnd());
 }
+
+TEST(FastSerializeDeserialize, VariousValues)
+{
+    {
+        FastSerializer serializer;
+        serializer.Write(true);
+        serializer.Write(false);
+        serializer.Write(42);
+        serializer.Write(-14329);
+        serializer.Write(QString("One two three"));
+        serializer.Write(QString("Ехал грека через реку"));
+        serializer.Write(4294967294u);
+
+        FastDeserializer deserializer(
+            serializer.GetData(),
+            serializer.GetIndex());
+
+        qDebug() << serializer.GetIndex();
+
+        {
+            bool value;
+
+            deserializer.Read(&value);
+            EXPECT_EQ(value, true);
+            deserializer.Read(&value);
+            EXPECT_EQ(value, false);
+        }
+        {
+            int value;
+
+            deserializer.Read(&value);
+            EXPECT_EQ(value, 42);
+            deserializer.Read(&value);
+            EXPECT_EQ(value, -14329);
+        }
+        {
+            QString value;
+
+            deserializer.Read(&value);
+            EXPECT_EQ(value, "One two three");
+            deserializer.Read(&value);
+            EXPECT_EQ(value, "Ехал грека через реку");
+        }
+        {
+            unsigned int value;
+
+            deserializer.Read(&value);
+            EXPECT_EQ(value, 4294967294u);
+        }
+
+        ASSERT_TRUE(deserializer.IsEnd());
+    }
+}
