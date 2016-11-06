@@ -159,6 +159,31 @@ public:
         index_ += 4;
     }
 
+    void Read(QString* value)
+    {
+        int size;
+        Read(&size);
+
+        EnsureSize(size * 2);
+        value->resize(size);
+        QChar* data = value->data();
+
+        for (int i = 0; i < size; ++i)
+        {
+            quint16 unicode = 0;
+            quint16 helper;
+            helper = static_cast<unsigned char>(data_[index_ + i * 2 + 0]);
+            unicode |= helper << 0;
+
+            helper = static_cast<unsigned char>(data_[index_ + i * 2 + 1]);
+            unicode |= helper << 8;
+
+            data[i] = unicode;
+        }
+
+        index_ += size * 2;
+    }
+
 private:
     void EnsureSize(int size)
     {

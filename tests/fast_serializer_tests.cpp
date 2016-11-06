@@ -336,4 +336,30 @@ TEST(FastDeserializer, ReadUint32)
     ASSERT_TRUE(deserializer.IsEnd());
 }
 
+TEST(FastDeserializer, ReadString)
+{
+    const char* const DATA =
+        "\x00\x00\x00\x00"
+        "\x03\x00\x00\x00"
+        "\x48\x00\x65\x00\x20\x00"
+        "\x05\x00\x00\x00"
+        "\x1F\x04\x20\x00\x20\x00\x3C\x04\x20\x00";
+    const int DATA_SIZE = 28;
 
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+    QString value;
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, "");
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, "He ");
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, "П  м ");
+
+    ASSERT_TRUE(deserializer.IsEnd());
+}
