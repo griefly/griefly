@@ -159,11 +159,7 @@ TEST(FastSerializer, WriteString)
     }
 
     {
-        // Cyrillic
-        // Some issues with cyrillic text in code, so load it from a file
-        QFile file("test/text/cyrillic.txt");
-        ASSERT_TRUE(file.open(QIODevice::ReadOnly | QIODevice::Text));
-        QString value = file.readLine();
+        QString value = "Привет, мир!";
         serializer.Write(value);
         ASSERT_EQ(serializer.GetIndex(), 60);
         EXPECT_EQ(serializer.GetData()[32], '\x0C');
@@ -254,6 +250,47 @@ TEST(FastDeserializer, ReadBool)
             EXPECT_TRUE(value);
         }
     }
+
+    ASSERT_TRUE(deserializer.IsEnd());
+}
+
+TEST(FastDeserializer, ReadInt32)
+{
+    const char* const DATA =
+        "\x00\x00\x00\x00"
+        "\x01\x00\x00\x00"
+        "\xFF\x00\x00\x00"
+        "\x47\xA3\x0B\x7A"
+        "\xFF\xFF\xFF\xFF"
+        "\xFF\x1F\xFF\xFF";
+    const int DATA_SIZE = 24;
+
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+    qint32 value;
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 0);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 1);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 255);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 2047583047);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, -1);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, -57345);
 
     ASSERT_TRUE(deserializer.IsEnd());
 }
