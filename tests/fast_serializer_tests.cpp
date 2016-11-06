@@ -295,4 +295,45 @@ TEST(FastDeserializer, ReadInt32)
     ASSERT_TRUE(deserializer.IsEnd());
 }
 
+TEST(FastDeserializer, ReadUint32)
+{
+    const char* const DATA =
+        "\x00\x00\x00\x00"
+        "\x01\x00\x00\x00"
+        "\xFF\x00\x00\x00"
+        "\x47\xA3\x0B\x7A"
+        "\xFF\xFF\xFF\xFF"
+        "\xFF\x1F\xFF\xFF";
+    const int DATA_SIZE = 24;
+
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+    quint32 value;
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 0);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 1);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 255);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 2047583047);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 4294967295);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.Read(&value);
+    EXPECT_EQ(value, 4294909951);
+
+    ASSERT_TRUE(deserializer.IsEnd());
+}
+
 

@@ -136,6 +136,29 @@ public:
         index_ += 4;
     }
 
+    void Read(quint32* value)
+    {
+        EnsureSize(4);
+
+        *value = 0;
+
+        quint32 helper;
+
+        helper = static_cast<unsigned char>(data_[index_ + 0]);
+        *value |= helper << 0;
+
+        helper = static_cast<unsigned char>(data_[index_ + 1]);
+        *value |= helper << 8;
+
+        helper = static_cast<unsigned char>(data_[index_ + 2]);
+        *value |= helper << 16;
+
+        helper = static_cast<unsigned char>(data_[index_ + 3]);
+        *value |= helper << 24;
+
+        index_ += 4;
+    }
+
 private:
     void EnsureSize(int size)
     {
