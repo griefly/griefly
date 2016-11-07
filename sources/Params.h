@@ -29,9 +29,6 @@ public:
         return retval;
     }
 
-    template<>
-    QString GetParam<QString>(QString name);
-
     bool GetParamBool(QString name)
     {
         if (params_.find(name) == params_.end())
@@ -45,7 +42,7 @@ private:
 };
 
 template<>
-QString ParamsHolder::GetParam<QString>(QString name)
+inline QString ParamsHolder::GetParam<QString>(QString name)
 {
     if (params_.find(name) == params_.end())
     {
