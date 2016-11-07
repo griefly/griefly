@@ -14,7 +14,7 @@ public:
     void UpdateSprite(quint32 ignored_table);
     virtual void AfterWorldCreation() override;
 protected:
-    std::string KV_SAVEBLE(material_);
+    QString KV_SAVEBLE(material_);
 private:
     static int CheckTable(IdPtr<IOnMapBase> container, quint32 ignored_table);
 }

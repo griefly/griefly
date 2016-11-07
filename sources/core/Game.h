@@ -23,15 +23,15 @@ class Game : public QObject, public IGame
     Q_OBJECT
 public:
     void WaitForExit();
-    void InitWorld(int id, std::string map_name);
+    void InitWorld(int id, QString map_name);
 
     Game();
     ~Game();
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) override;
 
-    virtual void PlayMusic(const std::string& name, float volume) override;
-    virtual void AddSound(const std::string& name) override;
+    virtual void PlayMusic(const QString& name, float volume) override;
+    virtual void AddSound(const QString& name) override;
 
     virtual IMapMaster& GetMap() override;
     virtual const IMapMaster& GetMap() const override;
@@ -77,7 +77,7 @@ private:
     std::vector<float> cpu_loads_;
     int cpu_loads_id_;
 
-    std::string last_touch_;
+    QString last_touch_;
 
     std::vector<Message2> messages_to_process_;
     void ProcessBroadcastedMessages();
@@ -89,7 +89,7 @@ private:
     int current_ping_;
     bool ping_send_is_requested_;
     bool process_in_;
-    std::string adrs_;
+    QString adrs_;
     quint32 creator_;
     bool auto_player_;
 

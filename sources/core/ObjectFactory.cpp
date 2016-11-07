@@ -106,10 +106,10 @@ void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
 void ObjectFactory::LoadMapHeader(std::stringstream& savefile)
 {
     savefile >> MAIN_TICK;
-    SYSTEM_STREAM << "MAIN_TICK: " << MAIN_TICK << std::endl;
+    qDebug() << "MAIN_TICK: " << MAIN_TICK;
 
     savefile >> id_;
-    SYSTEM_STREAM << "id_: " << id_ << std::endl;
+    qDebug() << "id_: " << id_;
     
     unsigned int new_seed;
     unsigned int new_calls_counter;
@@ -186,11 +186,15 @@ void ObjectFactory::Load(std::stringstream& savefile, quint32 real_this_mob)
             qDebug() << "Error! " << j << "\n";
             KvAbort();
         }
-        std::string type;
-        savefile >> type;
+        QString type;
+
+        std::string local;
+        savefile >> local;
+        type = QString::fromStdString(local);
+
         if(type == "0")
         {
-            SYSTEM_STREAM << "Zero id reached" << std::endl;
+            qDebug() << "Zero id reached";
             break;
         }
 
@@ -212,17 +216,17 @@ void ObjectFactory::Load(std::stringstream& savefile, quint32 real_this_mob)
     game_->GetMap().GetAtmosphere().LoadGrid();
 }
 
-void ObjectFactory::LoadFromMapGen(const std::string& name)
+void ObjectFactory::LoadFromMapGen(const QString& name)
 {
     //qDebug() << "Start clear";
     Clear();
     //qDebug() << "End clear";
 
     std::fstream sfile;
-    sfile.open(name, std::ios_base::in);
+    sfile.open(name.toStdString(), std::ios_base::in);
     if(sfile.fail())
     {
-        SYSTEM_STREAM << "Error open " << name << std::endl;
+        qDebug() << "Error open " << name;
         return;
     }
 
@@ -250,9 +254,12 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
     qDebug() << "Begin loading cycle";
     while (ss)
     {
-        std::string t_item;
+        QString t_item;
         quint32 x, y, z;
-        ss >> t_item;
+
+        std::string local;
+        ss >> local;
+        t_item = QString::fromStdString(local);
         if (!ss)
         {
             continue;
@@ -278,12 +285,12 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
         IdPtr<IOnMapObject> i = CreateImpl(t_item);
         if (!i.IsValid())
         {
-            qDebug() << "Unable to cast: " << QString::fromStdString(t_item);
+            qDebug() << "Unable to cast: " << t_item;
             KvAbort();
         }
         //qDebug() << "Success!";
 
-        std::map<std::string, std::string> variables;
+        std::map<QString, QString> variables;
         WrapReadMessage(ss, variables);
 
         for (auto it = variables.begin(); it != variables.end(); ++it)
@@ -294,7 +301,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
             }
 
             std::stringstream local_variable;
-            local_variable << it->second;
+            local_variable << it->second.toStdString();
 
             get_setters_for_types()[t_item][it->first](i.operator*(), local_variable);
         }
@@ -304,7 +311,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
         {
             if (game_->GetMap().GetSquares()[x][y][z]->GetTurf())
             {
-                SYSTEM_STREAM << "DOUBLE TURF!" << std::endl;
+                qDebug() << "DOUBLE TURF!";
             }
             game_->GetMap().GetSquares()[x][y][z]->SetTurf(t);
         }
@@ -316,7 +323,7 @@ void ObjectFactory::LoadFromMapGen(const std::string& name)
     FinishWorldCreation();
 }
 
-IMainObject* ObjectFactory::NewVoidObject(const std::string& type, quint32 id)
+IMainObject* ObjectFactory::NewVoidObject(const QString& type, quint32 id)
 {
     //qDebug() << "NewVoidObject: " << QString::fromStdString(type);
     auto& il = (*items_creators());
@@ -330,7 +337,7 @@ IMainObject* ObjectFactory::NewVoidObject(const std::string& type, quint32 id)
     return retval;
 }
 
-IMainObject* ObjectFactory::NewVoidObjectSaved(const std::string& type)
+IMainObject* ObjectFactory::NewVoidObjectSaved(const QString& type)
 {
     return (*items_void_creators())[type]();
 }
@@ -347,7 +354,7 @@ void ObjectFactory::Clear()
     }
     if (table_size != objects_table_.size())
     {
-        SYSTEM_STREAM << "WARNING: table_size != idTable_.size()!" << std::endl;
+        qDebug() << "WARNING: table_size != idTable_.size()!";
     }
 
     ids_to_delete_.clear();
@@ -377,12 +384,12 @@ void ObjectFactory::FinishWorldCreation()
     }
 }
 
-quint32 ObjectFactory::CreateImpl(const std::string &type, quint32 owner_id)
+quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
 {
     IMainObject* item = NewVoidObject(type, id_);
     if (item == 0)
     {
-        qDebug() << "Unable to create object: " << QString::fromStdString(type);
+        qDebug() << "Unable to create object: " << type;
         KvAbort();
     }
     item->SetGame(game_);
@@ -416,7 +423,7 @@ quint32 ObjectFactory::CreateImpl(const std::string &type, quint32 owner_id)
     return retval;
 }
 
-IMainObject* ObjectFactory::CreateVoid(const std::string &hash, quint32 id_new)
+IMainObject* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
 {
     IMainObject* item = NewVoidObjectSaved(hash);
     item->SetGame(game_);

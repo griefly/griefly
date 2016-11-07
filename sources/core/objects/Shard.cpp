@@ -12,7 +12,7 @@ Shard::Shard(quint32 id) : Item(id)
 void Shard::AfterWorldCreation()
 {
     unsigned int val = GetRand() % 3;
-    std::string st;
+    QString st;
     if (val == 0)
     {
         st = "large";

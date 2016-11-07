@@ -1,6 +1,6 @@
 #include "SpriteHolder.h"
 
-GLSprite* SpriteHolder::GetSprite(const std::string& type)
+GLSprite* SpriteHolder::GetSprite(const QString& type)
 {
     if(sprites.find(type) == sprites.end())
         sprites[type] = new GLSprite(type);
@@ -27,7 +27,7 @@ void SetSpriter(SpriteHolder* aspr)
     aspr_ = aspr;
 }
 
-void SpriteHolder::LoadImage(const std::string& image)
+void SpriteHolder::LoadImage(const QString& image)
 {
     sprites[image] = new GLSprite(image);
 }

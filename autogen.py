@@ -31,9 +31,9 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
     for header in header_list:
         print('#include "' + header + '"', file = autogen_file)
     print("", file = autogen_file)
-    print("std::unordered_map<std::string, setters_for_type>& get_setters_for_types()", file = autogen_file)
+    print("std::unordered_map<QString, setters_for_type>& get_setters_for_types()", file = autogen_file)
     print("{", file = autogen_file)
-    print("    static std::unordered_map<std::string, setters_for_type> map;", file = autogen_file)
+    print("    static std::unordered_map<QString, setters_for_type> map;", file = autogen_file)
     print("    return map;", file = autogen_file)
     print("}", file = autogen_file)
     print("", file = autogen_file)

@@ -15,21 +15,24 @@ public:
     void ParseParams(int argc, char* argv[]);
 
     template<class T>
-    T GetParam(std::string name)
+    T GetParam(QString name)
     {
         if (params_.find(name) == params_.end())
         {
-            qDebug() << "Cannot find param: " << QString::fromStdString(name);
+            qDebug() << "Cannot find param: " << name;
             return T();
         }
         std::stringstream converter;
-        converter << params_[name];
+        converter << params_[name].toStdString();
         T retval = T();
         converter >> retval;
         return retval;
     }
 
-    bool GetParamBool(std::string name)
+    template<>
+    QString GetParam<QString>(QString name);
+
+    bool GetParamBool(QString name)
     {
         if (params_.find(name) == params_.end())
         {
@@ -38,7 +41,22 @@ public:
         return true;
     }
 private:
-    std::map<std::string, std::string> params_; 
+    std::map<QString, QString> params_; 
 };
+
+template<>
+QString ParamsHolder::GetParam<QString>(QString name)
+{
+    if (params_.find(name) == params_.end())
+    {
+        qDebug() << "Cannot find param: " << name;
+        return QString();
+    }
+    std::stringstream converter;
+    converter << params_[name].toStdString();
+    std::string retval = std::string();
+    converter >> retval;
+    return QString::fromStdString(retval);
+}
 
 ParamsHolder& GetParamsHolder();

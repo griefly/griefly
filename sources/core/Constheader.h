@@ -9,6 +9,8 @@
 #include <algorithm>
 
 #include <qglobal.h>
+#include <QString>
+#include <QDebug>
 
 const int SIZE_H_SQ = 11; // visible size const
 const int SIZE_W_SQ = 11;
@@ -17,11 +19,6 @@ extern int sizeW; // visible play in pixel const
 extern int sizeH;
 
 extern bool NODRAW; // probably nodraw mode
-
-std::ostream& get_system_stream();
-
-#define SYSTEM_STREAM get_system_stream()
-//extern std::ostream& SYSTEM_STREAM;//some system information here
 
 typedef int Dir;
 const Dir D_ALL = -1;
@@ -98,4 +95,4 @@ const int MAX_LEVEL = 20;
 
 extern quint32 MAIN_TICK;
 
-const std::string RAW_DIR = "raw/";
+const QString RAW_DIR = "raw/";

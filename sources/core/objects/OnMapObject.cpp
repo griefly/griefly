@@ -8,12 +8,12 @@
 
 #include "../Helpers.h"
 
-void IOnMapObject::SetSprite(const std::string& name)
+void IOnMapObject::SetSprite(const QString& name)
 {
     view_.SetSprite(name);
 }
 
-void IOnMapObject::SetState(const std::string& name)
+void IOnMapObject::SetState(const QString& name)
 {
     view_.SetState(name);
 }

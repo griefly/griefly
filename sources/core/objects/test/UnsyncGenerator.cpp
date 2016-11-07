@@ -12,7 +12,7 @@ UnsyncGenerator::UnsyncGenerator(quint32 id) : IMainObject(id)
 void UnsyncGenerator::PerformUnsync()
 {
     qDebug() << "Unsync will be performed";
-    unsync_string_ = QUuid::createUuid().toString().toStdString();
+    unsync_string_ = QUuid::createUuid().toString();
 }
 
 void UnsyncGenerator::SetThisAsUnsyncGenerator()

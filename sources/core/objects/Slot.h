@@ -9,12 +9,12 @@
 
 namespace Slots
 {
-    const std::string SUIT = "SUIT";
-    const std::string HEAD = "HEAD";
-    const std::string ANYTHING = "ANYTHING";
-    const std::string FEET = "FEET";
-    const std::string UNIFORM = "UNIFORM";
-    const std::string DEFAULT = "DEFAULT";
+    const QString SUIT = "SUIT";
+    const QString HEAD = "HEAD";
+    const QString ANYTHING = "ANYTHING";
+    const QString FEET = "FEET";
+    const QString UNIFORM = "UNIFORM";
+    const QString DEFAULT = "DEFAULT";
 }
 
 class BaseSlot
@@ -63,22 +63,22 @@ public:
         posx_ = x;
         posy_ = y;
     }
-    void SetName(const std::string& name)
+    void SetName(const QString& name)
     {
         name_ = name;
     }
 
-    void SetType(const std::string& type)
+    void SetType(const QString& type)
     {
         type_ = type;
     }
-    bool MatchType(const std::string& type)
+    bool MatchType(const QString& type)
     {
         if (type_ == Slots::ANYTHING)
         {
             return true;
         }
-        if (type_.find(type) == std::string::npos)
+        if (type_.indexOf(type) == -1)
         {
             return false;
         }
@@ -118,8 +118,8 @@ public:
         file << item_ << " ";
         file << posx_ << " ";
         file << posy_ << " ";
-        file << type_ << " ";
-        file << name_ << " ";
+        file << type_.toStdString() << " ";
+        file << name_.toStdString() << " ";
         return file;
     }
     virtual std::istream& operator>>(std::stringstream& file) override
@@ -128,8 +128,17 @@ public:
         file >> item_;
         file >> posx_;
         file >> posy_;
-        file >> type_;
-        file >> name_;
+
+        {
+            std::string local;
+            file >> local;
+            type_ = QString::fromStdString(local);
+        }
+        {
+            std::string local;
+            file >> local;
+            name_ = QString::fromStdString(local);
+        }
         return file;
     }
     virtual unsigned int hash_member() const override
@@ -146,8 +155,8 @@ private:
     IdPtr<T> item_;
     int posx_;
     int posy_;
-    std::string type_;
-    std::string name_;
+    QString type_;
+    QString name_;
 };
 
 template <class T>

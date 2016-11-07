@@ -11,7 +11,7 @@ class LoginInterface: public InterfaceBase
 public:
     void Init();
 
-    virtual void HandleClick(const std::string& place) override {}
+    virtual void HandleClick(const QString& place) override {}
     virtual void Draw() override;
     virtual unsigned int hash() const override;
 private:

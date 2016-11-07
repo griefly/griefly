@@ -12,7 +12,7 @@
 
 struct NameSize
 {
-    std::string name;
+    QString name;
     unsigned int size;
 };
 
@@ -30,20 +30,20 @@ public:
     {
         friend class TextPainter;
     public:
-        Text& SetUpdater(std::function<void(std::string*)> updater);
+        Text& SetUpdater(std::function<void(QString*)> updater);
         Text& SetFreq(int freq);
     private:
-        Text(TextPainter* master, const std::string& key);
+        Text(TextPainter* master, const QString& key);
         ~Text();
         void Update();
         bool CanUpdate();
 
         unsigned int how_often_; // ms
-        std::function<void(std::string*)> updater_;
+        std::function<void(QString*)> updater_;
 
-        std::string key_;
+        QString key_;
 
-        std::string content_;
+        QString content_;
         QElapsedTimer time_;
 
         TextPainter* master_;
@@ -52,11 +52,11 @@ public:
     virtual ~TextPainter();
 
     void Process();
-    bool Delete(const std::string& name);
-    Text& operator[](const std::string& name);
+    bool Delete(const QString& name);
+    Text& operator[](const QString& name);
     void AddSystemText(QString key, QString text);
 signals:
     void addSystemText(QString key, QString text);
 private:
-    std::map<std::string, Text*> texts_;
+    std::map<QString, Text*> texts_;
 };

@@ -10,7 +10,7 @@ public:
     UnsyncGenerator(quint32 id);
     void PerformUnsync();
 private:
-    std::string KV_SAVEBLE(unsync_string_);
+    QString KV_SAVEBLE(unsync_string_);
 
     void SetThisAsUnsyncGenerator();
     KV_ON_LOAD_CALL(SetThisAsUnsyncGenerator);

@@ -22,12 +22,12 @@ public:
     virtual void Save(std::stringstream& str) override;
     virtual void Load(std::stringstream& str, quint32 real_this_mob) override;
     
-    virtual void LoadFromMapGen(const std::string& name) override;
+    virtual void LoadFromMapGen(const QString& name) override;
 
     virtual void BeginWorldCreation() override;
     virtual void FinishWorldCreation() override;
 
-    virtual quint32 CreateImpl(const std::string& type, quint32 owner = 0) override;
+    virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) override;
 
     virtual void DeleteLater(quint32 id) override;
     virtual void ProcessDeletion() override;
@@ -45,10 +45,10 @@ private:
     void SaveMapHeader(std::stringstream& str);
     void LoadMapHeader(std::stringstream& savefile);
 
-    IMainObject* CreateVoid(const std::string& hash, quint32 id_new);
+    IMainObject* CreateVoid(const QString& hash, quint32 id_new);
 
-    static IMainObject* NewVoidObject(const std::string& type, quint32 id);
-    static IMainObject* NewVoidObjectSaved(const std::string& type);
+    static IMainObject* NewVoidObject(const QString& type, quint32 id);
+    static IMainObject* NewVoidObjectSaved(const QString& type);
 
     IGame* game_;
 

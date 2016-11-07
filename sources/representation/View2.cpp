@@ -60,7 +60,7 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
     x = new_x + GetSprite()->W() / 2;
     y = new_y + GetSprite()->H() / 2;
 
-    const CSprite* loc = GetSprite()->GetSDLSprite();
+    const Sprite* loc = GetSprite()->GetSDLSprite();
     if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
     {
         return true;
@@ -74,7 +74,7 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
     int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
     int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
 
-    QImage image = loc->frames[image_state_w_ * loc->numFrameH + image_state_h_];
+    QImage image = loc->frames[image_state_w_ * loc->frames_h_ + image_state_h_];
 
     QRgb pixel = image.pixel(x, y);
     return qAlpha(pixel) < 1;

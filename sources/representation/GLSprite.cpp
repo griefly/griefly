@@ -32,7 +32,7 @@ const std::vector<GLuint>& GLSprite::operator[](quint32 num) const
     return gl_sprites_[num];
 }
 
-void GLSprite::Init(CSprite* sprite)
+void GLSprite::Init(Sprite* sprite)
 {
     fail_ = true;
 
@@ -47,7 +47,8 @@ void GLSprite::Init(CSprite* sprite)
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
     if ((sprite->w > maxTexSize || sprite->h > maxTexSize) && !force_no_fail)
     {
-        SYSTEM_STREAM << "OpenGL texture load fail: texture too big, maximal allowed size is " << maxTexSize << std::endl;
+        qDebug() << "OpenGL texture load fail: texture too big, maximal allowed size is "
+                 << maxTexSize;
         return;
     }
 
@@ -55,17 +56,17 @@ void GLSprite::Init(CSprite* sprite)
     w_ = sprite->w;
     h_ = sprite->h;
 
-    gl_sprites_.resize(sprite->numFrameH);
-    for (int i = 0; i < sprite->numFrameH; ++i)
-        gl_sprites_[i].resize(sprite->numFrameW);
+    gl_sprites_.resize(sprite->frames_h_);
+    for (int i = 0; i < sprite->frames_h_; ++i)
+        gl_sprites_[i].resize(sprite->frames_w_);
 
     GLuint glFormat_text = GL_RGBA;
     GLuint glFormat_surf = GL_RGBA;
 
-    for (int i = 0; i < sprite->numFrameH; ++i)
+    for (int i = 0; i < sprite->frames_h_; ++i)
     {
         glGenTextures(gl_sprites_[i].size(), &(gl_sprites_[i][0]));
-        for (int j = 0; j < sprite->numFrameW; ++j)
+        for (int j = 0; j < sprite->frames_w_; ++j)
         {
             //SYSTEM_STREAM << i << " " << j << std::endl;
 
@@ -76,7 +77,7 @@ void GLSprite::Init(CSprite* sprite)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-            QImage image = QGLWidget::convertToGLFormat(sprite->frames[j * sprite->numFrameH + i]);
+            QImage image = QGLWidget::convertToGLFormat(sprite->frames[j * sprite->frames_h_ + i]);
             glTexImage2D(
                 GL_TEXTURE_2D,
                 0,
@@ -88,33 +89,30 @@ void GLSprite::Init(CSprite* sprite)
                 GL_UNSIGNED_BYTE,
                 image.bits());
 
-            //SYSTEM_STREAM << gl_sprites_[i][j] << std::endl;
-
             if (glGetError())
-                SYSTEM_STREAM << glGetError() << std::endl;
-            //if (sprite->frames[j * sprite->numFrameH + i] == nullptr || sprite->frames[j * sprite->numFrameH + i]->pixels == nullptr)
-            //    SYSTEM_STREAM << "nullptr pixels" << std::endl;
-            //SYSTEM_STREAM << sprite->frames[j * sprite->numFrameH + i] << std::endl;
+            {
+                qDebug() << glGetError();
+            }
         }
     }
 
     fail_ = false;
 }
 
-GLSprite::GLSprite(const std::string& name)
+GLSprite::GLSprite(const QString& name)
 {
     MakeCurrentGLContext();
-    CSprite* sprite = new CSprite;
+    Sprite* sprite = new Sprite;
 
     InitSprite data;
-    data.imgFile = name;
+    data.file = name;
     data.numFrameH = 0;
     data.numFrameW = 0;
     fail_ = false;
     if (!sprite->init(data))
     {
         fail_ = true;
-        SYSTEM_STREAM << "Fail to load sprite " << name << std::endl;
+        qDebug() << "Fail to load sprite " << name;
         return;
     }
 
@@ -134,7 +132,7 @@ bool GLSprite::Fail() const
     return fail_;
 }
 
-CSprite* GLSprite::GetSDLSprite() const
+Sprite* GLSprite::GetSDLSprite() const
 {
     return sdl_sprite_;
 }

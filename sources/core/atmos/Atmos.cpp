@@ -24,23 +24,17 @@ Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
     z_size_ = 0;
 
     (*texts_)["{Perf}AtmosGridProcessing"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Atmos grid processing: "
-           << (grid_processing_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Atmos grid processing: %1 ms")
+            .arg((grid_processing_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     (*texts_)["{Perf}AtmosMove"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Atmos move processing: "
-           << (movement_processing_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Atmos move processing: %1 ms")
+            .arg((movement_processing_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     qDebug() << "Atmosphere load";

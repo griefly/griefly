@@ -12,7 +12,7 @@
 class GLSprite
 {
 public:
-    GLSprite(const std::string& string);
+    GLSprite(const QString& string);
     ~GLSprite();
     const std::vector<GLuint>& operator[](quint32 num) const;
     bool Fail() const;
@@ -21,15 +21,15 @@ public:
     int W() const;
     int H() const;
 
-    CSprite* GetSDLSprite() const;
+    Sprite* GetSDLSprite() const;
 
     unsigned int FrameW() const;
     unsigned int FrameH() const;
 private:
-    void Init(CSprite* sprite);
+    void Init(Sprite* sprite);
     int w_;
     int h_;
     std::vector<std::vector<GLuint>> gl_sprites_;
-    CSprite* sdl_sprite_;
+    Sprite* sdl_sprite_;
     bool fail_;
 };

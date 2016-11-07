@@ -21,9 +21,9 @@ public:
     {
         EditorEntry();
 
-        std::string item_type;
+        QString item_type;
 
-        std::map<std::string, std::string> variables;
+        std::map<QString, QString> variables;
 
         QGraphicsPixmapItem* pixmap_item;
     };
@@ -49,9 +49,9 @@ public:
 
     MapEditor(QGraphicsScene* scene);
 
-    void SaveMapgen(const std::string& name);
+    void SaveMapgen(const QString& name);
 
-    void LoadMapgen(const std::string& name);
+    void LoadMapgen(const QString& name);
 
     void fix_borders(int* posx, int* posy);
 
@@ -59,11 +59,11 @@ public:
 
     void Resize(int posx, int posy, int posz);
 
-    void AddItemType(const std::string& item_type, QVector<QPixmap> images);
+    void AddItemType(const QString& item_type, QVector<QPixmap> images);
 
-    void AddTurfType(const std::string& item_type);
+    void AddTurfType(const QString& item_type);
 
-    void AddItem(const std::string& item_type);
+    void AddItem(const QString& item_type);
 
     void UpdateDirs(EditorEntry* ee);
 
@@ -71,11 +71,11 @@ public:
 
     void RemoveItems(int posx, int posy, int posz);
 
-    MapEditor::EditorEntry& AddItem(const std::string& item_type, int posx, int posy, int posz);
+    MapEditor::EditorEntry& AddItem(const QString& item_type, int posx, int posy, int posz);
 
-    void SetTurf(const std::string& item_type);
+    void SetTurf(const QString& item_type);
 
-    MapEditor::EditorEntry& SetTurf(const std::string& item_type, int posx, int posy, int posz);
+    MapEditor::EditorEntry& SetTurf(const QString& item_type, int posx, int posy, int posz);
 
     void SetSelectionStage(int stage);
     int GetSelectionStage() const;
@@ -118,9 +118,9 @@ private:
 
     Pointer pointer_;
 
-    std::map<std::string, QVector<QPixmap>> image_holder_;
+    std::map<QString, QVector<QPixmap>> image_holder_;
 
-    std::set<std::string> turf_types_;
+    std::set<QString> turf_types_;
 
     QGraphicsScene* scene_;
 

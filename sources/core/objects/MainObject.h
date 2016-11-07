@@ -24,8 +24,8 @@ public:
 #endif // _BUILD_TESTS
     virtual ~IMainObject() { }
 
-    void PlaySoundIfVisible(const std::string& name, quint32 tile_id);
-    void PlayMusic(const std::string& name, float volume = 100.0f);
+    void PlaySoundIfVisible(const QString& name, quint32 tile_id);
+    void PlayMusic(const QString& name, float volume = 100.0f);
 
     static const int THIS_COUNTER = __COUNTER__; 
     virtual bool Save(std::stringstream& file);
@@ -40,13 +40,13 @@ public:
     IMainObject(quint32 id) { id_ = id; how_often_ = 0; game_ = nullptr; }
     IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
-    virtual const std::string& T_ITEM() const
+    virtual const QString& T_ITEM() const
     {
         return T_ITEM_S();
     }
-    static const std::string& T_ITEM_S()
+    static const QString& T_ITEM_S()
     {                                         
-        static std::string result = "main";
+        static QString result = "main";
         return result;
     }
     static int REAL_TYPE_ITEM;
@@ -73,18 +73,18 @@ protected:
     unsigned int GetRand();
 
     template<typename T>
-    IdPtr<T> Create(const std::string& type, IdPtr<IOnMapBase> owner = 0)
+    IdPtr<T> Create(const QString& type, IdPtr<IOnMapBase> owner = 0)
     {
         IdPtr<T> retval = CreateImpl(type, owner.Id());
         if (!retval.IsValid())
         {
-            qDebug() << "Unable to cast object: " << QString::fromStdString(type);
+            qDebug() << "Unable to cast object: " << type;
             KvAbort();
         }
         return retval;
     }
 private:
-    quint32 CreateImpl(const std::string& type, quint32 owner = 0);
+    quint32 CreateImpl(const QString& type, quint32 owner = 0);
 
     IGame* game_;
     quint32 id_;

@@ -24,10 +24,8 @@ Space::Space(quint32 id) : ITurf(id)
 
 void Space::AfterWorldCreation()
 {
-    std::stringstream conv;
     quint32 value = GetRand() % 25 + 1;
-    conv << value;
-    SetState(conv.str());
+    SetState(QString::number(value));
 }
 
 void Space::AttackBy(IdPtr<Item> item)

@@ -34,7 +34,7 @@ public:
     {
         InterfaceUnit();
         ViewInfo view;
-        std::string name;
+        QString name;
 
         int pixel_x;
         int pixel_y;
@@ -44,8 +44,8 @@ public:
 
     struct Sound
     {
-        Sound(const std::string& name) : name(name) {}
-        std::string name;
+        Sound(const QString& name) : name(name) {}
+        QString name;
     };
 
     struct Performance
@@ -98,7 +98,7 @@ private:
     struct FrameData
     {
         std::vector<Entity> entities;
-        std::vector<std::string> sounds;
+        std::vector<QString> sounds;
         std::vector<InterfaceUnit> units;
         int camera_pos_x;
         int camera_pos_y;

@@ -22,9 +22,9 @@ QJsonObject Network2::ParseJson(Message2 message)
     return doc.object();
 }
 
-bool Network2::IsKey(const QJsonObject& json, const std::string& key)
+bool Network2::IsKey(const QJsonObject& json, const QString& key)
 {
-    if (json["key"] == QString::fromStdString(key))
+    if (json["key"] == key)
     {
         return true;
     }

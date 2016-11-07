@@ -10,6 +10,6 @@ public:
     SpawnPoint(quint32 id);
 
     virtual void AfterWorldCreation() override;
-    std::string KV_SAVEBLE(spawn_type);
+    QString KV_SAVEBLE(spawn_type);
 };
 ADD_TO_TYPELIST(SpawnPoint);

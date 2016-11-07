@@ -50,8 +50,8 @@ public:
     
     virtual void Delete() override;
     virtual void Represent() override;
-    void SetSprite(const std::string& T_SPR);
-    void SetState(const std::string& name);
+    void SetSprite(const QString& T_SPR);
+    void SetState(const QString& name);
     ViewInfo* GetView() { return &view_; }
 public:
     int KV_SAVEBLE(v_level);
@@ -64,7 +64,7 @@ public:
     PassableLevel KV_SAVEBLE(passable_level);
 
     bool KV_SAVEBLE(transparent);
-    std::string KV_SAVEBLE(name);
+    QString KV_SAVEBLE(name);
 protected:
     ViewInfo KV_SAVEBLE(view_);
 };

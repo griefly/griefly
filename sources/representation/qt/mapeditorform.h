@@ -79,8 +79,8 @@ private:
     MapEditor* map_editor_;
 
     // Metainfo
-    std::vector<std::string> types_;
-    std::vector<std::string> turf_types_;
+    std::vector<QString> types_;
+    std::vector<QString> turf_types_;
 
     Ui::MapEditorForm *ui;
 };

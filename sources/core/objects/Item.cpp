@@ -31,13 +31,7 @@ void Screwdriver::AfterWorldCreation()
     Item::AfterWorldCreation();
 
     unsigned int value = GetRand() % 8;
-    std::stringstream converter;
-    converter << "screwdriver";
-    if (value > 1)
-    {
-        converter << value;
-    }
-    SetState(converter.str());
+    SetState(QString("screwdriver%1").arg(value));
 }
 
 Wirecutters::Wirecutters(quint32 id) : Item(id)

@@ -142,12 +142,12 @@ void Human::ProcessMessage(const Message2 &msg)
     }
     if (msg.type == MessageType::MESSAGE)
     {
-        std::string text = obj["text"].toString().toStdString();
-        std::string prefixes[] = {"me ", "me", "* ", "*"};
+        QString text = obj["text"].toString();
+        QString prefixes[] = {"me ", "me", "* ", "*"};
         bool found = false;
         for(auto& str : prefixes)
         {
-            if (text.find(str) == 0)
+            if (text.indexOf(str) == 0)
             {
                 quint32 length = str.length();
                 text.replace(0, length, name + " ");
@@ -268,7 +268,7 @@ void Human::ProcessMessage(const Message2 &msg)
     else
     {
         // TODO
-        interface_.HandleClick(obj["key"].toString().toStdString());
+        interface_.HandleClick(obj["key"].toString());
     }
 
 }
@@ -406,7 +406,7 @@ void Human::AttackBy(IdPtr<Item> item)
     {
         health_ -= item->damage;
         unsigned int value = GetRand() % 3;
-        std::string snd;
+        QString snd;
         if (value == 0)
         {
             snd = "genhit1.ogg";
@@ -432,9 +432,7 @@ void Human::AttackBy(IdPtr<Item> item)
         health_ -= 1;
 
         unsigned int punch_value = (GetRand() % 4) + 1;
-        std::stringstream conv;
-        conv << "punch" << punch_value << ".ogg";
-        PlaySoundIfVisible(conv.str(), owner.Id());
+        PlaySoundIfVisible(QString("punch%1.ogg").arg(punch_value), owner.Id());
 
         if (GetRand() % 5 == 0)
         {
@@ -457,14 +455,14 @@ void Human::AttackBy(IdPtr<Item> item)
     }
 
     unsigned int blood_value = (GetRand() % 7) + 1;
-    std::stringstream conv;
-    conv << "floor" << blood_value;
 
     if (IdPtr<Floor> floor = GetTurf())
     {
         if (!floor->bloody)
         {
-            floor->GetView()->AddOverlay("icons/blood.dmi", conv.str());
+            floor->GetView()->AddOverlay(
+                "icons/blood.dmi",
+                QString("floor%1").arg(blood_value));
             floor->bloody = true;
         }
     }
@@ -517,14 +515,14 @@ void Human::Bump(IdPtr<IMovable> item)
         }
 
         unsigned int blood_value = (GetRand() % 7) + 1;
-        std::stringstream conv;
-        conv << "floor" << blood_value;
 
         if (IdPtr<Floor> floor = GetTurf())
         {
             if (!floor->bloody)
             {
-                floor->GetView()->AddOverlay("icons/blood.dmi", conv.str());
+                floor->GetView()->AddOverlay(
+                    "icons/blood.dmi",
+                    QString("floor%1").arg(blood_value));
                 floor->bloody = true;
             }
         }

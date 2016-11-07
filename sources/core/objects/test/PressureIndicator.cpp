@@ -36,9 +36,9 @@ void PressureIndicator::SetNumber(int number)
         number = 0;
     }
 
-    static const std::string NUMBERS[10] =
+    static const QString NUMBERS[10] =
         { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-    static const std::string SPRITE = "icons/numbers.dmi";
+    static const QString SPRITE = "icons/numbers.dmi";
 
     int first_digit = number / 10;
     int second_digit = number % 10;

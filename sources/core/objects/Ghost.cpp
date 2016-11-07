@@ -94,11 +94,9 @@ void Ghost::ProcessMessage(const Message2& msg)
 void Ghost::InitGUI()
 {
     GetGame().GetTexts()["RespawnCount"].SetUpdater
-    ([this](std::string* str)
+    ([this](QString* str)
     {
-        std::stringstream conv;
-        conv << "Until respawn: " << seconds_until_respawn_;
-        *str = conv.str();
+        *str = QString("Until respawn: %1").arg(seconds_until_respawn_);
     }).SetFreq(250);
 }
 

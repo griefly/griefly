@@ -127,12 +127,12 @@ void ViewInfo::FramesetInfo::SetShift(int shift_x, int shift_y)
     shift_y_ = shift_y;
 }
 
-void ViewInfo::FramesetInfo::SetSprite(const std::string& name)
+void ViewInfo::FramesetInfo::SetSprite(const QString& name)
 {
     sprite_name_ = name;
 }
 
-void ViewInfo::FramesetInfo::SetState(const std::string& name)
+void ViewInfo::FramesetInfo::SetState(const QString& name)
 {
     state_ = name;
 }
@@ -186,8 +186,8 @@ void ViewInfo::SetAngle(int angle)
 }
 
 ViewInfo::FramesetInfo& ViewInfo::AddOverlay(
-    const std::string& sprite,
-    const std::string& state)
+    const QString& sprite,
+    const QString& state)
 {
     FramesetInfo frameset;
     frameset.SetSprite(sprite);
@@ -196,8 +196,8 @@ ViewInfo::FramesetInfo& ViewInfo::AddOverlay(
     return overlays_.back();
 }
 ViewInfo::FramesetInfo& ViewInfo::AddUnderlay(
-    const std::string& sprite,
-    const std::string& state)
+    const QString& sprite,
+    const QString& state)
 {
     FramesetInfo frameset;
     frameset.SetSprite(sprite);

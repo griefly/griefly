@@ -17,17 +17,21 @@ inline std::stringstream& WrapWriteMessage(std::stringstream& file, T& to_write)
     return file;
 }
 
-inline std::stringstream& WrapWriteMessage(std::stringstream& file, const std::string& to_write)
+inline std::stringstream& WrapWriteMessage(std::stringstream& file, const QString& to_write)
 {
-    file << static_cast<quint32>(to_write.size()) << " ";
-    file << to_write;
+    std::string local = to_write.toStdString();
+
+    file << static_cast<quint32>(local.size()) << " ";
+    file << local;
     return file;
 }
 
-inline std::stringstream& WrapWriteMessage(std::stringstream& file, std::string& to_write)
+inline std::stringstream& WrapWriteMessage(std::stringstream& file, QString& to_write)
 {
-    file << static_cast<quint32>(to_write.size()) << " ";
-    file << to_write;
+    std::string local = to_write.toStdString();
+
+    file << static_cast<quint32>(local.size()) << " ";
+    file << local;
     return file;
 }
 
@@ -52,7 +56,7 @@ inline std::stringstream& WrapReadMessage(std::stringstream& file, T& to_read)
     return file;
 }
 
-inline std::stringstream& WrapReadMessage(std::stringstream& file, std::string& to_read)
+inline std::stringstream& WrapReadMessage(std::stringstream& file, QString& to_read)
 {
     quint32 size;
     file >> size;
@@ -61,7 +65,7 @@ inline std::stringstream& WrapReadMessage(std::stringstream& file, std::string& 
     file.get(c);
     if (c != ' ')
     {
-        SYSTEM_STREAM << "Error: corrupted string info" << std::endl;
+        qDebug() << "Error: corrupted string info";
         return file;
     }
 
