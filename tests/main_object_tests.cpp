@@ -148,7 +148,7 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         MockIObjectFactory factory;
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
-        EXPECT_CALL(factory, CreateImpl("type", 42))
+        EXPECT_CALL(factory, CreateImpl(QString("type"), 42))
             .WillOnce(Return(111));
 
         IMainObject object(43);
@@ -177,7 +177,7 @@ TEST(MainObject, SoundAndMusic)
     MockIGame game;
     IMainObject object(1111111);
     object.SetGame(&game);
-    EXPECT_CALL(game, PlayMusic("music", 13.0f))
+    EXPECT_CALL(game, PlayMusic(QString("music"), 13.0f))
         .WillOnce(Return());
 
     object.PlayMusic("music", 13.0f);
@@ -188,7 +188,7 @@ TEST(MainObject, SoundAndMusic)
     EXPECT_CALL(map, IsTileVisible(33))
         .WillOnce(Return(false))
         .WillOnce(Return(true));
-    EXPECT_CALL(game, AddSound("sound"))
+    EXPECT_CALL(game, AddSound(QString("sound")))
         .WillOnce(Return());
 
     object.PlaySoundIfVisible("sound1", 33);

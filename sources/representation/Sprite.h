@@ -8,21 +8,21 @@
 
 struct InitSprite
 {
-    std::string imgFile;
+    QString file;
     int numFrameH;
     int numFrameW;
 };
 
-class CSprite
+class Sprite
 {
 public:
-    CSprite();
+    Sprite();
     ImageMetadata metadata;
     int h;
     int w;
-    int numFrameH;
-    int numFrameW;
+    int frames_h_;
+    int frames_w_;
     std::vector<QImage> frames;
     bool init(InitSprite data);
-    ~CSprite();
+    ~Sprite();
 };

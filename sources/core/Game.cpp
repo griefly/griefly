@@ -245,7 +245,7 @@ void Game::Process()
     thread_.exit();
 }
 
-const std::string ON_LOGIN_MESSAGE =
+const QString ON_LOGIN_MESSAGE =
         "Welcome to Griefly! It is yet another space station remake, so if you are here then you probably already know how to play."
         " Just in case: arrows for movement, left mouse click for hand actions (hit, attack, take), chat for speaking."
         " Use prefix ooc in the chat if you would like to use the ooc channel (it is a global channel).\n";
@@ -257,7 +257,7 @@ void Game::WaitForExit()
 
 std::vector<ObjectInfo>* id_ptr_id_table = nullptr;
 
-void Game::InitWorld(int id, std::string map_name)
+void Game::InitWorld(int id, QString map_name)
 {   
     InitSettersForTypes();
 
@@ -275,12 +275,12 @@ void Game::InitWorld(int id, std::string map_name)
             return;
         }
 
-        QString mapgen_name = QString::fromStdString(GetParamsHolder().GetParam<std::string>("mapgen_name"));
+        QString mapgen_name = GetParamsHolder().GetParam<QString>("mapgen_name");
         if (QFileInfo::exists(mapgen_name))
         {
             srand(QTime::currentTime().msecsSinceStartOfDay());
 
-            GetFactory().LoadFromMapGen(GetParamsHolder().GetParam<std::string>("mapgen_name"));
+            GetFactory().LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
             qDebug() << "End load from mapgen atmpsphere";
 
 
@@ -341,119 +341,87 @@ void Game::InitWorld(int id, std::string map_name)
     GetChat().PostText(ON_LOGIN_MESSAGE);
 
     GetTexts()["CpuLoad"].SetUpdater
-    ([this](std::string* str)
+    ([this](QString* str)
     {
-        std::stringstream ss; 
-        ss << "CPU load: " << cpu_load_ << "%";
-        *str = ss.str();
+        *str = QString("CPU load: %1%").arg(cpu_load_);
     }).SetFreq(1000);
 
     GetTexts()["CpuLoadAverage"].SetUpdater
-    ([this](std::string* str)
+    ([this](QString* str)
     {
         float sum = 0.0f;
         for (float load : cpu_loads_)
         {
             sum += load;
         }
-
-        std::stringstream ss;
-        ss << "Average CPU load: " << sum / cpu_loads_.size() << "%";
-        *str = ss.str();
+        *str = QString("Average CPU load: %1%").arg(sum / cpu_loads_.size());
     }).SetFreq(1000);
 
     GetTexts()["Tick"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Main tick: " << MAIN_TICK;
-        *str = ss.str();
+        *str = QString("Main tick: %1").arg(MAIN_TICK);
     });
 
     GetTexts()["AmountConnections"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Players: " << current_connections_;
-        *str = ss.str();
+        *str = QString("Players: %1").arg(current_connections_);
     });
 
     GetTexts()["PingTimer"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Ping: " << current_ping_ << "ms";
-        *str = ss.str();
+        *str = QString("Ping: %1 ms").arg(current_ping_);
     });
 
     GetTexts()["{Perf}ProcessMessages"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Process messages: "
-           << (process_messages_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Process messages: %1 ms")
+            .arg((process_messages_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     GetTexts()["{Perf}ProcessForeach"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Process objects: "
-           << (foreach_process_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Process objects: %1 ms")
+            .arg((foreach_process_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     GetTexts()["{Perf}ProcessForce"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Process force movement: "
-           << (force_process_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Process force movement: %1 ms")
+            .arg((force_process_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     GetTexts()["{Perf}ProcessAtmos"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Process atmos: "
-           << (atmos_process_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Process atmos: %1 ms")
+            .arg((atmos_process_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     GetTexts()["{Perf}ProcessDelete"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Process deletion: "
-           << (deletion_process_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Process deletion: %1 ms")
+            .arg((deletion_process_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     GetTexts()["{Perf}UpdateVisibility"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Update visibility: "
-           << (update_visibility_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Update visibility: %1 ms")
+            .arg((update_visibility_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     GetTexts()["{Perf}FrameGeneration"].SetUpdater
-    ([&](std::string* str)
+    ([&](QString* str)
     {
-        std::stringstream ss;
-        ss << "Frame generation: "
-           << (frame_generation_ns_ * 1.0) / 1000000.0
-           << " ms";
-        *str = ss.str();
+        *str = QString("Frame generation: %1 ms")
+            .arg((frame_generation_ns_ * 1.0) / 1000000.0);
     }).SetFreq(1000);
 
     thread_.start();
@@ -586,7 +554,7 @@ void Game::ProcessInputMessages()
             QJsonObject obj = Network2::ParseJson(msg);
             QString login = obj["login"].toString();
             QString text = obj["text"].toString();
-            GetChat().PostOOCText(login.toStdString(), text.toStdString());
+            GetChat().PostOOCText(login, text);
             continue;
         }
 
@@ -634,13 +602,13 @@ void Game::GenerateFrame()
     GetRepresentation().Swap();
 }
 
-void Game::PlayMusic(const std::string& name, float volume)
+void Game::PlayMusic(const QString& name, float volume)
 {
-    qDebug() << QString::fromStdString(name);
-    emit playMusic(QString::fromStdString(name), volume);
+    qDebug() << name;
+    emit playMusic(name, volume);
 }
 
-void Game::AddSound(const std::string& name)
+void Game::AddSound(const QString& name)
 {
     GetRepresentation().AddToNewFrame(name);
 }

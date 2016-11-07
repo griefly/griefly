@@ -275,8 +275,7 @@ void Representation::Click(int x, int y)
         int bdir = units[i].shift;
         if (!interface_views_[i].IsTransp(x, y, bdir))
         {
-            //qDebug() << "Clicked " << QString::fromStdString(units[i].name);
-            Network2::GetInstance().SendOrdinaryMessage(QString::fromStdString(units[i].name));
+            Network2::GetInstance().SendOrdinaryMessage(units[i].name);
             return;
         }
     }

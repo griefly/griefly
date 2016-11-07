@@ -13,7 +13,7 @@ AtmosTool::AtmosTool(quint32 id) : Item(id)
     name = "Atmos tool";
 }
 
-std::string AtmosTool::GetInfo(AtmosHolder &holder)
+QString AtmosTool::GetInfo(AtmosHolder &holder)
 {
     std::stringstream ss;
     ss << "Energy: " << holder.GetEnergy() << std::endl;
@@ -24,7 +24,7 @@ std::string AtmosTool::GetInfo(AtmosHolder &holder)
     {
         ss << GASES_NAME[i] << ": " << holder.GetGase(i) << std::endl;
     }
-    return ss.str();
+    return QString::fromStdString(ss.str());
 }
 
 void AtmosTool::AttackBy(IdPtr<Item> item)

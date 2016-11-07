@@ -5,6 +5,8 @@
 #include "core/Constheader.h"
 #include "core/Idptr.h"
 
+#include <QString>
+
 class SyncRandom;
 class Names;
 class IMob;
@@ -70,12 +72,12 @@ public:
     virtual void Save(std::stringstream& str) = 0;
     virtual void Load(std::stringstream& str, quint32 real_this_mob) = 0;
 
-    virtual void LoadFromMapGen(const std::string& name) = 0;
+    virtual void LoadFromMapGen(const QString& name) = 0;
 
     virtual void BeginWorldCreation() = 0;
     virtual void FinishWorldCreation() = 0;
 
-    virtual quint32 CreateImpl(const std::string& type, quint32 owner = 0) = 0;
+    virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) = 0;
 
     virtual void DeleteLater(quint32 id) = 0;
     virtual void ProcessDeletion() = 0;
@@ -94,13 +96,13 @@ class IChat
 public:
     virtual ~IChat() { }
 
-    virtual void PostTextFor(const std::string& str, IdPtr<IOnMapBase> owner) = 0;
-    virtual void PostText(const std::string& str) = 0;
-    virtual void PostOOCText(const std::string& who, const std::string& str) = 0;
-    virtual void PostSimpleText(const std::string& str, quint32 tile_id) = 0;
-    virtual void PostDamage(const std::string& by, const std::string& who,
-                            const std::string& object, quint32 tile_id) = 0;
-    virtual void PostWords(const std::string& who, const std::string& text, quint32 tile_id) = 0;
+    virtual void PostTextFor(const QString& str, IdPtr<IOnMapBase> owner) = 0;
+    virtual void PostText(const QString& str) = 0;
+    virtual void PostOOCText(const QString& who, const QString& str) = 0;
+    virtual void PostSimpleText(const QString& str, quint32 tile_id) = 0;
+    virtual void PostDamage(const QString& by, const QString& who,
+                            const QString& object, quint32 tile_id) = 0;
+    virtual void PostWords(const QString& who, const QString& text, quint32 tile_id) = 0;
 };
 
 class IGame
@@ -124,6 +126,6 @@ public:
     virtual IdPtr<IMob> GetMob() = 0;
     virtual void SetMob(quint32 new_mob) = 0;
 
-    virtual void AddSound(const std::string& name) = 0;
-    virtual void PlayMusic(const std::string& name, float volume) = 0;
+    virtual void AddSound(const QString& name) = 0;
+    virtual void PlayMusic(const QString& name, float volume) = 0;
 };

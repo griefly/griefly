@@ -11,7 +11,7 @@ public:
     DECLARE_GET_TYPE_ITEM(AtmosTool);
     AtmosTool(quint32 id);
 
-    static std::string GetInfo(AtmosHolder& holder);
+    static QString GetInfo(AtmosHolder& holder);
 
     virtual void AttackBy(IdPtr<Item> item) override;
 };

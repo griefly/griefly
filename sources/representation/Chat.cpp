@@ -11,49 +11,31 @@
 #include <QUuid>
 #include <QTextCursor>
 
-std::stringstream ss;
-std::fstream loc("debug_reports//" + QUuid::createUuid().toString().toStdString() + ".txt", std::ios::trunc | std::ios::out | std::ios::in);
-
-std::ostream* local_stream = &loc;
-
-//std::ostream* local_stream = &ss;
-//std::ostream& SYSTEM_STREAM = *local_stream;
-
-void SetLogToFile()
-{
-    local_stream = &loc;
-}
-
-std::ostream& get_system_stream()
-{
-    return *local_stream;
-}
-
 Chat::Chat(IGame* game)
 {
     game_ = game;
 }
 
-void Chat::PostSimpleText(const std::string& str, quint32 tile_id)
+void Chat::PostSimpleText(const QString& str, quint32 tile_id)
 {
     if (!game_->GetMap().IsTileVisible(tile_id))
     {
         return;
     }
 
-    emit insertHtmlIntoChat(QString::fromStdString(str));
+    emit insertHtmlIntoChat(str);
 }
 
-void Chat::PostDamage(const std::string& by, const std::string& who, const std::string& object, quint32 tile_id)
+void Chat::PostDamage(const QString& by, const QString& who, const QString& object, quint32 tile_id)
 {
     if (!game_->GetMap().IsTileVisible(tile_id))
     {
         return;
     }
 
-    QString q_by = QString::fromStdString(by).toHtmlEscaped();
-    QString q_who = QString::fromStdString(who).toHtmlEscaped();
-    QString q_object = QString::fromStdString(object).toHtmlEscaped();
+    QString q_by = by.toHtmlEscaped();
+    QString q_who = who.toHtmlEscaped();
+    QString q_object = object.toHtmlEscaped();
 
     emit insertHtmlIntoChat
         (
@@ -66,15 +48,15 @@ void Chat::PostDamage(const std::string& by, const std::string& who, const std::
          + "</font>");
 }
 
-void Chat::PostWords(const std::string& who, const std::string& text, quint32 tile_id)
+void Chat::PostWords(const QString& who, const QString& text, quint32 tile_id)
 {
     if (!game_->GetMap().IsTileVisible(tile_id))
     {
         return;
     }
 
-    QString q_who = QString::fromStdString(who).toHtmlEscaped();
-    QString q_text = QString::fromStdString(text).toHtmlEscaped();
+    QString q_who = who.toHtmlEscaped();
+    QString q_text = text.toHtmlEscaped();
 
     emit insertHtmlIntoChat
         (
@@ -86,7 +68,7 @@ void Chat::PostWords(const std::string& who, const std::string& text, quint32 ti
          + "</span>");
 }
 
-void Chat::PostTextFor(const std::string& str, IdPtr<IOnMapBase> owner)
+void Chat::PostTextFor(const QString& str, IdPtr<IOnMapBase> owner)
 {
     if (game_->GetMob() == owner)
     {
@@ -94,16 +76,16 @@ void Chat::PostTextFor(const std::string& str, IdPtr<IOnMapBase> owner)
     }
 }
 
-void Chat::PostText(const std::string& str_)
+void Chat::PostText(const QString& str_)
 {
-    QString loc = QString::fromStdString(str_).toHtmlEscaped();
+    QString loc = str_.toHtmlEscaped();
     emit insertHtmlIntoChat(loc.replace('\n', "<br>"));
 }
 
-void Chat::PostOOCText(const std::string &who, const std::string& text)
+void Chat::PostOOCText(const QString &who, const QString& text)
 {
-    QString q_who = QString::fromStdString(who).toHtmlEscaped();
-    QString q_text = QString::fromStdString(text).toHtmlEscaped();
+    QString q_who = who.toHtmlEscaped();
+    QString q_text = text.toHtmlEscaped();
 
     emit insertHtmlIntoChat
         (

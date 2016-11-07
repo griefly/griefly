@@ -2,8 +2,8 @@
 
 #include "Screen.h"
 
-TextPainter::Text::Text(TextPainter* master, const std::string& key)
-    : updater_([](std::string*){}),
+TextPainter::Text::Text(TextPainter* master, const QString& key)
+    : updater_([](QString*){}),
     master_(master),
     how_often_(200),
     key_(key)
@@ -15,7 +15,7 @@ TextPainter::Text::~Text()
 {
 }
 
-TextPainter::Text& TextPainter::Text::SetUpdater(std::function<void(std::string*)> updater)
+TextPainter::Text& TextPainter::Text::SetUpdater(std::function<void(QString*)> updater)
 {
     updater_ = updater;
     return *this;
@@ -29,7 +29,7 @@ TextPainter::Text& TextPainter::Text::SetFreq(int freq)
 
 void TextPainter::Text::Update()
 {
-    std::string new_content;
+    QString new_content;
     updater_(&new_content);
     if (content_ == new_content)
     {
@@ -37,9 +37,7 @@ void TextPainter::Text::Update()
     }
     content_.clear();
     content_ = new_content;
-    master_->AddSystemText(
-        QString::fromStdString(key_),
-        QString::fromStdString(content_));
+    master_->AddSystemText(key_, content_);
 }
 
 bool TextPainter::Text::CanUpdate()
@@ -68,7 +66,7 @@ void TextPainter::Process()
     }
 }
 
-bool TextPainter::Delete(const std::string& name)
+bool TextPainter::Delete(const QString& name)
 {
     auto itr = texts_.find(name);
     if (itr == texts_.end())
@@ -76,14 +74,14 @@ bool TextPainter::Delete(const std::string& name)
         return false;
     }
     
-    emit addSystemText(QString::fromStdString(name), "");
+    emit addSystemText(name, "");
 
     delete itr->second;
     texts_.erase(itr);
     return true;
 }
 
-TextPainter::Text& TextPainter::operator[](const std::string& name)
+TextPainter::Text& TextPainter::operator[](const QString& name)
 {
     auto value = texts_[name];
     if (value == nullptr)

@@ -10,19 +10,13 @@
 
 #include "KVAbort.h"
 
-QDebug operator<<(QDebug debug, const std::string& string)
-{
-    debug << QString::fromStdString(string);
-    return debug;
-}
-
 const ImageMetadata::SpriteMetadata& 
-    ImageMetadata::GetSpriteMetadata(const std::string& name)
+    ImageMetadata::GetSpriteMetadata(const QString& name)
 {
     return metadata_[name];
 }
 
-bool ImageMetadata::IsValidState(const std::string& name)
+bool ImageMetadata::IsValidState(const QString& name)
 {
     if (!Valid())
     {
@@ -39,7 +33,7 @@ void UserReadData(png_structp png_ptr, png_bytep data, png_size_t length) {
     stream->read(reinterpret_cast<char*>(data), length);
 }
 
-void ImageMetadata::Init(const std::string& name, int width, int height)
+void ImageMetadata::Init(const QString& name, int width, int height)
 {   
     qDebug() << "Begin to init metadata for " << name;
 
@@ -47,7 +41,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     height_ = height;
 
     std::ifstream source;
-    source.open(name, std::fstream::binary);
+    source.open(name.toStdString(), std::fstream::binary);
     if (source.fail()) 
     {
         qDebug() << "Metadata error: Fail to open file";
@@ -102,7 +96,7 @@ void ImageMetadata::Init(const std::string& name, int width, int height)
     {
         for (int i = 0; i < num_text; ++i)
         {
-            std::string string_key = std::string(text_ptr[i].key);
+            QString string_key = QString(text_ptr[i].key);
             if (string_key == "Description")
             {
                 std::stringstream string_text;
@@ -171,7 +165,11 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
     }
     loc.clear();
     ////////////
-    desc >> dmi_version_;
+    {
+        std::string local;
+        desc >> local;
+        dmi_version_ = QString::fromStdString(local);
+    }
     qDebug() << "Read version: " << dmi_version_;
     ////////////
     desc >> loc;
@@ -215,7 +213,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
     ////////////
     
     desc >> loc;
-    std::string current_state = "###";
+    QString current_state = "###";
     quint32 first_frame_pos = 0;
     while (loc != "#")
     {
@@ -241,8 +239,8 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 whole_str += loc;
             }
             loc = whole_str;
-            qDebug() << "New state: " << loc;
-            current_state = loc.substr(1, loc.length() - 2);
+            qDebug() << "New state: " << QString::fromStdString(loc);
+            current_state = QString::fromStdString(loc.substr(1, loc.length() - 2));
             metadata_[current_state].first_frame_pos = first_frame_pos;
         }
         else if (loc == "dirs")
@@ -414,7 +412,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         {
             // That happens quite oftern so it is needed
             // to detect unknon params in DMI format
-            qDebug() << "Unknown param: " << loc;
+            qDebug() << "Unknown param: " << QString::fromStdString(loc);
             KvAbort();
         }
         loc.clear();

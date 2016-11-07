@@ -98,7 +98,7 @@ public:
 
     static QJsonObject ParseJson(Message2 message);
 
-    static bool IsKey(const QJsonObject& json, const std::string& key);
+    static bool IsKey(const QJsonObject& json, const QString& key);
     static quint32 ExtractObjId(const QJsonObject& json);
     static QString ExtractAction(const QJsonObject& json);
 

@@ -91,6 +91,6 @@ private:
     int KV_SAVEBLE(door_state_);
     quint32 KV_SAVEBLE(last_tick_);
 
-    std::string KV_SAVEBLE(door_prefix_);
+    QString KV_SAVEBLE(door_prefix_);
 };
 ADD_TO_TYPELIST(GlassDoor);

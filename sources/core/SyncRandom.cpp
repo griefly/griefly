@@ -24,8 +24,8 @@ unsigned int SyncRandom::GetRand()
 
 void SyncRandom::SetRand(unsigned int new_seed, unsigned int new_calls_counter)
 {
-    SYSTEM_STREAM << "set_seed: " << new_seed << std::endl;
-    SYSTEM_STREAM << "set_calls_counter: " << new_calls_counter << std::endl;
+    qDebug() << "set_seed: " << new_seed;
+    qDebug() << "set_calls_counter: " << new_calls_counter;
     calls_counter_ = new_calls_counter;
     seed_ = new_seed;
 
@@ -35,12 +35,12 @@ void SyncRandom::SetRand(unsigned int new_seed, unsigned int new_calls_counter)
 
 unsigned int SyncRandom::GetSeed()
 {
-    SYSTEM_STREAM << "get_seed: " << seed_ << std::endl;
+    qDebug() << "get_seed: " << seed_;
     return seed_;
 }
 
 unsigned int SyncRandom::GetCallsCounter()
 {
-    SYSTEM_STREAM << "get_calls_counter: " << calls_counter_ << std::endl;
+    qDebug() << "get_calls_counter: " << calls_counter_;
     return calls_counter_;
 }

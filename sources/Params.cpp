@@ -4,15 +4,15 @@ void ParamsHolder::ParseParams(int argc, char* argv[])
 {
     for (int i = 0; i < argc; ++i)
     {
-        std::string str = std::string(argv[i]);
+        QString str = QString(argv[i]);
 
-        int num = str.find_first_of('=');
-        std::string key;
-        std::string value;
-        if (num != std::string::npos)
+        int num = str.indexOf('=');
+        QString key;
+        QString value;
+        if (num != -1)
         {
-            key = str.substr(0, num);
-            value = str.substr(num + 1);
+            key = str.left(num);
+            value = str.mid(num + 1);
         }
         else
         {

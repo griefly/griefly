@@ -96,7 +96,7 @@ Slot<Item>& HumanInterface::GetActiveHand()
 void HumanInterface::UpdatePulling(bool is_pulling)
 {
     pulling_ = is_pulling;
-    std::string state = pulling_ ? "pull1" : "pull0";
+    QString state = pulling_ ? "pull1" : "pull0";
     stop_pull_.GetView()->SetState(state);
 }
 
@@ -185,39 +185,39 @@ void HumanInterface::AddOverlays()
 {
     if (uniform_.Get())
     {
-        std::string state_name = uniform_.Get()->GetView()->GetBaseFrameset().GetState();
+        QString state_name = uniform_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/uniform.dmi", state_name + "_s");
     }
     if (feet_.Get())
     {
-        std::string state_name = feet_.Get()->GetView()->GetBaseFrameset().GetState();
+        QString state_name = feet_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/feet.dmi", state_name);
     }
     if (head_.Get())
     {
-        std::string state_name = head_.Get()->GetView()->GetBaseFrameset().GetState();
+        QString state_name = head_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/head.dmi", state_name);
     }
     if (suit_.Get())
     {
-        std::string state_name = suit_.Get()->GetView()->GetBaseFrameset().GetState();
+        QString state_name = suit_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/suit.dmi", state_name);
     }
 
     if (r_hand_.Get())
     {
-        std::string state_name = r_hand_.Get()->GetView()->GetBaseFrameset().GetState();
+        QString state_name = r_hand_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/items_righthand.dmi", state_name);
     }
 
     if (l_hand_.Get())
     {
-        std::string state_name = l_hand_.Get()->GetView()->GetBaseFrameset().GetState();
+        QString state_name = l_hand_.Get()->GetView()->GetBaseFrameset().GetState();
         owner_->GetView()->AddOverlay("icons/items_lefthand.dmi", state_name);
     }
 }
 
-void HumanInterface::HandleClick(const std::string& place)
+void HumanInterface::HandleClick(const QString& place)
 {
     if (place == HumanInterfacePlaces::RIGHT_HAND)
     {

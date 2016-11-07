@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QString>
+
 #include <string>
 #include <vector>
 
@@ -8,10 +10,10 @@ class Names
 {
 public:
     Names(SyncRandom* random);
-    std::string GetMaleName();
+    QString GetMaleName();
 private:
     void LoadNames();
-    std::vector<std::string> male_names_;
-    std::vector<std::string> last_;
+    std::vector<QString> male_names_;
+    std::vector<QString> last_name_;
     SyncRandom* random_;
 };

@@ -42,11 +42,6 @@ MainForm::MainForm(QWidget *parent) :
     ui->textBrowser->setReadOnly(true);
     ui->textBrowser->setUndoRedoEnabled(false);
 
-    if (!GetParamsHolder().GetParamBool("-debug_to_chat"))
-    {
-        SetLogToFile();
-    }
-
     {
         QList<int> sizes;
         sizes.push_back(512);
@@ -150,7 +145,7 @@ void MainForm::startGameLoop(int id, QString map)
     connect(game, &Game::sendMap,
             &Network2::GetInstance(), &Network2::sendMap);
 
-    game->InitWorld(id, map.toStdString());
+    game->InitWorld(id, map);
 
     connect(this, &MainForm::closing, game, &Game::endProcess);
     connect(this, &MainForm::generateUnsync, game, &Game::generateUnsync);
@@ -282,7 +277,7 @@ void MainForm::playMusic(QString name, float volume)
     qDebug() << name << " " << volume;
     if (name != "")
     {
-        GetSoundPlayer().PlayMusic(name.toStdString(), volume);
+        GetSoundPlayer().PlayMusic(name, volume);
     }
     else
     {
@@ -338,10 +333,10 @@ void MainForm::closeEvent(QCloseEvent* event)
 
 void MainForm::connectToHost()
 {
-    std::string adrs = "127.0.0.1";
+    QString adrs = "127.0.0.1";
     if (GetParamsHolder().GetParamBool("ip"))
     {
-        adrs = GetParamsHolder().GetParam<std::string>("ip");
+        adrs = GetParamsHolder().GetParam<QString>("ip");
     }
 
     int port = 1111;
@@ -350,23 +345,19 @@ void MainForm::connectToHost()
         port = GetParamsHolder().GetParam<int>("port");
     }
 
-    std::string login = "Guest";
+    QString login = "Guest";
     if (GetParamsHolder().GetParamBool("login"))
     {
-        login = GetParamsHolder().GetParam<std::string>("login");
+        login = GetParamsHolder().GetParam<QString>("login");
     }
 
-    std::string password = "";
+    QString password = "";
     if (GetParamsHolder().GetParamBool("password"))
     {
-        password = GetParamsHolder().GetParam<std::string>("password");
+        password = GetParamsHolder().GetParam<QString>("password");
     }
 
-    Network2::GetInstance().TryConnect(
-                QString::fromStdString(adrs),
-                port,
-                QString::fromStdString(login),
-                QString::fromStdString(password));
+    Network2::GetInstance().TryConnect(adrs, port, login, password);
 }
 
 bool IsOOCMessage(const QString& text)

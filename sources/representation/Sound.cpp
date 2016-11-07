@@ -14,22 +14,22 @@ SoundManager& GetSoundManager()
     return snd_mngr;
 }
 
-void SoundManager::InitSound(sf::Sound* sound, const std::string& name)
+void SoundManager::InitSound(sf::Sound* sound, const QString& name)
 {
     sound->setBuffer(*GetBuffer(name));
 }
 
-void SoundManager::LoadSound(const std::string& name)
+void SoundManager::LoadSound(const QString& name)
 {
-    SYSTEM_STREAM << "Load sound " << name << std::endl;
+    qDebug() << "Load sound " << name;
     holder_[name] = new sf::SoundBuffer;
-    if (!holder_[name]->loadFromFile("sounds/" + name))
+    if (!holder_[name]->loadFromFile(("sounds/" + name).toStdString()))
     {
-        SYSTEM_STREAM << "Error during load sound " << name << std::endl;
+        qDebug() << "Error during load sound " << name;
     }
 }
 
-const sf::SoundBuffer* SoundManager::GetBuffer(const std::string& name)
+const sf::SoundBuffer* SoundManager::GetBuffer(const QString& name)
 {
     if (!holder_[name])
     {
@@ -38,11 +38,11 @@ const sf::SoundBuffer* SoundManager::GetBuffer(const std::string& name)
     return holder_[name];
 }
 
-void InitSound(sf::Sound* sound, const std::string& name)
+void InitSound(sf::Sound* sound, const QString& name)
 {
     GetSoundManager().InitSound(sound, name);
 }
-void PlaySound(sf::Sound* sound, const std::string& name)
+void PlaySound(sf::Sound* sound, const QString& name)
 {
     if (!sound->getBuffer())
     {
@@ -65,7 +65,7 @@ SoundPlayer::SoundPlayer()
     sounds_.resize(100);
 }
 
-sf::Sound* SoundPlayer::PlaySound(const std::string& name)
+sf::Sound* SoundPlayer::PlaySound(const QString& name)
 {
     quint32 i;
     for (i = 0; i < sounds_.size(); ++i)
@@ -77,7 +77,7 @@ sf::Sound* SoundPlayer::PlaySound(const std::string& name)
     }
     if (i == sounds_.size())
     {
-        SYSTEM_STREAM << "Unable to play sound '" + name + "', the sound limit is reached "
+        qDebug() << "Unable to play sound '" + name + "', the sound limit is reached "
                       << i;
     }
     GetSoundManager().InitSound(&sounds_[i], name);
@@ -87,13 +87,13 @@ sf::Sound* SoundPlayer::PlaySound(const std::string& name)
     return &sounds_[i];
 }
 
-void SoundPlayer::PlayMusic(const std::string &name, float volume)
+void SoundPlayer::PlayMusic(const QString &name, float volume)
 {
     StopMusic();
 
-    if (!music_.openFromFile("music/" + name))
+    if (!music_.openFromFile(("music/" + name).toStdString()))
     {
-        SYSTEM_STREAM << "Cannot open music file " << "music/" << name << std::endl;
+        qDebug() << "Cannot open music file " << "music/" << name;
         return;
     }
     music_.setLoop(true);
@@ -109,7 +109,7 @@ void SoundPlayer::StopMusic()
     }
 }
 
-sf::Sound* PlaySound(const std::string& name)
+sf::Sound* PlaySound(const QString& name)
 {
     sf::Sound* s = GetSoundPlayer().PlaySound(name);
     //s->setPosition(mob_position::x, y, 0);

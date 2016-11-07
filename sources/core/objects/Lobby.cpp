@@ -41,7 +41,7 @@ void Lobby::AddSpawnPoint(IdPtr<SpawnPoint> point)
     spawn_points_.push_back(point);
 }
 
-std::vector<IdPtr<CubeTile>> Lobby::GetTilesFor(const std::string& type)
+std::vector<IdPtr<CubeTile>> Lobby::GetTilesFor(const QString& type)
 {
     std::vector<IdPtr<CubeTile>> retval;
     for (auto it = spawn_points_.begin(); it != spawn_points_.end(); ++it)

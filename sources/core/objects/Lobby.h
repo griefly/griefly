@@ -16,7 +16,7 @@ public:
     virtual void Process() override;
 
     void AddSpawnPoint(IdPtr<SpawnPoint> PosPoint);
-    std::vector<IdPtr<CubeTile>> GetTilesFor(const std::string& type);
+    std::vector<IdPtr<CubeTile>> GetTilesFor(const QString& type);
 
     int KV_SAVEBLE(security_score_);
     int KV_SAVEBLE(janitors_score_);

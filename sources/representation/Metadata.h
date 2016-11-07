@@ -7,6 +7,7 @@
 #include <png.h>
 
 #include <qglobal.h>
+#include <QString>
 
 class ImageMetadata
 {
@@ -62,16 +63,16 @@ public:
     {
         return height_;
     }
-    void Init(const std::string& file_name, int width, int height);
+    void Init(const QString& file_name, int width, int height);
 
-    const SpriteMetadata& GetSpriteMetadata(const std::string& name);
-    bool IsValidState(const std::string& name);
+    const SpriteMetadata& GetSpriteMetadata(const QString& name);
+    bool IsValidState(const QString& name);
 private:
     void InitWithoutMetadata();
 
     bool valid_;
 
-    std::string dmi_version_;
+    QString dmi_version_;
 
     png_uint_32 total_width_;
     png_uint_32 total_height_;
@@ -82,5 +83,5 @@ private:
     bool ParseDescription(std::stringstream& desc);
     void MakeSequence();
 
-    std::map<std::string, SpriteMetadata> metadata_;
+    std::map<QString, SpriteMetadata> metadata_;
 };

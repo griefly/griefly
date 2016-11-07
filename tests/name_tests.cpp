@@ -9,8 +9,8 @@ TEST(Names, Basics)
     Names names(&random);
     for (int i = 0; i < 20; ++i)
     {
-        std::string name = names.GetMaleName();
-        ASSERT_FALSE(name.empty());
+        QString name = names.GetMaleName();
+        ASSERT_FALSE(name.isEmpty());
     }
 }
 

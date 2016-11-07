@@ -4,7 +4,7 @@
 #include "../Game.h"
 #include "representation/Representation.h"
 
-void IMainObject::PlaySoundIfVisible(const std::string& name, quint32 tile_id)
+void IMainObject::PlaySoundIfVisible(const QString& name, quint32 tile_id)
 {
     if (GetGame().GetMap().IsTileVisible(tile_id))
     {
@@ -13,7 +13,7 @@ void IMainObject::PlaySoundIfVisible(const std::string& name, quint32 tile_id)
 }
 
 
-void IMainObject::PlayMusic(const std::string& name, float volume)
+void IMainObject::PlayMusic(const QString& name, float volume)
 {
     GetGame().PlayMusic(name, volume);
 }
@@ -25,7 +25,7 @@ void IMainObject::Delete()
 
 bool IMainObject::Save(std::stringstream& file)
 {
-    file << " " << T_ITEM() << " ";
+    file << " " << T_ITEM().toStdString() << " ";
     file << " " << id_ << " ";
     file << " " << how_often_ << " ";
     return true;
@@ -94,7 +94,7 @@ unsigned int IMainObject::GetRand()
     return GetGame().GetRandom().GetRand();
 }
 
-quint32 IMainObject::CreateImpl(const std::string& type, quint32 owner)
+quint32 IMainObject::CreateImpl(const QString& type, quint32 owner)
 {
     return GetFactory().CreateImpl(type, owner);
 }

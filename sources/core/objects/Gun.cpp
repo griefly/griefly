@@ -19,8 +19,8 @@ bool Gun::UseAmmo()
     return true;
 }
 
-void Gun::ShootImpl(VDir target, const std::string& sound,
-                    const std::string& projectile_type, const std::string& casing_type)
+void Gun::ShootImpl(VDir target, const QString& sound,
+                    const QString& projectile_type, const QString& casing_type)
 {
     IdPtr<CubeTile> tile = GetOwner()->GetOwner();
     IdPtr<IMovable> shooter = GetOwner();
@@ -32,7 +32,7 @@ void Gun::ShootImpl(VDir target, const std::string& sound,
             int y = target.y;
             Dir shooting_direction;
             Dir facing = shooter->GetDir();
-            if(std::abs(y) != std::abs(x))
+            if(qAbs(y) != qAbs(x))
             {
                 shooting_direction = VDirToDir(target);
             }
@@ -76,12 +76,11 @@ void Gun::ShootImpl(VDir target, const std::string& sound,
                 }
             }
             shooter->Rotate(shooting_direction);
-            auto projectile = Create<Projectile>(
-                                projectile_type,
-                                tile->GetNeighbour(shooting_direction));
+            auto new_tile = tile->GetNeighbour(shooting_direction);
+            auto projectile = Create<Projectile>(projectile_type, new_tile);
             projectile->MakeMovementPattern(target, facing);
             PlaySoundIfVisible(sound, tile.Id());
-            if (!casing_type.empty())
+            if (!casing_type.isEmpty())
             {
                 Dir dir = GetRand() % 4;
                 IdPtr<Item> casing = Create<Item>(casing_type, tile.Id());

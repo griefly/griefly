@@ -4,16 +4,18 @@
 
 #include <map>
 
+#include <QString>
+
 #include "Idptr.h"
 
-inline unsigned int hash(const std::string& str)
+inline unsigned int hash(const QString& str)
 {
     unsigned int len = str.length();
     unsigned int hash;
     unsigned int i;
     for(hash = i = 0; i < len; ++i)
     {
-        hash += str[i];
+        hash += str[i].unicode();
         hash += (hash << 10);
         hash ^= (hash >> 6);
     }
@@ -21,6 +23,18 @@ inline unsigned int hash(const std::string& str)
     hash ^= (hash >> 11);
     hash += (hash << 15);
     return hash + 1;
+}
+
+namespace std
+{
+    template<>
+    class hash<QString> {
+    public:
+        size_t operator()(const QString& value) const
+        {
+            return std::hash<std::string>()(value.toStdString());
+        }
+    };
 }
 
 template<class T>

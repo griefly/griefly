@@ -74,7 +74,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         IOnMapObject* bloc = CastTo<IOnMapObject>(loc);
         if (!bloc)
         {
-            qDebug() << QString::fromStdString(it->first);
+            qDebug() << it->first;
             continue;
         }
         bool is_turf = false;
@@ -90,7 +90,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         if (   view_info->GetBaseFrameset().GetSprite() == ""
             || view_info->GetBaseFrameset().GetState() == "")
         {
-            qDebug() << "EMPTY frameset:" << QString::fromStdString(it->first);
+            qDebug() << "EMPTY frameset:" << it->first;
             continue;
         }
 
@@ -101,7 +101,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
 
         if (view.GetBaseFrameset().GetMetadata() == nullptr)
         {
-            qDebug() << "EMPTY metadata:" << QString::fromStdString(it->first);
+            qDebug() << "EMPTY metadata:" << it->first;
             continue;
         }
 
@@ -125,7 +125,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         }
 
         QListWidgetItem* new_item
-                = new QListWidgetItem(QIcon(images[0]), bloc->T_ITEM().c_str());
+                = new QListWidgetItem(QIcon(images[0]), bloc->T_ITEM());
 
         if (!is_turf)
         {
@@ -162,7 +162,7 @@ void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, i
     ui->listWidgetTile->clear();
     for (auto it = entries.begin(); it != entries.end(); ++it)
     {
-        ui->listWidgetTile->addItem(it->item_type.c_str());
+        ui->listWidgetTile->addItem(it->item_type);
     }
 
     ui->listWidgetVariables->clear();
@@ -177,7 +177,7 @@ void MapEditorForm::on_createItem_clicked()
     {
         return;
     }
-    std::string type = types_[current_row];
+    QString type = types_[current_row];
     map_editor_->AddItem(type);
 }
 
@@ -200,7 +200,7 @@ void MapEditorForm::on_createTurf_clicked()
     {
         return;
     }
-    std::string type = turf_types_[current_row];
+    QString type = turf_types_[current_row];
     map_editor_->SetTurf(type);
 }
 
@@ -249,7 +249,7 @@ void MapEditorForm::on_saveMap_clicked()
     }
 
     file_names = dialog.selectedFiles();
-    map_editor_->SaveMapgen(file_names[0].toStdString());
+    map_editor_->SaveMapgen(file_names[0]);
 }
 
 void MapEditorForm::on_loadMap_clicked()
@@ -264,7 +264,7 @@ void MapEditorForm::on_loadMap_clicked()
     }
 
     file_names = dialog.selectedFiles();
-    map_editor_->LoadMapgen(file_names[0].toStdString());
+    map_editor_->LoadMapgen(file_names[0]);
 }
 
 void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
@@ -276,11 +276,11 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     }
     QListWidgetItem* item = ui->listWidgetTile->selectedItems().first();
 
-    auto& variables = get_setters_for_types()[item->text().toStdString()];
+    auto& variables = get_setters_for_types()[item->text()];
 
     for (auto it = variables.begin(); it != variables.end(); ++it)
     {
-        ui->listWidgetVariables->addItem(it->first.c_str());
+        ui->listWidgetVariables->addItem(it->first);
     }
 
     MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
@@ -294,7 +294,7 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 {
     MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
 
-    std::string& variable_value = ee.variables[item->text().toStdString()];
+    QString& variable_value = ee.variables[item->text().toStdString()];
 
     bool ok = false;
 
@@ -328,7 +328,7 @@ void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
 {
     for (int i = 0; i < ui->listWidgetVariables->count(); ++i)
     {
-        if (ee.variables[ui->listWidgetVariables->item(i)->text().toStdString()].size())
+        if (ee.variables[ui->listWidgetVariables->item(i)->text()].size())
         {
             ui->listWidgetVariables->item(i)->setBackgroundColor(QColor(200, 150, 170));
         }
@@ -347,20 +347,20 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         return;
     }
 
-    std::string& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
 
-    ui->lineEditRaw->setText(variable_value.c_str());
+    ui->lineEditRaw->setText(variable_value);
 
     std::stringstream ss;
-    ss << variable_value;
+    ss << variable_value.toStdString();
 
-    std::string parsed_value;
+    QString parsed_value;
     if (WrapReadMessage(ss, parsed_value).fail())
     {
         parsed_value = "PARSING_ERROR";
     }
 
-    ui->lineEditAsString->setText(parsed_value.c_str());
+    ui->lineEditAsString->setText(parsed_value);
 }
 
 void MapEditorForm::on_lineEditRaw_returnPressed()
@@ -378,9 +378,9 @@ void MapEditorForm::on_lineEditRaw_returnPressed()
 
 
 
-    std::string& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
 
-    variable_value = ui->lineEditRaw->text().toStdString();
+    variable_value = ui->lineEditRaw->text();
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
@@ -401,13 +401,13 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
         return;
     }
 
-    std::string& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text().toStdString()];
+    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
 
     std::stringstream ss;
-    std::string loc = ui->lineEditAsString->text().toStdString();
+    QString loc = ui->lineEditAsString->text();
     WrapWriteMessage(ss, loc);
 
-    variable_value = ss.str();
+    variable_value = QString::fromStdString(ss.str());
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);

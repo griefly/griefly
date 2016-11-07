@@ -11,10 +11,10 @@ class SpriteHolder
 {
 public:
     SpriteHolder();
-    GLSprite* GetSprite(const std::string& type);
-    void LoadImage(const std::string& image);
+    GLSprite* GetSprite(const QString& type);
+    void LoadImage(const QString& image);
 private:
-    std::map<std::string, GLSprite*> sprites;
+    std::map<QString, GLSprite*> sprites;
 };
 
 SpriteHolder& GetSpriter();

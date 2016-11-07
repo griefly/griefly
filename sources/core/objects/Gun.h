@@ -21,7 +21,7 @@ public:
 protected:
     int KV_SAVEBLE(max_ammunition_);
     int KV_SAVEBLE(ammunition_);
-    void ShootImpl(VDir target, const std::string& sound,
-                   const std::string& projectile_type, const std::string& casing_type);
+    void ShootImpl(VDir target, const QString& sound,
+                   const QString& projectile_type, const QString& casing_type);
 };
 ADD_TO_TYPELIST(Gun);

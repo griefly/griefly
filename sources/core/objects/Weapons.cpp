@@ -14,7 +14,7 @@ LaserGun::LaserGun(quint32 id) : Gun(id)
 void LaserGun::Shoot(VDir target)
 {
     unsigned int value = GetRand() % 2;
-    std::string snd;
+    QString snd;
     if (value == 0)
     {
         snd = "laser3.ogg";
@@ -37,7 +37,7 @@ Revolver::Revolver(quint32 id) : Gun(id)
 
 void Revolver::Shoot(VDir target)
 {
-    std::string snd;
+    QString snd;
     snd = "Gunshot.ogg";
     ShootImpl(target, snd, Bullet::T_ITEM_S(), BulletCasing::T_ITEM_S());
 }

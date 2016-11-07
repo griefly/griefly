@@ -44,10 +44,10 @@ public:
     MOCK_METHOD0(Hash, unsigned int());
     MOCK_METHOD1(Save, void(std::stringstream& str));
     MOCK_METHOD2(Load, void(std::stringstream& str, quint32 real_this_mob));
-    MOCK_METHOD1(LoadFromMapGen, void(const std::string& name));
+    MOCK_METHOD1(LoadFromMapGen, void(const QString& name));
     MOCK_METHOD0(BeginWorldCreation, void());
     MOCK_METHOD0(FinishWorldCreation, void());
-    MOCK_METHOD2(CreateImpl, quint32(const std::string&, quint32));
+    MOCK_METHOD2(CreateImpl, quint32(const QString&, quint32));
     MOCK_METHOD1(DeleteLater, void(quint32 id));
     MOCK_METHOD0(ProcessDeletion, void());
     MOCK_METHOD1(AddProcessingItem, void(quint32 item));
@@ -59,13 +59,13 @@ public:
 
 class MockIChat : public IChat {
 public:
-    MOCK_METHOD2(PostTextFor, void(const std::string& str, IdPtr<IOnMapBase> owner));
-    MOCK_METHOD1(PostText, void(const std::string& str));
-    MOCK_METHOD2(PostOOCText, void(const std::string& who, const std::string& str));
-    MOCK_METHOD2(PostSimpleText, void(const std::string& str, quint32 tile_id));
-    MOCK_METHOD4(PostDamage, void(const std::string& by, const std::string& who,
-                                const std::string& object, quint32 tile_id));
-    MOCK_METHOD3(PostWords, void(const std::string& who, const std::string& text, quint32 tile_id));
+    MOCK_METHOD2(PostTextFor, void(const QString& str, IdPtr<IOnMapBase> owner));
+    MOCK_METHOD1(PostText, void(const QString& str));
+    MOCK_METHOD2(PostOOCText, void(const QString& who, const QString& str));
+    MOCK_METHOD2(PostSimpleText, void(const QString& str, quint32 tile_id));
+    MOCK_METHOD4(PostDamage, void(const QString& by, const QString& who,
+                                const QString& object, quint32 tile_id));
+    MOCK_METHOD3(PostWords, void(const QString& who, const QString& text, quint32 tile_id));
 };
 
 class MockIGame : public IGame
@@ -83,7 +83,7 @@ public:
     MOCK_METHOD1(ChangeMob, void(IdPtr<IMob> new_mob));
     MOCK_METHOD0(GetMob, IdPtr<IMob>());
     MOCK_METHOD1(SetMob, void(quint32 new_mob));
-    MOCK_METHOD2(PlayMusic, void(const std::string& name, float volume));
-    MOCK_METHOD1(AddSound, void(const std::string& name));
+    MOCK_METHOD2(PlayMusic, void(const QString& name, float volume));
+    MOCK_METHOD1(AddSound, void(const QString& name));
 };
 

@@ -39,34 +39,34 @@ public:
 
         FramesetInfo();
 
-        void SetSprite(const std::string& name);
-        void SetState(const std::string& state);
+        void SetSprite(const QString& name);
+        void SetState(const QString& state);
         void SetAngle(int angle);
         void SetShift(int shift_x, int shift_y);
 
-        const std::string& GetState() const { return state_; }
-        const std::string& GetSprite() const { return sprite_name_; }
+        const QString& GetState() const { return state_; }
+        const QString& GetSprite() const { return sprite_name_; }
         int GetAngle() const { return angle_; }
         int GetShiftX() const { return shift_x_; }
         int GetShiftY() const { return shift_y_; }
     private:
-        std::string sprite_name_;
+        QString sprite_name_;
         int angle_;
-        std::string state_;
+        QString state_;
         int shift_x_;
         int shift_y_;
     };
 
     ViewInfo();
 
-    FramesetInfo& AddOverlay(const std::string& sprite, const std::string& state);
-    FramesetInfo& AddUnderlay(const std::string& sprite, const std::string& state);
+    FramesetInfo& AddOverlay(const QString& sprite, const QString& state);
+    FramesetInfo& AddUnderlay(const QString& sprite, const QString& state);
 
     void RemoveOverlays();
     void RemoveUnderlays();
 
-    void SetSprite(const std::string& sprite) { base_frameset_.SetSprite(sprite); }
-    void SetState(const std::string& sprite) { base_frameset_.SetState(sprite); }
+    void SetSprite(const QString& sprite) { base_frameset_.SetSprite(sprite); }
+    void SetState(const QString& sprite) { base_frameset_.SetState(sprite); }
     void SetAngle(int angle);
 
     const FramesetInfo& GetBaseFrameset() const { return base_frameset_; }

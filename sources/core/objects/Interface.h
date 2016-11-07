@@ -8,7 +8,7 @@
 class InterfaceBase
 {
 public:
-    virtual void HandleClick(const std::string& place) = 0;
+    virtual void HandleClick(const QString& place) = 0;
     virtual void Draw() = 0;
     virtual unsigned int hash() const = 0;
     virtual ~InterfaceBase() {}
@@ -16,17 +16,17 @@ public:
 
 namespace HumanInterfacePlaces
 {
-    const std::string UNCLICKABLE = "UNCLICKABLE";
-    const std::string RIGHT_HAND = "INT_RHAND";
-    const std::string LEFT_HAND = "INT_LHAND";
-    const std::string HEAD = "HEAD";
-    const std::string SUIT = "SUIT";
-    const std::string UNIFORM = "UNIFORM";
-    const std::string FEET = "FEET";
-    const std::string DROP = "DROP";
-    const std::string STOP_PULL = "STOP_PULL";
-    const std::string SWAP = "SWAP";
-    const std::string LAY = "SWITCH_LAY";
+    const QString UNCLICKABLE = "UNCLICKABLE";
+    const QString RIGHT_HAND = "INT_RHAND";
+    const QString LEFT_HAND = "INT_LHAND";
+    const QString HEAD = "HEAD";
+    const QString SUIT = "SUIT";
+    const QString UNIFORM = "UNIFORM";
+    const QString FEET = "FEET";
+    const QString DROP = "DROP";
+    const QString STOP_PULL = "STOP_PULL";
+    const QString SWAP = "SWAP";
+    const QString LAY = "SWITCH_LAY";
 }
 
 class Human;
@@ -39,7 +39,7 @@ public:
         owner_ = owner;
     }
 
-    virtual void HandleClick(const std::string& place) override;
+    virtual void HandleClick(const QString& place) override;
     virtual void Draw() override;
     void InitSlots();
     virtual ~HumanInterface();

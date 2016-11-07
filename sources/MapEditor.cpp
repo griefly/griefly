@@ -183,7 +183,7 @@ void MapEditor::PasteFromAreaBuffer()
                 second_selection_x_, second_selection_y_);
 }
 
-void MapEditor::SaveMapgen(const std::string &name)
+void MapEditor::SaveMapgen(const QString& name)
 {
     int size_x = editor_map_.size();
     int size_y = editor_map_[0].size();
@@ -201,7 +201,7 @@ void MapEditor::SaveMapgen(const std::string &name)
             {
                 if (editor_map_[x][y][z].turf.pixmap_item)
                 {
-                    ss << editor_map_[x][y][z].turf.item_type << " ";
+                    ss << editor_map_[x][y][z].turf.item_type.toStdString() << " ";
                     ss << x << " ";
                     ss << y << " ";
                     ss << z << " ";
@@ -211,7 +211,7 @@ void MapEditor::SaveMapgen(const std::string &name)
                 auto& il = editor_map_[x][y][z].items;
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
-                    ss << it->item_type << " ";
+                    ss << it->item_type.toStdString() << " ";
                     ss << x << " ";
                     ss << y << " ";
                     ss << z << " ";
@@ -221,7 +221,7 @@ void MapEditor::SaveMapgen(const std::string &name)
             }
 
     std::fstream sfile;
-    sfile.open(name, std::ios_base::out | std::ios_base::trunc);
+    sfile.open(name.toStdString(), std::ios_base::out | std::ios_base::trunc);
     if(sfile.fail())
     {
         return;
@@ -229,13 +229,13 @@ void MapEditor::SaveMapgen(const std::string &name)
     sfile << ss.str();
 }
 
-void MapEditor::LoadMapgen(const std::string &name)
+void MapEditor::LoadMapgen(const QString& name)
 {
     std::fstream sfile;
-    sfile.open(name, std::ios_base::in);
+    sfile.open(name.toStdString(), std::ios_base::in);
     if(sfile.fail())
     {
-        SYSTEM_STREAM << "Error open " << name << std::endl;
+        qDebug() << "Error open " << name;
         return;
     }
 
@@ -262,9 +262,12 @@ void MapEditor::LoadMapgen(const std::string &name)
 
     while (ss)
     {
-        std::string t_item;
+        QString t_item;
         quint32 x, y, z;
-        ss >> t_item;
+
+        std::string local;
+        ss >> local;
+        t_item = QString::fromStdString(local);
         if (!ss)
         {
             continue;
@@ -348,17 +351,17 @@ void MapEditor::Resize(int posx, int posy, int posz)
                 second_selection_x_, second_selection_y_);
 }
 
-void MapEditor::AddItemType(const std::string &item_type, QVector<QPixmap> image)
+void MapEditor::AddItemType(const QString &item_type, QVector<QPixmap> image)
 {
     image_holder_[item_type] = image;
 }
 
-void MapEditor::AddTurfType(const std::string &item_type)
+void MapEditor::AddTurfType(const QString &item_type)
 {
     turf_types_.insert(item_type);
 }
 
-void MapEditor::AddItem(const std::string &item_type)
+void MapEditor::AddItem(const QString &item_type)
 {
     for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
     {
@@ -373,16 +376,12 @@ void MapEditor::AddItem(const std::string &item_type)
                 second_selection_x_, second_selection_y_);
 }
 
-void MapEditor::UpdateDirs(MapEditor::EditorEntry *ee)
+void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
 {
     if (ee && ee->variables["dMove"].size())
     {
-        std::stringstream conv;
-        conv << ee->variables["dMove"];
-        int dMove;
-        conv >> dMove;
-
-        int byond_dir = helpers::dir_to_byond(dMove);
+        int dir = ee->variables["dMove"].toInt();
+        int byond_dir = helpers::dir_to_byond(dir);
 
         if (byond_dir < image_holder_[ee->item_type].size())
         {
@@ -417,7 +416,7 @@ void MapEditor::RemoveItems(int posx, int posy, int posz)
                 second_selection_x_, second_selection_y_);
 }
 
-MapEditor::EditorEntry& MapEditor::AddItem(const std::string &item_type, int posx, int posy, int posz)
+MapEditor::EditorEntry& MapEditor::AddItem(const QString &item_type, int posx, int posy, int posz)
 {
     EditorEntry new_entry;
     new_entry.item_type = item_type;
@@ -429,7 +428,7 @@ MapEditor::EditorEntry& MapEditor::AddItem(const std::string &item_type, int pos
     return editor_map_[posx][posy][posz].items.back();
 }
 
-void MapEditor::SetTurf(const std::string &item_type)
+void MapEditor::SetTurf(const QString &item_type)
 {
     for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
     {
@@ -444,7 +443,7 @@ void MapEditor::SetTurf(const std::string &item_type)
                 second_selection_x_, second_selection_y_);
 }
 
-MapEditor::EditorEntry& MapEditor::SetTurf(const std::string &item_type, int posx, int posy, int posz)
+MapEditor::EditorEntry& MapEditor::SetTurf(const QString &item_type, int posx, int posy, int posz)
 {
     if (editor_map_[posx][posy][posz].turf.pixmap_item != nullptr)
     {

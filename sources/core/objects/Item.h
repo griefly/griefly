@@ -8,7 +8,7 @@ public:
     DECLARE_SAVED(Item, IMovable);
     DECLARE_GET_TYPE_ITEM(Item);
     Item(quint32 id);
-    std::string KV_SAVEBLE(type);
+    QString KV_SAVEBLE(type);
     int KV_SAVEBLE(damage);
 };
 ADD_TO_TYPELIST(Item);

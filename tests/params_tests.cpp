@@ -29,15 +29,15 @@ TEST(Params, Basics)
     ASSERT_TRUE(params.GetParamBool("var3"));
     ASSERT_FALSE(params.GetParamBool("do_not_exist"));
 
-    ASSERT_EQ(params.GetParam<std::string>("-var"), "");
+    ASSERT_EQ(params.GetParam<QString>("-var"), "");
     ASSERT_EQ(params.GetParam<int>("-var"), 0);
-    ASSERT_EQ(params.GetParam<std::string>("var2"), "text");
-    ASSERT_EQ(params.GetParam<std::string>("var3"), "3");
+    ASSERT_EQ(params.GetParam<QString>("var2"), "text");
+    ASSERT_EQ(params.GetParam<QString>("var3"), "3");
     ASSERT_EQ(params.GetParam<int>("var3"), 3);
 
     {
         CaptureStderr();
-        ASSERT_EQ(params.GetParam<std::string>("donot"), "");
+        ASSERT_EQ(params.GetParam<QString>("donot"), "");
         std::string output = GetCapturedStderr();
         ASSERT_THAT(output, HasSubstr("Cannot find param"));
         ASSERT_THAT(output, HasSubstr("donot"));

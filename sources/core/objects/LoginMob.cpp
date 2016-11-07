@@ -18,9 +18,7 @@ const char* LOGIN_CLICK = "login_click";
 
 LoginMob::LoginMob(quint32 id) : IMob(id)
 {
-    std::stringstream conv;
-    conv << "LobbyPlayer" << id;
-    name = conv.str();
+    name = QString("LobbyPlayer%1").arg(id);
 
     interface_.Init();
 }
@@ -35,7 +33,7 @@ void LoginMob::DeinitGUI()
 void LoginMob::InitGUI()
 {
     GetGame().GetTexts()["LoginScreenCount"].SetUpdater
-    ([this](std::string* str)
+    ([this](QString* str)
     {
         if (GetLobby().GetSecondUntilStart() < 0)
         {
@@ -44,9 +42,7 @@ void LoginMob::InitGUI()
         }
         else
         {
-            std::stringstream conv;
-            conv << GetLobby().GetSecondUntilStart();
-            *str = conv.str();
+            *str = QString::number(GetLobby().GetSecondUntilStart());
         }
         *str = "Until start: " + *str;
     });
@@ -60,11 +56,11 @@ void LoginMob::GenerateInterfaceForFrame()
     interface_.Draw();
 }
 
-const std::string SECURITY_TEXT =
+const QString SECURITY_TEXT =
         "A space anomaly has moved a piece of your Space Station into an unknown part of space."
         " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all janitors."
         " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
-const std::string JANITOR_TEXT =
+const QString JANITOR_TEXT =
         "A space anomaly has moved a piece of your Space Station into an unknown part of space."
         " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all security."
         " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
@@ -86,7 +82,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
         {
             IdPtr<Human> human;
             std::vector<IdPtr<CubeTile>> tiles;
-            std::string text;
+            QString text;
             if (net_id % 2)
             {
                 qDebug() << "Creating security...";
@@ -125,7 +121,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
     }
     if (msg.type == MessageType::MESSAGE)
     {
-        /*std::string text = obj["text"].toString().toStdString();
+        /*QString text = obj["text"].toString().toStdString();
         if (Chat::IsOOCMessage(text))
         {
             GetChat().PostOOCText(name, text.substr(3));
