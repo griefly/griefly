@@ -31,7 +31,7 @@ inline Typeto* CastTo(TypeObjectFrom* ptr)
     }
     if (FastIsType<Typeto>(ptr->RT_ITEM()))
     {
-        return static_cast<Typeto*>(ptr);
+        return reinterpret_cast<Typeto*>(ptr);
     }
     return nullptr;
 }
