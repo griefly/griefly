@@ -1,40 +1,36 @@
-#include <QtDebug>
+#include "Log.h"
+
+#include <QDateTime>
+#include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QTextStream>
 #include <QUuid>
-#include <QDateTime> 
 
-#include "Log.h"
 #include "KVAbort.h"
 
 QFile logs;
 QTextStream logstream;
 
-void InitializeLog()
-{
-    QString datetime = QDateTime::currentDateTime().toString();
-    QString uuid = QUuid::createUuid().toString();
-    QString filename = QString("debug_reports/log-%1-%2.txt").arg(datetime).arg(uuid);
-    logs.setFileName(filename);
-    if (logs.open(QIODevice::WriteOnly | QIODevice::Append))
-    {
-        qDebug() << logs.fileName() << " cannot be opened.";
-        KvAbort();
-    }
-    logstream.setDevice(&logs);
-}
+const char* const DATETIME_FORMAT = "yyyy.MM.dd.HH.mm.ss.zzz";
 
-void KvMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &message)
+void KvMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& message)
 {
-    QString datetime = QDateTime::currentDateTime().toString();
+    QString datetime = QDateTime::currentDateTimeUtc().toString(DATETIME_FORMAT);
     QString information;
-    if(!context.file)
+    if (!context.file)
     {
-        information = QString("%1: %2").arg(datetime, message);
+        information = QString("%1: %2").arg(datetime).arg(message);
     }
     else
     {
-        information = QString("%1: %2 %3 %4 %5").arg(datetime, context.file, QString(context.line), context.function, message);
+        information
+            = QString("%1 [%2 %3 %4 %5]:")
+                .arg(datetime)
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(message);
     }
     switch (type)
     {
@@ -58,7 +54,38 @@ void KvMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
     }
 }
 void InstallMessageHandler()
-{   
+{
     qInstallMessageHandler(KvMessageHandler);
+}
+
+void InitializeLog()
+{
+    const QString LOG_DIRECTORY = "debug_reports";
+
+    if (!QDir(LOG_DIRECTORY).exists())
+    {
+        if (!QDir().mkdir(LOG_DIRECTORY))
+        {
+            qDebug() << "Unable to create directory:" << LOG_DIRECTORY;
+            KvAbort();
+        }
+    }
+
+    QString datetime = QDateTime::currentDateTimeUtc().toString(DATETIME_FORMAT);
+    QString uuid = QUuid::createUuid().toString();
+    QString filename
+        = QString("%1/log-%2-%3.txt")
+           .arg(LOG_DIRECTORY)
+           .arg(datetime)
+           .arg(uuid);
+    logs.setFileName(filename);
+    if (!logs.open(QIODevice::WriteOnly))
+    {
+        qDebug() << logs.fileName() << " cannot be opened.";
+        KvAbort();
+    }
+    logstream.setDevice(&logs);
+
+    InstallMessageHandler();
 }
 

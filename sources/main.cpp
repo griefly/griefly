@@ -50,10 +50,9 @@ int main(int argc, char *argv[])
     // LCOV_EXCL_START
     app.setStyle(QStyleFactory::create("fusion"));
 
-    if(GetParamsHolder().GetParamBool("-output_redirect"))
+    if (GetParamsHolder().GetParamBool("-output_redirect"))
     {
         InitializeLog();
-        InstallMessageHandler();
     }
     if (!GetParamsHolder().GetParamBool("-editor"))
     {
