@@ -293,9 +293,9 @@ bool SocketHandler::HandleHeader()
         return false;
     }
     message_size_ = qFromBigEndian<qint32>(
-        (const uchar*)&(buffer_.constData()[buffer_pos_]));
+        reinterpret_cast<const uchar*>(&(buffer_.constData()[buffer_pos_])));
     message_type_ = qFromBigEndian<qint32>(
-        (const uchar*)&(buffer_.constData()[buffer_pos_ + 4]));
+        reinterpret_cast<const uchar*>(&(buffer_.constData()[buffer_pos_ + 4])));
 
     buffer_pos_ += 8;
     reading_state_ = ReadingState::BODY;
