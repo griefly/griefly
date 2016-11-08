@@ -380,13 +380,13 @@ void SocketHandler::sendMessage(Message2 message)
 
     QByteArray data;
 
-    uchar temp[4];
+    char temp[4];
 
     qToBigEndian(json.size(), temp);
-    data.append((char*)temp, 4);
+    data.append(temp, 4);
 
     qToBigEndian(message.type, temp);
-    data.append((char*)temp, 4);
+    data.append(temp, 4);
 
     data.append(json);
 
