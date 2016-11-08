@@ -55,7 +55,7 @@ void KvMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
     case QtFatalMsg:
         logstream << information << endl;
         KvAbort();
-	}
+    }
 }
 void InstallMessageHandler()
 {   
