@@ -1,35 +1,43 @@
-#include "Log.h"
 #include <QtDebug>
 #include <QFile>
 #include <QTextStream>
 #include <QUuid>
-#include "KVAbort.h"
 #include <QDateTime> 
+
+#include "Log.h"
+#include "KVAbort.h"
 
 QFile logs;
 QTextStream logstream;
 
-void LogInitializer()
+void InitializeLog()
 {
+    QString datetime = QDateTime::currentDateTime().toString();
+    QString uuid = QUuid::createUuid().toString();
+    QString filename = QString("debug_reports/log-%1-%2.txt").arg(datetime).arg(uuid);
+    logs.setFileName(filename);
+    if (logs.open(QIODevice::WriteOnly | QIODevice::Append))
+    {
+        qDebug() << logs.fileName() << " cannot be opened.";
+        KvAbort();
+    }
     logstream.setDevice(&logs);
-    if(!logstream.device())
-    {
-        qDebug() << "No device was assigned.";
-        KvAbort();
-    }
-    logs.setFileName("/debug_reports/log-"+ QDateTime::currentDateTime().toString() + "-" + QUuid::createUuid().toString() + ".txt");
-    if(logs.open(QIODevice::WriteOnly | QIODevice::Append))
-    {
-        qDebug() << "File cannot be opened.";
-        KvAbort();
-    }
 }
 
 void KvMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &message)
 {
     QString datetime = QDateTime::currentDateTime().toString();
-    QString information = !context.file ? QString("%1: %2").arg(datetime, message) : QString("%1: %2 %3 %4 %5").arg(datetime, context.file, QString(context.line), context.function, message);
-    switch (type) {
+    QString information;
+    if(!context.file)
+    {
+        information = QString("%1: %2").arg(datetime, message);
+    }
+    else
+    {
+        information = QString("%1: %2 %3 %4 %5").arg(datetime, context.file, QString(context.line), context.function, message);
+    }
+    switch (type)
+    {
     case QtDebugMsg:
         logstream << information << endl;
         break;
