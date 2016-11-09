@@ -1,14 +1,15 @@
 #pragma once
 
-#include "Structure.h"
+#include "Breakable.h"
 
-class Grille: public Structure
+class Grille: public Breakable
 {
 public:
-    DECLARE_SAVED(Grille, Structure);
+    DECLARE_SAVED(Grille, Breakable);
     DECLARE_GET_TYPE_ITEM(Grille);
     Grille(quint32 id);
     virtual void AttackBy(IdPtr<Item> item) override;
+    virtual void Break() override;
 private:
     bool KV_SAVEBLE(cutted_);
 };

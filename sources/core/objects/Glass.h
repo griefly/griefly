@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Structure.h"
+#include "Breakable.h"
 
-class FlatGlass: public Structure
+class FlatGlass: public Breakable
 {
 public:
-    DECLARE_SAVED(FlatGlass, Structure);
+    DECLARE_SAVED(FlatGlass, Breakable);
     DECLARE_GET_TYPE_ITEM(FlatGlass);
     FlatGlass(quint32 id);
 
@@ -13,6 +13,7 @@ public:
 
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual bool Rotate(Dir dir) override;
+    virtual void Break() override;
 };
 ADD_TO_TYPELIST(FlatGlass);
 

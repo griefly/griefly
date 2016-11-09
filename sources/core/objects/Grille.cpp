@@ -8,7 +8,7 @@
 #include "../Game.h"
 #include "Materials.h"
 
-Grille::Grille(quint32 id) : Structure(id)
+Grille::Grille(quint32 id) : Breakable(id)
 {
     transparent = true;
     SetPassable(D_ALL, Passable::AIR);
@@ -37,15 +37,20 @@ void Grille::AttackBy(IdPtr<Item> item)
             SetPassable(D_ALL, Passable::FULL);
             cutted_ = true;
             Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+            return;
         }
         else
         {
             Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
             Delete();
+            return;
         }
     }
-    else
-    {
-        Structure::AttackBy(item);
-    }
+    Breakable::AttackBy(item);
+}
+
+void Grille::Break()
+{
+    Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+    Delete();
 }

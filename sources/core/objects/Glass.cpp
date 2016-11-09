@@ -3,8 +3,10 @@
 #include "../SyncRandom.h"
 #include "../Helpers.h"
 #include "Mob.h"
+#include "Breakable.h"
+#include "Shard.h"
 
-FlatGlass::FlatGlass(quint32 id) : Structure(id)
+FlatGlass::FlatGlass(quint32 id) : Breakable(id)
 {
     transparent = true;
 
@@ -33,22 +35,21 @@ void FlatGlass::AfterWorldCreation()
 
 void FlatGlass::Bump(IdPtr<IMovable> item)
 {
-    IdPtr<IMob> m;
-    m = item;
-    if (!m)
-        return;
-
-    if (item->GetDir() != GetDir())
+    if (IdPtr<IMob> mob = item)
     {
-        if (!CanPass(owner->GetPassable(D_ALL), passable_level))
-            return;
-        if (anchored)
-            return;
+        if (item->GetDir() != GetDir())
+        {
+            if (!CanPass(owner->GetPassable(D_ALL), passable_level))
+                return;
+            if (anchored)
+                return;
 
-        Rotate(item->GetDir());
+            Rotate(item->GetDir());
+        }
+        IMovable::Bump(item);
         return;
     }
-    IMovable::Bump(item);
+    Breakable::Bump(item);
 }
 
 bool FlatGlass::Rotate(Dir dir)
@@ -57,6 +58,12 @@ bool FlatGlass::Rotate(Dir dir)
     Structure::Rotate(dir);
     SetPassable(GetDir(), Passable::EMPTY);
     return true;
+}
+
+void FlatGlass::Break()
+{
+    Create<Item>(Shard::T_ITEM_S(), GetOwner());
+    Delete();
 }
 
 ReinforcedFlatGlass::ReinforcedFlatGlass(quint32 id) : FlatGlass(id)
