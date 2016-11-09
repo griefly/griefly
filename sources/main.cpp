@@ -19,6 +19,8 @@
 #include "core/FastIsType.h"
 #include "AutogenMetadata.h"
 
+#include "Log.h"
+
 int main(int argc, char *argv[])
 {
     // LCOV_EXCL_START
@@ -48,6 +50,10 @@ int main(int argc, char *argv[])
     // LCOV_EXCL_START
     app.setStyle(QStyleFactory::create("fusion"));
 
+    if (GetParamsHolder().GetParamBool("-output_redirect"))
+    {
+        InitializeLog();
+    }
     if (!GetParamsHolder().GetParamBool("-editor"))
     {
         MainForm main_form;
