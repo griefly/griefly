@@ -13,7 +13,8 @@ public:
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void Break() {};
     virtual void PlayOnHitSound() {};
-    void AddHitPoints(int number);
+    void SetHitPoints(int number);
+    void Hit(int damage);
 private:
     int KV_SAVEBLE(hit_points_);
 };

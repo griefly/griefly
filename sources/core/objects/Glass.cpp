@@ -12,6 +12,7 @@ FlatGlass::FlatGlass(quint32 id) : Breakable(id)
 
     tickSpeed = 5;
     pixSpeed = 1;
+    SetHitPoints(20);
 
     v_level = 9;
 
@@ -76,4 +77,5 @@ ReinforcedFlatGlass::ReinforcedFlatGlass(quint32 id) : FlatGlass(id)
 {
     SetState("rwindow");
     name = "Reinforced window";
+    SetHitPoints(100);
 }

@@ -15,6 +15,7 @@ Grille::Grille(quint32 id) : Breakable(id)
 
     tickSpeed = 5;
     pixSpeed = 1;
+    SetHitPoints(15);
 
     v_level = 8;
 
@@ -37,14 +38,18 @@ void Grille::AttackBy(IdPtr<Item> item)
             SetPassable(D_ALL, Passable::FULL);
             cutted_ = true;
             Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
-            return;
         }
         else
         {
             Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
             Delete();
-            return;
         }
+        return;
+    }
+    if (!item.IsValid())
+    {
+        Hit(2);
+        return;
     }
     Breakable::AttackBy(item);
 }
@@ -57,7 +62,7 @@ void Grille::Break()
         SetPassable(D_ALL, Passable::FULL);
         cutted_ = true;
         Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
-        AddHitPoints(1);
+        SetHitPoints(7);
     }
     else
     {

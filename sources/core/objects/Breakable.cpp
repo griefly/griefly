@@ -4,7 +4,7 @@
 
 Breakable::Breakable(quint32 id) : Structure(id)
 {
-   hit_points_ = 1;
+    hit_points_ = 1;
 }
 
 void Breakable::AttackBy(IdPtr<Item> item)
@@ -18,12 +18,7 @@ void Breakable::AttackBy(IdPtr<Item> item)
         Structure::AttackBy(item);
         return;
     }
-    hit_points_ -= item->damage;
-    PlayOnHitSound();
-    if (hit_points_ <= 0)
-    {
-        Break();
-    }
+    Hit(item->damage);
 }
 
 void Breakable::Bump(IdPtr<IMovable> item)
@@ -41,7 +36,17 @@ void Breakable::Bump(IdPtr<IMovable> item)
     IMovable::Bump(item);
 }
 
-void Breakable::AddHitPoints(int number)
+void Breakable::SetHitPoints(int number)
 {
-    hit_points_ += number;
+    hit_points_ = number;
+}
+
+void Breakable::Hit(int damage)
+{
+    hit_points_ -= damage;
+    PlayOnHitSound();
+    if (hit_points_ <= 0)
+    {
+        Break();
+    }
 }
