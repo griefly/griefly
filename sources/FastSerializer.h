@@ -9,6 +9,10 @@
 
 class FastSerializer
 {
+    template<class T>
+    friend FastSerializer& operator<<(
+        FastSerializer& serializer,
+        const T& value);
 public:
     static const int DEFAULT_SIZE = 32 * 1024 * 1024;
     FastSerializer();
@@ -87,6 +91,13 @@ private:
     std::vector<char> data_;
     quint32 index_;
 };
+
+template<class T>
+inline FastSerializer& operator<<(FastSerializer& serializer, const T& value)
+{
+    serializer.Write(value);
+    return serializer;
+}
 
 class FastDeserializer
 {
