@@ -80,7 +80,7 @@ OrangeBoots::OrangeBoots(quint32 id) : Cloth(id)
 ClownBoots::ClownBoots(quint32 id) : Cloth(id)
 {
     SetSprite("icons/shoes.dmi");
-    SetState("orange");
+    SetState("clown");
 
     type = Slots::FEET;
 
