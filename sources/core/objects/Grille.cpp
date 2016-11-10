@@ -51,6 +51,22 @@ void Grille::AttackBy(IdPtr<Item> item)
 
 void Grille::Break()
 {
-    Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
-    Delete();
+    if (!cutted_)
+    {
+        SetState("brokengrille");
+        SetPassable(D_ALL, Passable::FULL);
+        cutted_ = true;
+        Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+        AddHitPoints(1);
+    }
+    else
+    {
+        Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+        Delete();
+    }
+}
+
+void Grille::PlayOnHitSound()
+{
+    PlaySoundIfVisible("grillehit.ogg", GetOwner().Id());
 }

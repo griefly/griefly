@@ -12,7 +12,9 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void Break() {};
+    virtual void PlayOnHitSound() {};
+    void AddHitPoints(int number);
 private:
-    int KV_SAVEBLE(damage_points_);
+    int KV_SAVEBLE(hit_points_);
 };
 ADD_TO_TYPELIST(Breakable);

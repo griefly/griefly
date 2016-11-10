@@ -62,8 +62,14 @@ bool FlatGlass::Rotate(Dir dir)
 
 void FlatGlass::Break()
 {
+    PlaySoundIfVisible("hit_on_shattered_glass.ogg", GetOwner().Id());
     Create<Item>(Shard::T_ITEM_S(), GetOwner());
     Delete();
+}
+
+void FlatGlass::PlayOnHitSound()
+{
+    PlaySoundIfVisible("Glasshit.ogg", GetOwner().Id());
 }
 
 ReinforcedFlatGlass::ReinforcedFlatGlass(quint32 id) : FlatGlass(id)

@@ -10,6 +10,7 @@ public:
     Grille(quint32 id);
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Break() override;
+    virtual void PlayOnHitSound() override;
 private:
     bool KV_SAVEBLE(cutted_);
 };

@@ -14,6 +14,7 @@ public:
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual bool Rotate(Dir dir) override;
     virtual void Break() override;
+    virtual void PlayOnHitSound() override;
 };
 ADD_TO_TYPELIST(FlatGlass);
 
