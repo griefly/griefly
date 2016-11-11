@@ -25,12 +25,7 @@ void Breakable::Bump(IdPtr<IMovable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
-        hit_points_ -= projectile->GetDamage();
-        PlayOnHitSound();
-    }
-    if (hit_points_ <= 0)
-    {
-        Break();
+        Hit(projectile->GetDamage());
         return;
     }
     IMovable::Bump(item);
