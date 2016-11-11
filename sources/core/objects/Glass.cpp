@@ -3,13 +3,16 @@
 #include "../SyncRandom.h"
 #include "../Helpers.h"
 #include "Mob.h"
+#include "Breakable.h"
+#include "Shard.h"
 
-FlatGlass::FlatGlass(quint32 id) : Structure(id)
+FlatGlass::FlatGlass(quint32 id) : Breakable(id)
 {
     transparent = true;
 
     tickSpeed = 5;
     pixSpeed = 1;
+    SetHitPoints(20);
 
     v_level = 9;
 
@@ -33,22 +36,21 @@ void FlatGlass::AfterWorldCreation()
 
 void FlatGlass::Bump(IdPtr<IMovable> item)
 {
-    IdPtr<IMob> m;
-    m = item;
-    if (!m)
-        return;
-
-    if (item->GetDir() != GetDir())
+    if (IdPtr<IMob> mob = item)
     {
-        if (!CanPass(owner->GetPassable(D_ALL), passable_level))
-            return;
-        if (anchored)
-            return;
+        if (item->GetDir() != GetDir())
+        {
+            if (!CanPass(owner->GetPassable(D_ALL), passable_level) || anchored)
+            {
+                return;
+            }
 
-        Rotate(item->GetDir());
+            Rotate(item->GetDir());
+        }
+        IMovable::Bump(item);
         return;
     }
-    IMovable::Bump(item);
+    Breakable::Bump(item);
 }
 
 bool FlatGlass::Rotate(Dir dir)
@@ -59,8 +61,33 @@ bool FlatGlass::Rotate(Dir dir)
     return true;
 }
 
+void FlatGlass::Break()
+{
+    PlaySoundIfVisible("hit_on_shattered_glass.ogg", GetOwner().Id());
+    Create<Item>(Shard::T_ITEM_S(), GetOwner());
+    Delete();
+}
+
+void FlatGlass::PlayOnHitSound()
+{
+    PlaySoundIfVisible("Glasshit.ogg", GetOwner().Id());
+}
+
+void FlatGlass::AttackBy(IdPtr<Item> item)
+{
+    if(!item.IsValid())
+    {
+/*      GetGame().GetChat().PostSimpleText(
+        name + " knocks on window. " +, GetRoot().Id());*/
+        PlaySoundIfVisible("Glasshit.ogg", GetOwner().Id());
+        return;
+    }
+    Breakable::AttackBy(item);
+}
+
 ReinforcedFlatGlass::ReinforcedFlatGlass(quint32 id) : FlatGlass(id)
 {
     SetState("rwindow");
     name = "Reinforced window";
+    SetHitPoints(100);
 }
