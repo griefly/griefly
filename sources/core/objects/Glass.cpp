@@ -76,7 +76,7 @@ void FlatGlass::PlayOnHitSound()
 
 void FlatGlass::AttackBy(IdPtr<Item> item)
 {
-    if(!item.IsValid())
+    if (!item.IsValid())
     {
 /*      GetGame().GetChat().PostSimpleText(
         name + " knocks on window. " +, GetRoot().Id());*/
