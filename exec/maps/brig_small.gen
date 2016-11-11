@@ -1990,6 +1990,7 @@ ReinforcedFlatGlass 26 30 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_stro
 Floor 26 31 0 1 5 dMove 0  
 SecurityLocker 26 31 0 1 5 dMove 0  
 ClownUniform 26 31 0 1 5 dMove 0  
+ClownBoots 26 31 0 0 
 Floor 26 32 0 1 5 dMove 0  
 Floor 26 33 0 1 5 dMove 0  
 Floor 26 34 0 1 5 dMove 0  
@@ -2251,6 +2252,7 @@ ReinforcedFlatGlass 29 30 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_stro
 Floor 29 31 0 1 5 dMove 0  
 SecurityLocker 29 31 0 1 5 dMove 0  
 ClownUniform 29 31 0 1 5 dMove 0  
+ClownBoots 29 31 0 0 
 Floor 29 32 0 1 5 dMove 0  
 Floor 29 33 0 1 5 dMove 0  
 Floor 29 34 0 1 5 dMove 0  
@@ -2546,6 +2548,7 @@ ReinforcedFlatGlass 32 30 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_stro
 Floor 32 31 0 1 5 dMove 0  
 SecurityLocker 32 31 0 1 5 dMove 0  
 ClownUniform 32 31 0 1 5 dMove 0  
+ClownBoots 32 31 0 0 
 Floor 32 32 0 1 5 dMove 0  
 Floor 32 33 0 1 5 dMove 0  
 Floor 32 34 0 1 5 dMove 0  
@@ -2836,6 +2839,7 @@ ReinforcedFlatGlass 35 30 0 18 8 anchored 1 1 5 dMove 1 3 6 force_ 0  15 is_stro
 Floor 35 31 0 1 5 dMove 0  
 SecurityLocker 35 31 0 1 5 dMove 0  
 ClownUniform 35 31 0 1 5 dMove 0  
+ClownBoots 35 31 0 0 
 Floor 35 32 0 1 5 dMove 0  
 Floor 35 33 0 1 5 dMove 0  
 Floor 35 34 0 1 5 dMove 0  
@@ -3507,7 +3511,7 @@ Chair 42 25 0 18 8 anchored 0  5 dMove 1 2 6 force_ 0  15 is_strong_owner 0  8 l
 Floor 42 26 0 1 5 dMove 0  
 Floor 42 27 0 1 5 dMove 0  
 Floor 42 28 0 1 5 dMove 0  
-RemoteAtmosTool 42 28 0 0 
+RemoteAtmosTool 42 28 0 1 5 dMove 0  
 Floor 42 29 0 1 5 dMove 0  
 Floor 42 30 0 1 5 dMove 0  
 MetalWall 42 31 0 1 5 dMove 0  
