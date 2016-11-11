@@ -73,6 +73,7 @@ public:
     OrangeBoots(quint32 id);
 };
 ADD_TO_TYPELIST(OrangeBoots);
+
 class ClownBoots: public Cloth
 {
 public:

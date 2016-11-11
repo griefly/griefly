@@ -98,7 +98,6 @@ bool Human::TryMove(Dir direct)
         }
         if (IdPtr<ClownBoots> shoes = GetHumanInterface()->feet_.Get())
         {
-            unsigned int val = GetRand() % 2;
             QString sound = QString("clownstep%1.ogg").arg(GetRand() % 2 +1);
             PlaySoundIfVisible(sound, GetOwner().Id());
         }
