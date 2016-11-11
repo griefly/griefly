@@ -99,15 +99,7 @@ bool Human::TryMove(Dir direct)
         if (IdPtr<ClownBoots> shoes = GetHumanInterface()->feet_.Get())
         {
             unsigned int val = GetRand() % 2;
-            QString sound;
-            if (val == 0)
-            {
-                sound = "clownstep1.ogg";
-            }
-            else
-            {
-                sound = "clownstep2.ogg";
-            }
+            QString sound = QString("clownstep%1.ogg").arg(GetRand() % 2 +1);
             PlaySoundIfVisible(sound, GetOwner().Id());
         }
         if (pulled_object_ && ((std::abs(pos.x) + std::abs(pos.y)) < 2))
