@@ -8,13 +8,14 @@
 #include "../Game.h"
 #include "Materials.h"
 
-Grille::Grille(quint32 id) : Structure(id)
+Grille::Grille(quint32 id) : Breakable(id)
 {
     transparent = true;
     SetPassable(D_ALL, Passable::AIR);
 
     tickSpeed = 5;
     pixSpeed = 1;
+    SetHitPoints(15);
 
     v_level = 8;
 
@@ -43,9 +44,34 @@ void Grille::AttackBy(IdPtr<Item> item)
             Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
             Delete();
         }
+        return;
+    }
+    if (!item.IsValid())
+    {
+        Hit(2);
+        return;
+    }
+    Breakable::AttackBy(item);
+}
+
+void Grille::Break()
+{
+    if (!cutted_)
+    {
+        SetState("brokengrille");
+        SetPassable(D_ALL, Passable::FULL);
+        cutted_ = true;
+        Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+        SetHitPoints(7);
     }
     else
     {
-        Structure::AttackBy(item);
+        Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+        Delete();
     }
+}
+
+void Grille::PlayOnHitSound()
+{
+    PlaySoundIfVisible("grillehit.ogg", GetOwner().Id());
 }
