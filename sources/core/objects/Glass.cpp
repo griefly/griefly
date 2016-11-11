@@ -40,10 +40,10 @@ void FlatGlass::Bump(IdPtr<IMovable> item)
     {
         if (item->GetDir() != GetDir())
         {
-            if (!CanPass(owner->GetPassable(D_ALL), passable_level))
+            if (!CanPass(owner->GetPassable(D_ALL), passable_level) || anchored)
+            {
                 return;
-            if (anchored)
-                return;
+            }
 
             Rotate(item->GetDir());
         }
@@ -71,6 +71,18 @@ void FlatGlass::Break()
 void FlatGlass::PlayOnHitSound()
 {
     PlaySoundIfVisible("Glasshit.ogg", GetOwner().Id());
+}
+
+void FlatGlass::AttackBy(IdPtr<Item> item)
+{
+    if(!item.IsValid())
+    {
+/*      GetGame().GetChat().PostSimpleText(
+        name + " knocks on window. " +, GetRoot().Id());*/
+        PlaySoundIfVisible("Glasshit.ogg", GetOwner().Id());
+        return;
+    }
+    Breakable::AttackBy(item);
 }
 
 ReinforcedFlatGlass::ReinforcedFlatGlass(quint32 id) : FlatGlass(id)

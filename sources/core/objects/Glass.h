@@ -15,6 +15,7 @@ public:
     virtual bool Rotate(Dir dir) override;
     virtual void Break() override;
     virtual void PlayOnHitSound() override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(FlatGlass);
 
