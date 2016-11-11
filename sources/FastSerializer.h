@@ -211,6 +211,13 @@ private:
     quint32 index_;
 };
 
+template<class T>
+inline FastDeserializer& operator>>(FastDeserializer& deserializer, T& value)
+{
+    deserializer.Read(&value);
+    return deserializer;
+}
+
 
 
 
