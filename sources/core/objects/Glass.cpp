@@ -63,7 +63,8 @@ bool FlatGlass::Rotate(Dir dir)
 
 void FlatGlass::Break()
 {
-    PlaySoundIfVisible("hit_on_shattered_glass.ogg", GetOwner().Id());
+    QString sound = QString("Glassbr%1.ogg").arg(GetRand() % 3 + 1);
+    PlaySoundIfVisible(sound, GetOwner().Id());
     Create<Item>(Shard::T_ITEM_S(), GetOwner());
     Delete();
 }
