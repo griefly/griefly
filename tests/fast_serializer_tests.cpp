@@ -15,11 +15,11 @@ TEST(FastSerializer, WriteBool)
 {
     FastSerializer serializer;
 
-    serializer.Write(true);
+    serializer << true;
     ASSERT_EQ(serializer.GetIndex(), 1);
     EXPECT_TRUE(serializer.GetData()[0]);
 
-    serializer.Write(false);
+    serializer << false;
     ASSERT_EQ(serializer.GetIndex(), 2);
     EXPECT_FALSE(serializer.GetData()[1]);
 }
@@ -30,7 +30,7 @@ TEST(FastSerializer, WriteInt32)
 
     {
         qint32 value = 0;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 4);
         for (int i = 0; i < 4; ++i)
         {
@@ -40,7 +40,7 @@ TEST(FastSerializer, WriteInt32)
 
     {
         qint32 value = 1;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 8);
         EXPECT_EQ(serializer.GetData()[4], '\x01');
         for (int i = 5; i < 8; ++i)
@@ -51,7 +51,7 @@ TEST(FastSerializer, WriteInt32)
 
     {
         qint32 value = -1;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 12);
         for (int i = 8; i < 12; ++i)
         {
@@ -61,7 +61,7 @@ TEST(FastSerializer, WriteInt32)
 
     {
         qint32 value = 2047583047;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 16);
         EXPECT_EQ(serializer.GetData()[12], '\x47');
         EXPECT_EQ(serializer.GetData()[13], '\xA3');
@@ -71,7 +71,7 @@ TEST(FastSerializer, WriteInt32)
 
     {
         qint32 value = -2039583948;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 20);
         EXPECT_EQ(serializer.GetData()[16], '\x34');
         EXPECT_EQ(serializer.GetData()[17], '\x6B');
@@ -86,7 +86,7 @@ TEST(FastSerializer, WriteUint32)
 
     {
         quint32 value = 0;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 4);
         for (int i = 0; i < 4; ++i)
         {
@@ -96,7 +96,7 @@ TEST(FastSerializer, WriteUint32)
 
     {
         quint32 value = 1;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 8);
         EXPECT_EQ(serializer.GetData()[4], '\x01');
         for (int i = 5; i < 8; ++i)
@@ -107,7 +107,7 @@ TEST(FastSerializer, WriteUint32)
 
     {
         quint32 value = 4294967295;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 12);
         for (int i = 8; i < 12; ++i)
         {
@@ -117,7 +117,7 @@ TEST(FastSerializer, WriteUint32)
 
     {
         quint32 value = 2047583048;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 16);
         EXPECT_EQ(serializer.GetData()[12], '\x48');
         EXPECT_EQ(serializer.GetData()[13], '\xA3');
@@ -132,7 +132,7 @@ TEST(FastSerializer, WriteString)
 
     {
         QString value;
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 4);
         for (int i = 0; i < 4; ++i)
         {
@@ -142,7 +142,7 @@ TEST(FastSerializer, WriteString)
 
     {
         QString value("Hello world!");
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 32);
         EXPECT_EQ(serializer.GetData()[4], '\x0C');
         EXPECT_EQ(serializer.GetData()[5], '\x00');
@@ -160,7 +160,7 @@ TEST(FastSerializer, WriteString)
 
     {
         QString value = "Привет, мир!";
-        serializer.Write(value);
+        serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 60);
         EXPECT_EQ(serializer.GetData()[32], '\x0C');
         EXPECT_EQ(serializer.GetData()[33], '\x00');
@@ -184,7 +184,7 @@ TEST(FastSerializer, ResetIndex)
     FastSerializer serializer;
 
     ASSERT_EQ(serializer.GetIndex(), 0);
-    serializer.Write(42);
+    serializer << 42;
     ASSERT_EQ(serializer.GetIndex(), 4);
     serializer.ResetIndex();
     ASSERT_EQ(serializer.GetIndex(), 0);
@@ -199,7 +199,7 @@ TEST(FastSerializer, BigData)
     const int BIG_DATA_SIZE = FastSerializer::DEFAULT_SIZE * 2;
     for (int i = 0; i < BIG_DATA_SIZE; ++i)
     {
-        serializer.Write(true);
+        serializer << true;
     }
     ASSERT_EQ(serializer.GetIndex(), BIG_DATA_SIZE);
 }
@@ -211,9 +211,9 @@ TEST(FastDeserializerDeathTest, EnsureSizeFail)
     ASSERT_DEATH(
     {
         bool value;
-        deserializer.Read(&value);
-        deserializer.Read(&value);
-        deserializer.Read(&value);
+        deserializer >> value;
+        deserializer >> value;
+        deserializer >> value;
     }, "FastDeserializer: EnsureSize fail!");
 }
 
@@ -240,7 +240,7 @@ TEST(FastDeserializer, ReadBool)
     {
         ASSERT_FALSE(deserializer.IsEnd());
         bool value;
-        deserializer.Read(&value);
+        deserializer >> value;
         if (DATA[i] == '\0')
         {
             EXPECT_FALSE(value);
@@ -269,27 +269,27 @@ TEST(FastDeserializer, ReadInt32)
     qint32 value;
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 0);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 1);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 255);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 2047583047);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, -1);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, -57345);
 
     ASSERT_TRUE(deserializer.IsEnd());
@@ -310,27 +310,27 @@ TEST(FastDeserializer, ReadUint32)
     quint32 value;
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 0);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 1);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 255);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 2047583047);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 4294967295);
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, 4294909951);
 
     ASSERT_TRUE(deserializer.IsEnd());
@@ -350,15 +350,15 @@ TEST(FastDeserializer, ReadString)
     QString value;
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, "");
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, "He ");
 
     ASSERT_FALSE(deserializer.IsEnd());
-    deserializer.Read(&value);
+    deserializer >> value;
     EXPECT_EQ(value, "П  м ");
 
     ASSERT_TRUE(deserializer.IsEnd());
@@ -368,13 +368,13 @@ TEST(FastSerializeDeserialize, VariousValues)
 {
     {
         FastSerializer serializer;
-        serializer.Write(true);
-        serializer.Write(false);
-        serializer.Write(42);
-        serializer.Write(-14329);
-        serializer.Write(QString("One two three"));
-        serializer.Write(QString("Ехал грека через реку"));
-        serializer.Write(4294967294u);
+        serializer << true;
+        serializer << false;
+        serializer << 42;
+        serializer << -14329;
+        serializer << QString("One two three");
+        serializer << QString("Ехал грека через реку");
+        serializer << 4294967294u;
 
         FastDeserializer deserializer(
             serializer.GetData(),
@@ -385,31 +385,31 @@ TEST(FastSerializeDeserialize, VariousValues)
         {
             bool value;
 
-            deserializer.Read(&value);
+            deserializer >> value;
             EXPECT_EQ(value, true);
-            deserializer.Read(&value);
+            deserializer >> value;
             EXPECT_EQ(value, false);
         }
         {
             int value;
 
-            deserializer.Read(&value);
+            deserializer >> value;
             EXPECT_EQ(value, 42);
-            deserializer.Read(&value);
+            deserializer >> value;
             EXPECT_EQ(value, -14329);
         }
         {
             QString value;
 
-            deserializer.Read(&value);
+            deserializer >> value;
             EXPECT_EQ(value, "One two three");
-            deserializer.Read(&value);
+            deserializer >> value;
             EXPECT_EQ(value, "Ехал грека через реку");
         }
         {
             unsigned int value;
 
-            deserializer.Read(&value);
+            deserializer >> value;
             EXPECT_EQ(value, 4294967294u);
         }
 

@@ -30,7 +30,7 @@ public:
     {
         return data_.data();
     }
-
+private:
     void Write(bool value)
     {
         Preallocate(1);
@@ -79,7 +79,6 @@ public:
     }
     // Removed
     void Write(const char* value);
-private:
     void Preallocate(int size)
     {
         if ((index_ + size) > data_.size())
@@ -95,13 +94,19 @@ private:
 template<class T>
 inline FastSerializer& operator<<(FastSerializer& serializer, const T& value)
 {
-    static_assert(std::is_pointer<T>::value, "Pointers are forbidden!");
+    static_assert(
+        !std::is_array<T>::value,
+        "Arrays are forbidden (string constants too)!");
     serializer.Write(value);
     return serializer;
 }
 
 class FastDeserializer
 {
+    template<class T>
+    friend FastDeserializer& operator>>(
+        FastDeserializer& serializer,
+        T& value);
 public:
     FastDeserializer(const char* data, quint32 size)
         : data_(data),
@@ -118,6 +123,8 @@ public:
         }
         return false;
     }
+
+private:
     void Read(bool* value)
     {
         EnsureSize(1);
@@ -197,7 +204,6 @@ public:
         index_ += size * 2;
     }
 
-private:
     void EnsureSize(int size)
     {
         if ((size + index_) > size_)
