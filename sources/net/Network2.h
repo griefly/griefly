@@ -21,7 +21,7 @@ const int MAX_WAIT_ON_QUEUE = 1;
 struct Message2
 {
     qint32 type;
-    QString json;
+    QByteArray json;
 };
 
 Q_DECLARE_METATYPE(Message2)

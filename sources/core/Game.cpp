@@ -515,12 +515,12 @@ void Game::ProcessInputMessages()
             Message2 msg;
 
             msg.type = MessageType::HASH_MESSAGE;
-            msg.json =
+            msg.json.append(
                       "{\"hash\":"
                     + QString::number(hash)
                     + ",\"tick\":"
                     + QString::number(MAIN_TICK)
-                    + "}";
+                    + "}");
 
             Network2::GetInstance().SendMsg(msg);
 
