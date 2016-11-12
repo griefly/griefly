@@ -95,6 +95,7 @@ private:
 template<class T>
 inline FastSerializer& operator<<(FastSerializer& serializer, const T& value)
 {
+    static_assert(std::is_pointer<T>::value, "Pointers are forbidden!");
     serializer.Write(value);
     return serializer;
 }
