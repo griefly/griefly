@@ -73,7 +73,7 @@ Game::Game()
     for (quint32 i = 0; i < messages_log_.size(); ++i)
     {
         messages_log_[i].type = 0;
-        messages_log_[i].json = "(empty)";
+        messages_log_[i].json.append("(empty)");
     }
     log_pos_ = 0;
 
