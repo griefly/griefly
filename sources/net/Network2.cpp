@@ -313,7 +313,7 @@ bool SocketHandler::HandleBody()
     new_message.type = message_type_;
 
     new_message.json = net_codec_->toUnicode(
-        (const char*)&(buffer_.constData()[buffer_pos_]),
+        reinterpret_cast<const char*>(&(buffer_.constData()[buffer_pos_])),
         message_size_);
     buffer_pos_ += message_size_;
 
