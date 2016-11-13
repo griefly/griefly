@@ -197,7 +197,7 @@ void MainForm::startGameLoop(int id, QString map)
             GetRepresentation().Process();
             GetScreen().Swap();
             ++fps_counter;
-            delta_time += delta.restart();
+            delta_time += delta.elapsed();
             
             if (delta_time >= time_per_frame_ms)
             {
@@ -224,7 +224,7 @@ void MainForm::startGameLoop(int id, QString map)
         }
 
         QThread::msleep(sleep_time);
-        delta.restart();
+        delta.start();
         if (isHidden())
         {
             break;
