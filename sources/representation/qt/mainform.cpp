@@ -126,6 +126,11 @@ void MainForm::startGameLoop(int id, QString map)
         NODRAW = true;
     }
 
+    if (GetParamsHolder().GetParamBool("-max_fps"))
+    {
+        fps_cap_ = GetParamsHolder().GetParam<int>("-max_fps");
+    }
+
     SetRepresentation(new Representation);
     connect(ui->widget, &QtOpenGL::focusLost,
     []()
@@ -179,19 +184,46 @@ void MainForm::startGameLoop(int id, QString map)
     QElapsedTimer process_performance;
     qint64 max_process_time = 0;
 
+    int delta_time = 0;
+    float time_per_frame_ms = 1000 / fps_cap_;
+    float sleep_time = 0;
+    QElapsedTimer delta;
+    delta.start();
     while (true)
     {
-        ++fps_counter;
-
         process_performance.start();
-        GetRepresentation().Process();
-        GetScreen().Swap();
+        if(fps_cap_)
+        {
+            GetRepresentation().Process();
+            GetScreen().Swap();
+            ++fps_counter;
+            delta_time += delta.restart();
+            
+            if (delta_time >= time_per_frame_ms)
+            {
+                delta_time -= time_per_frame_ms;
+                sleep_time = 0;
+            }
+            else
+            {
+                sleep_time = time_per_frame_ms - delta_time;
+                delta_time = 0;
+            }
+            qDebug() << sleep_time << endl;
+        }
+        else
+        {
+            GetRepresentation().Process();
+            GetScreen().Swap();
+            ++fps_counter;
+        }
         qint64 process_time = process_performance.nsecsElapsed();
         if (process_time > max_process_time)
         {
             max_process_time = process_time;
         }
 
+        QThread::msleep(sleep_time);
         if (isHidden())
         {
             break;
@@ -201,16 +233,16 @@ void MainForm::startGameLoop(int id, QString map)
         {
             addSystemText("FPS", "FPS: " + QString::number(fps_counter));
             addSystemText(
-                "{Perf}Represent",
-                  "Represent max: "
-                + QString::number(max_process_time / 1e6)
-                + " ms");
+            "{Perf}Represent",
+            "Represent max: "
+            + QString::number(max_process_time / 1e6)
+            + " ms");
             qint64 mutex_ns = GetRepresentation().GetPerformance().mutex_ns;
             addSystemText(
-                "{Perf}RepresentMutex",
-                  "Represent mutex lock max: "
-                + QString::number(mutex_ns / 1e6)
-                + " ms");
+            "{Perf}RepresentMutex",
+            "Represent mutex lock max: "
+            + QString::number(mutex_ns / 1e6)
+            + " ms");
             GetRepresentation().ResetPerformance();
             max_process_time = 0;
             fps_timer.restart();
