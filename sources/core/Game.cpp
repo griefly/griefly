@@ -714,7 +714,7 @@ void Game::AddLastMessages(QByteArray& data)
              i != log_pos_;
              i = (i + 1) % messages_log_.size())
     {
-        data.append(messages_log_[i].type + " ");
+        data.append(QByteArray::number(messages_log_[i].type) + " ");
         data.append(messages_log_[i].json + '\n');
     }
 }
