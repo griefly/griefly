@@ -60,6 +60,8 @@ protected:
     int KV_SAVEBLE(health_);
 
     IdPtr<IMovable> KV_SAVEBLE(pulled_object_);
+private:
+    void TryClownBootsHonk();
 };
 ADD_TO_TYPELIST(Human);
 
