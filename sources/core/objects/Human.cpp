@@ -20,6 +20,7 @@
 #include "Gun.h"
 #include "Weapons.h"
 #include "ElectricTools.h"
+#include "SpaceTurf.h"
 
 Human::Human(quint32 id) : IMob(id)
 {
@@ -96,6 +97,9 @@ bool Human::TryMove(Dir direct)
         {
             PlaySoundIfVisible("glass_step.ogg", GetOwner().Id());
         }
+
+        TryClownBootsHonk();
+
         if (pulled_object_ && ((std::abs(pos.x) + std::abs(pos.y)) < 2))
         {
             if (!pulled_object_->TryMove(VDirToDir(pos)))
@@ -295,7 +299,9 @@ void Human::Process()
 void Human::SetLying(bool value)
 {
     if (value == false && lay_timer_ > 0)
+    {
         return;
+    }
 
     lying_ = value;
     if (lying_)
@@ -405,21 +411,8 @@ void Human::AttackBy(IdPtr<Item> item)
     if (item.IsValid() && (item->damage > 0))
     {
         health_ -= item->damage;
-        unsigned int value = GetRand() % 3;
-        QString snd;
-        if (value == 0)
-        {
-            snd = "genhit1.ogg";
-        }
-        if (value == 1)
-        {
-            snd = "genhit2.ogg";
-        }
-        if (value == 2)
-        {
-            snd = "genhit3.ogg";
-        }
-        PlaySoundIfVisible(snd, owner.Id());
+        QString sound = QString("genhit%1.ogg").arg(GetRand() % 3 + 1);
+        PlaySoundIfVisible(sound, owner.Id());
         if (IdPtr<IOnMapObject> item_owner = item->GetOwner())
         {
             GetGame().GetChat().PostDamage(item_owner->name, name, item->name, owner.Id());
@@ -566,6 +559,29 @@ void Human::StopPull()
 {
     pulled_object_ = 0;
     interface_.UpdatePulling(false);
+}
+
+void Human::TryClownBootsHonk()
+{
+    if (lying_)
+    {
+        return;
+    }
+    if (MAIN_TICK % 3 != 0)
+    {
+        return;
+    }
+    IdPtr<ClownBoots> shoes = GetHumanInterface()->feet_.Get();
+    if (!shoes.IsValid())
+    {
+        return;
+    }
+    if (IdPtr<Space> tile = GetTurf())
+    {
+        return;
+    }
+    QString sound = QString("clownstep%1.ogg").arg(GetRand() % 2 + 1);
+    PlaySoundIfVisible(sound, GetOwner().Id());
 }
 
 CaucasianHuman::CaucasianHuman(quint32 id) : Human(id)
