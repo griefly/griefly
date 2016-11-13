@@ -224,6 +224,7 @@ void MainForm::startGameLoop(int id, QString map)
         }
 
         QThread::msleep(sleep_time);
+        delta.restart();
         if (isHidden())
         {
             break;
