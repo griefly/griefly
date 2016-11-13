@@ -42,8 +42,8 @@ public:
     MOCK_METHOD0(GetIdTable, std::vector<ObjectInfo>&());
     MOCK_METHOD0(ForeachProcess, void());
     MOCK_METHOD0(Hash, unsigned int());
-    MOCK_METHOD1(Save, void(std::stringstream& str));
-    MOCK_METHOD2(Load, void(std::stringstream& str, quint32 real_this_mob));
+    MOCK_METHOD1(Save, void(FastSerializer& str));
+    MOCK_METHOD2(Load, void(FastDeserializer& str, quint32 real_this_mob));
     MOCK_METHOD1(LoadFromMapGen, void(const QString& name));
     MOCK_METHOD0(BeginWorldCreation, void());
     MOCK_METHOD0(FinishWorldCreation, void());

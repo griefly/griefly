@@ -19,8 +19,8 @@ public:
 
     virtual unsigned int Hash() override;
 
-    virtual void Save(std::stringstream& str) override;
-    virtual void Load(std::stringstream& str, quint32 real_this_mob) override;
+    virtual void Save(FastSerializer& str) override;
+    virtual void Load(FastDeserializer& str, quint32 real_this_mob) override;
     
     virtual void LoadFromMapGen(const QString& name) override;
 
@@ -42,8 +42,8 @@ public:
 private:
     void Clear();
 
-    void SaveMapHeader(std::stringstream& str);
-    void LoadMapHeader(std::stringstream& savefile);
+    void SaveMapHeader(FastSerializer& str);
+    void LoadMapHeader(FastDeserializer& savefile);
 
     IMainObject* CreateVoid(const QString& hash, quint32 id_new);
 

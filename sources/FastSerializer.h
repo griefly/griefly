@@ -77,6 +77,18 @@ private:
 
         index_ += size * 2;
     }
+    void Write(const QByteArray& value)
+    {
+        Write(value.size());
+        Preallocate(value.size());
+
+        for (int i = 0; i < value.size(); ++i)
+        {
+            data_[index_ + i] = value[i];
+        }
+
+        index_ += value.size();
+    }
     // Removed
     void Write(const char* value);
     void Preallocate(int size)
@@ -202,6 +214,24 @@ private:
         }
 
         index_ += size * 2;
+    }
+
+    void Read(QByteArray* value)
+    {
+        int size;
+        Read(&size);
+
+        EnsureSize(size);
+        value->resize(size);
+
+        char* data = value->data();
+
+        for (int i = 0; i < size; ++i)
+        {
+            data[i] = data_[index_ + i];
+        }
+
+        index_ += size;
     }
 
     void EnsureSize(int size)

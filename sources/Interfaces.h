@@ -69,8 +69,8 @@ public:
 
     virtual unsigned int Hash() = 0;
 
-    virtual void Save(std::stringstream& str) = 0;
-    virtual void Load(std::stringstream& str, quint32 real_this_mob) = 0;
+    virtual void Save(FastSerializer& str) = 0;
+    virtual void Load(FastDeserializer& str, quint32 real_this_mob) = 0;
 
     virtual void LoadFromMapGen(const QString& name) = 0;
 

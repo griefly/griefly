@@ -6,8 +6,8 @@
 
 class LoginInterface: public InterfaceBase
 {
-    friend std::ostream& operator<<(std::stringstream& file, LoginInterface& interf);
-    friend std::istream& operator>>(std::stringstream& file, LoginInterface& interf);
+    friend FastSerializer& operator<<(FastSerializer& file, LoginInterface& interf);
+    friend FastDeserializer& operator>>(FastDeserializer& file, LoginInterface& interf);
 public:
     void Init();
 
@@ -18,8 +18,8 @@ private:
     ViewInfo view_;
 };
 
-std::ostream& operator<<(std::stringstream& file, LoginInterface& interf);
-std::istream& operator>>(std::stringstream& file, LoginInterface& interf);
+FastSerializer& operator<<(FastSerializer& file, LoginInterface& interf);
+FastDeserializer& operator>>(FastDeserializer& file, LoginInterface& interf);
 
 inline unsigned int hash(const LoginInterface& i)
 {

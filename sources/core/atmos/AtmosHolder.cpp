@@ -141,21 +141,21 @@ void AtmosHolder::Truncate()
     UpdateMacroParams();
 }
 
-std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder)
+FastSerializer& operator<<(FastSerializer& file, const AtmosHolder& atmos_holder)
 {
     for (quint32 i = 0; i < GASES_NUM; ++i)
     {
-        file << atmos_holder.data_ptr_->gases[i] << " ";
+        file << atmos_holder.data_ptr_->gases[i];
     }
-    file << atmos_holder.data_ptr_->energy << " ";
-    file << atmos_holder.data_ptr_->pressure << " ";
-    file << atmos_holder.data_ptr_->volume << " ";
-    file << atmos_holder.data_ptr_->temperature << " ";
+    file << atmos_holder.data_ptr_->energy;
+    file << atmos_holder.data_ptr_->pressure;
+    file << atmos_holder.data_ptr_->volume;
+    file << atmos_holder.data_ptr_->temperature;
 
     return file;
 }
 
-std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder)
+FastDeserializer& operator>>(FastDeserializer& file, AtmosHolder& atmos_holder)
 {
     for (quint32 i = 0; i < GASES_NUM; ++i)
     {

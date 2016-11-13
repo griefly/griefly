@@ -11,7 +11,7 @@ std::unordered_map<QString, item_creator>* items_creators();
 
 std::unordered_map<QString, item_creator_saved>* items_void_creators();
 
-typedef void (*variable_setter)(IMainObject* ptr, std::stringstream& str);
+typedef void (*variable_setter)(IMainObject* ptr, FastDeserializer& str);
 
 typedef std::unordered_map<QString, variable_setter> setters_for_type;
 

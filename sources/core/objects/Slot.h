@@ -24,8 +24,8 @@ public:
     virtual IdPtr<Item>  Get() = 0;
     virtual void Remove() = 0;
     virtual void Draw() = 0;
-    virtual std::ostream& operator<<(std::stringstream& file) = 0;
-    virtual std::istream& operator>>(std::stringstream& file) = 0;
+    virtual FastSerializer& operator<<(FastSerializer& file) = 0;
+    virtual FastDeserializer& operator>>(FastDeserializer& file) = 0;
     virtual unsigned int hash_member() const = 0;
 };
 
@@ -112,33 +112,24 @@ public:
     {
         return &view_;
     }
-    virtual std::ostream& operator<<(std::stringstream& file) override
+    virtual FastSerializer& operator<<(FastSerializer& file) override
     {
-        file << view_ << " ";
-        file << item_ << " ";
-        file << posx_ << " ";
-        file << posy_ << " ";
-        file << type_.toStdString() << " ";
-        file << name_.toStdString() << " ";
+        file << view_;
+        file << item_;
+        file << posx_;
+        file << posy_;
+        file << type_;
+        file << name_;
         return file;
     }
-    virtual std::istream& operator>>(std::stringstream& file) override
+    virtual FastDeserializer& operator>>(FastDeserializer& file) override
     {
         file >> view_;
         file >> item_;
         file >> posx_;
         file >> posy_;
-
-        {
-            std::string local;
-            file >> local;
-            type_ = QString::fromStdString(local);
-        }
-        {
-            std::string local;
-            file >> local;
-            name_ = QString::fromStdString(local);
-        }
+        file >> type_;
+        file >> name_;
         return file;
     }
     virtual unsigned int hash_member() const override

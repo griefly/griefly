@@ -364,25 +364,25 @@ IdPtr<Item> HumanInterface::GetLHand()
     return l_hand_.Get();
 }
 
-std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
+FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf)
 {
-    interf.r_hand_.operator<<(file) << " ";
-    interf.drop_.operator<<(file) << " ";
-    interf.l_hand_.operator<<(file) << " ";
-    interf.head_.operator<<(file) << " ";
-    interf.suit_.operator<<(file) << " ";
-    interf.uniform_.operator<<(file) << " ";
-    interf.feet_.operator<<(file) << " ";
-    interf.swap_.operator<<(file) << " ";
-    interf.health_.operator<<(file) << " ";
-    interf.lay_.operator<<(file) << " ";
-    interf.stop_pull_.operator<<(file) << " ";
-    file << interf.active_hand_ << " ";
-    file << interf.pulling_ << " ";
-    file << interf.owner_ << " ";
+    interf.r_hand_.operator<<(file);
+    interf.drop_.operator<<(file);
+    interf.l_hand_.operator<<(file);
+    interf.head_.operator<<(file);
+    interf.suit_.operator<<(file);
+    interf.uniform_.operator<<(file);
+    interf.feet_.operator<<(file);
+    interf.swap_.operator<<(file);
+    interf.health_.operator<<(file);
+    interf.lay_.operator<<(file);
+    interf.stop_pull_.operator<<(file);
+    file << interf.active_hand_;
+    file << interf.pulling_;
+    file << interf.owner_;
     return file;
 }
-std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
+FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf)
 {
     interf.r_hand_.operator>>(file);
     interf.drop_.operator>>(file);

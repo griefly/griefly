@@ -28,8 +28,8 @@ public:
     void PlayMusic(const QString& name, float volume = 100.0f);
 
     static const int THIS_COUNTER = __COUNTER__; 
-    virtual bool Save(std::stringstream& file);
-    virtual bool Load(std::stringstream& file);
+    virtual bool Save(FastSerializer& serializer);
+    virtual bool Load(FastDeserializer& deserializer);
 
     virtual unsigned int Hash()
     {

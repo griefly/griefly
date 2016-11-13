@@ -331,11 +331,10 @@ void Game::InitWorld(int id, QString map_name)
             qDebug() << "An empty map received";
             KvAbort();
         }
-        std::stringstream ss;
-        ss.write(map_data.data(), map_data.length());
-        ss.seekg(0, std::ios::beg);
 
-        GetFactory().Load(ss, id);
+        FastDeserializer deserializer(map_data.data(), map_data.size());
+
+        GetFactory().Load(deserializer, id);
     }
 
     GetChat().PostText(ON_LOGIN_MESSAGE);
@@ -482,12 +481,11 @@ void Game::ProcessInputMessages()
             if (tick == MAIN_TICK)
             {
                 qDebug() << "Map will be generated";
-                std::stringstream ss;
-                GetFactory().Save(ss);
-                AddLastMessages(ss);
-                qDebug() << "Tellp: " << ss.tellp();
-                std::string string = ss.str();
-                data = QByteArray(string.c_str(), string.length());
+                serializer_.ResetIndex();
+                GetFactory().Save(serializer_);
+                // TODO:
+                // AddLastMessages(serializer);
+                data = QByteArray(serializer_.GetData(), serializer_.GetIndex());
                 qDebug() << " " << data.length();
             }
 

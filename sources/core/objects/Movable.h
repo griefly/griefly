@@ -2,7 +2,7 @@
 
 #include "OnMapObject.h"
 
-inline std::istream& operator>>(std::istream& file, VDir& vdir)
+inline FastDeserializer& operator>>(FastDeserializer& file, VDir& vdir)
 {
     file >> vdir.x;
     file >> vdir.y;
@@ -10,11 +10,11 @@ inline std::istream& operator>>(std::istream& file, VDir& vdir)
     return file;
 }
 
-inline std::ostream& operator<<(std::ostream& file, const VDir& vdir)
+inline FastSerializer& operator<<(FastSerializer& file, const VDir& vdir)
 {
-    file << vdir.x << " ";
-    file << vdir.y << " ";
-    file << vdir.z << " ";
+    file << vdir.x;
+    file << vdir.y;
+    file << vdir.z;
     return file;
 }
 

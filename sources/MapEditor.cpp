@@ -189,51 +189,51 @@ void MapEditor::SaveMapgen(const QString& name)
     int size_y = editor_map_[0].size();
     int size_z = editor_map_[0][0].size();
 
-    std::stringstream ss;
+    FastSerializer data;
 
-    ss << size_x << std::endl;
-    ss << size_y << std::endl;
-    ss << size_z << std::endl;
+    data << size_x;
+    data << size_y;
+    data << size_z;
 
     for (int z = 0; z < size_z; ++z)
+    {
         for (int x = 0; x < size_x; ++x)
+        {
             for (int y = 0; y < size_y; ++y)
             {
                 if (editor_map_[x][y][z].turf.pixmap_item)
                 {
-                    ss << editor_map_[x][y][z].turf.item_type.toStdString() << " ";
-                    ss << x << " ";
-                    ss << y << " ";
-                    ss << z << " ";
-                    WrapWriteMessage(ss, editor_map_[x][y][z].turf.variables);
-                    ss << std::endl;
+                    data << editor_map_[x][y][z].turf.item_type;
+                    data << x;
+                    data << y;
+                    data << z;
+                    WrapWriteMessage(data, editor_map_[x][y][z].turf.variables);
                 }
                 auto& il = editor_map_[x][y][z].items;
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
-                    ss << it->item_type.toStdString() << " ";
-                    ss << x << " ";
-                    ss << y << " ";
-                    ss << z << " ";
-                    WrapWriteMessage(ss, it->variables);
-                    ss << std::endl;
+                    data << it->item_type;
+                    data << x;
+                    data << y;
+                    data << z;
+                    WrapWriteMessage(data, it->variables);
                 }
             }
-
-    std::fstream sfile;
-    sfile.open(name.toStdString(), std::ios_base::out | std::ios_base::trunc);
-    if(sfile.fail())
+        }
+    }
+    QFile file(name);
+    if (!file.open(QIODevice::WriteOnly))
     {
+        qDebug() << file.fileName() << " cannot be opened.";
         return;
     }
-    sfile << ss.str();
+    file.write(data.GetData(), data.GetIndex());
 }
 
 void MapEditor::LoadMapgen(const QString& name)
 {
-    std::fstream sfile;
-    sfile.open(name.toStdString(), std::ios_base::in);
-    if(sfile.fail())
+    QFile file(name);
+    if (!file.open(QIODevice::ReadOnly))
     {
         qDebug() << "Error open " << name;
         return;
@@ -241,64 +241,44 @@ void MapEditor::LoadMapgen(const QString& name)
 
     ClearMap();
 
-    std::stringstream ss;
+    QByteArray raw_data = file.readAll();
+    FastDeserializer data(raw_data.data(), raw_data.size());
 
-    sfile.seekg (0, std::ios::end);
-    std::streamoff length = sfile.tellg();
-    sfile.seekg (0, std::ios::beg);
-    char* buff = new char[static_cast<quint32>(length)];
+    int x;
+    data >> x;
 
-    sfile.read(buff, length);
-    sfile.close();
-    ss.write(buff, length);
-    delete[] buff;
+    int y;
+    data >> y;
 
-    int x, y, z;
-    ss >> x;
-    ss >> y;
-    ss >> z;
+    int z;
+    data >> z;
 
     Resize(x, y, z);
 
-    while (ss)
+    while (!data.IsEnd())
     {
-        QString t_item;
-        quint32 x, y, z;
+        QString item_type;
+        quint32 x;
+        quint32 y;
+        quint32 z;
 
-        std::string local;
-        ss >> local;
-        t_item = QString::fromStdString(local);
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> x;
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> y;
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> z;
-        if (!ss)
-        {
-            continue;
-        }
+        data >> item_type;
+
+        data >> x;
+        data >> y;
+        data >> z;
 
         MapEditor::EditorEntry* ee;
-        if (turf_types_.find(t_item) != turf_types_.end())
+        if (turf_types_.find(item_type) != turf_types_.end())
         {
-            ee = &SetTurf(t_item, x, y, z);
+            ee = &SetTurf(item_type, x, y, z);
         }
         else
         {
-            ee = &AddItem(t_item, x, y, z);
+            ee = &AddItem(item_type, x, y, z);
         }
 
-        WrapReadMessage(ss, ee->variables);
+        WrapReadMessage(data, ee->variables);
 
         // TODO
         UpdateDirs(ee);

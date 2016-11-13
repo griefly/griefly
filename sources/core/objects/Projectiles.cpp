@@ -1,15 +1,17 @@
 #include "Projectiles.h"
 #include "../Helpers.h"
 
-std::ostream& operator<<(std::stringstream& file, const std::vector<Dir>& s)
+FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& s)
 {
-    file << " " << s.size() << " ";
+    file << s.size();
     for (auto it : s)
-        file << " " << it << " ";
+    {
+        file << it;
+    }
     return file;
 }
 
-std::istream& operator>>(std::stringstream& file, std::vector<Dir>& s)
+FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& s)
 {
     quint32 size;
     file >> size;

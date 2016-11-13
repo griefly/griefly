@@ -12,6 +12,8 @@
 #include <QString>
 #include <QDebug>
 
+#include "FastSerializer.h"
+
 const int SIZE_H_SQ = 11; // visible size const
 const int SIZE_W_SQ = 11;
 

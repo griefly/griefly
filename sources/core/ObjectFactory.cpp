@@ -78,32 +78,31 @@ void ObjectFactory::ForeachProcess()
     }
 }
 
-void ObjectFactory::SaveMapHeader(std::stringstream& savefile)
+void ObjectFactory::SaveMapHeader(FastSerializer& savefile)
 {
-    savefile << MAIN_TICK << std::endl;
-    savefile << id_ << std::endl;
+    savefile << MAIN_TICK;
+    savefile << id_;
 
     // Random save
-    savefile << game_->GetRandom().GetSeed() << std::endl;
-    savefile << game_->GetRandom().GetCallsCounter() << std::endl;
+    savefile << game_->GetRandom().GetSeed();
+    savefile << game_->GetRandom().GetCallsCounter();
 
     // Save Map Size
 
-    savefile << game_->GetMap().GetWidth() << std::endl;
-    savefile << game_->GetMap().GetHeight() << std::endl;
-    savefile << game_->GetMap().GetDepth() << std::endl;
+    savefile << game_->GetMap().GetWidth();
+    savefile << game_->GetMap().GetHeight();
+    savefile << game_->GetMap().GetDepth();
 
     // Save player table
-    savefile << players_table_.size() << " ";
+    savefile << players_table_.size();
     for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
     {
-        savefile << it->first << " ";
-        savefile << it->second << " ";
+        savefile << it->first;
+        savefile << it->second;
     }
-    savefile << std::endl;
 }
 
-void ObjectFactory::LoadMapHeader(std::stringstream& savefile)
+void ObjectFactory::LoadMapHeader(FastDeserializer& savefile)
 {
     savefile >> MAIN_TICK;
     qDebug() << "MAIN_TICK: " << MAIN_TICK;
@@ -147,7 +146,9 @@ void ObjectFactory::LoadMapHeader(std::stringstream& savefile)
     }
 }
 
-void ObjectFactory::Save(std::stringstream& savefile)
+const QString END_TYPE = "0~$";
+
+void ObjectFactory::Save(FastSerializer& savefile)
 {
     SaveMapHeader(savefile);
 
@@ -163,36 +164,31 @@ void ObjectFactory::Save(std::stringstream& savefile)
         if (it->object)
         {
             it->object->Save(savefile);
-            savefile << std::endl;
         }
         ++it;
     }
-    savefile << "0 ~";
+
+    savefile << END_TYPE;
 }
 
-const int AVERAGE_BYTE_PER_TILE = 129 * 2;
-const long int UNCOMPRESS_LEN_DEFAULT = 50 * 50 * 5 * AVERAGE_BYTE_PER_TILE;
-void ObjectFactory::Load(std::stringstream& savefile, quint32 real_this_mob)
+void ObjectFactory::Load(FastDeserializer& savefile, quint32 real_this_mob)
 {
     Clear();
 
     LoadMapHeader(savefile);
     int j = 0;
-    while(!savefile.eof())
+    while (!savefile.IsEnd())
     {
         j++;
-        if(savefile.fail())
+        if (savefile.IsEnd())
         {
             qDebug() << "Error! " << j << "\n";
             KvAbort();
         }
         QString type;
+        savefile >> type;
 
-        std::string local;
-        savefile >> local;
-        type = QString::fromStdString(local);
-
-        if(type == "0")
+        if (type == END_TYPE)
         {
             qDebug() << "Zero id reached";
             break;
@@ -222,29 +218,22 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
     Clear();
     //qDebug() << "End clear";
 
-    std::fstream sfile;
-    sfile.open(name.toStdString(), std::ios_base::in);
-    if(sfile.fail())
+    QFile file(name);
+    if (!file.open(QIODevice::ReadOnly))
     {
         qDebug() << "Error open " << name;
         return;
     }
 
-    std::stringstream ss;
-
-    sfile.seekg (0, std::ios::end);
-    std::streamoff length = sfile.tellg();
-    sfile.seekg (0, std::ios::beg);
-    char* buff = new char[static_cast<quint32>(length)];
-
-    sfile.read(buff, length);
-    sfile.close();
-    ss.write(buff, length);
-    delete[] buff;
+    QByteArray raw_data = file.readAll();
+    FastDeserializer ss(raw_data.data(), raw_data.size());
 
     BeginWorldCreation();
 
-    int x, y, z;
+    int x;
+    int y;
+    int z;
+
     ss >> x;
     ss >> y;
     ss >> z;
@@ -252,45 +241,30 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
     game_->MakeTiles(x, y, z);
 
     qDebug() << "Begin loading cycle";
-    while (ss)
+    while (!ss.IsEnd())
     {
-        QString t_item;
-        quint32 x, y, z;
+        QString item_type;
+        quint32 x;
+        quint32 y;
+        quint32 z;
 
-        std::string local;
-        ss >> local;
-        t_item = QString::fromStdString(local);
-        if (!ss)
-        {
-            continue;
-        }
+        ss >> item_type;
+
         ss >> x;
-        if (!ss)
-        {
-            continue;
-        }
         ss >> y;
-        if (!ss)
-        {
-            continue;
-        }
         ss >> z;
-        if (!ss)
-        {
-            continue;
-        }
 
         //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
         //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(t_item);
-        IdPtr<IOnMapObject> i = CreateImpl(t_item);
+        IdPtr<IOnMapObject> i = CreateImpl(item_type);
         if (!i.IsValid())
         {
-            qDebug() << "Unable to cast: " << t_item;
+            qDebug() << "Unable to cast: " << item_type;
             KvAbort();
         }
         //qDebug() << "Success!";
 
-        std::map<QString, QString> variables;
+        std::map<QString, QByteArray> variables;
         WrapReadMessage(ss, variables);
 
         for (auto it = variables.begin(); it != variables.end(); ++it)
@@ -300,10 +274,13 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
                 continue;
             }
 
-            std::stringstream local_variable;
-            local_variable << it->second.toStdString();
+            QByteArray variable_data = it->second;
 
-            get_setters_for_types()[t_item][it->first](i.operator*(), local_variable);
+            FastDeserializer local(variable_data.data(), variable_data.size());
+
+            get_setters_for_types()[item_type][it->first](
+                i.operator*(),
+                local);
         }
 
         //qDebug() << "id_ptr_on<ITurf> t = i";

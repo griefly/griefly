@@ -139,12 +139,12 @@ void LoginMob::CalculateVisible(std::list<PosPoint>* visible_list)
     visible_list->clear();
 }
 
-std::ostream& operator<<(std::stringstream& file, LoginInterface& interf)
+FastSerializer& operator<<(FastSerializer& file, LoginInterface& interf)
 {
     WrapWriteMessage(file, interf.view_);
     return file;
 }
-std::istream& operator>>(std::stringstream& file, LoginInterface& interf)
+FastDeserializer& operator>>(FastDeserializer& file, LoginInterface& interf)
 {
     WrapReadMessage(file, interf.view_);
     return file;

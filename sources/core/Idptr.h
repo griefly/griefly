@@ -8,6 +8,7 @@
 
 #include "FastIsType.h"
 #include "KVAbort.h"
+#include "FastSerializer.h"
 
 class IMainObject;
 
@@ -34,9 +35,9 @@ template<class T>
 class IdPtr : public IdPtrBase
 {
     template<class U>
-    friend std::ostream& operator<<(std::ostream& stream, const IdPtr<U>& ptr);
+    friend FastDeserializer& operator<<(FastDeserializer& stream, const IdPtr<U>& ptr);
     template<class U>
-    friend std::istream& operator>>(std::istream& stream, IdPtr<U>& ptr);
+    friend FastSerializer& operator>>(FastSerializer& stream, IdPtr<U>& ptr);
     template<class U>
     friend class IdPtr;
 public:
@@ -199,15 +200,17 @@ private:
 };
 
 template<typename T>
-std::ostream& operator<<(std::ostream& stream, const IdPtr<T>& ptr)
+FastSerializer& operator<<(FastSerializer& stream, const IdPtr<T>& ptr)
 {
-    stream << ptr.id_ << " ";
+    stream << ptr.Id();
     return stream;
 }
 
 template<typename T>
-std::istream& operator>>(std::istream& stream, IdPtr<T>& ptr)
+FastDeserializer& operator>>(FastDeserializer& stream, IdPtr<T>& ptr)
 {
-    stream >> ptr.id_;
+    quint32 id;
+    stream >> id;
+    ptr = id;
     return stream;
 }

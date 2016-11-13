@@ -179,6 +179,24 @@ TEST(FastSerializer, WriteString)
     }
 }
 
+// TODO: read QByteArray
+TEST(FastSerializer, WriteByteArray)
+{
+    FastSerializer serializer;
+
+    {
+        const int DATA_SIZE = 7;
+        const char DATA[DATA_SIZE + 1] = "fff\0fff";
+        QByteArray value(DATA, DATA_SIZE);
+        serializer << value;
+        ASSERT_EQ(serializer.GetIndex(), 11);
+        for (int i = 0; i < 11; ++i)
+        {
+            EXPECT_EQ(serializer.GetData()[i], DATA[i]);
+        }
+    }
+}
+
 TEST(FastSerializer, ResetIndex)
 {
     FastSerializer serializer;

@@ -66,6 +66,8 @@ private:
     void AddLastMessages(std::stringstream& stream);
     void AddMessageToMessageLog(Message2 message);
 
+    FastSerializer serializer_;
+
     std::vector<Message2> messages_log_;
     int log_pos_;
 
