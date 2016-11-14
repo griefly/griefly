@@ -127,14 +127,16 @@ TEST_F(IdPtrTest, Validating)
 TEST_F(IdPtrTest, SaveAndLoad)
 {
     IdPtr<IMainObject> ptr(93);
-    std::stringstream str;
-    str << ptr;
-    ASSERT_EQ(str.str(), "93 ");
+    FastSerializer serializer(1);
+    serializer << ptr;
+    ASSERT_EQ(QByteArray(serializer.GetData(), serializer.GetIndex()), "93 ");
 
     IdPtr<IMainObject> ptr2;
     ASSERT_FALSE(ptr2 == ptr);
 
-    str >> ptr2;
+    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+
+    deserializer >> ptr2;
     ASSERT_TRUE(ptr2 == ptr);
 }
 

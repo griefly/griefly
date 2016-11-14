@@ -179,7 +179,6 @@ TEST(FastSerializer, WriteString)
     }
 }
 
-// TODO: read QByteArray
 TEST(FastSerializer, WriteByteArray)
 {
     FastSerializer serializer;
@@ -378,6 +377,26 @@ TEST(FastDeserializer, ReadString)
     ASSERT_FALSE(deserializer.IsEnd());
     deserializer >> value;
     EXPECT_EQ(value, "П  м ");
+
+    ASSERT_TRUE(deserializer.IsEnd());
+}
+
+TEST(FastDeserializer, ReadByteArray)
+{
+    const char* const DATA = "\x1F\x04\x20\x00\x20\x00\x3C\x04\x20\x00";
+    const int DATA_SIZE = 10;
+
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+    ASSERT_FALSE(deserializer.IsEnd());
+    QByteArray value;
+    deserializer >> value;
+
+    ASSERT_EQ(value.size(), DATA_SIZE);
+
+    for (int i = 0; i < DATA_SIZE; ++i)
+    {
+        EXPECT_EQ(value[i], DATA[i]);
+    }
 
     ASSERT_TRUE(deserializer.IsEnd());
 }

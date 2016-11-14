@@ -87,26 +87,31 @@ TEST(FramesetInfo, StreamOperators)
     frameset_info.SetAngle(84);
     frameset_info.SetShift(12, 13);
 
-    std::stringstream str;
-    str << frameset_info;
+    FastSerializer serialzier(1);
+    serialzier << frameset_info;
 
-    ASSERT_EQ(str.str(), "8 sprite 1 7 state 2 84 12 13 ");
+    QByteArray value(serialzier.GetData(), serialzier.GetIndex());
 
-    str.str("8 sprite 2 7 state 3 -14 12 13");
+    ASSERT_EQ(value, "8 sprite 1 7 state 2 84 12 13 ");
+
+    FastDeserializer deserializer("8 sprite 2 7 state 3 -14 12 13", 30);
 
     ViewInfo::FramesetInfo frameset_info2;
-    str >> frameset_info2;
+    deserializer >> frameset_info2;
     ASSERT_EQ(frameset_info2.GetSprite(), "sprite 2");
     ASSERT_EQ(frameset_info2.GetState(), "state 3");
     ASSERT_EQ(frameset_info2.GetAngle(), -14);
     ASSERT_EQ(frameset_info2.GetShiftX(), 12);
     ASSERT_EQ(frameset_info2.GetShiftY(), 13);
 
-    std::stringstream str2;
-    str2 << frameset_info;
-    ViewInfo::FramesetInfo frameset_info3;
-    str2 >> frameset_info3;
-    ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
+    {
+        FastSerializer serializer;
+        serializer << frameset_info;
+        FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+        ViewInfo::FramesetInfo frameset_info3;
+        deserializer >> frameset_info3;
+        ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
+    }
 }
 
 TEST(FramesetInfo, Hash)
@@ -282,9 +287,9 @@ TEST(ViewInfo, StreamOperators)
 {
     ViewInfo view_info;  
     {
-        std::stringstream str;
-        str << view_info;
-        ASSERT_EQ(str.str(), "0  0  0 0 0  0 0 0 ");
+        FastSerializer serializer(1);
+        serializer << view_info;
+        ASSERT_EQ(QByteArray(serializer.GetData(), serializer.GetIndex()), "0  0  0 0 0  0 0 0 ");
     }
 
     view_info.SetSprite("vhs");
@@ -293,29 +298,32 @@ TEST(ViewInfo, StreamOperators)
     view_info.AddOverlay("something", "someone").SetShift(1, 10);
     view_info.AddUnderlay("tree", "weed");
     {
-        std::stringstream str;
-        str << view_info;
+        FastSerializer serializer(1);
+        serializer << view_info;
         ASSERT_EQ(
-            str.str(),
+            QByteArray(serializer.GetData(), serializer.GetIndex()),
             "3 vhs 4 dead 0 0 0  1 4 tree 4 weed 0 0 0  1 "
             "9 something 7 someone 0 1 10  11 ");
     }
 
     {
-        std::stringstream str("0  0  0 0 0  0 0 0 ");
-        str >> view_info;
+        FastDeserializer deserializer("0  0  0 0 0  0 0 0 ", 19);
+        deserializer >> view_info;
         ASSERT_EQ(view_info.GetAngle(), 0);
         ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "");
         ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "");
         ASSERT_EQ(view_info.GetOverlays().size(), 0);
         ASSERT_EQ(view_info.GetUnderlays().size(), 0);
+        ASSERT_TRUE(deserializer.IsEnd());
     }
 
     {
-        std::stringstream str(
+        const char* const DATA =
             "4 vhsa 5 dea1d 0 0 0  1 4 tree 4 weed 0 0 0  1 "
-            "8 smething 7 someone 0 1 10  11 ");
-        str >> view_info;
+            "8 smething 7 someone 0 1 10  11 ";
+        FastDeserializer deserializer(DATA, 79);
+
+        deserializer >> view_info;
         ASSERT_EQ(view_info.GetAngle(), 11);
         ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "vhsa");
         ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "dea1d");

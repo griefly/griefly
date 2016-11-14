@@ -46,9 +46,9 @@ TEST(MainObject, Save)
 {
     {
         IMainObject object(42);
-        std::stringstream save;
+        FastSerializer save(1);
         object.Save(save);
-        ASSERT_EQ(save.str(), " main  42  0 ");
+        ASSERT_EQ(QByteArray(save.GetData(), save.GetIndex()), " main  42  0 ");
     }
     {
         MockIGame game;
@@ -60,9 +60,9 @@ TEST(MainObject, Save)
 
         IMainObject object(42);
         object.SetGame(&game);
-        std::stringstream save("18");
+        FastDeserializer save("\x08\x00\x00\x00", 4);
         object.Load(save);
-        ASSERT_EQ(object.GetFreq(), 18);
+        ASSERT_EQ(object.GetFreq(), 8);
     }
 }
 
