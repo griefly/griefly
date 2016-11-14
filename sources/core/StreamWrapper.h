@@ -21,7 +21,7 @@ inline FastSerializer& WrapWriteMessage(
         FastSerializer& file,
         std::map<KeyType, ValueType>& to_write)
 {
-    file << to_write.size();
+    file << static_cast<quint32>(to_write.size());
     for (auto it = to_write.begin(); it != to_write.end(); ++it)
     {
         WrapWriteMessage(file, it->first);

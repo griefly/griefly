@@ -288,13 +288,21 @@ void MapEditor::LoadMapgen(const QString& name)
 void MapEditor::fix_borders(int *posx, int *posy)
 {
     if (*posx < 0)
+    {
         *posx = 0;
+    }
     if (*posx >= static_cast<int>(editor_map_.size()))
+    {
         *posx = static_cast<int>(editor_map_.size()) - 1;
+    }
     if (*posy < 0)
+    {
         *posy = 0;
+    }
     if (*posy >= static_cast<int>(editor_map_[0].size()))
+    {
         *posy = static_cast<int>(editor_map_[0].size()) - 1;
+    }
 }
 
 void MapEditor::SetPointer(int posx, int posy)

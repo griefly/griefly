@@ -6,13 +6,13 @@ FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info)
 {
     WrapWriteMessage(file, view_info.base_frameset_);
 
-    file << view_info.underlays_.size();
+    file << static_cast<quint32>(view_info.underlays_.size());
     for (auto it = view_info.underlays_.begin(); it != view_info.underlays_.end(); ++it)
     {
             WrapWriteMessage(file, *it);
     }
 
-    file << view_info.overlays_.size();
+    file << static_cast<quint32>(view_info.overlays_.size());
     for (auto it = view_info.overlays_.begin(); it != view_info.overlays_.end(); ++it)
     {
             WrapWriteMessage(file, *it);

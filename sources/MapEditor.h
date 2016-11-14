@@ -13,6 +13,8 @@
 #include <QKeyEvent>
 #include <QVector>
 
+typedef std::map<QString, QByteArray> MapgenVariablesType;
+
 class MapEditor: public QObject
 {
     Q_OBJECT
@@ -23,7 +25,7 @@ public:
 
         QString item_type;
 
-        std::map<QString, QString> variables;
+        MapgenVariablesType variables;
 
         QGraphicsPixmapItem* pixmap_item;
     };

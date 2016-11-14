@@ -15,7 +15,7 @@ class FastSerializer
         const T& value);
 public:
     static const int DEFAULT_SIZE = 32 * 1024 * 1024;
-    FastSerializer();
+    FastSerializer(int size = DEFAULT_SIZE);
     ~FastSerializer();
 
     void ResetIndex()

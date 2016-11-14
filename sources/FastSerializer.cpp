@@ -19,10 +19,10 @@ static_assert(
     sizeof(bool) == 1,
     "Unsupported platform, sizeof(bool) should be 1!");
 
-FastSerializer::FastSerializer()
+FastSerializer::FastSerializer(int size)
     : index_(0)
 {
-    data_.resize(DEFAULT_SIZE);
+    data_.resize(size);
 }
 
 FastSerializer::~FastSerializer()

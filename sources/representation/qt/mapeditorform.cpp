@@ -347,20 +347,21 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         return;
     }
 
-    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
+    QByteArray& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
 
-    ui->lineEditRaw->setText(variable_value);
+    ui->lineEditRaw->setText(variable_value.toHex());
 
-    std::stringstream ss;
-    ss << variable_value.toStdString();
+    // TODO: As string
 
-    QString parsed_value;
-    if (WrapReadMessage(ss, parsed_value).fail())
+    // FastDeserializer deserializer(variable_value.data(), variable_value.size());
+
+    /*QString parsed_value;
+    if (WrapReadMessage(deserializer, parsed_value))
     {
         parsed_value = "PARSING_ERROR";
     }
 
-    ui->lineEditAsString->setText(parsed_value);
+    ui->lineEditAsString->setText(parsed_value);*/
 }
 
 void MapEditorForm::on_lineEditRaw_returnPressed()
@@ -378,9 +379,9 @@ void MapEditorForm::on_lineEditRaw_returnPressed()
 
 
 
-    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
+    QByteArray& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
 
-    variable_value = ui->lineEditRaw->text();
+    variable_value = QByteArray::fromHex(ui->lineEditRaw->text().toUtf8());
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
@@ -401,7 +402,8 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
         return;
     }
 
-    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
+    // TODO: reimplement this
+    /*QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
 
     std::stringstream ss;
     QString loc = ui->lineEditAsString->text();
@@ -410,7 +412,7 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
     variable_value = QString::fromStdString(ss.str());
 
     on_listWidgetVariables_itemSelectionChanged();
-    UpdateVariablesColor(*ee);
+    UpdateVariablesColor(*ee);*/
 }
 
 void MapEditorForm::on_listWidgetTurf_clicked(const QModelIndex&index)

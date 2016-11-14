@@ -3,7 +3,7 @@
 
 FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& s)
 {
-    file << s.size();
+    file << static_cast<quint32>(s.size());
     for (auto it : s)
     {
         file << it;

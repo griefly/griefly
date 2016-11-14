@@ -11,6 +11,8 @@
 #include "net/NetworkMessagesTypes.h"
 #include "AutogenMetadata.h"
 
+#include "MapEditor.h"
+
 ObjectFactory::ObjectFactory(IGame* game)
 {
     objects_table_.resize(100);
@@ -94,7 +96,7 @@ void ObjectFactory::SaveMapHeader(FastSerializer& savefile)
     savefile << game_->GetMap().GetDepth();
 
     // Save player table
-    savefile << players_table_.size();
+    savefile << static_cast<quint32>(players_table_.size());
     for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
     {
         savefile << it->first;
@@ -264,7 +266,7 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
         }
         //qDebug() << "Success!";
 
-        std::map<QString, QByteArray> variables;
+        MapgenVariablesType variables;
         WrapReadMessage(ss, variables);
 
         for (auto it = variables.begin(); it != variables.end(); ++it)
