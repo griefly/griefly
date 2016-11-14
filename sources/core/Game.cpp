@@ -73,7 +73,7 @@ Game::Game()
     for (quint32 i = 0; i < messages_log_.size(); ++i)
     {
         messages_log_[i].type = 0;
-        messages_log_[i].json = "(empty)";
+        messages_log_[i].json.append("(empty)");
     }
     log_pos_ = 0;
 
@@ -484,10 +484,10 @@ void Game::ProcessInputMessages()
                 qDebug() << "Map will be generated";
                 std::stringstream ss;
                 GetFactory().Save(ss);
-                AddLastMessages(ss);
                 qDebug() << "Tellp: " << ss.tellp();
                 std::string string = ss.str();
                 data = QByteArray(string.c_str(), string.length());
+                AddLastMessages(data);
                 qDebug() << " " << data.length();
             }
 
@@ -515,12 +515,12 @@ void Game::ProcessInputMessages()
             Message2 msg;
 
             msg.type = MessageType::HASH_MESSAGE;
-            msg.json =
+            msg.json.append(
                       "{\"hash\":"
                     + QString::number(hash)
                     + ",\"tick\":"
                     + QString::number(MAIN_TICK)
-                    + "}";
+                    + "}");
 
             Network2::GetInstance().SendMsg(msg);
 
@@ -707,15 +707,15 @@ void Game::generateUnsync()
     }
 }
 
-void Game::AddLastMessages(std::stringstream& stream)
+void Game::AddLastMessages(QByteArray& data)
 {
-    stream << std::endl;
+    data.append('\n');
     for (int i = (log_pos_ + 1) % messages_log_.size();
              i != log_pos_;
              i = (i + 1) % messages_log_.size())
     {
-        stream << messages_log_[i].type << " ";
-        stream << messages_log_[i].json.toStdString() << std::endl;
+        data.append(QByteArray::number(messages_log_[i].type) + " ");
+        data.append(messages_log_[i].json + '\n');
     }
 }
 

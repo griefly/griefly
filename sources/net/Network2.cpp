@@ -18,7 +18,7 @@
 
 QJsonObject Network2::ParseJson(Message2 message)
 {
-    QJsonDocument doc = QJsonDocument::fromJson(message.json.toUtf8());
+    QJsonDocument doc = QJsonDocument::fromJson(message.json);
     return doc.object();
 }
 
@@ -127,7 +127,7 @@ void Network2::SendOrdinaryMessage(QString text)
 {
     Message2 msg;
     msg.type = MessageType::ORDINARY;
-    msg.json = "{\"key\":\"" + text + "\"}";
+    msg.json.append("{\"key\":\"" + text + "\"}");
 
     SendMsg(msg);
 }
@@ -136,7 +136,7 @@ void Network2::SendPing(QString ping_id)
 {
     Message2 msg;
     msg.type = MessageType::PING;
-    msg.json = "{\"ping_id\":\"" + ping_id + "\"}";
+    msg.json.append("{\"ping_id\":\"" + ping_id + "\"}");
 
     SendMsg(msg);
 }
@@ -312,9 +312,9 @@ bool SocketHandler::HandleBody()
     Message2 new_message;
     new_message.type = message_type_;
 
-    new_message.json = net_codec_->toUnicode(
+    new_message.json.append(net_codec_->toUnicode(
         (const char*)&(buffer_.constData()[buffer_pos_]),
-        message_size_);
+        message_size_));
     buffer_pos_ += message_size_;
 
     if (is_first_message_)
