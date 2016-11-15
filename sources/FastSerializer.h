@@ -93,7 +93,7 @@ private:
     void Write(const char* value);
     void Preallocate(int size)
     {
-        if ((index_ + size) > data_.size())
+        while ((index_ + size) > data_.size())
         {
             data_.resize(data_.size() * 2);
         }

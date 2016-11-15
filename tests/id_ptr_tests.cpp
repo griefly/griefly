@@ -129,15 +129,17 @@ TEST_F(IdPtrTest, SaveAndLoad)
     IdPtr<IMainObject> ptr(93);
     FastSerializer serializer(1);
     serializer << ptr;
-    ASSERT_EQ(QByteArray(serializer.GetData(), serializer.GetIndex()), "93 ");
+    EXPECT_EQ(
+        QByteArray(serializer.GetData(), serializer.GetIndex()),
+        QByteArray("\x5D\x00\x00\x00", 4));
 
     IdPtr<IMainObject> ptr2;
-    ASSERT_FALSE(ptr2 == ptr);
+    EXPECT_FALSE(ptr2 == ptr);
 
     FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
 
     deserializer >> ptr2;
-    ASSERT_TRUE(ptr2 == ptr);
+    EXPECT_TRUE(ptr2 == ptr);
 }
 
 

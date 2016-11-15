@@ -48,7 +48,15 @@ TEST(MainObject, Save)
         IMainObject object(42);
         FastSerializer save(1);
         object.Save(save);
-        ASSERT_EQ(QByteArray(save.GetData(), save.GetIndex()), " main  42  0 ");
+
+        const char* const DATA =
+            "\x04\x00\x00\x00\x6d\x00\x61\x00"
+            "\x69\x00\x6E\x00\x2A\x00\x00\x00"
+            "\x00\x00\x00\x00";
+
+        EXPECT_EQ(
+            QByteArray(save.GetData(), save.GetIndex()),
+            QByteArray(DATA, 20));
     }
     {
         MockIGame game;
@@ -62,7 +70,7 @@ TEST(MainObject, Save)
         object.SetGame(&game);
         FastDeserializer save("\x08\x00\x00\x00", 4);
         object.Load(save);
-        ASSERT_EQ(object.GetFreq(), 8);
+        EXPECT_EQ(object.GetFreq(), 8);
     }
 }
 

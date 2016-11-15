@@ -189,9 +189,13 @@ TEST(FastSerializer, WriteByteArray)
         QByteArray value(DATA, DATA_SIZE);
         serializer << value;
         ASSERT_EQ(serializer.GetIndex(), 11);
-        for (int i = 0; i < 11; ++i)
+        EXPECT_EQ(serializer.GetData()[0], '\x07');
+        EXPECT_EQ(serializer.GetData()[1], '\x00');
+        EXPECT_EQ(serializer.GetData()[2], '\x00');
+        EXPECT_EQ(serializer.GetData()[3], '\x00');
+        for (int i = 0; i < DATA_SIZE; ++i)
         {
-            EXPECT_EQ(serializer.GetData()[i], DATA[i]);
+            EXPECT_EQ(serializer.GetData()[i + 4], DATA[i]);
         }
     }
 }
@@ -383,19 +387,19 @@ TEST(FastDeserializer, ReadString)
 
 TEST(FastDeserializer, ReadByteArray)
 {
-    const char* const DATA = "\x1F\x04\x20\x00\x20\x00\x3C\x04\x20\x00";
-    const int DATA_SIZE = 10;
+    const char* const DATA = "\x0A\x00\x00\x00\x1F\x04\x20\x00\x20\x00\x3C\x04\x20\x00";
+    const int DATA_SIZE = 14;
 
     FastDeserializer deserializer(DATA, DATA_SIZE);
     ASSERT_FALSE(deserializer.IsEnd());
     QByteArray value;
     deserializer >> value;
 
-    ASSERT_EQ(value.size(), DATA_SIZE);
+    ASSERT_EQ(value.size(), DATA_SIZE - 4);
 
-    for (int i = 0; i < DATA_SIZE; ++i)
+    for (int i = 0; i < DATA_SIZE - 4; ++i)
     {
-        EXPECT_EQ(value[i], DATA[i]);
+        EXPECT_EQ(value[i], DATA[i + 4]);
     }
 
     ASSERT_TRUE(deserializer.IsEnd());
