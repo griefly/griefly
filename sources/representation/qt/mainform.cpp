@@ -205,7 +205,7 @@ void MainForm::startGameLoop(int id, QString map)
         {
             max_process_time = process_time;
         }
-        int sleep_time = time_per_frame_ms - process_time/1e6;
+        int sleep_time = time_per_frame_ms - process_time / 1e6;
         if (sleep_time > 0)
         {
             QThread::msleep(sleep_time);
@@ -220,15 +220,11 @@ void MainForm::startGameLoop(int id, QString map)
             addSystemText("FPS", "FPS: " + QString::number(fps_counter));
             addSystemText(
                 "{Perf}Represent",
-                "Represent max: "
-                + QString::number(max_process_time / 1e6)
-                + " ms");
+                QString("Represent max: %1 ms").arg(max_process_time / 1e6));
             qint64 mutex_ns = GetRepresentation().GetPerformance().mutex_ns;
             addSystemText(
                 "{Perf}RepresentMutex",
-                "Represent mutex lock max: "
-                + QString::number(mutex_ns / 1e6)
-                + " ms");
+                QString("Represent mutex lock max: %1 ms").arg(mutex_ns / 1e6));
             GetRepresentation().ResetPerformance();
             max_process_time = 0;
             fps_timer.restart();
