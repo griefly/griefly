@@ -74,5 +74,14 @@ public:
 };
 ADD_TO_TYPELIST(OrangeBoots);
 
+class ClownBoots: public Cloth
+{
+public:
+    DECLARE_SAVED(ClownBoots, Cloth);
+    DECLARE_GET_TYPE_ITEM(ClownBoots);
+    ClownBoots(quint32 id);
+};
+ADD_TO_TYPELIST(ClownBoots);
+
 
 

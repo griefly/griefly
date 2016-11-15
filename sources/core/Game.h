@@ -63,7 +63,7 @@ private:
     void InitGlobalObjects();
     void Process();
 
-    void AddLastMessages(std::stringstream& stream);
+    void AddLastMessages(QByteArray &data);
     void AddMessageToMessageLog(Message2 message);
 
     FastSerializer serializer_;
