@@ -51,23 +51,11 @@ Projectile::Projectile(quint32 id) : IMovable(id)
 void Projectile::Process()
 {
     Dir old_dir = GetDir();
-    if(harmless_)
-    {
-        if (!ProcessMovement())
-        {
-            return;
-        }
-        harmless_ = false;
-        if (GetDir() != old_dir)
-        {
-            ProcessMovement();
-        }
-        return;
-    }
     if (!ProcessMovement())
     {
         return;
     }
+    harmless_ = false;
     if (GetDir() != old_dir)
     {
         ProcessMovement();
