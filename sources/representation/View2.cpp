@@ -41,7 +41,7 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
         return true;
     }
 
-    if (shift >= (int)GetMetadata()->dirs)
+    if (shift >= static_cast<int>(GetMetadata()->dirs))
     {
         shift = 0;
     }
