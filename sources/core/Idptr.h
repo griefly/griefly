@@ -128,7 +128,7 @@ public:
         {
             Update();
         }
-        return reinterpret_cast<T*>(casted_);
+        return static_cast<T*>(casted_);
     }
 
     T* operator->() const
@@ -146,12 +146,12 @@ public:
 #if defined(KV_ID_PTR_VALID_CACHE)
         if (casted_)
         {
-            return reinterpret_cast<void*>(casted_);
+            return static_cast<void*>(casted_);
         }
 #endif // KV_ID_PTR_VALID_CACHE
         if (IsValid())
         {
-            return reinterpret_cast<void*>(casted_);
+            return static_cast<void*>(casted_);
         }
         return nullptr;
     }
