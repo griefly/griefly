@@ -14,6 +14,15 @@ class FastSerializer
         FastSerializer& serializer,
         const T& value);
 public:
+    typedef char Type;
+
+    static const Type BOOL_TYPE = 1;
+    static const Type INT32_TYPE = 2;
+    static const Type UINT32_TYPE = 3;
+    static const Type STRING_TYPE = 4;
+    static const Type BYTEARRAY_TYPE = 5;
+    static const Type TYPE_TYPE = 6;
+
     static const int DEFAULT_SIZE = 32 * 1024 * 1024;
     FastSerializer(int size = DEFAULT_SIZE);
     ~FastSerializer();
@@ -33,37 +42,44 @@ public:
 private:
     void Write(bool value)
     {
-        Preallocate(1);
-        data_[index_] = value;
-        ++index_;
+        Preallocate(2);
+        data_[index_] = BOOL_TYPE;
+        data_[index_ + 1] = value;
+        index_ += 2;
     }
     void Write(qint32 value)
     {
-        Preallocate(4);
+        Preallocate(5);
 
-        data_[index_ + 0] = (value >>  0) & 0xFF;
-        data_[index_ + 1] = (value >>  8) & 0xFF;
-        data_[index_ + 2] = (value >> 16) & 0xFF;
-        data_[index_ + 3] = (value >> 24) & 0xFF;
+        data_[index_ + 0] = INT32_TYPE;
+        data_[index_ + 1] = (value >>  0) & 0xFF;
+        data_[index_ + 2] = (value >>  8) & 0xFF;
+        data_[index_ + 3] = (value >> 16) & 0xFF;
+        data_[index_ + 4] = (value >> 24) & 0xFF;
 
-        index_ += 4;
+        index_ += 5;
     }
     void Write(quint32 value)
     {
-        Preallocate(4);
+        Preallocate(5);
 
-        data_[index_ + 0] = (value >>  0) & 0xFF;
-        data_[index_ + 1] = (value >>  8) & 0xFF;
-        data_[index_ + 2] = (value >> 16) & 0xFF;
-        data_[index_ + 3] = (value >> 24) & 0xFF;
+        data_[index_ + 0] = UINT32_TYPE;
+        data_[index_ + 1] = (value >>  0) & 0xFF;
+        data_[index_ + 2] = (value >>  8) & 0xFF;
+        data_[index_ + 3] = (value >> 16) & 0xFF;
+        data_[index_ + 4] = (value >> 24) & 0xFF;
 
-        index_ += 4;
+        index_ += 5;
     }
 
-    void Write(const QString& value)
+    void Write(const QString& value, Type type = STRING_TYPE)
     {
         const QChar* data = value.data();
         const int size = value.size();
+
+        Preallocate(1);
+        data_[index_ + 0] = type;
+        ++index_;
 
         Write(size);
         Preallocate(size * 2);
@@ -79,6 +95,10 @@ private:
     }
     void Write(const QByteArray& value)
     {
+        Preallocate(1);
+        data_[index_ + 0] = BYTEARRAY_TYPE;
+        ++index_;
+
         Write(value.size());
         Preallocate(value.size());
 
@@ -139,6 +159,7 @@ public:
 private:
     void Read(bool* value)
     {
+        EnsureType(FastSerializer::BOOL_TYPE);
         EnsureSize(1);
 
         *value = data_[index_];
@@ -147,6 +168,7 @@ private:
 
     void Read(qint32* value)
     {
+        EnsureType(FastSerializer::INT32_TYPE);
         EnsureSize(4);
 
         *value = 0;
@@ -170,6 +192,7 @@ private:
 
     void Read(quint32* value)
     {
+        EnsureType(FastSerializer::UINT32_TYPE);
         EnsureSize(4);
 
         *value = 0;
@@ -191,8 +214,12 @@ private:
         index_ += 4;
     }
 
-    void Read(QString* value)
+    void Read(
+        QString* value,
+        FastSerializer::Type type = FastSerializer::STRING_TYPE)
     {
+        EnsureType(type);
+
         int size;
         Read(&size);
 
@@ -218,6 +245,8 @@ private:
 
     void Read(QByteArray* value)
     {
+        EnsureType(FastSerializer::BYTEARRAY_TYPE);
+
         int size;
         Read(&size);
 
@@ -241,6 +270,18 @@ private:
             qDebug() << "FastDeserializer: EnsureSize fail!";
             KvAbort();
         }
+    }
+    void EnsureType(FastSerializer::Type type)
+    {
+        EnsureSize(1);
+        if (data_[index_] != type)
+        {
+            qDebug() << "Types mismatch:"
+                     << static_cast<int>(data_[index_])
+                     << static_cast<int>(type);
+            KvAbort();
+        }
+        ++index_;
     }
 
     const char* const data_;
