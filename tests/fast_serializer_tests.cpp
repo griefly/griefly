@@ -227,8 +227,7 @@ TEST(FastSerializer, BigData)
 
 TEST(FastDeserializerDeathTest, EnsureSizeFail)
 {
-    FastDeserializer deserializer("\0\0", 2);
-\
+    FastDeserializer deserializer("\x01\x00\x01\x00", 4);
     ASSERT_DEATH(
     {
         bool value;

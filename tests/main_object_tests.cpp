@@ -50,13 +50,13 @@ TEST(MainObject, Save)
         object.Save(save);
 
         const char* const DATA =
-            "\x04\x00\x00\x00\x6d\x00\x61\x00"
-            "\x69\x00\x6E\x00\x2A\x00\x00\x00"
-            "\x00\x00\x00\x00";
+            "\x04\x02\x04\x00\x00\x00\x6d\x00\x61\x00"
+            "\x69\x00\x6E\x00\x03\x2A\x00\x00\x00"
+            "\x02\x00\x00\x00\x00";
 
         EXPECT_EQ(
             QByteArray(save.GetData(), save.GetIndex()),
-            QByteArray(DATA, 20));
+            QByteArray(DATA, 24));
     }
     {
         MockIGame game;
@@ -68,7 +68,7 @@ TEST(MainObject, Save)
 
         IMainObject object(42);
         object.SetGame(&game);
-        FastDeserializer save("\x08\x00\x00\x00", 4);
+        FastDeserializer save("\x02\x08\x00\x00\x00", 5);
         object.Load(save);
         EXPECT_EQ(object.GetFreq(), 8);
     }

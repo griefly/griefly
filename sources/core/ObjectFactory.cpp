@@ -246,9 +246,9 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
     while (!ss.IsEnd())
     {
         QString item_type;
-        quint32 x;
-        quint32 y;
-        quint32 z;
+        qint32 x;
+        qint32 y;
+        qint32 z;
 
         ss >> item_type;
 

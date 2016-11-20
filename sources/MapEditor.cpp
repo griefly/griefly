@@ -258,9 +258,9 @@ void MapEditor::LoadMapgen(const QString& name)
     while (!data.IsEnd())
     {
         QString item_type;
-        quint32 x;
-        quint32 y;
-        quint32 z;
+        qint32 x;
+        qint32 y;
+        qint32 z;
 
         data >> item_type;
 
