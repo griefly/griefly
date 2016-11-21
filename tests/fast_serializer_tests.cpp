@@ -16,12 +16,14 @@ TEST(FastSerializer, WriteBool)
     FastSerializer serializer;
 
     serializer << true;
-    ASSERT_EQ(serializer.GetIndex(), 1);
-    EXPECT_TRUE(serializer.GetData()[0]);
+    ASSERT_EQ(serializer.GetIndex(), 2);
+    EXPECT_EQ(serializer.GetData()[0], '\x01');
+    EXPECT_TRUE(serializer.GetData()[1]);
 
     serializer << false;
-    ASSERT_EQ(serializer.GetIndex(), 2);
-    EXPECT_FALSE(serializer.GetData()[1]);
+    ASSERT_EQ(serializer.GetIndex(), 4);
+    EXPECT_EQ(serializer.GetData()[2], '\x01');
+    EXPECT_FALSE(serializer.GetData()[3]);
 }
 
 TEST(FastSerializer, WriteInt32)
@@ -31,19 +33,21 @@ TEST(FastSerializer, WriteInt32)
     {
         qint32 value = 0;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 4);
+        ASSERT_EQ(serializer.GetIndex(), 5);
+        EXPECT_EQ(serializer.GetData()[0], '\x02');
         for (int i = 0; i < 4; ++i)
         {
-            EXPECT_EQ(serializer.GetData()[i], '\x00');
+            EXPECT_EQ(serializer.GetData()[i + 1], '\x00');
         }
     }
 
     {
         qint32 value = 1;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 8);
-        EXPECT_EQ(serializer.GetData()[4], '\x01');
-        for (int i = 5; i < 8; ++i)
+        ASSERT_EQ(serializer.GetIndex(), 10);
+        EXPECT_EQ(serializer.GetData()[5], '\x02');
+        EXPECT_EQ(serializer.GetData()[6], '\x01');
+        for (int i = 7; i < 10; ++i)
         {
             EXPECT_EQ(serializer.GetData()[i], '\x00');
         }
@@ -52,8 +56,9 @@ TEST(FastSerializer, WriteInt32)
     {
         qint32 value = -1;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 12);
-        for (int i = 8; i < 12; ++i)
+        ASSERT_EQ(serializer.GetIndex(), 15);
+        EXPECT_EQ(serializer.GetData()[10], '\x02');
+        for (int i = 11; i < 15; ++i)
         {
             EXPECT_EQ(serializer.GetData()[i], '\xFF');
         }
@@ -62,21 +67,23 @@ TEST(FastSerializer, WriteInt32)
     {
         qint32 value = 2047583047;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 16);
-        EXPECT_EQ(serializer.GetData()[12], '\x47');
-        EXPECT_EQ(serializer.GetData()[13], '\xA3');
-        EXPECT_EQ(serializer.GetData()[14], '\x0B');
-        EXPECT_EQ(serializer.GetData()[15], '\x7A');
+        ASSERT_EQ(serializer.GetIndex(), 20);
+        EXPECT_EQ(serializer.GetData()[15], '\x02');
+        EXPECT_EQ(serializer.GetData()[16], '\x47');
+        EXPECT_EQ(serializer.GetData()[17], '\xA3');
+        EXPECT_EQ(serializer.GetData()[18], '\x0B');
+        EXPECT_EQ(serializer.GetData()[19], '\x7A');
     }
 
     {
         qint32 value = -2039583948;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 20);
-        EXPECT_EQ(serializer.GetData()[16], '\x34');
-        EXPECT_EQ(serializer.GetData()[17], '\x6B');
-        EXPECT_EQ(serializer.GetData()[18], '\x6E');
-        EXPECT_EQ(serializer.GetData()[19], '\x86');
+        ASSERT_EQ(serializer.GetIndex(), 25);
+        EXPECT_EQ(serializer.GetData()[20], '\x02');
+        EXPECT_EQ(serializer.GetData()[21], '\x34');
+        EXPECT_EQ(serializer.GetData()[22], '\x6B');
+        EXPECT_EQ(serializer.GetData()[23], '\x6E');
+        EXPECT_EQ(serializer.GetData()[24], '\x86');
     }
 }
 
@@ -87,8 +94,9 @@ TEST(FastSerializer, WriteUint32)
     {
         quint32 value = 0;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 4);
-        for (int i = 0; i < 4; ++i)
+        ASSERT_EQ(serializer.GetIndex(), 5);
+        EXPECT_EQ(serializer.GetData()[0], '\x03');
+        for (int i = 1; i < 5; ++i)
         {
             EXPECT_EQ(serializer.GetData()[i], '\x00');
         }
@@ -97,9 +105,10 @@ TEST(FastSerializer, WriteUint32)
     {
         quint32 value = 1;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 8);
-        EXPECT_EQ(serializer.GetData()[4], '\x01');
-        for (int i = 5; i < 8; ++i)
+        ASSERT_EQ(serializer.GetIndex(), 10);
+        EXPECT_EQ(serializer.GetData()[5], '\x03');
+        EXPECT_EQ(serializer.GetData()[6], '\x01');
+        for (int i = 7; i < 10; ++i)
         {
             EXPECT_EQ(serializer.GetData()[i], '\x00');
         }
@@ -108,8 +117,9 @@ TEST(FastSerializer, WriteUint32)
     {
         quint32 value = 4294967295;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 12);
-        for (int i = 8; i < 12; ++i)
+        ASSERT_EQ(serializer.GetIndex(), 15);
+        EXPECT_EQ(serializer.GetData()[10], '\x03');
+        for (int i = 11; i < 15; ++i)
         {
             EXPECT_EQ(serializer.GetData()[i], '\xFF');
         }
@@ -118,11 +128,12 @@ TEST(FastSerializer, WriteUint32)
     {
         quint32 value = 2047583048;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 16);
-        EXPECT_EQ(serializer.GetData()[12], '\x48');
-        EXPECT_EQ(serializer.GetData()[13], '\xA3');
-        EXPECT_EQ(serializer.GetData()[14], '\x0B');
-        EXPECT_EQ(serializer.GetData()[15], '\x7A');
+        ASSERT_EQ(serializer.GetIndex(), 20);
+        EXPECT_EQ(serializer.GetData()[15], '\x03');
+        EXPECT_EQ(serializer.GetData()[16], '\x48');
+        EXPECT_EQ(serializer.GetData()[17], '\xA3');
+        EXPECT_EQ(serializer.GetData()[18], '\x0B');
+        EXPECT_EQ(serializer.GetData()[19], '\x7A');
     }
 }
 
@@ -133,8 +144,10 @@ TEST(FastSerializer, WriteString)
     {
         QString value;
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 4);
-        for (int i = 0; i < 4; ++i)
+        ASSERT_EQ(serializer.GetIndex(), 6);
+        EXPECT_EQ(serializer.GetData()[0], '\x04');
+        EXPECT_EQ(serializer.GetData()[1], '\x02');
+        for (int i = 2; i < 6; ++i)
         {
             EXPECT_EQ(serializer.GetData()[i], '\x00');
         }
@@ -143,39 +156,41 @@ TEST(FastSerializer, WriteString)
     {
         QString value("Hello world!");
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 32);
-        EXPECT_EQ(serializer.GetData()[4], '\x0C');
-        EXPECT_EQ(serializer.GetData()[5], '\x00');
-        EXPECT_EQ(serializer.GetData()[6], '\x00');
-        EXPECT_EQ(serializer.GetData()[7], '\x00');
-        EXPECT_EQ(serializer.GetData()[8], 'H');
+        ASSERT_EQ(serializer.GetIndex(), 36);
+        EXPECT_EQ(serializer.GetData()[6], '\x04');
+        EXPECT_EQ(serializer.GetData()[7], '\x02');
+        EXPECT_EQ(serializer.GetData()[8], '\x0C');
         EXPECT_EQ(serializer.GetData()[9], '\x00');
-        EXPECT_EQ(serializer.GetData()[10], 'e');
+        EXPECT_EQ(serializer.GetData()[10], '\x00');
         EXPECT_EQ(serializer.GetData()[11], '\x00');
-        EXPECT_EQ(serializer.GetData()[18], ' ');
-        EXPECT_EQ(serializer.GetData()[19], '\x00');
-        EXPECT_EQ(serializer.GetData()[30], '!');
-        EXPECT_EQ(serializer.GetData()[31], '\x00');
+        EXPECT_EQ(serializer.GetData()[12], 'H');
+        EXPECT_EQ(serializer.GetData()[13], '\x00');
+        EXPECT_EQ(serializer.GetData()[14], 'e');
+        EXPECT_EQ(serializer.GetData()[15], '\x00');
+        EXPECT_EQ(serializer.GetData()[22], ' ');
+        EXPECT_EQ(serializer.GetData()[23], '\x00');
+        EXPECT_EQ(serializer.GetData()[34], '!');
+        EXPECT_EQ(serializer.GetData()[35], '\x00');
     }
 
     {
-        QString value = "Привет, мир!";
+        QString value("Привет, мир!");
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 60);
-        EXPECT_EQ(serializer.GetData()[32], '\x0C');
-        EXPECT_EQ(serializer.GetData()[33], '\x00');
-        EXPECT_EQ(serializer.GetData()[34], '\x00');
-        EXPECT_EQ(serializer.GetData()[35], '\x00');
-        EXPECT_EQ(serializer.GetData()[36], '\x1F');
-        EXPECT_EQ(serializer.GetData()[37], '\x04');
-        EXPECT_EQ(serializer.GetData()[48], ',');
-        EXPECT_EQ(serializer.GetData()[49], '\x00');
-        EXPECT_EQ(serializer.GetData()[50], ' ');
-        EXPECT_EQ(serializer.GetData()[51], '\x00');
-        EXPECT_EQ(serializer.GetData()[52], '\x3C');
-        EXPECT_EQ(serializer.GetData()[53], '\x04');
-        EXPECT_EQ(serializer.GetData()[58], '!');
-        EXPECT_EQ(serializer.GetData()[59], '\x00');
+        ASSERT_EQ(serializer.GetIndex(), 66);
+        EXPECT_EQ(serializer.GetData()[36], '\x04');
+        EXPECT_EQ(serializer.GetData()[37], '\x02');
+        EXPECT_EQ(serializer.GetData()[38], '\x0C');
+        EXPECT_EQ(serializer.GetData()[39], '\x00');
+        EXPECT_EQ(serializer.GetData()[40], '\x00');
+        EXPECT_EQ(serializer.GetData()[41], '\x00');
+        EXPECT_EQ(serializer.GetData()[54], ',');
+        EXPECT_EQ(serializer.GetData()[55], '\x00');
+        EXPECT_EQ(serializer.GetData()[56], ' ');
+        EXPECT_EQ(serializer.GetData()[57], '\x00');
+        EXPECT_EQ(serializer.GetData()[58], '\x3C');
+        EXPECT_EQ(serializer.GetData()[59], '\x04');
+        EXPECT_EQ(serializer.GetData()[64], '!');
+        EXPECT_EQ(serializer.GetData()[65], '\x00');
     }
 }
 
@@ -188,14 +203,16 @@ TEST(FastSerializer, WriteByteArray)
         const char DATA[DATA_SIZE + 1] = "fff\0fff";
         QByteArray value(DATA, DATA_SIZE);
         serializer << value;
-        ASSERT_EQ(serializer.GetIndex(), 11);
-        EXPECT_EQ(serializer.GetData()[0], '\x07');
-        EXPECT_EQ(serializer.GetData()[1], '\x00');
-        EXPECT_EQ(serializer.GetData()[2], '\x00');
+        ASSERT_EQ(serializer.GetIndex(), 13);
+        EXPECT_EQ(serializer.GetData()[0], '\x05');
+        EXPECT_EQ(serializer.GetData()[1], '\x02');
+        EXPECT_EQ(serializer.GetData()[2], '\x07');
         EXPECT_EQ(serializer.GetData()[3], '\x00');
+        EXPECT_EQ(serializer.GetData()[4], '\x00');
+        EXPECT_EQ(serializer.GetData()[5], '\x00');
         for (int i = 0; i < DATA_SIZE; ++i)
         {
-            EXPECT_EQ(serializer.GetData()[i + 4], DATA[i]);
+            EXPECT_EQ(serializer.GetData()[i + 6], DATA[i]);
         }
     }
 }
@@ -206,7 +223,7 @@ TEST(FastSerializer, ResetIndex)
 
     ASSERT_EQ(serializer.GetIndex(), 0);
     serializer << 42;
-    ASSERT_EQ(serializer.GetIndex(), 4);
+    ASSERT_EQ(serializer.GetIndex(), 5);
     serializer.ResetIndex();
     ASSERT_EQ(serializer.GetIndex(), 0);
 }
@@ -217,12 +234,12 @@ TEST(FastSerializer, BigData)
 
     ASSERT_EQ(serializer.GetIndex(), 0);
 
-    const int BIG_DATA_SIZE = FastSerializer::DEFAULT_SIZE * 2;
+    const int BIG_DATA_SIZE = FastSerializer::DEFAULT_SIZE;
     for (int i = 0; i < BIG_DATA_SIZE; ++i)
     {
         serializer << true;
     }
-    ASSERT_EQ(serializer.GetIndex(), BIG_DATA_SIZE);
+    ASSERT_EQ(serializer.GetIndex(), BIG_DATA_SIZE * 2);
 }
 
 TEST(FastDeserializerDeathTest, EnsureSizeFail)
