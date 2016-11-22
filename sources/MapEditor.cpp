@@ -203,7 +203,7 @@ void MapEditor::SaveMapgen(const QString& name)
             {
                 if (editor_map_[x][y][z].turf.pixmap_item)
                 {
-                    data << editor_map_[x][y][z].turf.item_type;
+                    data.WriteType(editor_map_[x][y][z].turf.item_type);
                     data << x;
                     data << y;
                     data << z;
@@ -212,7 +212,7 @@ void MapEditor::SaveMapgen(const QString& name)
                 auto& il = editor_map_[x][y][z].items;
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
-                    data << it->item_type;
+                    data.WriteType(it->item_type);
                     data << x;
                     data << y;
                     data << z;
@@ -262,7 +262,7 @@ void MapEditor::LoadMapgen(const QString& name)
         qint32 y;
         qint32 z;
 
-        data >> item_type;
+        data.ReadType(&item_type);
 
         data >> x;
         data >> y;

@@ -131,7 +131,7 @@ TEST_F(IdPtrTest, SaveAndLoad)
     serializer << ptr;
     EXPECT_EQ(
         QByteArray(serializer.GetData(), serializer.GetIndex()),
-        QByteArray("\x5D\x00\x00\x00", 4));
+        QByteArray("\x03\x5D\x00\x00\x00", 5));
 
     IdPtr<IMainObject> ptr2;
     EXPECT_FALSE(ptr2 == ptr);

@@ -39,6 +39,10 @@ public:
     {
         return data_.data();
     }
+    void WriteType(QString type)
+    {
+        Write(type, TYPE_TYPE);
+    }
 private:
     void Write(bool value)
     {
@@ -155,7 +159,10 @@ public:
         }
         return false;
     }
-
+    void ReadType(QString* value)
+    {
+        Read(value, FastSerializer::TYPE_TYPE);
+    }
 private:
     void Read(bool* value)
     {
@@ -276,9 +283,8 @@ private:
         EnsureSize(1);
         if (data_[index_] != type)
         {
-            qDebug() << "Types mismatch:"
-                     << static_cast<int>(data_[index_])
-                     << static_cast<int>(type);
+            const QString TEMPLATE("Types mismatch: expected - %1, actual - %2");
+            qDebug() << TEMPLATE.arg(static_cast<int>(type)).arg(static_cast<int>(data_[index_]));
             KvAbort();
         }
         ++index_;

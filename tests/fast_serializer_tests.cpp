@@ -254,6 +254,16 @@ TEST(FastDeserializerDeathTest, EnsureSizeFail)
     }, "FastDeserializer: EnsureSize fail!");
 }
 
+TEST(FastDeserializerDeathTest, EnsureType)
+{
+    FastDeserializer deserializer("\xFF", 1);
+    ASSERT_DEATH(
+    {
+        bool value;
+        deserializer >> value;
+    }, "Types mismatch: expected - 1, actual - -1");
+}
+
 TEST(FastDeserializer, Constructor)
 {
     {
@@ -268,17 +278,19 @@ TEST(FastDeserializer, Constructor)
 
 TEST(FastDeserializer, ReadBool)
 {
-    const char* const DATA = "\0134gkfo\0\01";
-    const int DATA_SIZE = 11;
+    const char* const DATA =
+        "\x01\x00\x01\x01\x01\x03\x01\x04\x01\xDD"
+        "\x01\xAF\x01\xFF\x01\x03\x01\x00\x01\x00";
+    const int DATA_SIZE = 20;
 
     FastDeserializer deserializer(DATA, DATA_SIZE);
 
-    for (int i = 0; i < DATA_SIZE; ++i)
+    for (int i = 0; i < DATA_SIZE / 2; ++i)
     {
         ASSERT_FALSE(deserializer.IsEnd());
         bool value;
         deserializer >> value;
-        if (DATA[i] == '\0')
+        if (DATA[i * 2 + 1] == '\0')
         {
             EXPECT_FALSE(value);
         }
@@ -294,13 +306,13 @@ TEST(FastDeserializer, ReadBool)
 TEST(FastDeserializer, ReadInt32)
 {
     const char* const DATA =
-        "\x00\x00\x00\x00"
-        "\x01\x00\x00\x00"
-        "\xFF\x00\x00\x00"
-        "\x47\xA3\x0B\x7A"
-        "\xFF\xFF\xFF\xFF"
-        "\xFF\x1F\xFF\xFF";
-    const int DATA_SIZE = 24;
+        "\x02\x00\x00\x00\x00"
+        "\x02\x01\x00\x00\x00"
+        "\x02\xFF\x00\x00\x00"
+        "\x02\x47\xA3\x0B\x7A"
+        "\x02\xFF\xFF\xFF\xFF"
+        "\x02\xFF\x1F\xFF\xFF";
+    const int DATA_SIZE = 30;
 
     FastDeserializer deserializer(DATA, DATA_SIZE);
     qint32 value;
@@ -335,13 +347,13 @@ TEST(FastDeserializer, ReadInt32)
 TEST(FastDeserializer, ReadUint32)
 {
     const char* const DATA =
-        "\x00\x00\x00\x00"
-        "\x01\x00\x00\x00"
-        "\xFF\x00\x00\x00"
-        "\x47\xA3\x0B\x7A"
-        "\xFF\xFF\xFF\xFF"
-        "\xFF\x1F\xFF\xFF";
-    const int DATA_SIZE = 24;
+        "\x03\x00\x00\x00\x00"
+        "\x03\x01\x00\x00\x00"
+        "\x03\xFF\x00\x00\x00"
+        "\x03\x47\xA3\x0B\x7A"
+        "\x03\xFF\xFF\xFF\xFF"
+        "\x03\xFF\x1F\xFF\xFF";
+    const int DATA_SIZE = 30;
 
     FastDeserializer deserializer(DATA, DATA_SIZE);
     quint32 value;
@@ -376,12 +388,12 @@ TEST(FastDeserializer, ReadUint32)
 TEST(FastDeserializer, ReadString)
 {
     const char* const DATA =
-        "\x00\x00\x00\x00"
-        "\x03\x00\x00\x00"
+        "\x04\x02\x00\x00\x00\x00"
+        "\x04\x02\x03\x00\x00\x00"
         "\x48\x00\x65\x00\x20\x00"
-        "\x05\x00\x00\x00"
+        "\x04\x02\x05\x00\x00\x00"
         "\x1F\x04\x20\x00\x20\x00\x3C\x04\x20\x00";
-    const int DATA_SIZE = 28;
+    const int DATA_SIZE = 34;
 
     FastDeserializer deserializer(DATA, DATA_SIZE);
     QString value;
@@ -403,19 +415,19 @@ TEST(FastDeserializer, ReadString)
 
 TEST(FastDeserializer, ReadByteArray)
 {
-    const char* const DATA = "\x0A\x00\x00\x00\x1F\x04\x20\x00\x20\x00\x3C\x04\x20\x00";
-    const int DATA_SIZE = 14;
+    const char* const DATA = "\x05\x02\x0A\x00\x00\x00\x1F\x04\x20\x00\x20\x00\x3C\x04\x20\x00";
+    const int DATA_SIZE = 16;
 
     FastDeserializer deserializer(DATA, DATA_SIZE);
     ASSERT_FALSE(deserializer.IsEnd());
     QByteArray value;
     deserializer >> value;
 
-    ASSERT_EQ(value.size(), DATA_SIZE - 4);
+    ASSERT_EQ(value.size(), DATA_SIZE - 6);
 
-    for (int i = 0; i < DATA_SIZE - 4; ++i)
+    for (int i = 0; i < DATA_SIZE - 6; ++i)
     {
-        EXPECT_EQ(value[i], DATA[i + 4]);
+        EXPECT_EQ(value[i], DATA[i + 6]);
     }
 
     ASSERT_TRUE(deserializer.IsEnd());

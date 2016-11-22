@@ -170,7 +170,7 @@ void ObjectFactory::Save(FastSerializer& savefile)
         ++it;
     }
 
-    savefile << END_TYPE;
+    savefile.WriteType(END_TYPE);
 }
 
 void ObjectFactory::Load(FastDeserializer& savefile, quint32 real_this_mob)
@@ -188,7 +188,7 @@ void ObjectFactory::Load(FastDeserializer& savefile, quint32 real_this_mob)
             KvAbort();
         }
         QString type;
-        savefile >> type;
+        savefile.ReadType(&type);
 
         if (type == END_TYPE)
         {
@@ -250,7 +250,7 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
         qint32 y;
         qint32 z;
 
-        ss >> item_type;
+        ss.ReadType(&item_type);
 
         ss >> x;
         ss >> y;
