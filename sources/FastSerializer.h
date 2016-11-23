@@ -163,6 +163,19 @@ public:
     {
         Read(value, FastSerializer::TYPE_TYPE);
     }
+    bool IsNextType(FastSerializer::Type type)
+    {
+        if (IsEnd())
+        {
+            return false;
+        }
+        if (data_[index_] != type)
+        {
+            return false;
+        }
+        return true;
+    }
+
 private:
     void Read(bool* value)
     {

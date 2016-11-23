@@ -69,6 +69,8 @@ private slots:
 
     void on_resizeMap_clicked();
 
+    void on_lineEditAsInt_returnPressed();
+
 private:
     bool is_turf_selected_;
 

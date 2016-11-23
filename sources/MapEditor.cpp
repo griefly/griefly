@@ -366,9 +366,12 @@ void MapEditor::AddItem(const QString &item_type)
 
 void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
 {
-    if (ee && ee->variables["dMove"].size())
+    QByteArray& data = ee->variables["dMove"];
+    if (ee && data.size())
     {
-        int dir = ee->variables["dMove"].toInt();
+        FastDeserializer deserializer(data.data(), data.size());
+        int dir;
+        deserializer >> dir;
         int byond_dir = helpers::dir_to_byond(dir);
 
         if (byond_dir < image_holder_[ee->item_type].size())
