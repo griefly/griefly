@@ -194,6 +194,43 @@ TEST(FastSerializer, WriteString)
     }
 }
 
+TEST(FastSerializer, WriteType)
+{
+    FastSerializer serializer;
+
+    {
+        QString value;
+        serializer.WriteType(value);
+        ASSERT_EQ(serializer.GetIndex(), 6);
+        EXPECT_EQ(serializer.GetData()[0], '\x06');
+        EXPECT_EQ(serializer.GetData()[1], '\x02');
+        for (int i = 2; i < 6; ++i)
+        {
+            EXPECT_EQ(serializer.GetData()[i], '\x00');
+        }
+    }
+
+    {
+        QString value("Hello world!");
+        serializer.WriteType(value);
+        ASSERT_EQ(serializer.GetIndex(), 36);
+        EXPECT_EQ(serializer.GetData()[6], '\x06');
+        EXPECT_EQ(serializer.GetData()[7], '\x02');
+        EXPECT_EQ(serializer.GetData()[8], '\x0C');
+        EXPECT_EQ(serializer.GetData()[9], '\x00');
+        EXPECT_EQ(serializer.GetData()[10], '\x00');
+        EXPECT_EQ(serializer.GetData()[11], '\x00');
+        EXPECT_EQ(serializer.GetData()[12], 'H');
+        EXPECT_EQ(serializer.GetData()[13], '\x00');
+        EXPECT_EQ(serializer.GetData()[14], 'e');
+        EXPECT_EQ(serializer.GetData()[15], '\x00');
+        EXPECT_EQ(serializer.GetData()[22], ' ');
+        EXPECT_EQ(serializer.GetData()[23], '\x00');
+        EXPECT_EQ(serializer.GetData()[34], '!');
+        EXPECT_EQ(serializer.GetData()[35], '\x00');
+    }
+}
+
 TEST(FastSerializer, WriteByteArray)
 {
     FastSerializer serializer;
@@ -274,6 +311,28 @@ TEST(FastDeserializer, Constructor)
         FastDeserializer deserializer(nullptr, 1);
         EXPECT_FALSE(deserializer.IsEnd());
     }
+}
+
+TEST(FastDeserializer, IsNextType)
+{
+    const char* const DATA =
+        "\x01\x00";
+    const int DATA_SIZE = 2;
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+    EXPECT_TRUE(deserializer.IsNextType(FastSerializer::BOOL_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::BYTEARRAY_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::INT32_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::UINT32_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::STRING_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::TYPE_TYPE));
+
+    bool value;
+    deserializer >> value;
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::BOOL_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::INT32_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::UINT32_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::STRING_TYPE));
+    EXPECT_FALSE(deserializer.IsNextType(FastSerializer::TYPE_TYPE));
 }
 
 TEST(FastDeserializer, ReadBool)
@@ -408,6 +467,34 @@ TEST(FastDeserializer, ReadString)
 
     ASSERT_FALSE(deserializer.IsEnd());
     deserializer >> value;
+    EXPECT_EQ(value, "П  м ");
+
+    ASSERT_TRUE(deserializer.IsEnd());
+}
+
+TEST(FastDeserializer, ReadType)
+{
+    const char* const DATA =
+        "\x06\x02\x00\x00\x00\x00"
+        "\x06\x02\x03\x00\x00\x00"
+        "\x48\x00\x65\x00\x20\x00"
+        "\x06\x02\x05\x00\x00\x00"
+        "\x1F\x04\x20\x00\x20\x00\x3C\x04\x20\x00";
+    const int DATA_SIZE = 34;
+
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+    QString value;
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.ReadType(&value);
+    EXPECT_EQ(value, "");
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.ReadType(&value);
+    EXPECT_EQ(value, "He ");
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer.ReadType(&value);
     EXPECT_EQ(value, "П  м ");
 
     ASSERT_TRUE(deserializer.IsEnd());

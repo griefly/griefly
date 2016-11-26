@@ -39,7 +39,7 @@ public:
     {
         return data_.data();
     }
-    void WriteType(QString type)
+    void WriteType(const QString& type)
     {
         Write(type, TYPE_TYPE);
     }
