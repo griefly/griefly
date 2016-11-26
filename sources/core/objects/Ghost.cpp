@@ -71,9 +71,9 @@ void Ghost::CalculateVisible(std::list<PosPoint>* visible_list)
     visible_list->clear();
     PosPoint p;
     p.posz = GetZ();
-    int x_low_border = std::max(0, GetX() - SIZE_H_SQ - 1);
+    int x_low_border = std::max(0, GetX() - SIZE_H_SQ);
     int x_high_border = std::min(GetGame().GetMap().GetWidth(), GetX() + SIZE_H_SQ);
-    int y_low_border = std::max(0, GetY() - SIZE_W_SQ - 2);
+    int y_low_border = std::max(0, GetY() - SIZE_W_SQ);
     int y_high_border = std::min(GetGame().GetMap().GetHeight(), GetY() + SIZE_W_SQ);
     for (int i = x_low_border; i < x_high_border; ++i)
     {
