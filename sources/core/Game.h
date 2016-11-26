@@ -63,8 +63,10 @@ private:
     void InitGlobalObjects();
     void Process();
 
-    void AddLastMessages(QByteArray &data);
+    void AddLastMessages(QByteArray* data);
     void AddMessageToMessageLog(Message2 message);
+
+    void AddBuildInfo(QByteArray* data);
 
     FastSerializer serializer_;
 

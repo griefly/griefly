@@ -190,11 +190,24 @@ if(NOT CLIENT_VERSION)
 endif()
 message(STATUS ${CLIENT_VERSION})
 
+set(SYSTEM_INFO "\
+System: ${CMAKE_SYSTEM}, \
+Compiler: ${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}, \
+Target processor: ${CMAKE_SYSTEM_PROCESSOR}, \
+Host processor: ${CMAKE_HOST_SYSTEM_PROCESSOR}\
+")
+message(STATUS ${SYSTEM_INFO})
+
 # Version.cpp generation
 execute_process(
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/version.py ${CLIENT_VERSION}
+    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/version.py
+    ${CLIENT_VERSION} ${SYSTEM_INFO}
+    RESULT_VARIABLE VERSION_GENERATION_RETVAL
 )
+if(NOT VERSION_GENERATION_RETVAL EQUAL 0)
+    message(FATAL_ERROR "Unable to generate 'Version.cpp' file!")
+endif()
 
 ###
 ### End checking build version
