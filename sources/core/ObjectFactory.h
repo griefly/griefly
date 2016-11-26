@@ -12,7 +12,6 @@ class ObjectFactory : public IObjectFactory
 public:
     ObjectFactory(IGame* game);
 
-    virtual unsigned int GetLastHash() override;
     virtual std::vector<ObjectInfo>& GetIdTable() override;
 
     virtual void ForeachProcess() override;
@@ -64,9 +63,6 @@ private:
     std::vector<IdPtr<IMainObject>> process_table_;
 
     std::vector<IdPtr<IMainObject>> add_to_process_;
-
-    unsigned int hash_last_;
-    unsigned int hash_last_tick_;
 
     quint32 id_;
 

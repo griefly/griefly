@@ -21,11 +21,6 @@ ObjectFactory::ObjectFactory(IGame* game)
     game_ = game;
 }
 
-unsigned int ObjectFactory::GetLastHash()
-{
-    return hash_last_;
-}
-
 std::vector<ObjectInfo>& ObjectFactory::GetIdTable()
 {
     return objects_table_;
