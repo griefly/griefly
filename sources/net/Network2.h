@@ -16,7 +16,7 @@
 
 #include "NetworkMessagesTypes.h"
 
-const int MAX_WAIT_ON_QUEUE = 1;
+const int MAX_WAIT_ON_QUEUE = 8;
 
 struct Message2
 {
