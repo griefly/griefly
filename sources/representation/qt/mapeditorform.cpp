@@ -68,7 +68,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     SetSpriter(new SpriteHolder);
 
     qDebug() << "Start generate images for creators";
-    for (auto it = (*items_creators()).begin(); it != (*items_creators()).end(); ++it)
+    for (auto it = (*GetItemsCreators()).begin(); it != (*GetItemsCreators()).end(); ++it)
     {
         IMainObject* loc = it->second(0);
         IOnMapObject* bloc = CastTo<IOnMapObject>(loc);
@@ -276,7 +276,7 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     }
     QListWidgetItem* item = ui->listWidgetTile->selectedItems().first();
 
-    auto& variables = get_setters_for_types()[item->text()];
+    auto& variables = GetSettersForTypes()[item->text()];
 
     for (auto it = variables.begin(); it != variables.end(); ++it)
     {

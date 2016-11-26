@@ -275,9 +275,8 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
 
             FastDeserializer local(variable_data.data(), variable_data.size());
 
-            get_setters_for_types()[item_type][it->first](
-                i.operator*(),
-                local);
+            auto& setters_for_type = GetSettersForTypes();
+            setters_for_type[item_type][it->first](i.operator*(), local);
         }
 
         //qDebug() << "id_ptr_on<ITurf> t = i";
@@ -300,7 +299,7 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
 IMainObject* ObjectFactory::NewVoidObject(const QString& type, quint32 id)
 {
     //qDebug() << "NewVoidObject: " << QString::fromStdString(type);
-    auto& il = (*items_creators());
+    auto& il = (*GetItemsCreators());
     //qDebug() << il.size();
     auto f = il[type];
 
@@ -313,7 +312,7 @@ IMainObject* ObjectFactory::NewVoidObject(const QString& type, quint32 id)
 
 IMainObject* ObjectFactory::NewVoidObjectSaved(const QString& type)
 {
-    return (*items_void_creators())[type]();
+    return (*GetVoidItemsCreators())[type]();
 }
 
 void ObjectFactory::Clear()

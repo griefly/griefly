@@ -1,6 +1,6 @@
 #include "AutogenMetadata.h"
 
-bool is_creators_inited()
+bool AreCreatorsInited()
 {
     static bool is = false;
     if (!is)
@@ -11,11 +11,11 @@ bool is_creators_inited()
     return true;
 }
 
-std::unordered_map<QString, item_creator>* items_creators()
+std::unordered_map<QString, ItemCreator>* GetItemsCreators()
 {
-    static std::unordered_map<QString, item_creator>* result
-            = new std::unordered_map<QString, item_creator>;
-    if (!is_creators_inited())
+    static std::unordered_map<QString, ItemCreator>* result
+        = new std::unordered_map<QString, ItemCreator>;
+    if (!AreCreatorsInited())
     {
         InitCreators();
         InitRealTypes();
@@ -23,11 +23,11 @@ std::unordered_map<QString, item_creator>* items_creators()
     return result;
 }
 
-std::unordered_map<QString, item_creator_saved>* items_void_creators()
+std::unordered_map<QString, VoidItemCreator>* GetVoidItemsCreators()
 {
-    static std::unordered_map<QString, item_creator_saved>* result
-            = new std::unordered_map<QString, item_creator_saved>;
-    if (!is_creators_inited())
+    static std::unordered_map<QString, VoidItemCreator>* result
+        = new std::unordered_map<QString, VoidItemCreator>;
+    if (!AreCreatorsInited())
     {
         InitCreators();
         InitRealTypes();
