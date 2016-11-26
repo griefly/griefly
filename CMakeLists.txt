@@ -5,6 +5,7 @@ option(BUILD_TESTS "Build tests" OFF)
 option(BUILD_COVER "Generate test coverage" OFF)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 include(ClangFormat)
 
