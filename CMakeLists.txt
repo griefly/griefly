@@ -190,11 +190,17 @@ if(NOT CLIENT_VERSION)
 endif()
 message(STATUS ${CLIENT_VERSION})
 
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(BITS_VERSION 64)
+else(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    set(BITS_VERSION 32)
+else()
+    message(FATAL_ERROR "Unsupported compiler bits version!")
+endif()
 set(SYSTEM_INFO "\
 System: ${CMAKE_SYSTEM}, \
 Compiler: ${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}, \
-Target processor: ${CMAKE_SYSTEM_PROCESSOR}, \
-Host processor: ${CMAKE_HOST_SYSTEM_PROCESSOR}\
+Bits version: ${BITS_VERSION}\
 ")
 message(STATUS ${SYSTEM_INFO})
 
@@ -295,6 +301,11 @@ if(BUILD_TESTS)
     target_link_libraries(KVEngine gmock)
     if(MSVC)
         set_target_properties(KVEngine PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:CONSOLE")
+        set_target_properties(KVEngine PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
+    endif()
+else()
+    if(MSVC)
+        target_link_libraries(KVEngine Qt5::WinMain)
     endif()
 endif()
 
