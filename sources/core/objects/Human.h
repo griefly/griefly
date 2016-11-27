@@ -17,6 +17,7 @@ public:
     virtual void ProcessMessage(const Message2& msg) override;
     virtual void Process() override;
     virtual void Live();
+    virtual void Regeneration();
 
     virtual IdPtr<IOnMapBase> GetNeighbour(Dir) const;
 
@@ -58,6 +59,9 @@ protected:
     bool KV_SAVEBLE(dead_);
 
     int KV_SAVEBLE(health_);
+    int KV_SAVEBLE(suffocation_damage_);
+    int KV_SAVEBLE(burn_damage_);
+    int KV_SAVEBLE(brute_damage_);
 
     IdPtr<IMovable> KV_SAVEBLE(pulled_object_);
 private:

@@ -42,6 +42,7 @@ Projectile::Projectile(quint32 id) : IMovable(id)
 {
     SetPassable(D_ALL, Passable::FULL);
     damage_ = 0;
+    burn_damage_ = 0;
     SetSprite("icons/projectiles.dmi");
     v_level = 6;
     current_step_ = 0;
@@ -248,4 +249,9 @@ int Projectile::GetDamage()
 {
     return damage_;
 }
+int Projectile::GetBurnDamage()
+{
+    return burn_damage_;
+}
+
 

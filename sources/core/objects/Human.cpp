@@ -39,6 +39,9 @@ Human::Human(quint32 id) : IMob(id)
     dead_ = false;
     lying_ = false;
     health_ = 100;
+    suffocation_damage_ = 0;
+    burn_damage_ = 0;
+    brute_damage_ = 0;
 
     pulled_object_ = 0;
 }
@@ -336,14 +339,23 @@ void Human::Live()
     if (IdPtr<CubeTile> t = owner)
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
+        int temperature = t->GetAtmosHolder()->GetTemperature();
+        if(std::abs(308-temperature) > 30)
+        {
+            int damage = (std::abs(308-temperature) / 100) > 1 ? (std::abs(308-temperature) / 100) : 1;
+            health_ -= damage;
+            burn_damage_ += damage;
+        }
         if (oxygen > 0)
         {
             t->GetAtmosHolder()->RemoveGase(OXYGEN, 1);
             t->GetAtmosHolder()->AddGase(CO2, 1);
+            Regeneration();
         }
         else if (health_ >= -100)
         {
             --health_;
+            suffocation_damage_++;
             
             if (GetRand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
             {
@@ -368,6 +380,7 @@ void Human::Live()
         if (health_ >= -100)
         {
             --health_;
+            suffocation_damage_++;
             if (GetRand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
             {
                 GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
@@ -377,6 +390,16 @@ void Human::Live()
     if (health_ < -100 && !dead_)
     {
         OnDeath();
+    }
+}
+
+void Human::Regeneration()
+{
+    int healed = suffocation_damage_ / 2 > 0 ? suffocation_damage_ / 2 : 1;
+    if(suffocation_damage_)
+    { 
+        health_ += healed;
+        suffocation_damage_ -= healed;
     }
 }
 
@@ -411,6 +434,7 @@ void Human::AttackBy(IdPtr<Item> item)
     if (item.IsValid() && (item->damage > 0))
     {
         health_ -= item->damage;
+        brute_damage_ -= item->damage;
         QString sound = QString("genhit%1.ogg").arg(GetRand() % 3 + 1);
         PlaySoundIfVisible(sound, owner.Id());
         if (IdPtr<IOnMapObject> item_owner = item->GetOwner())
@@ -422,7 +446,8 @@ void Human::AttackBy(IdPtr<Item> item)
     }
     else if (!item.IsValid())
     {
-        health_ -= 1;
+        health_--;
+        brute_damage_++;
 
         unsigned int punch_value = (GetRand() % 4) + 1;
         PlaySoundIfVisible(QString("punch%1.ogg").arg(punch_value), owner.Id());
@@ -496,7 +521,9 @@ void Human::Bump(IdPtr<IMovable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
-        health_ -= projectile->GetDamage();
+        health_ -= projectile->GetDamage() + projectile->GetBurnDamage();
+        brute_damage_ += projectile->GetDamage();
+        burn_damage_ += projectile->GetBurnDamage();
         GetGame().GetChat().PostSimpleText(
             name + " got hit by a " + projectile->name + "!", GetRoot().Id());
 
@@ -509,7 +536,7 @@ void Human::Bump(IdPtr<IMovable> item)
 
         unsigned int blood_value = (GetRand() % 7) + 1;
 
-        if (IdPtr<Floor> floor = GetTurf())
+        if (IdPtr<Floor> floor = GetTurf()) // TODO Bleeding only with ballistic bullets
         {
             if (!floor->bloody)
             {
