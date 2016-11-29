@@ -408,7 +408,7 @@ void Human::OnDeath()
 
 void Human::AttackBy(IdPtr<Item> item)
 {
-    if(IdPtr<Drinks> drink = item)
+    if (IdPtr<Drinks> drink = item)
     {
         drink->Drink(GetId(), item->GetOwner());
         return;

@@ -6,23 +6,27 @@ Drinks::Drinks(quint32 id) : Item(id)
     SetSprite("icons/drinks.dmi");
     full_ = false;
 }
-void Drinks::Drink(IdPtr<Human> human1, IdPtr<Human> human2)
+void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
 {
-    if(!full_)
+    if (!full_)
     {
         full_ = true;
-        if(human1 == human2)
+        if (consumer == feeder)
         {
             GetGame().GetChat().PostTextFor(
-            "You swallow a gulp of " + name + ".", human1->GetId());
+                QString("You swallow a gulp of %1.").arg(name), consumer->GetId());
         }
         else
         {
             GetGame().GetChat().PostSimpleText(
-            human2->name + " attempts to feed the contents of " + name + " to " + human1->name + ".", human1->GetId());
+                QString("%1 attempts to feed the contents of %2 to %3.").arg(feeder->name).arg(name).arg(consumer->name), consumer->GetId());
         }
-        PlaySoundIfVisible("drink.ogg", human1->GetRoot().Id());
+        PlaySoundIfVisible("drink.ogg", consumer->GetRoot().Id());
+        return;
     }
+    GetGame().GetChat().PostTextFor(
+        QString("%1 is empty.").arg(name), consumer->GetId());
+    
 }
 Vodka::Vodka(quint32 id) : Drinks(id)
 {
