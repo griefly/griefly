@@ -38,7 +38,7 @@ Human::Human(quint32 id) : IMob(id)
 
     dead_ = false;
     lying_ = false;
-    health_ = 100;
+    max_health_ = 100;
     suffocation_damage_ = 0;
     burn_damage_ = 0;
     brute_damage_ = 0;
@@ -343,7 +343,6 @@ void Human::Live()
         if(std::abs(308-temperature) > 30)
         {
             int damage = (std::abs(308-temperature) / 100) > 1 ? (std::abs(308-temperature) / 100) : 1;
-            health_ -= damage;
             burn_damage_ += damage;
         }
         if (oxygen > 0)
@@ -352,14 +351,13 @@ void Human::Live()
             t->GetAtmosHolder()->AddGase(CO2, 1);
             Regeneration();
         }
-        else if (health_ >= -100)
+        else if (CalculateHealth() >= -100)
         {
-            --health_;
             suffocation_damage_++;
             
             if (GetRand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
             {
-                GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+                GetGame().GetChat().PostSimpleText(QString("%1 gasps!").arg(name), owner->GetId());
             }
         }
     }
@@ -371,23 +369,22 @@ void Human::Live()
         --lay_timer_;
     }
 
-    if (health_ < 0)
+    if (CalculateHealth() < 0)
     {
         if (!lying_)
         {
             SetLying(true);
         }
-        if (health_ >= -100)
+        if (CalculateHealth() >= -100)
         {
-            --health_;
             suffocation_damage_++;
             if (GetRand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
             {
-                GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+                GetGame().GetChat().PostSimpleText(QString("%1 gasps!").arg(name), owner->GetId());
             }
         }
     }
-    if (health_ < -100 && !dead_)
+    if (CalculateHealth() < -100 && !dead_)
     {
         OnDeath();
     }
@@ -396,9 +393,8 @@ void Human::Live()
 void Human::Regeneration()
 {
     int healed = suffocation_damage_ / 2 > 0 ? suffocation_damage_ / 2 : 1;
-    if(suffocation_damage_)
+    if(suffocation_damage_ > 0)
     { 
-        health_ += healed;
         suffocation_damage_ -= healed;
     }
 }
@@ -433,7 +429,6 @@ void Human::AttackBy(IdPtr<Item> item)
     bool damaged = false;
     if (item.IsValid() && (item->damage > 0))
     {
-        health_ -= item->damage;
         brute_damage_ -= item->damage;
         QString sound = QString("genhit%1.ogg").arg(GetRand() % 3 + 1);
         PlaySoundIfVisible(sound, owner.Id());
@@ -446,7 +441,6 @@ void Human::AttackBy(IdPtr<Item> item)
     }
     else if (!item.IsValid())
     {
-        health_--;
         brute_damage_++;
 
         unsigned int punch_value = (GetRand() % 4) + 1;
@@ -507,7 +501,7 @@ void Human::Represent()
 
 void Human::CalculateVisible(std::list<PosPoint>* visible_list)
 {
-    if (health_ >= 0)
+    if (CalculateHealth() >= 0)
     {
         GetGame().GetMap().CalculateVisisble(
             visible_list,
@@ -521,7 +515,6 @@ void Human::Bump(IdPtr<IMovable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
-        health_ -= projectile->GetDamage() + projectile->GetBurnDamage();
         brute_damage_ += projectile->GetDamage();
         burn_damage_ += projectile->GetBurnDamage();
         GetGame().GetChat().PostSimpleText(
@@ -609,6 +602,17 @@ void Human::TryClownBootsHonk()
     }
     QString sound = QString("clownstep%1.ogg").arg(GetRand() % 2 + 1);
     PlaySoundIfVisible(sound, GetOwner().Id());
+}
+
+void Human::AddDamage(int brute, int suffocation, int burn)
+{
+    suffocation_damage_ += suffocation;
+    burn_damage_ += burn;
+    brute_damage_ += brute;
+}
+int Human::CalculateHealth()
+{
+    return max_health_ - (suffocation_damage_ + burn_damage_ + brute_damage_);
 }
 
 CaucasianHuman::CaucasianHuman(quint32 id) : Human(id)

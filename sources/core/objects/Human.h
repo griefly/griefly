@@ -22,6 +22,7 @@ public:
     virtual IdPtr<IOnMapBase> GetNeighbour(Dir) const;
 
     virtual void OnDeath();
+    int CalculateHealth();
 
     void SetLying(bool value);
     bool GetLying() const { return lying_; }
@@ -43,11 +44,12 @@ public:
 
     void UpdateOverlays();
 
-    int GetHealth() { return health_; }
+    int GetHealth() { return CalculateHealth(); }
 
     void RotationAction(IdPtr<IOnMapBase> item);
     void PullAction(IdPtr<IOnMapBase> item);
     void StopPull();
+    void AddDamage(int brute, int suffocation, int burn);
 protected:
     int KV_SAVEBLE(attack_cooldown_);
 
@@ -58,7 +60,7 @@ protected:
     bool KV_SAVEBLE(lying_);
     bool KV_SAVEBLE(dead_);
 
-    int KV_SAVEBLE(health_);
+    int KV_SAVEBLE(max_health_);
     int KV_SAVEBLE(suffocation_damage_);
     int KV_SAVEBLE(burn_damage_);
     int KV_SAVEBLE(brute_damage_);
