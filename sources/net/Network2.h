@@ -55,8 +55,6 @@ private:
 
     void SendData(const QByteArray& data);
 
-    QTextCodec* net_codec_;
-
     QString login_;
     QString password_;
 

@@ -166,7 +166,6 @@ void Game::Process()
         {
             break;
         }
-
         ProcessInputMessages();
 
         const int ATMOS_OFTEN = 1;
