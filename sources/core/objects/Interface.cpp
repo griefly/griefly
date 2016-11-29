@@ -158,6 +158,10 @@ void HumanInterface::UpdateHealth()
         }
     }
 }
+void UpdateEnviroment()
+{
+    
+}
 
 void HumanInterface::ApplyActiveHandOnSlot(Slot<Item>* slot)
 {

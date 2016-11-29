@@ -20,7 +20,7 @@ public:
     DECLARE_GET_TYPE_ITEM(Medicine);
     Medicine(quint32 id);
     void Heal(IdPtr<Human> target);
-private:
+protected:
     int KV_SAVEBLE(burn_heal_);
     int KV_SAVEBLE(brute_heal_);
 };

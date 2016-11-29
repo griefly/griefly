@@ -16,6 +16,7 @@ public:
     bool KV_SAVEBLE(bloody);
 protected:
     bool KV_SAVEBLE(open_);
+    QString KV_SAVEBLE(FloorType);
 };
 ADD_TO_TYPELIST(Floor);
 
@@ -27,4 +28,14 @@ public:
     Plating(quint32 id);
 };
 ADD_TO_TYPELIST(Plating);
+
+class WhiteFloor: public Floor
+{
+public:
+    DECLARE_SAVED(WhiteFloor, Floor);
+    DECLARE_GET_TYPE_ITEM(WhiteFloor);
+    WhiteFloor(quint32 id);
+};
+ADD_TO_TYPELIST(WhiteFloor);
+
 

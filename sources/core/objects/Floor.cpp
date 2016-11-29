@@ -18,7 +18,8 @@ Floor::Floor(quint32 id) : ITurf(id)
     SetState("floor");
 
     name = "Floor";
-
+    
+    FloorType = "floor";
     open_ = false;
     bloody = false;
 }
@@ -36,7 +37,15 @@ void Floor::AttackBy(IdPtr<Item> item)
         if (!open_)
         {
             SetOpen(true);
-            Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
+            switch(qHash(FloorType))
+            {
+                case 2179427974:
+                    Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
+                    break;
+                case 3691820876:
+                    Create<Item>(WhiteFloorTile::T_ITEM_S(), GetOwner());
+                    break;
+            }
             PlaySoundIfVisible("Crowbar.ogg", owner.Id());
         }
     }
@@ -46,6 +55,7 @@ void Floor::AttackBy(IdPtr<Item> item)
         {
             SetOpen(false);
             ftile->Delete();
+            FloorType = ftile->Type;
             PlaySoundIfVisible("Deconstruct.ogg", owner.Id());
         }
     }
@@ -66,7 +76,7 @@ void Floor::SetOpen(bool o)
     }
     else
     {
-        SetState("floor");
+        SetState(FloorType);
         v_level = 2;
         if (auto vent = owner->GetItem<Vent>())
         {
@@ -77,10 +87,16 @@ void Floor::SetOpen(bool o)
     //qDebug() << "End setopen";
 }
 
-
 Plating::Plating(quint32 id) : Floor(id)
 {
     open_ = true;
     // For map editor
     SetState("plating");
+}
+WhiteFloor::WhiteFloor(quint32 id) : Floor(id)
+{
+    open_ = false;
+    // For map editor
+    SetState("whitebot");
+    FloorType = "whitebot";
 }
