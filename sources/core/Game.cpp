@@ -112,7 +112,6 @@ void Game::InitGlobalObjects()
     map_ = new MapMaster(sync_random_, texts);
     qDebug() << "End master load";
     factory_ = new ObjectFactory(this);
-    id_ptr_id_table = &(factory_->GetIdTable());
     Chat* chat = new Chat(this);
     chat_ = chat;
     names_ = new Names(sync_random_);

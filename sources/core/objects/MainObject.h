@@ -45,19 +45,23 @@ public:
         return T_ITEM_S();
     }
     static const QString& T_ITEM_S()
-    {                                         
+    {
         static QString result = "main";
         return result;
     }
     static int REAL_TYPE_ITEM;
     virtual int RT_ITEM() const
-    {                                         
+    {
         return REAL_TYPE_ITEM;
-    }                                         
+    }
     static int RT_ITEM_S()
-    {                                         
+    {
         return REAL_TYPE_ITEM;
-    }       
+    }
+
+    static IMainObject* _Z_creator(quint32 id) { return new IMainObject(id); }
+    static IMainObject* _Z_creatorSaved() { return new IMainObject(nouse);}
+
     virtual void Process() { }
 
     void SetId(quint32 id);
