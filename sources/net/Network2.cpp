@@ -238,8 +238,6 @@ SocketHandler::SocketHandler(Network2* network)
 {    
     state_ = NetworkState::NOT_CONNECTED;
 
-    net_codec_ = QTextCodec::codecForName("UTF-8");
-
     connect(&socket_, &QTcpSocket::connected, this, &SocketHandler::socketConnected);
     connect(&socket_,
             static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error),
@@ -312,9 +310,9 @@ bool SocketHandler::HandleBody()
     Message2 new_message;
     new_message.type = message_type_;
 
-    new_message.json.append(net_codec_->toUnicode(
-        reinterpret_cast<const char*>(&(buffer_.constData()[buffer_pos_])),
-        message_size_));
+    new_message.json.append(
+        &buffer_.constData()[buffer_pos_],
+        message_size_);
     buffer_pos_ += message_size_;
 
     if (is_first_message_)
@@ -346,7 +344,10 @@ void SocketHandler::tryConnect(QString host, int port, QString login, QString pa
 
 void SocketHandler::socketConnected()
 {
+
     qDebug() << "socketConnected()";
+    // TCP_NODELAY
+    socket_.setSocketOption(QAbstractSocket::LowDelayOption, 1);
 
     SendData("S132");
 
@@ -376,7 +377,7 @@ void SocketHandler::socketConnected()
 
 void SocketHandler::sendMessage(Message2 message)
 {
-    QByteArray json = net_codec_->fromUnicode(message.json);
+    QByteArray& json = message.json;
 
     QByteArray data;
 

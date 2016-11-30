@@ -11,6 +11,7 @@ class ObjectFactory : public IObjectFactory
 {
 public:
     ObjectFactory(IGame* game);
+    virtual ~ObjectFactory();
 
     virtual std::vector<ObjectInfo>& GetIdTable() override;
 

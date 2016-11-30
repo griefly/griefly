@@ -19,6 +19,19 @@ ObjectFactory::ObjectFactory(IGame* game)
     id_ = 1;
     is_world_generating_ = true;
     game_ = game;
+    id_ptr_id_table = &objects_table_;
+}
+
+ObjectFactory::~ObjectFactory()
+{
+    ProcessDeletion();
+    for (auto& info : objects_table_)
+    {
+        if (info.object)
+        {
+            delete info.object;
+        }
+    }
 }
 
 std::vector<ObjectInfo>& ObjectFactory::GetIdTable()
