@@ -8,6 +8,8 @@
 #include "core/objects/test/UnsyncGenerator.h"
 #include "core/objects/test/TestMainObject.h"
 
+using ::testing::ReturnRef;
+
 TEST(ObjectFactory, Constructor)
 {
     MockIGame game;
@@ -73,5 +75,98 @@ TEST(ObjectFactory, AfterWorldCreation)
 
         TestMainObject* test_object = static_cast<TestMainObject*>(object);
         ASSERT_EQ(test_object->after_world_creation_, 1);
+    }
+}
+
+TEST(ObjectFactory, Process)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+    factory.FinishWorldCreation();
+
+    {
+        quint32 id = factory.CreateImpl(TestMainObject::T_ITEM_S());
+        ASSERT_EQ(id, 1);
+        ASSERT_GT(factory.GetIdTable().size(), 2);
+        IMainObject* object = factory.GetIdTable()[1].object;
+        ASSERT_EQ(object->T_ITEM(), TestMainObject::T_ITEM_S());
+
+        TestMainObject* test_object = static_cast<TestMainObject*>(object);
+        EXPECT_EQ(test_object->process_, 0);
+
+        MAIN_TICK = 1;
+
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 0);
+
+        EXPECT_CALL(game, GetFactory())
+            .WillOnce(ReturnRef(factory));
+        test_object->SetFreq(1);
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 1);
+
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 2);
+
+        EXPECT_CALL(game, GetFactory())
+            .WillOnce(ReturnRef(factory));
+        test_object->SetFreq(10);
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 2);
+
+        MAIN_TICK = 100;
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 3);
+
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 4);
+
+        test_object->SetFreq(0);
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 4);
+
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 4);
+
+        EXPECT_CALL(game, GetFactory())
+            .WillOnce(ReturnRef(factory));
+        test_object->SetFreq(1);
+        factory.GetIdTable()[1].object = nullptr;
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object->process_, 4);
+        factory.GetIdTable()[1].object = object;
+
+        quint32 id2 = factory.CreateImpl(TestMainObject::T_ITEM_S());
+        ASSERT_EQ(id2, 2);
+        ASSERT_GT(factory.GetIdTable().size(), 3);
+        IMainObject* object2 = factory.GetIdTable()[2].object;
+        ASSERT_EQ(object2->T_ITEM(), TestMainObject::T_ITEM_S());
+
+        TestMainObject* test_object2 = static_cast<TestMainObject*>(object2);
+        EXPECT_EQ(test_object2->process_, 0);
+
+        test_object->SetProcessCallback(
+        [&object2]()
+        {
+            object2->SetFreq(0);
+        });
+        EXPECT_CALL(game, GetFactory())
+            .WillOnce(ReturnRef(factory));
+        object2->SetFreq(1);
+
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object2->process_, 0);
+
+        test_object->SetProcessCallback(
+        [&factory]()
+        {
+            factory.GetIdTable()[2].object = nullptr;
+        });
+        EXPECT_CALL(game, GetFactory())
+            .WillOnce(ReturnRef(factory));
+        object2->SetFreq(1);
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object2->process_, 0);
+        factory.GetIdTable()[2].object = object2;
     }
 }
