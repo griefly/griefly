@@ -336,6 +336,8 @@ void Human::Live()
         return;
     }
 
+    interface_.UpdateEnviroment();
+
     if (IdPtr<CubeTile> t = owner)
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);

@@ -158,9 +158,22 @@ void HumanInterface::UpdateHealth()
         }
     }
 }
-void UpdateEnviroment()
+void HumanInterface::UpdateEnviroment()
 {
-    
+    if (IdPtr<Human> human = owner_)
+    {
+        if (IdPtr<CubeTile> t = human->GetOwner())
+        {
+            unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
+            int temperature = t->GetAtmosHolder()->GetTemperature();
+            oxygen_.GetView()->SetState("oxygen0");
+            if (oxygen > 0)
+            {
+                oxygen_.GetView()->SetState("oxygen1");
+            }
+   //         if()
+        }
+    }   
 }
 
 void HumanInterface::ApplyActiveHandOnSlot(Slot<Item>* slot)
@@ -310,6 +323,8 @@ void HumanInterface::Draw()
     feet_.Draw();
     swap_.Draw(helpers::dir_to_byond(active_hand_ ? D_UP : D_DOWN));
     health_.Draw();
+    temperature_.Draw();
+    oxygen_.Draw();
     lay_.Draw();
     stop_pull_.Draw();
 }
@@ -327,6 +342,8 @@ unsigned int HumanInterface::hash() const
     hash += active_hand_;
     hash += swap_.hash_member();
     hash += health_.hash_member();
+    hash += temperature_.hash_member();
+    hash += oxygen_.hash_member();
     hash += lay_.hash_member();
     hash += stop_pull_.hash_member();
     hash += pulling_;
@@ -379,6 +396,8 @@ FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf)
     interf.feet_.operator<<(file);
     interf.swap_.operator<<(file);
     interf.health_.operator<<(file);
+    interf.temperature_.operator<<(file);
+    interf.oxygen_.operator<<(file);
     interf.lay_.operator<<(file);
     interf.stop_pull_.operator<<(file);
     file << interf.active_hand_;
@@ -397,6 +416,8 @@ FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf)
     interf.feet_.operator>>(file);
     interf.swap_.operator>>(file);
     interf.health_.operator>>(file);
+    interf.temperature_.operator>>(file);
+    interf.oxygen_.operator>>(file);
     interf.lay_.operator>>(file);
     interf.stop_pull_.operator>>(file);
     file >> interf.active_hand_;
