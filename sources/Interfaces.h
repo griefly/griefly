@@ -83,8 +83,6 @@ public:
 
     virtual void AddProcessingItem(quint32 item) = 0;
 
-    virtual void ClearProcessing() = 0;
-
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) = 0;
     virtual quint32 GetPlayerId(quint32 net_id) = 0;
     virtual quint32 GetNetId(quint32 real_id) = 0;
