@@ -168,5 +168,17 @@ TEST(ObjectFactory, Process)
         factory.ForeachProcess();
         EXPECT_EQ(test_object2->process_, 0);
         factory.GetIdTable()[2].object = object2;
+
+        object->SetFreq(0);
+        EXPECT_CALL(game, GetFactory())
+            .WillRepeatedly(ReturnRef(factory));
+        object2->SetFreq(1);
+        object2->SetFreq(0);
+        object2->SetFreq(1);
+        object2->SetFreq(1);
+        object2->SetFreq(20);
+        object2->SetFreq(0);
+        factory.ForeachProcess();
+        EXPECT_EQ(test_object2->process_, 0);
     }
 }
