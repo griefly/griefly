@@ -175,7 +175,6 @@ public:
         }
         return true;
     }
-
 private:
     void Read(bool* value)
     {

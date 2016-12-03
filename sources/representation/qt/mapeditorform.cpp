@@ -241,7 +241,7 @@ void MapEditorForm::on_saveMap_clicked()
 {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::AnyFile);
-    dialog.setNameFilter(tr("Mapgen files (*.gen)"));
+    dialog.setNameFilter(tr("Mapgen files (*.gen.txt)"));
     QStringList file_names;
     if (!dialog.exec())
     {
@@ -256,7 +256,7 @@ void MapEditorForm::on_loadMap_clicked()
 {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(tr("Mapgen files (*.gen)"));
+    dialog.setNameFilter(tr("Mapgen files (*.gen.txt)"));
     QStringList file_names;
     if (!dialog.exec())
     {

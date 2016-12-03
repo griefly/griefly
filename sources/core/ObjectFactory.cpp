@@ -235,7 +235,18 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
         return;
     }
 
-    QByteArray raw_data = file.readAll();
+    QByteArray raw_data;
+    while (file.bytesAvailable())
+    {
+        QByteArray local = file.readLine();
+        if (local.size() < 1)
+        {
+            break;
+        }
+        local = local.left(local.size() - 1);
+        raw_data.append(local);
+    }
+    raw_data = QByteArray::fromHex(raw_data);
     FastDeserializer ss(raw_data.data(), raw_data.size());
 
     BeginWorldCreation();
