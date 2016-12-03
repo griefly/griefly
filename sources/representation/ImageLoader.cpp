@@ -9,7 +9,7 @@ void LoadImages()
     GetSpriter().LoadImage("icons/items.dmi");
     GetSpriter().LoadImage("icons/walls.dmi");
     GetSpriter().LoadImage("icons/shards.dmi");
-    GetSpriter().LoadImage("icons/space.png");
+    GetSpriter().LoadImage("icons/space.dmi");
     GetSpriter().LoadImage("icons/human.dmi");
     GetSpriter().LoadImage("icons/device.dmi");
 }

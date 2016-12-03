@@ -7,7 +7,7 @@
 
 IMob::IMob(quint32 id) : IMessageReceiver(id)
 {
-    SetSprite("icons/ork.png");
+    // Nothing
 }
 
 void IMob::AfterWorldCreation()
