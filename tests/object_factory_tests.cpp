@@ -33,6 +33,7 @@ TEST(ObjectFactory, CreateImpl)
         ASSERT_GT(factory.GetIdTable().size(), 2);
         IMainObject* object = factory.GetIdTable()[1].object;
         EXPECT_EQ(object->T_ITEM(), IMainObject::T_ITEM_S());
+        EXPECT_EQ(object->GetId(), 1);
     }
     {
         quint32 id = factory.CreateImpl(UnsyncGenerator::T_ITEM_S());
@@ -41,6 +42,7 @@ TEST(ObjectFactory, CreateImpl)
         ASSERT_GT(factory.GetIdTable().size(), 3);
         IMainObject* object = factory.GetIdTable()[2].object;
         EXPECT_EQ(object->T_ITEM(), UnsyncGenerator::T_ITEM_S());
+        EXPECT_EQ(object->GetId(), 2);
     }
 }
 
@@ -182,3 +184,44 @@ TEST(ObjectFactory, Process)
         EXPECT_EQ(test_object2->process_, 0);
     }
 }
+
+TEST(ObjectFactory, DeleteLater)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+    factory.FinishWorldCreation();
+
+    {
+        quint32 id = factory.CreateImpl(TestMainObject::T_ITEM_S());
+        ASSERT_EQ(id, 1);
+        ASSERT_GT(factory.GetIdTable().size(), 2);
+        IMainObject* object = factory.GetIdTable()[1].object;
+        ASSERT_EQ(object->T_ITEM(), TestMainObject::T_ITEM_S());
+
+        TestMainObject* test_object = static_cast<TestMainObject*>(object);
+        int counter = 0;
+        test_object->SetDestructorCallback(
+        [&counter]()
+        {
+            ++counter;
+        });
+        EXPECT_EQ(counter, 0);
+        EXPECT_TRUE(factory.GetIdTable()[1].object);
+        factory.DeleteLater(1);
+        EXPECT_EQ(counter, 0);
+        EXPECT_FALSE(factory.GetIdTable()[1].object);
+        factory.DeleteLater(1);
+        EXPECT_EQ(counter, 0);
+        EXPECT_FALSE(factory.GetIdTable()[1].object);
+        factory.DeleteLater(1);
+        EXPECT_EQ(counter, 0);
+        EXPECT_FALSE(factory.GetIdTable()[1].object);
+        factory.DeleteLater(1);
+        EXPECT_EQ(counter, 0);
+        EXPECT_FALSE(factory.GetIdTable()[1].object);
+        factory.ProcessDeletion();
+        EXPECT_EQ(counter, 1);
+        EXPECT_FALSE(factory.GetIdTable()[1].object);
+    }
+}
+
