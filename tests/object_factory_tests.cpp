@@ -225,3 +225,29 @@ TEST(ObjectFactory, DeleteLater)
     }
 }
 
+TEST(ObjectFactory, PlayersIds)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+
+    for (int i = 0; i < 100; ++i)
+    {
+        EXPECT_EQ(factory.GetNetId(i), 0);
+        EXPECT_EQ(factory.GetPlayerId(i), 0);
+    }
+
+    factory.SetPlayerId(1, 9915);
+    EXPECT_EQ(factory.GetNetId(9915), 1);
+    EXPECT_EQ(factory.GetPlayerId(1), 9915);
+
+    for (int i = 100; i < 200; ++i)
+    {
+        EXPECT_EQ(factory.GetNetId(i), 0);
+        EXPECT_EQ(factory.GetPlayerId(i), 0);
+    }
+
+    factory.SetPlayerId(543, 10000000);
+    EXPECT_EQ(factory.GetNetId(10000000), 543);
+    EXPECT_EQ(factory.GetPlayerId(543), 10000000);
+}
+

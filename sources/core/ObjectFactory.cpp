@@ -497,8 +497,12 @@ quint32 ObjectFactory::GetPlayerId(quint32 net_id)
 quint32 ObjectFactory::GetNetId(quint32 real_id)
 {
     for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
+    {
         if (it->second == real_id)
+        {
             return it->first;
+        }
+    }
     return 0;
 }
 
