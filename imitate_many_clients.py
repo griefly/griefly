@@ -23,7 +23,7 @@ def main():
     print "Amount of bots: " + str(total_bots)
 
     for x in range(0, total_bots):
-        p = subprocess.Popen(args, cwd='./Exec')
+        p = subprocess.Popen(args, cwd='./exec')
         processes.append(p)
 
     processes = processes[1:]
@@ -36,7 +36,7 @@ def main():
                 p.kill()
                 time.sleep(1)
                 p.communicate()
-                new_processes.append(subprocess.Popen(args, cwd='./Exec'))
+                new_processes.append(subprocess.Popen(args, cwd='./exec'))
             else:
                 new_processes.append(p)
         processes = new_processes
