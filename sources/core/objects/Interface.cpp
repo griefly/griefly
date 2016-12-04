@@ -52,6 +52,16 @@ void HumanInterface::InitSlots()
     health_.GetView()->SetState("health0");
     health_.SetName(HumanInterfacePlaces::UNCLICKABLE);
 
+    temperature_.SetPos(15, 9);
+    temperature_.GetView()->SetSprite("icons/screen1_old.dmi");
+    temperature_.GetView()->SetState("temp0");
+    temperature_.SetName(HumanInterfacePlaces::UNCLICKABLE);
+
+    oxygen_.SetPos(15, 12);
+    oxygen_.GetView()->SetSprite("icons/screen1_old.dmi");
+    oxygen_.GetView()->SetState("oxy0");
+    oxygen_.SetName(HumanInterfacePlaces::UNCLICKABLE);
+
     lay_.SetPos(15, 11);
     lay_.GetView()->SetSprite("icons/screen1_old.dmi");
     lay_.GetView()->SetState("rest0");
@@ -128,23 +138,23 @@ void HumanInterface::UpdateHealth()
     if (IdPtr<Human> human = owner_)
     {
         int health = human->GetHealth();
-        if (health == 100)
+        if (health == 10000)
         {
             health_.GetView()->SetState("health0");
         }
-        else if (health >= 80)
+        else if (health >= 8000)
         {
             health_.GetView()->SetState("health1");
         }
-        else if (health >= 60)
+        else if (health >= 6000)
         {
             health_.GetView()->SetState("health2");
         }
-        else if (health >= 40)
+        else if (health >= 4000)
         {
             health_.GetView()->SetState("health3");
         }
-        else if (health >= 20)
+        else if (health >= 2000)
         {
             health_.GetView()->SetState("health4");
         }
@@ -166,12 +176,43 @@ void HumanInterface::UpdateEnviroment()
         {
             unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
             int temperature = t->GetAtmosHolder()->GetTemperature();
-            oxygen_.GetView()->SetState("oxygen0");
-            if (oxygen > 0)
+            oxygen_.GetView()->SetState("oxy0");
+            if (oxygen < 1)
             {
-                oxygen_.GetView()->SetState("oxygen1");
+                oxygen_.GetView()->SetState("oxy1");
             }
-   //         if()
+            if (temperature - 40 > 12)
+            {
+                temperature_.GetView()->SetState("temp4");
+            }
+            else if (temperature - 40 > 9)
+            {
+                temperature_.GetView()->SetState("temp3");
+            }
+            else if (temperature - 40 > 6)
+            {
+                temperature_.GetView()->SetState("temp2");
+            }
+            else if (temperature - 40 > 3)
+            {
+                temperature_.GetView()->SetState("temp1");
+            }
+            else if(temperature - 40 > -3)
+            {
+                temperature_.GetView()->SetState("temp0");
+            }
+            else if(temperature - 40 > - 6)
+            {
+                temperature_.GetView()->SetState("temp-1");
+            }
+            else if(temperature - 40 > - 9)
+            {
+                temperature_.GetView()->SetState("temp-2");
+            }
+            else
+            {
+                temperature_.GetView()->SetState("temp-3");
+            }
         }
     }   
 }

@@ -38,7 +38,6 @@ void Floor::AttackBy(IdPtr<Item> item)
         {
             SetOpen(true);
             IdPtr<FloorTile> ftile = Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
-            ftile->type = floor_type_;
             PlaySoundIfVisible("Crowbar.ogg", owner.Id());
         }
     }
@@ -46,9 +45,8 @@ void Floor::AttackBy(IdPtr<Item> item)
     {
         if (open_)
         {
-            floor_type_ = ftile->type_;
-            ftile->Delete();
             SetOpen(false);
+            ftile->Delete();
             PlaySoundIfVisible("Deconstruct.ogg", owner.Id());
         }
     }

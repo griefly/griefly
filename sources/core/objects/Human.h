@@ -44,6 +44,8 @@ public:
 
     void UpdateOverlays();
 
+    auto Random() const -> double;
+
     int GetHealth() { return CalculateHealth(); }
 
     void RotationAction(IdPtr<IOnMapBase> item);

@@ -38,7 +38,7 @@ Human::Human(quint32 id) : IMob(id)
 
     dead_ = false;
     lying_ = false;
-    max_health_ = 100;
+    max_health_ = 10000;
     suffocation_damage_ = 0;
     burn_damage_ = 0;
     brute_damage_ = 0;
@@ -342,9 +342,9 @@ void Human::Live()
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
         int temperature = t->GetAtmosHolder()->GetTemperature();
-        if(std::abs(308-temperature) > 30)
+        if(std::abs(40-temperature) > 3)
         {
-            int damage = (std::abs(308-temperature) / 100) > 1 ? (std::abs(308-temperature) / 100) : 1;
+            int damage = (std::abs(40-temperature) / 10) > 1 ? (std::abs(308-temperature) / 100) : 1;
             burn_damage_ += damage;
         }
         if (oxygen > 0)
@@ -353,9 +353,9 @@ void Human::Live()
             t->GetAtmosHolder()->AddGase(CO2, 1);
             Regeneration();
         }
-        else if (CalculateHealth() >= -100)
+        else if (CalculateHealth() >= -10000)
         {
-            suffocation_damage_++;
+            suffocation_damage_ += 100;
             
             if (GetRand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
             {
@@ -377,16 +377,16 @@ void Human::Live()
         {
             SetLying(true);
         }
-        if (CalculateHealth() >= -100)
+        if (CalculateHealth() >= -10000)
         {
-            suffocation_damage_++;
+            suffocation_damage_ += 100;
             if (GetRand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
             {
                 GetGame().GetChat().PostSimpleText(QString("%1 gasps!").arg(name), owner->GetId());
             }
         }
     }
-    if (CalculateHealth() < -100 && !dead_)
+    if (CalculateHealth() < -10000 && !dead_)
     {
         OnDeath();
     }
@@ -443,7 +443,7 @@ void Human::AttackBy(IdPtr<Item> item)
     }
     else if (!item.IsValid())
     {
-        brute_damage_++;
+        brute_damage_ += 100;
 
         unsigned int punch_value = (GetRand() % 4) + 1;
         PlaySoundIfVisible(QString("punch%1.ogg").arg(punch_value), owner.Id());
