@@ -5,8 +5,8 @@
 #include "core/ObjectFactory.h"
 
 #include "core/objects/MainObject.h"
-#include "core/objects/test/UnsyncGenerator.h"
 #include "core/objects/test/TestMainObject.h"
+#include "core/objects/test/UnsyncGenerator.h"
 
 using ::testing::ReturnRef;
 
@@ -249,5 +249,44 @@ TEST(ObjectFactory, PlayersIds)
     factory.SetPlayerId(543, 10000000);
     EXPECT_EQ(factory.GetNetId(10000000), 543);
     EXPECT_EQ(factory.GetPlayerId(543), 10000000);
+}
+
+TEST(ObjectFactory, Hash)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+
+    EXPECT_EQ(factory.Hash(), 0);
+
+    TestMainObject* test_object = nullptr;
+    {
+        quint32 id = factory.CreateImpl(TestMainObject::T_ITEM_S());
+        ASSERT_EQ(id, 1);
+        ASSERT_GT(factory.GetIdTable().size(), 2);
+        IMainObject* object = factory.GetIdTable()[1].object;
+        ASSERT_EQ(object->T_ITEM(), TestMainObject::T_ITEM_S());
+
+        test_object = static_cast<TestMainObject*>(object);
+    }
+    EXPECT_CALL(game, GetFactory())
+        .WillOnce(ReturnRef(factory));
+    test_object->SetFreq(1);
+    EXPECT_EQ(factory.Hash(), 2);
+
+    factory.ForeachProcess();
+    EXPECT_EQ(factory.Hash(), 4);
+
+    test_object->SetFreq(0);
+    EXPECT_EQ(factory.Hash(), 2);
+
+    EXPECT_CALL(game, GetFactory())
+        .WillOnce(ReturnRef(factory));
+    test_object->SetFreq(1);
+    factory.ForeachProcess();
+    EXPECT_EQ(factory.Hash(), 5);
+
+    factory.DeleteLater(test_object->GetId());
+    factory.ProcessDeletion();
+    EXPECT_EQ(factory.Hash(), 0);
 }
 
