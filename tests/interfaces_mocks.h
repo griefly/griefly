@@ -14,6 +14,9 @@ public:
     MOCK_METHOD3(Resize, void(quint32 x, quint32 y, quint32 z));
     MOCK_METHOD0(Process, void());
     MOCK_METHOD0(ProcessMove, void());
+
+    MOCK_METHOD4(SetFlags, void(quint32 x, quint32 y, quint32 z, Flags flags));
+    MOCK_METHOD0(LoadGrid, void());
 };
 
 class MockIMapMaster : public IMapMaster

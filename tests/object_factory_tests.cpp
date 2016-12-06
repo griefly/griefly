@@ -5,6 +5,9 @@
 #include "core/ObjectFactory.h"
 
 #include "core/objects/MainObject.h"
+#include "core/objects/Tile.h"
+#include "core/objects/OnMapObject.h"
+#include "core/objects/Turf.h"
 #include "core/objects/test/TestMainObject.h"
 #include "core/objects/test/UnsyncGenerator.h"
 
@@ -25,6 +28,8 @@ TEST(ObjectFactory, Constructor)
 TEST(ObjectFactory, CreateImpl)
 {
     MockIGame game;
+    MockIMapMaster map;
+    MockIAtmosphere atmos;
     ObjectFactory factory(&game);
     {
         quint32 id = factory.CreateImpl(IMainObject::T_ITEM_S());
@@ -43,6 +48,49 @@ TEST(ObjectFactory, CreateImpl)
         IMainObject* object = factory.GetIdTable()[2].object;
         EXPECT_EQ(object->T_ITEM(), UnsyncGenerator::T_ITEM_S());
         EXPECT_EQ(object->GetId(), 2);
+    }
+    {
+        quint32 id = factory.CreateImpl(CubeTile::T_ITEM_S());
+        EXPECT_EQ(id, 3);
+
+        ASSERT_GT(factory.GetIdTable().size(), 4);
+        IMainObject* object = factory.GetIdTable()[3].object;
+        ASSERT_EQ(object->T_ITEM(), CubeTile::T_ITEM_S());
+        EXPECT_EQ(object->GetId(), 3);
+        CubeTile* tile = static_cast<CubeTile*>(object);
+        tile->SetPos(0, 0);
+
+        EXPECT_CALL(game, GetMap())
+            .WillOnce(ReturnRef(map));
+        EXPECT_CALL(map, GetAtmosphere())
+            .WillOnce(ReturnRef(atmos));
+        EXPECT_CALL(atmos, SetFlags(0, 0, 0, '\0'));
+        quint32 id2 = factory.CreateImpl(IOnMapObject::T_ITEM_S(), id);
+        EXPECT_EQ(id2, 4);
+        {
+            ASSERT_GT(factory.GetIdTable().size(), 5);
+            IMainObject* object = factory.GetIdTable()[4].object;
+            ASSERT_EQ(object->T_ITEM(), IOnMapObject::T_ITEM_S());
+            EXPECT_EQ(object->GetId(), 4);
+            IOnMapObject* on_map_object = static_cast<IOnMapObject*>(object);
+            EXPECT_EQ(on_map_object->GetOwner().Id(), id);
+        }
+
+        EXPECT_CALL(game, GetMap())
+            .WillOnce(ReturnRef(map));
+        EXPECT_CALL(map, GetAtmosphere())
+            .WillOnce(ReturnRef(atmos));
+        EXPECT_CALL(atmos, SetFlags(0, 0, 0, '\0'));
+        quint32 id3 = factory.CreateImpl(ITurf::T_ITEM_S(), id);
+        EXPECT_EQ(id3, 5);
+        {
+            ASSERT_GT(factory.GetIdTable().size(), 6);
+            IMainObject* object = factory.GetIdTable()[5].object;
+            ASSERT_EQ(object->T_ITEM(), ITurf::T_ITEM_S());
+            EXPECT_EQ(object->GetId(), 5);
+            ITurf* turf = static_cast<ITurf*>(object);
+            EXPECT_EQ(turf->GetOwner().Id(), id);
+        }
     }
 }
 

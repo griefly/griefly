@@ -403,7 +403,6 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
     {
         if (CastTo<ITurf>(item) != nullptr)
         {
-            qDebug() << "is_turf == true";
             owner->SetTurf(item->GetId());
         }
         else if (!owner->AddItem(item->GetId()))
