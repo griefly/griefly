@@ -25,6 +25,18 @@ TEST(ObjectFactory, Constructor)
     EXPECT_EQ(id_ptr_id_table, &factory.GetIdTable());
 }
 
+TEST(ObjectFactoryDeathTest, CreateImplFailAdd)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+
+    ASSERT_DEATH(
+    {
+        quint32 id = factory.CreateImpl(IOnMapBase::T_ITEM_S());
+        factory.CreateImpl(IOnMapBase::T_ITEM_S(), id);
+    }, "AddItem failed");
+}
+
 TEST(ObjectFactory, CreateImpl)
 {
     MockIGame game;
@@ -91,6 +103,18 @@ TEST(ObjectFactory, CreateImpl)
             ITurf* turf = static_cast<ITurf*>(object);
             EXPECT_EQ(turf->GetOwner().Id(), id);
         }
+    }
+}
+
+TEST(ObjectFactory, CreateImplResizeTable)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+
+    for (int i = 1; i < 1000; ++i)
+    {
+        quint32 id = factory.CreateImpl(IMainObject::T_ITEM_S());
+        EXPECT_EQ(id, i);
     }
 }
 
@@ -337,4 +361,13 @@ TEST(ObjectFactory, Hash)
     factory.ProcessDeletion();
     EXPECT_EQ(factory.Hash(), 0);
 }
+
+/*TEST(ObjectFactory, SaveAndLoad)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+
+    FastSerializer serializer;
+    factory.Save(serializer);
+}*/
 

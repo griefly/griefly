@@ -162,12 +162,6 @@ void ObjectFactory::Save(FastSerializer& savefile)
 {
     SaveMapHeader(savefile);
 
-    if (objects_table_.empty())
-    {
-        qDebug() << "Trying to save empty world!";
-        KvAbort();
-    }
-
     auto it = ++objects_table_.begin();
     while (it != objects_table_.end())
     {
