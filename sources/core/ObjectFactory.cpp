@@ -206,11 +206,10 @@ void ObjectFactory::Load(FastDeserializer& savefile, quint32 real_this_mob)
         IMainObject* object = CreateVoid(type, id_loc);
         object->Load(savefile);
     }
-    qDebug() << "\n NUM OF ELEMENTS CREATED: " << j;
-    qDebug() << "SET MOB START" << GetPlayerId(real_this_mob);
-    game_->SetMob(GetPlayerId(real_this_mob));
-    qDebug() << "SET MOB END" << game_->GetMob().Id();
-    game_->ChangeMob(game_->GetMob());
+    quint32 player_id = GetPlayerId(real_this_mob);
+    game_->SetMob(player_id);
+    qDebug() << "Player id:" << player_id;
+    game_->ChangeMob(player_id);
     is_world_generating_ = false;
 
     game_->GetMap().GetAtmosphere().LoadGrid();

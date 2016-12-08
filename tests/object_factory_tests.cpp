@@ -8,10 +8,12 @@
 #include "core/objects/Tile.h"
 #include "core/objects/OnMapObject.h"
 #include "core/objects/Turf.h"
+#include "core/objects/Mob.h"
 #include "core/objects/test/TestMainObject.h"
 #include "core/objects/test/UnsyncGenerator.h"
 
 using ::testing::ReturnRef;
+using ::testing::Return;
 
 TEST(ObjectFactory, Constructor)
 {
@@ -362,12 +364,59 @@ TEST(ObjectFactory, Hash)
     EXPECT_EQ(factory.Hash(), 0);
 }
 
-/*TEST(ObjectFactory, SaveAndLoad)
+TEST(ObjectFactory, SaveAndLoadNoObjects)
 {
-    MockIGame game;
-    ObjectFactory factory(&game);
-
     FastSerializer serializer;
-    factory.Save(serializer);
-}*/
+    {
+        MockIGame game;
+        MockIMapMaster map;
+        SyncRandom rand;
+        rand.SetRand(4242, 32);
+        ObjectFactory factory(&game);
+        EXPECT_CALL(game, GetRandom())
+            .WillOnce(ReturnRef(rand))
+            .WillOnce(ReturnRef(rand));
+        EXPECT_CALL(game, GetMap())
+            .WillOnce(ReturnRef(map))
+            .WillOnce(ReturnRef(map))
+            .WillOnce(ReturnRef(map));
+
+        EXPECT_CALL(map, GetWidth())
+            .WillOnce(Return(13));
+        EXPECT_CALL(map, GetHeight())
+            .WillOnce(Return(17));
+        EXPECT_CALL(map, GetDepth())
+            .WillOnce(Return(23));
+
+        factory.Save(serializer);
+    }
+    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    {
+        MockIGame game;
+        MockIMapMaster map;
+        SyncRandom rand;
+        MockIAtmosphere atmos;
+        ObjectFactory factory(&game);
+
+        EXPECT_CALL(game, GetRandom())
+            .WillOnce(ReturnRef(rand));
+        EXPECT_CALL(game, GetMap())
+            .WillOnce(ReturnRef(map))
+            .WillOnce(ReturnRef(map));
+        EXPECT_CALL(map, ResizeMap(13, 17, 23));
+        EXPECT_CALL(game, SetMob(0));
+
+        IdPtr<IMob> mob = 0;
+        EXPECT_CALL(game, ChangeMob(mob));
+
+        EXPECT_CALL(map, GetAtmosphere())
+            .WillOnce(ReturnRef(atmos));
+        EXPECT_CALL(atmos, LoadGrid())
+            .Times(1);
+
+        factory.Load(deserializer, 0);
+        EXPECT_EQ(rand.GetCallsCounter(), 32);
+        EXPECT_EQ(rand.GetSeed(), 4242);
+    }
+}
 
