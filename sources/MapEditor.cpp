@@ -454,6 +454,7 @@ MapEditor::EditorEntry& MapEditor::AddItem(const QString &item_type, int posx, i
 
 void MapEditor::SetTurf(const QString &item_type)
 {
+    // For performance everything should be removed firstly
     for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
     {
         for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
