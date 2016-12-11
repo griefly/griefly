@@ -423,6 +423,10 @@ void MapEditor::RemoveItems()
             RemoveItems(x, y, 0);
         }
     }
+
+    emit newSelectionSetted(
+        first_selection_x_, first_selection_y_,
+        second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::RemoveItems(int posx, int posy, int posz)
@@ -434,10 +438,6 @@ void MapEditor::RemoveItems(int posx, int posy, int posz)
         delete it->pixmap_item;
     }
     items.clear();
-
-    emit newSelectionSetted(
-                first_selection_x_, first_selection_y_,
-                second_selection_x_, second_selection_y_);
 }
 
 MapEditor::EditorEntry& MapEditor::AddItem(const QString &item_type, int posx, int posy, int posz)
@@ -454,6 +454,16 @@ MapEditor::EditorEntry& MapEditor::AddItem(const QString &item_type, int posx, i
 
 void MapEditor::SetTurf(const QString &item_type)
 {
+    for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
+    {
+        for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
+        {
+            scene_->removeItem(editor_map_[x][y][0].turf.pixmap_item);
+            delete editor_map_[x][y][0].turf.pixmap_item;
+            editor_map_[x][y][0].turf.pixmap_item = nullptr;
+        }
+    }
+
     for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
     {
         for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
