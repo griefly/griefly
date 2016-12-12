@@ -45,8 +45,7 @@ Projectile::Projectile(quint32 id) : IMovable(id)
     SetSprite("icons/projectiles.dmi");
     v_level = 6;
     current_step_ = 0;
-    tickSpeed = 1;
-    pixSpeed = 4;
+    tick_speed_ = 1;
     passable_level = Passable::SMALL_ITEM;
     harmless_ = true;
 }

@@ -14,8 +14,7 @@
 
 Ghost::Ghost(quint32 id) : IMob(id)
 {
-    tickSpeed = 1;
-    pixSpeed = 2;
+    tick_speed_ = 1;
 
     v_level = 11;
 

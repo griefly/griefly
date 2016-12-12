@@ -38,7 +38,7 @@ public:
     bool MainMove();
 
     virtual bool Rotate(Dir dir);
-    Dir GetDir() const { return dMove; }
+    Dir GetDir() const { return direction_; }
 
     virtual void ProcessForce();
     virtual void ApplyForce(VDir force) override;
@@ -50,15 +50,14 @@ public:
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 public:
     VDir KV_SAVEBLE(force_);
-    bool KV_SAVEBLE(anchored);
-    int KV_SAVEBLE(lastMove);
-    int KV_SAVEBLE(tickSpeed);
-    int KV_SAVEBLE(pixSpeed);
+    bool KV_SAVEBLE(anchored_);
+    int KV_SAVEBLE(last_move_);
+    int KV_SAVEBLE(tick_speed_);
 
     KV_ON_LOAD_CALL(LoadInForceManager);
     void LoadInForceManager();
 private:
-    Dir KV_SAVEBLE(dMove);
+    Dir KV_SAVEBLE(direction_);
 };
 ADD_TO_TYPELIST(IMovable);
 

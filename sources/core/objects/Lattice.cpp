@@ -14,7 +14,7 @@ Lattice::Lattice(quint32 id) : Structure(id)
     SetState("latticefull");
 
     v_level = 1;
-    anchored = true;
+    anchored_ = true;
 
     name = "Lattice";
 }
