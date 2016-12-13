@@ -52,6 +52,14 @@ public:
     void PullAction(IdPtr<IOnMapBase> item);
     void StopPull();
     void AddDamage(int brute, int suffocation, int burn);
+    
+    int GetBurnDamage() {return suffocation_damage_;}
+    int GetSuffocationDamage() {return burn_damage_;}
+    int GetBruteDamage() {return brute_damage_;}
+    bool IsDead() {return dead_;}
+    int AddBurnDamage(int damage);
+    int AddOxygenDamage(int damage);
+    int AddBruteDamage(int damage);
 protected:
     int KV_SAVEBLE(attack_cooldown_);
 
