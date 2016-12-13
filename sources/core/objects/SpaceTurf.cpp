@@ -17,7 +17,7 @@ Space::Space(quint32 id) : ITurf(id)
     
     SetFriction(0);
 
-    SetSprite("icons/space.png"); 
+    SetSprite("icons/space.dmi");
     SetState("10");
     name = "Space";
 }

@@ -227,7 +227,27 @@ void MapEditor::SaveMapgen(const QString& name)
         qDebug() << file.fileName() << " cannot be opened.";
         return;
     }
-    file.write(data.GetData(), data.GetIndex());
+
+    // Binary mapgen is really bad for version control systems, so
+    // converting it to hex with line breaks
+
+    QByteArray hex = QByteArray(data.GetData(), data.GetIndex()).toHex();
+
+    int index = -1;
+    int old_index = 0;
+    while (true)
+    {
+        index = hex.indexOf("0602", index + 1);
+        if (index == -1)
+        {
+            break;
+        }
+        file.write(hex.data() + old_index, index - old_index);
+        file.write("\n");
+        old_index = index;
+    }
+    file.write(hex.data() + old_index, hex.size() - old_index);
+    file.write("\n");
 }
 
 void MapEditor::LoadMapgen(const QString& name)
@@ -241,7 +261,18 @@ void MapEditor::LoadMapgen(const QString& name)
 
     ClearMap();
 
-    QByteArray raw_data = file.readAll();
+    QByteArray raw_data;
+    while (file.bytesAvailable())
+    {
+        QByteArray local = file.readLine();
+        if (local.size() < 1)
+        {
+            break;
+        }
+        local = local.left(local.size() - 1);
+        raw_data.append(local);
+    }
+    raw_data = QByteArray::fromHex(raw_data);
     FastDeserializer data(raw_data.data(), raw_data.size());
 
     int x;
@@ -254,6 +285,8 @@ void MapEditor::LoadMapgen(const QString& name)
     data >> z;
 
     Resize(x, y, z);
+
+    qDebug() << x << y << z;
 
     while (!data.IsEnd())
     {

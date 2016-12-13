@@ -21,6 +21,7 @@
 #include "Weapons.h"
 #include "ElectricTools.h"
 #include "SpaceTurf.h"
+#include "Drinks.h"
 
 Human::Human(quint32 id) : IMob(id)
 {
@@ -428,6 +429,11 @@ void Human::OnDeath()
 
 void Human::AttackBy(IdPtr<Item> item)
 {
+    if (IdPtr<Drinks> drink = item)
+    {
+        drink->Drink(GetId(), item->GetOwner());
+        return;
+    }
     bool damaged = false;
     if (item.IsValid() && (item->damage > 0))
     {

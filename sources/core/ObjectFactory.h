@@ -11,6 +11,7 @@ class ObjectFactory : public IObjectFactory
 {
 public:
     ObjectFactory(IGame* game);
+    virtual ~ObjectFactory();
 
     virtual std::vector<ObjectInfo>& GetIdTable() override;
 
@@ -33,13 +34,12 @@ public:
 
     virtual void AddProcessingItem(quint32 item) override;
 
-    virtual void ClearProcessing() override;
-
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
     virtual quint32 GetPlayerId(quint32 net_id) override;
     virtual quint32 GetNetId(quint32 real_id) override;
 private:
     void Clear();
+    void ClearProcessing();
 
     void SaveMapHeader(FastSerializer& str);
     void LoadMapHeader(FastDeserializer& savefile);

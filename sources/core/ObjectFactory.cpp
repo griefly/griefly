@@ -19,6 +19,19 @@ ObjectFactory::ObjectFactory(IGame* game)
     id_ = 1;
     is_world_generating_ = true;
     game_ = game;
+    id_ptr_id_table = &objects_table_;
+}
+
+ObjectFactory::~ObjectFactory()
+{
+    ProcessDeletion();
+    for (auto& info : objects_table_)
+    {
+        if (info.object)
+        {
+            delete info.object;
+        }
+    }
 }
 
 std::vector<ObjectInfo>& ObjectFactory::GetIdTable()
@@ -222,7 +235,18 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
         return;
     }
 
-    QByteArray raw_data = file.readAll();
+    QByteArray raw_data;
+    while (file.bytesAvailable())
+    {
+        QByteArray local = file.readLine();
+        if (local.size() < 1)
+        {
+            break;
+        }
+        local = local.left(local.size() - 1);
+        raw_data.append(local);
+    }
+    raw_data = QByteArray::fromHex(raw_data);
     FastDeserializer ss(raw_data.data(), raw_data.size());
 
     BeginWorldCreation();

@@ -50,7 +50,6 @@ public:
     MOCK_METHOD1(DeleteLater, void(quint32 id));
     MOCK_METHOD0(ProcessDeletion, void());
     MOCK_METHOD1(AddProcessingItem, void(quint32 item));
-    MOCK_METHOD0(ClearProcessing, void());
     MOCK_METHOD2(SetPlayerId, void(quint32 net_id, quint32 real_id));
     MOCK_METHOD1(GetPlayerId, quint32(quint32 net_id));
     MOCK_METHOD1(GetNetId, quint32(quint32 real_id));
