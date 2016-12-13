@@ -13,8 +13,7 @@ Grille::Grille(quint32 id) : Breakable(id)
     transparent = true;
     SetPassable(D_ALL, Passable::AIR);
 
-    tickSpeed = 5;
-    pixSpeed = 1;
+    tick_speed_ = 5;
     SetHitPoints(15);
 
     v_level = 8;

@@ -17,8 +17,8 @@ public:
     virtual void AfterWorldCreation() override;
     virtual void Process() override;
 
-    int after_world_creation_;
-    int process_;
+    int KV_SAVEBLE(after_world_creation_);
+    int KV_SAVEBLE(process_);
 
     void SetCreationCallback(std::function<void()> callback);
     void SetProcessCallback(std::function<void()> callback);

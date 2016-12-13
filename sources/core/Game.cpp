@@ -280,8 +280,6 @@ void Game::InitWorld(int id, QString map_name)
             srand(QTime::currentTime().msecsSinceStartOfDay());
 
             GetFactory().LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
-            qDebug() << "End load from mapgen atmpsphere";
-
 
             GetFactory().CreateImpl(Lobby::T_ITEM_S());
 

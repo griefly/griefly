@@ -4,7 +4,7 @@
 
 Table::Table(quint32 id) : IMovable(id)
 {
-    anchored = true;
+    anchored_ = true;
     v_level = 4;
     SetPassable(D_ALL, Passable::SMALL_CREATURE);
     SetSprite(""); 

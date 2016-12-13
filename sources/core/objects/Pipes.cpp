@@ -8,7 +8,7 @@
 
 PipeBase::PipeBase(quint32 id) : IMovable(id)
 {
-    anchored = true;
+    anchored_ = true;
     v_level = 1;
 
     SetSprite("icons/pipes.dmi");
@@ -370,7 +370,7 @@ void Connector::AfterWorldCreation()
     if (auto tank = owner->GetItem<GasTank>())
     {
         ConnectToGasTank(tank);
-        tank->anchored = true;
+        tank->anchored_ = true;
     }
 }
 

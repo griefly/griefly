@@ -25,8 +25,7 @@
 
 Human::Human(quint32 id) : IMob(id)
 {
-    tickSpeed = 1;
-    pixSpeed = 2;
+    tick_speed_ = 1;
     SetSprite("icons/human.dmi");
     SetState("african1_m_s");
     SetPassable(D_ALL, Passable::BIG_ITEM);
@@ -556,7 +555,7 @@ void Human::RotationAction(IdPtr<IOnMapBase> item)
 {
     if (IdPtr<IMovable> movable = item)
     {
-        if (!movable->anchored)
+        if (!movable->anchored_)
         {
             if (IdPtr<Projectile> projectile = movable)
             {

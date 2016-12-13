@@ -16,7 +16,7 @@ Girder::Girder(quint32 id) : Structure(id)
 
     SetPassable(D_ALL, Passable::AIR);
 
-    anchored = true;
+    anchored_ = true;
     name = "Girder";
 }
 

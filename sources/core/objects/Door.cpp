@@ -193,7 +193,7 @@ GlassDoor::GlassDoor(quint32 id) : IMovable(id)
 
     door_prefix_ = "left";
 
-    anchored = true;
+    anchored_ = true;
 
     door_state_ = CLOSED;
 

@@ -33,7 +33,7 @@ public:
 
     virtual unsigned int Hash()
     {
-        return GetId();
+        return GetId() + GetFreq();
     }
 
     virtual void Delete();
