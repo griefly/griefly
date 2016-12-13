@@ -73,6 +73,12 @@ void ObjectFactory::ForeachProcess()
 {
     UpdateProcessingItems();
 
+    const int CLEAR_TICK = 10;
+    if (MAIN_TICK % CLEAR_TICK == 1)
+    {
+        ClearProcessing();
+    }
+
     quint32 table_size = process_table_.size();
     for (quint32 i = 0; i < table_size; ++i)
     {
