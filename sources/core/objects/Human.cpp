@@ -22,6 +22,7 @@
 #include "ElectricTools.h"
 #include "SpaceTurf.h"
 #include "Drinks.h"
+#include "MedbayTools.h"
 
 Human::Human(quint32 id) : IMob(id)
 {
@@ -432,6 +433,10 @@ void Human::AttackBy(IdPtr<Item> item)
     {
         drink->Drink(GetId(), item->GetOwner());
         return;
+    }
+    if(IdPtr<HealthAnalyzer> analyzer = item)
+    {
+        analyzer->Scan(GetId());
     }
     bool damaged = false;
     if (item.IsValid() && (item->damage > 0))
