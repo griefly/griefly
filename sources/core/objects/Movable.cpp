@@ -194,6 +194,12 @@ unsigned int ForceManager::Hash()
 
 void ForceManager::Process()
 {
+    const int CLEAR_TICK = 10;
+    if (MAIN_TICK % CLEAR_TICK == 1)
+    {
+        Clear();
+    }
+
     for (auto movable = to_add_.begin(); movable != to_add_.end(); ++movable)
     {
         if (!(*movable).IsValid())
