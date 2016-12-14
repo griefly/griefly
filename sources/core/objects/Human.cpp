@@ -346,7 +346,7 @@ void Human::Live()
         if(std::abs(40-temperature) > 3)
         {
             int damage = (std::abs(40-temperature) / 10) > 1 ? (std::abs(308-temperature) / 100) : 1;
-            burn_damage_ += damage;
+            AddBurnDamage(damage);
         }
         if (oxygen > 0)
         {
@@ -356,7 +356,7 @@ void Human::Live()
         }
         else if (CalculateHealth() >= -10000)
         {
-            suffocation_damage_ += 100;
+            AddSuffocationDamage(100);
             
             if (GetRand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
             {
@@ -380,7 +380,7 @@ void Human::Live()
         }
         if (CalculateHealth() >= -10000)
         {
-            suffocation_damage_ += 100;
+            AddSuffocationDamage(100);
             if (GetRand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
             {
                 GetGame().GetChat().PostSimpleText(QString("%1 gasps!").arg(name), owner->GetId());
@@ -398,7 +398,7 @@ void Human::Regeneration()
     int healed = suffocation_damage_ / 2 > 0 ? suffocation_damage_ / 2 : 1;
     if(suffocation_damage_ > 0)
     { 
-        suffocation_damage_ -= healed;
+        AddSuffocationDamage(-(healed));
     }
 }
 
@@ -437,11 +437,17 @@ void Human::AttackBy(IdPtr<Item> item)
     if(IdPtr<HealthAnalyzer> analyzer = item)
     {
         analyzer->Scan(GetId());
+        return;
+    }
+    if(IdPtr<Medicine> medicine = item)
+    {
+        medicine->Heal(GetId());
+        return;
     }
     bool damaged = false;
     if (item.IsValid() && (item->damage > 0))
     {
-        brute_damage_ -= item->damage;
+        AddBruteDamage(item->damage * 100);
         QString sound = QString("genhit%1.ogg").arg(GetRand() % 3 + 1);
         PlaySoundIfVisible(sound, owner.Id());
         if (IdPtr<IOnMapObject> item_owner = item->GetOwner())
@@ -453,7 +459,7 @@ void Human::AttackBy(IdPtr<Item> item)
     }
     else if (!item.IsValid())
     {
-        brute_damage_ += 100;
+        AddBruteDamage(100);
 
         unsigned int punch_value = (GetRand() % 4) + 1;
         PlaySoundIfVisible(QString("punch%1.ogg").arg(punch_value), owner.Id());
@@ -527,8 +533,8 @@ void Human::Bump(IdPtr<IMovable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
-        brute_damage_ += projectile->GetDamage();
-        burn_damage_ += projectile->GetBurnDamage();
+        AddBurnDamage(projectile->GetDamage() * 100);
+        AddBurnDamage(projectile->GetBurnDamage() * 100);
         GetGame().GetChat().PostSimpleText(
             name + " got hit by a " + projectile->name + "!", GetRoot().Id());
 
@@ -616,12 +622,6 @@ void Human::TryClownBootsHonk()
     PlaySoundIfVisible(sound, GetOwner().Id());
 }
 
-void Human::AddDamage(int brute, int suffocation, int burn)
-{
-    suffocation_damage_ += suffocation;
-    burn_damage_ += burn;
-    brute_damage_ += brute;
-}
 int Human::CalculateHealth()
 {
     return max_health_ - (suffocation_damage_ + burn_damage_ + brute_damage_);
@@ -630,6 +630,21 @@ int Human::CalculateHealth()
 CaucasianHuman::CaucasianHuman(quint32 id) : Human(id)
 {
     SetState("caucasian2_m_s");
+}
+
+void Human::AddBurnDamage(int damage)
+{
+    burn_damage_ += damage;
+}
+
+void Human::AddSuffocationDamage(int damage)
+{
+    suffocation_damage_ += damage;
+}
+
+void Human::AddBruteDamage(int damage)
+{
+    brute_damage_ += damage;
 }
 
 void CaucasianHuman::AfterWorldCreation()

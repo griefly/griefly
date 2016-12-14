@@ -35,11 +35,11 @@ public:
 };
 ADD_TO_TYPELIST(Ointment);
 
-class BrutePatch: public Medicine
+class BruisePack: public Medicine
 {
 public:
-    DECLARE_SAVED(BrutePatch, Medicine);
-    DECLARE_GET_TYPE_ITEM(BrutePatch);
-    BrutePatch(quint32 id);
+    DECLARE_SAVED(BruisePack, Medicine);
+    DECLARE_GET_TYPE_ITEM(BruisePack);
+    BruisePack(quint32 id);
 };
-ADD_TO_TYPELIST(BrutePatch);
+ADD_TO_TYPELIST(BruisePack);

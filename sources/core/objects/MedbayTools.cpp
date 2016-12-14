@@ -4,6 +4,7 @@ HealthAnalyzer::HealthAnalyzer(quint32 id) : Item(id)
 {
     SetSprite("icons/device.dmi");
     SetState("health");
+    name = "Health Analyzer";
 }
 
 void HealthAnalyzer::Scan(IdPtr<Human> target)
@@ -43,17 +44,30 @@ Medicine::Medicine(quint32 id) : Item(id)
 
 void Medicine::Heal(IdPtr<Human> target)
 {
-    target->AddDamage(-(brute_heal_),0,-(burn_heal_));
+    if(target->GetBurnDamage() < burn_heal_)
+    {
+        target->AddBurnDamage(-(target->GetBurnDamage()));
+        return;
+    }
+    if(target->GetBurnDamage() < brute_heal_)
+    {
+        target->AddBruteDamage(-(target->GetBruteDamage()));
+        return;
+    }
+    target->AddBurnDamage(-(burn_heal_));
+    target->AddBruteDamage(-(brute_heal_));
 }
 
 Ointment::Ointment(quint32 id) : Medicine(id)
 {
     SetState("ointment");
-    burn_heal_ = 10;
+    burn_heal_ = 1000;
+    name = "Ointment";
 }
 
-BrutePatch::BrutePatch(quint32 id) : Medicine(id)
+BruisePack::BruisePack(quint32 id) : Medicine(id)
 {
     SetState("brutepack");
-    brute_heal_ = 10;
+    brute_heal_ = 1000;
+    name = "bruise pack";
 }
