@@ -151,11 +151,7 @@ MapEditorForm::~MapEditorForm()
 
 void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, int second_y)
 {
-    ui->cursor_label->setText(
-        "("
-        + QString::number(first_x) + ", "
-        + QString::number(first_y)
-        + ")");
+    ui->cursor_label->setText(tr("(%1, %2)").arg(first_x).arg(first_y));
 
     auto entries = map_editor_->GetEntriesFor(first_x, first_y, 0);
 
