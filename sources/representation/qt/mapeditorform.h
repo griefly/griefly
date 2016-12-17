@@ -71,6 +71,8 @@ private slots:
 
     void on_lineEditAsInt_returnPressed();
 
+    void on_lineEditAsBool_returnPressed();
+
 private:
     bool is_turf_selected_;
 

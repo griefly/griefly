@@ -354,19 +354,28 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
     {
         FastDeserializer deserializer(variable_value.data(), variable_value.size());
 
-        QString parsed_value;
+        QString parsed_value("PARSING_ERROR");
         if (deserializer.IsNextType(FastSerializer::INT32_TYPE))
         {
             int value;
             WrapReadMessage(deserializer, value);
             parsed_value = QString::number(value);
         }
-        else
-        {
-            parsed_value = "PARSING_ERROR";
-        }
 
         ui->lineEditAsInt->setText(parsed_value);
+    }
+    {
+        FastDeserializer deserializer(variable_value.data(), variable_value.size());
+
+        QString parsed_value("PARSING_ERROR");
+        if (deserializer.IsNextType(FastSerializer::BOOL_TYPE))
+        {
+            bool value;
+            WrapReadMessage(deserializer, value);
+            parsed_value = value ? "1" : "0";
+        }
+
+        ui->lineEditAsBool->setText(parsed_value);
     }
 }
 
@@ -451,6 +460,39 @@ void MapEditorForm::on_lineEditAsInt_returnPressed()
     UpdateVariablesColor(*ee);
 
     map_editor_->UpdateDirs(ee);
+}
+
+void MapEditorForm::on_lineEditAsBool_returnPressed()
+{
+    if (!ui->listWidgetVariables->currentItem())
+    {
+        return;
+    }
+
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
+
+    QString current_variable = ui->listWidgetVariables->currentItem()->text();
+
+    FastSerializer ss(1);
+    QString loc = ui->lineEditAsBool->text();
+
+    bool ok = false;
+    bool value = !!loc.toInt(&ok);
+    if (!ok)
+    {
+        return;
+    }
+
+    WrapWriteMessage(ss, value);
+
+    ee->variables[current_variable] = QByteArray(ss.GetData(), ss.GetIndex());
+
+    on_listWidgetVariables_itemSelectionChanged();
+    UpdateVariablesColor(*ee);
 }
 
 void MapEditorForm::on_listWidgetTurf_clicked(const QModelIndex&index)
