@@ -265,6 +265,12 @@ void MapEditorForm::on_loadMap_clicked()
 
 void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 {
+    QString name;
+    if (QListWidgetItem* item = ui->listWidgetVariables->currentItem())
+    {
+        name = item->text();
+    }
+
     ui->listWidgetVariables->clear();
     if (ui->listWidgetTile->selectedItems().size() == 0)
     {
@@ -274,9 +280,14 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 
     auto& variables = GetSettersForTypes()[item->text()];
 
-    for (auto it = variables.begin(); it != variables.end(); ++it)
+    int counter = 0;
+    for (auto it = variables.begin(); it != variables.end(); ++it, ++counter)
     {
         ui->listWidgetVariables->addItem(it->first);
+        if (it->first == name)
+        {
+            ui->listWidgetVariables->setCurrentRow(counter);
+        }
     }
 
     MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
@@ -285,25 +296,6 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
         UpdateVariablesColor(*ee);
     }
 }
-
-/*void MapEditorForm::on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item)
-{
-    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
-
-    QString& variable_value = ee.variables[item->text().toStdString()];
-
-    bool ok = false;
-
-    QString result =
-            QInputDialog::getText(
-                nullptr, "Text Input", "New variable value:", QLineEdit::Normal, variable_value.c_str(), &ok);
-
-    if (ok)
-    {
-        variable_value = result.toStdString();
-    }
-    UpdateVariablesColor(ee);
-}*/
 
 MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
 {
