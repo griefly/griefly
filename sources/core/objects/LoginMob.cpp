@@ -109,7 +109,8 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 int z = map.GetDepth() / 2;
                 tiles.push_back(map.GetSquares()[x][y][z]);
             }
-            tiles[0]->AddItem(human);
+            int index = GetRand() % tiles.size();
+            tiles[index]->AddItem(human);
             if (GetId() == GetGame().GetMob().Id())
             {
                 GetGame().ChangeMob(human);
