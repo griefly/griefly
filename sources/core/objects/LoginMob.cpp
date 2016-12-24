@@ -120,14 +120,6 @@ void LoginMob::ProcessMessage(const Message2& msg)
         }
         qDebug() << "End human creation in LoginMob";
     }
-    if (msg.type == MessageType::MESSAGE)
-    {
-        /*QString text = obj["text"].toString().toStdString();
-        if (Chat::IsOOCMessage(text))
-        {
-            GetChat().PostOOCText(name, text.substr(3));
-        }*/
-    }
 }
 
 void LoginMob::Process()
