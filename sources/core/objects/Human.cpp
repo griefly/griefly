@@ -39,7 +39,7 @@ Human::Human(quint32 id) : IMob(id)
 
     dead_ = false;
     lying_ = false;
-    max_health_ = 10000;
+    max_health_ = HUMAN_MAX_HEALT;
     suffocation_damage_ = 0;
     burn_damage_ = 0;
     brute_damage_ = 0;
@@ -343,9 +343,12 @@ void Human::Live()
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
         int temperature = t->GetAtmosHolder()->GetTemperature();
-        if(std::abs(40-temperature) > 3)
+        const int REGULAR_TEMPERATURE = 40;
+        const int BURNING_TRASHHOLD = 3;
+        const int MIN_BURN_DAMAGE = 1;
+        if(qAbs(REGULAR_TEMPERATURE - temperature) > BURNING_TRASHHOLD)
         {
-            int damage = (std::abs(40-temperature) / 10) > 1 ? (std::abs(308-temperature) / 100) : 1;
+            int damage = qMax(MIN_BURN_DAMAGE,qAbs(REGULAR_TEMPERATURE - temperature));
             AddBurnDamage(damage);
         }
         if (oxygen > 0)

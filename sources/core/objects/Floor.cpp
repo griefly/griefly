@@ -15,6 +15,7 @@ Floor::Floor(quint32 id) : ITurf(id)
     SetPassable(D_ALL, Passable::FULL);
 
     SetSprite("icons/floors.dmi");
+    SetState("floor"); 
 
     name = "Floor";
     
@@ -37,7 +38,7 @@ void Floor::AttackBy(IdPtr<Item> item)
         if (!open_)
         {
             SetOpen(true);
-            IdPtr<FloorTile> ftile = Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
+            Create<Item>(FloorTile::T_ITEM_S(), GetOwner());
             PlaySoundIfVisible("Crowbar.ogg", owner.Id());
         }
     }

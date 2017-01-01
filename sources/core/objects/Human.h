@@ -2,6 +2,8 @@
 
 #include "Mob.h"
 
+const int HUMAN_MAX_HEALT = 10000;
+
 class Human: public IMob
 {
 public:
@@ -52,10 +54,10 @@ public:
     void PullAction(IdPtr<IOnMapBase> item);
     void StopPull();
     
-    int GetBurnDamage() {return suffocation_damage_;}
-    int GetSuffocationDamage() {return burn_damage_;}
-    int GetBruteDamage() {return brute_damage_;}
-    bool IsDead() {return dead_;}
+    int GetBurnDamage() { return suffocation_damage_; }
+    int GetSuffocationDamage() { return burn_damage_; }
+    int GetBruteDamage() { return brute_damage_; }
+    bool IsDead() { return dead_; }
     void AddBurnDamage(int damage);
     void AddSuffocationDamage(int damage);
     void AddBruteDamage(int damage);

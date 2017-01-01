@@ -138,34 +138,10 @@ void HumanInterface::UpdateHealth()
     if (IdPtr<Human> human = owner_)
     {
         int health = human->GetHealth();
-        if (health == 10000)
-        {
-            health_.GetView()->SetState("health0");
-        }
-        else if (health >= 8000)
-        {
-            health_.GetView()->SetState("health1");
-        }
-        else if (health >= 6000)
-        {
-            health_.GetView()->SetState("health2");
-        }
-        else if (health >= 4000)
-        {
-            health_.GetView()->SetState("health3");
-        }
-        else if (health >= 2000)
-        {
-            health_.GetView()->SetState("health4");
-        }
-        else if (health >= 0)
-        {
-            health_.GetView()->SetState("health5");
-        }
-        else //if (health_.GetView()->GetBaseFrameset()->GetState() != "health6")
-        {
-            health_.GetView()->SetState("health6");
-        }
+        const int STATES_AMOUNT = 7;
+        int state = (health * STATES_AMOUNT) / (HUMAN_MAX_HEALT + 1) > 0 ? (health * STATES_AMOUNT) / (HUMAN_MAX_HEALT + 1) : 0; // it will be from 0 to 6
+        state = STATES_AMOUNT - state - 1; // 0 to 6, but reverted
+        health_.GetView()->SetState(QString("health%1").arg(state));
     }
 }
 void HumanInterface::UpdateEnviroment()
@@ -176,6 +152,7 @@ void HumanInterface::UpdateEnviroment()
         {
             unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
             int temperature = t->GetAtmosHolder()->GetTemperature();
+            
             oxygen_.GetView()->SetState("oxy0");
             if (oxygen < 1)
             {
