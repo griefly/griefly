@@ -109,7 +109,8 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 int z = map.GetDepth() / 2;
                 tiles.push_back(map.GetSquares()[x][y][z]);
             }
-            tiles[0]->AddItem(human);
+            int index = GetRand() % tiles.size();
+            tiles[index]->AddItem(human);
             if (GetId() == GetGame().GetMob().Id())
             {
                 GetGame().ChangeMob(human);
@@ -118,14 +119,6 @@ void LoginMob::ProcessMessage(const Message2& msg)
             GetGame().GetChat().PostTextFor(text, human);
         }
         qDebug() << "End human creation in LoginMob";
-    }
-    if (msg.type == MessageType::MESSAGE)
-    {
-        /*QString text = obj["text"].toString().toStdString();
-        if (Chat::IsOOCMessage(text))
-        {
-            GetChat().PostOOCText(name, text.substr(3));
-        }*/
     }
 }
 

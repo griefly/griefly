@@ -151,11 +151,7 @@ MapEditorForm::~MapEditorForm()
 
 void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, int second_y)
 {
-    ui->cursor_label->setText(
-        "("
-        + QString::number(first_x) + ", "
-        + QString::number(first_y)
-        + ")");
+    ui->cursor_label->setText(tr("(%1, %2)").arg(first_x).arg(first_y));
 
     auto entries = map_editor_->GetEntriesFor(first_x, first_y, 0);
 
@@ -269,6 +265,12 @@ void MapEditorForm::on_loadMap_clicked()
 
 void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 {
+    QString name;
+    if (QListWidgetItem* item = ui->listWidgetVariables->currentItem())
+    {
+        name = item->text();
+    }
+
     ui->listWidgetVariables->clear();
     if (ui->listWidgetTile->selectedItems().size() == 0)
     {
@@ -278,9 +280,14 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 
     auto& variables = GetSettersForTypes()[item->text()];
 
-    for (auto it = variables.begin(); it != variables.end(); ++it)
+    int counter = 0;
+    for (auto it = variables.begin(); it != variables.end(); ++it, ++counter)
     {
         ui->listWidgetVariables->addItem(it->first);
+        if (it->first == name)
+        {
+            ui->listWidgetVariables->setCurrentRow(counter);
+        }
     }
 
     MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
@@ -289,25 +296,6 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
         UpdateVariablesColor(*ee);
     }
 }
-
-/*void MapEditorForm::on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item)
-{
-    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
-
-    QString& variable_value = ee.variables[item->text().toStdString()];
-
-    bool ok = false;
-
-    QString result =
-            QInputDialog::getText(
-                nullptr, "Text Input", "New variable value:", QLineEdit::Normal, variable_value.c_str(), &ok);
-
-    if (ok)
-    {
-        variable_value = result.toStdString();
-    }
-    UpdateVariablesColor(ee);
-}*/
 
 MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
 {
@@ -366,19 +354,28 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
     {
         FastDeserializer deserializer(variable_value.data(), variable_value.size());
 
-        QString parsed_value;
+        QString parsed_value("PARSING_ERROR");
         if (deserializer.IsNextType(FastSerializer::INT32_TYPE))
         {
             int value;
             WrapReadMessage(deserializer, value);
             parsed_value = QString::number(value);
         }
-        else
-        {
-            parsed_value = "PARSING_ERROR";
-        }
 
         ui->lineEditAsInt->setText(parsed_value);
+    }
+    {
+        FastDeserializer deserializer(variable_value.data(), variable_value.size());
+
+        QString parsed_value("PARSING_ERROR");
+        if (deserializer.IsNextType(FastSerializer::BOOL_TYPE))
+        {
+            bool value;
+            WrapReadMessage(deserializer, value);
+            parsed_value = value ? "1" : "0";
+        }
+
+        ui->lineEditAsBool->setText(parsed_value);
     }
 }
 
@@ -463,6 +460,39 @@ void MapEditorForm::on_lineEditAsInt_returnPressed()
     UpdateVariablesColor(*ee);
 
     map_editor_->UpdateDirs(ee);
+}
+
+void MapEditorForm::on_lineEditAsBool_returnPressed()
+{
+    if (!ui->listWidgetVariables->currentItem())
+    {
+        return;
+    }
+
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
+
+    QString current_variable = ui->listWidgetVariables->currentItem()->text();
+
+    FastSerializer ss(1);
+    QString loc = ui->lineEditAsBool->text();
+
+    bool ok = false;
+    bool value = !!loc.toInt(&ok);
+    if (!ok)
+    {
+        return;
+    }
+
+    WrapWriteMessage(ss, value);
+
+    ee->variables[current_variable] = QByteArray(ss.GetData(), ss.GetIndex());
+
+    on_listWidgetVariables_itemSelectionChanged();
+    UpdateVariablesColor(*ee);
 }
 
 void MapEditorForm::on_listWidgetTurf_clicked(const QModelIndex&index)

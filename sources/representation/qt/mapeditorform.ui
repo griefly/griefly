@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>819</width>
-    <height>518</height>
+    <height>619</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -222,8 +222,14 @@
            <widget class="QListWidget" name="listWidgetTile"/>
            <widget class="QListWidget" name="listWidgetVariables"/>
            <widget class="QTabWidget" name="tabWidgetVariables">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>100</height>
+             </size>
+            </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="tabRaw">
              <attribute name="title">
@@ -260,6 +266,21 @@
               <string>As Int</string>
              </attribute>
              <widget class="QLineEdit" name="lineEditAsInt">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>113</width>
+                <height>20</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="tab">
+             <attribute name="title">
+              <string>As Bool</string>
+             </attribute>
+             <widget class="QLineEdit" name="lineEditAsBool">
               <property name="geometry">
                <rect>
                 <x>10</x>

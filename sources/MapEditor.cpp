@@ -399,7 +399,7 @@ void MapEditor::AddItem(const QString &item_type)
 
 void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
 {
-    QByteArray& data = ee->variables["dMove"];
+    QByteArray& data = ee->variables["direction_"];
     if (ee && data.size())
     {
         FastDeserializer deserializer(data.data(), data.size());
