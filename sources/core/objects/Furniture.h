@@ -17,6 +17,8 @@ public:
     DECLARE_SAVED(Chair, IMovable);
     DECLARE_GET_TYPE_ITEM(Chair);
     Chair(quint32 id);
+
+    virtual void AfterWorldCreation() override;
 };
 ADD_TO_TYPELIST(Chair);
 
