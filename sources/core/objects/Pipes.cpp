@@ -424,7 +424,7 @@ void PipePump::Process()
         return;
     }
 
-    if (static_cast<int>(head_connection->GetPressure()) >= pump_pressure_)
+    if (head_connection->GetPressure() >= pump_pressure_)
     {
         return;
     }
