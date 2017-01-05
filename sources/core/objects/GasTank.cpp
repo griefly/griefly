@@ -101,9 +101,9 @@ void MagicGasTank::Process()
     GetAtmosHolder()->RemoveGase(CO2, GetAtmosHolder()->GetGase(CO2));
     GetAtmosHolder()->RemoveGase(NYTROGEN, GetAtmosHolder()->GetGase(NYTROGEN));
 
-    int new_oxygen = std::max(0, O2_TANK_AMOUNT - static_cast<int>(GetAtmosHolder()->GetGase(OXYGEN)));
+    int new_oxygen = qMax(0, O2_TANK_AMOUNT - GetAtmosHolder()->GetGase(OXYGEN));
     GetAtmosHolder()->AddGase(OXYGEN, new_oxygen);
 
-    int new_energy = std::max(0, O2_TANK_ENERGY - static_cast<int>(GetAtmosHolder()->GetEnergy()));
+    int new_energy = qMax(0, O2_TANK_ENERGY - GetAtmosHolder()->GetEnergy());
     GetAtmosHolder()->AddEnergy(new_energy);
 }
