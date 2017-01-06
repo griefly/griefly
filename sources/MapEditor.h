@@ -89,6 +89,7 @@ public:
     void ClearMap();
 
     std::vector<EditorEntry>& GetEntriesFor(int posx, int posy, int posz);
+    EditorEntry& GetTurfFor(int posx, int posy, int posz);
 
     const Pointer& GetPointer() const { return pointer_; }
 signals:

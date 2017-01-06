@@ -23,6 +23,15 @@ Chair::Chair(quint32 id) : IMovable(id)
     name = "Chair";
 }
 
+void Chair::AfterWorldCreation()
+{
+    IMovable::AfterWorldCreation();
+
+    if (GetDir() == D_UP)
+    {
+        v_level = 10;
+    }
+}
 
 Stool::Stool(quint32 id) : IMovable(id)
 {

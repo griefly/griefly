@@ -164,6 +164,8 @@ void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, i
     ui->listWidgetVariables->clear();
     ui->lineEditAsString->clear();
     ui->lineEditRaw->clear();
+
+    on_listWidgetTile_itemSelectionChanged();
 }
 
 void MapEditorForm::on_createItem_clicked()
@@ -272,13 +274,10 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     }
 
     ui->listWidgetVariables->clear();
-    if (ui->listWidgetTile->selectedItems().size() == 0)
-    {
-        return;
-    }
-    QListWidgetItem* item = ui->listWidgetTile->selectedItems().first();
 
-    auto& variables = GetSettersForTypes()[item->text()];
+    QString item_type = GetCurrentEditorEntry()->item_type;
+
+    auto& variables = GetSettersForTypes()[item_type];
 
     int counter = 0;
     for (auto it = variables.begin(); it != variables.end(); ++it, ++counter)
@@ -303,8 +302,13 @@ MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
 
     int current_x = map_editor_->GetPointer().first_posx;
     int current_y = map_editor_->GetPointer().first_posy;
-    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
 
+    if (ui->listWidgetTile->selectedItems().size() == 0)
+    {
+        return &map_editor_->GetTurfFor(current_x, current_y, 0);
+    }
+
+    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
     if (entries.size() > static_cast<quint32>(current_index))
     {
         return &entries[current_index];

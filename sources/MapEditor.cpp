@@ -576,3 +576,8 @@ std::vector<MapEditor::EditorEntry>& MapEditor::GetEntriesFor(int posx, int posy
     return editor_map_[posx][posy][posz].items;
 }
 
+MapEditor::EditorEntry& MapEditor::GetTurfFor(int posx, int posy, int posz)
+{
+    return editor_map_[posx][posy][posz].turf;
+}
+
