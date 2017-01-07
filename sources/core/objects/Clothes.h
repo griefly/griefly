@@ -29,6 +29,15 @@ public:
 };
 ADD_TO_TYPELIST(Helmet);
 
+class Tophat: public Cloth
+{
+public:
+    DECLARE_SAVED(Tophat, Cloth);
+    DECLARE_GET_TYPE_ITEM(Tophat);
+    Tophat(quint32 id);
+};
+ADD_TO_TYPELIST(Tophat);
+
 class EngineUniform: public Cloth
 {
 public:
