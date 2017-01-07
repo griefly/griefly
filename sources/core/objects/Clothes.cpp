@@ -27,6 +27,16 @@ Helmet::Helmet(quint32 id) : Cloth(id)
     name = "Armor";
 }
 
+Tophat::Tophat(quint32 id) : Cloth(id)
+{
+    SetSprite("icons/hats.dmi");
+    SetState("tophat");
+
+    type = Slots::HEAD;
+
+    name = "Tophat";
+}
+
 EngineUniform::EngineUniform(quint32 id) : Cloth(id)
 {
     SetSprite("icons/uniforms.dmi");
