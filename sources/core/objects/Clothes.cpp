@@ -97,6 +97,16 @@ OrangeBoots::OrangeBoots(quint32 id) : Cloth(id)
     name = "Orange boots";
 }
 
+BlackBoots::BlackBoots(quint32 id) : Cloth(id)
+{
+    SetSprite("icons/shoes.dmi");
+    SetState("black");
+
+    type = Slots::FEET;
+
+    name = "Black boots";
+}
+
 ClownBoots::ClownBoots(quint32 id) : Cloth(id)
 {
     SetSprite("icons/shoes.dmi");
