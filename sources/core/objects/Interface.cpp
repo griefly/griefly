@@ -160,38 +160,7 @@ void HumanInterface::UpdateEnviroment()
             }
             int state = qMax(-3, ((temperature / 40) - 1) * 100);
             state = qMin(4, state);
-/*            if (temperature - 40 > 12)
-            {
-                temperature_.GetView()->SetState("temp4");
-            }
-            else if (temperature - 40 > 9)
-            {
-                temperature_.GetView()->SetState("temp3");
-            }
-            else if (temperature - 40 > 6)
-            {
-                temperature_.GetView()->SetState("temp2");
-            }
-            else if (temperature - 40 > 3)
-            {
-                temperature_.GetView()->SetState("temp1");
-            }
-            else if(temperature - 40 > 0)
-            {
-                temperature_.GetView()->SetState("temp0");
-            }
-            else if(temperature - 40 > - 3)
-            {
-                temperature_.GetView()->SetState("temp-1");
-            }
-            else if(temperature - 40 > - 6)
-            {
-                temperature_.GetView()->SetState("temp-2");
-            }
-            else if(temperature - 40 > - 9)
-            {
-                temperature_.GetView()->SetState("temp-3");
-            }*/
+            temperature_.GetView()->SetState(QString("temp%1").arg(state));
         }
     }
 }
