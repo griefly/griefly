@@ -18,7 +18,7 @@ Floor::Floor(quint32 id) : ITurf(id)
     SetState("floor"); 
 
     name = "Floor";
-    
+
     floor_type_ = "floor";
     open_ = false;
     bloody = false;

@@ -2,7 +2,7 @@
 
 #include "Mob.h"
 
-const int HUMAN_MAX_HEALT = 10000;
+const int HUMAN_MAX_HEALTH = 10000;
 
 class Human: public IMob
 {
@@ -46,21 +46,19 @@ public:
 
     void UpdateOverlays();
 
-    auto Random() const -> double;
-
     int GetHealth() { return CalculateHealth(); }
 
     void RotationAction(IdPtr<IOnMapBase> item);
     void PullAction(IdPtr<IOnMapBase> item);
     void StopPull();
     
-    int GetBurnDamage() { return suffocation_damage_; }
-    int GetSuffocationDamage() { return burn_damage_; }
+    int GetBurnDamage() { return burn_damage_; }
+    int GetSuffocationDamage() { return suffocation_damage_; }
     int GetBruteDamage() { return brute_damage_; }
     bool IsDead() { return dead_; }
-    void AddBurnDamage(int damage);
-    void AddSuffocationDamage(int damage);
-    void AddBruteDamage(int damage);
+    void ApplyBurnDamage(int damage);
+    void ApplySuffocationDamage(int damage);
+    void ApplyBruteDamage(int damage);
 protected:
     int KV_SAVEBLE(attack_cooldown_);
 

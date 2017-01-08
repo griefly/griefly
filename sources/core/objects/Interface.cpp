@@ -139,7 +139,7 @@ void HumanInterface::UpdateHealth()
     {
         int health = human->GetHealth();
         const int STATES_AMOUNT = 7;
-        int state = (health * STATES_AMOUNT) / (HUMAN_MAX_HEALT + 1) > 0 ? (health * STATES_AMOUNT) / (HUMAN_MAX_HEALT + 1) : 0; // it will be from 0 to 6
+        int state = qMax(0, (health * STATES_AMOUNT) / (HUMAN_MAX_HEALTH + 1)); // it will be from 0 to 6
         state = STATES_AMOUNT - state - 1; // 0 to 6, but reverted
         health_.GetView()->SetState(QString("health%1").arg(state));
     }
@@ -158,7 +158,9 @@ void HumanInterface::UpdateEnviroment()
             {
                 oxygen_.GetView()->SetState("oxy1");
             }
-            if (temperature - 40 > 12)
+            int state = qMax(-3, ((temperature / 40) - 1) * 100);
+            state = qMin(4, state);
+/*            if (temperature - 40 > 12)
             {
                 temperature_.GetView()->SetState("temp4");
             }
@@ -174,24 +176,24 @@ void HumanInterface::UpdateEnviroment()
             {
                 temperature_.GetView()->SetState("temp1");
             }
-            else if(temperature - 40 > -3)
+            else if(temperature - 40 > 0)
             {
                 temperature_.GetView()->SetState("temp0");
             }
-            else if(temperature - 40 > - 6)
+            else if(temperature - 40 > - 3)
             {
                 temperature_.GetView()->SetState("temp-1");
             }
-            else if(temperature - 40 > - 9)
+            else if(temperature - 40 > - 6)
             {
                 temperature_.GetView()->SetState("temp-2");
             }
-            else
+            else if(temperature - 40 > - 9)
             {
                 temperature_.GetView()->SetState("temp-3");
-            }
+            }*/
         }
-    }   
+    }
 }
 
 void HumanInterface::ApplyActiveHandOnSlot(Slot<Item>* slot)
