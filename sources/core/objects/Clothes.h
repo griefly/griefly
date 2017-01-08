@@ -65,6 +65,15 @@ public:
 };
 ADD_TO_TYPELIST(ClownUniform);
 
+class BarmanUniform: public Cloth
+{
+public:
+    DECLARE_SAVED(BarmanUniform, Cloth);
+    DECLARE_GET_TYPE_ITEM(BarmanUniform);
+    BarmanUniform(quint32 id);
+};
+ADD_TO_TYPELIST(BarmanUniform);
+
 class RedUniform: public Cloth
 {
 public:
