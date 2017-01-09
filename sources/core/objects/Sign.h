@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Turf.h"
+#include "OnMapObject.h"
 
 class WallSign: public IOnMapObject
 {
