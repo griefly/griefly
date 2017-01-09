@@ -17,17 +17,17 @@ void HealthAnalyzer::Scan(IdPtr<Human> target)
     GetGame().GetChat().PostTextFor(QString("Analyzing results for %1:\nOverall status:").arg(target->name), GetOwner());
 
     GetGame().GetChat().PostTextFor(target->IsDead() ? QString("Deceased") : QString("%1 healthy").arg(health), GetOwner());
-    if (target->GetBruteDamage() > 1000)
+    if (target->GetBruteDamage() > HUMAN_MAX_HEALTH / 10)
     {
-        GetGame().GetChat().PostTextFor(QString("%1 tissue damage detected.").arg(target->GetBruteDamage() > 5000 ? "Severe" : "Minor"), GetOwner());
+        GetGame().GetChat().PostTextFor(QString("%1 tissue damage detected.").arg(target->GetBruteDamage() > HUMAN_MAX_HEALTH / 2 ? "Severe" : "Minor"), GetOwner());
     }
-    if (target->GetBurnDamage() > 1000)
+    if (target->GetBurnDamage() > HUMAN_MAX_HEALTH / 10)
     {
-        GetGame().GetChat().PostTextFor(QString("%1 burn damage detected.").arg(target->GetBurnDamage() > 5000 ? "Severe" : "Minor"), GetOwner());
+        GetGame().GetChat().PostTextFor(QString("%1 burn damage detected.").arg(target->GetBurnDamage() > HUMAN_MAX_HEALTH / 2 ? "Severe" : "Minor"), GetOwner());
     }
-    if (target->GetSuffocationDamage() > 1000)
+    if (target->GetSuffocationDamage() > HUMAN_MAX_HEALTH / 10)
     {
-        GetGame().GetChat().PostTextFor(QString("%1 oxygen deprivation detected.").arg(target->GetSuffocationDamage() > 5000 ? "Severe" : "Minor"), GetOwner());
+        GetGame().GetChat().PostTextFor(QString("%1 oxygen deprivation detected.").arg(target->GetSuffocationDamage() > HUMAN_MAX_HEALTH / 2 ? "Severe" : "Minor"), GetOwner());
     }
     GetGame().GetChat().PostTextFor(QString("Damage: Brute-Burn-Suffocation Specfics: %1-%2-%3").arg(brute).arg(burn).arg(suffocation_damage), GetOwner());
 }
@@ -40,9 +40,8 @@ Medicine::Medicine(quint32 id) : Item(id)
 
 void Medicine::Heal(IdPtr<Human> target)
 {
-
-    target->ApplyBurnDamage(-1 * (burn_heal_));
-    target->ApplyBruteDamage(-1 * (brute_heal_));
+    target->ApplyBurnDamage(-1 * burn_heal_);
+    target->ApplyBruteDamage(-1 * brute_heal_);
 }
 
 Ointment::Ointment(quint32 id) : Medicine(id)

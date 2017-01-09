@@ -337,13 +337,12 @@ void Human::Live()
         return;
     }
 
-    interface_.UpdateEnviroment();
+    interface_.UpdateEnvironment();
 
     if (IdPtr<CubeTile> t = owner)
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
         int temperature = t->GetAtmosHolder()->GetTemperature();
-        const int REGULAR_TEMPERATURE = 40;
         const int BURNING_THRESHOLD = 3;
         const int MIN_BURN_DAMAGE = 1;
         if (qAbs(REGULAR_TEMPERATURE - temperature) > BURNING_THRESHOLD)
@@ -519,7 +518,7 @@ void Human::Bump(IdPtr<IMovable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
-        ApplyBurnDamage(projectile->GetDamage() * 100);
+        ApplyBruteDamage(projectile->GetDamage() * 100);
         ApplyBurnDamage(projectile->GetBurnDamage() * 100);
         GetGame().GetChat().PostSimpleText(
             name + " got hit by a " + projectile->name + "!", GetRoot().Id());

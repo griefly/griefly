@@ -1,6 +1,6 @@
 #include "Sign.h"
 
-Sign::Sign(quint32 id) : ITurf(id)
+WallSign::WallSign(quint32 id) : IOnMapObject(id)
 {
     transparent = true;
     SetPassable(D_ALL, Passable::FULL);
@@ -14,12 +14,12 @@ Sign::Sign(quint32 id) : ITurf(id)
     sign_type_ = "bluecross2";
 }
 
-void Sign::AfterWorldCreation()
+void WallSign::AfterWorldCreation()
 {
-    ITurf::AfterWorldCreation();
+    IOnMapObject::AfterWorldCreation();
     SetState(sign_type_);
 }
 
-void Sign::AttackBy(IdPtr<Item> item)
+void WallSign::AttackBy(IdPtr<Item> item)
 {
 }

@@ -3,6 +3,7 @@
 #include "Mob.h"
 
 const int HUMAN_MAX_HEALTH = 10000;
+const int REGULAR_TEMPERATURE = 40;
 
 class Human: public IMob
 {

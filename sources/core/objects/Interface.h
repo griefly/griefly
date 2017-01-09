@@ -60,7 +60,7 @@ public:
     void UpdateHealth();
     void UpdateLaying();
     void UpdatePulling(bool is_pulling);
-    void UpdateEnviroment();
+    void UpdateEnvironment();
 
 public:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);

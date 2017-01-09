@@ -144,7 +144,7 @@ void HumanInterface::UpdateHealth()
         health_.GetView()->SetState(QString("health%1").arg(state));
     }
 }
-void HumanInterface::UpdateEnviroment()
+void HumanInterface::UpdateEnvironment()
 {
     if (IdPtr<Human> human = owner_)
     {
@@ -158,7 +158,7 @@ void HumanInterface::UpdateEnviroment()
             {
                 oxygen_.GetView()->SetState("oxy1");
             }
-            int state = qMax(-3, ((temperature / 40) - 1) * 100);
+            int state = qMax(-3, ((temperature / REGULAR_TEMPERATURE) - 1) * 100);
             state = qMin(4, state);
             temperature_.GetView()->SetState(QString("temp%1").arg(state));
         }
