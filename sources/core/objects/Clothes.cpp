@@ -77,6 +77,16 @@ ClownUniform::ClownUniform(quint32 id) : Cloth(id)
     name = "Clown uniform";
 }
 
+BarmanUniform::BarmanUniform(quint32 id) : Cloth(id)
+{
+    SetSprite("icons/uniforms.dmi");
+    SetState("ba_suit");
+
+    type = Slots::UNIFORM;
+
+    name = "Barman uniform";
+}
+
 OrangeBoots::OrangeBoots(quint32 id) : Cloth(id)
 {
     SetSprite("icons/shoes.dmi");
@@ -85,6 +95,16 @@ OrangeBoots::OrangeBoots(quint32 id) : Cloth(id)
     type = Slots::FEET;
 
     name = "Orange boots";
+}
+
+BlackBoots::BlackBoots(quint32 id) : Cloth(id)
+{
+    SetSprite("icons/shoes.dmi");
+    SetState("black");
+
+    type = Slots::FEET;
+
+    name = "Black boots";
 }
 
 ClownBoots::ClownBoots(quint32 id) : Cloth(id)
