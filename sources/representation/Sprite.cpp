@@ -20,8 +20,8 @@ bool Sprite::init(InitSprite data)
     }
     else
     {
-        frames_h_ = data.numFrameH;
-        frames_w_ = data.numFrameW;
+        qDebug() << "Invalid metadata, aborting:" << data.file;
+        KvAbort();
     }
     if((frames_h_ == 0) || (frames_w_ == 0))
     {        
