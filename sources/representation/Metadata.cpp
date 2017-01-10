@@ -129,6 +129,9 @@ void ImageMetadata::Init(const QString& name, int width, int height)
 void ImageMetadata::InitWithoutMetadata()
 {
     qDebug() << "Fail metadata load, try without it";
+
+    metadata_.clear();
+
     metadata_[""].first_frame_pos = 0;
 
     metadata_[""].frames_sequence.push_back(0);
