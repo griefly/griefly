@@ -33,7 +33,6 @@ void HealthAnalyzer::Scan(IdPtr<Human> target)
 }
 Medicine::Medicine(quint32 id) : Item(id)
 {
-    SetSprite("icons/item.dmi");
     burn_heal_ = 0;
     brute_heal_ = 0;
 }

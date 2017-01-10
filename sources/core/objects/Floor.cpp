@@ -15,7 +15,7 @@ Floor::Floor(quint32 id) : ITurf(id)
     SetPassable(D_ALL, Passable::FULL);
 
     SetSprite("icons/floors.dmi");
-    SetState("floor"); 
+    SetState("floor");
 
     name = "Floor";
 
@@ -84,4 +84,5 @@ Plating::Plating(quint32 id) : Floor(id)
     open_ = true;
     // For map editor
     SetState("plating");
+    floor_type_ = "plating";
 }
