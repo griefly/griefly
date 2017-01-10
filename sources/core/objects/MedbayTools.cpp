@@ -41,6 +41,7 @@ void Medicine::Heal(IdPtr<Human> target)
 {
     target->ApplyBurnDamage(-1 * burn_heal_);
     target->ApplyBruteDamage(-1 * brute_heal_);
+    Delete();
 }
 
 Ointment::Ointment(quint32 id) : Medicine(id)
