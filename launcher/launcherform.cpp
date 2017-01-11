@@ -144,7 +144,8 @@ void LauncherForm::on_connectPushButton_clicked()
         args.push_back("password=" + ui->passwordLineEdit->text());
     }
     args.push_back("port=" + ui->portLineEdit->text());
-    args.push_back("mapgen_name=maps/brig_small.gen");
+    args.push_back("mapgen_name=maps/gloom.gen.txt");
+    args.push_back("-output_redirect");
 
     QString custom_args = ui->customArgsLineEdit->text();
     args.append(custom_args.split(" "));
