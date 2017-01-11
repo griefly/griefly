@@ -158,7 +158,8 @@ void HumanInterface::UpdateEnvironment()
             {
                 oxygen_.GetView()->SetState("oxy1");
             }
-            int state = qMax(-4, ((temperature / REGULAR_TEMPERATURE) - 1) * 10);
+            int state = qMax(-4, ((temperature - REGULAR_TEMPERATURE) / REGULAR_TEMPERATURE) * 10);
+            qDebug() << "state: " <<state << endl;
             state = qMin(4, state);
             temperature_.GetView()->SetState(QString("temp%1").arg(state));
         }
