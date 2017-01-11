@@ -28,7 +28,6 @@ void Floor::AfterWorldCreation()
 {
     ITurf::AfterWorldCreation();
     SetOpen(open_);
-    SetState(floor_type_);
 }
 
 void Floor::AttackBy(IdPtr<Item> item)
@@ -84,5 +83,7 @@ Plating::Plating(quint32 id) : Floor(id)
     open_ = true;
     // For map editor
     SetState("plating");
-    floor_type_ = "plating";
+    floor_type_ = "floor";
 }
+
+
