@@ -22,6 +22,7 @@
 #include "ElectricTools.h"
 #include "SpaceTurf.h"
 #include "Drinks.h"
+#include "MedbayTools.h"
 
 Human::Human(quint32 id) : IMob(id)
 {
@@ -38,7 +39,10 @@ Human::Human(quint32 id) : IMob(id)
 
     dead_ = false;
     lying_ = false;
-    health_ = 100;
+    max_health_ = HUMAN_MAX_HEALTH;
+    suffocation_damage_ = 0;
+    burn_damage_ = 0;
+    brute_damage_ = 0;
 
     pulled_object_ = 0;
 }
@@ -333,21 +337,32 @@ void Human::Live()
         return;
     }
 
+    interface_.UpdateEnvironment();
+
     if (IdPtr<CubeTile> t = owner)
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
+        int temperature = t->GetAtmosHolder()->GetTemperature();
+        const int BURNING_THRESHOLD = 3;
+        const int MIN_BURN_DAMAGE = 1;
+        if (qAbs(REGULAR_TEMPERATURE - temperature) > BURNING_THRESHOLD)
+        {
+            int damage = qMax(MIN_BURN_DAMAGE,qAbs(REGULAR_TEMPERATURE - temperature));
+            ApplyBurnDamage(damage);
+        }
         if (oxygen > 0)
         {
             t->GetAtmosHolder()->RemoveGase(OXYGEN, 1);
             t->GetAtmosHolder()->AddGase(CO2, 1);
+            Regeneration();
         }
-        else if (health_ >= -100)
+        else if (CalculateHealth() >= -1 * HUMAN_MAX_HEALTH)
         {
-            --health_;
+            ApplySuffocationDamage(100);
             
             if (GetRand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
             {
-                GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+                GetGame().GetChat().PostSimpleText(QString("%1 gasps!").arg(name), owner->GetId());
             }
         }
     }
@@ -359,25 +374,35 @@ void Human::Live()
         --lay_timer_;
     }
 
-    if (health_ < 0)
+    if (CalculateHealth() < 0)
     {
         if (!lying_)
         {
             SetLying(true);
         }
-        if (health_ >= -100)
+        if (CalculateHealth() >= -1 * HUMAN_MAX_HEALTH)
         {
-            --health_;
+            ApplySuffocationDamage(100);
             if (GetRand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
             {
-                GetGame().GetChat().PostSimpleText(name + " gasps!", owner->GetId());
+                GetGame().GetChat().PostSimpleText(QString("%1 gasps!").arg(name), owner->GetId());
             }
         }
     }
-    if (health_ < -100 && !dead_)
+    if (CalculateHealth() < -1 * HUMAN_MAX_HEALTH && !dead_)
     {
         OnDeath();
     }
+}
+
+void Human::Regeneration()
+{
+    if (GetSuffocationDamage() <= 0)
+    {
+        return;
+    }
+    int healed = qMax(1, GetSuffocationDamage() / 2);
+    ApplySuffocationDamage(-1 * healed);
 }
 
 IdPtr<IOnMapBase> Human::GetNeighbour(Dir) const
@@ -412,10 +437,20 @@ void Human::AttackBy(IdPtr<Item> item)
         drink->Drink(GetId(), item->GetOwner());
         return;
     }
+    if (IdPtr<HealthAnalyzer> analyzer = item)
+    {
+        analyzer->Scan(GetId());
+        return;
+    }
+    if (IdPtr<Medicine> medicine = item)
+    {
+        medicine->Heal(GetId());
+        return;
+    }
     bool damaged = false;
     if (item.IsValid() && (item->damage > 0))
     {
-        health_ -= item->damage;
+        ApplyBruteDamage(item->damage * 100);
         QString sound = QString("genhit%1.ogg").arg(GetRand() % 3 + 1);
         PlaySoundIfVisible(sound, owner.Id());
         if (IdPtr<IOnMapObject> item_owner = item->GetOwner())
@@ -427,7 +462,7 @@ void Human::AttackBy(IdPtr<Item> item)
     }
     else if (!item.IsValid())
     {
-        health_ -= 1;
+        ApplyBruteDamage(100);
 
         unsigned int punch_value = (GetRand() % 4) + 1;
         PlaySoundIfVisible(QString("punch%1.ogg").arg(punch_value), owner.Id());
@@ -445,24 +480,6 @@ void Human::AttackBy(IdPtr<Item> item)
     if (!damaged)
     {
         return;
-    }
-
-    if ((GetRand() % 3) != 0)
-    {
-        return;
-    }
-
-    unsigned int blood_value = (GetRand() % 7) + 1;
-
-    if (IdPtr<Floor> floor = GetTurf())
-    {
-        if (!floor->bloody)
-        {
-            floor->GetView()->AddOverlay(
-                "icons/blood.dmi",
-                QString("floor%1").arg(blood_value));
-            floor->bloody = true;
-        }
     }
 }
 
@@ -487,7 +504,7 @@ void Human::Represent()
 
 void Human::CalculateVisible(std::list<PosPoint>* visible_list)
 {
-    if (health_ >= 0)
+    if (CalculateHealth() >= 0)
     {
         GetGame().GetMap().CalculateVisisble(
             visible_list,
@@ -501,29 +518,12 @@ void Human::Bump(IdPtr<IMovable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
-        health_ -= projectile->GetDamage();
+        ApplyBruteDamage(projectile->GetDamage() * 100);
+        ApplyBurnDamage(projectile->GetBurnDamage() * 100);
         GetGame().GetChat().PostSimpleText(
             name + " got hit by a " + projectile->name + "!", GetRoot().Id());
 
         // TODO (?): sound
-
-        if ((GetRand() % 3) != 0)
-        {
-            return;
-        }
-
-        unsigned int blood_value = (GetRand() % 7) + 1;
-
-        if (IdPtr<Floor> floor = GetTurf())
-        {
-            if (!floor->bloody)
-            {
-                floor->GetView()->AddOverlay(
-                    "icons/blood.dmi",
-                    QString("floor%1").arg(blood_value));
-                floor->bloody = true;
-            }
-        }
         return;
     }
     IMovable::Bump(item);
@@ -589,9 +589,53 @@ void Human::TryClownBootsHonk()
     PlaySoundIfVisible(sound, GetOwner().Id());
 }
 
+int Human::CalculateHealth()
+{
+    return max_health_ - (suffocation_damage_ + burn_damage_ + brute_damage_);
+}
+
 CaucasianHuman::CaucasianHuman(quint32 id) : Human(id)
 {
     SetState("caucasian2_m_s");
+}
+
+void Human::ApplyBurnDamage(int damage)
+{
+    burn_damage_ += damage;
+    burn_damage_ = qMax(0, burn_damage_);
+}
+
+void Human::ApplySuffocationDamage(int damage)
+{
+    suffocation_damage_ += damage;
+    suffocation_damage_ = qMax(0, suffocation_damage_);
+}
+
+void Human::ApplyBruteDamage(int damage)
+{
+    brute_damage_ += damage;
+    brute_damage_ = qMax(0, brute_damage_);
+    if (damage > 0)
+    {
+        const int ALWAYS_BLOOD_BORDER = 1000;
+        int brute_helper = qMax(1, ALWAYS_BLOOD_BORDER - brute_damage_);
+        if ((GetRand() % brute_helper) == 1)
+        {
+            return;
+        }
+        unsigned int blood_value = (GetRand() % 7) + 1;
+
+        if (IdPtr<Floor> floor = GetTurf())
+        {
+            if (!floor->bloody)
+            {
+                floor->GetView()->AddOverlay(
+                    "icons/blood.dmi",
+                    QString("floor%1").arg(blood_value));
+                floor->bloody = true;
+            }
+        }
+    }
 }
 
 void CaucasianHuman::AfterWorldCreation()

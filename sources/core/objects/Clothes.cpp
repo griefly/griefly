@@ -116,3 +116,23 @@ ClownBoots::ClownBoots(quint32 id) : Cloth(id)
 
     name = "Clown boots";
 }
+
+MedicalUniform::MedicalUniform(quint32 id) : Cloth(id)
+{
+    SetSprite("icons/uniforms.dmi");
+    SetState("medical");
+
+    type = Slots::UNIFORM;
+
+    name = "Medical uniform";
+}
+
+WhiteShoes::WhiteShoes(quint32 id) : Cloth(id)
+{
+    SetSprite("icons/shoes.dmi");
+    SetState("white");
+
+    type = Slots::FEET;
+
+    name = "White shoes";
+}

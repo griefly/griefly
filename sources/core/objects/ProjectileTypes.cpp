@@ -9,7 +9,7 @@ Bullet::Bullet(quint32 id) : Projectile(id)
 
 Laser::Laser(quint32 id) : Projectile(id)
 {
-    damage_ = 10;
+    burn_damage_ = 10;
     SetState("laser");
     name = "Laser";
 }

@@ -110,5 +110,21 @@ public:
 };
 ADD_TO_TYPELIST(ClownBoots);
 
+class MedicalUniform: public Cloth
+{
+public:
+    DECLARE_SAVED(MedicalUniform, Cloth);
+    DECLARE_GET_TYPE_ITEM(MedicalUniform);
+    MedicalUniform(quint32 id);
+};
+ADD_TO_TYPELIST(MedicalUniform);
 
+class WhiteShoes: public Cloth
+{
+public:
+    DECLARE_SAVED(WhiteShoes, Cloth);
+    DECLARE_GET_TYPE_ITEM(WhiteShoes);
+    WhiteShoes(quint32 id);
+};
+ADD_TO_TYPELIST(WhiteShoes);
 
