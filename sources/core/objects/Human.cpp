@@ -155,7 +155,7 @@ void Human::ProcessMessage(const Message2 &msg)
         bool found = false;
         for(auto& str : prefixes)
         {
-            if (text.startsWith(str) == 0)
+            if (text.startsWith(str))
             {
                 quint32 length = str.length();
                 text.replace(0, length, name + " ");
