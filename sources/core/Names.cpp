@@ -18,6 +18,10 @@ void Names::LoadNames()
         while (male_file.bytesAvailable())
         {
             QString name = male_file.readLine();
+            if (name.endsWith('\n'))
+            {
+                name = name.mid(0, name.size() - 1);
+            }
             male_names_.push_back(name);
         }
     }
@@ -32,6 +36,10 @@ void Names::LoadNames()
         while (last_file.bytesAvailable())
         {
             QString name = last_file.readLine();
+            if (name.endsWith('\n'))
+            {
+                name = name.mid(0, name.size() - 1);
+            }
             last_name_.push_back(name);
         }
     }

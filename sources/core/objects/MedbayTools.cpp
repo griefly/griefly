@@ -14,7 +14,9 @@ void HealthAnalyzer::Scan(IdPtr<Human> target)
     float burn = target->GetBurnDamage() / 100.0f;
     float brute = target->GetBruteDamage() / 100.0f;
 
-    GetGame().GetChat().PostTextFor(QString("Analyzing results for %1:\nOverall status:").arg(target->name), GetOwner());
+    QString results_for = QString("Analyzing results for %1:").arg(target->name);
+    GetGame().GetChat().PostTextFor(results_for, GetOwner());
+    GetGame().GetChat().PostTextFor("Overall status:", GetOwner());
 
     GetGame().GetChat().PostTextFor(target->IsDead() ? QString("Deceased") : QString("%1 healthy").arg(health), GetOwner());
     if (target->GetBruteDamage() > HUMAN_MAX_HEALTH / 10)

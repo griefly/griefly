@@ -10,7 +10,11 @@ TEST(Names, Basics)
     for (int i = 0; i < 20; ++i)
     {
         QString name = names.GetMaleName();
-        ASSERT_FALSE(name.isEmpty());
+        EXPECT_FALSE(name.isEmpty());
+        for (QChar ch : name)
+        {
+            EXPECT_NE(ch, QChar('\n'));
+        }
     }
 }
 
