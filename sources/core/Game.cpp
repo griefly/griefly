@@ -320,6 +320,8 @@ void Game::InitWorld(int id, QString map_name)
     else
     {
         qDebug() << "Begin load map";
+        QElapsedTimer load_timer;
+        load_timer.start();
 
         QByteArray map_data = Network2::GetInstance().GetMapData();
 
@@ -332,6 +334,8 @@ void Game::InitWorld(int id, QString map_name)
         FastDeserializer deserializer(map_data.data(), map_data.size());
 
         GetFactory().Load(deserializer, id);
+
+        qDebug() << "Map is loaded, " << load_timer.elapsed() << " ms";
     }
 
     GetChat().PostText(ON_LOGIN_MESSAGE);
