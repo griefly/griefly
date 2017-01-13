@@ -19,7 +19,9 @@ void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
         else
         {
             GetGame().GetChat().PostSimpleText(
-                QString("%1 attempts to feed the contents of %2 to %3.").arg(feeder->name).arg(name).arg(consumer->name), consumer->GetId());
+                QString("%1 attempts to feed the contents of %2 to %3.")
+                    .arg(feeder->name).arg(name).arg(consumer->name),
+                consumer->GetId());
         }
         PlaySoundIfVisible("drink.ogg", consumer->GetRoot().Id());
         return;

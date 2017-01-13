@@ -98,6 +98,7 @@ public:
     virtual void PostText(const QString& str) = 0;
     virtual void PostOOCText(const QString& who, const QString& str) = 0;
     virtual void PostSimpleText(const QString& str, quint32 tile_id) = 0;
+    virtual void PostHtmlText(const QString& str, quint32 tile_id) = 0;
     virtual void PostDamage(const QString& by, const QString& who,
                             const QString& object, quint32 tile_id) = 0;
     virtual void PostWords(const QString& who, const QString& text, quint32 tile_id) = 0;

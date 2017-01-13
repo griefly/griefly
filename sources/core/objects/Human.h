@@ -78,6 +78,7 @@ protected:
     IdPtr<IMovable> KV_SAVEBLE(pulled_object_);
 private:
     void TryClownBootsHonk();
+    void MakeEmote(const QString& emote);
 };
 ADD_TO_TYPELIST(Human);
 

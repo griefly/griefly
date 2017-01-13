@@ -65,6 +65,7 @@ public:
     MOCK_METHOD1(PostText, void(const QString& str));
     MOCK_METHOD2(PostOOCText, void(const QString& who, const QString& str));
     MOCK_METHOD2(PostSimpleText, void(const QString& str, quint32 tile_id));
+    MOCK_METHOD2(PostHtmlText, void(const QString& str, quint32 tile_id));
     MOCK_METHOD4(PostDamage, void(const QString& by, const QString& who,
                                 const QString& object, quint32 tile_id));
     MOCK_METHOD3(PostWords, void(const QString& who, const QString& text, quint32 tile_id));

@@ -153,13 +153,13 @@ void Human::ProcessMessage(const Message2 &msg)
         QString text = obj["text"].toString();
         QString prefixes[] = {"me ", "me", "* ", "*"};
         bool found = false;
-        for(auto& str : prefixes)
+        for (auto& str : prefixes)
         {
             if (text.startsWith(str))
             {
                 quint32 length = str.length();
-                text.replace(0, length, name + " ");
-                GetGame().GetChat().PostSimpleText(text, owner.Id());
+                text.replace(0, length, "");
+                MakeEmote(text);
                 found = true;
                 break;
             }
@@ -362,7 +362,7 @@ void Human::Live()
             
             if (GetRand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
             {
-                GetGame().GetChat().PostSimpleText(QString("%1 gasps!").arg(name), owner->GetId());
+                MakeEmote("gasps!");
             }
         }
     }
@@ -385,7 +385,7 @@ void Human::Live()
             ApplySuffocationDamage(100);
             if (GetRand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
             {
-                GetGame().GetChat().PostSimpleText(QString("%1 gasps!").arg(name), owner->GetId());
+                MakeEmote("gasps!");
             }
         }
     }
@@ -587,6 +587,13 @@ void Human::TryClownBootsHonk()
     }
     QString sound = QString("clownstep%1.ogg").arg(GetRand() % 2 + 1);
     PlaySoundIfVisible(sound, GetOwner().Id());
+}
+
+void Human::MakeEmote(const QString& emote)
+{
+    GetGame().GetChat().PostHtmlText(
+        QString("<b>%1</b> %2").arg(name.toHtmlEscaped()).arg(emote.toHtmlEscaped()),
+        owner->GetId());
 }
 
 int Human::CalculateHealth()

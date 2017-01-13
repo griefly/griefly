@@ -23,6 +23,16 @@ void Chat::PostSimpleText(const QString& str, quint32 tile_id)
         return;
     }
 
+    emit insertHtmlIntoChat(str.toHtmlEscaped());
+}
+
+void Chat::PostHtmlText(const QString& str, quint32 tile_id)
+{
+    if (!game_->GetMap().IsTileVisible(tile_id))
+    {
+        return;
+    }
+
     emit insertHtmlIntoChat(str);
 }
 
