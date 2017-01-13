@@ -27,7 +27,8 @@ bool Laser::CheckPassable()
     if (tile->IsTransparent())
     {
         auto nearby = tile->GetNeighbour(GetDir());
-        if (nearby->IsTransparent())
+        // Check for map borders
+        if ((nearby != tile) && nearby->IsTransparent())
         {
             return true;
         }
