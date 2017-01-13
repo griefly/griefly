@@ -199,7 +199,7 @@ void ObjectFactory::Load(FastDeserializer& savefile, quint32 real_this_mob)
 
         quint32 id_loc;
         savefile >> id_loc;
-        
+
         IMainObject* object = CreateVoid(type, id_loc);
         object->Load(savefile);
     }

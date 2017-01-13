@@ -32,10 +32,11 @@ bool Laser::CheckPassable()
             return true;
         }
     }
-    if (IMovable::CheckPassable())
-    {
-        return true;
-    }
+
+    // TODO (?): Bump() by Laser.
+    // We cannot call IMovable::CheckPassable here because then
+    // laser projectiles will bump glasses, so it is needed to add bump here
+
     Delete();
     return false;
 }

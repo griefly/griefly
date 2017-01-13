@@ -17,11 +17,11 @@ FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& s)
     file >> size;
     s.reserve(size);
 
-    unsigned int local_id;
+    Dir dir;
     for (quint32 i = 0; i < size; ++i)
     {
-        file >> local_id;
-        s.push_back(local_id);
+        file >> dir;
+        s.push_back(dir);
     }
     return file;
 }
