@@ -401,8 +401,7 @@ void Human::Regeneration()
     {
         return;
     }
-    int healed = qMax(1, GetSuffocationDamage() / 2);
-    ApplySuffocationDamage(-1 * healed);
+    ApplySuffocationDamage(-1 * 50);
 }
 
 IdPtr<IOnMapBase> Human::GetNeighbour(Dir) const

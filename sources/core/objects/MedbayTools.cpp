@@ -10,28 +10,49 @@ HealthAnalyzer::HealthAnalyzer(quint32 id) : Item(id)
 void HealthAnalyzer::Scan(IdPtr<Human> target)
 {
     float health = target->GetHealth() / 100.0f;
-    float suffocation_damage = target->GetSuffocationDamage() / 100.0f;
+    float suffocation = target->GetSuffocationDamage() / 100.0f;
     float burn = target->GetBurnDamage() / 100.0f;
     float brute = target->GetBruteDamage() / 100.0f;
 
-    QString results_for = QString("Analyzing results for %1:").arg(target->name);
-    GetGame().GetChat().PostTextFor(results_for, GetOwner());
+    GetGame().GetChat().PostHtmlFor(
+        QString("<b>Analyzing results for %1:</b>").arg(target->name.toHtmlEscaped()),
+        GetOwner());
     GetGame().GetChat().PostTextFor("Overall status:", GetOwner());
 
-    GetGame().GetChat().PostTextFor(target->IsDead() ? QString("Deceased") : QString("%1 healthy").arg(health), GetOwner());
+    QString healthy = QString("<b>%1%</b> healthy").arg(health);
+    QString deceased("<b><font color=\"red\">Deceased</font></b>");
+
+    GetGame().GetChat().PostHtmlFor(target->IsDead() ? deceased : healthy, GetOwner());
     if (target->GetBruteDamage() > HUMAN_MAX_HEALTH / 10)
     {
-        GetGame().GetChat().PostTextFor(QString("%1 tissue damage detected.").arg(target->GetBruteDamage() > HUMAN_MAX_HEALTH / 2 ? "Severe" : "Minor"), GetOwner());
+        QString level = target->GetBruteDamage() > (HUMAN_MAX_HEALTH / 2) ? "Severe" : "Minor";
+        GetGame().GetChat().PostHtmlFor(
+            QString("%1 <font color=\"red\">tissue damage</font> detected.").arg(level),
+            GetOwner());
     }
     if (target->GetBurnDamage() > HUMAN_MAX_HEALTH / 10)
     {
-        GetGame().GetChat().PostTextFor(QString("%1 burn damage detected.").arg(target->GetBurnDamage() > HUMAN_MAX_HEALTH / 2 ? "Severe" : "Minor"), GetOwner());
+        QString level = target->GetBurnDamage() > (HUMAN_MAX_HEALTH / 2) ? "Severe" : "Minor";
+        GetGame().GetChat().PostHtmlFor(
+            QString("%1 <font color=\"#7f8200\">burn damage</font> detected.").arg(level),
+            GetOwner());
     }
     if (target->GetSuffocationDamage() > HUMAN_MAX_HEALTH / 10)
     {
-        GetGame().GetChat().PostTextFor(QString("%1 oxygen deprivation detected.").arg(target->GetSuffocationDamage() > HUMAN_MAX_HEALTH / 2 ? "Severe" : "Minor"), GetOwner());
+        QString level = target->GetSuffocationDamage() > HUMAN_MAX_HEALTH / 2 ? "Severe" : "Minor";
+        GetGame().GetChat().PostHtmlFor(
+            QString("%1 <font color=\"blue\">oxygen deprivation</font> detected.").arg(level),
+            GetOwner());
     }
-    GetGame().GetChat().PostTextFor(QString("Damage: Brute-Burn-Suffocation Specfics: %1-%2-%3").arg(brute).arg(burn).arg(suffocation_damage), GetOwner());
+    GetGame().GetChat().PostHtmlFor(
+        QString("Damage: <font color=\"red\">Brute</font>-"
+                "<font color=\"#7f8200\">Burn</font>-"
+                "<font color=\"blue\">Suffocation</font>"
+                " Specfics: <b><font color=\"red\">%1%</font></b>-"
+                "<b><font color=\"#7f8200\">%2%</font></b>-"
+                "<b><font color=\"blue\">%3%</font></b>")
+            .arg(brute).arg(burn).arg(suffocation),
+        GetOwner());
 }
 Medicine::Medicine(quint32 id) : Item(id)
 {
