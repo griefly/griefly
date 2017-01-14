@@ -138,9 +138,13 @@ void HumanInterface::UpdateHealth()
     if (IdPtr<Human> human = owner_)
     {
         int health = human->GetHealth();
-        const int STATES_AMOUNT = 7;
-        int state = qMax(0, (health * STATES_AMOUNT) / (HUMAN_MAX_HEALTH + 1)); // it will be from 0 to 6
-        state = STATES_AMOUNT - state - 1; // 0 to 6, but reverted
+        const int MAX_NON_CRIT_STATE = 5;
+        int state = qMax(0, (health * MAX_NON_CRIT_STATE) / HUMAN_MAX_HEALTH); // it will be from 0 to 5
+        state = MAX_NON_CRIT_STATE - state; // 0 to 5, but reverted
+        if (health < 0)
+        {
+            state = MAX_NON_CRIT_STATE + 1;
+        }
         health_.GetView()->SetState(QString("health%1").arg(state));
     }
 }
