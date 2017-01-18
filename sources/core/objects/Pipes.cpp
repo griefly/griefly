@@ -23,7 +23,7 @@ void PipeBase::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<AtmosTool> at = item)
     {
-        GetGame().GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
+        GetGame().GetChat().PostHtmlFor(AtmosTool::GetHtmlInfo(atmos_holder_), at->GetOwner());
         return;
     }
 }

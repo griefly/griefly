@@ -50,7 +50,7 @@ void HealthAnalyzer::Scan(IdPtr<Human> target)
                 "<font color=\"blue\">Suffocation</font>"
                 " Specfics: <b><font color=\"red\">%1%</font></b>-"
                 "<b><font color=\"#7f8200\">%2%</font></b>-"
-                "<b><font color=\"blue\">%3%</font></b>")
+                "<b><font color=\"blue\">%3%</font></b><br>")
             .arg(brute).arg(burn).arg(suffocation),
         GetOwner());
 }

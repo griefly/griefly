@@ -268,8 +268,8 @@ void Human::ProcessMessage(const Message2 &msg)
                 {
                     return;
                 }
-                GetGame().GetChat().PostTextFor(
-                    AtmosTool::GetInfo(*tile->GetAtmosHolder()), GetId());
+                GetGame().GetChat().PostHtmlFor(
+                    AtmosTool::GetHtmlInfo(*tile->GetAtmosHolder()), GetId());
             }
         }
     }
