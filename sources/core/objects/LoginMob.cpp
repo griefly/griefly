@@ -11,6 +11,7 @@
 #include "representation/Chat.h"
 #include "../Helpers.h"
 #include "representation/Representation.h"
+#include "Professions.h"
 
 #include <QDebug>
 
@@ -80,21 +81,17 @@ void LoginMob::ProcessMessage(const Message2& msg)
         quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
-            IdPtr<Human> human;
+            IdPtr<Human> human = Create<Human>(Human::T_ITEM_S());;
             std::vector<IdPtr<CubeTile>> tiles;
             QString text;
             if (net_id % 2)
             {
-                qDebug() << "Creating security...";
-                human = Create<Human>(CaucasianHuman::T_ITEM_S());
-                qDebug() << "End creating security1...";
+                professions::ToSecurityOfficer(human);
                 tiles = GetLobby().GetTilesFor("security");
                 text = SECURITY_TEXT;
-                qDebug() << "End creating security2...";
             }
             else
             {
-                human = Create<Human>(Human::T_ITEM_S());
                 tiles = GetLobby().GetTilesFor("janitor");
                 text = JANITOR_TEXT;
             }

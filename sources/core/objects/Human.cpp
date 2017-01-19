@@ -54,13 +54,13 @@ void Human::AfterWorldCreation()
     interface_.InitSlots();
     interface_.SetOwner(GetId());
 
-    interface_.uniform_.Set(Create<Item>(JanitorUniform::T_ITEM_S()));
+    /*interface_.uniform_.Set(Create<Item>(JanitorUniform::T_ITEM_S()));
     interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
     interface_.r_hand_.Set(Create<Item>(Crowbar::T_ITEM_S()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());
-    interface_.r_hand_.Get()->SetOwner(GetId());
+    interface_.r_hand_.Get()->SetOwner(GetId());*/
 
     UpdateOverlays();
 
@@ -425,8 +425,6 @@ void Human::OnDeath()
     }
     dead_ = true;
     SetFreq(0);
-
-    GetLobby().security_score_ += 1;
 }
 
 void Human::AttackBy(IdPtr<Item> item)
@@ -600,11 +598,6 @@ int Human::CalculateHealth()
     return max_health_ - (suffocation_damage_ + burn_damage_ + brute_damage_);
 }
 
-CaucasianHuman::CaucasianHuman(quint32 id) : Human(id)
-{
-    SetState("caucasian2_m_s");
-}
-
 void Human::ApplyBurnDamage(int damage)
 {
     burn_damage_ += damage;
@@ -642,37 +635,4 @@ void Human::ApplyBruteDamage(int damage)
             }
         }
     }
-}
-
-void CaucasianHuman::AfterWorldCreation()
-{
-    // It is not mistake - we don't want to call Human function
-    // because it creates some new items
-    IMob::AfterWorldCreation();
-    interface_.InitSlots();
-    interface_.SetOwner(GetId());
-
-    interface_.uniform_.Set(Create<Item>(RedUniform::T_ITEM_S()));
-    interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(Create<Item>(Wrench::T_ITEM_S())); // wrench
-    interface_.head_.Set(Create<Item>(Helmet::T_ITEM_S()));
-    interface_.suit_.Set(Create<Item>(Armor::T_ITEM_S()));
-
-    interface_.uniform_.Get()->SetOwner(GetId());
-    interface_.feet_.Get()->SetOwner(GetId());
-    interface_.r_hand_.Get()->SetOwner(GetId());
-    interface_.head_.Get()->SetOwner(GetId());
-    interface_.suit_.Get()->SetOwner(GetId());
-
-    UpdateOverlays();
-
-    name = GetGame().GetNames().GetMaleName();
-}
-
-void CaucasianHuman::OnDeath()
-{
-    Human::OnDeath();
-
-    GetLobby().security_score_ -= 1;
-    GetLobby().janitors_score_ += 1;
 }

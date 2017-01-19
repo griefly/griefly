@@ -14,9 +14,6 @@ Lobby& GetLobby()
 Lobby::Lobby(quint32 id): IMainObject(id)
 {
     seconds_ = 1;//60 * 2;
-
-    security_score_ = 0;
-    janitors_score_ = 0;
 }
 
 void Lobby::AfterWorldCreation()

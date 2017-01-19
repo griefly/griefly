@@ -75,7 +75,7 @@ public:
     const IGame& GetGame() const;
     IObjectFactory& GetFactory();
     unsigned int GetRand();
-protected:
+
     template<typename T>
     IdPtr<T> Create(const QString& type, IdPtr<IOnMapBase> owner = 0)
     {

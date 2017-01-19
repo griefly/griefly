@@ -81,15 +81,3 @@ private:
     void MakeEmote(const QString& emote);
 };
 ADD_TO_TYPELIST(Human);
-
-class CaucasianHuman: public Human
-{
-public:
-    DECLARE_SAVED(CaucasianHuman, Human);
-    DECLARE_GET_TYPE_ITEM(CaucasianHuman);
-    CaucasianHuman(quint32 id);
-    virtual void AfterWorldCreation() override;
-
-    virtual void OnDeath() override;
-};
-ADD_TO_TYPELIST(CaucasianHuman);
