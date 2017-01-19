@@ -277,7 +277,9 @@ void Game::InitWorld(int id, QString map_name)
         QString mapgen_name = GetParamsHolder().GetParam<QString>("mapgen_name");
         if (QFileInfo::exists(mapgen_name))
         {
-            srand(QTime::currentTime().msecsSinceStartOfDay());
+            qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
+            unsigned int seed = static_cast<unsigned int>(qrand());
+            GetRandom().SetRand(seed, 0);
 
             GetFactory().LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
 
