@@ -7,4 +7,5 @@
 namespace professions
 {
     void ToSecurityOfficer(IdPtr<Human> human);
+    void ToDoctor(IdPtr<Human> human);
 }

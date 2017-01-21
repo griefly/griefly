@@ -1,15 +1,10 @@
 #include "Professions.h"
 
 #include "Clothes.h"
+#include "MedbayTools.h"
 
 void professions::ToSecurityOfficer(IdPtr<Human> human)
 {
-    if (!human.IsValid())
-    {
-        qDebug() << "Human is not valid in 'ToSecurityOfficer'";
-        return;
-    }
-
     HumanInterface* interface = human->GetHumanInterface();
 
     human->SetState("caucasian2_m_s");
@@ -27,6 +22,23 @@ void professions::ToSecurityOfficer(IdPtr<Human> human)
     interface->feet_.Get()->SetOwner(human.Id());
     interface->head_.Get()->SetOwner(human.Id());
     interface->suit_.Get()->SetOwner(human.Id());
+
+    human->UpdateOverlays();
+}
+
+void professions::ToDoctor(IdPtr<Human> human)
+{
+    HumanInterface* interface = human->GetHumanInterface();
+
+    human->SetState("caucasian2_m_s");
+
+    interface->uniform_.Set(human->Create<Item>(MedicalUniform::T_ITEM_S()));
+    interface->feet_.Set(human->Create<Item>(WhiteShoes::T_ITEM_S()));
+    interface->r_hand_.Set(human->Create<Item>(BruisePack::T_ITEM_S()));
+
+    interface->uniform_.Get()->SetOwner(human.Id());
+    interface->feet_.Get()->SetOwner(human.Id());
+    interface->r_hand_.Get()->SetOwner(human.Id());
 
     human->UpdateOverlays();
 }

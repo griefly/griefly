@@ -84,7 +84,8 @@ void LoginMob::ProcessMessage(const Message2& msg)
             IdPtr<Human> human = Create<Human>(Human::T_ITEM_S());;
             std::vector<IdPtr<CubeTile>> tiles;
             QString text;
-            if (net_id % 2)
+
+            if (GetRand() % 2)
             {
                 professions::ToSecurityOfficer(human);
                 tiles = GetLobby().GetTilesFor("security");
@@ -92,8 +93,9 @@ void LoginMob::ProcessMessage(const Message2& msg)
             }
             else
             {
-                tiles = GetLobby().GetTilesFor("janitor");
-                text = JANITOR_TEXT;
+                professions::ToDoctor(human);
+                tiles = GetLobby().GetTilesFor("doctor");
+                // text = DOCTOR_TEXT;
             }
             //ghost->name = name;
             GetGame().GetFactory().SetPlayerId(net_id, human.Id());
