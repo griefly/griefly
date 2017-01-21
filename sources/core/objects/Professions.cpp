@@ -42,3 +42,22 @@ void professions::ToDoctor(IdPtr<Human> human)
 
     human->UpdateOverlays();
 }
+
+void professions::ToAssistant(IdPtr<Human> human)
+{
+    HumanInterface* interface = human->GetHumanInterface();
+
+    human->SetState("caucasian2_m_s");
+
+    interface->uniform_.Set(human->Create<Item>(JanitorUniform::T_ITEM_S()));
+    interface->feet_.Set(human->Create<Item>(BlackBoots::T_ITEM_S()));
+
+    // Grey uniform hack
+    interface->uniform_.Get()->SetState("grey");
+    interface->uniform_.Get()->name = "Grey uniform";
+
+    interface->uniform_.Get()->SetOwner(human.Id());
+    interface->feet_.Get()->SetOwner(human.Id());
+
+    human->UpdateOverlays();
+}
