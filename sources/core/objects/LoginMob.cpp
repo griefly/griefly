@@ -66,6 +66,13 @@ const QString JANITOR_TEXT =
         " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all security."
         " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
 
+const int HUMAN_STATES_AMOUNT = 12;
+const QString HUMAN_STATES[HUMAN_STATES_AMOUNT] =
+    {"caucasian1_m_s", "caucasian2_m_s", "caucasian3_m_s",
+     "latino_m_s", "mediterranean_m_s", "asian1_m_s",
+     "asian2_m_s", "arab_m_s", "indian_m_s",
+     "african1_m_s", "african2_m_s", "albino_m_s"};
+
 void LoginMob::ProcessMessage(const Message2& msg)
 {
     QJsonObject obj = Network2::ParseJson(msg);
@@ -81,10 +88,14 @@ void LoginMob::ProcessMessage(const Message2& msg)
         quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
-            IdPtr<Human> human = Create<Human>(Human::T_ITEM_S());;
+            IdPtr<Human> human = Create<Human>(Human::T_ITEM_S());
+
+            QString human_state = HUMAN_STATES[GetRand() % HUMAN_STATES_AMOUNT];
+            human->SetState(human_state);
+
             std::vector<IdPtr<CubeTile>> tiles;
             QString text;
-            switch (GetRand() % 4)
+            switch (GetRand() % 5)
             {
             case 0:
                 professions::ToSecurityOfficer(human);

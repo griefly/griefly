@@ -8,8 +8,6 @@ void professions::ToSecurityOfficer(IdPtr<Human> human)
 {
     HumanInterface* interface = human->GetHumanInterface();
 
-    human->SetState("caucasian2_m_s");
-
     interface->uniform_.Set(human->Create<Item>(RedUniform::T_ITEM_S()));
     interface->feet_.Set(human->Create<Item>(OrangeBoots::T_ITEM_S()));
     interface->head_.Set(human->Create<Item>(Helmet::T_ITEM_S()));
@@ -31,8 +29,6 @@ void professions::ToDoctor(IdPtr<Human> human)
 {
     HumanInterface* interface = human->GetHumanInterface();
 
-    human->SetState("caucasian2_m_s");
-
     interface->uniform_.Set(human->Create<Item>(MedicalUniform::T_ITEM_S()));
     interface->feet_.Set(human->Create<Item>(WhiteShoes::T_ITEM_S()));
     interface->r_hand_.Set(human->Create<Item>(BruisePack::T_ITEM_S()));
@@ -47,8 +43,6 @@ void professions::ToDoctor(IdPtr<Human> human)
 void professions::ToAssistant(IdPtr<Human> human)
 {
     HumanInterface* interface = human->GetHumanInterface();
-
-    human->SetState("caucasian2_m_s");
 
     interface->uniform_.Set(human->Create<Item>(JanitorUniform::T_ITEM_S()));
     interface->feet_.Set(human->Create<Item>(BlackBoots::T_ITEM_S()));
@@ -67,8 +61,6 @@ void professions::ToClown(IdPtr<Human> human)
 {
     HumanInterface* interface = human->GetHumanInterface();
 
-    human->SetState("caucasian2_m_s");
-
     interface->uniform_.Set(human->Create<Item>(ClownUniform::T_ITEM_S()));
     interface->feet_.Set(human->Create<Item>(ClownBoots::T_ITEM_S()));
 
@@ -81,8 +73,6 @@ void professions::ToClown(IdPtr<Human> human)
 void professions::ToBarman(IdPtr<Human> human)
 {
     HumanInterface* interface = human->GetHumanInterface();
-
-    human->SetState("caucasian2_m_s");
 
     interface->uniform_.Set(human->Create<Item>(BarmanUniform::T_ITEM_S()));
     interface->feet_.Set(human->Create<Item>(BlackBoots::T_ITEM_S()));
