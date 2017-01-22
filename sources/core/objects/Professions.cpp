@@ -61,3 +61,18 @@ void professions::ToAssistant(IdPtr<Human> human)
 
     human->UpdateOverlays();
 }
+
+void professions::ToClown(IdPtr<Human> human)
+{
+    HumanInterface* interface = human->GetHumanInterface();
+
+    human->SetState("caucasian2_m_s");
+
+    interface->uniform_.Set(human->Create<Item>(ClownUniform::T_ITEM_S()));
+    interface->feet_.Set(human->Create<Item>(ClownBoots::T_ITEM_S()));
+
+    interface->uniform_.Get()->SetOwner(human.Id());
+    interface->feet_.Get()->SetOwner(human.Id());
+
+    human->UpdateOverlays();
+}

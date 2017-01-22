@@ -9,4 +9,5 @@ namespace professions
     void ToSecurityOfficer(IdPtr<Human> human);
     void ToDoctor(IdPtr<Human> human);
     void ToAssistant(IdPtr<Human> human);
+    void ToClown(IdPtr<Human> human);
 }

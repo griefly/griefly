@@ -84,7 +84,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
             IdPtr<Human> human = Create<Human>(Human::T_ITEM_S());;
             std::vector<IdPtr<CubeTile>> tiles;
             QString text;
-            switch (GetRand() % 3)
+            switch (GetRand() % 4)
             {
             case 0:
                 professions::ToSecurityOfficer(human);
@@ -101,10 +101,15 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 tiles = GetLobby().GetTilesFor("assistant");
                 // text = ASSISTANT_TEXT;
                 break;
+            case 3:
+                professions::ToClown(human);
+                tiles = GetLobby().GetTilesFor("clown");
+                // text = CLOWN_TEXT;
+                break;
             default:
                 qDebug() << "Unknown profession id!";
             }
-            //ghost->name = name;
+
             GetGame().GetFactory().SetPlayerId(net_id, human.Id());
 
             if (tiles.empty())
