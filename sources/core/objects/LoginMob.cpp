@@ -106,6 +106,10 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 tiles = GetLobby().GetTilesFor("clown");
                 // text = CLOWN_TEXT;
                 break;
+            case 4:
+                professions::ToBarman(human);
+                tiles = GetLobby().GetTilesFor("barman");
+                // text = CLOWN_TEXT;
             default:
                 qDebug() << "Unknown profession id!";
             }

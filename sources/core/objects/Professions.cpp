@@ -2,6 +2,7 @@
 
 #include "Clothes.h"
 #include "MedbayTools.h"
+#include "Weapons.h"
 
 void professions::ToSecurityOfficer(IdPtr<Human> human)
 {
@@ -73,6 +74,27 @@ void professions::ToClown(IdPtr<Human> human)
 
     interface->uniform_.Get()->SetOwner(human.Id());
     interface->feet_.Get()->SetOwner(human.Id());
+
+    human->UpdateOverlays();
+}
+
+void professions::ToBarman(IdPtr<Human> human)
+{
+    HumanInterface* interface = human->GetHumanInterface();
+
+    human->SetState("caucasian2_m_s");
+
+    interface->uniform_.Set(human->Create<Item>(BarmanUniform::T_ITEM_S()));
+    interface->feet_.Set(human->Create<Item>(BlackBoots::T_ITEM_S()));
+    interface->head_.Set(human->Create<Item>(Tophat::T_ITEM_S()));
+    interface->suit_.Set(human->Create<Item>(Armor::T_ITEM_S()));
+    interface->r_hand_.Set(human->Create<Item>(Revolver::T_ITEM_S()));
+
+    interface->uniform_.Get()->SetOwner(human.Id());
+    interface->feet_.Get()->SetOwner(human.Id());
+    interface->head_.Get()->SetOwner(human.Id());
+    interface->suit_.Get()->SetOwner(human.Id());
+    interface->r_hand_.Get()->SetOwner(human.Id());
 
     human->UpdateOverlays();
 }
