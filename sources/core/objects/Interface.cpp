@@ -154,16 +154,26 @@ void HumanInterface::UpdateEnvironment()
     {
         if (IdPtr<CubeTile> t = human->GetOwner())
         {
-            unsigned int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
+            int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
             int temperature = t->GetAtmosHolder()->GetTemperature();
-            
+            int pressure = t->GetAtmosHolder()->GetPressure();
+
             oxygen_.GetView()->SetState("oxy0");
             if (oxygen < 1)
             {
                 oxygen_.GetView()->SetState("oxy1");
             }
-            int state = qMax(-4, ((temperature - REGULAR_TEMPERATURE) / REGULAR_TEMPERATURE) * 10);
+            int state = qMax(-4, (temperature - REGULAR_TEMPERATURE) / 6);
             state = qMin(4, state);
+
+            // When amount of atmos moles is too small
+            // temperature starts behave a little bit weird
+            const int ZERO_TEMPERATURE_PRESSURE_BORDER = 1000;
+            if (pressure < ZERO_TEMPERATURE_PRESSURE_BORDER)
+            {
+                state = -4;
+            }
+
             temperature_.GetView()->SetState(QString("temp%1").arg(state));
         }
     }
