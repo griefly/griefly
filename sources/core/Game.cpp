@@ -245,8 +245,10 @@ void Game::Process()
 }
 
 const QString ON_LOGIN_MESSAGE =
-        "Welcome to Griefly! It is yet another space station remake, so if you are here then you probably already know how to play."
+        "Welcome to Griefly! It is yet another space station remake, so if you are here then you probably"
+        " already know how to play."
         " Just in case: arrows for movement, left mouse click for hand actions (hit, attack, take), chat for speaking."
+        " Pull objects - ctrl + click, rotate objects - R + click, look at objects - shift + click."
         " Use prefix ooc in the chat if you would like to use the ooc channel (it is a global channel).\n";
 
 void Game::WaitForExit()
