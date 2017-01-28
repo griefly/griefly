@@ -57,14 +57,10 @@ void LoginMob::GenerateInterfaceForFrame()
     interface_.Draw();
 }
 
-const QString SECURITY_TEXT =
-        "A space anomaly has moved a piece of your Space Station into an unknown part of space."
-        " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all janitors."
-        " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
-const QString JANITOR_TEXT =
-        "A space anomaly has moved a piece of your Space Station into an unknown part of space."
-        " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all security."
-        " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
+const QString GENERIC_TEXT =
+    "A space anomaly has moved a piece of your Space Station into an unknown part of space."
+    " All laws and rules are gone, and you are just a poor <b>%1</b>."
+    " Seems like atmos still works, so maybe you won't die from asphyxiation.<br>";
 
 const int HUMAN_STATES_AMOUNT = 12;
 const QString HUMAN_STATES[HUMAN_STATES_AMOUNT] =
@@ -100,27 +96,27 @@ void LoginMob::ProcessMessage(const Message2& msg)
             case 0:
                 professions::ToSecurityOfficer(human);
                 tiles = GetLobby().GetTilesFor("security");
-                text = SECURITY_TEXT;
+                text = GENERIC_TEXT.arg("security officer");
                 break;
             case 1:
                 professions::ToDoctor(human);
                 tiles = GetLobby().GetTilesFor("doctor");
-                // text = DOCTOR_TEXT;
+                text = GENERIC_TEXT.arg("doctor");
                 break;
             case 2:
                 professions::ToAssistant(human);
                 tiles = GetLobby().GetTilesFor("assistant");
-                // text = ASSISTANT_TEXT;
+                text = GENERIC_TEXT.arg("assistant");
                 break;
             case 3:
                 professions::ToClown(human);
                 tiles = GetLobby().GetTilesFor("clown");
-                // text = CLOWN_TEXT;
+                text = GENERIC_TEXT.arg("clown");
                 break;
             case 4:
                 professions::ToBarman(human);
                 tiles = GetLobby().GetTilesFor("barman");
-                // text = CLOWN_TEXT;
+                text = GENERIC_TEXT.arg("barman");
             default:
                 qDebug() << "Unknown profession id!";
             }
@@ -142,7 +138,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 GetGame().ChangeMob(human);
             }
 
-            GetGame().GetChat().PostTextFor(text, human);
+            GetGame().GetChat().PostHtmlFor(text, human);
         }
         qDebug() << "End human creation in LoginMob";
     }
