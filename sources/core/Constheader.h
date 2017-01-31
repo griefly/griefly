@@ -17,9 +17,6 @@
 const int SIZE_H_SQ = 12; // visible size const
 const int SIZE_W_SQ = 12;
 
-extern int sizeW; // visible play in pixel const
-extern int sizeH;
-
 extern bool NODRAW; // probably nodraw mode
 
 typedef int Dir;

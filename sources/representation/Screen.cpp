@@ -66,11 +66,11 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
 
 }
 
-int Screen::w()
+int Screen::GetWidth()
 {
     return GetGLWidget()->width();
 }
-int Screen::h()
+int Screen::GetHeight()
 {
     return GetGLWidget()->height();
 }
