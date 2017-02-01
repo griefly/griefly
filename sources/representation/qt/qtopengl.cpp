@@ -67,7 +67,7 @@ void QtOpenGL::initializeGL()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glOrtho(0, width(), height(), 0, 0, 1); // TODO: check
+    glOrtho(0, AREA_SIZE_W, AREA_SIZE_H, 0, 0, 1); // TODO: check
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
