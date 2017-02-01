@@ -197,6 +197,7 @@ void MainForm::startGameLoop(int id, QString map)
     while (true)
     {
         process_performance.start();
+        GetRepresentation().HandleInput();
         GetRepresentation().Process();
         GetScreen().Swap();
         ++fps_counter;

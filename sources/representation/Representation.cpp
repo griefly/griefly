@@ -212,7 +212,6 @@ void Representation::Process()
 
     SynchronizeViews();
 
-    HandleInput();
     const int AUTOPLAY_INTERVAL = 10;
     if (autoplay_ && (autoplay_timer_.elapsed() > AUTOPLAY_INTERVAL))
     {
