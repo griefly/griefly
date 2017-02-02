@@ -12,7 +12,6 @@ public:
     void Draw(const GLSprite* sprite, int x, int y, int imageW, int imageH, float angle = 0.0f);
     void ResetScreen(int x, int y);
     void Clear();
-    void Swap();
     bool Fail();
 
     void PerformSizeUpdate();

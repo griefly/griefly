@@ -22,11 +22,6 @@ void Screen::ResetScreen(int x, int y)
     GetGLWidget()->resize(x, y);
 }
 
-void Screen::Swap()
-{
-    GetGLWidget()->swapBuffers();
-}
-
 void Screen::Clear()
 {
     glClear(GL_COLOR_BUFFER_BIT);

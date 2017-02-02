@@ -198,8 +198,7 @@ void MainForm::startGameLoop(int id, QString map)
     {
         process_performance.start();
         GetRepresentation().HandleInput();
-        GetRepresentation().Process();
-        GetScreen().Swap();
+        GetGLWidget()->updateGL();
         ++fps_counter;
         qint64 process_time = process_performance.nsecsElapsed();
         if (process_time > max_process_time)
@@ -474,8 +473,6 @@ void MainForm::on_splitter_splitterMoved(int pos, int index)
     if (IsScreenValid())
     {
         GetScreen().PerformSizeUpdate();
-        GetScreen().Clear();
-        GetScreen().Swap();
     }
 
     int x_pos = (ui->leftColumn->width() - min_size) / 2;
