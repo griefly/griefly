@@ -82,7 +82,10 @@ void QtOpenGL::initializeGL()
 
 void QtOpenGL::paintGL()
 {
-
+    if (IsRepresentationValid())
+    {
+        GetRepresentation().Process();
+    }
 }
 
 void QtOpenGL::resizeGL(int width, int height)
