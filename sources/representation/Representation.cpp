@@ -41,10 +41,10 @@ Representation::Representation()
     int old_size_h = GetGLWidget()->height();
     SetScreen(new Screen(AREA_SIZE_W, AREA_SIZE_H));
     GetGLWidget()->resize(old_size_w, old_size_h);
-    std::cout << "Screen set" << std::endl;
+    qDebug() << "Screen set";
     SetSpriter(new SpriteHolder);
 
-    std::cout << "Begin load resources" << std::endl;
+    qDebug() << "Begin load resources";
     LoadImages();
     LoadSounds();
 }

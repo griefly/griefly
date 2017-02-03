@@ -42,7 +42,7 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
     {
         qDebug() << glGetError();
     }
-    glTranslatef(     x + sprite.W() / 2.0f,      y + sprite.H() / 2.0f, 0.0f); 
+    glTranslatef(x + sprite.W() / 2.0f, y + sprite.H() / 2.0f, 0.0f);
     glRotatef(angle, 0.0f, 0.0f, 1.0f);
     glTranslatef(-1 * x - sprite.W() / 2.0f, -1 * y - sprite.H() / 2.0f, 0.0f); 
 
@@ -79,7 +79,6 @@ Screen& GetScreen()
 {
     return *screen;
 }
-
 
 bool IsScreenValid()
 {
