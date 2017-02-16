@@ -335,6 +335,32 @@ TEST(FastDeserializer, IsNextType)
     EXPECT_FALSE(deserializer.IsNextType(FastSerializer::TYPE_TYPE));
 }
 
+TEST(FastDeserializerDeathTest, GetNextTypeEnd)
+{
+    FastDeserializer deserializer(nullptr, 0);
+    ASSERT_DEATH(
+    {
+        deserializer.GetNextType();
+    }, "Cannot determine the next type");
+}
+
+TEST(FastDeserializer, GetNextType)
+{
+    const char* const DATA =
+        "\x01\x00\x05";
+    const int DATA_SIZE = 3;
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+
+    char bool_type = FastSerializer::BOOL_TYPE;
+    EXPECT_EQ(deserializer.GetNextType(), bool_type);
+
+    bool value;
+    deserializer >> value;
+
+    char bytearray_type = FastSerializer::BYTEARRAY_TYPE;
+    EXPECT_EQ(deserializer.GetNextType(), bytearray_type);
+}
+
 TEST(FastDeserializer, ReadBool)
 {
     const char* const DATA =
