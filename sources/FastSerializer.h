@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "KVAbort.h"\
+#include "KVAbort.h"
 
 class FastSerializer
 {
@@ -151,7 +151,7 @@ public:
     {
         // Nothing
     }
-    bool IsEnd()
+    bool IsEnd() const
     {
         if (index_ >= size_)
         {
@@ -174,6 +174,15 @@ public:
             return false;
         }
         return true;
+    }
+    FastSerializer::Type GetNextType() const
+    {
+        if (IsEnd())
+        {
+            qDebug() << "Cannot determine the next type because the end has been reached!";
+            KvAbort();
+        }
+        return data_[index_];
     }
 private:
     void Read(bool* value)
@@ -313,6 +322,8 @@ inline FastDeserializer& operator>>(FastDeserializer& deserializer, T& value)
     deserializer.Read(&value);
     return deserializer;
 }
+
+QString Humanize(FastDeserializer* deserializer);
 
 
 

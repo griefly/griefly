@@ -29,3 +29,8 @@ FastSerializer::~FastSerializer()
 {
     // Nothing
 }
+
+QString Humanize(FastDeserializer *deserializer)
+{
+    // TODO
+}
