@@ -59,7 +59,7 @@ QString Humanize(FastDeserializer *deserializer)
         {
             QString value;
             *deserializer >> value;
-            stream << value;
+            stream << value.replace(' ', "$");
         }
         else if (type == FastSerializer::BYTEARRAY_TYPE)
         {
@@ -71,13 +71,15 @@ QString Humanize(FastDeserializer *deserializer)
         {
             QString value;
             deserializer->ReadType(&value);
-            stream << value << endl;
+            stream << "\r\n" << value;
         }
         else
         {
             qDebug() << "Unknown type: " << type;
             KvAbort();
         }
+        stream << " ";
     }
+
     return retval;
 }

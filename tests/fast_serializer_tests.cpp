@@ -598,3 +598,21 @@ TEST(FastSerializeDeserialize, VariousValues)
         ASSERT_TRUE(deserializer.IsEnd());
     }
 }
+
+TEST(FastDeserializer, Humanize)
+{
+    FastSerializer serializer;
+    serializer << QString("woof");
+    serializer << 123;
+    serializer << 42u;
+    serializer << QByteArray("woof");
+    serializer << true;
+    serializer.WriteType("Meow");
+    serializer << QString("smart kitty");
+
+    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+
+    QString value = Humanize(&deserializer);
+
+    EXPECT_EQ(value, "woof 123 42 776f6f66 1 \r\nMeow smart$kitty ");
+}
