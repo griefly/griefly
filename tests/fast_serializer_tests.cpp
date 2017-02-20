@@ -599,6 +599,15 @@ TEST(FastSerializeDeserialize, VariousValues)
     }
 }
 
+TEST(FastDeserializerDeathTest, HumanizeUnknownType)
+{
+    FastDeserializer deserializer("\x80", 1);
+    ASSERT_DEATH(
+    {
+        Humanize(&deserializer);
+    }, "Unknown type");
+}
+
 TEST(FastDeserializer, Humanize)
 {
     FastSerializer serializer;
