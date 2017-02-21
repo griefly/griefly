@@ -71,6 +71,10 @@ QString Humanize(FastDeserializer *deserializer)
         {
             QString value;
             deserializer->ReadType(&value);
+            if (value == END_TYPE)
+            {
+                break;
+            }
             stream << "\r\n" << value;
         }
         else

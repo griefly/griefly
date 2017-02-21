@@ -7,6 +7,8 @@
 
 #include "KVAbort.h"
 
+const QLatin1String END_TYPE("0~$");
+
 class FastSerializer
 {
     template<class T>

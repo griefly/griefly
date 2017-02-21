@@ -162,8 +162,6 @@ void ObjectFactory::LoadMapHeader(FastDeserializer& savefile)
     }
 }
 
-const QString END_TYPE = "0~$";
-
 void ObjectFactory::Save(FastSerializer& savefile)
 {
     SaveMapHeader(savefile);
