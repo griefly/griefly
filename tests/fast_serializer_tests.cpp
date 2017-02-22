@@ -618,6 +618,8 @@ TEST(FastDeserializer, Humanize)
     serializer << true;
     serializer.WriteType("Meow");
     serializer << QString("smart kitty");
+    serializer.WriteType(END_TYPE);
+    serializer << QString("stupid kitty");
 
     FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
 
