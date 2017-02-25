@@ -376,6 +376,8 @@ include_directories(UNPACKER_DIR)
 include_directories("qzip_unpacker")
 
 file(GLOB_RECURSE UNPACKER_SOURCES "${UNPACKER_DIR}*.cpp")
+list(APPEND UNPACKER_SOURCES "${SOURCE_DIR}/FastSerializer.cpp" "${SOURCE_DIR}/FastSerializer.h")
+list(APPEND UNPACKER_SOURCES "${SOURCE_DIR}/KVAbort.cpp" "${SOURCE_DIR}/KVAbort.h")
 
 add_executable(Unpacker ${UNPACKER_SOURCES})
 

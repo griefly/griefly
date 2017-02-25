@@ -4,6 +4,8 @@
 #include <QTextStream>
 #include <QFile>
 
+#include "FastSerializer.h"
+
 inline QTextStream& qStdout()
 {
     static QTextStream r(stdout);
@@ -29,6 +31,12 @@ int main(int argc, char* argv[])
     }
     QByteArray compressed = input.readAll();
     QByteArray uncompressed = qUncompress(compressed);
+
+    FastDeserializer deserializer(uncompressed.data(), uncompressed.size());
+
+    QString humanized = Humanize(&deserializer);
+
+    //QByteArray tail = uncompressed.mid(deserializer.)
 
     QFile output(args[2]);
     if (!output.open(QIODevice::WriteOnly))
