@@ -161,6 +161,10 @@ public:
         }
         return false;
     }
+    quint32 GetIndex() const
+    {
+        return index_;
+    }
     void ReadType(QString* value)
     {
         Read(value, FastSerializer::TYPE_TYPE);

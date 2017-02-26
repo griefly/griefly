@@ -361,6 +361,28 @@ TEST(FastDeserializer, GetNextType)
     EXPECT_EQ(deserializer.GetNextType(), bytearray_type);
 }
 
+TEST(FastDeserializer, GetIndex)
+{
+    const char* const DATA =
+        "\x01\x00\x02\x03\x00\x00\x00";
+    const int DATA_SIZE = 7;
+
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+    EXPECT_EQ(deserializer.GetIndex(), 0);
+
+    {
+        bool value;
+        deserializer >> value;
+    }
+    EXPECT_EQ(deserializer.GetIndex(), 2);
+
+    {
+        int value;
+        deserializer >> value;
+    }
+    EXPECT_EQ(deserializer.GetIndex(), 7);
+}
+
 TEST(FastDeserializer, ReadBool)
 {
     const char* const DATA =
@@ -626,4 +648,5 @@ TEST(FastDeserializer, Humanize)
     QString value = Humanize(&deserializer);
 
     EXPECT_EQ(value, "woof 123 42 776f6f66 1 \r\nMeow smart$kitty ");
+    EXPECT_EQ(deserializer.GetIndex(), 90);
 }
