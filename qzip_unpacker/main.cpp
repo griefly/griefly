@@ -36,7 +36,10 @@ int main(int argc, char* argv[])
 
     QString humanized = Humanize(&deserializer);
 
-    //QByteArray tail = uncompressed.mid(deserializer.)
+    QByteArray tail = uncompressed.mid(deserializer.GetIndex());
+
+    humanized.append("\r\n\r\n\r\n");
+    humanized.append(tail);
 
     QFile output(args[2]);
     if (!output.open(QIODevice::WriteOnly))
@@ -44,7 +47,7 @@ int main(int argc, char* argv[])
         qStdout() << "Unable to open file to write";
         return -1;
     }
-    if (output.write(uncompressed) == -1)
+    if (output.write(humanized.toUtf8()) == -1)
     {
         qStdout() << "Unable to write data to file";
         return -1;
