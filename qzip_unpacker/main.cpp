@@ -17,13 +17,20 @@ int main(int argc, char* argv[])
     QCoreApplication app(argc, argv);
 
     QStringList args = app.arguments();
-    if (args.size() != 3)
+    if (args.size() < 2)
     {
-        qStdout() << "Usage: " << args[0] << " [input] [output]";
+        qStdout() << "Usage: " << args[0] << " input [output]";
         return -1;
     }
 
-    QFile input(args[1]);
+    QString input_file_name = args[1];
+    QString output_file_name = args[1] + ".map";
+    if (args.size() > 2)
+    {
+        output_file_name = args[2];
+    }
+
+    QFile input(input_file_name);
     if (!input.open(QIODevice::ReadOnly))
     {
         qStdout() << "Unable to open file to read";
@@ -41,7 +48,7 @@ int main(int argc, char* argv[])
     humanized.append("\r\n\r\n\r\n");
     humanized.append(tail);
 
-    QFile output(args[2]);
+    QFile output(output_file_name);
     if (!output.open(QIODevice::WriteOnly))
     {
         qStdout() << "Unable to open file to write";
