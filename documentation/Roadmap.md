@@ -10,3 +10,8 @@ Griefly roadmap
 1. Simple movement, passable levels, bumps (**done**)
 2. Energy based movement system with friction and momentum (**partly done**)
 3. Collision system, especially projectiles
+
+### Network
+1. Basic network with fat client (**done**)
+2. Thin BYOND-like client
+3. Some movement prediction on client
