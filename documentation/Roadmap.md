@@ -15,3 +15,8 @@ Griefly roadmap
 1. Basic network with fat client (**done**)
 2. Thin BYOND-like client
 3. Some movement prediction on client
+
+### Electricity
+1. Wires with true resistance and bandwidth
+2. Atmos based turbine as energy source
+3. Inductivity and capacity
