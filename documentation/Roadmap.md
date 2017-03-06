@@ -20,3 +20,7 @@ Griefly roadmap
 1. Wires with true resistance and bandwidth
 2. Atmos based turbine as energy source
 3. Inductivity and capacity
+
+### Light system
+1. Core system with light sources
+2. Pretty shaders for representation
