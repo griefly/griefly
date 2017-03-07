@@ -24,3 +24,8 @@ Griefly roadmap
 ### Light system
 1. Core system with light sources
 2. Pretty shaders for representation
+
+### Map editor
+1. Simple map editor (**done**)
+2. Map editor assets
+3. External map editor
