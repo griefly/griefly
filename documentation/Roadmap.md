@@ -29,3 +29,7 @@ Griefly roadmap
 1. Simple map editor (**done**)
 2. Map editor assets
 3. External map editor
+
+### Scripting
+1. Automatic API generation
+2. Some language binding
