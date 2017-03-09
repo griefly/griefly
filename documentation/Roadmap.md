@@ -33,3 +33,7 @@ Griefly roadmap
 ### Scripting
 1. Automatic API generation
 2. Some language binding
+
+### Other physics-like systems
+1. Chemistry
+2. Radiation
