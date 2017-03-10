@@ -37,3 +37,8 @@ Griefly roadmap
 ### Other physics-like systems
 1. Chemistry
 2. Radiation
+
+### Interface
+1. Basic interface (**done**)
+2. Complex interface for in-game consoles
+3. Better overall interface
