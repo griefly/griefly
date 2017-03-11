@@ -42,3 +42,7 @@ Griefly roadmap
 1. Basic interface (**done**)
 2. Complex interface for in-game consoles
 3. Better overall interface
+
+### Human
+1. Basic health & combat system (**done**)
+2. Complex health & combat system
