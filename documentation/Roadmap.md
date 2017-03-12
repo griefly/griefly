@@ -37,6 +37,8 @@ Griefly roadmap
 ### Other physics-like systems
 1. Chemistry
 2. Radiation
+3. Explosions
+4. Temperature & energy for objects
 
 ### Interface
 1. Basic interface (**done**)
