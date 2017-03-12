@@ -72,19 +72,27 @@ inline Dir VDirToDir(const VDir& vdir)
     int abs_x = std::abs(vdir.x);
     int abs_y = std::abs(vdir.y);
     int abs_z = std::abs(vdir.z);
-    if (abs_x > abs_y && abs_x > abs_z)
+    if ((abs_x > abs_y) && (abs_x > abs_z))
+    {
         if (vdir.x > 0)
+        {
             return D_RIGHT;
-        else
-            return D_LEFT;
-    if (abs_y > abs_z)
-        if (vdir.y > 0)
+        }
+        return D_LEFT;
+    }
+    if (abs_y >= abs_z)
+    {
+        if (vdir.y >= 0)
+        {
             return D_DOWN;
-        else
-            return D_UP;
+        }
+        return D_UP;
+    }
 
     if (vdir.z > 0)
+    {
         return D_ZUP;
+    }
     return D_ZDOWN;
 }
 
@@ -93,5 +101,3 @@ const Dir DirToRDir[6] = {1, 0, 3, 2, 5, 4};
 const int MAX_LEVEL = 20;
 
 extern quint32 MAIN_TICK;
-
-const QString RAW_DIR = "raw/";
