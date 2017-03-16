@@ -10,7 +10,7 @@ public:
     DECLARE_GET_TYPE_ITEM(Door);
     Door(quint32 id);
     
-    enum STATE
+    enum State
     {
         OPEN, CLOSED, OPENING, CLOSING, WELDED  
     };
@@ -20,7 +20,7 @@ public:
     virtual void Process() override;
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
-    bool IsState(STATE state) const { return state == door_state_ ; }
+    bool IsState(State state) const { return state == door_state_; }
     void Weld();
 private:
     int KV_SAVEBLE(door_state_);
