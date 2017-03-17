@@ -639,7 +639,7 @@ TEST(FastDeserializer, Humanize)
     serializer << QByteArray("woof");
     serializer << true;
     serializer.WriteType("Meow");
-    serializer << QString("smart kitty");
+    serializer << QString("smart kitty has some $$$!");
     serializer.WriteType(END_TYPE);
     serializer << QString("stupid kitty");
 
@@ -647,6 +647,6 @@ TEST(FastDeserializer, Humanize)
 
     QString value = Humanize(&deserializer);
 
-    EXPECT_EQ(value, "woof 123 42 776f6f66 1 \r\nMeow smart$kitty ");
-    EXPECT_EQ(deserializer.GetIndex(), 90);
+    EXPECT_EQ(value, "woof 123 42 776f6f66 1 \r\nMeow smart$kitty$has$some$\\$\\$\\$! ");
+    EXPECT_EQ(deserializer.GetIndex(), 118);
 }

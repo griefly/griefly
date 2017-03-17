@@ -59,7 +59,7 @@ QString Humanize(FastDeserializer *deserializer)
         {
             QString value;
             *deserializer >> value;
-            stream << value.replace(' ', "$");
+            stream << value.replace('$', "\\$").replace(' ', "$");
         }
         else if (type == FastSerializer::BYTEARRAY_TYPE)
         {
