@@ -9,7 +9,7 @@ Bullet::Bullet(quint32 id) : Projectile(id)
 
 Laser::Laser(quint32 id) : Projectile(id)
 {
-    damage_ = 10;
+    burn_damage_ = 10;
     SetState("laser");
     name = "Laser";
 }
@@ -27,15 +27,17 @@ bool Laser::CheckPassable()
     if (tile->IsTransparent())
     {
         auto nearby = tile->GetNeighbour(GetDir());
-        if (nearby->IsTransparent())
+        // Check for map borders
+        if ((nearby != tile) && nearby->IsTransparent())
         {
             return true;
         }
     }
-    if (IMovable::CheckPassable())
-    {
-        return true;
-    }
+
+    // TODO (?): Bump() by Laser.
+    // We cannot call IMovable::CheckPassable here because then
+    // laser projectiles will bump glasses, so it is needed to add bump here
+
     Delete();
     return false;
 }

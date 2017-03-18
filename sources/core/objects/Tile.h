@@ -8,16 +8,18 @@
 #include "../atmos/AtmosHolder.h"
 
 template<class T>
-std::iostream& operator<<(std::iostream& file, std::vector<IdPtr<T>>& content)
+FastSerializer& operator<<(FastSerializer& file, const std::vector<IdPtr<T>>& content)
 {
-    file << " " << content.size() << " ";
+    file << static_cast<quint32>(content.size());
     for (auto it = content.begin(); it != content.end(); ++it)
-        file << " " << it->Id() << " ";
+    {
+        file << it->Id();
+    }
     return file;
 }
 
 template<class T>
-std::iostream& operator>>(std::iostream& file, std::vector<IdPtr<T>>& content)
+FastDeserializer& operator>>(FastDeserializer& file, std::vector<IdPtr<T>>& content)
 {
     quint32 size;
     file >> size;

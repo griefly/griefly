@@ -87,26 +87,27 @@ TEST(FramesetInfo, StreamOperators)
     frameset_info.SetAngle(84);
     frameset_info.SetShift(12, 13);
 
-    std::stringstream str;
-    str << frameset_info;
+    FastSerializer serialzier(1);
+    serialzier << frameset_info;
 
-    ASSERT_EQ(str.str(), "8 sprite 1 7 state 2 84 12 13 ");
-
-    str.str("8 sprite 2 7 state 3 -14 12 13");
+    FastDeserializer deserializer(serialzier.GetData(), serialzier.GetIndex());
 
     ViewInfo::FramesetInfo frameset_info2;
-    str >> frameset_info2;
-    ASSERT_EQ(frameset_info2.GetSprite(), "sprite 2");
-    ASSERT_EQ(frameset_info2.GetState(), "state 3");
-    ASSERT_EQ(frameset_info2.GetAngle(), -14);
-    ASSERT_EQ(frameset_info2.GetShiftX(), 12);
-    ASSERT_EQ(frameset_info2.GetShiftY(), 13);
+    deserializer >> frameset_info2;
+    EXPECT_EQ(frameset_info2.GetSprite(), "sprite 1");
+    EXPECT_EQ(frameset_info2.GetState(), "state 2");
+    EXPECT_EQ(frameset_info2.GetAngle(), 84);
+    EXPECT_EQ(frameset_info2.GetShiftX(), 12);
+    EXPECT_EQ(frameset_info2.GetShiftY(), 13);
 
-    std::stringstream str2;
-    str2 << frameset_info;
-    ViewInfo::FramesetInfo frameset_info3;
-    str2 >> frameset_info3;
-    ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
+    {
+        FastSerializer serializer(1);
+        serializer << frameset_info;
+        FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+        ViewInfo::FramesetInfo frameset_info3;
+        deserializer >> frameset_info3;
+        EXPECT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
+    }
 }
 
 TEST(FramesetInfo, Hash)
@@ -280,58 +281,38 @@ TEST(ViewInfo, IsSameFramesets)
 
 TEST(ViewInfo, StreamOperators)
 {
-    ViewInfo view_info;  
-    {
-        std::stringstream str;
-        str << view_info;
-        ASSERT_EQ(str.str(), "0  0  0 0 0  0 0 0 ");
-    }
+    ViewInfo view_info;
 
     view_info.SetSprite("vhs");
     view_info.SetState("dead");
     view_info.SetAngle(11);
     view_info.AddOverlay("something", "someone").SetShift(1, 10);
     view_info.AddUnderlay("tree", "weed");
-    {
-        std::stringstream str;
-        str << view_info;
-        ASSERT_EQ(
-            str.str(),
-            "3 vhs 4 dead 0 0 0  1 4 tree 4 weed 0 0 0  1 "
-            "9 something 7 someone 0 1 10  11 ");
-    }
 
-    {
-        std::stringstream str("0  0  0 0 0  0 0 0 ");
-        str >> view_info;
-        ASSERT_EQ(view_info.GetAngle(), 0);
-        ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "");
-        ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "");
-        ASSERT_EQ(view_info.GetOverlays().size(), 0);
-        ASSERT_EQ(view_info.GetUnderlays().size(), 0);
-    }
+    FastSerializer serializer(1);
+    serializer << view_info;
 
-    {
-        std::stringstream str(
-            "4 vhsa 5 dea1d 0 0 0  1 4 tree 4 weed 0 0 0  1 "
-            "8 smething 7 someone 0 1 10  11 ");
-        str >> view_info;
-        ASSERT_EQ(view_info.GetAngle(), 11);
-        ASSERT_EQ(view_info.GetBaseFrameset().GetSprite(), "vhsa");
-        ASSERT_EQ(view_info.GetBaseFrameset().GetState(), "dea1d");
+    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
 
-        ASSERT_EQ(view_info.GetOverlays().size(), 1);
-        ViewInfo::FramesetInfo frameset_info1 = view_info.GetOverlays()[0];
-        ASSERT_EQ(frameset_info1.GetSprite(), "smething");
-        ASSERT_EQ(frameset_info1.GetState(), "someone");
-        ASSERT_EQ(frameset_info1.GetShiftX(), 1);
-        ASSERT_EQ(frameset_info1.GetShiftY(), 10);
+    ViewInfo view_info2;
+    deserializer >> view_info2;
+    EXPECT_EQ(view_info2.GetAngle(), 11);
+    EXPECT_EQ(view_info2.GetBaseFrameset().GetSprite(), "vhs");
+    EXPECT_EQ(view_info2.GetBaseFrameset().GetState(), "dead");
 
-        ASSERT_EQ(view_info.GetUnderlays().size(), 1);
-        ViewInfo::FramesetInfo frameset_info2 = view_info.GetUnderlays()[0];
-        ASSERT_EQ(frameset_info2.GetSprite(), "tree");
-        ASSERT_EQ(frameset_info2.GetState(), "weed");
-    }
+    ASSERT_EQ(view_info2.GetOverlays().size(), 1);
+    ViewInfo::FramesetInfo frameset_info1 = view_info2.GetOverlays()[0];
+    EXPECT_EQ(frameset_info1.GetSprite(), "something");
+    EXPECT_EQ(frameset_info1.GetState(), "someone");
+    EXPECT_EQ(frameset_info1.GetShiftX(), 1);
+    EXPECT_EQ(frameset_info1.GetShiftY(), 10);
+
+    ASSERT_EQ(view_info2.GetUnderlays().size(), 1);
+    ViewInfo::FramesetInfo frameset_info2 = view_info2.GetUnderlays()[0];
+    EXPECT_EQ(frameset_info2.GetSprite(), "tree");
+    EXPECT_EQ(frameset_info2.GetState(), "weed");
+
+    EXPECT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info2));
 }
 
 TEST(ViewInfo, Hash)

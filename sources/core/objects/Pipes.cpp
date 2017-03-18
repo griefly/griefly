@@ -8,7 +8,7 @@
 
 PipeBase::PipeBase(quint32 id) : IMovable(id)
 {
-    anchored = true;
+    anchored_ = true;
     v_level = 1;
 
     SetSprite("icons/pipes.dmi");
@@ -23,7 +23,7 @@ void PipeBase::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<AtmosTool> at = item)
     {
-        GetGame().GetChat().PostTextFor(AtmosTool::GetInfo(atmos_holder_), at->GetOwner());
+        GetGame().GetChat().PostHtmlFor(AtmosTool::GetHtmlInfo(atmos_holder_), at->GetOwner());
         return;
     }
 }
@@ -370,7 +370,7 @@ void Connector::AfterWorldCreation()
     if (auto tank = owner->GetItem<GasTank>())
     {
         ConnectToGasTank(tank);
-        tank->anchored = true;
+        tank->anchored_ = true;
     }
 }
 
@@ -424,7 +424,7 @@ void PipePump::Process()
         return;
     }
 
-    if (static_cast<int>(head_connection->GetPressure()) >= pump_pressure_)
+    if (head_connection->GetPressure() >= pump_pressure_)
     {
         return;
     }

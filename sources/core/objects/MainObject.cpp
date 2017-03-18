@@ -23,21 +23,23 @@ void IMainObject::Delete()
     GetGame().GetFactory().DeleteLater(id_);
 }
 
-bool IMainObject::Save(std::stringstream& file)
+bool IMainObject::Save(FastSerializer& serializer)
 {
-    file << " " << T_ITEM().toStdString() << " ";
-    file << " " << id_ << " ";
-    file << " " << how_often_ << " ";
+    serializer.WriteType(T_ITEM());
+    serializer << id_;
+    serializer << how_often_;
     return true;
 }
 
-bool IMainObject::Load(std::stringstream& file)
+bool IMainObject::Load(FastDeserializer& deserializer)
 {
-    file >> how_often_;
+    // It is mainly empty because all data is loaded by
+    // the outer function
+
+    deserializer >> how_often_;
 
     SetFreq(GetFreq());
 
-    // It empty becouse all data load main outer function
     return true;
 }
 

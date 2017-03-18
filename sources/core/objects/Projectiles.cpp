@@ -1,25 +1,27 @@
 #include "Projectiles.h"
 #include "../Helpers.h"
 
-std::ostream& operator<<(std::stringstream& file, const std::vector<Dir>& s)
+FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& s)
 {
-    file << " " << s.size() << " ";
+    file << static_cast<quint32>(s.size());
     for (auto it : s)
-        file << " " << it << " ";
+    {
+        file << it;
+    }
     return file;
 }
 
-std::istream& operator>>(std::stringstream& file, std::vector<Dir>& s)
+FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& s)
 {
     quint32 size;
     file >> size;
     s.reserve(size);
 
-    unsigned int local_id;
+    Dir dir;
     for (quint32 i = 0; i < size; ++i)
     {
-        file >> local_id;
-        s.push_back(local_id);
+        file >> dir;
+        s.push_back(dir);
     }
     return file;
 }
@@ -40,11 +42,11 @@ Projectile::Projectile(quint32 id) : IMovable(id)
 {
     SetPassable(D_ALL, Passable::FULL);
     damage_ = 0;
+    burn_damage_ = 0;
     SetSprite("icons/projectiles.dmi");
     v_level = 6;
     current_step_ = 0;
-    tickSpeed = 1;
-    pixSpeed = 4;
+    tick_speed_ = 1;
     passable_level = Passable::SMALL_ITEM;
     harmless_ = true;
 }
@@ -246,4 +248,9 @@ int Projectile::GetDamage()
 {
     return damage_;
 }
+int Projectile::GetBurnDamage()
+{
+    return burn_damage_;
+}
+
 

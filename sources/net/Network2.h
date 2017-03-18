@@ -16,7 +16,7 @@
 
 #include "NetworkMessagesTypes.h"
 
-const int MAX_WAIT_ON_QUEUE = 1;
+const int MAX_WAIT_ON_QUEUE = 8;
 
 struct Message2
 {
@@ -54,8 +54,6 @@ private:
     QTcpSocket socket_;
 
     void SendData(const QByteArray& data);
-
-    QTextCodec* net_codec_;
 
     QString login_;
     QString password_;

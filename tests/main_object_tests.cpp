@@ -46,9 +46,17 @@ TEST(MainObject, Save)
 {
     {
         IMainObject object(42);
-        std::stringstream save;
+        FastSerializer save(1);
         object.Save(save);
-        ASSERT_EQ(save.str(), " main  42  0 ");
+
+        const char* const DATA =
+            "\x06\x02\x04\x00\x00\x00\x6d\x00\x61\x00"
+            "\x69\x00\x6E\x00\x03\x2A\x00\x00\x00"
+            "\x02\x00\x00\x00\x00";
+
+        EXPECT_EQ(
+            QByteArray(save.GetData(), save.GetIndex()),
+            QByteArray(DATA, 24));
     }
     {
         MockIGame game;
@@ -60,9 +68,9 @@ TEST(MainObject, Save)
 
         IMainObject object(42);
         object.SetGame(&game);
-        std::stringstream save("18");
+        FastDeserializer save("\x02\x08\x00\x00\x00", 5);
         object.Load(save);
-        ASSERT_EQ(object.GetFreq(), 18);
+        EXPECT_EQ(object.GetFreq(), 8);
     }
 }
 

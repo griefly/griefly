@@ -2,7 +2,7 @@
 
 Bed::Bed(quint32 id) : IMovable(id)
 {
-    anchored = true;
+    anchored_ = true;
     v_level = 3;
 
     SetSprite("icons/objects.dmi");
@@ -13,7 +13,7 @@ Bed::Bed(quint32 id) : IMovable(id)
 
 Chair::Chair(quint32 id) : IMovable(id)
 {
-    anchored = true;
+    anchored_ = true;
 
     v_level = 3;
 
@@ -23,10 +23,19 @@ Chair::Chair(quint32 id) : IMovable(id)
     name = "Chair";
 }
 
+void Chair::AfterWorldCreation()
+{
+    IMovable::AfterWorldCreation();
+
+    if (GetDir() == D_UP)
+    {
+        v_level = 10;
+    }
+}
 
 Stool::Stool(quint32 id) : IMovable(id)
 {
-    anchored = true;
+    anchored_ = true;
 
     v_level = 3;
 

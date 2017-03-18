@@ -9,8 +9,8 @@
 class AtmosHolder
 {
     friend class Atmosphere;
-    friend std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
-    friend std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder);
+    friend FastDeserializer& operator>>(FastDeserializer& file, AtmosHolder& atmos_holder);
+    friend FastSerializer& operator<<(FastSerializer& file, const AtmosHolder& atmos_holder);
     friend unsigned int hash(const AtmosHolder& atmos_holder);
 public:
     AtmosHolder()
@@ -51,8 +51,8 @@ private:
     AtmosData data_;
 };
 
-std::istream& operator>>(std::stringstream& file, AtmosHolder& atmos_holder);
-std::ostream& operator<<(std::stringstream& file, const AtmosHolder& atmos_holder);
+FastDeserializer& operator>>(FastDeserializer& file, AtmosHolder& atmos_holder);
+FastSerializer& operator<<(FastSerializer& file, const AtmosHolder& atmos_holder);
 
 inline unsigned int hash(const AtmosHolder& atmos_holder)
 {

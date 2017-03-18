@@ -11,16 +11,16 @@ class ObjectFactory : public IObjectFactory
 {
 public:
     ObjectFactory(IGame* game);
+    virtual ~ObjectFactory();
 
-    virtual unsigned int GetLastHash() override;
     virtual std::vector<ObjectInfo>& GetIdTable() override;
 
     virtual void ForeachProcess() override;
 
     virtual unsigned int Hash() override;
 
-    virtual void Save(std::stringstream& str) override;
-    virtual void Load(std::stringstream& str, quint32 real_this_mob) override;
+    virtual void Save(FastSerializer& str) override;
+    virtual void Load(FastDeserializer& str, quint32 real_this_mob) override;
     
     virtual void LoadFromMapGen(const QString& name) override;
 
@@ -34,16 +34,15 @@ public:
 
     virtual void AddProcessingItem(quint32 item) override;
 
-    virtual void ClearProcessing() override;
-
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
     virtual quint32 GetPlayerId(quint32 net_id) override;
     virtual quint32 GetNetId(quint32 real_id) override;
 private:
     void Clear();
+    void ClearProcessing();
 
-    void SaveMapHeader(std::stringstream& str);
-    void LoadMapHeader(std::stringstream& savefile);
+    void SaveMapHeader(FastSerializer& str);
+    void LoadMapHeader(FastDeserializer& savefile);
 
     IMainObject* CreateVoid(const QString& hash, quint32 id_new);
 
@@ -64,9 +63,6 @@ private:
     std::vector<IdPtr<IMainObject>> process_table_;
 
     std::vector<IdPtr<IMainObject>> add_to_process_;
-
-    unsigned int hash_last_;
-    unsigned int hash_last_tick_;
 
     quint32 id_;
 

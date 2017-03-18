@@ -70,6 +70,7 @@ void ImageMetadata::Init(const QString& name, int width, int height)
     if (!png_ptr)
     {
         qDebug() << "Metadata error: Couldn't initialize png read struct";
+        KvAbort();
         return;
     }
 
@@ -78,6 +79,7 @@ void ImageMetadata::Init(const QString& name, int width, int height)
     {
         qDebug() << "Metadata error: Couldn't initialize png info struct";
         png_destroy_read_struct(&png_ptr, static_cast<png_infopp>(0), static_cast<png_infopp>(0));
+        KvAbort();
         return;
     }
 
@@ -94,7 +96,8 @@ void ImageMetadata::Init(const QString& name, int width, int height)
 
     if (png_get_text(png_ptr, info_ptr, &text_ptr, &num_text) > 0)
     {
-        for (int i = 0; i < num_text; ++i)
+        int i = 0;
+        for (; i < num_text; ++i)
         {
             QString string_key = QString(text_ptr[i].key);
             if (string_key == "Description")
@@ -105,21 +108,30 @@ void ImageMetadata::Init(const QString& name, int width, int height)
                 break;
             }
         }
+        if (i == num_text)
+        {
+            qDebug() << "Unable to find \"Description\" key, trying without metadata";
+            InitWithoutMetadata();
+        }
     }
 
     png_destroy_read_struct(&png_ptr, &info_ptr, static_cast<png_infopp>(0));
     source.close();
-    qDebug() << "End load metadata for " << name;
 
     if (!Valid())
     {
-        InitWithoutMetadata();
+        qDebug() << "Fail during metadata parsing, abort!";
+        KvAbort();
     }
+    qDebug() << "End load metadata for " << name;
 }
 
 void ImageMetadata::InitWithoutMetadata()
 {
     qDebug() << "Fail metadata load, try without it";
+
+    metadata_.clear();
+
     metadata_[""].first_frame_pos = 0;
 
     metadata_[""].frames_sequence.push_back(0);

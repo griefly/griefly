@@ -1,6 +1,6 @@
 #include "ElectricTools.h"
 
-#include <sstream>
+#include <QTextStream>
 
 #include "representation/Chat.h"
 #include "Tile.h"
@@ -13,18 +13,32 @@ AtmosTool::AtmosTool(quint32 id) : Item(id)
     name = "Atmos tool";
 }
 
-QString AtmosTool::GetInfo(AtmosHolder &holder)
+QString AtmosTool::GetHtmlInfo(AtmosHolder &holder)
 {
-    std::stringstream ss;
-    ss << "Energy: " << holder.GetEnergy() << std::endl;
-    ss << "Volume: " << holder.GetVolume() << std::endl;
-    ss << "Temperature: " << holder.GetTemperature() << std::endl;
-    ss << "Pressure: " << holder.GetPressure() << std::endl;
+    QString retval;
+
+    QTextStream ss(&retval);
+    ss << "<b>Atmos data:</b><br>";
+    ss << "Energy: " << holder.GetEnergy() << "<br>";
+    ss << "Volume: " << holder.GetVolume() << "<br>";
+    ss << "Temperature: " << holder.GetTemperature() << "<br>";
+    ss << "Pressure: " << holder.GetPressure() << "<br>";
+
+    int overall_gases = 0;
     for (quint32 i = 0; i < GASES_NUM; ++i)
     {
-        ss << GASES_NAME[i] << ": " << holder.GetGase(i) << std::endl;
+        overall_gases += holder.GetGase(i);
     }
-    return QString::fromStdString(ss.str());
+    overall_gases = qMax(1, overall_gases);
+
+    for (quint32 i = 0; i < GASES_NUM; ++i)
+    {
+        ss << QString("%1: <b>%2%</b> (%3)<br>")
+            .arg(GASES_NAME[i])
+            .arg((holder.GetGase(i) * 100.0) / overall_gases, 0, 'f', 2)
+            .arg(holder.GetGase(i));
+    }
+    return retval;
 }
 
 void AtmosTool::AttackBy(IdPtr<Item> item)
@@ -33,7 +47,7 @@ void AtmosTool::AttackBy(IdPtr<Item> item)
     {
         if (IdPtr<CubeTile> ct = GetOwner()->GetOwner())
         {
-            GetGame().GetChat().PostTextFor(GetInfo(*ct->GetAtmosHolder()), GetOwner());
+            GetGame().GetChat().PostHtmlFor(GetHtmlInfo(*ct->GetAtmosHolder()), GetOwner());
         }
     }
 }

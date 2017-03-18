@@ -25,6 +25,7 @@
 
 #include "AutogenMetadata.h"
 
+#include "Version.h"
 
 #include "net/Network2.h"
 #include "net/NetworkMessagesTypes.h"
@@ -111,7 +112,6 @@ void Game::InitGlobalObjects()
     map_ = new MapMaster(sync_random_, texts);
     qDebug() << "End master load";
     factory_ = new ObjectFactory(this);
-    id_ptr_id_table = &(factory_->GetIdTable());
     Chat* chat = new Chat(this);
     chat_ = chat;
     names_ = new Names(sync_random_);
@@ -129,9 +129,9 @@ void Game::InitGlobalObjects()
 void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
 {
     GetMap().ResizeMap(new_map_x, new_map_y, new_map_z);
-    for(int x = 0; x < GetMap().GetWidth(); x++)
+    for (int x = 0; x < GetMap().GetWidth(); x++)
     {
-        for(int y = 0; y < GetMap().GetHeight(); y++)
+        for (int y = 0; y < GetMap().GetHeight(); y++)
         {
             for (int z = 0; z < GetMap().GetDepth(); z++)
             {
@@ -161,12 +161,11 @@ void Game::Process()
 
     while (true)
     {
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 40);       
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
         if (is_end_process_)
         {
             break;
         }
-
         ProcessInputMessages();
 
         const int ATMOS_OFTEN = 1;
@@ -246,8 +245,10 @@ void Game::Process()
 }
 
 const QString ON_LOGIN_MESSAGE =
-        "Welcome to Griefly! It is yet another space station remake, so if you are here then you probably already know how to play."
+        "Welcome to Griefly! It is yet another space station remake, so if you are here then you probably"
+        " already know how to play."
         " Just in case: arrows for movement, left mouse click for hand actions (hit, attack, take), chat for speaking."
+        " Pull objects - ctrl + click, rotate objects - R + click, look at objects - shift + click."
         " Use prefix ooc in the chat if you would like to use the ooc channel (it is a global channel).\n";
 
 void Game::WaitForExit()
@@ -278,11 +279,11 @@ void Game::InitWorld(int id, QString map_name)
         QString mapgen_name = GetParamsHolder().GetParam<QString>("mapgen_name");
         if (QFileInfo::exists(mapgen_name))
         {
-            srand(QTime::currentTime().msecsSinceStartOfDay());
+            qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
+            unsigned int seed = static_cast<unsigned int>(qrand());
+            GetRandom().SetRand(seed, 0);
 
             GetFactory().LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
-            qDebug() << "End load from mapgen atmpsphere";
-
 
             GetFactory().CreateImpl(Lobby::T_ITEM_S());
 
@@ -295,7 +296,7 @@ void Game::InitWorld(int id, QString map_name)
 
             for (auto it = GetFactory().GetIdTable().begin();
                       it != GetFactory().GetIdTable().end();
-                      ++it)
+                    ++it)
             {
                 if (it->object && (it->object->RT_ITEM() == SpawnPoint::REAL_TYPE_ITEM))
                 {
@@ -323,6 +324,8 @@ void Game::InitWorld(int id, QString map_name)
     else
     {
         qDebug() << "Begin load map";
+        QElapsedTimer load_timer;
+        load_timer.start();
 
         QByteArray map_data = Network2::GetInstance().GetMapData();
 
@@ -331,11 +334,12 @@ void Game::InitWorld(int id, QString map_name)
             qDebug() << "An empty map received";
             KvAbort();
         }
-        std::stringstream ss;
-        ss.write(map_data.data(), map_data.length());
-        ss.seekg(0, std::ios::beg);
 
-        GetFactory().Load(ss, id);
+        FastDeserializer deserializer(map_data.data(), map_data.size());
+
+        GetFactory().Load(deserializer, id);
+
+        qDebug() << "Map is loaded, " << load_timer.elapsed() << " ms";
     }
 
     GetChat().PostText(ON_LOGIN_MESSAGE);
@@ -482,12 +486,14 @@ void Game::ProcessInputMessages()
             if (tick == MAIN_TICK)
             {
                 qDebug() << "Map will be generated";
-                std::stringstream ss;
-                GetFactory().Save(ss);
-                qDebug() << "Tellp: " << ss.tellp();
-                std::string string = ss.str();
-                data = QByteArray(string.c_str(), string.length());
-                AddLastMessages(data);
+
+                serializer_.ResetIndex();
+                GetFactory().Save(serializer_);
+                data = QByteArray(serializer_.GetData(), serializer_.GetIndex());
+
+                AddLastMessages(&data);
+                AddBuildInfo(&data);
+
                 qDebug() << " " << data.length();
             }
 
@@ -707,15 +713,15 @@ void Game::generateUnsync()
     }
 }
 
-void Game::AddLastMessages(QByteArray& data)
+void Game::AddLastMessages(QByteArray* data)
 {
-    data.append('\n');
+    data->append('\n');
     for (int i = (log_pos_ + 1) % messages_log_.size();
              i != log_pos_;
              i = (i + 1) % messages_log_.size())
     {
-        data.append(QByteArray::number(messages_log_[i].type) + " ");
-        data.append(messages_log_[i].json + '\n');
+        data->append(QByteArray::number(messages_log_[i].type) + " ");
+        data->append(messages_log_[i].json + '\n');
     }
 }
 
@@ -723,6 +729,13 @@ void Game::AddMessageToMessageLog(Message2 message)
 {
     messages_log_[log_pos_] = message;
     log_pos_ = (log_pos_ + 1) % messages_log_.size();
+}
+
+void Game::AddBuildInfo(QByteArray* data)
+{
+    QString system_info("Build info: %1, Qt: %2");
+    system_info = system_info.arg(GetBuildInfo()).arg(GetQtVersion());
+    data->append(system_info);
 }
 
 void Game::ProcessBroadcastedMessages()

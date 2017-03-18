@@ -39,12 +39,12 @@ Representation::Representation()
 
     int old_size_w = GetGLWidget()->width();
     int old_size_h = GetGLWidget()->height();
-    SetScreen(new Screen(sizeW, sizeH));
+    SetScreen(new Screen(AREA_SIZE_W, AREA_SIZE_H));
     GetGLWidget()->resize(old_size_w, old_size_h);
-    std::cout << "Screen set" << std::endl;
+    qDebug() << "Screen set";
     SetSpriter(new SpriteHolder);
 
-    std::cout << "Begin load resources" << std::endl;
+    qDebug() << "Begin load resources";
     LoadImages();
     LoadSounds();
 }
@@ -212,7 +212,6 @@ void Representation::Process()
 
     SynchronizeViews();
 
-    HandleInput();
     const int AUTOPLAY_INTERVAL = 10;
     if (autoplay_ && (autoplay_timer_.elapsed() > AUTOPLAY_INTERVAL))
     {
@@ -491,12 +490,12 @@ void Representation::Camera::PerformPixelMovement()
 
 int Representation::Camera::GetFullShiftX()
 {
-    return -1 * (pos_x * 32 + pixel_shift_x_) + (sizeW / 2) - 16;
+    return -1 * (pos_x * 32 + pixel_shift_x_) + (AREA_SIZE_W / 2) - 16;
 }
 
 int Representation::Camera::GetFullShiftY()
 {
-    return -1 * (pos_y * 32 + pixel_shift_y_) + (sizeH / 2) - 16;
+    return -1 * (pos_y * 32 + pixel_shift_y_) + (AREA_SIZE_H / 2) - 16;
 }
 
 Representation* g_r = nullptr;

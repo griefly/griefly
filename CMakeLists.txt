@@ -5,6 +5,9 @@ option(BUILD_TESTS "Build tests" OFF)
 option(BUILD_COVER "Generate test coverage" OFF)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+set(UTILS_DIR utils/)
 
 include(ClangFormat)
 if (WIN32)
@@ -203,11 +206,30 @@ if(NOT CLIENT_VERSION)
 endif()
 message(STATUS ${CLIENT_VERSION})
 
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(BITS_VERSION 64)
+else(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    set(BITS_VERSION 32)
+else()
+    message(FATAL_ERROR "Unsupported compiler bits version!")
+endif()
+set(SYSTEM_INFO "\
+System: ${CMAKE_SYSTEM}, \
+Compiler: ${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}, \
+Bits version: ${BITS_VERSION}\
+")
+message(STATUS ${SYSTEM_INFO})
+
 # Version.cpp generation
 execute_process(
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/version.py ${CLIENT_VERSION}
+    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${UTILS_DIR}/version.py
+    ${CLIENT_VERSION} ${SYSTEM_INFO}
+    RESULT_VARIABLE VERSION_GENERATION_RETVAL
 )
+if(NOT VERSION_GENERATION_RETVAL EQUAL 0)
+    message(FATAL_ERROR "Unable to generate 'Version.cpp' file!")
+endif()
 
 ###
 ### End checking build version
@@ -256,11 +278,11 @@ file(GLOB_RECURSE FORMS "${SOURCE_DIR}*.ui")
 # Metadata & source code generation
 add_custom_command(
     OUTPUT metadata.json
-    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/metadata_generator.py ${CMAKE_CURRENT_SOURCE_DIR} metadata.json
+    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${UTILS_DIR}/metadata_generator.py ${CMAKE_CURRENT_SOURCE_DIR} metadata.json
     DEPENDS ${HEADERS})
 add_custom_command(
     OUTPUT AutogenMetadata.cpp
-    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/autogen.py
+    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${UTILS_DIR}/autogen.py
     DEPENDS metadata.json
 )
 add_custom_target(Metadata ALL DEPENDS AutogenMetadata.cpp)
@@ -295,6 +317,11 @@ if(BUILD_TESTS)
     target_link_libraries(KVEngine gmock)
     if(MSVC)
         set_target_properties(KVEngine PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:CONSOLE")
+        set_target_properties(KVEngine PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
+    endif()
+else()
+    if(MSVC)
+        target_link_libraries(KVEngine Qt5::WinMain)
     endif()
 endif()
 
@@ -365,6 +392,8 @@ include_directories(UNPACKER_DIR)
 include_directories("qzip_unpacker")
 
 file(GLOB_RECURSE UNPACKER_SOURCES "${UNPACKER_DIR}*.cpp")
+list(APPEND UNPACKER_SOURCES "${SOURCE_DIR}/FastSerializer.cpp" "${SOURCE_DIR}/FastSerializer.h")
+list(APPEND UNPACKER_SOURCES "${SOURCE_DIR}/KVAbort.cpp" "${SOURCE_DIR}/KVAbort.h")
 
 add_executable(Unpacker ${UNPACKER_SOURCES})
 

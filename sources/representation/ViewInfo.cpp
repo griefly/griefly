@@ -2,32 +2,27 @@
 
 #include "core/StreamWrapper.h"
 
-std::ostream& operator<<(std::stringstream& file, ViewInfo& view_info)
+FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info)
 {
     WrapWriteMessage(file, view_info.base_frameset_);
-    file << " ";
 
-    file << view_info.underlays_.size();
-    file << " ";
+    file << static_cast<quint32>(view_info.underlays_.size());
     for (auto it = view_info.underlays_.begin(); it != view_info.underlays_.end(); ++it)
     {
             WrapWriteMessage(file, *it);
-            file << " ";
     }
 
-    file << view_info.overlays_.size();
-    file << " ";
+    file << static_cast<quint32>(view_info.overlays_.size());
     for (auto it = view_info.overlays_.begin(); it != view_info.overlays_.end(); ++it)
     {
             WrapWriteMessage(file, *it);
-            file << " ";
     }
 
-    file << view_info.angle_ << " ";
+    file << view_info.angle_;
 
     return file;
 }
-std::istream& operator>>(std::stringstream& file, ViewInfo& view_info)
+FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info)
 {
     WrapReadMessage(file, view_info.base_frameset_);
 
@@ -56,21 +51,16 @@ std::istream& operator>>(std::stringstream& file, ViewInfo& view_info)
     return file;
 }
 
-std::ostream& operator<<(std::stringstream& file, ViewInfo::FramesetInfo& frameset_info)
+FastSerializer& operator<<(FastSerializer& file, ViewInfo::FramesetInfo& frameset_info)
 {
     WrapWriteMessage(file, frameset_info.sprite_name_);
-    file << " ";
     WrapWriteMessage(file, frameset_info.state_);
-    file << " ";
     file << frameset_info.angle_;
-    file << " ";
     file << frameset_info.shift_x_;
-    file << " ";
     file << frameset_info.shift_y_;
-    file << " ";
     return file;
 }
-std::istream& operator>>(std::stringstream& file, ViewInfo::FramesetInfo& frameset_info)
+FastDeserializer& operator>>(FastDeserializer& file, ViewInfo::FramesetInfo& frameset_info)
 {
     WrapReadMessage(file, frameset_info.sprite_name_);
     WrapReadMessage(file, frameset_info.state_);

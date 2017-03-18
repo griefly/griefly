@@ -11,6 +11,7 @@
 #include "representation/Chat.h"
 #include "../Helpers.h"
 #include "representation/Representation.h"
+#include "Professions.h"
 
 #include <QDebug>
 
@@ -56,14 +57,17 @@ void LoginMob::GenerateInterfaceForFrame()
     interface_.Draw();
 }
 
-const QString SECURITY_TEXT =
-        "A space anomaly has moved a piece of your Space Station into an unknown part of space."
-        " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all janitors."
-        " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
-const QString JANITOR_TEXT =
-        "A space anomaly has moved a piece of your Space Station into an unknown part of space."
-        " All laws and rules are gone, so you can finally fulfil your dearest wish: to kill all security."
-        " Good luck on the battlefield, and remember - the atmos is missing, so be quick to act.\n";
+const QString GENERIC_TEXT =
+    "A space anomaly has moved a piece of your Space Station into an unknown part of space."
+    " All laws and rules are gone, and you are just a poor <b>%1</b>."
+    " Seems like atmos still works, so maybe you won't die from asphyxiation.<br>";
+
+const int HUMAN_STATES_AMOUNT = 12;
+const QString HUMAN_STATES[HUMAN_STATES_AMOUNT] =
+    {"caucasian1_m_s", "caucasian2_m_s", "caucasian3_m_s",
+     "latino_m_s", "mediterranean_m_s", "asian1_m_s",
+     "asian2_m_s", "arab_m_s", "indian_m_s",
+     "african1_m_s", "african2_m_s", "albino_m_s"};
 
 void LoginMob::ProcessMessage(const Message2& msg)
 {
@@ -80,25 +84,44 @@ void LoginMob::ProcessMessage(const Message2& msg)
         quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
-            IdPtr<Human> human;
+            IdPtr<Human> human = Create<Human>(Human::T_ITEM_S());
+
+            QString human_state = HUMAN_STATES[GetRand() % HUMAN_STATES_AMOUNT];
+            human->SetState(human_state);
+
             std::vector<IdPtr<CubeTile>> tiles;
             QString text;
-            if (net_id % 2)
+            switch (GetRand() % 5)
             {
-                qDebug() << "Creating security...";
-                human = Create<Human>(CaucasianHuman::T_ITEM_S());
-                qDebug() << "End creating security1...";
+            case 0:
+                professions::ToSecurityOfficer(human);
                 tiles = GetLobby().GetTilesFor("security");
-                text = SECURITY_TEXT;
-                qDebug() << "End creating security2...";
+                text = GENERIC_TEXT.arg("security officer");
+                break;
+            case 1:
+                professions::ToDoctor(human);
+                tiles = GetLobby().GetTilesFor("doctor");
+                text = GENERIC_TEXT.arg("doctor");
+                break;
+            case 2:
+                professions::ToAssistant(human);
+                tiles = GetLobby().GetTilesFor("assistant");
+                text = GENERIC_TEXT.arg("assistant");
+                break;
+            case 3:
+                professions::ToClown(human);
+                tiles = GetLobby().GetTilesFor("clown");
+                text = GENERIC_TEXT.arg("clown");
+                break;
+            case 4:
+                professions::ToBarman(human);
+                tiles = GetLobby().GetTilesFor("barman");
+                text = GENERIC_TEXT.arg("barman");
+                break;
+            default:
+                qDebug() << "Unknown profession id!";
             }
-            else
-            {
-                human = Create<Human>(Human::T_ITEM_S());
-                tiles = GetLobby().GetTilesFor("janitor");
-                text = JANITOR_TEXT;
-            }
-            //ghost->name = name;
+
             GetGame().GetFactory().SetPlayerId(net_id, human.Id());
 
             if (tiles.empty())
@@ -109,23 +132,16 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 int z = map.GetDepth() / 2;
                 tiles.push_back(map.GetSquares()[x][y][z]);
             }
-            tiles[0]->AddItem(human);
+            int index = GetRand() % tiles.size();
+            tiles[index]->AddItem(human);
             if (GetId() == GetGame().GetMob().Id())
             {
                 GetGame().ChangeMob(human);
             }
 
-            GetGame().GetChat().PostTextFor(text, human);
+            GetGame().GetChat().PostHtmlFor(text, human);
         }
         qDebug() << "End human creation in LoginMob";
-    }
-    if (msg.type == MessageType::MESSAGE)
-    {
-        /*QString text = obj["text"].toString().toStdString();
-        if (Chat::IsOOCMessage(text))
-        {
-            GetChat().PostOOCText(name, text.substr(3));
-        }*/
     }
 }
 
@@ -139,12 +155,12 @@ void LoginMob::CalculateVisible(std::list<PosPoint>* visible_list)
     visible_list->clear();
 }
 
-std::ostream& operator<<(std::stringstream& file, LoginInterface& interf)
+FastSerializer& operator<<(FastSerializer& file, LoginInterface& interf)
 {
     WrapWriteMessage(file, interf.view_);
     return file;
 }
-std::istream& operator>>(std::stringstream& file, LoginInterface& interf)
+FastDeserializer& operator>>(FastDeserializer& file, LoginInterface& interf)
 {
     WrapReadMessage(file, interf.view_);
     return file;

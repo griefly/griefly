@@ -68,7 +68,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     SetSpriter(new SpriteHolder);
 
     qDebug() << "Start generate images for creators";
-    for (auto it = (*items_creators()).begin(); it != (*items_creators()).end(); ++it)
+    for (auto it = (*GetItemsCreators()).begin(); it != (*GetItemsCreators()).end(); ++it)
     {
         IMainObject* loc = it->second(0);
         IOnMapObject* bloc = CastTo<IOnMapObject>(loc);
@@ -151,11 +151,7 @@ MapEditorForm::~MapEditorForm()
 
 void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, int second_y)
 {
-    ui->cursor_label->setText(
-        "("
-        + QString::number(first_x) + ", "
-        + QString::number(first_y)
-        + ")");
+    ui->cursor_label->setText(tr("(%1, %2)").arg(first_x).arg(first_y));
 
     auto entries = map_editor_->GetEntriesFor(first_x, first_y, 0);
 
@@ -168,6 +164,8 @@ void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, i
     ui->listWidgetVariables->clear();
     ui->lineEditAsString->clear();
     ui->lineEditRaw->clear();
+
+    on_listWidgetTile_itemSelectionChanged();
 }
 
 void MapEditorForm::on_createItem_clicked()
@@ -241,7 +239,7 @@ void MapEditorForm::on_saveMap_clicked()
 {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::AnyFile);
-    dialog.setNameFilter(tr("Mapgen files (*.gen)"));
+    dialog.setNameFilter(tr("Mapgen files (*.gen.txt)"));
     QStringList file_names;
     if (!dialog.exec())
     {
@@ -256,7 +254,7 @@ void MapEditorForm::on_loadMap_clicked()
 {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(tr("Mapgen files (*.gen)"));
+    dialog.setNameFilter(tr("Mapgen files (*.gen.txt)"));
     QStringList file_names;
     if (!dialog.exec())
     {
@@ -269,18 +267,26 @@ void MapEditorForm::on_loadMap_clicked()
 
 void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 {
-    ui->listWidgetVariables->clear();
-    if (ui->listWidgetTile->selectedItems().size() == 0)
+    QString name;
+    if (QListWidgetItem* item = ui->listWidgetVariables->currentItem())
     {
-        return;
+        name = item->text();
     }
-    QListWidgetItem* item = ui->listWidgetTile->selectedItems().first();
 
-    auto& variables = get_setters_for_types()[item->text()];
+    ui->listWidgetVariables->clear();
 
-    for (auto it = variables.begin(); it != variables.end(); ++it)
+    QString item_type = GetCurrentEditorEntry()->item_type;
+
+    auto& variables = GetSettersForTypes()[item_type];
+
+    int counter = 0;
+    for (auto it = variables.begin(); it != variables.end(); ++it, ++counter)
     {
         ui->listWidgetVariables->addItem(it->first);
+        if (it->first == name)
+        {
+            ui->listWidgetVariables->setCurrentRow(counter);
+        }
     }
 
     MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
@@ -290,33 +296,19 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     }
 }
 
-/*void MapEditorForm::on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item)
-{
-    MapEditor::EditorEntry& ee = GetCurrentEditorEntry();
-
-    QString& variable_value = ee.variables[item->text().toStdString()];
-
-    bool ok = false;
-
-    QString result =
-            QInputDialog::getText(
-                nullptr, "Text Input", "New variable value:", QLineEdit::Normal, variable_value.c_str(), &ok);
-
-    if (ok)
-    {
-        variable_value = result.toStdString();
-    }
-    UpdateVariablesColor(ee);
-}*/
-
 MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
 {
     int current_index = ui->listWidgetTile->currentRow();
 
     int current_x = map_editor_->GetPointer().first_posx;
     int current_y = map_editor_->GetPointer().first_posy;
-    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
 
+    if (ui->listWidgetTile->selectedItems().size() == 0)
+    {
+        return &map_editor_->GetTurfFor(current_x, current_y, 0);
+    }
+
+    auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
     if (entries.size() > static_cast<quint32>(current_index))
     {
         return &entries[current_index];
@@ -347,20 +339,48 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         return;
     }
 
-    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
+    QByteArray& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
 
-    ui->lineEditRaw->setText(variable_value);
+    ui->lineEditRaw->setText(variable_value.toHex());
 
-    std::stringstream ss;
-    ss << variable_value.toStdString();
-
-    QString parsed_value;
-    if (WrapReadMessage(ss, parsed_value).fail())
     {
-        parsed_value = "PARSING_ERROR";
+        FastDeserializer deserializer(variable_value.data(), variable_value.size());
+
+        QString parsed_value("PARSING_ERROR");
+        if (deserializer.IsNextType(FastSerializer::STRING_TYPE))
+        {
+            WrapReadMessage(deserializer, parsed_value);
+        }
+
+        ui->lineEditAsString->setText(parsed_value);
     }
 
-    ui->lineEditAsString->setText(parsed_value);
+    {
+        FastDeserializer deserializer(variable_value.data(), variable_value.size());
+
+        QString parsed_value("PARSING_ERROR");
+        if (deserializer.IsNextType(FastSerializer::INT32_TYPE))
+        {
+            int value;
+            WrapReadMessage(deserializer, value);
+            parsed_value = QString::number(value);
+        }
+
+        ui->lineEditAsInt->setText(parsed_value);
+    }
+    {
+        FastDeserializer deserializer(variable_value.data(), variable_value.size());
+
+        QString parsed_value("PARSING_ERROR");
+        if (deserializer.IsNextType(FastSerializer::BOOL_TYPE))
+        {
+            bool value;
+            WrapReadMessage(deserializer, value);
+            parsed_value = value ? "1" : "0";
+        }
+
+        ui->lineEditAsBool->setText(parsed_value);
+    }
 }
 
 void MapEditorForm::on_lineEditRaw_returnPressed()
@@ -376,11 +396,9 @@ void MapEditorForm::on_lineEditRaw_returnPressed()
         return;
     }
 
+    QByteArray& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
 
-
-    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
-
-    variable_value = ui->lineEditRaw->text();
+    variable_value = QByteArray::fromHex(ui->lineEditRaw->text().toUtf8());
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
@@ -401,13 +419,81 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
         return;
     }
 
-    QString& variable_value = ee->variables[ui->listWidgetVariables->currentItem()->text()];
+    QString current_variable = ui->listWidgetVariables->currentItem()->text();
 
-    std::stringstream ss;
+    FastSerializer ss(1);
     QString loc = ui->lineEditAsString->text();
     WrapWriteMessage(ss, loc);
 
-    variable_value = QString::fromStdString(ss.str());
+    ee->variables[current_variable] = QByteArray(ss.GetData(), ss.GetIndex());
+
+    on_listWidgetVariables_itemSelectionChanged();
+    UpdateVariablesColor(*ee);
+}
+
+void MapEditorForm::on_lineEditAsInt_returnPressed()
+{
+    if (!ui->listWidgetVariables->currentItem())
+    {
+        return;
+    }
+
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
+
+    QString current_variable = ui->listWidgetVariables->currentItem()->text();
+
+    FastSerializer ss(1);
+    QString loc = ui->lineEditAsInt->text();
+
+    bool ok = false;
+    int value = loc.toInt(&ok);
+    if (!ok)
+    {
+        return;
+    }
+
+    WrapWriteMessage(ss, value);
+
+    ee->variables[current_variable] = QByteArray(ss.GetData(), ss.GetIndex());
+
+    on_listWidgetVariables_itemSelectionChanged();
+    UpdateVariablesColor(*ee);
+
+    map_editor_->UpdateDirs(ee);
+}
+
+void MapEditorForm::on_lineEditAsBool_returnPressed()
+{
+    if (!ui->listWidgetVariables->currentItem())
+    {
+        return;
+    }
+
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
+
+    QString current_variable = ui->listWidgetVariables->currentItem()->text();
+
+    FastSerializer ss(1);
+    QString loc = ui->lineEditAsBool->text();
+
+    bool ok = false;
+    bool value = !!loc.toInt(&ok);
+    if (!ok)
+    {
+        return;
+    }
+
+    WrapWriteMessage(ss, value);
+
+    ee->variables[current_variable] = QByteArray(ss.GetData(), ss.GetIndex());
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);

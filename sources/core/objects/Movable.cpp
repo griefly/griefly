@@ -9,11 +9,10 @@
 
 IMovable::IMovable(quint32 id) : IOnMapObject(id)
 {
-    lastMove = 0;
-    tickSpeed = 1;
-    pixSpeed = 1;
-    dMove = D_DOWN;
-    anchored = false;
+    last_move_ = 0;
+    tick_speed_ = 1;
+    direction_ = D_DOWN;
+    anchored_ = false;
     force_.x = 0;
     force_.y = 0;
     force_.z = 0;
@@ -25,7 +24,7 @@ bool IMovable::TryMove(Dir direct)
     {
         return false;
     }
-    if (anchored)
+    if (anchored_)
     {
         return false;
     }
@@ -79,7 +78,7 @@ void IMovable::LoadInForceManager()
 
 bool IMovable::CheckMoveTime()
 {
-    if ((static_cast<int>(MAIN_TICK) - lastMove) < tickSpeed)
+    if ((static_cast<int>(MAIN_TICK) - last_move_) < tick_speed_)
     {
         return false;
     }
@@ -88,12 +87,12 @@ bool IMovable::CheckMoveTime()
 
 bool IMovable::CheckPassable()
 {
-    PassableLevel loc = GetPassable(dMove);
+    PassableLevel loc = GetPassable(GetDir());
     if (loc != Passable::FULL)
     {
-        SetPassable(dMove, Passable::FULL);
+        SetPassable(GetDir(), Passable::FULL);
     }
-    if (!CanPass(owner->GetPassable(dMove), passable_level))
+    if (!CanPass(owner->GetPassable(GetDir()), passable_level))
     {
         owner->Bump(GetId());
         force_.x = 0;
@@ -101,18 +100,18 @@ bool IMovable::CheckPassable()
         force_.z = 0;
         if (loc != Passable::FULL)
         {
-            SetPassable(dMove, loc);
+            SetPassable(GetDir(), loc);
         }
         return false;
     }
     if (loc != Passable::FULL)
     {
-        SetPassable(dMove, loc);
+        SetPassable(GetDir(), loc);
     }
 
-    auto neighbour = owner->GetNeighbour(dMove);
+    auto neighbour = owner->GetNeighbour(GetDir());
     if (   !CanPass(neighbour->GetPassable(D_ALL), passable_level)
-        || !CanPass(neighbour->GetPassable(helpers::revert_dir(dMove)), passable_level))
+        || !CanPass(neighbour->GetPassable(helpers::revert_dir(GetDir())), passable_level))
     {
         neighbour->Bump(GetId());
         force_.x = 0;
@@ -126,13 +125,13 @@ bool IMovable::CheckPassable()
 
 bool IMovable::Rotate(Dir dir)
 {
-    dMove = dir;
+    direction_ = dir;
     return true;
 }
 
 bool IMovable::MainMove()
 {
-    auto new_owner = owner->GetNeighbour(dMove);
+    auto new_owner = owner->GetNeighbour(GetDir());
     if (new_owner == owner)
     {
         return false;
@@ -141,7 +140,7 @@ bool IMovable::MainMove()
     owner->RemoveItem(GetId());
     new_owner->AddItem(GetId());
 
-    lastMove = static_cast<int>(MAIN_TICK);
+    last_move_ = static_cast<int>(MAIN_TICK);
     return true;
 }
 
@@ -159,9 +158,9 @@ void IMovable::Represent()
 
 void IMovable::Bump(IdPtr<IMovable> item)
 {
-    if (IdPtr<IMob> m = item)
+    if (IdPtr<IMob> mob = item)
     {
-        ApplyForce(DirToVDir[m->dMove]);
+        ApplyForce(DirToVDir[mob->GetDir()]);
     }
 }
 
@@ -195,6 +194,12 @@ unsigned int ForceManager::Hash()
 
 void ForceManager::Process()
 {
+    const int CLEAR_TICK = 10;
+    if (MAIN_TICK % CLEAR_TICK == 1)
+    {
+        Clear();
+    }
+
     for (auto movable = to_add_.begin(); movable != to_add_.end(); ++movable)
     {
         if (!(*movable).IsValid())

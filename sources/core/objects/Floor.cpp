@@ -19,6 +19,7 @@ Floor::Floor(quint32 id) : ITurf(id)
 
     name = "Floor";
 
+    floor_type_ = "floor";
     open_ = false;
     bloody = false;
 }
@@ -66,7 +67,7 @@ void Floor::SetOpen(bool o)
     }
     else
     {
-        SetState("floor");
+        SetState(floor_type_);
         v_level = 2;
         if (auto vent = owner->GetItem<Vent>())
         {
@@ -77,10 +78,12 @@ void Floor::SetOpen(bool o)
     //qDebug() << "End setopen";
 }
 
-
 Plating::Plating(quint32 id) : Floor(id)
 {
     open_ = true;
     // For map editor
     SetState("plating");
+    floor_type_ = "floor";
 }
+
+

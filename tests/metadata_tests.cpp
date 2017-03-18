@@ -23,6 +23,15 @@ TEST(ImageMetadataDeathTest, PngSignatureMissing)
     }, "Fail to read png signature");
 }
 
+TEST(ImageMetadataDeathTest, InvalidMetadata)
+{
+    ImageMetadata metadata;
+    ASSERT_DEATH(
+    {
+        metadata.Init("test/icons/invalid_metadata.png", 0, 0);
+    }, "Fail during metadata parsing, abort!");
+}
+
 TEST(ImageMetadataDeathTest, UnknownParam)
 {
     ImageMetadata metadata;
@@ -156,6 +165,7 @@ TEST(ImageMetadata, InitWithoutMetadata)
         CaptureStderr();
         metadata.Init("test/icons/no_metadata.png", 0, 0);
         std::string output = GetCapturedStderr();
+        ASSERT_THAT(output, HasSubstr("Unable to find \"Description\" key"));
         ASSERT_THAT(output, HasSubstr("Fail metadata load, try without it"));
 
         ASSERT_TRUE(metadata.Valid());

@@ -7,7 +7,7 @@ void Structure::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<Screwdriver> scr = item)
     {
-        anchored = !anchored;
+        anchored_ = !anchored_;
         PlaySoundIfVisible("Screwdriver.ogg", owner.Id());
     }
 }

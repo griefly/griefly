@@ -22,11 +22,6 @@ void Screen::ResetScreen(int x, int y)
     GetGLWidget()->resize(x, y);
 }
 
-void Screen::Swap()
-{
-    GetGLWidget()->swapBuffers();
-}
-
 void Screen::Clear()
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -47,7 +42,7 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
     {
         qDebug() << glGetError();
     }
-    glTranslatef(     x + sprite.W() / 2.0f,      y + sprite.H() / 2.0f, 0.0f); 
+    glTranslatef(x + sprite.W() / 2.0f, y + sprite.H() / 2.0f, 0.0f);
     glRotatef(angle, 0.0f, 0.0f, 1.0f);
     glTranslatef(-1 * x - sprite.W() / 2.0f, -1 * y - sprite.H() / 2.0f, 0.0f); 
 
@@ -66,11 +61,11 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
 
 }
 
-int Screen::w()
+int Screen::GetWidth()
 {
     return GetGLWidget()->width();
 }
-int Screen::h()
+int Screen::GetHeight()
 {
     return GetGLWidget()->height();
 }
@@ -84,7 +79,6 @@ Screen& GetScreen()
 {
     return *screen;
 }
-
 
 bool IsScreenValid()
 {

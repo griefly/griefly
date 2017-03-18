@@ -176,7 +176,7 @@ func (c *ClientConnection) Run() {
 	if !ok {
 		log.Printf("client version mismatch. Game version: '%s', client version: '%s'",
 			currentVersion, login.GameVersion)
-		msg := &ErrmsgWrongGameVersion{CorrectVersion: clientVersionBuild}
+		msg := &ErrmsgWrongGameVersion{CorrectVersion: currentVersion}
 		reply := NewEnvelope(msg, MsgidWrongGameVersion, 0)
 		c.writeMessage(reply)
 		return

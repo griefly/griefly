@@ -5,13 +5,28 @@
 
 #include <vector>
 
-#include "KVAbort.h"\
+#include "KVAbort.h"
+
+const QLatin1String END_TYPE("0~$");
 
 class FastSerializer
 {
+    template<class T>
+    friend FastSerializer& operator<<(
+        FastSerializer& serializer,
+        const T& value);
 public:
+    typedef char Type;
+
+    static const Type BOOL_TYPE = 1;
+    static const Type INT32_TYPE = 2;
+    static const Type UINT32_TYPE = 3;
+    static const Type STRING_TYPE = 4;
+    static const Type BYTEARRAY_TYPE = 5;
+    static const Type TYPE_TYPE = 6;
+
     static const int DEFAULT_SIZE = 32 * 1024 * 1024;
-    FastSerializer();
+    FastSerializer(int size = DEFAULT_SIZE);
     ~FastSerializer();
 
     void ResetIndex()
@@ -26,40 +41,51 @@ public:
     {
         return data_.data();
     }
-
+    void WriteType(const QString& type)
+    {
+        Write(type, TYPE_TYPE);
+    }
+private:
     void Write(bool value)
     {
-        Preallocate(1);
-        data_[index_] = value;
-        ++index_;
+        Preallocate(2);
+        data_[index_] = BOOL_TYPE;
+        data_[index_ + 1] = value;
+        index_ += 2;
     }
     void Write(qint32 value)
     {
-        Preallocate(4);
+        Preallocate(5);
 
-        data_[index_ + 0] = (value >>  0) & 0xFF;
-        data_[index_ + 1] = (value >>  8) & 0xFF;
-        data_[index_ + 2] = (value >> 16) & 0xFF;
-        data_[index_ + 3] = (value >> 24) & 0xFF;
+        data_[index_ + 0] = INT32_TYPE;
+        data_[index_ + 1] = (value >>  0) & 0xFF;
+        data_[index_ + 2] = (value >>  8) & 0xFF;
+        data_[index_ + 3] = (value >> 16) & 0xFF;
+        data_[index_ + 4] = (value >> 24) & 0xFF;
 
-        index_ += 4;
+        index_ += 5;
     }
     void Write(quint32 value)
     {
-        Preallocate(4);
+        Preallocate(5);
 
-        data_[index_ + 0] = (value >>  0) & 0xFF;
-        data_[index_ + 1] = (value >>  8) & 0xFF;
-        data_[index_ + 2] = (value >> 16) & 0xFF;
-        data_[index_ + 3] = (value >> 24) & 0xFF;
+        data_[index_ + 0] = UINT32_TYPE;
+        data_[index_ + 1] = (value >>  0) & 0xFF;
+        data_[index_ + 2] = (value >>  8) & 0xFF;
+        data_[index_ + 3] = (value >> 16) & 0xFF;
+        data_[index_ + 4] = (value >> 24) & 0xFF;
 
-        index_ += 4;
+        index_ += 5;
     }
 
-    void Write(const QString& value)
+    void Write(const QString& value, Type type = STRING_TYPE)
     {
         const QChar* data = value.data();
         const int size = value.size();
+
+        Preallocate(1);
+        data_[index_ + 0] = type;
+        ++index_;
 
         Write(size);
         Preallocate(size * 2);
@@ -73,12 +99,27 @@ public:
 
         index_ += size * 2;
     }
+    void Write(const QByteArray& value)
+    {
+        Preallocate(1);
+        data_[index_ + 0] = BYTEARRAY_TYPE;
+        ++index_;
+
+        Write(value.size());
+        Preallocate(value.size());
+
+        for (int i = 0; i < value.size(); ++i)
+        {
+            data_[index_ + i] = value[i];
+        }
+
+        index_ += value.size();
+    }
     // Removed
     void Write(const char* value);
-private:
     void Preallocate(int size)
     {
-        if ((index_ + size) > data_.size())
+        while ((index_ + size) > data_.size())
         {
             data_.resize(data_.size() * 2);
         }
@@ -88,8 +129,22 @@ private:
     quint32 index_;
 };
 
+template<class T>
+inline FastSerializer& operator<<(FastSerializer& serializer, const T& value)
+{
+    static_assert(
+        !std::is_array<T>::value,
+        "Arrays are forbidden (string constants too)!");
+    serializer.Write(value);
+    return serializer;
+}
+
 class FastDeserializer
 {
+    template<class T>
+    friend FastDeserializer& operator>>(
+        FastDeserializer& serializer,
+        T& value);
 public:
     FastDeserializer(const char* data, quint32 size)
         : data_(data),
@@ -98,7 +153,7 @@ public:
     {
         // Nothing
     }
-    bool IsEnd()
+    bool IsEnd() const
     {
         if (index_ >= size_)
         {
@@ -106,8 +161,39 @@ public:
         }
         return false;
     }
+    quint32 GetIndex() const
+    {
+        return index_;
+    }
+    void ReadType(QString* value)
+    {
+        Read(value, FastSerializer::TYPE_TYPE);
+    }
+    bool IsNextType(FastSerializer::Type type)
+    {
+        if (IsEnd())
+        {
+            return false;
+        }
+        if (data_[index_] != type)
+        {
+            return false;
+        }
+        return true;
+    }
+    FastSerializer::Type GetNextType() const
+    {
+        if (IsEnd())
+        {
+            qDebug() << "Cannot determine the next type because the end has been reached!";
+            KvAbort();
+        }
+        return data_[index_];
+    }
+private:
     void Read(bool* value)
     {
+        EnsureType(FastSerializer::BOOL_TYPE);
         EnsureSize(1);
 
         *value = data_[index_];
@@ -116,6 +202,7 @@ public:
 
     void Read(qint32* value)
     {
+        EnsureType(FastSerializer::INT32_TYPE);
         EnsureSize(4);
 
         *value = 0;
@@ -139,6 +226,7 @@ public:
 
     void Read(quint32* value)
     {
+        EnsureType(FastSerializer::UINT32_TYPE);
         EnsureSize(4);
 
         *value = 0;
@@ -160,8 +248,12 @@ public:
         index_ += 4;
     }
 
-    void Read(QString* value)
+    void Read(
+        QString* value,
+        FastSerializer::Type type = FastSerializer::STRING_TYPE)
     {
+        EnsureType(type);
+
         int size;
         Read(&size);
 
@@ -185,7 +277,26 @@ public:
         index_ += size * 2;
     }
 
-private:
+    void Read(QByteArray* value)
+    {
+        EnsureType(FastSerializer::BYTEARRAY_TYPE);
+
+        int size;
+        Read(&size);
+
+        EnsureSize(size);
+        value->resize(size);
+
+        char* data = value->data();
+
+        for (int i = 0; i < size; ++i)
+        {
+            data[i] = data_[index_ + i];
+        }
+
+        index_ += size;
+    }
+
     void EnsureSize(int size)
     {
         if ((size + index_) > size_)
@@ -194,11 +305,31 @@ private:
             KvAbort();
         }
     }
+    void EnsureType(FastSerializer::Type type)
+    {
+        EnsureSize(1);
+        if (data_[index_] != type)
+        {
+            const QString TEMPLATE("Types mismatch: expected - %1, actual - %2");
+            qDebug() << TEMPLATE.arg(static_cast<int>(type)).arg(static_cast<int>(data_[index_]));
+            KvAbort();
+        }
+        ++index_;
+    }
 
     const char* const data_;
     const quint32 size_;
     quint32 index_;
 };
+
+template<class T>
+inline FastDeserializer& operator>>(FastDeserializer& deserializer, T& value)
+{
+    deserializer.Read(&value);
+    return deserializer;
+}
+
+QString Humanize(FastDeserializer* deserializer);
 
 
 

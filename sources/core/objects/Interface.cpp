@@ -52,6 +52,16 @@ void HumanInterface::InitSlots()
     health_.GetView()->SetState("health0");
     health_.SetName(HumanInterfacePlaces::UNCLICKABLE);
 
+    temperature_.SetPos(15, 9);
+    temperature_.GetView()->SetSprite("icons/screen1_old.dmi");
+    temperature_.GetView()->SetState("temp0");
+    temperature_.SetName(HumanInterfacePlaces::UNCLICKABLE);
+
+    oxygen_.SetPos(15, 12);
+    oxygen_.GetView()->SetSprite("icons/screen1_old.dmi");
+    oxygen_.GetView()->SetState("oxy0");
+    oxygen_.SetName(HumanInterfacePlaces::UNCLICKABLE);
+
     lay_.SetPos(15, 11);
     lay_.GetView()->SetSprite("icons/screen1_old.dmi");
     lay_.GetView()->SetState("rest0");
@@ -128,33 +138,43 @@ void HumanInterface::UpdateHealth()
     if (IdPtr<Human> human = owner_)
     {
         int health = human->GetHealth();
-        if (health == 100)
+        const int MAX_NON_CRIT_STATE = 5;
+        int state = qMax(0, (health * MAX_NON_CRIT_STATE) / HUMAN_MAX_HEALTH); // it will be from 0 to 5
+        state = MAX_NON_CRIT_STATE - state; // 0 to 5, but reverted
+        if (health < 0)
         {
-            health_.GetView()->SetState("health0");
+            state = MAX_NON_CRIT_STATE + 1;
         }
-        else if (health >= 80)
+        health_.GetView()->SetState(QString("health%1").arg(state));
+    }
+}
+void HumanInterface::UpdateEnvironment()
+{
+    if (IdPtr<Human> human = owner_)
+    {
+        if (IdPtr<CubeTile> t = human->GetOwner())
         {
-            health_.GetView()->SetState("health1");
-        }
-        else if (health >= 60)
-        {
-            health_.GetView()->SetState("health2");
-        }
-        else if (health >= 40)
-        {
-            health_.GetView()->SetState("health3");
-        }
-        else if (health >= 20)
-        {
-            health_.GetView()->SetState("health4");
-        }
-        else if (health >= 0)
-        {
-            health_.GetView()->SetState("health5");
-        }
-        else //if (health_.GetView()->GetBaseFrameset()->GetState() != "health6")
-        {
-            health_.GetView()->SetState("health6");
+            int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
+            int temperature = t->GetAtmosHolder()->GetTemperature();
+            int pressure = t->GetAtmosHolder()->GetPressure();
+
+            oxygen_.GetView()->SetState("oxy0");
+            if (oxygen < 1)
+            {
+                oxygen_.GetView()->SetState("oxy1");
+            }
+            int state = qMax(-4, (temperature - REGULAR_TEMPERATURE) / 6);
+            state = qMin(4, state);
+
+            // When amount of atmos moles is too small
+            // temperature starts behave a little bit weird
+            const int ZERO_TEMPERATURE_PRESSURE_BORDER = 1000;
+            if (pressure < ZERO_TEMPERATURE_PRESSURE_BORDER)
+            {
+                state = -4;
+            }
+
+            temperature_.GetView()->SetState(QString("temp%1").arg(state));
         }
     }
 }
@@ -306,6 +326,8 @@ void HumanInterface::Draw()
     feet_.Draw();
     swap_.Draw(helpers::dir_to_byond(active_hand_ ? D_UP : D_DOWN));
     health_.Draw();
+    temperature_.Draw();
+    oxygen_.Draw();
     lay_.Draw();
     stop_pull_.Draw();
 }
@@ -323,6 +345,8 @@ unsigned int HumanInterface::hash() const
     hash += active_hand_;
     hash += swap_.hash_member();
     hash += health_.hash_member();
+    hash += temperature_.hash_member();
+    hash += oxygen_.hash_member();
     hash += lay_.hash_member();
     hash += stop_pull_.hash_member();
     hash += pulling_;
@@ -364,25 +388,27 @@ IdPtr<Item> HumanInterface::GetLHand()
     return l_hand_.Get();
 }
 
-std::ostream& operator<<(std::stringstream& file, HumanInterface& interf)
+FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf)
 {
-    interf.r_hand_.operator<<(file) << " ";
-    interf.drop_.operator<<(file) << " ";
-    interf.l_hand_.operator<<(file) << " ";
-    interf.head_.operator<<(file) << " ";
-    interf.suit_.operator<<(file) << " ";
-    interf.uniform_.operator<<(file) << " ";
-    interf.feet_.operator<<(file) << " ";
-    interf.swap_.operator<<(file) << " ";
-    interf.health_.operator<<(file) << " ";
-    interf.lay_.operator<<(file) << " ";
-    interf.stop_pull_.operator<<(file) << " ";
-    file << interf.active_hand_ << " ";
-    file << interf.pulling_ << " ";
-    file << interf.owner_ << " ";
+    interf.r_hand_.operator<<(file);
+    interf.drop_.operator<<(file);
+    interf.l_hand_.operator<<(file);
+    interf.head_.operator<<(file);
+    interf.suit_.operator<<(file);
+    interf.uniform_.operator<<(file);
+    interf.feet_.operator<<(file);
+    interf.swap_.operator<<(file);
+    interf.health_.operator<<(file);
+    interf.temperature_.operator<<(file);
+    interf.oxygen_.operator<<(file);
+    interf.lay_.operator<<(file);
+    interf.stop_pull_.operator<<(file);
+    file << interf.active_hand_;
+    file << interf.pulling_;
+    file << interf.owner_;
     return file;
 }
-std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
+FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf)
 {
     interf.r_hand_.operator>>(file);
     interf.drop_.operator>>(file);
@@ -393,6 +419,8 @@ std::istream& operator>>(std::stringstream& file, HumanInterface& interf)
     interf.feet_.operator>>(file);
     interf.swap_.operator>>(file);
     interf.health_.operator>>(file);
+    interf.temperature_.operator>>(file);
+    interf.oxygen_.operator>>(file);
     interf.lay_.operator>>(file);
     interf.stop_pull_.operator>>(file);
     file >> interf.active_hand_;

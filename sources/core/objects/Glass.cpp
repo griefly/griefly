@@ -10,8 +10,7 @@ FlatGlass::FlatGlass(quint32 id) : Breakable(id)
 {
     transparent = true;
 
-    tickSpeed = 5;
-    pixSpeed = 1;
+    tick_speed_ = 5;
     SetHitPoints(20);
 
     v_level = 9;
@@ -40,7 +39,7 @@ void FlatGlass::Bump(IdPtr<IMovable> item)
     {
         if (item->GetDir() != GetDir())
         {
-            if (!CanPass(owner->GetPassable(D_ALL), passable_level) || anchored)
+            if (!CanPass(owner->GetPassable(D_ALL), passable_level) || anchored_)
             {
                 return;
             }

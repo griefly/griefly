@@ -4,18 +4,18 @@
 
 #include "core/objects/MainObject.h"
 
-typedef IMainObject* (*item_creator)(quint32 id);
-typedef IMainObject* (*item_creator_saved)();
+typedef IMainObject* (*ItemCreator)(quint32 id);
+typedef IMainObject* (*VoidItemCreator)();
 
-std::unordered_map<QString, item_creator>* items_creators();
+std::unordered_map<QString, ItemCreator>* GetItemsCreators();
 
-std::unordered_map<QString, item_creator_saved>* items_void_creators();
+std::unordered_map<QString, VoidItemCreator>* GetVoidItemsCreators();
 
-typedef void (*variable_setter)(IMainObject* ptr, std::stringstream& str);
+typedef void (*VariableSetter)(IMainObject* ptr, FastDeserializer& str);
 
-typedef std::unordered_map<QString, variable_setter> setters_for_type;
+typedef std::unordered_map<QString, VariableSetter> SettersForType;
 
-std::unordered_map<QString, setters_for_type>& get_setters_for_types();
+std::unordered_map<QString, SettersForType>& GetSettersForTypes();
 
 void InitRealTypes();
 void InitCreators();

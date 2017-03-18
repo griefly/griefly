@@ -189,51 +189,71 @@ void MapEditor::SaveMapgen(const QString& name)
     int size_y = editor_map_[0].size();
     int size_z = editor_map_[0][0].size();
 
-    std::stringstream ss;
+    FastSerializer data;
 
-    ss << size_x << std::endl;
-    ss << size_y << std::endl;
-    ss << size_z << std::endl;
+    data << size_x;
+    data << size_y;
+    data << size_z;
 
     for (int z = 0; z < size_z; ++z)
+    {
         for (int x = 0; x < size_x; ++x)
+        {
             for (int y = 0; y < size_y; ++y)
             {
                 if (editor_map_[x][y][z].turf.pixmap_item)
                 {
-                    ss << editor_map_[x][y][z].turf.item_type.toStdString() << " ";
-                    ss << x << " ";
-                    ss << y << " ";
-                    ss << z << " ";
-                    WrapWriteMessage(ss, editor_map_[x][y][z].turf.variables);
-                    ss << std::endl;
+                    data.WriteType(editor_map_[x][y][z].turf.item_type);
+                    data << x;
+                    data << y;
+                    data << z;
+                    WrapWriteMessage(data, editor_map_[x][y][z].turf.variables);
                 }
                 auto& il = editor_map_[x][y][z].items;
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
-                    ss << it->item_type.toStdString() << " ";
-                    ss << x << " ";
-                    ss << y << " ";
-                    ss << z << " ";
-                    WrapWriteMessage(ss, it->variables);
-                    ss << std::endl;
+                    data.WriteType(it->item_type);
+                    data << x;
+                    data << y;
+                    data << z;
+                    WrapWriteMessage(data, it->variables);
                 }
             }
-
-    std::fstream sfile;
-    sfile.open(name.toStdString(), std::ios_base::out | std::ios_base::trunc);
-    if(sfile.fail())
+        }
+    }
+    QFile file(name);
+    if (!file.open(QIODevice::WriteOnly))
     {
+        qDebug() << file.fileName() << " cannot be opened.";
         return;
     }
-    sfile << ss.str();
+
+    // Binary mapgen is really bad for version control systems, so
+    // converting it to hex with line breaks
+
+    QByteArray hex = QByteArray(data.GetData(), data.GetIndex()).toHex();
+
+    int index = -1;
+    int old_index = 0;
+    while (true)
+    {
+        index = hex.indexOf("0602", index + 1);
+        if (index == -1)
+        {
+            break;
+        }
+        file.write(hex.data() + old_index, index - old_index);
+        file.write("\n");
+        old_index = index;
+    }
+    file.write(hex.data() + old_index, hex.size() - old_index);
+    file.write("\n");
 }
 
 void MapEditor::LoadMapgen(const QString& name)
 {
-    std::fstream sfile;
-    sfile.open(name.toStdString(), std::ios_base::in);
-    if(sfile.fail())
+    QFile file(name);
+    if (!file.open(QIODevice::ReadOnly))
     {
         qDebug() << "Error open " << name;
         return;
@@ -241,64 +261,57 @@ void MapEditor::LoadMapgen(const QString& name)
 
     ClearMap();
 
-    std::stringstream ss;
+    QByteArray raw_data;
+    while (file.bytesAvailable())
+    {
+        QByteArray local = file.readLine();
+        if (local.size() < 1)
+        {
+            break;
+        }
+        local = local.left(local.size() - 1);
+        raw_data.append(local);
+    }
+    raw_data = QByteArray::fromHex(raw_data);
+    FastDeserializer data(raw_data.data(), raw_data.size());
 
-    sfile.seekg (0, std::ios::end);
-    std::streamoff length = sfile.tellg();
-    sfile.seekg (0, std::ios::beg);
-    char* buff = new char[static_cast<quint32>(length)];
+    int x;
+    data >> x;
 
-    sfile.read(buff, length);
-    sfile.close();
-    ss.write(buff, length);
-    delete[] buff;
+    int y;
+    data >> y;
 
-    int x, y, z;
-    ss >> x;
-    ss >> y;
-    ss >> z;
+    int z;
+    data >> z;
 
     Resize(x, y, z);
 
-    while (ss)
-    {
-        QString t_item;
-        quint32 x, y, z;
+    qDebug() << x << y << z;
 
-        std::string local;
-        ss >> local;
-        t_item = QString::fromStdString(local);
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> x;
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> y;
-        if (!ss)
-        {
-            continue;
-        }
-        ss >> z;
-        if (!ss)
-        {
-            continue;
-        }
+    while (!data.IsEnd())
+    {
+        QString item_type;
+        qint32 x;
+        qint32 y;
+        qint32 z;
+
+        data.ReadType(&item_type);
+
+        data >> x;
+        data >> y;
+        data >> z;
 
         MapEditor::EditorEntry* ee;
-        if (turf_types_.find(t_item) != turf_types_.end())
+        if (turf_types_.find(item_type) != turf_types_.end())
         {
-            ee = &SetTurf(t_item, x, y, z);
+            ee = &SetTurf(item_type, x, y, z);
         }
         else
         {
-            ee = &AddItem(t_item, x, y, z);
+            ee = &AddItem(item_type, x, y, z);
         }
 
-        WrapReadMessage(ss, ee->variables);
+        WrapReadMessage(data, ee->variables);
 
         // TODO
         UpdateDirs(ee);
@@ -308,13 +321,21 @@ void MapEditor::LoadMapgen(const QString& name)
 void MapEditor::fix_borders(int *posx, int *posy)
 {
     if (*posx < 0)
+    {
         *posx = 0;
+    }
     if (*posx >= static_cast<int>(editor_map_.size()))
+    {
         *posx = static_cast<int>(editor_map_.size()) - 1;
+    }
     if (*posy < 0)
+    {
         *posy = 0;
+    }
     if (*posy >= static_cast<int>(editor_map_[0].size()))
+    {
         *posy = static_cast<int>(editor_map_[0].size()) - 1;
+    }
 }
 
 void MapEditor::SetPointer(int posx, int posy)
@@ -378,9 +399,12 @@ void MapEditor::AddItem(const QString &item_type)
 
 void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
 {
-    if (ee && ee->variables["dMove"].size())
+    QByteArray& data = ee->variables["direction_"];
+    if (ee && data.size())
     {
-        int dir = ee->variables["dMove"].toInt();
+        FastDeserializer deserializer(data.data(), data.size());
+        int dir;
+        deserializer >> dir;
         int byond_dir = helpers::dir_to_byond(dir);
 
         if (byond_dir < image_holder_[ee->item_type].size())
@@ -399,6 +423,10 @@ void MapEditor::RemoveItems()
             RemoveItems(x, y, 0);
         }
     }
+
+    emit newSelectionSetted(
+        first_selection_x_, first_selection_y_,
+        second_selection_x_, second_selection_y_);
 }
 
 void MapEditor::RemoveItems(int posx, int posy, int posz)
@@ -410,10 +438,6 @@ void MapEditor::RemoveItems(int posx, int posy, int posz)
         delete it->pixmap_item;
     }
     items.clear();
-
-    emit newSelectionSetted(
-                first_selection_x_, first_selection_y_,
-                second_selection_x_, second_selection_y_);
 }
 
 MapEditor::EditorEntry& MapEditor::AddItem(const QString &item_type, int posx, int posy, int posz)
@@ -430,6 +454,17 @@ MapEditor::EditorEntry& MapEditor::AddItem(const QString &item_type, int posx, i
 
 void MapEditor::SetTurf(const QString &item_type)
 {
+    // For performance everything should be removed firstly
+    for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
+    {
+        for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
+        {
+            scene_->removeItem(editor_map_[x][y][0].turf.pixmap_item);
+            delete editor_map_[x][y][0].turf.pixmap_item;
+            editor_map_[x][y][0].turf.pixmap_item = nullptr;
+        }
+    }
+
     for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
     {
         for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
@@ -539,5 +574,10 @@ void MapEditor::ClearMap()
 std::vector<MapEditor::EditorEntry>& MapEditor::GetEntriesFor(int posx, int posy, int posz)
 {
     return editor_map_[posx][posy][posz].items;
+}
+
+MapEditor::EditorEntry& MapEditor::GetTurfFor(int posx, int posy, int posz)
+{
+    return editor_map_[posx][posy][posz].turf;
 }
 

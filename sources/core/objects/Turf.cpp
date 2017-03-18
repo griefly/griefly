@@ -15,6 +15,14 @@ void ITurf::Delete()
 
 int Friction::CombinedFriction(IdPtr<ITurf> turf)
 {
+    if (   turf->GetX() == 0
+        || turf->GetY() == 0
+        || turf->GetX() == turf->GetGame().GetMap().GetWidth() - 1
+        || turf->GetY() == turf->GetGame().GetMap().GetHeight() - 1)
+    {
+        return Friction::BASE_FRICTION;
+    }
+
     int retval =
           turf->GetFriction()
         + turf->GetNeighbour(D_UP)->GetTurf()->GetFriction()

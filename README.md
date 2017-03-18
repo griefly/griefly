@@ -66,12 +66,14 @@ How to run game without launcher
 Pass those command line parameters to `KVEngine` or `KVEngine.exe`:
 
 First (master) client:  
-`mapgen_name=maps/brig_small.gen -auto_connect login=<admin login> password=<admin password>`  
-where `login` and `password` params values should match values in an auth database (by default `griefly-server/db/auth.json`)  
+`mapgen_name=<path_to_mapgen> login=<admin login> password=<admin password>`  
+where `login` and `password` params values should match values in an auth database (by default `griefly-server/db/auth.json`), and `path_to_mapgen` should be path to some mapgen file. Some default mapgen files are places in the `maps` (e.g. `maps/brig_small.gen`).  
 Other clients:  
-`-auto_connect login=Guest`
+`login=Guest`
 
 You can also specify game host by parameter `ip=game_host_address`. By default it connects to localhost.
+
+Launcher basically does same things, but in a more convenient for usual users way.
 
 Codestyle
 ----------

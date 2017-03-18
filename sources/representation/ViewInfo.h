@@ -2,21 +2,22 @@
 
 #include <vector>
 #include <string>
-#include <sstream>
+
+#include "FastSerializer.h"
 
 #include "core/Hashes.h"
 
 class ViewInfo;
 
-std::ostream& operator<<(std::stringstream& file, ViewInfo& view_info);
-std::istream& operator>>(std::stringstream& file, ViewInfo& view_info);
+FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info);
+FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info);
 
 inline unsigned int hash(const ViewInfo& view_info);
 
 class ViewInfo
 {
-    friend std::ostream& operator<<(std::stringstream& file, ViewInfo& view_info);
-    friend std::istream& operator>>(std::stringstream& file, ViewInfo& view_info);
+    friend FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info);
+    friend FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info);
 
     friend unsigned int hash(const ViewInfo& view_info);
 public:
@@ -25,11 +26,11 @@ public:
 
     class FramesetInfo
     {
-        friend std::ostream& operator<< (
-                std::stringstream& file,
+        friend FastSerializer& operator<< (
+                FastSerializer& file,
                 ViewInfo::FramesetInfo& frameset_info);
-        friend std::istream& operator>> (
-                std::stringstream& file,
+        friend FastDeserializer& operator>> (
+                FastDeserializer& file,
                 ViewInfo::FramesetInfo& frameset_info);
 
         friend unsigned int hash(const ViewInfo::FramesetInfo& frameset);
@@ -85,10 +86,14 @@ private:
 inline unsigned int hash(const ViewInfo& view_info)
 {
     unsigned int loc = 0;
-    for (auto it = view_info.overlays_.begin(); it != view_info.overlays_.end(); ++it)
+    for (auto it = view_info.overlays_.begin(); it != view_info.overlays_.end(); ++it)\
+    {
         loc += hash(*it);
+    }
     for (auto it = view_info.underlays_.begin(); it != view_info.underlays_.end(); ++it)
+    {
         loc += hash(*it);
+    }
     loc += hash(view_info.base_frameset_);
     loc += view_info.angle_;
     return loc;

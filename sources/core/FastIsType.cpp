@@ -23,10 +23,19 @@ public:
             cast_table = new QVector<QBitArray>;
 
             QFile json_file("metadata.json");
-            json_file.open(QIODevice::ReadOnly);
+            if (!json_file.open(QIODevice::ReadOnly))
+            {
+                qDebug() << "Unable to open 'metadata.json' file!";
+                KvAbort();
+            }
             QByteArray json_raw = json_file.readAll();
             parsed_json_ = QJsonDocument::fromJson(json_raw);
             classes_data_ = parsed_json_.object().value("classes").toArray();
+            if (classes_data_.isEmpty())
+            {
+                qDebug() << "'metadata.json' is corrupted!";
+                KvAbort();
+            }
 
             InitTable();
             inited = true;

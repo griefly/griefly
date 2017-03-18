@@ -43,8 +43,8 @@ public:
     virtual void Draw() override;
     void InitSlots();
     virtual ~HumanInterface();
-    friend std::ostream& operator<<(std::stringstream& file, HumanInterface& interf);
-    friend std::istream& operator>>(std::stringstream& file, HumanInterface& interf);
+    friend FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf);
+    friend FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf);
     virtual unsigned int hash() const override;
 
     void Pick(IdPtr<Item> item);
@@ -60,6 +60,7 @@ public:
     void UpdateHealth();
     void UpdateLaying();
     void UpdatePulling(bool is_pulling);
+    void UpdateEnvironment();
 
 public:
     void ApplyActiveHandOnSlot(Slot<Item>* slot);
@@ -74,6 +75,8 @@ public:
     Slot<Item> stop_pull_;
 
     Slot<Item> health_;
+    Slot<Item> temperature_;
+    Slot<Item> oxygen_;
 
     Slot<Item> lay_;
 
@@ -87,8 +90,8 @@ private:
     void StopPull();
 };
 
-std::ostream& operator<<(std::stringstream& file, HumanInterface& interf);
-std::istream& operator>>(std::stringstream& file, HumanInterface& interf);
+FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf);
+FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf);
 
 inline unsigned int hash(const HumanInterface& i)
 {

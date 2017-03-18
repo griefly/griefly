@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "MapEditor.h"
+#include "FastSerializer.h"
 
 namespace Ui {
 class MapEditorForm;
@@ -68,6 +69,10 @@ private slots:
 
     void on_resizeMap_clicked();
 
+    void on_lineEditAsInt_returnPressed();
+
+    void on_lineEditAsBool_returnPressed();
+
 private:
     bool is_turf_selected_;
 
@@ -81,6 +86,8 @@ private:
     // Metainfo
     std::vector<QString> types_;
     std::vector<QString> turf_types_;
+
+    FastSerializer serializer_;
 
     Ui::MapEditorForm *ui;
 };

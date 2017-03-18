@@ -63,8 +63,12 @@ private:
     void InitGlobalObjects();
     void Process();
 
-    void AddLastMessages(QByteArray &data);
+    void AddLastMessages(QByteArray* data);
     void AddMessageToMessageLog(Message2 message);
+
+    void AddBuildInfo(QByteArray* data);
+
+    FastSerializer serializer_;
 
     std::vector<Message2> messages_log_;
     int log_pos_;

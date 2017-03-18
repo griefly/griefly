@@ -70,6 +70,7 @@ public:
     void HandleKeyboardDown(QKeyEvent* event);
     void HandleKeyboardUp(QKeyEvent* event);
     void ResetKeysState();
+    void HandleInput();
 private:
     QMap<Qt::Key, bool> keys_state_;
 
@@ -81,8 +82,6 @@ private:
     QElapsedTimer message_sending_interval_;
 
     QMutex mutex_;
-
-    void HandleInput();
 
     void SynchronizeViews();
     void PerformPixelMovement();
