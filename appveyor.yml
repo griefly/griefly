@@ -15,16 +15,13 @@ install:
   - cmd: SET PNG_INCLUDE_DIR=%CD%\lpng1612
   - cmd: SET PNG_LIBRARY_DIR=%CD%\lpng1612\projects\vstudio\Release
   # Install zlib
-  - ps: wget http://zlib.net/zlib128-dll.zip -Outfile zlib128-dll.zip
-  - cmd: 7z x zlib128-dll.zip -o%CD%\zlib128-dll
-  - ps: wget http://zlib.net/zlib128.zip -Outfile zlib128.zip
+  - ps: wget https://github.com/madler/zlib/archive/v1.2.8.zip -Outfile zlib128.zip
   - cmd: 7z x zlib128.zip
-  - cmd: SET ZLIB_ROOT=%CD%\zlib128-dll
+  - cmd: SET ZLIB_ROOT=%CD%\zlib-1.2.8
   # Build libpng
   - cmd: cd lpng1612\projects\vstudio
   - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86'
   - cmd: msbuild vstudio.sln /tv:12.0 /p:Configuration=Release
-  - cmd: msbuild vstudio.sln /tv:12.0 /p:Configuration="Release Library"
   - cmd: cd %APPVEYOR_BUILD_FOLDER%
   - cmd: SET CMAKE_PREFIX_PATH=%QT5DIR%\msvc2013_opengl
 
@@ -33,13 +30,11 @@ build_script:
   - cmd: cmake --build . --target install --config Release -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
-  - ps: Get-ChildItem Exec
-#  - cmd: COPY zlib128-dll\zlib1.dll Exec
-#  - cmd: COPY SFML-2.3\sfml-system-2.dll Exec
-
-artifacts:
-  - path: Exec
-    name: Client Executable
+  # For tests
+  - cmd: set PATH=%QT5DIR%/msvc2013_opengl/bin/;%PATH%
+  - cmd: set PATH=%QT5DIR%/msvc2013_opengl/plugins/;%PATH%
+  - cmd: set PATH=%APPVEYOR_BUILD_FOLDER%/SFML-2.3/bin/;%PATH%
+  - cmd: set PATH=%APPVEYOR_BUILD_FOLDER%/lpng1612/projects/vstudio/Release/;%PATH%
 
 test_script:
   - cmd: cd Exec

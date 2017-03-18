@@ -10,10 +10,6 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(UTILS_DIR utils/)
 
 include(ClangFormat)
-if (WIN32)
-        set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP ON)
-    include(InstallRequiredSystemLibraries)
-endif()
 
 ##################################
 ### Start search dependencies
@@ -53,6 +49,9 @@ else()
     message(FATAL_ERROR "Unable to find Qt5Network!")
 endif()
 
+get_target_property(QtNetwork_location Qt5::Network LOCATION)
+message(STATUS "${QtNetwork_location}")
+
 find_package(Qt5Widgets REQUIRED)
 if(Qt5Widgets_FOUND)
     message(STATUS "Qt5Widgets has been found")
@@ -60,12 +59,18 @@ else()
     message(FATAL_ERROR "Unable to find Qt5Widgets!")
 endif()
 
+get_target_property(QtWidgets_location Qt5::Widgets LOCATION)
+message(STATUS "${QtWidgets_location}")
+
 find_package(Qt5OpenGL REQUIRED)
 if(Qt5OpenGL_FOUND)
     message(STATUS "Qt5OpenGL has been found")
 else()
     message(FATAL_ERROR "Unable to find Qt5OpenGL!")
 endif()
+
+get_target_property(QtOpenGL_location Qt5::OpenGL LOCATION)
+message(STATUS "${QtOpenGL_location}")
 
 # Some variables neeeded by Qt
 set(CMAKE_AUTOMOC ON)
@@ -439,43 +444,6 @@ install(TARGETS KVEngine Launcher
 install(FILES ${CMAKE_BINARY_DIR}/metadata.json
         DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
 
-install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
-        DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/
-        COMPONENT Applications)
-
-IF(DEFINED ENV{APPVEYOR_BUILD_FOLDER}) # Are we building on Appveyor?
-    FILE(TO_CMAKE_PATH $ENV{QT5DIR} QT_DIR)
-    install(FILES ${QT_DIR}/msvc2013_opengl/bin/icudt53.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/bin/icuin53.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/bin/icuuc53.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/plugins/platforms/qwindows.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/platforms/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/plugins/platforms/qoffscreen.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/platforms/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/plugins/platforms/qminimal.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/platforms/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/bin/Qt5Core.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/bin/Qt5Gui.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/bin/Qt5Network.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/bin/Qt5OpenGL.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
-    install(FILES ${QT_DIR}/msvc2013_opengl/bin/Qt5Widgets.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/lpng1612/projects/vstudio/Release/libpng16.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR})
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.3/bin/sfml-system-2.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR})
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.3/bin/sfml-audio-2.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR})
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.3/bin/OpenAL32.dll
-            DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR})
-ENDIF()
 ###
 ### Install rules
 #####################################
