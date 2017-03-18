@@ -20,12 +20,12 @@ TEST(MainObject, Constructor)
 
 TEST(MainObject, Types)
 {
-   ASSERT_EQ(IMainObject::T_ITEM_S(), "main");
+   ASSERT_EQ(IMainObject::GetTypeStatic(), "main");
    IMainObject object(42);
-   ASSERT_EQ(object.T_ITEM(), "main");
+   ASSERT_EQ(object.GetType(), "main");
 
-   ASSERT_EQ(object.RT_ITEM(), 0);
-   ASSERT_EQ(IMainObject::RT_ITEM_S(), 0);
+   ASSERT_EQ(object.GetTypeIndex(), 0);
+   ASSERT_EQ(IMainObject::GetTypeIndexStatic(), 0);
 }
 
 TEST(MainObject, Hash)

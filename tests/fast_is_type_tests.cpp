@@ -10,9 +10,9 @@
 
 TEST(FastIsType, TwoArgs)
 {
-    int main_type = IMainObject::RT_ITEM_S();
-    int unsync_type = UnsyncGenerator::RT_ITEM_S();
-    int draw_type = IDraw::RT_ITEM_S();
+    int main_type = IMainObject::GetTypeIndexStatic();
+    int unsync_type = UnsyncGenerator::GetTypeIndexStatic();
+    int draw_type = IDraw::GetTypeIndexStatic();
 
     ASSERT_TRUE(FastIsType(main_type, main_type));
     ASSERT_TRUE(FastIsType(main_type, unsync_type));
@@ -28,9 +28,9 @@ TEST(FastIsType, TwoArgs)
 
 TEST(FastIsType, OneArg)
 {
-    int main_type = IMainObject::RT_ITEM_S();
-    int unsync_type = UnsyncGenerator::RT_ITEM_S();
-    int draw_type = IDraw::RT_ITEM_S();
+    int main_type = IMainObject::GetTypeIndexStatic();
+    int unsync_type = UnsyncGenerator::GetTypeIndexStatic();
+    int draw_type = IDraw::GetTypeIndexStatic();
 
     ASSERT_TRUE(FastIsType<IMainObject>(main_type));
     ASSERT_TRUE(FastIsType<IMainObject>(unsync_type));

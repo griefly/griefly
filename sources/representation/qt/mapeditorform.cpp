@@ -125,7 +125,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
         }
 
         QListWidgetItem* new_item
-                = new QListWidgetItem(QIcon(images[0]), bloc->T_ITEM());
+            = new QListWidgetItem(QIcon(images[0]), bloc->GetType());
 
         if (!is_turf)
         {

@@ -9,10 +9,10 @@ void professions::ToSecurityOfficer(IdPtr<Human> human)
 {
     HumanInterface* hud = human->GetHumanInterface();
 
-    hud->uniform_.Set(human->Create<Item>(RedUniform::T_ITEM_S()));
-    hud->feet_.Set(human->Create<Item>(OrangeBoots::T_ITEM_S()));
-    hud->head_.Set(human->Create<Item>(Helmet::T_ITEM_S()));
-    hud->suit_.Set(human->Create<Item>(Armor::T_ITEM_S()));
+    hud->uniform_.Set(human->Create<Item>(RedUniform::GetTypeStatic()));
+    hud->feet_.Set(human->Create<Item>(OrangeBoots::GetTypeStatic()));
+    hud->head_.Set(human->Create<Item>(Helmet::GetTypeStatic()));
+    hud->suit_.Set(human->Create<Item>(Armor::GetTypeStatic()));
 
     // Red boots hack
     hud->feet_.Get()->SetState("red");
@@ -30,9 +30,9 @@ void professions::ToDoctor(IdPtr<Human> human)
 {
     HumanInterface* hud = human->GetHumanInterface();
 
-    hud->uniform_.Set(human->Create<Item>(MedicalUniform::T_ITEM_S()));
-    hud->feet_.Set(human->Create<Item>(WhiteShoes::T_ITEM_S()));
-    hud->r_hand_.Set(human->Create<Item>(BruisePack::T_ITEM_S()));
+    hud->uniform_.Set(human->Create<Item>(MedicalUniform::GetTypeStatic()));
+    hud->feet_.Set(human->Create<Item>(WhiteShoes::GetTypeStatic()));
+    hud->r_hand_.Set(human->Create<Item>(BruisePack::GetTypeStatic()));
 
     hud->uniform_.Get()->SetOwner(human.Id());
     hud->feet_.Get()->SetOwner(human.Id());
@@ -45,8 +45,8 @@ void professions::ToAssistant(IdPtr<Human> human)
 {
     HumanInterface* hud = human->GetHumanInterface();
 
-    hud->uniform_.Set(human->Create<Item>(JanitorUniform::T_ITEM_S()));
-    hud->feet_.Set(human->Create<Item>(BlackBoots::T_ITEM_S()));
+    hud->uniform_.Set(human->Create<Item>(JanitorUniform::GetTypeStatic()));
+    hud->feet_.Set(human->Create<Item>(BlackBoots::GetTypeStatic()));
 
     // Grey uniform hack
     hud->uniform_.Get()->SetState("grey");
@@ -62,8 +62,8 @@ void professions::ToClown(IdPtr<Human> human)
 {
     HumanInterface* hud = human->GetHumanInterface();
 
-    hud->uniform_.Set(human->Create<Item>(ClownUniform::T_ITEM_S()));
-    hud->feet_.Set(human->Create<Item>(ClownBoots::T_ITEM_S()));
+    hud->uniform_.Set(human->Create<Item>(ClownUniform::GetTypeStatic()));
+    hud->feet_.Set(human->Create<Item>(ClownBoots::GetTypeStatic()));
 
     hud->uniform_.Get()->SetOwner(human.Id());
     hud->feet_.Get()->SetOwner(human.Id());
@@ -75,11 +75,11 @@ void professions::ToBarman(IdPtr<Human> human)
 {
     HumanInterface* hud = human->GetHumanInterface();
 
-    hud->uniform_.Set(human->Create<Item>(BarmanUniform::T_ITEM_S()));
-    hud->feet_.Set(human->Create<Item>(BlackBoots::T_ITEM_S()));
-    hud->head_.Set(human->Create<Item>(Tophat::T_ITEM_S()));
-    hud->suit_.Set(human->Create<Item>(Armor::T_ITEM_S()));
-    hud->r_hand_.Set(human->Create<Item>(Revolver::T_ITEM_S()));
+    hud->uniform_.Set(human->Create<Item>(BarmanUniform::GetTypeStatic()));
+    hud->feet_.Set(human->Create<Item>(BlackBoots::GetTypeStatic()));
+    hud->head_.Set(human->Create<Item>(Tophat::GetTypeStatic()));
+    hud->suit_.Set(human->Create<Item>(Armor::GetTypeStatic()));
+    hud->r_hand_.Set(human->Create<Item>(Revolver::GetTypeStatic()));
 
     hud->uniform_.Get()->SetOwner(human.Id());
     hud->feet_.Get()->SetOwner(human.Id());

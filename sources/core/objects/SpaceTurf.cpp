@@ -33,6 +33,6 @@ void Space::AttackBy(IdPtr<Item> item)
     if (IdPtr<Rod> rod = item)
     {
         rod->Delete();
-        Create<IOnMapObject>(Lattice::T_ITEM_S(), GetOwner());
+        Create<IOnMapObject>(Lattice::GetTypeStatic(), GetOwner());
     }
 }

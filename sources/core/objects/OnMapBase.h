@@ -116,7 +116,7 @@ public:
     template<class T>
     IdPtr<T> GetItem()
     {
-        return GetItemImpl(T::RT_ITEM_S());
+        return GetItemImpl(T::GetTypeIndexStatic());
     }
     void SetOwner(quint32 value)
     {

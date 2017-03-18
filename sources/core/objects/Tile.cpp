@@ -400,7 +400,7 @@ quint32 CubeTile::GetItemImpl(unsigned int hash)
 {
     for (auto it = inside_list_.rbegin(); it != inside_list_.rend(); ++it)
     {
-        if (FastIsType(hash, (*it)->RT_ITEM()))
+        if (FastIsType(hash, (*it)->GetTypeIndex()))
         {
             return it->Id();
         }

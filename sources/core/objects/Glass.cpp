@@ -64,7 +64,7 @@ void FlatGlass::Break()
 {
     QString sound = QString("Glassbr%1.ogg").arg(GetRand() % 3 + 1);
     PlaySoundIfVisible(sound, GetOwner().Id());
-    Create<Item>(Shard::T_ITEM_S(), GetOwner());
+    Create<Item>(Shard::GetTypeStatic(), GetOwner());
     Delete();
 }
 

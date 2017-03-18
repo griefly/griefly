@@ -49,22 +49,22 @@ template<int num> __forceinline unsigned int KV_HASH_FUNC(unsigned int hash, Fak
 #define KV_ON_LOAD_CALL(function) struct Z_Impl##function { static const int function##counter = __COUNTER__;}; __forceinline void KV_SAVE_FUNC(FastSerializer& file, FakeParamClass<Z_Impl##function :: function##counter>){KV_SAVE_FUNC(file, FakeParamClass<Z_Impl##function :: function##counter + 1>());} __forceinline void KV_LOAD_FUNC(FastDeserializer& file, FakeParamClass<Z_Impl##function ::function##counter>){ function(); KV_LOAD_FUNC(file, FakeParamClass<Z_Impl##function :: function##counter + 1>());} __forceinline unsigned int KV_HASH_FUNC(unsigned int h, FakeParamClass<Z_Impl##function :: function##counter>){return KV_HASH_FUNC(h, FakeParamClass<Z_Impl##function :: function##counter + 1>());};
 
 
-#define DECLARE_GET_TYPE_ITEM(str)            \
-    virtual const QString& T_ITEM() const \
-    {                                         \
-        return T_ITEM_S();                    \
-    }                                         \
-    static const QString& T_ITEM_S()      \
-    {                                         \
-        static QString result = #str;     \
-        return result;                        \
-    }                                         \
-    static int REAL_TYPE_ITEM;                \
-    virtual int RT_ITEM() const               \
-    {                                         \
-        return REAL_TYPE_ITEM;                \
-    }                                         \
-    static int RT_ITEM_S()                    \
-    {                                         \
-        return REAL_TYPE_ITEM;                \
-    }                                         
+#define DECLARE_GET_TYPE_ITEM(str)         \
+    virtual const QString& GetType() const \
+    {                                      \
+        return GetTypeStatic();            \
+    }                                      \
+    static const QString& GetTypeStatic()  \
+    {                                      \
+        static QString type = #str;        \
+        return type;                       \
+    }                                      \
+    static int TYPE_INDEX;                 \
+    virtual int GetTypeIndex() const       \
+    {                                      \
+        return TYPE_INDEX;                 \
+    }                                      \
+    static int GetTypeIndexStatic()        \
+    {                                      \
+        return TYPE_INDEX;                 \
+    }

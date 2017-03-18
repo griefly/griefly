@@ -36,11 +36,11 @@ void Grille::AttackBy(IdPtr<Item> item)
             SetState("brokengrille");
             SetPassable(D_ALL, Passable::FULL);
             cutted_ = true;
-            Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+            Create<IOnMapObject>(Rod::GetTypeStatic(), GetOwner());
         }
         else
         {
-            Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+            Create<IOnMapObject>(Rod::GetTypeStatic(), GetOwner());
             Delete();
         }
         return;
@@ -60,12 +60,12 @@ void Grille::Break()
         SetState("brokengrille");
         SetPassable(D_ALL, Passable::FULL);
         cutted_ = true;
-        Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+        Create<IOnMapObject>(Rod::GetTypeStatic(), GetOwner());
         SetHitPoints(7);
     }
     else
     {
-        Create<IOnMapObject>(Rod::T_ITEM_S(), GetOwner());
+        Create<IOnMapObject>(Rod::GetTypeStatic(), GetOwner());
         Delete();
     }
 }

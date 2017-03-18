@@ -84,7 +84,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
         quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
         if (net_id)
         {
-            IdPtr<Human> human = Create<Human>(Human::T_ITEM_S());
+            IdPtr<Human> human = Create<Human>(Human::GetTypeStatic());
 
             QString human_state = HUMAN_STATES[GetRand() % HUMAN_STATES_AMOUNT];
             human->SetState(human_state);

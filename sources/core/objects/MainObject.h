@@ -40,23 +40,23 @@ public:
     IMainObject(quint32 id) { id_ = id; how_often_ = 0; game_ = nullptr; }
     IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
-    virtual const QString& T_ITEM() const
+    virtual const QString& GetType() const
     {
-        return T_ITEM_S();
+        return GetTypeStatic();
     }
-    static const QString& T_ITEM_S()
+    static const QString& GetTypeStatic()
     {
-        static QString result = "main";
-        return result;
+        static QString type = "main";
+        return type;
     }
-    static int REAL_TYPE_ITEM;
-    virtual int RT_ITEM() const
+    static int TYPE_INDEX;
+    virtual int GetTypeIndex() const
     {
-        return REAL_TYPE_ITEM;
+        return TYPE_INDEX;
     }
-    static int RT_ITEM_S()
+    static int GetTypeIndexStatic()
     {
-        return REAL_TYPE_ITEM;
+        return TYPE_INDEX;
     }
 
     static IMainObject* _Z_creator(quint32 id) { return new IMainObject(id); }

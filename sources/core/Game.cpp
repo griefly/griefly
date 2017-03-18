@@ -135,7 +135,7 @@ void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
         {
             for (int z = 0; z < GetMap().GetDepth(); z++)
             {
-                IdPtr<CubeTile> loc = GetFactory().CreateImpl(CubeTile::T_ITEM_S());
+                IdPtr<CubeTile> loc = GetFactory().CreateImpl(CubeTile::GetTypeStatic());
                 loc->SetPos(x, y, z);
                 GetMap().GetSquares()[x][y][z] = loc;
             }
@@ -285,12 +285,12 @@ void Game::InitWorld(int id, QString map_name)
 
             GetFactory().LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
 
-            GetFactory().CreateImpl(Lobby::T_ITEM_S());
+            GetFactory().CreateImpl(Lobby::GetTypeStatic());
 
             if (GetParamsHolder().GetParamBool("-unsync_generation"))
             {
                 quint32 unsync_generator
-                    = GetFactory().CreateImpl(UnsyncGenerator::T_ITEM_S());
+                    = GetFactory().CreateImpl(UnsyncGenerator::GetTypeStatic());
                 SetUnsyncGenerator(unsync_generator);
             }
 
@@ -298,13 +298,13 @@ void Game::InitWorld(int id, QString map_name)
                       it != GetFactory().GetIdTable().end();
                     ++it)
             {
-                if (it->object && (it->object->RT_ITEM() == SpawnPoint::REAL_TYPE_ITEM))
+                if (it->object && (it->object->GetTypeIndex() == SpawnPoint::GetTypeIndexStatic()))
                 {
                     GetLobby().AddSpawnPoint(it->object->GetId());
                 }
             }
 
-            quint32 newmob = GetFactory().CreateImpl(LoginMob::T_ITEM_S());
+            quint32 newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
 
             ChangeMob(newmob);
             GetFactory().SetPlayerId(id, newmob);
@@ -460,7 +460,7 @@ void Game::ProcessInputMessages()
                 continue;
             }
 
-            quint32 newmob = GetFactory().CreateImpl(LoginMob::T_ITEM_S());
+            quint32 newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
 
             qDebug() << "New client " << newmob;
 

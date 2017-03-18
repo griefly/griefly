@@ -263,7 +263,7 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
         ss >> z;
 
         //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
-        //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(t_item);
+        //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(GetType);
         IdPtr<IOnMapObject> i = CreateImpl(item_type);
         if (!i.IsValid())
         {

@@ -21,7 +21,7 @@ void InitCastTable();
 template<typename Typeto>
 inline bool FastIsType(int typefrom)
 {
-    return FastIsType(Typeto::RT_ITEM_S(), typefrom);
+    return FastIsType(Typeto::GetTypeIndexStatic(), typefrom);
 }
 
 template<typename Typeto, typename TypeObjectFrom>
@@ -31,7 +31,7 @@ inline Typeto* CastTo(TypeObjectFrom* ptr)
     {
         return nullptr;
     }
-    if (FastIsType<Typeto>(ptr->RT_ITEM()))
+    if (FastIsType<Typeto>(ptr->GetTypeIndex()))
     {
         return static_cast<Typeto*>(static_cast<IMainObject*>(ptr));
     }

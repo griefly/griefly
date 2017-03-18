@@ -54,9 +54,9 @@ void Human::AfterWorldCreation()
     interface_.InitSlots();
     interface_.SetOwner(GetId());
 
-    /*interface_.uniform_.Set(Create<Item>(JanitorUniform::T_ITEM_S()));
-    interface_.feet_.Set(Create<Item>(OrangeBoots::T_ITEM_S()));
-    interface_.r_hand_.Set(Create<Item>(Crowbar::T_ITEM_S()));
+    /*interface_.uniform_.Set(Create<Item>(JanitorUniform::GetTypeStatic()));
+    interface_.feet_.Set(Create<Item>(OrangeBoots::GetTypeStatic()));
+    interface_.r_hand_.Set(Create<Item>(Crowbar::GetTypeStatic()));
 
     interface_.uniform_.Get()->SetOwner(GetId());
     interface_.feet_.Get()->SetOwner(GetId());
@@ -414,7 +414,7 @@ void Human::OnDeath()
     quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
     if (net_id)
     {
-        auto ghost = Create<Ghost>(Ghost::T_ITEM_S());
+        auto ghost = Create<Ghost>(Ghost::GetTypeStatic());
         ghost->name = name;
         GetGame().GetFactory().SetPlayerId(net_id, ghost.Id());
         owner->AddItem(ghost);

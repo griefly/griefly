@@ -25,7 +25,7 @@ void IMainObject::Delete()
 
 bool IMainObject::Save(FastSerializer& serializer)
 {
-    serializer.WriteType(T_ITEM());
+    serializer.WriteType(GetType());
     serializer << id_;
     serializer << how_often_;
     return true;

@@ -30,9 +30,9 @@ void MetalWall::AttackBy(IdPtr<Item> item)
         if (wtool->Working())
         {
             PlaySoundIfVisible("Welder.ogg", owner.Id());
-            Create<IOnMapObject>(Girder::T_ITEM_S(), GetOwner());
-            Create<IOnMapObject>(Metal::T_ITEM_S(), GetOwner());
-            Create<ITurf>(Plating::T_ITEM_S(), GetOwner());
+            Create<IOnMapObject>(Girder::GetTypeStatic(), GetOwner());
+            Create<IOnMapObject>(Metal::GetTypeStatic(), GetOwner());
+            Create<ITurf>(Plating::GetTypeStatic(), GetOwner());
             Delete();
         }
     }

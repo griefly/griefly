@@ -23,7 +23,7 @@ void LaserGun::Shoot(VDir target)
     {
         snd = "Laser.ogg";
     }
-    ShootImpl(target, snd, Laser::T_ITEM_S(), "");
+    ShootImpl(target, snd, Laser::GetTypeStatic(), "");
 }
 Revolver::Revolver(quint32 id) : Gun(id)
 {
@@ -39,5 +39,5 @@ void Revolver::Shoot(VDir target)
 {
     QString snd;
     snd = "Gunshot.ogg";
-    ShootImpl(target, snd, Bullet::T_ITEM_S(), BulletCasing::T_ITEM_S());
+    ShootImpl(target, snd, Bullet::GetTypeStatic(), BulletCasing::GetTypeStatic());
 }
