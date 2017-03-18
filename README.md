@@ -1,7 +1,8 @@
 Griefly
 ===========
 
-[![Build Status](https://travis-ci.org/griefly/griefly.svg?branch=master)](https://travis-ci.org/griefly/griefly)
+[![Linux Build Status](https://travis-ci.org/griefly/griefly.svg?branch=master)](https://travis-ci.org/griefly/griefly)
+[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/griefly/griefly?branch=master&svg=true)](https://ci.appveyor.com/project/kremius/griefly)
 [![Coverage Status](https://coveralls.io/repos/github/griefly/griefly/badge.svg?branch=master)](https://coveralls.io/github/griefly/griefly?branch=master)
 [![Join the chat at https://gitter.im/griefly/griefly](https://badges.gitter.im/kremius/karya-valya.svg)](https://gitter.im/griefly/griefly?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
