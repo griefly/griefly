@@ -39,12 +39,18 @@ else()
     message(FATAL_ERROR "Unable to find Qt5Core!")
 endif()
 
+get_target_property(QtCore_location Qt5::Core LOCATION)
+message(STATUS "${QtCore_location}")
+
 find_package(Qt5Network REQUIRED)
 if(Qt5Network_FOUND)
     message(STATUS "Qt5Network has been found")
 else()
     message(FATAL_ERROR "Unable to find Qt5Network!")
 endif()
+
+get_target_property(QtNetwork_location Qt5::Network LOCATION)
+message(STATUS "${QtNetwork_location}")
 
 find_package(Qt5Widgets REQUIRED)
 if(Qt5Widgets_FOUND)
@@ -53,12 +59,18 @@ else()
     message(FATAL_ERROR "Unable to find Qt5Widgets!")
 endif()
 
+get_target_property(QtWidgets_location Qt5::Widgets LOCATION)
+message(STATUS "${QtWidgets_location}")
+
 find_package(Qt5OpenGL REQUIRED)
 if(Qt5OpenGL_FOUND)
     message(STATUS "Qt5OpenGL has been found")
 else()
     message(FATAL_ERROR "Unable to find Qt5OpenGL!")
 endif()
+
+get_target_property(QtOpenGL_location Qt5::OpenGL LOCATION)
+message(STATUS "${QtOpenGL_location}")
 
 # Some variables neeeded by Qt
 set(CMAKE_AUTOMOC ON)
@@ -139,10 +151,17 @@ if(BUILD_TESTS)
 
     configure_file(tests/CMakeLists.txt
                    googletest-download/CMakeLists.txt)
-    execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
-    execute_process(COMMAND ${CMAKE_COMMAND} --build .
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+    IF(CMAKE_BUILD_TYPE MATCHES DEBUG) # Build gtest in release if so.
+        execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+        execute_process(COMMAND ${CMAKE_COMMAND} --build .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+    ELSE()
+        execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=Release .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+        execute_process(COMMAND ${CMAKE_COMMAND} --build . --config Release
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+    ENDIF()
 
     # Prevent GoogleTest from overriding our compiler/linker options
     # when building with Visual Studio
