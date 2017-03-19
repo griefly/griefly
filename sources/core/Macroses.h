@@ -41,11 +41,7 @@ struct FakeParamClass {};
     {                                      \
         return GetTypeStatic();            \
     }                                      \
-    static const QString& GetTypeStatic()  \
-    {                                      \
-        static QString type = #str;        \
-        return type;                       \
-    }                                      \
+    static const QString& GetTypeStatic(); \
     static int TYPE_INDEX;                 \
     virtual int GetTypeIndex() const       \
     {                                      \

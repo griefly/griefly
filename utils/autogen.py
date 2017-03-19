@@ -38,9 +38,20 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
     print("}", file = autogen_file)
     print("", file = autogen_file)
     print("int IMainObject::TYPE_INDEX;", file = autogen_file)
+    print("const QString& IMainObject::GetTypeStatic()", file = autogen_file)
+    print("{", file = autogen_file)
+    print('    static const QString type = "main";', file = autogen_file)
+    print("    return type;", file = autogen_file)
+    print("}", file = autogen_file)
+    print("", file = autogen_file)
     for class_data in metadata["classes"]:
         print("int " + class_data["class"] + "::TYPE_INDEX;", file = autogen_file)
-    print("", file = autogen_file)
+        print("const QString& " + class_data["class"] + "::GetTypeStatic()", file = autogen_file)
+        print("{", file = autogen_file)
+        print('    static const QString type = "' + class_data["type"] + '";', file = autogen_file)
+        print("    return type;", file = autogen_file)
+        print("}", file = autogen_file)
+        print("", file = autogen_file)
     print("void InitRealTypes()", file = autogen_file)
     print("{", file = autogen_file)
     print("    IMainObject::TYPE_INDEX = 0;", file = autogen_file)
@@ -65,7 +76,7 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
         class_data_loc = class_data
         while class_data_loc:
             for variable in class_data_loc["variables"]:
-                print('    GetSettersForTypes()["' + class_data["type"] + '"]["' + variable + '"] = &' + class_data_loc["class"] + '::_Z_KV_SETTERS' + variable + ';', file = autogen_file)
+                print("    GetSettersForTypes()[" + class_data["class"] + '::GetTypeStatic()]["' + variable + '"] = &' + class_data_loc["class"] + '::_Z_KV_SETTERS' + variable + ';', file = autogen_file)
             class_data_loc = get_class_data(class_data_loc["base_class"])
         #print("", file = autogen_file)
     print("}", file = autogen_file)

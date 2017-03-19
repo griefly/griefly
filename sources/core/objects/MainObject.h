@@ -47,11 +47,7 @@ public:
     {
         return GetTypeStatic();
     }
-    static const QString& GetTypeStatic()
-    {
-        static QString type = "main";
-        return type;
-    }
+    static const QString& GetTypeStatic();
     static int TYPE_INDEX;
     virtual int GetTypeIndex() const
     {
