@@ -286,13 +286,14 @@ add_custom_command(
     COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${UTILS_DIR}/metadata_generator.py ${CMAKE_CURRENT_SOURCE_DIR} metadata.json
     DEPENDS ${HEADERS})
 add_custom_command(
-    OUTPUT AutogenMetadata.cpp
+    OUTPUT AutogenMetadata.cpp AutogenSerialization.cpp
     COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${UTILS_DIR}/autogen.py
     DEPENDS metadata.json
 )
 add_custom_target(Metadata ALL DEPENDS AutogenMetadata.cpp)
 
 list(APPEND SOURCES "${CMAKE_BINARY_DIR}/AutogenMetadata.cpp")
+list(APPEND SOURCES "${CMAKE_BINARY_DIR}/AutogenSerialization.cpp")
 list(APPEND SOURCES "${CMAKE_BINARY_DIR}/Version.cpp")
 
 qt5_wrap_ui(FORMS_HEADERS ${FORMS})

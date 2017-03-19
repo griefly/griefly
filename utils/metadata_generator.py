@@ -24,11 +24,16 @@ def parse_declare_saved_begin(file, class_and_base, filename):
         raise ParseError("Next line after 'DECLARE_SAVED' macros does not contain 'DECLARE_GET_TYPE_ITEM' macros")
 
     variables = []
+    on_load_calls = []
     while True:
         line = file.next()
         result = extract_macros_params(line, "KV_SAVEBLE")
         if result:
             variables.append(result.strip())
+            continue
+        result = extract_macros_params(line, "KV_ON_LOAD_CALL")
+        if result:
+            on_load_calls.append(result.strip())
             continue
         result = extract_macros_params(line, "ADD_TO_TYPELIST")
         if result:
@@ -44,7 +49,8 @@ def parse_declare_saved_begin(file, class_and_base, filename):
                    "header" : header,
                    "base_class" : base_class_name,
                    "type" : class_type,
-                   "variables" : variables}
+                   "variables" : variables,
+                   "on_load_calls" : on_load_calls}
 
     metadata["classes"].append(class_entry)
       
@@ -82,7 +88,7 @@ def main():
                 #print("Parse file '" + fullpath + "'")
                 parse_file(fullpath, filename)
 
-    json_data = json.JSONEncoder().encode(metadata)
+    json_data = json.JSONEncoder(indent = 4).encode(metadata)
     with open(json_name, "w") as json_file:
         json_file.write(json_data)
 

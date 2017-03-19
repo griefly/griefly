@@ -55,7 +55,13 @@ unsigned int hash(std::vector<IdPtr<T>>& content)
     return retval;
 }
 
-inline unsigned int hash(unsigned int h)
+inline unsigned int hash(unsigned int value)
 {
-    return h;
+    return value;
+}
+
+inline unsigned int hash(int value)
+{
+    // The conversion is well-defined
+    return static_cast<unsigned int>(value);
 }

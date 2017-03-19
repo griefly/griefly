@@ -23,15 +23,14 @@ void IMainObject::Delete()
     GetGame().GetFactory().DeleteLater(id_);
 }
 
-bool IMainObject::Save(FastSerializer& serializer)
+void IMainObject::Save(FastSerializer& serializer)
 {
     serializer.WriteType(GetType());
     serializer << id_;
     serializer << how_often_;
-    return true;
 }
 
-bool IMainObject::Load(FastDeserializer& deserializer)
+void IMainObject::Load(FastDeserializer& deserializer)
 {
     // It is mainly empty because all data is loaded by
     // the outer function
@@ -39,8 +38,6 @@ bool IMainObject::Load(FastDeserializer& deserializer)
     deserializer >> how_often_;
 
     SetFreq(GetFreq());
-
-    return true;
 }
 
 void IMainObject::SetFreq(int freq)

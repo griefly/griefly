@@ -28,12 +28,15 @@ public:
     void PlayMusic(const QString& name, float volume = 100.0f);
 
     static const int THIS_COUNTER = __COUNTER__; 
-    virtual bool Save(FastSerializer& serializer);
-    virtual bool Load(FastDeserializer& deserializer);
+    virtual void Save(FastSerializer& serializer);
+    virtual void Load(FastDeserializer& deserializer);
 
     virtual unsigned int Hash()
     {
-        return GetId() + GetFreq();
+        unsigned int retval = 0;
+        retval += hash(GetId());
+        retval += hash(GetFreq());
+        return retval;
     }
 
     virtual void Delete();
