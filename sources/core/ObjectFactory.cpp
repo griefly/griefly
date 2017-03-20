@@ -309,12 +309,24 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
 
 IMainObject* ObjectFactory::NewVoidObject(const QString& type, quint32 id)
 {
-    return (*GetItemsCreators())[type](id);
+    auto creator = GetItemsCreators()->find(type);
+    if (creator == GetItemsCreators()->end())
+    {
+        qDebug() << "Unable to find creator for type: " << type;
+        KvAbort();
+    }
+    return creator->second(id);
 }
 
 IMainObject* ObjectFactory::NewVoidObjectSaved(const QString& type)
 {
-    return (*GetVoidItemsCreators())[type]();
+    auto creator = GetVoidItemsCreators()->find(type);
+    if (creator == GetVoidItemsCreators()->end())
+    {
+        qDebug() << "Unable to find void creator for type: " << type;
+        KvAbort();
+    }
+    return creator->second();
 }
 
 void ObjectFactory::Clear()
