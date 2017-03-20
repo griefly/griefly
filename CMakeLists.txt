@@ -72,6 +72,16 @@ endif()
 get_target_property(QtOpenGL_location Qt5::OpenGL LOCATION)
 message(STATUS "${QtOpenGL_location}")
 
+find_package(Qt5Multimedia REQUIRED)
+if(Qt5Multimedia_FOUND)
+    message(STATUS "Qt5Multimedia has been found")
+else()
+    message(FATAL_ERROR "Unable to find Qt5Multimedia!")
+endif()
+
+get_target_property(QtMultimedia_location Qt5::Multimedia LOCATION)
+message(STATUS "${QtMultimedia_location}")
+
 # Some variables neeeded by Qt
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -314,6 +324,7 @@ qt5_use_modules(KVEngine Core)
 qt5_use_modules(KVEngine Network)
 qt5_use_modules(KVEngine Widgets)
 qt5_use_modules(KVEngine OpenGL)
+qt5_use_modules(KVEngine Multimedia)
 
 # Add GTEST lib
 if(BUILD_TESTS)

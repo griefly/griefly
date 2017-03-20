@@ -3,6 +3,7 @@
 #include "Representation.h"
 
 #include <QDebug>
+#include <QFileInfo>
 
 #ifdef PlaySound
 #undef PlaySound
@@ -91,22 +92,26 @@ void SoundPlayer::PlayMusic(const QString &name, float volume)
 {
     StopMusic();
 
-    if (!music_.openFromFile(("music/" + name).toStdString()))
+    playlist_.clear();
+
+    // Seems like QMediaPlayer cannot handle
+    QFileInfo file_info("music/" + name);
+    qDebug() << file_info.absoluteFilePath();
+    if (!playlist_.addMedia(QUrl::fromLocalFile(file_info.absoluteFilePath())))
     {
-        qDebug() << "Cannot open music file " << "music/" << name;
+        qDebug() << "Cannot add music file to playlist: " << "music/" << name;
         return;
     }
-    music_.setLoop(true);
-    music_.setVolume(volume);
-    music_.play();
+    playlist_.setPlaybackMode(QMediaPlaylist::Loop);
+
+    media_player_.setPlaylist(&playlist_);
+    media_player_.setVolume(static_cast<int>(volume));
+    media_player_.play();
 }
 
 void SoundPlayer::StopMusic()
 {
-    if (music_.getStatus() != sf::Music::Status::Stopped)
-    {
-        music_.stop();
-    }
+    media_player_.stop();
 }
 
 sf::Sound* PlaySound(const QString& name)

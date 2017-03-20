@@ -7,6 +7,9 @@
 #include "core/Constheader.h"
 #include "core/Hashes.h"
 
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+
 #ifdef PlaySound
 #undef PlaySound
 #endif // PlaySound
@@ -31,7 +34,9 @@ public:
     void PlayMusic(const QString& name, float volume = 100.0f);
     void StopMusic();
 private:
-    sf::Music music_;
+    QMediaPlayer media_player_;
+    QMediaPlaylist playlist_;
+
     std::vector<sf::Sound> sounds_;
 };
 
