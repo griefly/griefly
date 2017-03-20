@@ -39,6 +39,17 @@ TEST(ObjectFactoryDeathTest, CreateImplFailAdd)
     }, "AddItem failed");
 }
 
+TEST(ObjectFactoryDeathTest, CreateImplFailFindType)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+
+    ASSERT_DEATH(
+    {
+        factory.CreateImpl("This type does not exist.");
+    }, "Unable to find creator for type");
+}
+
 TEST(ObjectFactory, CreateImpl)
 {
     MockIGame game;
