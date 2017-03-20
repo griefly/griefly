@@ -94,7 +94,7 @@ void SoundPlayer::PlayMusic(const QString &name, float volume)
 
     playlist_.clear();
 
-    // Seems like QMediaPlayer cannot handle
+    // Seems like QMediaPlayer cannot handle relative paths
     QFileInfo file_info("music/" + name);
     qDebug() << file_info.absoluteFilePath();
     if (!playlist_.addMedia(QUrl::fromLocalFile(file_info.absoluteFilePath())))
