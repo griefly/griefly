@@ -5,10 +5,6 @@ environment:
   QT5DIR: C:\Qt\5.4
 
 install:
-  # Install SFML
-  - ps: wget http://www.sfml-dev.org/files/SFML-2.3-windows-vc12-32-bit.zip -Outfile SFML.zip
-  - cmd: 7z x SFML.zip
-  - cmd: SET SFML_ROOT=%CD%\SFML-2.3
   # Install libpng
   - ps: wget https://sourceforge.net/projects/libpng/files/libpng16/older-releases/1.6.12/lpng1612.7z/download -Outfile lpng1612.7z -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
   - cmd: 7z x lpng1612.7z
@@ -33,7 +29,6 @@ after_build:
   # For tests
   - cmd: set PATH=%QT5DIR%/msvc2013_opengl/bin/;%PATH%
   - cmd: set PATH=%QT5DIR%/msvc2013_opengl/plugins/;%PATH%
-  - cmd: set PATH=%APPVEYOR_BUILD_FOLDER%/SFML-2.3/bin/;%PATH%
   - cmd: set PATH=%APPVEYOR_BUILD_FOLDER%/lpng1612/projects/vstudio/Release/;%PATH%
 
 test_script:
