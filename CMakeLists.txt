@@ -113,18 +113,6 @@ endif()
 
 ###########################
 #
-# SFML search (${SFML_ROOT} and $ENV{SFML_ROOT} can be setted)
-#
-###########################
-find_package(SFML 2 COMPONENTS system audio REQUIRED)
-if(SFML_FOUND)
-    message(STATUS "SFML has been found, libs: ${SFML_LIBRARIES}")
-else()
-    message(FATAL_ERROR "Unable to find SFML!")
-endif()
-
-###########################
-#
 # PNG search
 #
 ###########################
@@ -140,7 +128,7 @@ if(WIN32)
         $ENV{ZLIB_ROOT})
 endif()
 find_package(PNG REQUIRED)
-if(SFML_FOUND)
+if(PNG_FOUND)
     message(STATUS "PNG has been found, version: ${PNG_VERSION_STRING}, include: ${PNG_INCLUDE_DIRS}, libs: ${PNG_LIBRARIES}")
 else()
     message(FATAL_ERROR "Unable to find PNGLIB!")
@@ -161,17 +149,17 @@ if(BUILD_TESTS)
 
     configure_file(tests/CMakeLists.txt
                    googletest-download/CMakeLists.txt)
-    IF(CMAKE_BUILD_TYPE MATCHES DEBUG) # Build gtest in release if so.
+    if(CMAKE_BUILD_TYPE MATCHES DEBUG) # Build gtest in release if so.
         execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
         execute_process(COMMAND ${CMAKE_COMMAND} --build .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
-    ELSE()
+    else()
         execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=Release .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
         execute_process(COMMAND ${CMAKE_COMMAND} --build . --config Release
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
-    ENDIF()
+    endif()
 
     # Prevent GoogleTest from overriding our compiler/linker options
     # when building with Visual Studio
@@ -314,10 +302,6 @@ add_executable(KVEngine WIN32 ${SOURCES} ${HEADERS} ${FORMS_HEADERS} ${TESTS})
 add_definitions(${PNG_DEFINITIONS})
 include_directories(${PNG_INCLUDE_DIRS})
 target_link_libraries(KVEngine ${PNG_LIBRARIES})
-
-# Add SFML lib
-include_directories(${SFML_INCLUDE_DIR})
-target_link_libraries(KVEngine ${SFML_LIBRARIES})
 
 # Add Qt5 lib
 qt5_use_modules(KVEngine Core)

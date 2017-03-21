@@ -12,13 +12,12 @@ Dependencies
 -------------
 1. Some C++ compiler (it works at least with compiler from **Visual Studio 2012** and **g++**)
 2. Qt5 (e.g., **Desktop Qt 5.4.0 MSVC2012 OpenGL 32bit**). Qt Creator is optional, but desired
-3. SFML 2.*
-4. libpng
-5. zlib
-6. Python 2.7
-7. Golang 1.5+ (https://golang.org/dl/)
-8. Git
-9. CMake 3.*
+3. libpng
+4. zlib
+5. Python 2.7
+6. Golang 1.5+ (https://golang.org/dl/)
+7. Git
+8. CMake 3.*
 
 How to build everything on Windows
 ----------------------------------
@@ -35,7 +34,6 @@ It should be possible to build everything without Qt Creator, but the guide assu
    Mine setted as:  
   `Set PNG_INCLUDE_DIR to C:\Users\Kremius\Documents\ExternalLibs\lpng1612`  
   `Set PNG_LIBRARY_DIR to C:\Users\Kremius\Documents\ExternalLibs\lpng1612\projects\vstudio\Release`  
-  `Set SFML_ROOT to C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3`  
   `Set ZLIB_ROOT to C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll`  
   If you cannot open the environment variables table (Qt Creator 3.\* does not allow that before successfull CMake generation) or prefer usual variables in CMake (Qt Creator 4.\* allows to use them in convenient way) then you can set them as `-DVARIABLE=VALUE` (e.g. `-DSFML_ROOT=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3`)
 4. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
