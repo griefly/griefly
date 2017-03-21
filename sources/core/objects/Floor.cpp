@@ -38,7 +38,7 @@ void Floor::AttackBy(IdPtr<Item> item)
         {
             SetOpen(true);
             Create<Item>(FloorTile::GetTypeStatic(), GetOwner());
-            PlaySoundIfVisible("Crowbar.ogg", owner.Id());
+            PlaySoundIfVisible("Crowbar.wav", owner.Id());
         }
     }
     else if (IdPtr<FloorTile> ftile = item)
@@ -47,7 +47,7 @@ void Floor::AttackBy(IdPtr<Item> item)
         {
             SetOpen(false);
             ftile->Delete();
-            PlaySoundIfVisible("Deconstruct.ogg", owner.Id());
+            PlaySoundIfVisible("Deconstruct.wav", owner.Id());
         }
     }
 }

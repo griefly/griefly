@@ -29,7 +29,7 @@ void MetalWall::AttackBy(IdPtr<Item> item)
     {
         if (wtool->Working())
         {
-            PlaySoundIfVisible("Welder.ogg", owner.Id());
+            PlaySoundIfVisible("Welder.wav", owner.Id());
             Create<IOnMapObject>(Girder::GetTypeStatic(), GetOwner());
             Create<IOnMapObject>(Metal::GetTypeStatic(), GetOwner());
             Create<ITurf>(Plating::GetTypeStatic(), GetOwner());

@@ -89,7 +89,7 @@ void Gun::ShootImpl(VDir target, const QString& sound,
         }
         else
         {
-            PlaySoundIfVisible("empty.ogg", tile.Id()); 
+            PlaySoundIfVisible("empty.wav", tile.Id()); 
             // the *click* text from ss13
         }
     }	

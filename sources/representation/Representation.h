@@ -11,6 +11,8 @@
 #include <QKeyEvent>
 #include <QElapsedTimer>
 
+#include "Sound.h"
+
 const char* const STOP_MUSIC = "^";
 
 class Representation
@@ -71,6 +73,8 @@ public:
     void HandleKeyboardUp(QKeyEvent* event);
     void ResetKeysState();
     void HandleInput();
+
+    SoundPlayer& GetSoundPlayer() { return player_; }
 private:
     QMap<Qt::Key, bool> keys_state_;
 
@@ -138,6 +142,8 @@ private:
         int pixel_shift_x_;
         int pixel_shift_y_;
     } camera_;
+
+    SoundPlayer player_;
 };
 
 Representation &GetRepresentation();

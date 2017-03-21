@@ -23,7 +23,7 @@ void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
                     .arg(feeder->name).arg(name).arg(consumer->name),
                 consumer->GetId());
         }
-        PlaySoundIfVisible("drink.ogg", consumer->GetRoot().Id());
+        PlaySoundIfVisible("drink.wav", consumer->GetRoot().Id());
         return;
     }
     GetGame().GetChat().PostTextFor(

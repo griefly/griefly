@@ -17,11 +17,11 @@ void LaserGun::Shoot(VDir target)
     QString snd;
     if (value == 0)
     {
-        snd = "laser3.ogg";
+        snd = "laser3.wav";
     }
     if (value == 1)
     {
-        snd = "Laser.ogg";
+        snd = "Laser.wav";
     }
     ShootImpl(target, snd, Laser::GetTypeStatic(), "");
 }
@@ -38,6 +38,6 @@ Revolver::Revolver(quint32 id) : Gun(id)
 void Revolver::Shoot(VDir target)
 {
     QString snd;
-    snd = "Gunshot.ogg";
+    snd = "Gunshot.wav";
     ShootImpl(target, snd, Bullet::GetTypeStatic(), BulletCasing::GetTypeStatic());
 }

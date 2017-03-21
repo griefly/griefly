@@ -1,91 +1,44 @@
 #include "Sound.h"
 
-#include "Representation.h"
-
 #include <QDebug>
 #include <QFileInfo>
 
-#ifdef PlaySound
-#undef PlaySound
-#endif // PlaySound
-
-SoundManager& GetSoundManager()
-{
-    static SoundManager snd_mngr;
-    return snd_mngr;
-}
-
-void SoundManager::InitSound(sf::Sound* sound, const QString& name)
-{
-    sound->setBuffer(*GetBuffer(name));
-}
-
-void SoundManager::LoadSound(const QString& name)
-{
-    qDebug() << "Load sound " << name;
-    holder_[name] = new sf::SoundBuffer;
-    if (!holder_[name]->loadFromFile(("sounds/" + name).toStdString()))
-    {
-        qDebug() << "Error during load sound " << name;
-    }
-}
-
-const sf::SoundBuffer* SoundManager::GetBuffer(const QString& name)
-{
-    if (!holder_[name])
-    {
-        LoadSound(name);
-    }
-    return holder_[name];
-}
-
-void InitSound(sf::Sound* sound, const QString& name)
-{
-    GetSoundManager().InitSound(sound, name);
-}
-void PlaySound(sf::Sound* sound, const QString& name)
-{
-    if (!sound->getBuffer())
-    {
-        InitSound(sound, name);
-    }
-    if (sound->getStatus() != sf::SoundSource::Playing)
-    {
-        sound->play();
-    }
-}
-
-SoundPlayer& GetSoundPlayer()
-{
-    static SoundPlayer snd_player;
-    return snd_player;
-}
+#include <QSound>
 
 SoundPlayer::SoundPlayer()
 {
-    sounds_.resize(100);
+    // Do nothing
 }
 
-sf::Sound* SoundPlayer::PlaySound(const QString& name)
+void SoundPlayer::PlaySound(const QString& name, float volume)
 {
-    quint32 i;
-    for (i = 0; i < sounds_.size(); ++i)
+    QVector<SoundPtr>& sound_cache = sounds_[name];
+
+    SoundPtr ptr;
+
+    for (auto it = sound_cache.begin(); it != sound_cache.end(); ++it)
     {
-        if (sounds_[i].getStatus() == sf::SoundSource::Stopped)
+        if (!(*it)->isPlaying())
         {
+            ptr = *it;
             break;
         }
     }
-    if (i == sounds_.size())
+
+    if (!ptr)
     {
-        qDebug() << "Unable to play sound '" + name + "', the sound limit is reached "
-                      << i;
+        const int MAXIMUM_SOUND_CACHE_SIZE = 8;
+        if (sound_cache.size() >= MAXIMUM_SOUND_CACHE_SIZE)
+        {
+            return;
+        }
+        ptr.reset(new QSoundEffect, &QObject::deleteLater);
+        ptr->setSource(QUrl::fromLocalFile("sounds/" + name));
+        sound_cache.append(ptr);
     }
-    GetSoundManager().InitSound(&sounds_[i], name);
-    // TODO: volume
-    sounds_[i].setVolume(15.0f);
-    sounds_[i].play();
-    return &sounds_[i];
+
+    ptr->setVolume(volume / 100.0f);
+    ptr->play();
 }
 
 void SoundPlayer::PlayMusic(const QString &name, float volume)
@@ -112,11 +65,4 @@ void SoundPlayer::PlayMusic(const QString &name, float volume)
 void SoundPlayer::StopMusic()
 {
     media_player_.stop();
-}
-
-sf::Sound* PlaySound(const QString& name)
-{
-    sf::Sound* s = GetSoundPlayer().PlaySound(name);
-    //s->setPosition(mob_position::x, y, 0);
-    return s;
 }

@@ -10,7 +10,6 @@
 
 #include "Text.h"
 #include "SpriteHolder.h"
-#include "SoundLoader.h"
 #include "ImageLoader.h"
 
 #include "qt/qtopengl.h"
@@ -46,7 +45,6 @@ Representation::Representation()
 
     qDebug() << "Begin load resources";
     LoadImages();
-    LoadSounds();
 }
 
 void Representation::ResetPerformance()

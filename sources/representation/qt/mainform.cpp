@@ -291,11 +291,11 @@ void MainForm::playMusic(QString name, float volume)
     qDebug() << name << " " << volume;
     if (name != "")
     {
-        GetSoundPlayer().PlayMusic(name, volume);
+        GetRepresentation().GetSoundPlayer().PlayMusic(name, volume);
     }
     else
     {
-        GetSoundPlayer().StopMusic();
+        GetRepresentation().GetSoundPlayer().StopMusic();
     }
 }
 

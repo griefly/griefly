@@ -31,7 +31,7 @@ void Door::Open()
         return;
     }
     SetState("door_opening");
-    PlaySoundIfVisible("airlock.ogg", owner.Id());
+    PlaySoundIfVisible("airlock.wav", owner.Id());
     door_state_ = OPENING;
     last_tick_ = MAIN_TICK;
     SetFreq(1);
@@ -44,7 +44,7 @@ void Door::Close()
         return;
     }
     SetState("door_closing");
-    PlaySoundIfVisible("airlock.ogg", owner.Id());
+    PlaySoundIfVisible("airlock.wav", owner.Id());
     SetPassable(D_ALL, Passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;
@@ -113,7 +113,7 @@ void Door::Weld()
         GetView()->AddOverlay("icons/Doorglass.dmi", "welded");
         door_state_ = WELDED;
     }
-    PlaySoundIfVisible("Welder.ogg", owner.Id());
+    PlaySoundIfVisible("Welder.wav", owner.Id());
 }
 
 void Door::AttackBy(IdPtr<Item> item)
@@ -218,7 +218,7 @@ void GlassDoor::Open()
         return;
     }
     SetState(door_prefix_ + "opening");
-    PlaySoundIfVisible("windowdoor.ogg", owner.Id());
+    PlaySoundIfVisible("windowdoor.wav", owner.Id());
     door_state_ = OPENING;
     last_tick_ = MAIN_TICK;
     SetFreq(1);
@@ -231,7 +231,7 @@ void GlassDoor::Close()
         return;
     }
     SetState(door_prefix_ + "closing");
-    PlaySoundIfVisible("windowdoor.ogg", owner.Id());
+    PlaySoundIfVisible("windowdoor.wav", owner.Id());
     SetPassable(GetDir(), Passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;

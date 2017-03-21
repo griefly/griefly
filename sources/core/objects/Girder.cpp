@@ -33,7 +33,7 @@ void Girder::AttackBy(IdPtr<Item> item)
     }
     else if (IdPtr<Wrench> wrench = item)
     {
-        PlaySoundIfVisible("Ratchet.ogg", owner.Id());
+        PlaySoundIfVisible("Ratchet.wav", owner.Id());
         Create<Item>(Metal::GetTypeStatic(), GetOwner());
         Delete();
     }

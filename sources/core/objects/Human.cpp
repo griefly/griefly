@@ -99,7 +99,7 @@ bool Human::TryMove(Dir direct)
     {   
         if (owner->GetItem<Shard>().IsValid())
         {
-            PlaySoundIfVisible("glass_step.ogg", GetOwner().Id());
+            PlaySoundIfVisible("glass_step.wav", GetOwner().Id());
         }
 
         TryClownBootsHonk();
@@ -448,7 +448,7 @@ void Human::AttackBy(IdPtr<Item> item)
     if (item.IsValid() && (item->damage > 0))
     {
         ApplyBruteDamage(item->damage * 100);
-        QString sound = QString("genhit%1.ogg").arg(GetRand() % 3 + 1);
+        QString sound = QString("genhit%1.wav").arg(GetRand() % 3 + 1);
         PlaySoundIfVisible(sound, owner.Id());
         if (IdPtr<IOnMapObject> item_owner = item->GetOwner())
         {
@@ -462,7 +462,7 @@ void Human::AttackBy(IdPtr<Item> item)
         ApplyBruteDamage(100);
 
         unsigned int punch_value = (GetRand() % 4) + 1;
-        PlaySoundIfVisible(QString("punch%1.ogg").arg(punch_value), owner.Id());
+        PlaySoundIfVisible(QString("punch%1.wav").arg(punch_value), owner.Id());
 
         if (GetRand() % 5 == 0)
         {
@@ -582,7 +582,7 @@ void Human::TryClownBootsHonk()
     {
         return;
     }
-    QString sound = QString("clownstep%1.ogg").arg(GetRand() % 2 + 1);
+    QString sound = QString("clownstep%1.wav").arg(GetRand() % 2 + 1);
     PlaySoundIfVisible(sound, GetOwner().Id());
 }
 
