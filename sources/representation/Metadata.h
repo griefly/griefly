@@ -8,6 +8,7 @@
 
 #include <qglobal.h>
 #include <QString>
+#include <QTextStream>
 
 class ImageMetadata
 {
@@ -80,7 +81,7 @@ private:
     quint32 width_;
     quint32 height_;
 
-    bool ParseDescription(std::stringstream& desc);
+    bool ParseDescription(QTextStream& desc);
     void MakeSequence();
 
     std::map<QString, SpriteMetadata> metadata_;

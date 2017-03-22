@@ -1,7 +1,6 @@
 #include "Metadata.h"
 
 #include <fstream>
-#include <sstream>
 #include <string>
 
 #include <QDebug>
@@ -102,9 +101,9 @@ void ImageMetadata::Init(const QString& name, int width, int height)
             QString string_key = QString(text_ptr[i].key);
             if (string_key == "Description")
             {
-                std::stringstream string_text;
-                string_text << std::string(text_ptr[i].text);
-                ParseDescription(string_text);
+                QString text(text_ptr[i].text);
+                QTextStream stream(&text);
+                ParseDescription(stream);
                 break;
             }
         }
@@ -138,9 +137,9 @@ void ImageMetadata::InitWithoutMetadata()
     valid_ = true;
 }
 
-bool ImageMetadata::ParseDescription(std::stringstream& desc)
+bool ImageMetadata::ParseDescription(QTextStream& desc)
 {
-    std::string loc;
+    QString loc;
     desc >> loc;
     if (loc != "#")
     {
@@ -178,9 +177,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
     loc.clear();
     ////////////
     {
-        std::string local;
-        desc >> local;
-        dmi_version_ = QString::fromStdString(local);
+        desc >> dmi_version_;
     }
     qDebug() << "Read version: " << dmi_version_;
     ////////////
@@ -238,7 +235,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 qDebug() << "Fail to read '=' from .dmi file";
                 return false;
             }
-            std::string whole_str = "";
+            QString whole_str = "";
                
             loc.clear();
             desc >> loc;
@@ -251,8 +248,8 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
                 whole_str += loc;
             }
             loc = whole_str;
-            qDebug() << "New state: " << QString::fromStdString(loc);
-            current_state = QString::fromStdString(loc.substr(1, loc.length() - 2));
+            qDebug() << "New state: " << loc;
+            current_state = loc.mid(1, loc.length() - 2);
             metadata_[current_state].first_frame_pos = first_frame_pos;
         }
         else if (loc == "dirs")
@@ -424,7 +421,7 @@ bool ImageMetadata::ParseDescription(std::stringstream& desc)
         {
             // That happens quite oftern so it is needed
             // to detect unknon params in DMI format
-            qDebug() << "Unknown param: " << QString::fromStdString(loc);
+            qDebug() << "Unknown param: " << loc;
             KvAbort();
         }
         loc.clear();

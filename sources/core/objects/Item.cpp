@@ -1,7 +1,5 @@
 #include "Item.h"
 
-#include <sstream>
-
 #include "../SyncRandom.h"
 #include "Slot.h"
 

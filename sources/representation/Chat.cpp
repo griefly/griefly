@@ -1,7 +1,5 @@
 #include "Chat.h"
 
-#include <sstream>
-
 #include "Text.h"
 #include "core/Constheader.h"
 #include "Screen.h"

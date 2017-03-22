@@ -3,9 +3,10 @@
 #include <QDebug>
 #include <QString>
 
+#include <QTextStream>
+
 #include <map>
 #include <string>
-#include <sstream>
 
 #include "core/Constheader.h"
 
@@ -22,10 +23,9 @@ public:
             qDebug() << "Cannot find param: " << name;
             return T();
         }
-        std::stringstream converter;
-        converter << params_[name].toStdString();
+        QTextStream stream(&params_[name]);
         T retval = T();
-        converter >> retval;
+        stream >> retval;
         return retval;
     }
 
@@ -40,20 +40,5 @@ public:
 private:
     std::map<QString, QString> params_; 
 };
-
-template<>
-inline QString ParamsHolder::GetParam<QString>(QString name)
-{
-    if (params_.find(name) == params_.end())
-    {
-        qDebug() << "Cannot find param: " << name;
-        return QString();
-    }
-    std::stringstream converter;
-    converter << params_[name].toStdString();
-    std::string retval = std::string();
-    converter >> retval;
-    return QString::fromStdString(retval);
-}
 
 ParamsHolder& GetParamsHolder();

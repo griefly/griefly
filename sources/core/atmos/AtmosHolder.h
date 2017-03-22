@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <sstream>
 
 #include "AtmosConstants.h"
 #include "AtmosGrid.h"
