@@ -75,7 +75,6 @@ private:
 
     bool is_end_process_;
 
-    int lps_;
     float cpu_load_;
 
     std::vector<float> cpu_loads_;

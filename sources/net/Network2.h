@@ -16,7 +16,7 @@
 
 #include "NetworkMessagesTypes.h"
 
-const int MAX_WAIT_ON_QUEUE = 8;
+const int MAX_WAIT_ON_QUEUE = 90;
 
 struct Message2
 {
@@ -115,6 +115,7 @@ public:
     void Disconnect();
 
     bool IsMessageAvailable();
+    void WaitForMessageAvailable();
     Message2 PopMessage();
 
     QByteArray GetMapData();

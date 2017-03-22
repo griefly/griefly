@@ -150,12 +150,17 @@ void Network2::Disconnect()
 bool Network2::IsMessageAvailable()
 {
     QMutexLocker locker(&queue_mutex_);
+    return received_messages_.size() > 0;
+}
+
+void Network2::WaitForMessageAvailable()
+{
+    QMutexLocker locker(&queue_mutex_);
 
     if (received_messages_.size() == 0)
     {
         queue_wait_.wait(&queue_mutex_, MAX_WAIT_ON_QUEUE);
     }
-    return received_messages_.size() > 0;
 }
 
 Message2 Network2::PopMessage()

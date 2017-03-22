@@ -153,14 +153,21 @@ void Game::Process()
 {
     QElapsedTimer fps_timer;
     fps_timer.start();
-    lps_ = 0;
     process_in_ = false;
 
     QElapsedTimer ping_timer;
     ping_timer.start();
 
+    QElapsedTimer cpu_timer;
+
+    int cpu_consumed_ms = 0;
+
     while (true)
     {
+        Network2::GetInstance().WaitForMessageAvailable();
+
+        cpu_timer.start();
+
         QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
         if (is_end_process_)
         {
@@ -219,11 +226,14 @@ void Game::Process()
             frame_generation_ns_ /= 2;
         }
 
-        if (fps_timer.elapsed() >= 1000)
+        cpu_consumed_ms += cpu_timer.elapsed();
+
+        qint64 fps_elapsed = fps_timer.elapsed();
+        if (fps_elapsed >= 1000)
         {
             fps_timer.restart();
-            cpu_load_ = ((1000.0f / MAX_WAIT_ON_QUEUE) - lps_) / (1000.0f / MAX_WAIT_ON_QUEUE) * 100;
-            lps_ = 0;
+            cpu_load_ = ((cpu_consumed_ms * 1.0) / fps_elapsed) * 100;
+            cpu_consumed_ms = 0;
             cpu_loads_[cpu_loads_id_] = cpu_load_;
             cpu_loads_id_ = (cpu_loads_id_ + 1) % cpu_loads_.size();
         }
@@ -238,7 +248,6 @@ void Game::Process()
             ping_send_time_.restart();
         }
 
-        ++lps_;
         process_in_ = false;
     }
     thread_.exit();
