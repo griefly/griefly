@@ -36,7 +36,14 @@ for line in metadata_io:
         metadata["states"][value] = {}
         current_object = metadata["states"][value]
         continue;
-    current_object[key] = value
+    if ',' in value:
+        values = value.split(',')
+        current_object[key] = map(float, values)
+        continue
+    try:
+        current_object[key] = int(value)
+    except ValueError:
+        current_object[key] = float(value)
 
 json_data = json.JSONEncoder(indent = 4).encode(metadata)
 json_name = sys.argv[1] + ".json"
