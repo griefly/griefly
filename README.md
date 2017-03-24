@@ -35,11 +35,11 @@ It should be possible to build everything without Qt Creator, but the guide assu
   `Set PNG_INCLUDE_DIR to C:\Users\Kremius\Documents\ExternalLibs\lpng1612`  
   `Set PNG_LIBRARY_DIR to C:\Users\Kremius\Documents\ExternalLibs\lpng1612\projects\vstudio\Release`  
   `Set ZLIB_ROOT to C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll`  
-  If you cannot open the environment variables table (Qt Creator 3.\* does not allow that before successfull CMake generation) or prefer usual variables in CMake (Qt Creator 4.\* allows to use them in convenient way) then you can set them as `-DVARIABLE=VALUE` (e.g. `-DSFML_ROOT=C:\Users\Kremius\Documents\ExternalLibs\SFML-2.3`)
+  If you cannot open the environment variables table (Qt Creator 3.\* does not allow that before successfull CMake generation) or prefer usual variables in CMake (Qt Creator 4.\* allows to use them in convenient way) then you can set them as `-DVARIABLE=VALUE` (e.g. `-DZLIB_ROOT=C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll`)
 4. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
 5. Build the project.  
    Client executables will appear in the `exec` folder, and the server executable will appear in the `griefly-server` folder.  
-   Client executables depend from various dlls (Qt, SFML), so it is needed to manually place them to the `exec` folder.
+   Client executables depend from various dlls, so it is needed to manually place them to the `exec` folder.
 
 **Note:** It is supposed to perform build from an active git repository (`git describe --tags --abbrev=4` will be called during the process).
 
