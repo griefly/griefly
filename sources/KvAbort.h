@@ -1,5 +1,6 @@
 #pragma once
 
-// TODO: kv_abort() with message
+#include <QString>
+
 // __gcov_fflush + abort
-void KvAbort();
+void KvAbort(const QString& message);

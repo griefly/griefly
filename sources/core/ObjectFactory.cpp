@@ -218,8 +218,7 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
     QFile file(name);
     if (!file.open(QIODevice::ReadOnly))
     {
-        qDebug() << "Error open: " << name;
-        KvAbort();
+        KvAbort(QString("Error open: %1").arg(name));
     }
 
     QByteArray raw_data;
@@ -267,8 +266,7 @@ void ObjectFactory::LoadFromMapGen(const QString& name)
         IdPtr<IOnMapObject> i = CreateImpl(item_type);
         if (!i.IsValid())
         {
-            qDebug() << "Unable to cast: " << item_type;
-            KvAbort();
+            KvAbort(QString("Unable to cast: %1").arg(item_type));
         }
         //qDebug() << "Success!";
 
@@ -312,8 +310,7 @@ IMainObject* ObjectFactory::NewVoidObject(const QString& type, quint32 id)
     auto creator = GetItemsCreators()->find(type);
     if (creator == GetItemsCreators()->end())
     {
-        qDebug() << "Unable to find creator for type: " << type;
-        KvAbort();
+        KvAbort(QString("Unable to find creator for type: %1").arg(type));
     }
     return creator->second(id);
 }
@@ -323,8 +320,7 @@ IMainObject* ObjectFactory::NewVoidObjectSaved(const QString& type)
     auto creator = GetVoidItemsCreators()->find(type);
     if (creator == GetVoidItemsCreators()->end())
     {
-        qDebug() << "Unable to find void creator for type: " << type;
-        KvAbort();
+        KvAbort(QString("Unable to find void creator for type: %1").arg(type));
     }
     return creator->second();
 }
@@ -392,8 +388,7 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
         }
         else if (!owner->AddItem(item->GetId()))
         {
-            qDebug() << "AddItem failed";
-            KvAbort();
+            KvAbort("AddItem failed");
         }
     }
 

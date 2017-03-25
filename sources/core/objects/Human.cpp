@@ -232,9 +232,8 @@ void Human::ProcessMessage(const Message2 &msg)
                     {
                         if (!object_owner->RemoveItem(object))
                         {
-                            qDebug() << "Unable to RemoveItem from owner during"
-                                        " the pick phase!";
-                            KvAbort();
+                            KvAbort("Unable to RemoveItem from owner during"
+                                    " the pick phase!");
                         }
                         object->SetOwner(GetId());
                     }

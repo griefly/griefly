@@ -79,8 +79,7 @@ QString Humanize(FastDeserializer *deserializer)
         }
         else
         {
-            qDebug() << "Unknown type: " << type;
-            KvAbort();
+            KvAbort(QString("Unknown type: %1").arg(type));
         }
         stream << " ";
     }

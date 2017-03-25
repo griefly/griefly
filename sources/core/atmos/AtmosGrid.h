@@ -84,13 +84,11 @@ public:
     {
         if (width_ < 2)
         {
-            qDebug() << "Width too small for AtmosGrid!";
-            KvAbort();
+            KvAbort("Width too small for AtmosGrid!");
         }
         if (height_ < 2)
         {
-            qDebug() << "Height too small for AtmosGrid!";
-            KvAbort();
+            KvAbort("Height too small for AtmosGrid!");
         }
         cells_ = new Cell[length_];
     }
@@ -112,8 +110,7 @@ public:
         default: break;
         }
 
-        qDebug() << "AtmosGrid::Get, Unknown dir:" << dir;
-        KvAbort();
+        KvAbort(QString("AtmosGrid::Get, Unknown dir: %1").arg(dir));
         // Not reachable
         return cells_[pos];
     }

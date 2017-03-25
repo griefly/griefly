@@ -81,8 +81,7 @@ public:
         IdPtr<T> retval = CreateImpl(type, owner.Id());
         if (!retval.IsValid())
         {
-            qDebug() << "Unable to cast object: " << type;
-            KvAbort();
+            KvAbort(QString("Unable to cast object: %1").arg(type));
         }
         return retval;
     }

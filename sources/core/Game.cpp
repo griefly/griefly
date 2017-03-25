@@ -280,9 +280,7 @@ void Game::InitWorld(int id, QString map_name)
     {
         if (!GetParamsHolder().GetParamBool("mapgen_name"))
         {
-            qDebug() << "No mapgen param!";
-            KvAbort();
-            return;
+            KvAbort("No mapgen param!");
         }
 
         QString mapgen_name = GetParamsHolder().GetParam<QString>("mapgen_name");
@@ -325,9 +323,7 @@ void Game::InitWorld(int id, QString map_name)
         }
         else
         {
-            qDebug() << "Mapgen file does not exist!" << mapgen_name;
-            KvAbort();
-            return;
+            KvAbort(QString("Mapgen file does not exist: %1").arg(mapgen_name));
         }
     }
     else
@@ -340,8 +336,7 @@ void Game::InitWorld(int id, QString map_name)
 
         if (map_data.length() == 0)
         {
-            qDebug() << "An empty map received";
-            KvAbort();
+            KvAbort("An empty map received");
         }
 
         FastDeserializer deserializer(map_data.data(), map_data.size());
@@ -522,8 +517,7 @@ void Game::ProcessInputMessages()
 
             if (tick != MAIN_TICK)
             {
-                qDebug() << "Tick mismatch! " << tick << " " << MAIN_TICK;
-                KvAbort();
+                KvAbort(QString("Tick mismatch! %1 %2").arg(tick).arg(MAIN_TICK));
             }
             unsigned int hash = GetFactory().Hash();
 
@@ -769,8 +763,7 @@ void Game::ProcessBroadcastedMessages()
          }
          else
          {
-             qDebug() << "Game object is not valid: " << net_id;
-             KvAbort();
+             KvAbort(QString("Game object is not valid: %1").arg(net_id));
          }
     }
     messages_to_process_.clear();
@@ -780,7 +773,6 @@ void Game::CheckMessagesOrderCorrectness()
 {
     if (!messages_to_process_.empty())
     {
-        qDebug() << "CheckMessagesOrderCorrectness fail";
-        KvAbort();
+        KvAbort("CheckMessagesOrderCorrectness fail");
     }
 }

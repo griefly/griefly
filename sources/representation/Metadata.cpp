@@ -43,16 +43,14 @@ void ImageMetadata::Init(const QString& name, int width, int height)
         QJsonDocument document = QJsonDocument::fromJson(data, &error);
         if (error.error != QJsonParseError::NoError)
         {
-            qDebug() << "Json parase error:" << error.errorString();
-            KvAbort();
+            KvAbort(QString("Json parase error: %1").arg(error.errorString()));
         }
         ParseInfo(document.object());
     }
 
     if (!Valid())
     {
-        qDebug() << "Fail during metadata parsing, abort!";
-        KvAbort();
+        KvAbort("Fail during metadata parsing, abort!");
     }
     qDebug() << "End load metadata for " << name;
 }
@@ -73,37 +71,31 @@ void ImageMetadata::ParseInfo(const QJsonObject& metadata)
 {
     if (metadata.isEmpty())
     {
-        qDebug() << "Corrupted metadata!";
-        KvAbort();
+        KvAbort("Corrupted metadata!");
     }
 
     QJsonObject info;
     if (!ValidateKey(metadata, "info", &info))
     {
-        qDebug() << "Corrupted 'info' key in metadata!";
-        KvAbort();
+        KvAbort("Corrupted 'info' key in metadata!");
     }
     if (!ValidateKey(info, "version", &version_))
     {
-        qDebug() << "Corrupted 'version' key in info!";
-        KvAbort();
+        KvAbort("Corrupted 'version' key in info!");
     }
     if (!ValidateKey(info, "width", &width_))
     {
-        qDebug() << "Corrupted 'width' key in info!";
-        KvAbort();
+        KvAbort("Corrupted 'width' key in info!");
     }
     if (!ValidateKey(info, "height", &height_))
     {
-        qDebug() << "Corrupted 'height' key in info!";
-        KvAbort();
+        KvAbort("Corrupted 'height' key in info!");
     }
 
     QJsonArray states;
     if (!ValidateKey(metadata, "states", &states))
     {
-        qDebug() << "Corrupted 'states' key in metadata!";
-        KvAbort();
+        KvAbort("Corrupted 'states' key in metadata!");
     }
 
     int first_frame_pos = 0;
@@ -112,14 +104,12 @@ void ImageMetadata::ParseInfo(const QJsonObject& metadata)
         QJsonObject state;
         if (!ValidateValue(state_value, &state))
         {
-            qDebug() << "Corrupted state in states!" << state_value;
-            KvAbort();
+            KvAbort("Corrupted state in states!");
         }
         QString state_name;
         if (!ValidateKey(state, "state", &state_name))
         {
-            qDebug() << "Corrupted 'state' key in state!";
-            KvAbort();
+            KvAbort("Corrupted 'state' key in state!");
         }
         qDebug() << "State name:" << state_name;
 
@@ -128,14 +118,12 @@ void ImageMetadata::ParseInfo(const QJsonObject& metadata)
 
         if (!ValidateKey(state, "dirs", &current_metadata.dirs))
         {
-            qDebug() << "Unable to load dirs from state!" << state_name;
-            KvAbort();
+            KvAbort("Unable to load dirs from state!");
         }
         int frames_amount;
         if (!ValidateKey(state, "frames", &frames_amount))
         {
-            qDebug() << "Unable to load dirs from state!" << state_name;
-            KvAbort();
+            KvAbort("Unable to load dirs from state!");
         }
         current_metadata.frames_data.resize(frames_amount);
         first_frame_pos += frames_amount * current_metadata.dirs;
@@ -145,8 +133,7 @@ void ImageMetadata::ParseInfo(const QJsonObject& metadata)
         {
             if (delays.size() != current_metadata.frames_data.size())
             {
-                qDebug() << "Frames-delays amount mismatch!" << state_name;
-                KvAbort();
+                KvAbort("Frames-delays amount mismatch!");
             }
             for (int i = 0; i < delays.size(); ++i)
             {
@@ -154,16 +141,14 @@ void ImageMetadata::ParseInfo(const QJsonObject& metadata)
                 double delay;
                 if (!ValidateValue(value, &delay))
                 {
-                    qDebug() << "Corrupted delay value:" << i << state_name;
-                    KvAbort();
+                    KvAbort(QString("Corrupted delay value: %1").arg(i));
                 }
                 current_metadata.frames_data[i].delay = delay;
             }
         }
         else if (current_metadata.frames_data.size() > 1)
         {
-            qDebug() << "Delays are missing for frames!" << state_name;
-            KvAbort();
+            KvAbort("Delays are missing for frames!");
         }
 
         ValidateKey(state, "rewind", &current_metadata.rewind);
@@ -175,8 +160,7 @@ void ImageMetadata::ParseInfo(const QJsonObject& metadata)
             const int HOTSPOT_SIZE = 3;
             if (hotspot.size() != HOTSPOT_SIZE)
             {
-                qDebug() << "Invalid hotspot size!" << state_name;
-                KvAbort();
+                KvAbort("Invalid hotspot size!");
             }
             for (int i = 0; i < HOTSPOT_SIZE; ++i)
             {
@@ -184,8 +168,7 @@ void ImageMetadata::ParseInfo(const QJsonObject& metadata)
                 int hotspot_value;
                 if (!ValidateValue(value, &hotspot_value))
                 {
-                    qDebug() << "Corrupted hotspot value:" << state_name;
-                    KvAbort();
+                    KvAbort("Corrupted hotspot value!");
                 }
                 current_metadata.hotspot[i] = hotspot_value;
             }
