@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "KVAbort.h"
+#include "KvAbort.h"
 
 const QLatin1String END_TYPE("0~$");
 

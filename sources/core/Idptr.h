@@ -7,7 +7,7 @@
 #include <QDebug>
 
 #include "FastIsType.h"
-#include "KVAbort.h"
+#include "KvAbort.h"
 #include "FastSerializer.h"
 
 class IMainObject;

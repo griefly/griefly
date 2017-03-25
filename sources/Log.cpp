@@ -7,7 +7,7 @@
 #include <QTextStream>
 #include <QUuid>
 
-#include "KVAbort.h"
+#include "KvAbort.h"
 
 QFile logs;
 QTextStream logstream;

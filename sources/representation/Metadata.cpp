@@ -5,7 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 
-#include "KVAbort.h"
+#include "KvAbort.h"
 #include "JsonValidator.h"
 
 const ImageMetadata::SpriteMetadata& 
