@@ -51,8 +51,8 @@ bool impl::Validator<int>::ValidateValue(
     {
         return false;
     }
-    if (   temp_value >= std::numeric_limits<int>::max()
-        || temp_value <= std::numeric_limits<int>::min())
+    if (   temp_value > std::numeric_limits<int>::max()
+        || temp_value < std::numeric_limits<int>::min())
     {
         return false;
     }
@@ -62,8 +62,10 @@ bool impl::Validator<int>::ValidateValue(
     {
         return false;
     }
-
-    *value_to_set = static_cast<int>(temp_value);
+    if (value_to_set)
+    {
+        *value_to_set = static_cast<int>(temp_value);
+    }
     return true;
 }
 
@@ -87,7 +89,7 @@ bool impl::Validator<QJsonArray>::ValidateValue(
     const QJsonValue& value, QJsonArray* value_to_set)
 {
     return ValidateValueImpl(
-        value, value_to_set, &QJsonValue::isObject,
+        value, value_to_set, &QJsonValue::isArray,
         static_cast<QJsonArray(QJsonValue::*)(const QJsonArray&) const>(&QJsonValue::toArray),
         QJsonArray());
 }
