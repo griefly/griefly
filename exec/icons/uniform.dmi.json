@@ -1,0 +1,754 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blue_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blue_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "maroon_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "maroon_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "red_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "black_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blackf_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blackf_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "white_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "white_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "medical_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "medical_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "yellow_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellow_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "aqua_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "aqua_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "purple_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "purple_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lightpurple_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightpurple_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "orange_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orange_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pink_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pink_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lightgreen_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightgreen_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lightblue_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightblue_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "green_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "green_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lightbrown_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightbrown_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "brown_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "brown_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "yellowgreen_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellowgreen_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "darkblue_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "darkblue_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lightred_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightred_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "darkred_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "darkred_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "captain_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "captain_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "grey_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grey_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "engine_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "engine_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "atmos_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "atmos_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hop_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hop_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "toxinswhite_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "toxinswhite_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chapblack_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chapblack_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "geneticswhite_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "geneticswhite_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "forensicsred_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "forensicsred_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ba_suit_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ba_suit_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "sl_suit_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sl_suit_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "detective_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "owl_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "owl_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hosred_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hosred_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "clown_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "johnny_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "johnny_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "janitor_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "janitor_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lawyer_black_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lawyer_black_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lawyer_red_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lawyer_red_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lawyer_blue_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lawyer_blue_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "psyche_s", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "psyche_l", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chef_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chef_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blackshorts_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blackshorts_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blueshorts_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blueshorts_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "greenshorts_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "greenshorts_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "redshorts_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redshorts_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "greyshorts_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "greyshorts_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cargo_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cargo_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "director_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "director_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chief_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chief_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hydroponics_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydroponics_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "green_suit_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "green_suit_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "red_suit_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red_suit_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "teal_suit_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "teal_suit_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "black_suit_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black_suit_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "overalls_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "overalls_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tourist_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tourist_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tactifool_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tactifool_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "schoolgirl_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "schoolgirl_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pirate_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pirate_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "mime_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mime_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "soviet_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soviet_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "centcom_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "centcom_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "officer_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "officer_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blackskirt_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blackskirt_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "miner_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "miner_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "robotics2_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "robotics2_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "robotics_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "robotics_l"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "waiter_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "waiter_l"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": ""
+        }
+    ]
+}

@@ -1,0 +1,1212 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "revolver"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "taser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "taser0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "taser25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "taser50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "taser75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "taser100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "retro"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "retro0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "retro25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "retro50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "retro75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "retro100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "crossbow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syringegun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rapidsyringegun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energystun0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energystun25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energystun50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energystun75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energystun100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energykill0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energykill25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energykill50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energykill75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energykill100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xray"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xray100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xray75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xray50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xray25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xray0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "caplaser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energy25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energy50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energy75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energy100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "energy0", 
+            "delay": [
+                3.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energy"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energykill"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energystun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "nenergy-g", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "nenergy-f", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "nenergy-c", 
+            "delay": [
+                10.0, 
+                10.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "caplaser100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "caplaser75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "caplaser50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "caplaser25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "caplaser0", 
+            "delay": [
+                4.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shotgun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cshotgun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dshotgun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sawnshotgun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shotguna"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cshotguna"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shotgunb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cshotgunb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "freezegun", 
+            "delay": [
+                3.0, 
+                1.0, 
+                1.0, 
+                2.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "freezegun100", 
+            "delay": [
+                3.0, 
+                1.0, 
+                1.0, 
+                2.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "freezegun75", 
+            "delay": [
+                3.0, 
+                1.0, 
+                1.0, 
+                2.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "freezegun50", 
+            "delay": [
+                3.0, 
+                1.0, 
+                1.0, 
+                2.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "freezegun25", 
+            "delay": [
+                3.0, 
+                1.0, 
+                1.0, 
+                2.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "freezegun0", 
+            "delay": [
+                3.0, 
+                1.0, 
+                1.0, 
+                2.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mateba"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carbine"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ak331"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nucgun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nucgun-stun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nucgun-kill"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nucgun-100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nucgun-75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nucgun-50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nucgun-25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "nucgun-0", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "nucgun-whee", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "nucgun-clean", 
+            "delay": [
+                10.0, 
+                10.0, 
+                10.0, 
+                10.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "nucgun-light", 
+            "delay": [
+                7.0, 
+                7.0, 
+                7.0, 
+                7.0, 
+                7.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "nucgun-medium", 
+            "delay": [
+                4.0, 
+                4.0, 
+                4.0, 
+                4.0, 
+                4.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "nucgun-crit", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "m1911"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glock"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "g115 Pistol"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "c96load", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                10.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gaussrifle100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gaussrifle75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gaussrifle50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gaussrifle25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "gaussrifle0", 
+            "delay": [
+                6.0, 
+                6.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c96"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ak331nomag"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carbinenomag"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "p08"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "p08empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "saber"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "saber-l"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "saber-m"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "saber-s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "saber-f"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "m1911-p", 
+            "delay": [
+                5.0, 
+                1.0, 
+                1.0, 
+                5.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "m1911-p0", 
+            "delay": [
+                4.0, 
+                4.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "m1911-p25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "m1911-p50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "m1911-p75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "m1911-p100-test"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mini-uzi"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "m1911-p100", 
+            "delay": [
+                5.0, 
+                1.0, 
+                1.0, 
+                5.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silenced_pistol"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmagun100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmagun75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmagun50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmagun25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "plasmagun0", 
+            "delay": [
+                5.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmagun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chemsprayer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stunrevolver"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stunrevolver0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stunrevolver25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stunrevolver50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stunrevolver75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stunrevolver100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shockgun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shockgun0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shockgun100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shockgun75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shockgun50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shockgun25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "decloner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "decloner100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "decloner75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "decloner50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "decloner25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "decloner0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lasercannon"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 10, 
+            "state": "lasercannon0", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lasercannon25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lasercannon50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lasercannon75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lasercannon100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "deagleg"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "deaglecamo"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "deagle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c110-X"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c90_stealth"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c05r"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c10r"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ionrifle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ionrifle100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ionrifle75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ionrifle50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ionrifle25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "ionrifle0", 
+            "delay": [
+                3.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sgunNoSpear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sgunSpear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sgunMagSpear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "pulse", 
+            "delay": [
+                1.0, 
+                1.0, 
+                2.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pulse100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pulse75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pulse50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pulse25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "pulse0", 
+            "delay": [
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c20r"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c20r-20"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c20r-16"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c20r-12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c20r-8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c20r-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c20r-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "laser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "laser0", 
+            "delay": [
+                4.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "laser25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "laser50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "laser75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "laser100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "riotgun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "staffofchange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "staffofchange0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "staffofchange25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "staffofchange50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "staffofchange75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "staffofchange100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluetag0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluetag25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluetag50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluetag75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluetag100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redtag"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redtag0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redtag25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redtag50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redtag75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redtag100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluetag"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "florayield100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "florayield75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "florayield50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "florayield25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "florayield0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floramut100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floramut75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floramut50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floramut25"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floramut0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gyropistol"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gyropistolloaded"
+        }
+    ]
+}

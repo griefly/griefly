@@ -1,18 +1,17 @@
 #include "Metadata.h"
 
-#include <fstream>
-#include <string>
-
 #include <QDebug>
-
-#include <png.h>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonParseError>
 
 #include "KVAbort.h"
+#include "JsonValidator.h"
 
 const ImageMetadata::SpriteMetadata& 
     ImageMetadata::GetSpriteMetadata(const QString& name)
 {
-    return metadata_[name];
+    return sprites_metadata_[name];
 }
 
 bool ImageMetadata::IsValidState(const QString& name)
@@ -21,15 +20,7 @@ bool ImageMetadata::IsValidState(const QString& name)
     {
         return false;
     }
-    return metadata_.find(name) != metadata_.end();
-}
-
-const int PNGSIGSIZE = 8;
-
-void UserReadData(png_structp png_ptr, png_bytep data, png_size_t length) {
-    png_voidp io_ptr = png_get_io_ptr(png_ptr);
-    std::istream* stream = static_cast<std::istream*>(io_ptr);
-    stream->read(reinterpret_cast<char*>(data), length);
+    return sprites_metadata_.find(name) != sprites_metadata_.end();
 }
 
 void ImageMetadata::Init(const QString& name, int width, int height)
@@ -39,83 +30,24 @@ void ImageMetadata::Init(const QString& name, int width, int height)
     width_ = width;
     height_ = height;
 
-    std::ifstream source;
-    source.open(name.toStdString(), std::fstream::binary);
-    if (source.fail()) 
+    QFile file(name + ".json");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "Metadata error: Fail to open file";
-        return;
-    }
-
-    png_byte pngsig[PNGSIGSIZE];
-    source.read(reinterpret_cast<char*>(pngsig), PNGSIGSIZE);
-
-    if (source.fail()) 
-    {
-        qDebug() << "Metadata error: Fail to read png signature";
-        KvAbort();
-    }
-
-    int is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
-
-    if (is_png)
-    {
-        qDebug() << "Metadata error: Data is not valid PNG-data: " << is_png;
+        qDebug() << "Unable to open metadata file, trying without metadata: " << name;
         InitWithoutMetadata();
-        return;
     }
-
-    png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    if (!png_ptr)
+    else
     {
-        qDebug() << "Metadata error: Couldn't initialize png read struct";
-        KvAbort();
-        return;
-    }
-
-    png_infop info_ptr = png_create_info_struct(png_ptr);
-    if (!info_ptr)
-    {
-        qDebug() << "Metadata error: Couldn't initialize png info struct";
-        png_destroy_read_struct(&png_ptr, static_cast<png_infopp>(0), static_cast<png_infopp>(0));
-        KvAbort();
-        return;
-    }
-
-    png_set_read_fn(png_ptr, static_cast<png_voidp>(&source), &UserReadData);
-
-    png_set_sig_bytes(png_ptr, PNGSIGSIZE);
-    png_read_info(png_ptr, info_ptr);
-
-    png_get_IHDR(png_ptr, info_ptr, &total_width_, &total_height_, 0, 0, 0, 0, 0);
-
-
-    png_textp text_ptr;
-    int num_text;
-
-    if (png_get_text(png_ptr, info_ptr, &text_ptr, &num_text) > 0)
-    {
-        int i = 0;
-        for (; i < num_text; ++i)
+        QByteArray data = file.readAll();
+        QJsonParseError error;
+        QJsonDocument document = QJsonDocument::fromJson(data, &error);
+        if (error.error != QJsonParseError::NoError)
         {
-            QString string_key = QString(text_ptr[i].key);
-            if (string_key == "Description")
-            {
-                QString text(text_ptr[i].text);
-                QTextStream stream(&text);
-                ParseDescription(stream);
-                break;
-            }
+            qDebug() << "Json parase error:" << error.errorString();
+            KvAbort();
         }
-        if (i == num_text)
-        {
-            qDebug() << "Unable to find \"Description\" key, trying without metadata";
-            InitWithoutMetadata();
-        }
+        ParseInfo(document.object());
     }
-
-    png_destroy_read_struct(&png_ptr, &info_ptr, static_cast<png_infopp>(0));
-    source.close();
 
     if (!Valid())
     {
@@ -129,320 +61,135 @@ void ImageMetadata::InitWithoutMetadata()
 {
     qDebug() << "Fail metadata load, try without it";
 
-    metadata_.clear();
+    sprites_metadata_.clear();
 
-    metadata_[""].first_frame_pos = 0;
+    sprites_metadata_[""].first_frame_pos = 0;
 
-    metadata_[""].frames_sequence.push_back(0);
+    sprites_metadata_[""].frames_sequence.push_back(0);
     valid_ = true;
 }
 
-bool ImageMetadata::ParseDescription(QTextStream& desc)
+void ImageMetadata::ParseInfo(const QJsonObject& metadata)
 {
-    QString loc;
-    desc >> loc;
-    if (loc != "#")
+    if (metadata.isEmpty())
     {
-        qDebug() << "Fail to read '#' from .dmi file";
-        return false;
+        qDebug() << "Corrupted metadata!";
+        KvAbort();
     }
-    loc.clear();
-    desc >> loc;
-    if (loc != "BEGIN")
-    {
-        qDebug() << "Fail to read 'BEGIN' from .dmi file";
-        return false;
-    }
-    loc.clear();
-    desc >> loc;
-    if (loc != "DMI")
-    {
-        qDebug() << "Fail to read 'DMI' from .dmi file";
-        return false;
-    }
-    loc.clear();
-    desc >> loc;
-    if (loc != "version")
-    {
-        qDebug() << "Fail to read 'version' from .dmi file";
-        return false;
-    }
-    loc.clear();
-    desc >> loc;
-    if (loc != "=")
-    {
-        qDebug() << "Fail to read '=' from .dmi file";
-        return false;
-    }
-    loc.clear();
-    ////////////
-    {
-        desc >> dmi_version_;
-    }
-    qDebug() << "Read version: " << dmi_version_;
-    ////////////
-    desc >> loc;
-    if (loc != "width")
-    {
-        qDebug() << "Fail to read 'width' from .dmi file";
-        return false;
-    }
-    loc.clear();
-    desc >> loc;
-    if (loc != "=")
-    {
-        qDebug() << "Fail to read '=' from .dmi file";
-        return false;
-    }
-    loc.clear();
-    
-    //////////////
-    desc >> width_;
-    qDebug() << "Read width: " << width_;
-    /////////////
 
-    desc >> loc;
-    if (loc != "height")
+    QJsonObject info;
+    if (!ValidateKey(metadata, "info", &info))
     {
-        qDebug() << "Fail to read 'height' from .dmi file";
-        return false;
+        qDebug() << "Corrupted 'info' key in metadata!";
+        KvAbort();
     }
-    loc.clear();
-    desc >> loc;
-    if (loc != "=")
+    if (!ValidateKey(info, "version", &version_))
     {
-        qDebug() << "Fail to read '=' from .dmi file";
-        return false;
+        qDebug() << "Corrupted 'version' key in info!";
+        KvAbort();
     }
-    loc.clear();
-    
-    /////////////
-    desc >> height_;
-    qDebug() << "Read height: " << height_;
-    ////////////
-    
-    desc >> loc;
-    QString current_state = "###";
-    quint32 first_frame_pos = 0;
-    while (loc != "#")
+    if (!ValidateKey(info, "width", &width_))
     {
-        if (loc == "state")
+        qDebug() << "Corrupted 'width' key in info!";
+        KvAbort();
+    }
+    if (!ValidateKey(info, "height", &height_))
+    {
+        qDebug() << "Corrupted 'height' key in info!";
+        KvAbort();
+    }
+
+    QJsonArray states;
+    if (!ValidateKey(metadata, "states", &states))
+    {
+        qDebug() << "Corrupted 'states' key in metadata!";
+        KvAbort();
+    }
+
+    int first_frame_pos = 0;
+    for (const QJsonValue& state_value : states)
+    {
+        QJsonObject state;
+        if (!ValidateValue(state_value, &state))
         {
-            loc.clear();
-            desc >> loc;
-            if (loc != "=")
-            {
-                qDebug() << "Fail to read '=' from .dmi file";
-                return false;
-            }
-            QString whole_str = "";
-               
-            loc.clear();
-            desc >> loc;
-            whole_str += loc;
-            while (loc[loc.length() - 1] != '"')
-            {
-                loc.clear();
-                desc >> loc;
-                whole_str += " ";
-                whole_str += loc;
-            }
-            loc = whole_str;
-            qDebug() << "New state: " << loc;
-            current_state = loc.mid(1, loc.length() - 2);
-            metadata_[current_state].first_frame_pos = first_frame_pos;
-        }
-        else if (loc == "dirs")
-        {
-            loc.clear();
-            desc >> loc;
-            if (loc != "=")
-            {
-                qDebug() << "Fail to read '=' from .dmi file";
-                return false;
-            }
-            loc.clear();
-
-            quint32 dirs;
-            desc >> dirs;
-
-            if (current_state == "###")
-            {
-                qDebug() << "Dirs without state";
-                return false;
-            }
-            metadata_[current_state].dirs = dirs;
-        }
-        else if (loc == "frames")
-        {
-            loc.clear();
-            desc >> loc;
-            if (loc != "=")
-            {
-                qDebug() << "Fail to read '=' from .dmi file";
-                return false;
-            }
-            loc.clear();
-
-            quint32 frames;
-            desc >> frames;
-
-            if (current_state == "###")
-            {
-                qDebug() << "Frames without state";
-                return false;
-            }
-            metadata_[current_state].frames_data.resize(frames);
-            first_frame_pos += frames * metadata_[current_state].dirs;
-        }
-        else if (loc == "delay")
-        {
-            loc.clear();
-            desc >> loc;
-            if (loc != "=")
-            {
-                qDebug() << "Fail to read '=' from .dmi file";
-                return false;
-            }
-            loc.clear();
-
-            if (current_state == "###")
-            {
-                qDebug() << "Delay without state";
-                return false;
-            }
-
-            for (quint32 i = 0; i < metadata_[current_state].frames_data.size() - 1; ++i)
-            {
-                quint32 value;
-                desc >> value;
-                metadata_[current_state].frames_data[i].delay = value;
-
-                char comma;
-                desc >> comma;
-                if (comma != ',')
-                {
-                    qDebug() << "Fail to read ',' from .dmi file";
-                    return false;
-                }
-            }
-            quint32 value;
-            desc >> value;
-            metadata_[current_state].frames_data
-                [metadata_[current_state].frames_data.size() - 1]
-                    .delay = value;
-        }
-        else if (loc == "rewind")
-        {
-            loc.clear();
-            desc >> loc;
-            if (loc != "=")
-            {
-                qDebug() << "Fail to read '=' from .dmi file";
-                return false;
-            }
-            loc.clear();
-
-            if (current_state == "###")
-            {
-                qDebug() << "Rewind without state";
-                return false;
-            }
-
-            quint32 rewind;
-            desc >> rewind;
-            metadata_[current_state].rewind = rewind ? true : false;
-        }
-        else if (loc == "loop")
-        {
-            loc.clear();
-            desc >> loc;
-            if (loc != "=")
-            {
-                qDebug() << "Fail to read '=' from .dmi file";
-                return false;
-            }
-            loc.clear();
-
-            if (current_state == "###")
-            {
-                qDebug() << "Loop without state";
-                return false;
-            }
-
-            int loop;
-            desc >> loop;
-            metadata_[current_state].loop = loop;
-        }
-        else if (loc == "hotspot")
-        {
-            loc.clear();
-            desc >> loc;
-            if (loc != "=")
-            {
-                qDebug() << "Fail to read '=' from .dmi file";
-                return false;
-            }
-            loc.clear();
-
-            if (current_state == "###")
-            {
-                qDebug() << "Hotspot without state";
-                return false;
-            }
-            
-            int num;
-            desc >> num;
-            metadata_[current_state].hotspot[0] = num;
-
-            char comma;
-            desc >> comma;
-            if (comma != ',')
-            {
-                qDebug() << "Fail to read ',' from .dmi file";
-                return false;
-            }
-
-            desc >> num;
-            metadata_[current_state].hotspot[1] = num;
-
-            desc >> comma;
-            if (comma != ',')
-            {
-                qDebug() << "Fail to read ',' from .dmi file";
-                return false;
-            }
-
-            desc >> num;
-            metadata_[current_state].hotspot[2] = num;
-
-        }
-        else
-        {
-            // That happens quite oftern so it is needed
-            // to detect unknon params in DMI format
-            qDebug() << "Unknown param: " << loc;
+            qDebug() << "Corrupted state in states!" << state_value;
             KvAbort();
         }
-        loc.clear();
-        desc >> loc;
-    }
+        QString state_name;
+        if (!ValidateKey(state, "state", &state_name))
+        {
+            qDebug() << "Corrupted 'state' key in state!";
+            KvAbort();
+        }
+        qDebug() << "State name:" << state_name;
 
-    qDebug() << "End of states";
+        SpriteMetadata& current_metadata = sprites_metadata_[state_name];
+        current_metadata.first_frame_pos = first_frame_pos;
 
-    loc.clear();
-    desc >> loc;
-    if (loc != "END")
-    {
-        qDebug() << "Fail to read 'END' from .dmi file";
-        return false;
-    }
-    loc.clear();
-    desc >> loc;
-    if (loc != "DMI")
-    {
-        qDebug() << "Fail to read 'DMI' from .dmi file";
-        return false;
+        if (!ValidateKey(state, "dirs", &current_metadata.dirs))
+        {
+            qDebug() << "Unable to load dirs from state!" << state_name;
+            KvAbort();
+        }
+        int frames_amount;
+        if (!ValidateKey(state, "frames", &frames_amount))
+        {
+            qDebug() << "Unable to load dirs from state!" << state_name;
+            KvAbort();
+        }
+        current_metadata.frames_data.resize(frames_amount);
+        first_frame_pos += frames_amount * current_metadata.dirs;
+
+        QJsonArray delays;
+        if (ValidateKey(state, "delay", &delays))
+        {
+            if (delays.size() != current_metadata.frames_data.size())
+            {
+                qDebug() << "Frames-delays amount mismatch!" << state_name;
+                KvAbort();
+            }
+            for (int i = 0; i < delays.size(); ++i)
+            {
+                const QJsonValue& value = delays[i];
+                double delay;
+                if (!ValidateValue(value, &delay))
+                {
+                    qDebug() << "Corrupted delay value:" << i << state_name;
+                    KvAbort();
+                }
+                current_metadata.frames_data[i].delay = delay;
+            }
+        }
+        else if (current_metadata.frames_data.size() > 1)
+        {
+            qDebug() << "Delays are missing for frames!" << state_name;
+            KvAbort();
+        }
+
+        ValidateKey(state, "rewind", &current_metadata.rewind);
+        ValidateKey(state, "loop", &current_metadata.loop);
+
+        QJsonArray hotspot;
+        if (ValidateKey(state, "hotspot", &hotspot))
+        {
+            const int HOTSPOT_SIZE = 3;
+            if (hotspot.size() != HOTSPOT_SIZE)
+            {
+                qDebug() << "Invalid hotspot size!" << state_name;
+                KvAbort();
+            }
+            for (int i = 0; i < HOTSPOT_SIZE; ++i)
+            {
+                const QJsonValue& value = hotspot[i];
+                int hotspot_value;
+                if (!ValidateValue(value, &hotspot_value))
+                {
+                    qDebug() << "Corrupted hotspot value:" << state_name;
+                    KvAbort();
+                }
+                current_metadata.hotspot[i] = hotspot_value;
+            }
+        }
     }
 
     qDebug() << "Begin make sequence";
@@ -452,17 +199,16 @@ bool ImageMetadata::ParseDescription(QTextStream& desc)
     qDebug() << "End make sequence";
 
     valid_ = true;
-    return true;
 }
 
 void ImageMetadata::MakeSequence()
 {
-    for (auto it = metadata_.begin(); it != metadata_.end(); ++it)
+    for (auto it = sprites_metadata_.begin(); it != sprites_metadata_.end(); ++it)
     {
-        auto& metadata = it->second.frames_data;
-        auto& sequence = it->second.frames_sequence;
-        int local_loop = it->second.loop;
-        if (it->second.loop == -1 || it->second.loop == 0)
+        auto& metadata = it->frames_data;
+        auto& sequence = it->frames_sequence;
+        int local_loop = it->loop;
+        if (it->loop == -1 || it->loop == 0)
         {
             local_loop = 1;
         }
@@ -473,7 +219,7 @@ void ImageMetadata::MakeSequence()
             {
                 sequence.push_back(i);
             }
-            if (it->second.rewind)
+            if (it->rewind)
             {
                 int from = metadata.size() - 2;
                 if (from < 0)
@@ -486,7 +232,7 @@ void ImageMetadata::MakeSequence()
                 }
             }
         }
-        if (!(it->second.loop == -1 || it->second.loop == 0))
+        if (!(it->loop == -1 || it->loop == 0))
         {
             sequence.push_back(-1);
         }

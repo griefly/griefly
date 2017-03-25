@@ -1,0 +1,184 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uniform"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "back"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "id"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "belt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mask"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glasses"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ears"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "head"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "suit_storage"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pocket"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gloves"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shoes"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hand_r_inactive"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hand_l_inactive"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hand_r_active"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hand_l_active"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "toggle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pull"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_resist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_drop"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_throw_off"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_throw_on"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_equip"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "swap_1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "swap_2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "swap_1_m"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "harm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "help"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "disarm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grab"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "walking"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "running"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "zone_sel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "template"
+        }
+    ]
+}

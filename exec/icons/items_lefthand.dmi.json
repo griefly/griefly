@@ -1,0 +1,1596 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 3, 
+            "state": "DONGS", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "nothing"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "template"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "an_tank"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "armor"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "assembly"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "atoxinbottle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "b_shoesold"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "b_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lb_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "backpack"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "beer"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bgloves"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_hood"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bl_shoesold"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bl_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blindfold"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "broken_beer"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "brutepack"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "c_tube"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "card-id"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cell"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "clipboard"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "coil"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "coil-wire"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "coolant-c"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cutters"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "dg_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "dropper"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "earmuffs"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "electropack"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "fire_extinguisher"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "fire_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rad_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "firstaid"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "firstaid-ointment"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "firstaid-toxin"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "emp"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "flashbang"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "flight"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "g_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gas_mask"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gift"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "glasses"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gy_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "handcuff"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "headset"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "healthanalyzer"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "helmet"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "implantcase"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "jetpack"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "labcoat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lgloves"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "m_mask"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "medibottle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "multitool"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "muzzle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ointment"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "oxygen"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "oxygen-c"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "paintcan"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "paper"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pen"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pill"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "plasma"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "plasma-c"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rack_parts"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "radio"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rejuvbottle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "sunglasses"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s_helmet"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s_mask"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "screwdriver"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "shard-glass"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "sheet-glass"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "sheet-metal"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "sheet-rglass"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "signaler"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat_gl"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat_hel"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat_sh"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syringe_0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syringe_1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syringe_5"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syringe_10"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syringe_15"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syringe_kit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "table_parts"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tile"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "toolbox_red"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "toolbox_yellow"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "toxinbottle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wrap_paper"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wrench"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "y_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ygloves"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "flamethrower_0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "flamethrower_1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "space_helmet_syndicate"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "axe0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "axe1", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ba_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wcoat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cakehat0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cakehat1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bombvest"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "dnainjector"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tdgreen", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tdred", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tdhelm", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "contliquid"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "contsolid"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "contvapour"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "beaker"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cleaner"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wizshoe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wizrobe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wizhat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "janitor"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "mop"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bucket"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caution"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pwig", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "judge", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "galoshes"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gas_alt"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "det_hat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "det"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "det_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "egg"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "egg2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "egg1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "egg3"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "egg4"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "egg5"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "toolbox_blue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "owl_mask"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "greatcoat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "clown"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "clown_hat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "clown_shoes"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "johnny"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "johnny_coat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rcd"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rcdammo"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "buildpipe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "analyzer"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "baton"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_orange"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "electronic"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gun"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "nazi1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "o_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "owl"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "p_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "r_feet"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "r_hands"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "r_head"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "r_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ro_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rods"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-green"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-green"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-green-dark"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-green-dark"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-orange"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-orange"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-blue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-blue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-green"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-green"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-blue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-blue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-red"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-red"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "santa"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "santahat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "sl_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "space_suit_syndicate"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "staff"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "straight_jacket"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "sword0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "swordblue", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "swordred", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "swordgreen", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "swordpurple", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 4, 
+            "state": "blade", 
+            "delay": [
+                2.0, 
+                2.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "that"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "w_shoes"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "w_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "welder"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "welder1", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "death_commando_mask"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "death_commando_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "centcom"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caparmor"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "warden"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "centhat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caphat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gold_id"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lawyer_black"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lawyer_red"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lawyer_blue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "briefcase"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "crossbow"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "psyche"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "candy"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chips"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "coffee"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "r_shoes"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bike_horn"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "vialgreen"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "vialblue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "brain2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "scalpel"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "saw1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "emergency"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "b_shoes"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bl_shoes"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "o_shoes"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "o_shoes1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pie"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "vhammer"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "vhelmet"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "buckler"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chainmail"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chef"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chefhat"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rolling_pin"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "burger"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cola"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "donut1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "donut2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "faggot"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "fork"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "knife"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "spoon"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "butcher_knife"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "sec-case"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cigoff"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "cigon", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 6, 
+            "state": "zippoon", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "zippo"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "b_mask"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bedsheet"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "stamp"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cigpacket"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syringegun"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bible"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "classic_baton"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "brick"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "mousetrap"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lipstick"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lipstickopen"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "welding"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "plantbgone"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "nettle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "deathnettle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "spraycan"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hoe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "riot"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "kobskull"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cutlass0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "cutlass1", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "magboots"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninja_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rig_suit"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninja_mask"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rig_helm"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "toysword1", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "toysword0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "foamcrossbow"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "canister"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "plasticx"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blueprints", 
+            "hotspot": [
+                10.0, 
+                21.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "clownpack"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "securitypack"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "medicalpack"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blackskirt"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "firefighter"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "weldingoff"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pickaxe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "spickaxe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "upickaxe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ppickaxe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gpickaxe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "dpickaxe"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "shovel"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "jackhammer"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "latexballon"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "waiter"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "revballoon"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rev_headballoon"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndballoon"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "nun"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "imperium_monk"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "fireaxe0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "fireaxe1"
+        }
+    ]
+}

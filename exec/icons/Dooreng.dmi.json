@@ -1,0 +1,113 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "door_closed"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "door_locked"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "door_opening", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "door_deny", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "door_closing", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "door_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "o_door_opening", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "o_door_closing", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "door_spark", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "panel_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "welded"
+        }
+    ]
+}

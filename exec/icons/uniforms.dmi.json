@@ -1,0 +1,394 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pink"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grey"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "captain"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "barman"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "janitor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chef"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "medical"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chaplain"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sl_suit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "johnny"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nazi"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "brown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lawyer_black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lawyer_red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lawyer_blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightbrown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "aqua"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "purple"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightpurple"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightblue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellowgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "darkblue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lightred"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "darkred"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hop"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hos"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "toxins"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "genetics"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "atmos"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "engine"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "owl"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rainbow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mario"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "luigi"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "psyche", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "director"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chiefengineer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ba_suit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydroponics"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "green_suit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red_suit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black_suit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "teal_suit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "police"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "overalls"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tourist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pirate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "schoolgirl"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mime"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soviet"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "centcom"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "officer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tactifool"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blackskirt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blackshorts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blueshorts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "greenshorts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "greyshorts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redshorts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": ""
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "miner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "robotics2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "robotics"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "waiter"
+        }
+    ]
+}

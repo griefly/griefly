@@ -1,0 +1,1525 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": ""
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "r_wall"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "r_wall-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "r_wall-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "r_wall-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "r_wall-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "r_wall-5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "r_wall-6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metalfwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "metalfwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "metalfwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "metal15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "frwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "frwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "frwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "riveted"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "rock_Uranium", 
+            "delay": [
+                10.0, 
+                4.0, 
+                4.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_Iron"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "rock_Gold", 
+            "delay": [
+                10.0, 
+                4.0, 
+                4.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "rock_Diamond", 
+            "delay": [
+                10.0, 
+                4.0, 
+                4.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "rock_Silver", 
+            "delay": [
+                10.0, 
+                4.0, 
+                4.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "rock_Plasma", 
+            "delay": [
+                10.0, 
+                4.0, 
+                4.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_Adamantine"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_Coal"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_Clown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_side_w"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_side_e"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_side_n"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_side_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_corner_nw"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_corner_ne"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_corner_sw"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_corner_se"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwall15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rockvault"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstonevault"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alienvault"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamondfwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "diamondfwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "diamondfwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "goldfwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "goldfwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "goldfwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silverfwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "silverfwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "silverfwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uraniumfwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "uraniumfwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "uraniumfwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmafwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "plasmafwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "plasmafwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clownfwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "clownfwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "clownfwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstonefwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "sandstonefwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "sandstonefwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamond15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gold15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasma15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uranium15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silver15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iron15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstone15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown15"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "fakewindows"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "fakewindows2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "rock_Gibtonite", 
+            "delay": [
+                10.0, 
+                4.0, 
+                4.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "rock_Gibtonite_active", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_Gibtonite_inactive"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_highchance"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_labor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_lowchance"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rock_nochance"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "woodfwall_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "woodfwall_opening", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "woodfwall_closing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }
+    ]
+}

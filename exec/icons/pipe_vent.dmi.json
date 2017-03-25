@@ -1,0 +1,44 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "intactold"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "exposedold"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "intact"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "intact-f"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "exposed"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "exposed-f"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hvent"
+        }
+    ]
+}

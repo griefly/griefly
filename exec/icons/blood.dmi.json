@@ -1,0 +1,444 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "thisisfuckingstupid"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "itemblood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "handblood"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "uniformblood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "uniformblood2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "armorblood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "armorblood2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "helmetblood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "helmetblood2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "suitblood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "suitblood2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "maskblood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "maskblood2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "shoeblood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shoeblood2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "coatblood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "coatblood2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bloodyhands"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bloodyhands2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gibarm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibmid2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gibhead"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gibleg"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gibtorso"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibmid1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gib3"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gib4"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gib5"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gib6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gib1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gib2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibup1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibdown1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibmid3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibbl1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibbl2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibbl3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibbl4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gibbl5"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "u_ketchup"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "u_guilty"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "u_madman"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "u_psycopath"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "u_ketchup_l"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "u_guilty_l"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "u_dangerous_l"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "u_madman_l"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "u_psycopath_l"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "tracks"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xfloor1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xfloor2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xfloor3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xfloor4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xfloor5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xfloor6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xfloor7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "xgibhead"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "xgibtorso"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibup1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibdown1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibmid1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibmid2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibmid3"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "xgibarm"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "xgibleg"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "xtracks"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgib1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgib2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgib3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgib4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgib5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgib6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibbl1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibbl2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibbl3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibbl4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xgibbl5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "remains"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "remainsxeno"
+        }
+    ]
+}

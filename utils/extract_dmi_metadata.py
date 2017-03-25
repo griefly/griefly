@@ -8,7 +8,7 @@ if len(sys.argv) < 2:
     exit(-1)
 
 metadata = {"info" : {},
-            "states" : {}}
+            "states" : []}
 
 def extract_key_value(line):
     index = line.index('=')
@@ -33,8 +33,9 @@ for line in metadata_io:
         if not value.startswith('"') or not value.endswith('"'):
             raise ParseError("State '" + value + "' does not have quotes around itself")
         value = value[1:-1]
-        metadata["states"][value] = {}
-        current_object = metadata["states"][value]
+        current_object = {}
+        metadata["states"].append(current_object)
+        current_object["state"] = value;
         continue;
     if ',' in value:
         values = value.split(',')

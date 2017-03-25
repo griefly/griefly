@@ -1,0 +1,239 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "spark", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bullet"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cbbolt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "plasma", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "laser"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ibeam"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "u_laser", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bee"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "toxin", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 3, 
+            "state": "energy", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "magicm", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "fireball", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 3, 
+            "state": "spell", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pulse0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pulse1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pulse1_bl"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pulse0_bl"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ice_1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ice_2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "declone"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "heavylaser"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bolter"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 3, 
+            "state": "ion", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "SpearFlight"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "MSpearFlight"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "emitter"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "bluespace", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 3, 
+            "state": "energy2", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "xray"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gauss_silenced"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "gauss"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bluelaser"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "omnilaser"
+        }
+    ]
+}

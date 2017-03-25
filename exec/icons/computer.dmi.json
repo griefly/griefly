@@ -1,0 +1,802 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "aiupload", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "aiupload0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "aiuploadb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "airtunnel00", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "airtunnel01", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "airtunnel02", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "airtunnel10", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "airtunnel11", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "airtunnel12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 9, 
+            "state": "airtunnel0r", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 9, 
+            "state": "airtunnel0e", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 9, 
+            "state": "airtunnel1r", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 9, 
+            "state": "airtunnel1e", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "arcade", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "arcade0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "arcadeb", 
+            "delay": [
+                20.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "atmos"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tank"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alert:0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alert:1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "alert:2", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "atmos0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "atmosb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "comm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "comm0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "commb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "computer_generic", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "computer_generic0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "computer_genericb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "crew"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "crew0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "crewb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "dna", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dna0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dnab"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "engine"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "engine1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "engine2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "engine0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "engineb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "escape"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "escape0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "escapeb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "id"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "id0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "idb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "messyfiles"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "messyfiles0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "messyfilesb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "robot"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "robot0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "robotb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "powerold", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "power", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "power0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "powerb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "scanner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "scanner0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "scannerb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "old_security"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "old_security0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "old_securityb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "security_det"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "security_det0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "security_detb", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shuttle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shuttle0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shuttleb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "solarold"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "solar"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "solcon-o"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "solar0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "solarb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "teleport", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "teleport0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "teleportb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c_unpowered"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "old", 
+            "delay": [
+                5.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "oldb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "old0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "security"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "securityb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "security0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ai-fixer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "ai-fixer-empty", 
+            "delay": [
+                7.0, 
+                7.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ai-fixer-404"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ai-fixer-full"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "ai-fixer-on", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ai-fixerb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ai-fixer0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tank0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tankb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 44, 
+            "state": "cameras", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cameras0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "camerasb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "supply"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "supply0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "supplyb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "request"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "request0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "requestb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "explosive"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "explosiveb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "explosive0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndishuttle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndishuttle0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndishuttleb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alert:00"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alert:10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alert:20"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rdcomp"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rdcompb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rdcomp0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 9, 
+            "state": "rdcomp-inuse", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dummy"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "mecha", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mecha0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mechab"
+        }
+    ]
+}

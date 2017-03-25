@@ -1,0 +1,136 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "valve0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "valve1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "valve01", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "valve10", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "valve0nopower"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "valve1nopower"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hvalve0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hvalve1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "hvalve01", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "hvalve10", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hvalve0nopower"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hvalve1nopower"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tvalve1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tvalve0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "tvalve10", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "tvalve01", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tvalve1nopower"
+        }
+    ]
+}

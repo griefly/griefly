@@ -1,0 +1,928 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wrap_paper"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "deliveryPaper"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "c_tube"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fcardholder0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fcardholder1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "implantcase-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "implantcase-r"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "implantcase-b"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "implantpad-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "implantpad-1", 
+            "delay": [
+                5.0, 
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "implanter0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "implanter1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "broken_beer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rcd"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dnainjector"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dnainjector0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ointment"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "brutepack"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "handcuff"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "beartrap0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "beartrap1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cuff_red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cuff_blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cuff_yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cuff_green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cuff_pink"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cuff_orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cuff_cyan"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cuff_white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetblue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetorange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetred"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetpurple"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetyellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetrainbow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetbrown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetcaptain"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheethop"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetce"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheethos"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetmedical"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetcmo"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetrd"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetqm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetcentcom"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetsyndie"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetcult", 
+            "hotspot": [
+                17.0, 
+                8.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetwiz", 
+            "hotspot": [
+                17.0, 
+                8.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetclown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheetmime"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "earmuffs"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "nucleardisk", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "game_kit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "toyhammer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bike_horn"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "banana"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "banana_peel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "zippo"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "zippoon", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lighter-g"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lighter-g-on"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lighter-r"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lighter-r-on"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lighter-y"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lighter-y-on"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lighter-c"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lighter-c-on"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rods"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tile"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fr_tile"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tile_grass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tile-carpet"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tile-wood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_wire"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tile_e"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rack_parts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "table_parts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_tableparts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "reinf_tableparts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "poker_tableparts"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lipstick"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lipstick_red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lipstick_purple"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lipstick_jade"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lipstick_black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blueprints"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-wood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-metal"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-plasteel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-glass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-rglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-cloth"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-leather"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-wetleather"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-hairlesshide"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-hide"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-card"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-cat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-xeno"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-corgi"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-lizard", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheet-monkey", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_violet"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_neutral"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paint_blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shovel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "spade"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pickaxe", 
+            "hotspot": [
+                20.0, 
+                11.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "spickaxe", 
+            "hotspot": [
+                20.0, 
+                11.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dpickaxe"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gpickaxe", 
+            "hotspot": [
+                20.0, 
+                11.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "upickaxe"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ppickaxe"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "jackhammer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "handdrill"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "diamonddrill"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmacutter"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "welder"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "welder1", 
+            "delay": [
+                2.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cutters-y"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cutters"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "legacycutters"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "legacywrench"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wrench"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "legacyscrewdriver"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriver"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriver2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriver3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriver4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriver5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriver6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriver7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red_crowbar"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "crowbar"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fire_extinguisher0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fire_extinguisher1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "latexballon_blow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "latexballon_bursted"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "latexballon"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soap"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soapnt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soapdeluxe"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soapsyndie"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "miniFE0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "miniFE1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "towel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "nanoimplant", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nanoimplant0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellowcake"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red_phone"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "album"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "photo"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "camera_off"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "camera"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "film"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "razor", 
+            "hotspot": [
+                19.0, 
+                21.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "newscaster"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "Jaunter", 
+            "delay": [
+                5.0, 
+                5.0, 
+                5.0, 
+                5.0, 
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "resonator"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "mining_voucher", 
+            "delay": [
+                5.0, 
+                5.0, 
+                5.0, 
+                5.0, 
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "goliath_hide"
+        }
+    ]
+}

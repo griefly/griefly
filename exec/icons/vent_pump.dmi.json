@@ -1,0 +1,102 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "outold", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 2, 
+            "state": "inold", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "offold"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "off"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "out", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "in", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hoff"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "hout", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "hin", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }
+    ]
+}

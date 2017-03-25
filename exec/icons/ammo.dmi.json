@@ -1,0 +1,374 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357-5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357-6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357-7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "357"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rcd"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "speedloader_empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38-5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38-6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38-7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "38"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gshell"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bshell"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blshell"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stunshell"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38-5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38-6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38-7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "T38"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "45-10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "9x19p-8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "45-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "7.63x25m-9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "7.63x25m-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "5.56"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "9x19p-0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-casing"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "5.56s-30"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "5.56s-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "9mm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418-5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418-6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418-7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "418"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666-5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666-6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666-7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "666"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "MagSpear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "MagSpear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "12mm-20"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "12mm-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "12mm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "50ae-7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "50ae-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "50ae"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "75-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "75"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "75-8"
+        }
+    ]
+}

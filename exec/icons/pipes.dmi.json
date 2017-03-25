@@ -1,0 +1,553 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-db"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-f"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-f-lb"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-f-db"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "exposed"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "exposed-db"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "exposed-f"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "exposed-f-db"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "exposed-f-lb"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "one-way"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "one-way-db"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "connector"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "connector-f"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "high_capacity"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "high>low"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "meterX", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "meter16", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meter17"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "meter18", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "manifold"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "manifold-db"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "manifold-f"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "manifold-f-db"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "circ1-run", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "circ1-slow", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "circ1-off"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "circ1-p"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "circ2-off"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "circ2-p"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "circ2-run", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "circ2-slow", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "vent"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "vent-db"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "inlet"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "trunk"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "compressor"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "turbine"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "comp-o1", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "comp-o2", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "comp-o3", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "comp-o4", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "turb-o", 
+            "delay": [
+                3.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "inlet_filter-4", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "inlet_filter-3", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "inlet_filter-2", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "inlet_filter-1", 
+            "delay": [
+                4.0, 
+                4.0, 
+                4.0, 
+                4.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "inlet_filter-0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "vent_filter-0"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "vent_filter-4", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "vent_filter-3", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "vent_filter-2", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "vent_filter-1", 
+            "delay": [
+                4.0, 
+                4.0, 
+                4.0, 
+                4.0, 
+                4.0, 
+                4.0, 
+                4.0, 
+                4.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "discon"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-y"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-y-f"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-g"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-g-f"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-r"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-r-f"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-b"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-b-f"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-c"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "intact-c-f"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "exposed10"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "exposed01"
+        }
+    ]
+}

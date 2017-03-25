@@ -1,0 +1,893 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-meat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-robo"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-clear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shaker"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shotglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "beer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alebottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rumbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiskeybottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vodkabottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ginbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cognacbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "goldschlagerbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "patronbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orangejuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "limejuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cream"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tomatojuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_clear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_brown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gintonicglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiskeyglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ginvodkaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tequillaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rumglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "kahluaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wineglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cognacglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cubalibreglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "beepskysmashglass", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "manlydorfglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "martiniglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "driestmartiniglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "goldschlagerglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "patronglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiskeycolaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "irishcreamglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tequillasunriseglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriverglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bloodymaryglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bravebullglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiterussianglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "gargleblasterglass", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 14, 
+            "state": "doctorsdelightglass", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "aleglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "beerglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "toxinsspecialglass", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vermouthglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vodkatonicglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "manhattanglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "proj_manhattanglass", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ginfizzglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "longislandicedteaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "threemileislandglass", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "margaritaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "irishcoffeeglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "b52glass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "atomicbombglass", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiskeysodaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiskeysodaglass2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_brown2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blackrussianglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "Space_mountain_wind_glass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "thirteen_loko_glass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dr_gibb_glass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "space-up_glass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mojito"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "hell", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "berryjuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bahama_mama"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "banana"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carrotjuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "jar"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "jar_metroid"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "jar_what"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sodawater"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tonic"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cola"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "purple_can"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ice_tea_can"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "energy_drink"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "thirteen_loko"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "space_mountain_wind"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dr_gibb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "starkist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "space-up"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lemon-lime"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "milk"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soymilk"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "coffee"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tea"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "water"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "water_cup"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "water_cup_e"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "flask_old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "flask"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "britcup"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ramen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sbitenglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red_meadglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meadglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iced_beerglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grogglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "nuka_colaglass", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soy_latte"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cafe_latte"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "acidspitglass", 
+            "delay": [
+                30.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "amasecglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "neurotoxinglass", 
+            "delay": [
+                30.0, 
+                3.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hippiesdelightglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bananahonkglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "golden_cup"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 12, 
+            "state": "singulo", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chocolateglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "lemonglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "poisonberryjuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "silencerglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bottleofnothing"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nothing"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "holyflask"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "aloe"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "andalusia"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alliescocktail"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "snowwhite"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "antifreeze"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "b&p"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "demonsblood", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "booger"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "devilskiss"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "changelingsting", 
+            "delay": [
+                10.0, 
+                10.0, 
+                10.0, 
+                10.0, 
+                10.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "irishcarbomb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicatebomb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "erikasurprise"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vermouthbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "kahluabottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tequillabottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "winebottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "iceglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "icedcoffeeglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "broken"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "broken_bottle"
+        }
+    ]
+}

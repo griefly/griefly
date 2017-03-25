@@ -1,0 +1,736 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "fire"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fire2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bedsheet"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bedsheet2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "armor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "armor2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "detective-armor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective-armor2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_general"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_general2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_virology"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_virology2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_security"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_security2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_janitor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_janitor2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_scientist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_scientist2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bombsuit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuit2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bombsuitsec"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuitsec2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rad"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rad2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rad_old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rad_old2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "space"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "space2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-green2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-blue2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-med"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-med2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-orange2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-red2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-black-engie"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-engie2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-green2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-green-dark"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-green-dark2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-orange2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-blue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rig"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rig2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 4, 
+            "state": "void", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "void2", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "straight_jacket"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "straight_jacket2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "thermal"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "thermal2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "heavy"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "heavy2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "swat2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "deathsquad"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "deathsquad2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "labcoat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "labcoat2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "vest"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vest2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bombvest"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombvest2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tdgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tdgreen2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tdred"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tdred2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wizard-fake"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wizard-fake2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wizard2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "redwizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redwizard2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "violetwizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "violetwizard2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninja-old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninja2-old"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninja"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninjan"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninjanf"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninjak"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninjakf"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninja2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninjan2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninjanf2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninjak2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninjakf2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "santa"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "santa2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "judge"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "judge2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "detective"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "centcom"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "centcom2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "oldcaparmor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "oldcaparmor2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caparmor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "caparmor2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chef"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chef2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "apron"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "apron2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pirate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pirate2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "plaguedoctor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plaguedoctor2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hos"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hos2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "labcoat_cmo"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "labcoat_cmo2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hazard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hazard2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "firesuit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "firesuit2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "labgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "labgreen2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "suspenders"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "suspenders2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "surgeon"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "surgeon2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "marisa"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "marisa2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "captunic"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "captunic2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "nun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nun2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chaplain_hoodie"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chaplain_hoodie"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "imperium_monk"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "imperium_monk2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": ""
+        }
+    ]
+}

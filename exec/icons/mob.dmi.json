@@ -1,0 +1,744 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 22, 
+            "state": "h2monkey", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 22, 
+            "state": "monkey2h", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blank"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "handcuff1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "legcuff1", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "id"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "m-none"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rev"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rev_head"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "synd"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cultOLD"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 12, 
+            "state": "liquify", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 12, 
+            "state": "liquifybckup", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "reappear", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "cloak", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 7, 
+            "state": "uncloak", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "shadow", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 8, 
+            "state": "phaseout", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 7, 
+            "state": "phasein", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "blspell", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": ""
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "empty"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 3, 
+            "state": "cult_s", 
+            "delay": [
+                2.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghostian"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghostian2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghostking"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "baby roro"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "baby roro eat", 
+            "delay": [
+                6.0, 
+                10.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "baby roro dead"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "baby roro dead-nocore"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "adult roro"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "adult roro eat", 
+            "delay": [
+                6.0, 
+                10.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "phazon metroid", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "phazon metroid glow", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 14, 
+            "state": "gibbed-h", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 13, 
+            "state": "gibbed-m", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 12, 
+            "state": "gibbed-r", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 12, 
+            "state": "gibbed-a", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 13, 
+            "state": "dust-a", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 13, 
+            "state": "dust-h", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 11, 
+            "state": "dust-m", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 13, 
+            "state": "dust-r", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninja"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninjaf"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "horror"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 4, 
+            "state": "nim", 
+            "delay": [
+                1.0, 
+                3.0, 
+                5.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 10, 
+            "state": "god", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shade"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shade_dead"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "armour"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "artificer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "behemoth"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "harvester"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "ghost2", 
+            "delay": [
+                5.0, 
+                5.0, 
+                5.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "roro egg-growing"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "roro egg-grown"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 12, 
+            "state": "phase_shift", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 12, 
+            "state": "phase_shift2", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 4, 
+            "state": "floating", 
+            "delay": [
+                10.0, 
+                10.0, 
+                10.0, 
+                10.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_pink"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_cyan"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_dblue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_dred"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_dgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_dcyan"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_grey"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_dyellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ghost_dpink"
+        }
+    ]
+}

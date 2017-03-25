@@ -1,0 +1,64 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "empty"
+        }
+    ]
+}

@@ -1,0 +1,102 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "filter"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "filter-off"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pipepump-stop"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "pipepump-run", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "filter-o2", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "filter-n2", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "filter-co2", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "filter-tox", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "filter-bypass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "filter-emag", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "filter-spark", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "filter-open"
+        }
+    ]
+}

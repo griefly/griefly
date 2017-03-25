@@ -1,0 +1,37 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "state1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "state2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "state with spaces"
+        }, 
+        {
+            "dirs": 1, 
+            "delay": [
+                1.0, 
+                3.0, 
+                2.0, 
+                10.0
+            ], 
+            "state": "animated", 
+            "rewind": 1, 
+            "frames": 4, 
+            "loop": 4
+        }
+    ]
+}

@@ -1,0 +1,341 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "launcherbtt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "launcheract"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "anom", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shards"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 32, 
+            "state": "bhole2", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "shieldon", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shieldoff"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "shieldonbr", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shieldoffbr"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ash"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "weldtank"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "watertank"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stool"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chair"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "e_chair0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "e_chair1", 
+            "delay": [
+                5.0, 
+                5.0
+            ], 
+            "loop": 65535
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "e_chairs", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ], 
+            "loop": 41
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "e_chairo0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "e_chairo1", 
+            "delay": [
+                5.0, 
+                5.0
+            ], 
+            "loop": 65535
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "e_chairos", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rack_old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rack"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bed"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "e_bed0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "e_bed1", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "e_beds", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ], 
+            "loop": 41
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "e_bedo0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "e_bedo1", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "e_bedos", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dispenser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "beertankTEMP"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "navbeacon0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "navbeacon0-f"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "navbeacon1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "navbeacon1-f"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "boxingbell"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "pews"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "barrier0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "barrier1", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "immrod"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "effigy", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }
+    ]
+}

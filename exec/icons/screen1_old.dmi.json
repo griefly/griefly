@@ -1,0 +1,677 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": ""
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "backup"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "internal0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "internal1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "internal2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fire0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fire1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "oxy0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "oxy1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tox0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tox1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pull0b"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "unequip"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health0old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "health6", 
+            "delay": [
+                5.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pull1b"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "temp0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "temp1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "temp2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "temp3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "temp4", 
+            "delay": [
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "temp-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "temp-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "temp-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "temp-4", 
+            "delay": [
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "block"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pull0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pull1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_throw_off"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_drop"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "equip"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "center"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_hand"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hand"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "x"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "x2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "arrow", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                2.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blank"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 10, 
+            "state": "flash", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 20, 
+            "state": "e_flash", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_resist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sleep0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rest0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sleep1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rest1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "other"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gloves"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shoes"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mach1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "harm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "help"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "disarm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grab"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "selector"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "intent"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glasses"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ears"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dither50"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blurry"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hair"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "belt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "move"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "facingOLD"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "walkingOLD"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "runningOLD"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dither12g"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grabbed"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grabbed1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grabbed+1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "reinforce"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "!reinforce"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "disarm/kill"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "disarm/killf", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "disarm/kill1", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blank"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "x3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dark128"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dark64"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dark32"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "act_throw_on"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 27, 
+            "state": "druggy", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "hotspot": [
+                12.0, 
+                22.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 40, 
+            "state": "noise", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alien"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "filler"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pocket"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blocked"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s_arrow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "facing"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "walking"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "running"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "decoline"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "BETA"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nutrition0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nutrition1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nutrition2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nutrition3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nutrition4"
+        }
+    ]
+}

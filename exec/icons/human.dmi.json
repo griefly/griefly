@@ -1,0 +1,259 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blank"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caucasian1_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caucasian1_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caucasian2_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caucasian2_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caucasian3_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "caucasian3_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "latino_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "latino_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "mediterranean_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "mediterranean_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "asian1_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "asian1_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "asian2_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "asian2_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "arab_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "arab_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "indian_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "indian_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "african1_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "african1_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "african2_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "african2_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "albino_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "albino_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ghost"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "husk_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 7, 
+            "state": "body_cloaked", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "skeleton_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lizard_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "lizard_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "jelly_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "jelly_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "golem_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "golem_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "plant_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "plant_f_s"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plant_dead"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "zombie_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "shadow_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "slime_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "slime_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "adamantine_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "adamantine_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "fly_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "fly_f_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pod_m_s"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pod_f_s"
+        }
+    ]
+}

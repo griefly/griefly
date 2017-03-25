@@ -1,0 +1,369 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fire"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bomb"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "armor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective-armor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "heavy"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "swat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "deathsquad"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "space"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-green-dark"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-med"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-black-engie"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rig"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "void"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_general"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_virology"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_security"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_janitor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_scientist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rad"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rad_old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "labcoat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vest"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "apron"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chef"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "santa"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "death"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tdgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tdred"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "straight_jacket"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "johnny"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nazi"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "centcom"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "oldcaparmor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "caparmor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "judge"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pirate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plaguedoctor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hos"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "labcoat_cmo"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wizard-fake"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redwizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "violetwizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninja-old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninja"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninjan"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninjanf"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninjak"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninjakf"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hazard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "firesuit", 
+            "hotspot": [
+                3.0, 
+                24.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "labgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "surgical"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuitsec"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "marisa"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "captunic"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nun"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chaplain_hoodie"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "imperium_monk"
+        }
+    ]
+}

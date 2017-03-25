@@ -1,0 +1,566 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "girder"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": ""
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "displaced"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "reinforced"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "melted"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grille"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "brokengrille"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "latticefull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "window"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "rwindow"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "twindow"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "twindowold"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "fwindow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "unwall", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "ungirder", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "unr_girder", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "r_girder"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "table_dir"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "table"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "table_1tilethick"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "table_1tileendtable"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "table_middle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "table_dir2"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "table_dir3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "woodenbarricade"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "reinftable"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "reinftable_dir"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "reinftable_1tilethick"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "reinftable_1tileendtable"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "reinftable_middle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "reinftable_dir2"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "reinftable_dir3"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "table_horizontal"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "table_vertical"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "window0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rwindow14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "twindow15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ladder00"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ladder10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ladder01"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ladder11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "woodtable"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "woodtable_dir", 
+            "hotspot": [
+                25.0, 
+                3.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "woodtable_1tilethick"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "woodtable_1tileendtable"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "woodtable_middle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "woodtable_dir2"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "woodtable_dir3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "safe"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "safe-open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floorsafe"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floorsafe-open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "linenbin-full"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "linenbin-half"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "linenbin-empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pokertable"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "pokertable_dir"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "pokertable_1tilethick"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pokertable_1tileendtable"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pokertable_middle"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pokertable_dir2"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "pokertable_dir3"
+        }
+    ]
+}

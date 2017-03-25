@@ -1,0 +1,19 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hotspot", 
+            "hotspot": [
+                13.0, 
+                9.0, 
+                1.0
+            ]
+        }
+    ]
+}

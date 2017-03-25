@@ -1,0 +1,29 @@
+{
+    "info": {
+        "width": 288, 
+        "version": 4.0, 
+        "height": 288
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "singularity_s9old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "singularity_s9", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "large"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "medium"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "small"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmalarge"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmamedium"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plasmasmall"
+        }
+    ]
+}

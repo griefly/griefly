@@ -1,0 +1,748 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pie"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "waffles"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mburger"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hburger"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "assburger"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "brainburger"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cola"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donut1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donut2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "faggot"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "beer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chips"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "candy"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "coffee"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "water"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "roburger"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "spice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sugar"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "flour"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "egg"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donkpocket"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donutbox"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donutbox0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bowl"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzatray"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzacrust"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzacrust2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzasauce"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzacheese"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzacheese2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzapepperoni"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzabrains"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pizzashrooms"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggbox"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donutbox5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donutbox4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donutbox3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donutbox2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "donutbox1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "berrypile"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chilipepper"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "eggplant"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "icepepper"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-meat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "soybeans"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shake-robo"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "coldsauce"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hotsauce"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tomato"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wheat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ketchup"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "milk"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-clear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alco-empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shaker"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shotglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xenomeat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "amanita"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "angel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "libertycap"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plumphelmet"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chanterelle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xburger"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meatbread"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "meatbreadslice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cheesewheel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cheesewedge"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tray"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "omelette"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "muffin"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carrot"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_clear"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_brown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rumbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiskeybottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vodkabottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ginbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "winebottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tequillabottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "kahluabottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cognacbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vermouthbottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tonic"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orangejuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gintonicglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiskeyglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ginvodkaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tequillaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rumglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "limejuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "kahluaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wineglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cognacglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cubalibreglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alebottle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "beepskysmashglass", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "manlydorfglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cream"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tomatojuice"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "martiniglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiskeycolaglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "irishcreamglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tequillasunriseglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "screwdriverglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bloodymaryglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bravebullglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiterussianglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "gargleblasterglass", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 14, 
+            "state": "doctorsdelightglass", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "aleglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "beerglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "toxinsspecialglass", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vermouthglass"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "glass_red"
+        }
+    ]
+}

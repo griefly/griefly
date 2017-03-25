@@ -1,0 +1,458 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "atmos"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "spectrometer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "spectrometer_s", 
+            "delay": [
+                4.0, 
+                4.0, 
+                4.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "adv_spectrometer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "adv_spectrometer_s", 
+            "delay": [
+                4.0, 
+                4.0, 
+                4.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "health"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydro"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "locator"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "flash"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "flash2", 
+            "delay": [
+                1.0, 
+                1.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sflash"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "sflash2", 
+            "delay": [
+                1.0, 
+                1.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "flashburnt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shield0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "shield1", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "hand_tele", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "motion0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "motion1", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "motion2", 
+            "delay": [
+                1.0, 
+                5.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "motion3", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "forensic0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "forensic1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "t-ray0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "t-ray1", 
+            "delay": [
+                1.0, 
+                10.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "emp"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "empar", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "powersink0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "powersink1", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pinoff"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 2, 
+            "state": "pinonfar", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 2, 
+            "state": "pinonmedium", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 2, 
+            "state": "pinonclose", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "pinondirect", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "pinonnull", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 2, 
+            "state": "pinonalert", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndbeacon"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "multitool"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tonercartridge"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "batterer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "battererburnt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "taperecorder_idle"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "taperecorder_recording", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "taperecorder_playing", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "taperecorder_empty"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tape_white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tape_blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tape_red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tape_yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tape_purple"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ribbonoverlay"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 6, 
+            "state": "mindflash", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "mindflash2", 
+            "delay": [
+                1.0, 
+                2.0, 
+                5.0
+            ], 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mindflashburnt", 
+            "rewind": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "multitool_red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pointer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pointer_red_laser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pointer_blue_laser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pointer_green_laser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pointer_purple_laser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "camera_bug", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mining"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "memorizer"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "memorizerburnt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 4, 
+            "state": "memorizer2", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }
+    ]
+}

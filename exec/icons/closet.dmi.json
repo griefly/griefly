@@ -1,0 +1,495 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "closed"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mixed"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grey"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pink"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bioopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_general"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_generalopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_virology"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_virologyopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_security"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_securityopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_janitor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_janitoropen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_scientist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_scientistopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicateopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate1open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "emergency"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "emergencyopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "secure"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "secure1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "secureopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "secureoff"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "securebroken", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                60.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "securebrokenopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "medical"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "medical1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "medicalopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "medicalbroken"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "coffin_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "coffin"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wall-locker"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wall-locker1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wall-lockeropen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wall-lockeroff"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "wall-lockerbroken", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fridge1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fridgeopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fridge"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fridgebroken"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "firecloset"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireclosetopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "toolcloset"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "toolclosetopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mining"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "miningopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "miningsec"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "miningsec1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "miningsecoff"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "miningsecbroken", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                60.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuitopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuitsecopen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuitsec"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "extinguisher10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "extinguisher11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "extinguisher00"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "extinguisher01"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydrant"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydrant_open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "fireaxe1100opening", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe1000"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe1100"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe0000"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "fireaxe1000closing", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ], 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "fireaxe0100opening", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 5, 
+            "state": "fireaxe0000closing", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe1010"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe1020"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe1030"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe1141"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe0010"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe0020"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe0030"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe0141"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fireaxe0100"
+        }
+    ]
+}

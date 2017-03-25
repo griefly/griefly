@@ -1,0 +1,749 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "helmet"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "helmet2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_general"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_general2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_virology"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_virology2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_security"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_security2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_janitor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_janitor2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bombsuit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuit2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bombsuitsec"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bombsuitsec2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bio_scientist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio_scientist2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rad"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rad2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "space"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "space2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "capspace"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "capspace2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-green2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-green-dark"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-green-dark2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-orange2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-blue2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-black2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-green"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-green2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-blue2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-med"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-med2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-orange2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-red2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-engie"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate-helm-black-engie2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "swat2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat-alt"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "swat-alt2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "syndicate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "syndicate2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tophat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tophat2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cake0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cake02"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 3, 
+            "state": "cake1", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "cake12", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "thunderdome"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "thunderdome2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wizard2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "santahat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "santahat2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pwig"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pwig2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "detective"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "centcom"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "centcom2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "captain"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "captain2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "paper"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "paper2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "security"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "security2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "viking"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "viking2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chef"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chef2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hardhat0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hardhat02"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hardhat1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hardhat12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mario"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "mario2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "luigi"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "luigi2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bowser"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bowser2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rig-old"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rig-old2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "witch"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "witch2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "hoscap"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hoscap2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "policehelm"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "policehelm2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "flat_cap"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "flat_cap2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cowboy"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cowboy2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "pirate"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pirate2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bandana"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bandana2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "plaguedoctor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plaguedoctor2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "headslime"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "headslime2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "beret"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "beret2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ushankadown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ushankadown2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "ushankaup"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ushankaup2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wizard-fake"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wizard-fake2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "rig"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rig2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "redwizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redwizard2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bunny"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bunny2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "violetwizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "violetwizard2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 5, 
+            "state": "kitty", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "kitty2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "kittyinner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "kittyinner2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "weldingup", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "weldingup2", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "welding", 
+            "loop": 1
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "welding2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "marisa"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "marisa2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninja"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninja2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "void"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "void2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "capcap"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "capcap2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chaplain_hood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chaplain_hood2"
+        }
+    ]
+}

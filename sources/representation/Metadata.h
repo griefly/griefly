@@ -1,14 +1,11 @@
 #pragma once
 
-#include <map>
-#include <string>
-#include <vector>
-
-#include <png.h>
-
 #include <qglobal.h>
+
+#include <QMap>
 #include <QString>
-#include <QTextStream>
+#include <QVector>
+#include <QJsonObject>
 
 class ImageMetadata
 {
@@ -19,7 +16,7 @@ public:
         SpriteMetadata()
         {
             dirs = 1;
-            rewind = false;
+            rewind = 0;
             frames_data.resize(1);
             first_frame_pos = 0;
             loop = -1;
@@ -32,21 +29,16 @@ public:
         {
             FrameMetadata()
             {
-                delay = 0;
-           /*     state_w = 0;
-                state_h = 0; TODO */
+                delay = 0.0;
             }
-
-            quint32 delay;
-         /*   quint32 state_w;
-            quint32 state_h;*/
+            double delay;
         };
-        std::vector<FrameMetadata> frames_data;
+        QVector<FrameMetadata> frames_data;
 
-        std::vector<int> frames_sequence;
+        QVector<int> frames_sequence;
         
-        quint32 dirs;
-        bool rewind;
+        int dirs;
+        int rewind;
         int loop;
         int hotspot[3];
 
@@ -73,16 +65,13 @@ private:
 
     bool valid_;
 
-    QString dmi_version_;
+    double version_;
 
-    png_uint_32 total_width_;
-    png_uint_32 total_height_;
+    int width_;
+    int height_;
 
-    quint32 width_;
-    quint32 height_;
-
-    bool ParseDescription(QTextStream& desc);
+    void ParseInfo(const QJsonObject& metadata);
     void MakeSequence();
 
-    std::map<QString, SpriteMetadata> metadata_;
+    QMap<QString, SpriteMetadata> sprites_metadata_;
 };

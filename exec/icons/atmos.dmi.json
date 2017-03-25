@@ -1,0 +1,281 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "can-o3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "can-o2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "can-o1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "can-o0", 
+            "delay": [
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redws"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grey"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "can-open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "can-connector"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orange-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grey-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blue-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redws-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "can-oT"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vent0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vent1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vent2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "vent-p"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pscrubber:0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "pscrubber:1", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pscrubber:T0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "pscrubber:T1", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "psiphon:0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "psiphon:1", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "psiphon:T0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "psiphon:T1", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "heater1", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "heater-p"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "heater1-h", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "scrubber:0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "scrubber:1", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "scrubber:T"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siphon:0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "siphon:1", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siphon:T"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheater0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 7, 
+            "state": "sheater1", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sheater-open"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellow-1"
+        }
+    ]
+}

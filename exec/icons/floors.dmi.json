@@ -1,0 +1,1690 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plating"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "dark"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bar"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stage_bottom"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stage_left"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stage_bleft"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "stage_stairs"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cafeteria"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grimy"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "red"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "redcorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redfull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "whitered"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "whiteredcorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiteredfull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "blue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "bluecorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluefull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "whiteblue"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "whitebluecorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whitebluefull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "green"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "greencorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "greenfull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "whitegreen"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "whitegreencorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whitegreenfull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "yellowsiding"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "yellowcornersiding"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "yellow"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "yellowcorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "yellowfull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "whiteyellow"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "whiteyellowcorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whiteyellowfull"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "chapel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": ""
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "engine"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bcircuit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bcircuitoff"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gcircuit"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "gcircuitoff"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "neutral"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "neutralfull"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "neutralcorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "orange"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "orangecorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orangefull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "whitehall"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "whitecorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "arrival"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "arrivalcorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "escape"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "escapecorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "purple"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "purplecorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "purplefull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "whitepurple"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "whitepurplecorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whitepurplefull"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cmo"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "black"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "blackcorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "caution"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cautioncorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grass1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grass2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grass3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "grass4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floorgrime"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "L16"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "solarpanel"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "freezerfloor"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "damaged1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "damaged3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "damaged2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "panelscorched"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floorscorched1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floorscorched2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "damaged4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "damaged5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "platingdmg1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "platingdmg2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "platingdmg3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "delivery"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bot"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "derelict16"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid_dug"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydrofloor"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "warning"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "warningcorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "brownold"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "browncornerold"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "brown"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "browncorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "carpetside"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "carpetcorner"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "carpet"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpetnoconnect"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "carpetsymbol"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "redyellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redyellowfull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "redblue"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "bluered"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redbluefull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "redgreen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "redgreenfull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "greenyellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "greenyellowfull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "greenblue"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "greenbluefull"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "blueyellow"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "blueyellowfull"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "showroomfloor"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "podhatch"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "podhatchcorner"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "elevatorshaft"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "warnplate"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "warnplatecorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "warnwhite"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "warnwhitecorner"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "vault"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "loadingarea"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "loadingareadirty1"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "loadingareadirty2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 16, 
+            "state": "light_on_flicker1", 
+            "delay": [
+                122.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 16, 
+            "state": "light_on_flicker2", 
+            "delay": [
+                100.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 16, 
+            "state": "light_on_flicker3", 
+            "delay": [
+                87.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 16, 
+            "state": "light_on_flicker4", 
+            "delay": [
+                70.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 16, 
+            "state": "light_on_broken", 
+            "delay": [
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "light_on", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "light_off"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "light_broken"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rockvault"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "sandstonevault"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "alienvault"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "light_on-r", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "light_on-g", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "light_on-y", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "light_on-b", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "light_on-p", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "light_on-w", 
+            "delay": [
+                1.0, 
+                1.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "siding15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wall_thermite"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood_siding15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroid12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroidplating"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "asteroidfloor"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "asteroidwarning"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "barber"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cult"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cultdamage"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cultdamage2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cultdamage3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cultdamage4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cultdamage5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cultdamage6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cultdamage7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whitebot"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "whitedelivery"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "plaque"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 8, 
+            "state": "lava", 
+            "delay": [
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0, 
+                3.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood-broken"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood-broken2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood-broken3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood-broken4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood-broken5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood-broken6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wood-broken7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet0-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet1-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet2-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet3-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet4-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet5-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet5-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet6-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet6-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet7-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet7-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet7-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet7-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet8-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet9-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet9-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet10-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet10-8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet11-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet11-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet11-8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet11-12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet12-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet13-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet13-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet13-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet13-5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet14-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet14-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet14-8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet14-10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet15-0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "carpet-broken"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "floor4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand4"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand5"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand6"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand7"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand8"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand9"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand10"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand11"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand12"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand13"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand14"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "ironsand15"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "recharge_floor", 
+            "delay": [
+                6.0, 
+                6.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 2, 
+            "state": "recharge_floor_asteroid", 
+            "delay": [
+                6.0, 
+                6.0
+            ]
+        }
+    ]
+}

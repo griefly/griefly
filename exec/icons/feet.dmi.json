@@ -1,0 +1,214 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "detective"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "detective2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "boots"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "boots2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "chef"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chef2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "white"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "white2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "clown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "clown2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "red"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "red2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "wizard"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "wizard2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "galoshes"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "galoshes2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "swat2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "black"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "black2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "brown"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "brown2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "orange"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orange2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "orange1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "orange12"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "tourist"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "tourist2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "cowboy"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "cowboy2"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "magboots-old0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "magboots-old02"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "magboots-old1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "magboots-old12"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "magboots0"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "magboots02"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "magboots1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "magboots12"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "swat-new"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "s-ninja"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "s-ninja2"
+        }
+    ]
+}

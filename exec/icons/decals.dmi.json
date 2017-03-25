@@ -1,0 +1,234 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0, 
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bio"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "doors"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "fire"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nosmoking2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nosmoking"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "securearea"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "shock"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "space"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "deathsposal"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "pods"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "goldenplaque"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "atmosplaque"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "kiddieplaque"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluecross"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "bluecross2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "radiation"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "examroom"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "monkey_painting"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xenobio"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "science1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "science2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chemistry1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "chemistry2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydro1"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydro2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hydro3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "xenobio2"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "map-left"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "map-right"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "map-left-MS"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "map-right-MS"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "map-left-DS"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "map-right-DS"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "direction_eng"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "direction_supply"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "direction_sci"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "direction_sec"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "direction_med"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "direction_evac"
+        }, 
+        {
+            "dirs": 4, 
+            "frames": 1, 
+            "state": "direction_bridge"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "backing"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "safety"
+        }, 
+        {
+            "dirs": 8, 
+            "frames": 1, 
+            "state": "roomnum"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "nanotrasen"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "map-pubby"
+        }
+    ]
+}
