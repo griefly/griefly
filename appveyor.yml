@@ -5,7 +5,7 @@ environment:
   QT5DIR: C:\Qt\5.4
 
 install:
-  # Nothing
+  - cmd: SET CMAKE_PREFIX_PATH=%QT5DIR%\msvc2013_opengl
 
 build_script:
   - cmd: cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On
