@@ -5,21 +5,7 @@ environment:
   QT5DIR: C:\Qt\5.4
 
 install:
-  # Install libpng
-  - ps: wget https://sourceforge.net/projects/libpng/files/libpng16/older-releases/1.6.12/lpng1612.7z/download -Outfile lpng1612.7z -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
-  - cmd: 7z x lpng1612.7z
-  - cmd: SET PNG_INCLUDE_DIR=%CD%\lpng1612
-  - cmd: SET PNG_LIBRARY_DIR=%CD%\lpng1612\projects\vstudio\Release
-  # Install zlib
-  - ps: wget https://github.com/madler/zlib/archive/v1.2.8.zip -Outfile zlib128.zip
-  - cmd: 7z x zlib128.zip
-  - cmd: SET ZLIB_ROOT=%CD%\zlib-1.2.8
-  # Build libpng
-  - cmd: cd lpng1612\projects\vstudio
-  - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86'
-  - cmd: msbuild vstudio.sln /tv:12.0 /p:Configuration=Release
-  - cmd: cd %APPVEYOR_BUILD_FOLDER%
-  - cmd: SET CMAKE_PREFIX_PATH=%QT5DIR%\msvc2013_opengl
+  # Nothing
 
 build_script:
   - cmd: cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On

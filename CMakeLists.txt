@@ -95,27 +95,6 @@ if(PYTHONINTERP_FOUND)
     message(STATUS "Python has been found, version: ${PYTHON_VERSION_STRING}")
 endif()
 
-###########################
-#
-# PNG search
-#
-###########################
-if(WIN32)
-    set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH}
-        ${PNG_INCLUDE_DIR}
-        $ENV{PNG_INCLUDE_DIR})
-    set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH}
-        ${PNG_LIBRARY_DIR}
-        $ENV{PNG_LIBRARY_DIR})
-    set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}
-        ${ZLIB_ROOT}
-        $ENV{ZLIB_ROOT})
-endif()
-find_package(PNG REQUIRED)
-if(PNG_FOUND)
-    message(STATUS "PNG has been found, version: ${PNG_VERSION_STRING}, include: ${PNG_INCLUDE_DIRS}, libs: ${PNG_LIBRARIES}")
-endif()
-
 ######################
 #
 # GTEST "search"
@@ -279,11 +258,6 @@ list(APPEND SOURCES "${CMAKE_BINARY_DIR}/Version.cpp")
 qt5_wrap_ui(FORMS_HEADERS ${FORMS})
 
 add_executable(KVEngine WIN32 ${SOURCES} ${HEADERS} ${FORMS_HEADERS} ${TESTS})
-
-# Add PNG lib
-add_definitions(${PNG_DEFINITIONS})
-include_directories(${PNG_INCLUDE_DIRS})
-target_link_libraries(KVEngine ${PNG_LIBRARIES})
 
 # Add Qt5 lib
 qt5_use_modules(KVEngine Core)
