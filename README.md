@@ -12,12 +12,10 @@ Dependencies
 -------------
 1. Some C++ compiler (it works at least with compiler from **Visual Studio 2012** and **g++**)
 2. Qt5 (e.g., **Desktop Qt 5.4.0 MSVC2012 OpenGL 32bit**). Qt Creator is optional, but desired
-3. libpng
-4. zlib
-5. Python 2.7
-6. Golang 1.5+ (https://golang.org/dl/)
-7. Git
-8. CMake 3.*
+3. Python 2.7
+4. Golang 1.5+ (https://golang.org/dl/)
+5. Git
+6. CMake 3.*
 
 How to build everything on Windows
 ----------------------------------
@@ -25,19 +23,11 @@ _If you have any issues during the build process please report them_
 
 It should be possible to build everything without Qt Creator, but the guide assumes that Qt Creator is used.  
 
-1. All tools and libs from the depencies list should be available on your machine
+1. All tools and libs from the depencies list should be available on your machine. Tools and libs should be present in `%PATH%`
 2. Open CMakeLists.txt in Qt Creator  
    Open Project -> Select CMakeLists.txt -> Select build folder
-3. Environment variables  
-   In the opened project: Projects _(left column in Qt Creator)_ -> Build Environment  
-   It is needed to set environment or usual CMake variables for some libs. Other tools and libs should be present in `%PATH%`, so if you have installed them then everything should be fine.
-   Mine setted as:  
-  `Set PNG_INCLUDE_DIR to C:\Users\Kremius\Documents\ExternalLibs\lpng1612`  
-  `Set PNG_LIBRARY_DIR to C:\Users\Kremius\Documents\ExternalLibs\lpng1612\projects\vstudio\Release`  
-  `Set ZLIB_ROOT to C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll`  
-  If you cannot open the environment variables table (Qt Creator 3.\* does not allow that before successfull CMake generation) or prefer usual variables in CMake (Qt Creator 4.\* allows to use them in convenient way) then you can set them as `-DVARIABLE=VALUE` (e.g. `-DZLIB_ROOT=C:\Users\Kremius\Documents\ExternalLibs\zlib128-dll`)
-4. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
-5. Build the project.  
+3. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
+4. Build the project.  
    Client executables will appear in the `exec` folder, and the server executable will appear in the `griefly-server` folder.  
    Client executables depend from various dlls, so it is needed to manually place them to the `exec` folder.
 
