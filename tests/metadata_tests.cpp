@@ -45,7 +45,7 @@ TEST(ImageMetadata, Init)
     const ImageMetadata::SpriteMetadata& sprite
         = metadata.GetSpriteMetadata("state2");
     EXPECT_EQ(sprite.dirs, 4);
-    EXPECT_EQ(sprite.rewind, false);
+    EXPECT_EQ(sprite.rewind, 0);
     EXPECT_EQ(sprite.loop, -1);
     for (int i = 0; i < 3; ++i)
     {
@@ -115,7 +115,7 @@ TEST(ImageMetadata, InitHotspot)
     const ImageMetadata::SpriteMetadata& sprite
         = metadata.GetSpriteMetadata("hotspot");
     EXPECT_EQ(sprite.dirs, 1);
-    EXPECT_EQ(sprite.rewind, false);
+    EXPECT_EQ(sprite.rewind, 1);
     EXPECT_EQ(sprite.loop, -1);
     EXPECT_EQ(sprite.hotspot[0], 13);
     EXPECT_EQ(sprite.hotspot[1], 9);
