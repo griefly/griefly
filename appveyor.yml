@@ -1,21 +1,20 @@
 version: 1.0.{build}
-image: Visual Studio 2013
+image: Visual Studio 2015
 
 environment:
-  QT5DIR: C:\Qt\5.4
+  QT5DIR: C:\Qt\5.8
 
 install:
-  - cmd: SET CMAKE_PREFIX_PATH=%QT5DIR%\msvc2013_opengl
+  - cmd: SET CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
 
 build_script:
-  - cmd: cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On
+  - cmd: cmake -G "Visual Studio 2015 Win64" -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On
   - cmd: cmake --build . --target install --config Release -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
   # For tests
-  - cmd: set PATH=%QT5DIR%/msvc2013_opengl/bin/;%PATH%
-  - cmd: set PATH=%QT5DIR%/msvc2013_opengl/plugins/;%PATH%
-  - cmd: set PATH=%APPVEYOR_BUILD_FOLDER%/lpng1612/projects/vstudio/Release/;%PATH%
+  - cmd: set PATH=%QT5DIR%/msvc2015_64/bin/;%PATH%
+  - cmd: set PATH=%QT5DIR%/msvc2015_64/plugins/;%PATH%
 
 test_script:
   - cmd: cd Exec
