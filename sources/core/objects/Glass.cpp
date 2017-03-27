@@ -63,14 +63,14 @@ bool FlatGlass::Rotate(Dir dir)
 void FlatGlass::Break()
 {
     QString sound = QString("Glassbr%1.wav").arg(GetRand() % 3 + 1);
-    PlaySoundIfVisible(sound, GetOwner().Id());
+    PlaySoundIfVisible(sound);
     Create<Item>(Shard::GetTypeStatic(), GetOwner());
     Delete();
 }
 
 void FlatGlass::PlayOnHitSound()
 {
-    PlaySoundIfVisible("Glasshit.wav", GetOwner().Id());
+    PlaySoundIfVisible("Glasshit.wav");
 }
 
 void FlatGlass::AttackBy(IdPtr<Item> item)
@@ -79,7 +79,7 @@ void FlatGlass::AttackBy(IdPtr<Item> item)
     {
 /*      GetGame().GetChat().PostSimpleText(
         name + " knocks on window. " +, GetRoot().Id());*/
-        PlaySoundIfVisible("Glasshit.wav", GetOwner().Id());
+        PlaySoundIfVisible("Glasshit.wav");
         return;
     }
     Breakable::AttackBy(item);

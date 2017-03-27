@@ -30,7 +30,7 @@ void Grille::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<Wirecutters> w = item)
     {
-        PlaySoundIfVisible("Wirecutter.wav", owner.Id());
+        PlaySoundIfVisible("Wirecutter.wav");
         if (!cutted_)
         {
             SetState("brokengrille");
@@ -72,5 +72,5 @@ void Grille::Break()
 
 void Grille::PlayOnHitSound()
 {
-    PlaySoundIfVisible("grillehit.wav", GetOwner().Id());
+    PlaySoundIfVisible("grillehit.wav");
 }

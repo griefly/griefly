@@ -4,15 +4,6 @@
 #include "../Game.h"
 #include "representation/Representation.h"
 
-void IMainObject::PlaySoundIfVisible(const QString& name, quint32 tile_id)
-{
-    if (GetGame().GetMap().IsTileVisible(tile_id))
-    {
-        GetGame().AddSound(name);
-    }
-}
-
-
 void IMainObject::PlayMusic(const QString& name, float volume)
 {
     GetGame().PlayMusic(name, volume);

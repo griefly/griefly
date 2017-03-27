@@ -154,7 +154,7 @@ void Closet::Close()
     SetPassable(D_ALL, Passable::AIR);
     SetState("closed");
 
-    PlaySoundIfVisible("click.wav", owner.Id());
+    PlaySoundIfVisible("click.wav");
 }
 
 void Closet::Open()
@@ -169,7 +169,7 @@ void Closet::Open()
     SetPassable(D_ALL, Passable::FULL);
     SetState("open");
 
-    PlaySoundIfVisible("click.wav", owner.Id());
+    PlaySoundIfVisible("click.wav");
 }
 
 

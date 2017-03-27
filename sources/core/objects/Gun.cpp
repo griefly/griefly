@@ -78,7 +78,7 @@ void Gun::ShootImpl(VDir target, const QString& sound,
             shooter->Rotate(shooting_direction);
             auto projectile = Create<Projectile>(projectile_type, tile);
             projectile->MakeMovementPattern(target, facing);
-            PlaySoundIfVisible(sound, tile.Id());
+            PlaySoundIfVisible(sound);
             projectile->Process();
             if (!casing_type.isEmpty())
             {
@@ -89,7 +89,7 @@ void Gun::ShootImpl(VDir target, const QString& sound,
         }
         else
         {
-            PlaySoundIfVisible("empty.wav", tile.Id()); 
+            PlaySoundIfVisible("empty.wav");
             // the *click* text from ss13
         }
     }	

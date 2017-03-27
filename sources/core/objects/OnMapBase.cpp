@@ -22,6 +22,14 @@ IdPtr<IOnMapBase> IOnMapBase::GetRoot()
     return GetOwner()->GetRoot();
 }
 
+void IOnMapBase::PlaySoundIfVisible(const QString& name)
+{
+    if (GetGame().GetMap().IsTileVisible(GetRoot().Id()))
+    {
+        GetGame().AddSound(name);
+    }
+}
+
 void IOnMapBase::SetTurf(IdPtr<ITurf> turf)
 {
     if (owner.IsValid())

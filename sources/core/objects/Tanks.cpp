@@ -23,7 +23,7 @@ void FuelTank::AttackBy(IdPtr<Item> item)
     if (IdPtr<Weldingtool> w = item)
     {
         w->AddFuel(50);
-        PlaySoundIfVisible("refill.wav", owner.Id());
+        PlaySoundIfVisible("refill.wav");
     }
 }
 

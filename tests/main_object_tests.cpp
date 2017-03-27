@@ -179,38 +179,3 @@ TEST(MainObject, Delete)
         .WillOnce(Return());
     object.Delete();
 }
-
-TEST(MainObject, SoundAndMusic)
-{
-    MockIGame game;
-    IMainObject object(1111111);
-    object.SetGame(&game);
-    EXPECT_CALL(game, PlayMusic(QString("music"), 13.0f))
-        .WillOnce(Return());
-
-    object.PlayMusic("music", 13.0f);
-
-    MockIMapMaster map;
-    EXPECT_CALL(game, GetMap())
-        .WillRepeatedly(ReturnRef(map));
-    EXPECT_CALL(map, IsTileVisible(33))
-        .WillOnce(Return(false))
-        .WillOnce(Return(true));
-    EXPECT_CALL(game, AddSound(QString("sound")))
-        .WillOnce(Return());
-
-    object.PlaySoundIfVisible("sound1", 33);
-    object.PlaySoundIfVisible("sound", 33);
-}
-
-
-
-
-
-
-
-
-
-
-
-

@@ -143,6 +143,7 @@ public:
     virtual IdPtr<ITurf> GetTurf();
     virtual void SetTurf(IdPtr<ITurf> turf);
     IdPtr<IOnMapBase> GetRoot();
+    void PlaySoundIfVisible(const QString& name);
 protected:
     IdPtr<IOnMapBase> KV_SAVEBLE(owner);
     virtual quint32 GetItemImpl(unsigned int hash) { return 0; }

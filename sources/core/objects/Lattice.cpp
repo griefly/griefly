@@ -28,7 +28,7 @@ void Lattice::AttackBy(IdPtr<Item> item)
         GetTurf()->Delete();
         Create<ITurf>(Plating::GetTypeStatic(), GetOwner());
 
-        PlaySoundIfVisible("Deconstruct.wav", owner.Id());
+        PlaySoundIfVisible("Deconstruct.wav");
 
         Delete();
     }

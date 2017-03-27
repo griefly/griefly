@@ -24,7 +24,6 @@ public:
 #endif // _BUILD_TESTS
     virtual ~IMainObject() { }
 
-    void PlaySoundIfVisible(const QString& name, quint32 tile_id);
     void PlayMusic(const QString& name, float volume = 100.0f);
 
     static const int THIS_COUNTER = __COUNTER__; 
