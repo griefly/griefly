@@ -121,6 +121,12 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
         return;
     }
 
+    const int UNPASSABLE_FREQUENCY = 6;
+    if (((x + y) % UNPASSABLE_FREQUENCY) != (MAIN_TICK % UNPASSABLE_FREQUENCY))
+    {
+        return;
+    }
+
     for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
         AtmosGrid::Cell& nearby = grid_->Get(x, y, atmos::DIRS[dir]);
