@@ -12,7 +12,7 @@ build_script:
   - cmd: cmake --build . --target install --config Release -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
-  - cmd: "%QTDIR%/msvc2015_64/bin/windeployqt.exe" Exec/KVEngine.exe
+  - cmd: "%QT5DIR%/msvc2015_64/bin/windeployqt.exe" Exec/KVEngine.exe
   - cmd: ren Exec Griefly
 
 test_script:
