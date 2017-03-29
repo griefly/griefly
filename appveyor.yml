@@ -12,10 +12,13 @@ build_script:
   - cmd: cmake --build . --target install --config Release -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
-  # For tests
-  - cmd: set PATH=%QT5DIR%/msvc2015_64/bin/;%PATH%
-  - cmd: set PATH=%QT5DIR%/msvc2015_64/plugins/;%PATH%
+  - cmd: %QTDIR%/msvc2015_64/bin/windeployqt.exe Exec/KVEngine.exe
+  - cmd: ren Exec Griefly
 
 test_script:
-  - cmd: cd Exec
+  - cmd: cd Griefly
   - cmd: KVEngine.exe --run-tests
+
+artifacts:
+  - path: Griefly
+    name: Griefly
