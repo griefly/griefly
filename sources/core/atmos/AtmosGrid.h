@@ -34,11 +34,11 @@ class AtmosGrid
 public:
     struct Cell
     {
-        AtmosData data;
+        AtmosData data alignas(16);
 
-        int flows[atmos::DIRS_SIZE];
+        int flows[atmos::DIRS_SIZE] alignas(16);
 
-        IAtmosphere::Flags flags;
+        IAtmosphere::Flags flags alignas(16);
         Cell()
         {
             for (int i = 0; i < GASES_NUM; ++i)
@@ -105,8 +105,8 @@ public:
         {
         case atmos::DOWN:  return cells_[pos + 1];
         case atmos::UP:    return cells_[pos - 1];
-        case atmos::RIGHT: return cells_[pos + width_];
-        case atmos::LEFT:  return cells_[pos - width_];
+        case atmos::RIGHT: return cells_[pos + 32];
+        case atmos::LEFT:  return cells_[pos - 32];
         default: break;
         }
 

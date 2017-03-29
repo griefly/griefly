@@ -1,12 +1,14 @@
 #include "AtmosGrid.h"
 
+#include "emmintrin.h"
+
 void AtmosGrid::Process()
 {
     Prepare(0);
-    Prepare(1);
-    Prepare(2);
-    Prepare(3);
-    Prepare(4);
+    //Prepare(1);
+    //Prepare(2);
+    //Prepare(3);
+    //Prepare(4);
 
     Finalize();
 }
@@ -14,28 +16,25 @@ void AtmosGrid::Process()
 inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
 {
     int near_size = 0;
-    int gases_sums[GASES_NUM];
-    for (int i = 0; i < GASES_NUM; ++i)
-    {
-        gases_sums[i] = 0;
-    }
+    int gases_sums[GASES_NUM] alignas(16);
+    __m128i* gases_sums_sse = reinterpret_cast<__m128i*>(gases_sums);
+    *gases_sums_sse = _mm_setzero_si128();
     int energy_sum = 0;
 
     for (int dir = 0; dir < atmos::DIRS_SIZE + 1; ++dir)
     {
         if (AtmosGrid::Cell* nearby = near_cells[dir])
         {
-            for (int i = 0; i < GASES_NUM; ++i)
-            {
-                gases_sums[i] += nearby->data.gases[i];
-            }
+            __m128i* nearby_gases_sse = reinterpret_cast<__m128i*>(nearby->data.gases);
+            *gases_sums_sse = _mm_add_epi32(*nearby_gases_sse, *gases_sums_sse);
             energy_sum += nearby->data.energy;
             ++near_size;
         }
     }
 
-    int gases_average[GASES_NUM];
-    int gases_remains[GASES_NUM];
+    int gases_average[GASES_NUM] alignas(16);
+    __m128i* gases_average_sse = reinterpret_cast<__m128i*>(gases_average);
+    int gases_remains[GASES_NUM] alignas(16);
     for (int i = 0; i < GASES_NUM; ++i)
     {
         gases_average[i] = gases_sums[i] / near_size;
@@ -99,10 +98,10 @@ void AtmosGrid::Prepare(int stage)
                 continue;
             }
 
-            if (((column + (line * 2)) % 5) != ((MAIN_TICK + stage) % 5))
-            {
-                continue;
-            }
+            //if (((column + (line * 2)) % 5) != ((MAIN_TICK + stage) % 5))
+            //{
+            //    continue;
+            //}
 
             Cell* near_cells[atmos::DIRS_SIZE + 1];
 

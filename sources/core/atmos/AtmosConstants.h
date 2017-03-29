@@ -17,11 +17,16 @@ const int NYTROGEN_FREEDOM = 5;
 const int NYTROGEN_WEIGHT = 14 * 3;
 const char* const NYTROGEN_NAME = "Nytrogen";
 
-const int GASES_NUM = 3;
+const int TEST_GAS = 3;
+const int TEST_GAS_FREEDOM = 1;
+const int TEST_GAS_WEIGHT = 1;
+const char* const TEST_GAS_NAME = "Test gas";
 
-const int GASES_WEIGHT[GASES_NUM] = {OXYGEN_WEIGHT, CO2_WEIGHT, NYTROGEN_WEIGHT};
-const int GASES_FREEDOM[GASES_NUM] = {OXYGEN_FREEDOM, CO2_FREEDOM, NYTROGEN_FREEDOM};
-const char* const GASES_NAME[GASES_NUM] = {OXYGEN_NAME, CO2_NAME, NYTROGEN_NAME};
+const int GASES_NUM = 4;
+
+const int GASES_WEIGHT[GASES_NUM] = {OXYGEN_WEIGHT, CO2_WEIGHT, NYTROGEN_WEIGHT, TEST_GAS_WEIGHT};
+const int GASES_FREEDOM[GASES_NUM] = {OXYGEN_FREEDOM, CO2_FREEDOM, NYTROGEN_FREEDOM, TEST_GAS_FREEDOM};
+const char* const GASES_NAME[GASES_NUM] = {OXYGEN_NAME, CO2_NAME, NYTROGEN_NAME, TEST_GAS_NAME};
 
 const int MAX_GAS_LEVEL = 1000;
 
@@ -34,7 +39,7 @@ const int ENERGY_CONST = 100;
 
 struct AtmosData
 {
-    int gases[GASES_NUM];
+    int gases[GASES_NUM] alignas(16);
     int energy;
     int pressure;
     int volume;
