@@ -13,13 +13,14 @@ build_script:
 
 after_build:
   - cmd: C:\Qt\5.8\msvc2015_64\bin\windeployqt.exe Exec/KVEngine.exe
-  - cmd: for /f "tokens=* USEBACKQ" %%f in (`git describe --tags --abbrev=4`) do (set KV_VERSION=%%f)
-  - cmd: ren Exec Griefly-%KV_VERSION%-win64
+  - cmd: for /f "tokens=* USEBACKQ" %F in (`git describe --tags --abbrev=4`) do (set KVVERSION=%F)
+  - cmd: echo %KVVERSION%
+  - cmd: ren Exec Griefly-%KVVERSION%-win64
 
 test_script:
-  - cmd: cd Griefly-%KV_VERSION%-win64
+  - cmd: cd Griefly-%KVVERSION%-win64
   - cmd: KVEngine.exe --run-tests
 
 artifacts:
-  - path: Griefly-%KV_VERSION%-win64
-    name: Griefly-%KV_VERSION%-win64
+  - path: Griefly-%KVVERSION%-win64
+    name: Griefly-%KVVERSION%-win64
