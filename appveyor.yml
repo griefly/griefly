@@ -5,7 +5,7 @@ environment:
   QT5DIR: C:\Qt\5.8
 
 install:
-  - cmd: SET CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
+  - cmd: set CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
 
 build_script:
   - cmd: cmake -G "Visual Studio 14 2015 Win64"  -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On
@@ -13,12 +13,13 @@ build_script:
 
 after_build:
   - cmd: C:\Qt\5.8\msvc2015_64\bin\windeployqt.exe Exec/KVEngine.exe
-  - cmd: ren Exec Griefly
+  - cmd: for /f "tokens=* USEBACKQ" %%f in (`git describe --tags --abbrev=4`) do (set KV_VERSION=%%f)
+  - cmd: ren Exec Griefly-%KV_VERSION%-win64
 
 test_script:
-  - cmd: cd Griefly
+  - cmd: cd Griefly-%KV_VERSION%-win64
   - cmd: KVEngine.exe --run-tests
 
 artifacts:
-  - path: Griefly
-    name: Griefly
+  - path: Griefly-%KV_VERSION%-win64
+    name: Griefly-%KV_VERSION%-win64
