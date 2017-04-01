@@ -65,14 +65,7 @@ const int PRESSURE_MOVE_BORDER = 1000;
 const int FLOW_MOVE_BORDER = -15;
 
 void Atmosphere::ProcessTileMove(int x, int y, int z)
-{   
-    auto tile = map_->GetSquares()[x][y][z];
-
-    if (tile->GetTurf()->GetAtmosState() == NON_SIMULATED)
-    {
-        return;
-    }
-
+{
     AtmosGrid::Cell& cell = grid_->At(x, y);
 
     VDir force;
@@ -91,6 +84,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
 
     if (IsNonZero(force))
     {
+        auto tile = map_->GetSquares()[x][y][z];
         if (tile->GetInsideList().size())
         {
             auto i = tile->GetInsideList().rbegin();
@@ -127,6 +121,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
         return;
     }
 
+    auto tile = map_->GetSquares()[x][y][z];
     for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
         AtmosGrid::Cell& nearby = grid_->Get(x, y, atmos::DIRS[dir]);
