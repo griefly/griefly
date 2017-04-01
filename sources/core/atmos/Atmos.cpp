@@ -70,32 +70,41 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
 
     VDir force;
 
-    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
+    if (cell.flags & atmos::EMPTY)
     {
-        int flow = cell.flows[dir];
-        cell.flows[dir] = 0;
-        if (flow  <= FLOW_MOVE_BORDER)
+        for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
         {
-            VDir local = DirToVDir[atmos::INDEXES_TO_DIRS[dir]];
-            force.x += local.x;
-            force.y += local.y;
+            cell.flows[dir] = 0;
         }
     }
-
-    if (IsNonZero(force))
+    else
     {
-        auto tile = map_->GetSquares()[x][y][z];
-        if (tile->GetInsideList().size())
+        for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
         {
-            auto i = tile->GetInsideList().rbegin();
-            while (   (i != tile->GetInsideList().rend())
-                   && ((*i)->passable_level == Passable::EMPTY))
+            int flow = cell.flows[dir];
+            cell.flows[dir] = 0;
+            if (flow <= FLOW_MOVE_BORDER)
             {
-                ++i;
+                VDir local = DirToVDir[atmos::INDEXES_TO_DIRS[dir]];
+                force.x += local.x;
+                force.y += local.y;
             }
-            if (i != tile->GetInsideList().rend())
+        }
+        if (IsNonZero(force))
+        {
+            auto tile = map_->GetSquares()[x][y][z];
+            if (tile->GetInsideList().size())
             {
-                (*i)->ApplyForce(force);
+                auto i = tile->GetInsideList().rbegin();
+                while (   (i != tile->GetInsideList().rend())
+                       && ((*i)->passable_level == Passable::EMPTY))
+                {
+                    ++i;
+                }
+                if (i != tile->GetInsideList().rend())
+                {
+                    (*i)->ApplyForce(force);
+                }
             }
         }
     }
@@ -168,7 +177,7 @@ void Atmosphere::ProcessMove()
         }
     }
     movement_processing_ns_
-            = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
+        = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
 }
 
 void Atmosphere::SetFlags(quint32 x, quint32 y, quint32 z, IAtmosphere::Flags flags)

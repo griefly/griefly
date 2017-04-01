@@ -17,6 +17,7 @@ namespace atmos
     const IAtmosphere::Flags RIGHT = 8;
     const IAtmosphere::Flags CENTER = 16;
     const IAtmosphere::Flags SPACE = 32;
+    const IAtmosphere::Flags EMPTY = 64;
 
     const IAtmosphere::Flags DIRS[DIRS_SIZE]
         = { LEFT, UP, DOWN, RIGHT };
