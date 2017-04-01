@@ -19,7 +19,7 @@
 
 Representation::Representation()
 {
-    current_frame_ = &first_data_;
+    old_frame_ = &first_data_;
     new_frame_ = &second_data_;
     is_updated_ = false;
     current_frame_id_ = 1;
@@ -77,7 +77,7 @@ void Representation::Swap()
 {
     QMutexLocker lock(&mutex_);
 
-    std::swap(current_frame_, new_frame_);
+    std::swap(old_frame_, new_frame_);
     is_updated_ = true;
     new_frame_->entities.clear();
     new_frame_->sounds.clear();
@@ -204,7 +204,7 @@ Representation::InterfaceUnit::InterfaceUnit()
 void Representation::Process()
 {
     performance_.timer.start();
-    QMutexLocker lock(&mutex_);
+
     performance_.mutex_ns
         = qMax(performance_.mutex_ns, performance_.timer.nsecsElapsed());
 
@@ -264,7 +264,7 @@ void Representation::Click(int x, int y)
     //qDebug() << "S_X: " << s_x << ", S_Y: " <<  s_y;
     //qDebug() << "X: " << x << ", Y: " <<  y;
 
-    auto& units = current_frame_->units;
+    auto& units = current_frame_.units;
 
 
     for (unsigned int i = 0; i < units.size(); ++i)
@@ -277,7 +277,7 @@ void Representation::Click(int x, int y)
         }
     }
 
-    auto& ents = current_frame_->entities;
+    auto& ents = current_frame_.entities;
 
     int id_to_send = -1;
 
@@ -339,38 +339,44 @@ void Representation::Click(int x, int y)
 
 void Representation::SynchronizeViews()
 {
-    if (is_updated_)
     {
-        camera_.SetPos(current_frame_->camera_pos_x, current_frame_->camera_pos_y);
-
-        for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
+        QMutexLocker lock(&mutex_);
+        if (!is_updated_)
         {
-            auto& view_with_frame_id = views_[it->id];
-            view_with_frame_id.view.LoadViewInfo(it->view);
-            if (view_with_frame_id.frame_id != current_frame_id_)
-            {
-                view_with_frame_id.view.SetX(it->pos_x * 32);
-                view_with_frame_id.view.SetY(it->pos_y * 32);
-            }
-            view_with_frame_id.frame_id = current_frame_id_ + 1;
-        } 
-
-        interface_views_.resize(current_frame_->units.size());
-        for (int i = 0; i < static_cast<int>(interface_views_.size()); ++i)
-        {
-            interface_views_[i].LoadViewInfo(current_frame_->units[i].view);
-            interface_views_[i].SetX(current_frame_->units[i].pixel_x);
-            interface_views_[i].SetY(current_frame_->units[i].pixel_y);
+            return;
         }
-
-        for (auto it = current_frame_->sounds.begin(); it != current_frame_->sounds.end(); ++it)
-        {
-            GetSoundPlayer().PlaySound(*it);
-        }
-
-        ++current_frame_id_;
-        is_updated_ = false;
+        current_frame_ = *old_frame_;
     }
+
+    camera_.SetPos(current_frame_.camera_pos_x, current_frame_.camera_pos_y);
+
+    for (auto it = current_frame_.entities.begin(); it != current_frame_.entities.end(); ++it)
+    {
+        auto& view_with_frame_id = views_[it->id];
+        view_with_frame_id.view.LoadViewInfo(it->view);
+        if (view_with_frame_id.frame_id != current_frame_id_)
+        {
+            view_with_frame_id.view.SetX(it->pos_x * 32);
+            view_with_frame_id.view.SetY(it->pos_y * 32);
+        }
+        view_with_frame_id.frame_id = current_frame_id_ + 1;
+    }
+
+    interface_views_.resize(current_frame_.units.size());
+    for (int i = 0; i < static_cast<int>(interface_views_.size()); ++i)
+    {
+        interface_views_[i].LoadViewInfo(current_frame_.units[i].view);
+        interface_views_[i].SetX(current_frame_.units[i].pixel_x);
+        interface_views_[i].SetY(current_frame_.units[i].pixel_y);
+    }
+
+    for (auto it = current_frame_.sounds.begin(); it != current_frame_.sounds.end(); ++it)
+    {
+        GetSoundPlayer().PlaySound(*it);
+    }
+
+    ++current_frame_id_;
+    is_updated_ = false;
 }
 
 int get_pixel_speed_for_distance(int distance)
@@ -397,7 +403,7 @@ int get_pixel_speed_for_distance(int distance)
 
 void Representation::PerformPixelMovement()
 {
-    for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
+    for (auto it = current_frame_.entities.begin(); it != current_frame_.entities.end(); ++it)
     {
         int pixel_x = it->pos_x * 32;
         int pixel_y = it->pos_y * 32;
@@ -424,7 +430,7 @@ void Representation::Draw()
 {
     for (int vlevel = 0; vlevel < MAX_LEVEL; ++vlevel)
     {
-        for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
+        for (auto it = current_frame_.entities.begin(); it != current_frame_.entities.end(); ++it)
         {
             if (it->vlevel == vlevel)
             {
@@ -435,7 +441,7 @@ void Representation::Draw()
             }
         }
     }
-    for (auto it = current_frame_->entities.begin(); it != current_frame_->entities.end(); ++it)
+    for (auto it = current_frame_.entities.begin(); it != current_frame_.entities.end(); ++it)
     {
         if (it->vlevel >= MAX_LEVEL)
         {
@@ -451,7 +457,7 @@ void Representation::DrawInterface()
 {
     for (int i = 0; i < static_cast<int>(interface_views_.size()); ++i)
     {
-        interface_views_[i].Draw(0, 0, current_frame_->units[i].shift);
+        interface_views_[i].Draw(0, 0, current_frame_.units[i].shift);
     }
 }
 
