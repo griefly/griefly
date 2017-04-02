@@ -81,7 +81,9 @@ public:
     AtmosGrid(int width, int height)
         : width_(width),
           height_(height),
-          length_(width_ * height_)
+          length_(width_ * height_),
+          group_height_(height / atmos::CELL_GROUP_SIZE),
+          group_width_(width / atmos::CELL_GROUP_SIZE)
     {
         if (width_ < 2)
         {
@@ -105,40 +107,36 @@ public:
     {
         delete[] cells_;
     }
-
-    inline Cell& Get(int pos, IAtmosphere::Flags dir)
-    {
-        // TODO: Boundaries check?
-
-        switch (dir)
-        {
-        case atmos::DOWN:  return cells_[pos + 1];
-        case atmos::UP:    return cells_[pos - 1];
-        case atmos::RIGHT: return cells_[pos + width_];
-        case atmos::LEFT:  return cells_[pos - width_];
-        default: break;
-        }
-
-        KvAbort(QString("AtmosGrid::Get, Unknown dir: %1").arg(dir));
-        // Not reachable
-        return cells_[pos];
-    }
     inline Cell& Get(int x, int y, IAtmosphere::Flags dir)
     {
-        return Get(y + x * height_, dir);
+        switch (dir)
+        {
+        case atmos::DOWN:  return At(x, y + 1);
+        case atmos::UP:    return At(x, y - 1);
+        case atmos::RIGHT: return At(x + 1, y);
+        case atmos::LEFT:  return At(x - 1, y);
+        default: break;
+        }
     }
 
     inline Cell& At(int x, int y)
     {
-        return cells_[y + x * height_];
+        int group_x = x / atmos::CELL_GROUP_SIZE;
+        int x_in_group = x % atmos::CELL_GROUP_SIZE;
+        int group_y = y / atmos::CELL_GROUP_SIZE;
+        int y_in_group = y % atmos::CELL_GROUP_SIZE;
+        Cell* group = &(cells_[(group_y + group_x * group_height_) * atmos::CELL_GROUP_SIZE * atmos::CELL_GROUP_SIZE]);
+        return group[y_in_group + x_in_group * atmos::CELL_GROUP_SIZE];
     }
     void Process();
 private:
-    void Prepare(int stage);
+    void ProcessGroups();
     void Finalize();
 
     int width_;
     int height_;
+    int group_height_;
+    int group_width_;
     int length_;
     Cell* cells_;
 };
