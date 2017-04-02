@@ -11,9 +11,8 @@
 
 #include "representation/Text.h"
 
-Atmosphere::Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter *texts)
-    : random_(random),
-      map_(map),
+Atmosphere::Atmosphere(IMapMaster* map, TextPainter *texts)
+    : map_(map),
       texts_(texts)
 {
     grid_processing_ns_ = 0;
@@ -49,7 +48,7 @@ void Atmosphere::Resize(quint32 x, quint32 y, quint32 z)
     z_size_ = z;
 
     delete grid_;
-    grid_ = new AtmosGrid(random_, x_size_, y_size_);
+    grid_ = new AtmosGrid(x_size_, y_size_);
 }
 
 void Atmosphere::Process()
