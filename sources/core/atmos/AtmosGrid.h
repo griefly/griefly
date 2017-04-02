@@ -28,6 +28,7 @@ namespace atmos
 
     const Dir INDEXES_TO_DIRS[DIRS_SIZE]
         = { D_LEFT, D_UP, D_DOWN, D_RIGHT };
+    const int CELL_GROUP_SIZE = 32;
 }
 
 class AtmosGrid
@@ -90,6 +91,14 @@ public:
         if (height_ < 2)
         {
             KvAbort("Height too small for AtmosGrid!");
+        }
+        if ((width_ % atmos::CELL_GROUP_SIZE) != 0)
+        {
+            KvAbort(QString("Width is not multiplier of %1!").arg(atmos::CELL_GROUP_SIZE));
+        }
+        if ((height_ % atmos::CELL_GROUP_SIZE) != 0)
+        {
+            KvAbort(QString("Height is not multiplier of %1!").arg(atmos::CELL_GROUP_SIZE));
         }
         cells_ = new Cell[length_];
     }
