@@ -19,6 +19,11 @@ namespace atmos
     const IAtmosphere::Flags SPACE = 32;
     const IAtmosphere::Flags EMPTY = 64;
 
+    const int LEFT_INDEX = 0;
+    const int UP_INDEX = 1;
+    const int DOWN_INDEX = 2;
+    const int RIGHT_INDEX = 3;
+
     const IAtmosphere::Flags DIRS[DIRS_SIZE]
         = { LEFT, UP, DOWN, RIGHT };
     const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
@@ -134,7 +139,7 @@ public:
     }
     void Process();
 private:
-    void Prepare(int stage);
+    void Prepare();
     void Finalize();
 
     int width_;

@@ -2,13 +2,64 @@
 
 void AtmosGrid::Process()
 {
-    Prepare(0);
-    Prepare(1);
-    Prepare(2);
-    Prepare(3);
-    Prepare(4);
+    Prepare();
+//    Prepare();
 
     Finalize();
+}
+
+inline void ProcessTwoVerticalCells(AtmosGrid::Cell* top, AtmosGrid::Cell* bot)
+{
+    int gases_sums[GASES_NUM];
+    int energy_sum;
+    for (int i = 0; i < GASES_NUM; ++i)
+    {
+        gases_sums[i] = top->data.gases[i] + bot->data.gases[i];
+    }
+    energy_sum = top->data.energy + bot->data.energy;
+
+    for (int i = 0; i < GASES_NUM; ++i)
+    {
+        int average = gases_sums[i] / 2;
+        int remains = gases_sums[i] % 2;
+        int diff = average - bot->data.gases[i];
+        top->flows[atmos::DOWN_INDEX] -= diff;
+        bot->flows[atmos::UP_INDEX] += diff;
+
+        top->data.gases[i] = average + remains;
+        bot->data.gases[i] = average;
+    }
+    int energy_average = energy_sum / 2;
+    int energy_remains = energy_sum % 2;
+    top->data.energy = energy_average + energy_remains;
+    bot->data.energy = energy_average;
+}
+
+inline void ProcessTwoHorizontalCells(AtmosGrid::Cell* left, AtmosGrid::Cell* right)
+{
+    int gases_sums[GASES_NUM];
+    int energy_sum;
+    for (int i = 0; i < GASES_NUM; ++i)
+    {
+        gases_sums[i] = left->data.gases[i] + right->data.gases[i];
+    }
+    energy_sum = left->data.energy + right->data.energy;
+
+    for (int i = 0; i < GASES_NUM; ++i)
+    {
+        int average = gases_sums[i] / 2;
+        int remains = gases_sums[i] % 2;
+        int diff = average - right->data.gases[i];
+        left->flows[atmos::RIGHT_INDEX] -= diff;
+        right->flows[atmos::LEFT_INDEX] += diff;
+
+        left->data.gases[i] = average + remains;
+        right->data.gases[i] = average;
+    }
+    int energy_average = energy_sum / 2;
+    int energy_remains = energy_sum % 2;
+    left->data.energy = energy_average + energy_remains;
+    right->data.energy = energy_average;
 }
 
 inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
@@ -69,74 +120,100 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
     center.data.energy = energy_average + energy_remains;
 }
 
-void AtmosGrid::Prepare(int stage)
+void AtmosGrid::Prepare()
 {
     int pos = 0;
-
-    // Left border line
-    for (; pos < height_; ++pos)
+    for (int line = 0; line < width_; ++line)
     {
-        Cell& current = cells_[pos];
-        current.Truncate();
-    }
-
-    for (int line = 1; line < width_ - 1; ++line)
-    {
-        // Upper border line
+        for (int column = 0; column < height_; ++column, ++pos)
         {
-            Cell& current = cells_[pos];
-            current.Truncate();
-        }
-        ++pos;
-        for (int column = 1; column < height_ - 1; ++column, ++pos)
-        {
-
-            Cell& current = cells_[pos];
-
-            if (!current.IsPassable(atmos::CENTER))
-            {
-                // TODO: if something still here
-                continue;
-            }
-
-            if (((column + (line * 2)) % 5) != ((MAIN_TICK + stage) % 5))
+            if (   (column % 2) != 0
+                || (line % 2) != 0)
             {
                 continue;
             }
 
-            Cell* near_cells[atmos::DIRS_SIZE + 1];
+            Cell& top_left = cells_[pos];
+            Cell& bot_left = cells_[pos + 1];
+            Cell& top_right = cells_[pos + width_];
+            Cell& bot_right = cells_[pos + 1 + width_];
 
-            for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
+            if (   top_left.IsPassable(atmos::CENTER)
+                && top_left.IsPassable(atmos::RIGHT)
+                && top_right.IsPassable(atmos::CENTER)
+                && top_right.IsPassable(atmos::LEFT))
             {
-                if (current.IsPassable(atmos::DIRS[dir]))
-                {
-                    Cell& nearby = Get(pos, atmos::DIRS[dir]);
-                    if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
-                        && nearby.IsPassable(atmos::CENTER))
-                    {
-                        near_cells[dir] = &nearby;
-                        continue;
-                    }
-                }
-                near_cells[dir] = nullptr;
+                ProcessTwoHorizontalCells(&top_left, &top_right);
             }
-            near_cells[atmos::DIRS_SIZE] = &current;
-
-            ProcessFiveCells(near_cells);
+            if (   bot_left.IsPassable(atmos::CENTER)
+                && bot_left.IsPassable(atmos::RIGHT)
+                && bot_right.IsPassable(atmos::CENTER)
+                && bot_right.IsPassable(atmos::LEFT))
+            {
+                ProcessTwoHorizontalCells(&bot_left, &bot_right);
+            }
+            if (   top_left.IsPassable(atmos::CENTER)
+                && top_left.IsPassable(atmos::DOWN)
+                && bot_left.IsPassable(atmos::CENTER)
+                && bot_left.IsPassable(atmos::UP))
+            {
+                ProcessTwoVerticalCells(&top_left, &bot_left);
+            }
+            if (   top_right.IsPassable(atmos::CENTER)
+                && top_right.IsPassable(atmos::DOWN)
+                && bot_right.IsPassable(atmos::CENTER)
+                && bot_right.IsPassable(atmos::UP))
+            {
+                ProcessTwoVerticalCells(&top_right, &bot_right);
+            }
         }
-        // Lower border line
+    }
+    pos = 0;
+    for (int line = 0; line < width_ - 1; ++line)
+    {
+        for (int column = 0; column < height_ - 1; ++column, ++pos)
         {
-            Cell& current = cells_[pos];
-            current.Truncate();
+            if (   (column % 2) != 1
+                || (line % 2) != 1)
+            {
+                continue;
+            }
+
+            Cell& top_left = cells_[pos];
+            Cell& bot_left = cells_[pos + 1];
+            Cell& top_right = cells_[pos + width_];
+            Cell& bot_right = cells_[pos + 1 + width_];
+
+            if (   top_left.IsPassable(atmos::CENTER)
+                && top_left.IsPassable(atmos::RIGHT)
+                && top_right.IsPassable(atmos::CENTER)
+                && top_right.IsPassable(atmos::LEFT))
+            {
+                ProcessTwoHorizontalCells(&top_left, &top_right);
+            }
+            if (   bot_left.IsPassable(atmos::CENTER)
+                && bot_left.IsPassable(atmos::RIGHT)
+                && bot_right.IsPassable(atmos::CENTER)
+                && bot_right.IsPassable(atmos::LEFT))
+            {
+                ProcessTwoHorizontalCells(&bot_left, &bot_right);
+            }
+            if (   top_left.IsPassable(atmos::CENTER)
+                && top_left.IsPassable(atmos::DOWN)
+                && bot_left.IsPassable(atmos::CENTER)
+                && bot_left.IsPassable(atmos::UP))
+            {
+                ProcessTwoVerticalCells(&top_left, &bot_left);
+            }
+            if (   top_right.IsPassable(atmos::CENTER)
+                && top_right.IsPassable(atmos::DOWN)
+                && bot_right.IsPassable(atmos::CENTER)
+                && bot_right.IsPassable(atmos::UP))
+            {
+                ProcessTwoVerticalCells(&top_right, &bot_right);
+            }
         }
         ++pos;
-    }
-
-    // Right border line
-    for (int i = 0; i < height_; ++i, ++pos)
-    {
-        Cell& current = cells_[pos];
-        current.Truncate();
     }
 }
 
