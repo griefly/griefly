@@ -27,8 +27,8 @@ public:
     MOCK_CONST_METHOD0(GetDepth, int());
     MOCK_METHOD0(Represent, void());
     MOCK_METHOD3(ResizeMap, void(int new_map_x, int new_map_y, int new_map_z));
-    MOCK_METHOD0(GetSquares, std::vector<std::vector<std::vector<SqType>>>&());
-    MOCK_CONST_METHOD0(GetSquares, const std::vector<std::vector<std::vector<SqType>>>&());
+    MOCK_METHOD0(GetSquares, QVector<QVector<QVector<SqType>>>&());
+    MOCK_CONST_METHOD0(GetSquares, const QVector<QVector<QVector<SqType>>>&());
     MOCK_METHOD0(GetVisiblePoints, std::list<PosPoint>*());
     MOCK_METHOD0(GetAtmosphere, IAtmosphere&());
     MOCK_METHOD0(FillAtmosphere, void());

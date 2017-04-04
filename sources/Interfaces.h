@@ -43,8 +43,8 @@ public:
     virtual void ResizeMap(int new_map_x, int new_map_y, int new_map_z) = 0;
 
     typedef IdPtr<CubeTile> SqType;
-    virtual std::vector<std::vector<std::vector<SqType>>>& GetSquares() = 0;
-    virtual const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const = 0;
+    virtual QVector<QVector<QVector<SqType>>>& GetSquares() = 0;
+    virtual const QVector<QVector<QVector<SqType>>>& GetSquares() const = 0;
 
     virtual std::list<PosPoint>* GetVisiblePoints() = 0;
     virtual IAtmosphere& GetAtmosphere() = 0;
