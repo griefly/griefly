@@ -131,6 +131,7 @@ public:
     void Process();
 private:
     void ProcessGroups();
+    void ProcessGroupsBorders();
     void Finalize();
 
     int width_;

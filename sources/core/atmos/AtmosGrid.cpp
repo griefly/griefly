@@ -3,6 +3,7 @@
 void AtmosGrid::Process()
 {
     ProcessGroups();
+    ProcessGroupsBorders();
     Finalize();
 }
 
@@ -84,7 +85,6 @@ void AtmosGrid::ProcessGroups()
         Cell* current_group = &cells_[group_index * AMOUNT_CELLS_IN_GROUP];
         for (int stage = 0; stage < 5; ++stage)
         {
-            //int
             for (int x = 1; x < atmos::CELL_GROUP_SIZE - 1; ++x)
             {
                 for (int y = 1; y < atmos::CELL_GROUP_SIZE - 1; ++y)
@@ -108,6 +108,55 @@ void AtmosGrid::ProcessGroups()
                         if (current.IsPassable(atmos::DIRS[dir]))
                         {
                             Cell& nearby = GetNearInGroup(&current, atmos::DIRS[dir]);
+                            if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
+                                && nearby.IsPassable(atmos::CENTER))
+                            {
+                                near_cells[dir] = &nearby;
+                                continue;
+                            }
+                        }
+                        near_cells[dir] = nullptr;
+                    }
+                    near_cells[atmos::DIRS_SIZE] = &current;
+
+                    ProcessFiveCells(near_cells);
+                }
+            }
+        }
+    }
+}
+
+void AtmosGrid::ProcessGroupsBorders()
+{
+    for (int group_x = 1; group_x < group_width_ - 1; ++group_x)
+    {
+        int end_x = group_x * atmos::CELL_GROUP_SIZE;
+        int start_x = end_x - 1;
+        for (int stage = 0; stage < 5; ++stage)
+        {
+            for (int x = start_x; x < end_x; ++x)
+            {
+                for (int y = 1; y < height_ - 1; ++y)
+                {
+                    if (((x + (y * 2)) % 5) != ((MAIN_TICK + stage) % 5))
+                    {
+                        continue;
+                    }
+
+                    Cell& current = At(x, y);
+
+                    if (!current.IsPassable(atmos::CENTER))
+                    {
+                        continue;
+                    }
+
+                    Cell* near_cells[atmos::DIRS_SIZE + 1];
+
+                    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
+                    {
+                        if (current.IsPassable(atmos::DIRS[dir]))
+                        {
+                            Cell& nearby = Get(x, y, atmos::DIRS[dir]);
                             if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
                                 && nearby.IsPassable(atmos::CENTER))
                             {
