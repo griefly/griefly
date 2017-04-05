@@ -173,6 +173,51 @@ void AtmosGrid::ProcessGroupsBorders()
             }
         }
     }
+    for (int group_y = 1; group_y < group_height_ - 1; ++group_y)
+    {
+        int end_y = group_y * atmos::CELL_GROUP_SIZE;
+        int start_y = end_y - 1;
+        for (int stage = 0; stage < 5; ++stage)
+        {
+            for (int y = start_y; y < end_y; ++y)
+            {
+                for (int x = 1; x < width_; ++x)
+                {
+                    if (((x + (y * 2)) % 5) != ((MAIN_TICK + stage) % 5))
+                    {
+                        continue;
+                    }
+
+                    Cell& current = At(x, y);
+
+                    if (!current.IsPassable(atmos::CENTER))
+                    {
+                        continue;
+                    }
+
+                    Cell* near_cells[atmos::DIRS_SIZE + 1];
+
+                    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
+                    {
+                        if (current.IsPassable(atmos::DIRS[dir]))
+                        {
+                            Cell& nearby = Get(x, y, atmos::DIRS[dir]);
+                            if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
+                                && nearby.IsPassable(atmos::CENTER))
+                            {
+                                near_cells[dir] = &nearby;
+                                continue;
+                            }
+                        }
+                        near_cells[dir] = nullptr;
+                    }
+                    near_cells[atmos::DIRS_SIZE] = &current;
+
+                    ProcessFiveCells(near_cells);
+                }
+            }
+        }
+    }
 }
 
 void AtmosGrid::Finalize()
