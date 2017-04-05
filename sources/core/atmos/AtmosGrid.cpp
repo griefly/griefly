@@ -69,8 +69,8 @@ inline AtmosGrid::Cell& GetNearInGroup(AtmosGrid::Cell* current, IAtmosphere::Fl
 {
     switch (dir)
     {
-    case atmos::DOWN:  return *(current - 1);
-    case atmos::UP:    return *(current + 1);
+    case atmos::DOWN:  return *(current + 1);
+    case atmos::UP:    return *(current - 1);
     case atmos::RIGHT: return *(current + atmos::CELL_GROUP_SIZE);
     case atmos::LEFT:  return *(current - atmos::CELL_GROUP_SIZE);
     default: break;
