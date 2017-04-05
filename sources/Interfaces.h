@@ -62,7 +62,7 @@ class IObjectFactory
 public:
     virtual ~IObjectFactory() { }
 
-    virtual std::vector<ObjectInfo>& GetIdTable() = 0;
+    virtual QVector<ObjectInfo>& GetIdTable() = 0;
 
     virtual void ForeachProcess() = 0;
 

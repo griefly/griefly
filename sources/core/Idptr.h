@@ -22,7 +22,7 @@ struct ObjectInfo
     IMainObject* object;
 };
 
-extern std::vector<ObjectInfo>* id_ptr_id_table;
+extern QVector<ObjectInfo>* id_ptr_id_table;
 
 struct IdPtrBase
 {
