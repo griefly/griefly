@@ -65,61 +65,104 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
     center.data.energy = energy_average + energy_remains;
 }
 
-inline AtmosGrid::Cell& GetNearInGroup(AtmosGrid::Cell* current, IAtmosphere::Flags dir)
+inline AtmosGrid::Cell& GetNearInGroup(AtmosGrid::Cell* current, Dir dir)
 {
     switch (dir)
     {
-    case atmos::DOWN:  return *(current + 1);
-    case atmos::UP:    return *(current - 1);
-    case atmos::RIGHT: return *(current + atmos::CELL_GROUP_SIZE);
-    case atmos::LEFT:  return *(current - atmos::CELL_GROUP_SIZE);
-    default: break;
+    case D_DOWN:
+        return *(current + 1);
+    case D_UP:
+        return *(current - 1);
+    case D_RIGHT:
+        return *(current + atmos::CELL_GROUP_SIZE);
+    case D_LEFT:
+        return *(current - atmos::CELL_GROUP_SIZE);
     }
+}
+
+namespace
+{
+    const int AMOUNT_CELLS_IN_GROUP = atmos::CELL_GROUP_SIZE * atmos::CELL_GROUP_SIZE;
+    const int STAGES_AMOUNT = 5;
+    inline bool BelongsToStage(int x, int y, int stage)
+    {
+        return (((x + (y * 2)) % STAGES_AMOUNT) == ((MAIN_TICK + stage) % STAGES_AMOUNT));
+    }
+
+    inline void ProcessInnerGroupCell(AtmosGrid::Cell* current)
+    {
+        if (!current->IsPassable(atmos::CENTER))
+        {
+            return;
+        }
+
+        AtmosGrid::Cell* near_cells[atmos::DIRS_SIZE + 1];
+
+        for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
+        {
+            if (current->IsPassable(atmos::DIRS[dir]))
+            {
+                AtmosGrid::Cell& nearby = GetNearInGroup(current, atmos::INDEXES_TO_DIRS[dir]);
+                if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
+                    && nearby.IsPassable(atmos::CENTER))
+                {
+                    near_cells[dir] = &nearby;
+                    continue;
+                }
+            }
+            near_cells[dir] = nullptr;
+        }
+        near_cells[atmos::DIRS_SIZE] = current;
+
+        ProcessFiveCells(near_cells);
+    }
+}
+inline void AtmosGrid::ProcessBorderGroupCell(Cell* current, int x, int y)
+{
+    if (!current->IsPassable(atmos::CENTER))
+    {
+        return;
+    }
+
+    Cell* near_cells[atmos::DIRS_SIZE + 1];
+
+    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
+    {
+        if (current->IsPassable(atmos::DIRS[dir]))
+        {
+            Cell& nearby = Get(x, y, atmos::INDEXES_TO_DIRS[dir]);
+            if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
+                && nearby.IsPassable(atmos::CENTER))
+            {
+                near_cells[dir] = &nearby;
+                continue;
+            }
+        }
+        near_cells[dir] = nullptr;
+    }
+    near_cells[atmos::DIRS_SIZE] = current;
+
+    ProcessFiveCells(near_cells);
 }
 
 void AtmosGrid::ProcessGroups()
 {
-    const int AMOUNT_CELLS_IN_GROUP = atmos::CELL_GROUP_SIZE * atmos::CELL_GROUP_SIZE;
-    for (int group_index = 0; group_index < group_height_ * group_width_; ++group_index)
+    Cell* current_group = &cells_[0];
+    const int GROUPS_AMOUNT = group_height_ * group_width_;
+    for (int index = 0; index < GROUPS_AMOUNT; ++index, current_group += AMOUNT_CELLS_IN_GROUP)
     {
-        Cell* current_group = &cells_[group_index * AMOUNT_CELLS_IN_GROUP];
-        for (int stage = 0; stage < 5; ++stage)
+        for (int stage = 0; stage < STAGES_AMOUNT; ++stage)
         {
             for (int x = 1; x < atmos::CELL_GROUP_SIZE - 1; ++x)
             {
                 for (int y = 1; y < atmos::CELL_GROUP_SIZE - 1; ++y)
                 {
-                    if (((x + (y * 2)) % 5) != ((MAIN_TICK + stage) % 5))
+                    if (!BelongsToStage(x, y, stage))
                     {
                         continue;
                     }
-
                     Cell& current = current_group[y + x * atmos::CELL_GROUP_SIZE];
-
-                    if (!current.IsPassable(atmos::CENTER))
-                    {
-                        continue;
-                    }
-
-                    Cell* near_cells[atmos::DIRS_SIZE + 1];
-
-                    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
-                    {
-                        if (current.IsPassable(atmos::DIRS[dir]))
-                        {
-                            Cell& nearby = GetNearInGroup(&current, atmos::DIRS[dir]);
-                            if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
-                                && nearby.IsPassable(atmos::CENTER))
-                            {
-                                near_cells[dir] = &nearby;
-                                continue;
-                            }
-                        }
-                        near_cells[dir] = nullptr;
-                    }
-                    near_cells[atmos::DIRS_SIZE] = &current;
-
-                    ProcessFiveCells(near_cells);
+                    ProcessInnerGroupCell(&current);
                 }
             }
         }
@@ -132,43 +175,18 @@ void AtmosGrid::ProcessGroupsBorders()
     {
         int end_x = group_x * atmos::CELL_GROUP_SIZE;
         int start_x = end_x - 1;
-        for (int stage = 0; stage < 5; ++stage)
+        for (int stage = 0; stage < STAGES_AMOUNT; ++stage)
         {
             for (int x = start_x; x < end_x; ++x)
             {
                 for (int y = 1; y < height_ - 1; ++y)
                 {
-                    if (((x + (y * 2)) % 5) != ((MAIN_TICK + stage) % 5))
+                    if (!BelongsToStage(x, y, stage))
                     {
                         continue;
                     }
-
                     Cell& current = At(x, y);
-
-                    if (!current.IsPassable(atmos::CENTER))
-                    {
-                        continue;
-                    }
-
-                    Cell* near_cells[atmos::DIRS_SIZE + 1];
-
-                    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
-                    {
-                        if (current.IsPassable(atmos::DIRS[dir]))
-                        {
-                            Cell& nearby = Get(x, y, atmos::DIRS[dir]);
-                            if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
-                                && nearby.IsPassable(atmos::CENTER))
-                            {
-                                near_cells[dir] = &nearby;
-                                continue;
-                            }
-                        }
-                        near_cells[dir] = nullptr;
-                    }
-                    near_cells[atmos::DIRS_SIZE] = &current;
-
-                    ProcessFiveCells(near_cells);
+                    ProcessBorderGroupCell(&current, x, y);
                 }
             }
         }
@@ -177,43 +195,18 @@ void AtmosGrid::ProcessGroupsBorders()
     {
         int end_y = group_y * atmos::CELL_GROUP_SIZE;
         int start_y = end_y - 1;
-        for (int stage = 0; stage < 5; ++stage)
+        for (int stage = 0; stage < STAGES_AMOUNT; ++stage)
         {
             for (int y = start_y; y < end_y; ++y)
             {
                 for (int x = 1; x < width_; ++x)
                 {
-                    if (((x + (y * 2)) % 5) != ((MAIN_TICK + stage) % 5))
+                    if (!BelongsToStage(x, y, stage))
                     {
                         continue;
                     }
-
                     Cell& current = At(x, y);
-
-                    if (!current.IsPassable(atmos::CENTER))
-                    {
-                        continue;
-                    }
-
-                    Cell* near_cells[atmos::DIRS_SIZE + 1];
-
-                    for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
-                    {
-                        if (current.IsPassable(atmos::DIRS[dir]))
-                        {
-                            Cell& nearby = Get(x, y, atmos::DIRS[dir]);
-                            if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
-                                && nearby.IsPassable(atmos::CENTER))
-                            {
-                                near_cells[dir] = &nearby;
-                                continue;
-                            }
-                        }
-                        near_cells[dir] = nullptr;
-                    }
-                    near_cells[atmos::DIRS_SIZE] = &current;
-
-                    ProcessFiveCells(near_cells);
+                    ProcessBorderGroupCell(&current, x, y);
                 }
             }
         }

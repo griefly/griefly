@@ -107,15 +107,18 @@ public:
     {
         delete[] cells_;
     }
-    inline Cell& Get(int x, int y, IAtmosphere::Flags dir)
+    inline Cell& Get(int x, int y, Dir dir)
     {
         switch (dir)
         {
-        case atmos::DOWN:  return At(x, y + 1);
-        case atmos::UP:    return At(x, y - 1);
-        case atmos::RIGHT: return At(x + 1, y);
-        case atmos::LEFT:  return At(x - 1, y);
-        default: break;
+        case D_DOWN:
+            return At(x, y + 1);
+        case D_UP:
+            return At(x, y - 1);
+        case D_RIGHT:
+            return At(x + 1, y);
+        case D_LEFT:
+            return At(x - 1, y);
         }
     }
 
@@ -133,6 +136,8 @@ private:
     void ProcessGroups();
     void ProcessGroupsBorders();
     void Finalize();
+
+    void ProcessBorderGroupCell(Cell* current, int x, int y);
 
     int width_;
     int height_;
