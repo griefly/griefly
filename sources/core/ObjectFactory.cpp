@@ -34,7 +34,7 @@ ObjectFactory::~ObjectFactory()
     }
 }
 
-std::vector<ObjectInfo>& ObjectFactory::GetIdTable()
+QVector<ObjectInfo>& ObjectFactory::GetIdTable()
 {
     return objects_table_;
 }
@@ -166,7 +166,8 @@ void ObjectFactory::Save(FastSerializer& savefile)
 {
     SaveMapHeader(savefile);
 
-    auto it = ++objects_table_.begin();
+    auto it = objects_table_.begin();
+    ++it;
     while (it != objects_table_.end())
     {
         if (it->object)

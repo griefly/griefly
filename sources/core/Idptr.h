@@ -22,7 +22,7 @@ struct ObjectInfo
     IMainObject* object;
 };
 
-extern std::vector<ObjectInfo>* id_ptr_id_table;
+extern QVector<ObjectInfo>* id_ptr_id_table;
 
 struct IdPtrBase
 {
@@ -194,8 +194,6 @@ private:
         }
         return (*id_ptr_id_table)[id].object;
     }
-    // Dynamic memory allocation is disabled
-    static void* operator new(size_t);
 };
 
 template<typename T>

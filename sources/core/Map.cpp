@@ -120,12 +120,12 @@ IAtmosphere& MapMaster::GetAtmosphere()
     return *atmosphere_;
 }
 
-std::vector<std::vector<std::vector<MapMaster::SqType>>>& MapMaster::GetSquares()
+QVector<QVector<QVector<MapMaster::SqType>>>& MapMaster::GetSquares()
 {
     return squares_;
 }
 
-const std::vector<std::vector<std::vector<MapMaster::SqType>>>& MapMaster::GetSquares() const
+const QVector<QVector<QVector<MapMaster::SqType>>>& MapMaster::GetSquares() const
 {
     return squares_;
 }

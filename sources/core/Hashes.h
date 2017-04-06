@@ -32,7 +32,7 @@ namespace std
     public:
         size_t operator()(const QString& value) const
         {
-            return std::hash<std::string>()(value.toStdString());
+            return static_cast<size_t>(qHash(value));
         }
     };
 }

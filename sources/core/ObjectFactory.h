@@ -13,7 +13,7 @@ public:
     ObjectFactory(IGame* game);
     virtual ~ObjectFactory();
 
-    virtual std::vector<ObjectInfo>& GetIdTable() override;
+    virtual QVector<ObjectInfo>& GetIdTable() override;
 
     virtual void ForeachProcess() override;
 
@@ -57,12 +57,12 @@ private:
 
     void UpdateProcessingItems();
 
-    std::vector<IMainObject*> ids_to_delete_;
+    QVector<IMainObject*> ids_to_delete_;
 
-    std::vector<ObjectInfo> objects_table_;
-    std::vector<IdPtr<IMainObject>> process_table_;
+    QVector<ObjectInfo> objects_table_;
+    QVector<IdPtr<IMainObject>> process_table_;
 
-    std::vector<IdPtr<IMainObject>> add_to_process_;
+    QVector<IdPtr<IMainObject>> add_to_process_;
 
     quint32 id_;
 
