@@ -132,7 +132,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
     auto tile = map_->GetSquares()[x][y][z];
     for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
-        AtmosGrid::Cell& nearby = grid_->Get(x, y, atmos::DIRS[dir]);
+        AtmosGrid::Cell& nearby = grid_->Get(x, y, atmos::INDEXES_TO_DIRS[dir]);
         if (  (nearby.data.pressure + PRESSURE_MOVE_BORDER)
             < cell.data.pressure)
         {

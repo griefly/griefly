@@ -199,7 +199,7 @@ void AtmosGrid::ProcessGroupsBorders()
         {
             for (int y = start_y; y < end_y; ++y)
             {
-                for (int x = 1; x < width_; ++x)
+                for (int x = 1; x < width_ - 1; ++x)
                 {
                     if (!BelongsToStage(x, y, stage))
                     {
