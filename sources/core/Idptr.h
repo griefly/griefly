@@ -61,12 +61,12 @@ public:
         *this = other;
     }
     template<class U>
-    bool operator==(const IdPtr<U>& other)
+    bool operator==(const IdPtr<U>& other) const
     {
         return id_ == other.id_;
     }
     template<class U>
-    bool operator!=(const IdPtr<U>& other)
+    bool operator!=(const IdPtr<U>& other) const
     {
         return !operator==(other);
     }
@@ -141,19 +141,19 @@ public:
         Update();
         return operator*() != nullptr;
     }
-    operator void*() const
+    explicit operator bool() const
     {
 #if defined(KV_ID_PTR_VALID_CACHE)
         if (casted_)
         {
-            return static_cast<void*>(casted_);
+            return true;
         }
 #endif // KV_ID_PTR_VALID_CACHE
         if (IsValid())
         {
-            return static_cast<void*>(casted_);
+            return true;
         }
-        return nullptr;
+        return false;
     }
     quint32 Id() const
     {
