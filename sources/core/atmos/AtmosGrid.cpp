@@ -177,7 +177,7 @@ void AtmosGrid::ProcessGroupsBorders()
         int start_x = end_x - 1;
         for (int stage = 0; stage < STAGES_AMOUNT; ++stage)
         {
-            for (int x = start_x; x < end_x; ++x)
+            for (int x = start_x; x <= end_x; ++x)
             {
                 for (int y = 1; y < height_ - 1; ++y)
                 {
@@ -197,7 +197,7 @@ void AtmosGrid::ProcessGroupsBorders()
         int start_y = end_y - 1;
         for (int stage = 0; stage < STAGES_AMOUNT; ++stage)
         {
-            for (int y = start_y; y < end_y; ++y)
+            for (int y = start_y; y <= end_y; ++y)
             {
                 for (int x = 1; x < width_ - 1; ++x)
                 {
