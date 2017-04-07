@@ -104,7 +104,7 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
 
 MapMaster::MapMaster(SyncRandom* sync_random, TextPainter* texts)
     : losf_(this),
-      atmosphere_(new Atmosphere(sync_random, this, texts))
+      atmosphere_(new Atmosphere(this, texts))
 {
     visible_points_ = new std::list<PosPoint>;
 }
@@ -120,12 +120,12 @@ IAtmosphere& MapMaster::GetAtmosphere()
     return *atmosphere_;
 }
 
-std::vector<std::vector<std::vector<MapMaster::SqType>>>& MapMaster::GetSquares()
+QVector<QVector<QVector<MapMaster::SqType>>>& MapMaster::GetSquares()
 {
     return squares_;
 }
 
-const std::vector<std::vector<std::vector<MapMaster::SqType>>>& MapMaster::GetSquares() const
+const QVector<QVector<QVector<MapMaster::SqType>>>& MapMaster::GetSquares() const
 {
     return squares_;
 }

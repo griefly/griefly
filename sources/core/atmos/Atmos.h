@@ -15,7 +15,7 @@ class TextPainter;
 class Atmosphere : public IAtmosphere
 {
 public:
-    Atmosphere(SyncRandom* random, IMapMaster* map, TextPainter* texts);
+    Atmosphere(IMapMaster* map, TextPainter* texts);
     virtual void Resize(quint32 x, quint32 y, quint32 z) override;
     virtual void Process() override;
     virtual void ProcessMove() override;
@@ -34,7 +34,6 @@ private:
     int y_size_;
     int z_size_;
 
-    SyncRandom* random_;
     IMapMaster* map_;
     TextPainter* texts_;
 };

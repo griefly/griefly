@@ -100,20 +100,22 @@ private:
 
     struct FrameData
     {
-        std::vector<Entity> entities;
-        std::vector<QString> sounds;
-        std::vector<InterfaceUnit> units;
+        QVector<Entity> entities;
+        QVector<QString> sounds;
+        QVector<InterfaceUnit> units;
         int camera_pos_x;
         int camera_pos_y;
     };
 
     typedef FrameData DataType;
 
-    DataType* current_frame_;
+    DataType* old_frame_;
     DataType* new_frame_;
 
     DataType first_data_;
     DataType second_data_;
+
+    DataType current_frame_;
 
     struct ViewWithFrameId
     {

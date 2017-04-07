@@ -17,6 +17,7 @@ namespace atmos
     const IAtmosphere::Flags RIGHT = 8;
     const IAtmosphere::Flags CENTER = 16;
     const IAtmosphere::Flags SPACE = 32;
+    const IAtmosphere::Flags EMPTY = 64;
 
     const IAtmosphere::Flags DIRS[DIRS_SIZE]
         = { LEFT, UP, DOWN, RIGHT };
@@ -27,6 +28,7 @@ namespace atmos
 
     const Dir INDEXES_TO_DIRS[DIRS_SIZE]
         = { D_LEFT, D_UP, D_DOWN, D_RIGHT };
+    const int CELL_GROUP_SIZE = 32;
 }
 
 class AtmosGrid
@@ -76,11 +78,12 @@ public:
             data.energy = 0;
         }
     };
-    AtmosGrid(SyncRandom* random, int width, int height)
-        : random_(random),
-          width_(width),
+    AtmosGrid(int width, int height)
+        : width_(width),
           height_(height),
-          length_(width_ * height_)
+          length_(width_ * height_),
+          group_height_(height / atmos::CELL_GROUP_SIZE),
+          group_width_(width / atmos::CELL_GROUP_SIZE)
     {
         if (width_ < 2)
         {
@@ -90,48 +93,56 @@ public:
         {
             KvAbort("Height too small for AtmosGrid!");
         }
+        if ((width_ % atmos::CELL_GROUP_SIZE) != 0)
+        {
+            KvAbort(QString("Width is not multiplier of %1!").arg(atmos::CELL_GROUP_SIZE));
+        }
+        if ((height_ % atmos::CELL_GROUP_SIZE) != 0)
+        {
+            KvAbort(QString("Height is not multiplier of %1!").arg(atmos::CELL_GROUP_SIZE));
+        }
         cells_ = new Cell[length_];
     }
     ~AtmosGrid()
     {
         delete[] cells_;
     }
-
-    inline Cell& Get(int pos, IAtmosphere::Flags dir)
+    inline Cell& Get(int x, int y, Dir dir)
     {
-        // TODO: Boundaries check?
-
         switch (dir)
         {
-        case atmos::DOWN:  return cells_[pos + 1];
-        case atmos::UP:    return cells_[pos - 1];
-        case atmos::RIGHT: return cells_[pos + 32];
-        case atmos::LEFT:  return cells_[pos - 32];
-        default: break;
+        case D_DOWN:
+            return At(x, y + 1);
+        case D_UP:
+            return At(x, y - 1);
+        case D_RIGHT:
+            return At(x + 1, y);
+        case D_LEFT:
+            return At(x - 1, y);
         }
-
-        KvAbort(QString("AtmosGrid::Get, Unknown dir: %1").arg(dir));
-        // Not reachable
-        return cells_[pos];
-    }
-    inline Cell& Get(int x, int y, IAtmosphere::Flags dir)
-    {
-        return Get(y + x * height_, dir);
     }
 
     inline Cell& At(int x, int y)
     {
-        return cells_[y + x * height_];
+        int group_x = x / atmos::CELL_GROUP_SIZE;
+        int x_in_group = x % atmos::CELL_GROUP_SIZE;
+        int group_y = y / atmos::CELL_GROUP_SIZE;
+        int y_in_group = y % atmos::CELL_GROUP_SIZE;
+        Cell* group = &(cells_[(group_y + group_x * group_height_) * atmos::CELL_GROUP_SIZE * atmos::CELL_GROUP_SIZE]);
+        return group[y_in_group + x_in_group * atmos::CELL_GROUP_SIZE];
     }
     void Process();
 private:
-    void Prepare(int stage);
+    void ProcessGroups();
+    void ProcessGroupsBorders();
     void Finalize();
 
-    SyncRandom* random_;
+    void ProcessBorderGroupCell(Cell* current, int x, int y);
 
     int width_;
     int height_;
+    int group_height_;
+    int group_width_;
     int length_;
     Cell* cells_;
 };

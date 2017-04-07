@@ -265,7 +265,7 @@ void Game::WaitForExit()
     thread_.wait();
 }
 
-std::vector<ObjectInfo>* id_ptr_id_table = nullptr;
+QVector<ObjectInfo>* id_ptr_id_table = nullptr;
 
 void Game::InitWorld(int id, QString map_name)
 {   

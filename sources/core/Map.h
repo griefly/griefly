@@ -49,8 +49,8 @@ public:
 
     virtual IAtmosphere& GetAtmosphere() override;
 
-    virtual std::vector<std::vector<std::vector<SqType>>>& GetSquares() override;
-    virtual const std::vector<std::vector<std::vector<SqType>>>& GetSquares() const override;
+    virtual QVector<QVector<QVector<SqType>>>& GetSquares() override;
+    virtual const QVector<QVector<QVector<SqType>>>& GetSquares() const override;
 
     virtual int GetWidth() const override;
     virtual int GetHeight() const override;
@@ -72,6 +72,6 @@ public:
 private:
     LOSfinder losf_;
     IAtmosphere* atmosphere_;
-    std::vector<std::vector<std::vector<SqType>>> squares_;
+    QVector<QVector<QVector<SqType>>> squares_;
     std::list<PosPoint>* visible_points_;
 };

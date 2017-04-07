@@ -438,7 +438,7 @@ void CubeTile::UpdateAtmosPassable()
             atmos::LEFT,
             atmos::RIGHT };
 
-    IAtmosphere::Flags flags = 0;
+    IAtmosphere::Flags flags = atmos::FULL;
     for (int i = 0; i < 5; ++i)
     {
         if (!CanPass(GetPassable(dirs[i]), Passable::AIR))
@@ -450,6 +450,10 @@ void CubeTile::UpdateAtmosPassable()
     if (turf_ && turf_->GetAtmosState() == SPACE)
     {
         flags |= atmos::SPACE;
+    }
+    if (inside_list_.empty())
+    {
+        flags |= atmos::EMPTY;
     }
 
     GetGame().GetMap().GetAtmosphere().SetFlags(posx_, posy_, posz_, flags);

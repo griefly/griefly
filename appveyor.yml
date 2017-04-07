@@ -5,17 +5,24 @@ environment:
   QT5DIR: C:\Qt\5.8
 
 install:
-  - cmd: SET CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
+  - cmd: set CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
+  - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64'
 
 build_script:
   - cmd: cmake -G "Visual Studio 14 2015 Win64"  -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On
   - cmd: cmake --build . --target install --config Release -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
-  # For tests
-  - cmd: set PATH=%QT5DIR%/msvc2015_64/bin/;%PATH%
-  - cmd: set PATH=%QT5DIR%/msvc2015_64/plugins/;%PATH%
+  - cmd: '%QT5DIR%\msvc2015_64\bin\windeployqt.exe Exec/KVEngine.exe'
+  - cmd: for /f "tokens=* USEBACKQ" %%F in (`git describe --tags --abbrev^=4`) do set KVVERSION=%%F
+  - cmd: set KVVERSION=Griefly-%KVVERSION%-win64
+  - cmd: echo %KVVERSION%
+  - cmd: ren Exec %KVVERSION%
 
 test_script:
-  - cmd: cd Exec
+  - cmd: cd %KVVERSION%
   - cmd: KVEngine.exe --run-tests
+
+artifacts:
+  - path: '%KVVERSION%'
+    name: '%KVVERSION%'
