@@ -47,7 +47,17 @@ How to build everything on Linux
 How to start server
 -------------------
 
-Just run the executable from directory `gopath/src/griefly-server`.
+Server available in directory `gopath/src/griefly-server`. When hosting server,
+consider following adjustments:
+
+1. Change password for admin user in db/auth.json. Passwords stored in plain
+   text now.
+2. When starting server, provide `-server-url` parameter. This parameter is an URL for asset server.
+   It should be either host address (when server exposed to internet directly) or external ip
+   (when running behind NAT). Server will bind on port, extracted from this url and
+   clients will use url to connect to server for map exchange.
+
+Other server options available in help: `griefly-server -h`
 
 How to run game without launcher
 --------------------------------
