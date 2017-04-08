@@ -8,6 +8,8 @@ import (
 	"io"
 	"log"
 	"net"
+	"strconv"
+	"strings"
 
 	"gopkg.in/validator.v2"
 )
@@ -131,7 +133,62 @@ func (c *ClientConnection) reciever() {
 	}
 }
 
+type version struct {
+	numParts []int
+	rest     string
+	orig     string
+}
+
+func parseVersion(ver string) version {
+	ver = strings.TrimLeft(ver, "v")
+	var parts []string
+	outer := strings.Split(ver, "-")
+	inner := strings.Split(outer[0], ".")
+
+	parts = append(parts, inner...)
+	if len(outer) > 1 {
+		parts = append(parts, outer[1])
+	}
+
+	var rest string
+	if len(outer) > 2 {
+		rest = strings.Join(outer[2:], "-")
+	}
+
+	var numParts []int
+	for _, p := range parts {
+		num, _ := strconv.Atoi(p) // ignore error, assume zero
+		numParts = append(numParts, num)
+	}
+
+	return version{numParts, rest, ver}
+}
+
+func (v version) String() string {
+	return v.orig
+}
+
+func (v version) less(other version) bool {
+	for i, num := range other.numParts {
+		if i >= len(v.numParts) {
+			return true
+		}
+
+		if v.numParts[i] < num {
+			return true
+		}
+
+		if v.numParts[i] > num {
+			return false
+		}
+	}
+
+	return false
+}
+
 var clientVersionBuild string
+
+var clientVersion = parseVersion(clientVersionBuild)
 
 func (c *ClientConnection) Run() {
 	defer c.conn.Close()
@@ -163,7 +220,7 @@ func (c *ClientConnection) Run() {
 
 	login := e.Message.(*MessageLogin)
 
-	if login.GameVersion < clientVersionBuild {
+	if parseVersion(login.GameVersion).less(clientVersion) {
 		log.Printf("client is too old. Server version: '%s', client version: '%s'",
 			clientVersionBuild, login.GameVersion)
 		msg := &ErrmsgWrongGameVersion{CorrectVersion: clientVersionBuild}
