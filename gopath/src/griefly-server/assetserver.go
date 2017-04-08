@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -37,7 +38,15 @@ func NewAssetServer(serverURL string, collector *StatsCollector) (*AssetServer, 
 }
 
 func (as *AssetServer) ListenAndServe() error {
-	server := http.Server{Addr: as.serverURL.Host, Handler: as}
+	var port string
+	colonIdx := strings.Index(as.serverURL.Host, ":")
+	if colonIdx < 0 {
+		port = ":80"
+	} else {
+		port = as.serverURL.Host[colonIdx:]
+	}
+
+	server := http.Server{Addr: port, Handler: as}
 	return server.ListenAndServe()
 }
 
