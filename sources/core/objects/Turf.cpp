@@ -5,7 +5,7 @@
 ITurf::ITurf(quint32 id) : IOnMapObject(id)
 {
     friction_ = Friction::BASE_FRICTION;
-    atmos_state_ = SIMULATED;
+    atmos_state_ = atmos::SIMULATED;
 }
 
 void ITurf::Delete() 

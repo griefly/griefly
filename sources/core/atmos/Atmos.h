@@ -9,7 +9,10 @@
 
 class SyncRandom;
 class IMapMaster;
-class AtmosGrid;
+namespace atmos
+{
+    class AtmosGrid;
+}
 class TextPainter;
 
 class Atmosphere : public IAtmosphere
@@ -23,7 +26,7 @@ public:
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) override;
     virtual void LoadGrid() override;
 private:
-    AtmosGrid* grid_;
+    atmos::AtmosGrid* grid_;
 
     qint64 grid_processing_ns_;
     qint64 movement_processing_ns_;

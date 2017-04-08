@@ -22,12 +22,12 @@ void MapMaster::FillAtmosphere()
             for (int y = 0; y < GetHeight(); ++y)
             {
                 if (   squares_[x][y][z]->GetTurf()
-                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != SPACE
-                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != NON_SIMULATED)
+                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != atmos::SPACE
+                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != atmos::NON_SIMULATED)
                 {
                     // It is not passable then still fill with air cause of doors
                     auto holder = squares_[x][y][z]->GetAtmosHolder();
-                    AddDefaultValues(holder);
+                    atmos::AddDefaultValues(holder);
                 }
             }
         }

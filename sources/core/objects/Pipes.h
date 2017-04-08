@@ -16,11 +16,11 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) { return false; }
     virtual bool CanTransferGas(Dir dir) const { return false; }
-    AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
+    atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 protected:
     void ConnectHelper(IdPtr<PipeBase>& connection, Dir dir);
     void ProcessHelper(IdPtr<PipeBase>& connection, Dir dir);
-    AtmosHolder KV_SAVEBLE(atmos_holder_);
+    atmos::AtmosHolder KV_SAVEBLE(atmos_holder_);
 };
 ADD_TO_TYPELIST(PipeBase);
 

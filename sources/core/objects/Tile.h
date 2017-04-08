@@ -105,7 +105,7 @@ public:
         UpdatePassable();
     }
     virtual void UpdatePassable() override;
-    AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
+    atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 
     typedef std::vector<IdPtr<IOnMapObject>> InsideType;
     InsideType& GetInsideList() { return inside_list_; }
@@ -121,7 +121,7 @@ private:
 
     IdPtr<ITurf> KV_SAVEBLE(turf_);
 
-    AtmosHolder KV_SAVEBLE(atmos_holder_);
+    atmos::AtmosHolder KV_SAVEBLE(atmos_holder_);
 
     int KV_SAVEBLE(posx_);
     int KV_SAVEBLE(posy_);

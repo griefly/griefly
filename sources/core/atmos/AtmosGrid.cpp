@@ -1,5 +1,8 @@
 #include "AtmosGrid.h"
 
+namespace atmos
+{
+
 void AtmosGrid::Process()
 {
     ProcessGroups();
@@ -91,7 +94,7 @@ namespace
 
     inline void ProcessInnerGroupCell(AtmosGrid::Cell* current)
     {
-        if (!current->IsPassable(atmos::CENTER))
+        if (!current->IsPassable(atmos::CENTER_BLOCK))
         {
             return;
         }
@@ -104,7 +107,7 @@ namespace
             {
                 AtmosGrid::Cell& nearby = GetNearInGroup(current, atmos::INDEXES_TO_DIRS[dir]);
                 if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
-                    && nearby.IsPassable(atmos::CENTER))
+                    && nearby.IsPassable(atmos::CENTER_BLOCK))
                 {
                     near_cells[dir] = &nearby;
                     continue;
@@ -119,7 +122,7 @@ namespace
 }
 inline void AtmosGrid::ProcessBorderGroupCell(Cell* current, int x, int y)
 {
-    if (!current->IsPassable(atmos::CENTER))
+    if (!current->IsPassable(atmos::CENTER_BLOCK))
     {
         return;
     }
@@ -132,7 +135,7 @@ inline void AtmosGrid::ProcessBorderGroupCell(Cell* current, int x, int y)
         {
             Cell& nearby = Get(x, y, atmos::INDEXES_TO_DIRS[dir]);
             if (   nearby.IsPassable(atmos::REVERT_DIRS[dir])
-                && nearby.IsPassable(atmos::CENTER))
+                && nearby.IsPassable(atmos::CENTER_BLOCK))
             {
                 near_cells[dir] = &nearby;
                 continue;
@@ -219,7 +222,7 @@ void AtmosGrid::Finalize()
     {
         Cell& cell = cells_[pos];
 
-        if (cell.flags & atmos::SPACE)
+        if (cell.flags & atmos::SPACE_TILE)
         {
             for (int i = 0; i < GASES_NUM; ++i)
             {
@@ -232,4 +235,6 @@ void AtmosGrid::Finalize()
 
         UpdateMacroParams(&cell.data);
     }
+}
+
 }

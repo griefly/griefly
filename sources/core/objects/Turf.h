@@ -19,11 +19,11 @@ public:
     int GetFriction() const { return friction_; }
     void SetFriction(int friction) { friction_ = friction; }
 
-    AtmosState GetAtmosState() const { return atmos_state_; }
-    void SetAtmosState(AtmosState as) { atmos_state_ = as; }
+    atmos::AtmosState GetAtmosState() const { return atmos_state_; }
+    void SetAtmosState(atmos::AtmosState atmos_state) { atmos_state_ = atmos_state; }
 private:
     int KV_SAVEBLE(friction_);
-    AtmosState KV_SAVEBLE(atmos_state_);
+    atmos::AtmosState KV_SAVEBLE(atmos_state_);
 };
 ADD_TO_TYPELIST(ITurf);
 

@@ -407,7 +407,7 @@ void PipePump::Process()
     Dir tail;
     GetTailAndHead(GetDir(), &head, &tail);
     ProcessHelper(tail_, tail);
-    AtmosHolder* head_connection = nullptr;
+    atmos::AtmosHolder* head_connection = nullptr;
     if (head_)
     {
         head_connection = head_->GetAtmosHolder();
@@ -431,7 +431,7 @@ void PipePump::Process()
 
     head_connection->Connect(
         GetAtmosHolder(),
-        MAX_GAS_LEVEL,
-        MAX_GAS_LEVEL / 4,
-        MAX_GAS_LEVEL);
+        atmos::MAX_GAS_LEVEL,
+        atmos::MAX_GAS_LEVEL / 4,
+        atmos::MAX_GAS_LEVEL);
 }

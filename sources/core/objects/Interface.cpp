@@ -154,7 +154,7 @@ void HumanInterface::UpdateEnvironment()
     {
         if (IdPtr<CubeTile> t = human->GetOwner())
         {
-            int oxygen = t->GetAtmosHolder()->GetGase(OXYGEN);
+            int oxygen = t->GetAtmosHolder()->GetGase(atmos::OXYGEN);
             int temperature = t->GetAtmosHolder()->GetTemperature();
             int pressure = t->GetAtmosHolder()->GetPressure();
 

@@ -14,7 +14,7 @@ void PressureIndicator::Process()
 {
     if (IdPtr<CubeTile> tile = GetRoot())
     {
-        AtmosHolder* holder = tile->GetAtmosHolder();
+        atmos::AtmosHolder* holder = tile->GetAtmosHolder();
         SetNumber(holder->GetPressure() / 1000);
     }
 }

@@ -22,7 +22,7 @@ GasTank::GasTank(quint32 id)
     SetState("blue");
 
     open_ = false;
-    atmos_holder_.AddGase(OXYGEN, O2_TANK_AMOUNT);
+    atmos_holder_.AddGase(atmos::OXYGEN, O2_TANK_AMOUNT);
     atmos_holder_.AddEnergy(O2_TANK_ENERGY);
     // atmos_holder_.SetVolume();
 }
@@ -98,11 +98,11 @@ void MagicGasTank::Process()
 {
     GasTank::Process();
 
-    GetAtmosHolder()->RemoveGase(CO2, GetAtmosHolder()->GetGase(CO2));
-    GetAtmosHolder()->RemoveGase(NYTROGEN, GetAtmosHolder()->GetGase(NYTROGEN));
+    GetAtmosHolder()->RemoveGase(atmos::CO2, GetAtmosHolder()->GetGase(atmos::CO2));
+    GetAtmosHolder()->RemoveGase(atmos::NYTROGEN, GetAtmosHolder()->GetGase(atmos::NYTROGEN));
 
-    int new_oxygen = qMax(0, O2_TANK_AMOUNT - GetAtmosHolder()->GetGase(OXYGEN));
-    GetAtmosHolder()->AddGase(OXYGEN, new_oxygen);
+    int new_oxygen = qMax(0, O2_TANK_AMOUNT - GetAtmosHolder()->GetGase(atmos::OXYGEN));
+    GetAtmosHolder()->AddGase(atmos::OXYGEN, new_oxygen);
 
     int new_energy = qMax(0, O2_TANK_ENERGY - GetAtmosHolder()->GetEnergy());
     GetAtmosHolder()->AddEnergy(new_energy);

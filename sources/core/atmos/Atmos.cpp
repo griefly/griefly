@@ -48,7 +48,7 @@ void Atmosphere::Resize(quint32 x, quint32 y, quint32 z)
     z_size_ = z;
 
     delete grid_;
-    grid_ = new AtmosGrid(x_size_, y_size_);
+    grid_ = new atmos::AtmosGrid(x_size_, y_size_);
 }
 
 void Atmosphere::Process()
@@ -65,11 +65,11 @@ const int FLOW_MOVE_BORDER = -15;
 
 void Atmosphere::ProcessTileMove(int x, int y, int z)
 {
-    AtmosGrid::Cell& cell = grid_->At(x, y);
+    atmos::AtmosGrid::Cell& cell = grid_->At(x, y);
 
     VDir force;
 
-    if (cell.flags & atmos::EMPTY)
+    if (cell.flags & atmos::NO_OBJECTS)
     {
         for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
         {
@@ -118,7 +118,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
         return;
     }
 
-    if (!cell.IsPassable(atmos::CENTER))
+    if (!cell.IsPassable(atmos::CENTER_BLOCK))
     {
         return;
     }
@@ -132,7 +132,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
     auto tile = map_->GetSquares()[x][y][z];
     for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
-        AtmosGrid::Cell& nearby = grid_->Get(x, y, atmos::INDEXES_TO_DIRS[dir]);
+        atmos::AtmosGrid::Cell& nearby = grid_->Get(x, y, atmos::INDEXES_TO_DIRS[dir]);
         if (  (nearby.data.pressure + PRESSURE_MOVE_BORDER)
             < cell.data.pressure)
         {
@@ -195,8 +195,8 @@ void Atmosphere::LoadGrid()
             {
                 auto& tile = squares[x][y][z];
                 tile->UpdateAtmosPassable();
-                AtmosHolder* holder = tile->GetAtmosHolder();
-                AtmosGrid::Cell& cell = grid_->At(x, y);
+                atmos::AtmosHolder* holder = tile->GetAtmosHolder();
+                atmos::AtmosGrid::Cell& cell = grid_->At(x, y);
 
                 cell.data = holder->data_;
                 holder->SetAtmosData(&cell.data);

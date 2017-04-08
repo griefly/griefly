@@ -13,7 +13,7 @@ AtmosTool::AtmosTool(quint32 id) : Item(id)
     name = "Atmos tool";
 }
 
-QString AtmosTool::GetHtmlInfo(AtmosHolder &holder)
+QString AtmosTool::GetHtmlInfo(atmos::AtmosHolder& holder)
 {
     QString retval;
 
@@ -25,16 +25,16 @@ QString AtmosTool::GetHtmlInfo(AtmosHolder &holder)
     ss << "Pressure: " << holder.GetPressure() << "<br>";
 
     int overall_gases = 0;
-    for (quint32 i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < atmos::GASES_NUM; ++i)
     {
         overall_gases += holder.GetGase(i);
     }
     overall_gases = qMax(1, overall_gases);
 
-    for (quint32 i = 0; i < GASES_NUM; ++i)
+    for (quint32 i = 0; i < atmos::GASES_NUM; ++i)
     {
         ss << QString("%1: <b>%2%</b> (%3)<br>")
-            .arg(GASES_NAME[i])
+            .arg(atmos::GASES_NAME[i])
             .arg((holder.GetGase(i) * 100.0) / overall_gases, 0, 'f', 2)
             .arg(holder.GetGase(i));
     }
