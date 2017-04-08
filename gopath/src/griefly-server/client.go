@@ -196,6 +196,10 @@ func (r *Registry) Run() {
 				continue
 			}
 
+			if r.handlePing(m) {
+				continue
+			}
+
 			r.handleOOC(m)
 			r.handleGameMessage(m)
 
@@ -469,6 +473,15 @@ func (r *Registry) handleForcedNextTick(m *Envelope) bool {
 			r.handleNewTick(time.Now())
 		}
 
+		return true
+	}
+
+	return false
+}
+
+func (r *Registry) handlePing(m *Envelope) bool {
+	if m.Kind == MsgidPing {
+		r.sendOne(m.From, m)
 		return true
 	}
 
