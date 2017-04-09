@@ -6,8 +6,13 @@
 
 #include "ElectricTools.h"
 
-const int O2_TANK_AMOUNT = 10000;
-const int O2_TANK_ENERGY = 5000;
+namespace
+{
+    const int O2_TANK_AMOUNT = 10000;
+    const int O2_TANK_ENERGY = 5000;
+
+    const int PLASMA_TANK_AMOUNT = 10000;
+}
 
 GasTank::GasTank(quint32 id)
     : IMovable(id)
@@ -106,4 +111,13 @@ void MagicGasTank::Process()
 
     int new_energy = qMax(0, O2_TANK_ENERGY - GetAtmosHolder()->GetEnergy());
     GetAtmosHolder()->AddEnergy(new_energy);
+}
+
+PlasmaGasTank::PlasmaGasTank(quint32 id) : GasTank(id)
+{
+    name = "Plasma tank";
+    SetState("orange");
+
+    GetAtmosHolder()->RemoveGase(atmos::OXYGEN, O2_TANK_AMOUNT);
+    GetAtmosHolder()->AddGase(atmos::PLASMA, PLASMA_TANK_AMOUNT);
 }

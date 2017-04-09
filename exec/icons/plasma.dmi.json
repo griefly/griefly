@@ -1,0 +1,29 @@
+{
+    "info": {
+        "width": 32, 
+        "version": 4.0,
+        "height": 32
+    }, 
+    "states": [
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "plasma", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 3, 
+            "state": "nitrous_oxide", 
+            "delay": [
+                2.0, 
+                2.0, 
+                2.0
+            ]
+        }
+    ]
+}

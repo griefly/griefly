@@ -30,6 +30,8 @@ public:
         int pos_y;
         int vlevel;
         int dir;
+
+        bool clickable;
     };
 
     struct InterfaceUnit

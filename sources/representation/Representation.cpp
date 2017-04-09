@@ -192,6 +192,7 @@ Representation::Entity::Entity()
     pos_y = 0;
     vlevel = 0;
     dir = D_DOWN;
+    clickable = true;
 }
 
 Representation::InterfaceUnit::InterfaceUnit()
@@ -283,6 +284,10 @@ void Representation::Click(int x, int y)
 
     for (auto it = ents.rbegin(); it != ents.rend(); ++it)
     {
+        if (!it->clickable)
+        {
+            continue;
+        }
         if (it->vlevel >= MAX_LEVEL)
         {
             int bdir = helpers::dir_to_byond(it->dir);
@@ -299,6 +304,10 @@ void Representation::Click(int x, int y)
     {
         for (auto it = ents.rbegin(); it != ents.rend(); ++it)
         {
+            if (!it->clickable)
+            {
+                continue;
+            }
             if (it->vlevel != vlevel)
             {
                 continue;
@@ -306,7 +315,6 @@ void Representation::Click(int x, int y)
             int bdir = helpers::dir_to_byond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                //qDebug() << "Clicked " << it->id;
                 id_to_send = it->id;
                 break;
             }

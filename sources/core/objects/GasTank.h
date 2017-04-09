@@ -5,7 +5,7 @@
 #include "../atmos/AtmosHolder.h"
 #include "Item.h"
 
-class GasTank: public IMovable
+class GasTank : public IMovable
 {
 public:
     DECLARE_SAVED(GasTank, IMovable);
@@ -26,7 +26,7 @@ private:
 };
 ADD_TO_TYPELIST(GasTank);
 
-class MagicGasTank: public GasTank
+class MagicGasTank : public GasTank
 {
 public:
     DECLARE_SAVED(MagicGasTank, GasTank);
@@ -36,3 +36,12 @@ public:
     virtual void Process() override;
 };
 ADD_TO_TYPELIST(MagicGasTank);
+
+class PlasmaGasTank : public GasTank
+{
+public:
+    DECLARE_SAVED(PlasmaGasTank, GasTank);
+    DECLARE_GET_TYPE_ITEM(PlasmaGasTank);
+    PlasmaGasTank(quint32 id);
+};
+ADD_TO_TYPELIST(PlasmaGasTank);
