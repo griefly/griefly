@@ -187,7 +187,7 @@ private:
 
     static IMainObject* GetFromIdTable(quint32 id)
     {
-        if (id >= id_ptr_id_table->size())
+        if (static_cast<int>(id) >= id_ptr_id_table->size())
         {
             KvAbort(QString("Id table lookup fail, id: %1, size: %2")
                 .arg(id).arg(id_ptr_id_table->size()));
