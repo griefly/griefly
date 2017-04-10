@@ -20,11 +20,16 @@ public:
     {
         switch (direct)
         {
-        case D_UP:    return passable_up;
-        case D_DOWN:  return passable_down;
-        case D_LEFT:  return passable_left;
-        case D_RIGHT: return passable_right;
-        case D_ALL:   return passable_all;
+        case Dir::UP:
+            return passable_up;
+        case Dir::DOWN:
+            return passable_down;
+        case Dir::LEFT:
+            return passable_left;
+        case Dir::RIGHT:
+            return passable_right;
+        case Dir::ALL:
+            return passable_all;
         }
         return false;
     }
@@ -33,14 +38,26 @@ public:
     {
         switch (direct)
         {
-        case D_UP:    passable_up = p;    break;
-        case D_DOWN:  passable_down = p;  break;
-        case D_LEFT:  passable_left = p;  break;
-        case D_RIGHT: passable_right = p; break;
-        case D_ALL:   passable_all = p;   break;
+        case Dir::UP:
+            passable_up = p;
+            break;
+        case Dir::DOWN:
+            passable_down = p;
+            break;
+        case Dir::LEFT:
+            passable_left = p;
+            break;
+        case Dir::RIGHT:
+            passable_right = p;
+            break;
+        case Dir::ALL:
+            passable_all = p;
+            break;
         }
         if (owner)
+        {
             owner->UpdatePassable();
+        }
     }
 
     virtual bool IsTransparent() const override

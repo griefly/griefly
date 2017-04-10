@@ -11,7 +11,7 @@ IMovable::IMovable(quint32 id) : IOnMapObject(id)
 {
     last_move_ = 0;
     tick_speed_ = 1;
-    direction_ = D_DOWN;
+    direction_ = Dir::DOWN;
     anchored_ = false;
     force_.x = 0;
     force_.y = 0;
@@ -50,7 +50,7 @@ void IMovable::ProcessForce()
         return;
     }
 
-    VDir vstep = DirToVDir[step];
+    VDir vstep = DirToVDir(step);
     force_.x -= (vstep.x * Friction::CombinedFriction(GetTurf())) / Friction::BASE_FRICTION;
     force_.y -= (vstep.y * Friction::CombinedFriction(GetTurf())) / Friction::BASE_FRICTION;
     force_.z -= (vstep.z * Friction::CombinedFriction(GetTurf())) / Friction::BASE_FRICTION;
@@ -110,8 +110,8 @@ bool IMovable::CheckPassable()
     }
 
     auto neighbour = owner->GetNeighbour(GetDir());
-    if (   !CanPass(neighbour->GetPassable(D_ALL), passable_level)
-        || !CanPass(neighbour->GetPassable(helpers::revert_dir(GetDir())), passable_level))
+    if (   !CanPass(neighbour->GetPassable(Dir::ALL), passable_level)
+        || !CanPass(neighbour->GetPassable(RevertDir(GetDir())), passable_level))
     {
         neighbour->Bump(GetId());
         force_.x = 0;
@@ -160,13 +160,13 @@ void IMovable::Bump(IdPtr<IMovable> item)
 {
     if (IdPtr<IMob> mob = item)
     {
-        ApplyForce(DirToVDir[mob->GetDir()]);
+        ApplyForce(DirToVDir(mob->GetDir()));
     }
 }
 
 void IMovable::BumpByGas(Dir dir, bool inside)
 {
-    ApplyForce(DirToVDir[dir]);
+    ApplyForce(DirToVDir(dir));
 }
 
 ForceManager& ForceManager::Get()

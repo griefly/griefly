@@ -12,11 +12,11 @@ Closet::Closet(quint32 id)
 
     open_ = false;
 
-    SetPassable(D_ALL, Passable::AIR);
-    SetPassable(D_UP, Passable::FULL);
-    SetPassable(D_DOWN, Passable::FULL);
-    SetPassable(D_LEFT, Passable::FULL);
-    SetPassable(D_RIGHT, Passable::FULL);
+    SetPassable(Dir::ALL, Passable::AIR);
+    SetPassable(Dir::UP, Passable::FULL);
+    SetPassable(Dir::DOWN, Passable::FULL);
+    SetPassable(Dir::LEFT, Passable::FULL);
+    SetPassable(Dir::RIGHT, Passable::FULL);
 
     SetSprite("icons/closet.dmi");
     SetState("closed");
@@ -151,7 +151,7 @@ void Closet::Close()
     });
 
     open_ = false;
-    SetPassable(D_ALL, Passable::AIR);
+    SetPassable(Dir::ALL, Passable::AIR);
     SetState("closed");
 
     PlaySoundIfVisible("click.wav");
@@ -166,7 +166,7 @@ void Closet::Open()
     content_.clear();
 
     open_ = true;
-    SetPassable(D_ALL, Passable::FULL);
+    SetPassable(Dir::ALL, Passable::FULL);
     SetState("open");
 
     PlaySoundIfVisible("click.wav");

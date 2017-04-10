@@ -191,7 +191,7 @@ Representation::Entity::Entity()
     pos_x = 0;
     pos_y = 0;
     vlevel = 0;
-    dir = D_DOWN;
+    dir = Dir::DOWN;
     clickable = true;
 }
 
@@ -290,7 +290,7 @@ void Representation::Click(int x, int y)
         }
         if (it->vlevel >= MAX_LEVEL)
         {
-            int bdir = helpers::dir_to_byond(it->dir);
+            int bdir = helpers::DirToByond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
                 //qDebug() << "Clicked " << it->id;
@@ -312,7 +312,7 @@ void Representation::Click(int x, int y)
             {
                 continue;
             }
-            int bdir = helpers::dir_to_byond(it->dir);
+            int bdir = helpers::DirToByond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
                 id_to_send = it->id;
@@ -445,7 +445,7 @@ void Representation::Draw()
                 views_[it->id].view.Draw(
                     camera_.GetFullShiftX(),
                     camera_.GetFullShiftY(),
-                    helpers::dir_to_byond(it->dir));
+                    helpers::DirToByond(it->dir));
             }
         }
     }
@@ -456,7 +456,7 @@ void Representation::Draw()
             views_[it->id].view.Draw(
                 camera_.GetFullShiftX(),
                 camera_.GetFullShiftY(),
-                helpers::dir_to_byond(it->dir));
+                helpers::DirToByond(it->dir));
         }
     }
 }

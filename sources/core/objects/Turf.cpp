@@ -33,7 +33,7 @@ void ITurf::Represent()
             ent.view.SetSprite("icons/plasma.dmi");
             ent.view.SetState("plasma");
             ent.clickable = false;
-            ent.dir = D_DOWN;
+            ent.dir = Dir::DOWN;
             GetRepresentation().AddToNewFrame(ent);
         }
     }
@@ -52,10 +52,10 @@ int Friction::CombinedFriction(IdPtr<ITurf> turf)
 
     int retval =
           turf->GetFriction()
-        + turf->GetNeighbour(D_UP)->GetTurf()->GetFriction()
-        + turf->GetNeighbour(D_DOWN)->GetTurf()->GetFriction()
-        + turf->GetNeighbour(D_LEFT)->GetTurf()->GetFriction()
-        + turf->GetNeighbour(D_RIGHT)->GetTurf()->GetFriction();
+        + turf->GetNeighbour(Dir::UP)->GetTurf()->GetFriction()
+        + turf->GetNeighbour(Dir::DOWN)->GetTurf()->GetFriction()
+        + turf->GetNeighbour(Dir::LEFT)->GetTurf()->GetFriction()
+        + turf->GetNeighbour(Dir::RIGHT)->GetTurf()->GetFriction();
     if (retval > Friction::BASE_FRICTION)
     {
         retval = Friction::BASE_FRICTION;
@@ -66,10 +66,10 @@ int Friction::CombinedFriction(IdPtr<ITurf> turf)
     if (retval < Friction::BASE_FRICTION)
     {
         if (   turf->GetOwner()->GetItem<Lattice>()
-            || turf->GetNeighbour(D_UP)->GetItem<Lattice>()
-            || turf->GetNeighbour(D_DOWN)->GetItem<Lattice>()
-            || turf->GetNeighbour(D_LEFT)->GetItem<Lattice>()
-            || turf->GetNeighbour(D_RIGHT)->GetItem<Lattice>()
+            || turf->GetNeighbour(Dir::UP)->GetItem<Lattice>()
+            || turf->GetNeighbour(Dir::DOWN)->GetItem<Lattice>()
+            || turf->GetNeighbour(Dir::LEFT)->GetItem<Lattice>()
+            || turf->GetNeighbour(Dir::RIGHT)->GetItem<Lattice>()
             )
         {
             retval = Friction::BASE_FRICTION;

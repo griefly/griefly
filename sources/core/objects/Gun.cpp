@@ -40,38 +40,38 @@ void Gun::ShootImpl(VDir target, const QString& sound,
             {
                 if (y < 0)
                 {
-                    if (facing == D_LEFT || facing == D_RIGHT)
+                    if (facing == Dir::LEFT || facing == Dir::RIGHT)
                     {
                         if (x > 0)
                         {
-                            shooting_direction = D_RIGHT;
+                            shooting_direction = Dir::RIGHT;
                         }
                         else
                         {
-                            shooting_direction = D_LEFT;
+                            shooting_direction = Dir::LEFT;
                         }
                     }
                     else
                     {
-                        shooting_direction = D_UP;
+                        shooting_direction = Dir::UP;
                     }
                 }
                 else
                 {
-                    if (facing == D_LEFT || facing == D_RIGHT)
+                    if (facing == Dir::LEFT || facing == Dir::RIGHT)
                     {
                         if (x > 0)
                         {
-                            shooting_direction = D_RIGHT;
+                            shooting_direction = Dir::RIGHT;
                         }
                         else
                         {
-                            shooting_direction = D_LEFT;
+                            shooting_direction = Dir::LEFT;
                         }
                     }
                     else
                     {
-                        shooting_direction = D_DOWN;
+                        shooting_direction = Dir::DOWN;
                     }
                 }
             }
@@ -82,7 +82,7 @@ void Gun::ShootImpl(VDir target, const QString& sound,
             projectile->Process();
             if (!casing_type.isEmpty())
             {
-                Dir dir = GetRand() % 4;
+                Dir dir = static_cast<Dir>(GetRand() % 4);
                 IdPtr<Item> casing = Create<Item>(casing_type, tile.Id());
                 casing->Rotate(dir);
             } 	

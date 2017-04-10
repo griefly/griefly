@@ -25,10 +25,10 @@ void FlatGlass::AfterWorldCreation()
 {
     Structure::AfterWorldCreation();
 
-    SetPassable(D_UP, Passable::FULL);
-    SetPassable(D_DOWN, Passable::FULL);
-    SetPassable(D_LEFT, Passable::FULL);
-    SetPassable(D_RIGHT, Passable::FULL);
+    SetPassable(Dir::UP, Passable::FULL);
+    SetPassable(Dir::DOWN, Passable::FULL);
+    SetPassable(Dir::LEFT, Passable::FULL);
+    SetPassable(Dir::RIGHT, Passable::FULL);
 
     SetPassable(GetDir(), Passable::EMPTY);
 }
@@ -39,7 +39,7 @@ void FlatGlass::Bump(IdPtr<IMovable> item)
     {
         if (item->GetDir() != GetDir())
         {
-            if (!CanPass(owner->GetPassable(D_ALL), passable_level) || anchored_)
+            if (!CanPass(owner->GetPassable(Dir::ALL), passable_level) || anchored_)
             {
                 return;
             }

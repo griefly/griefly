@@ -41,18 +41,18 @@ void IMob::ProcessMessage(const Message2 &msg)
 
     if (Network2::IsKey(obj, Input::MOVE_UP))
     {
-        TryMove(D_UP);
+        TryMove(Dir::UP);
     }
     else if (Network2::IsKey(obj, Input::MOVE_DOWN))
     {
-        TryMove(D_DOWN);
+        TryMove(Dir::DOWN);
     }
     else if (Network2::IsKey(obj, Input::MOVE_LEFT))
     {
-        TryMove(D_LEFT);
+        TryMove(Dir::LEFT);
     }
     else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
     {
-        TryMove(D_RIGHT);
+        TryMove(Dir::RIGHT);
     }
 }

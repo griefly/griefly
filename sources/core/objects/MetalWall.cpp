@@ -13,7 +13,7 @@
 MetalWall::MetalWall(quint32 id) : ITurf(id)
 {
     transparent = false;
-    SetPassable(D_ALL, Passable::EMPTY);
+    SetPassable(Dir::ALL, Passable::EMPTY);
 
     v_level = 2;
 
@@ -41,7 +41,7 @@ void MetalWall::AttackBy(IdPtr<Item> item)
 ReinforcedWall::ReinforcedWall(quint32 id) : ITurf(id)
 {
     transparent = false;
-    SetPassable(D_ALL, Passable::EMPTY);
+    SetPassable(Dir::ALL, Passable::EMPTY);
 
     v_level = 2;
 

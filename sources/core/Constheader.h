@@ -18,19 +18,35 @@ const int SIZE_W_SQ = 12;
 
 extern bool NODRAW; // probably nodraw mode
 
-typedef int Dir;
-const Dir D_ALL = -1;
-const Dir D_LEFT = 0;
-const Dir D_RIGHT = 1;
-const Dir D_UP = 2;
-const Dir D_DOWN = 3;
-const Dir D_ZUP = 4;
-const Dir D_ZDOWN = 5;
+enum class Dir : int
+{
+    ALL = -1,
+    LEFT = 0,
+    RIGHT = 1,
+    UP = 2,
+    DOWN = 3,
+    ZUP = 4,
+    ZDOWN = 5,
 
-const Dir D_SOUTHEAST = 6;
-const Dir D_SOUTHWEST = 7;
-const Dir D_NORTHEAST = 8;
-const Dir D_NORTHWEST = 9;
+    SOUTHEAST = 6,
+    SOUTHWEST = 7,
+    NORTHEAST = 8,
+    NORTHWEST = 9,
+};
+
+inline FastSerializer& operator<<(FastSerializer& file, const Dir& dir)
+{
+    file << static_cast<int>(dir);
+    return file;
+}
+
+inline FastDeserializer& operator>>(FastDeserializer& file, Dir& dir)
+{
+    int temp;
+    file >> temp;
+    dir = static_cast<Dir>(temp);
+    return file;
+}
 
 struct VDir
 {
@@ -64,7 +80,16 @@ const VDir VD_DOWN(0, 1, 0); // south
 const VDir VD_ZUP(0, 0, 1);
 const VDir VD_ZDOWN(0, 0, -1);
 
-const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
+namespace helpers
+{
+    const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
+}
+inline VDir DirToVDir(Dir dir)
+{
+    // TODO: switch
+    int index = static_cast<int>(dir);
+    return helpers::DirToVDir[index];
+}
 
 inline Dir VDirToDir(const VDir& vdir)
 {
@@ -75,27 +100,52 @@ inline Dir VDirToDir(const VDir& vdir)
     {
         if (vdir.x > 0)
         {
-            return D_RIGHT;
+            return Dir::RIGHT;
         }
-        return D_LEFT;
+        return Dir::LEFT;
     }
     if (abs_y >= abs_z)
     {
         if (vdir.y >= 0)
         {
-            return D_DOWN;
+            return Dir::DOWN;
         }
-        return D_UP;
+        return Dir::UP;
     }
 
     if (vdir.z > 0)
     {
-        return D_ZUP;
+        return Dir::ZUP;
     }
-    return D_ZDOWN;
+    return Dir::ZDOWN;
 }
 
-const Dir DirToRDir[6] = {1, 0, 3, 2, 5, 4};
+inline Dir RevertDir(Dir dir)
+{
+    switch (dir)
+    {
+    case Dir::UP:
+        return Dir::DOWN;
+    case Dir::DOWN:
+        return Dir::UP;
+    case Dir::LEFT:
+        return Dir::RIGHT;
+    case Dir::RIGHT:
+        return Dir::LEFT;
+    case Dir::ZUP:
+        return Dir::ZDOWN;
+    case Dir::ZDOWN:
+        return Dir::ZUP;
+    case Dir::NORTHEAST:
+        return Dir::SOUTHWEST;
+    case Dir::SOUTHWEST:
+        return Dir::NORTHEAST;
+    case Dir::SOUTHEAST:
+        return Dir::NORTHWEST;
+    case Dir::NORTHWEST:
+        return Dir::SOUTHEAST;
+    }
+}
 
 const int MAX_LEVEL = 20;
 

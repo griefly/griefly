@@ -41,7 +41,7 @@ void PipeBase::ConnectHelper(IdPtr<PipeBase>& connection, Dir dir)
             }
             if (IdPtr<PipeBase> pipe = obj)
             {
-                if (pipe->Connect(helpers::revert_dir(dir), GetId()))
+                if (pipe->Connect(RevertDir(dir), GetId()))
                 {
                     connection = pipe;
                 }
@@ -54,7 +54,7 @@ void PipeBase::ProcessHelper(IdPtr<PipeBase>& connection, Dir dir)
 {
     if (connection.IsValid())
     {
-        if (connection->CanTransferGas(helpers::revert_dir(dir)))
+        if (connection->CanTransferGas(RevertDir(dir)))
         {
             connection->GetAtmosHolder()->Connect(GetAtmosHolder());
         }
@@ -123,21 +123,21 @@ void Pipe::Process()
 
 void Pipe::GetTailAndHead(Dir dir, Dir* head, Dir* tail)
 {
-    static int DIRS_DATA[10][2]
+    static Dir DIRS_DATA[10][2]
         = {
-        {D_LEFT, D_RIGHT}, // D_LEFT
-        {D_RIGHT, D_LEFT}, // D_RIGHT
-        {D_UP, D_DOWN}, // D_UP
-        {D_DOWN, D_UP}, // D_DOWN
-        {D_ZUP, D_ZDOWN}, // D_ZUP
-        {D_ZDOWN, D_ZUP}, // D_ZDOWN
-        {D_RIGHT, D_DOWN}, // D_SOUTHEAST
-        {D_DOWN, D_LEFT}, // D_SOUTHWEST
-        {D_UP, D_RIGHT}, // D_NORTHEAST
-        {D_LEFT, D_UP} // D_NORTHWEST
+        {Dir::LEFT, Dir::RIGHT}, // Dir::LEFT
+        {Dir::RIGHT, Dir::LEFT}, // Dir::RIGHT
+        {Dir::UP, Dir::DOWN}, // Dir::UP
+        {Dir::DOWN, Dir::UP}, // Dir::DOWN
+        {Dir::ZUP, Dir::ZDOWN}, // Dir::ZUP
+        {Dir::ZDOWN, Dir::ZUP}, // Dir::ZDOWN
+        {Dir::RIGHT, Dir::DOWN}, // D_SOUTHEAST
+        {Dir::DOWN, Dir::LEFT}, // D_SOUTHWEST
+        {Dir::UP, Dir::RIGHT}, // D_NORTHEAST
+        {Dir::LEFT, Dir::UP} // D_NORTHWEST
         };
-    *head = DIRS_DATA[dir][0];
-    *tail = DIRS_DATA[dir][1];
+    *head = DIRS_DATA[static_cast<int>(dir)][0];
+    *tail = DIRS_DATA[static_cast<int>(dir)][1];
 }
 
 Manifold::Manifold(quint32 id) : PipeBase(id)
@@ -212,26 +212,26 @@ void Manifold::Process()
 
 void Manifold::GetConnectionsDirs(Dir dir, Dir *tail, Dir *left, Dir *right)
 {
-    *tail = helpers::revert_dir(dir);
-    if (dir == D_DOWN)
+    *tail = RevertDir(dir);
+    if (dir == Dir::DOWN)
     {
-        *left = D_RIGHT;
-        *right = D_LEFT;
+        *left = Dir::RIGHT;
+        *right = Dir::LEFT;
     }
-    else if (dir == D_UP)
+    else if (dir == Dir::UP)
     {
-        *left = D_LEFT;
-        *right = D_RIGHT;
+        *left = Dir::LEFT;
+        *right = Dir::RIGHT;
     }
-    else if (dir == D_RIGHT)
+    else if (dir == Dir::RIGHT)
     {
-        *left = D_UP;
-        *right = D_DOWN;
+        *left = Dir::UP;
+        *right = Dir::DOWN;
     }
     else
     {
-        *left = D_DOWN;
-        *right = D_UP;
+        *left = Dir::DOWN;
+        *right = Dir::UP;
     }
 }
 
@@ -394,7 +394,7 @@ PipePump::PipePump(quint32 id) : Pipe(id)
 
 bool PipePump::CanTransferGas(Dir dir) const
 {
-    if (helpers::revert_dir(dir) == GetDir())
+    if (RevertDir(dir) == GetDir())
     {
         return true;
     }

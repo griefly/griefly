@@ -29,7 +29,7 @@ public:
         int pos_x;
         int pos_y;
         int vlevel;
-        int dir;
+        Dir dir;
 
         bool clickable;
     };

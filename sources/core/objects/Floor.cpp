@@ -12,7 +12,7 @@
 Floor::Floor(quint32 id) : ITurf(id)
 {
     transparent = true;
-    SetPassable(D_ALL, Passable::FULL);
+    SetPassable(Dir::ALL, Passable::FULL);
 
     SetSprite("icons/floors.dmi");
     SetState("floor");

@@ -403,9 +403,9 @@ void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
     if (ee && data.size())
     {
         FastDeserializer deserializer(data.data(), data.size());
-        int dir;
+        Dir dir;
         deserializer >> dir;
-        int byond_dir = helpers::dir_to_byond(dir);
+        int byond_dir = helpers::DirToByond(dir);
 
         if (byond_dir < image_holder_[ee->item_type].size())
         {

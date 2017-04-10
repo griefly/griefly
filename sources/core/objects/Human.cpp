@@ -29,7 +29,7 @@ Human::Human(quint32 id) : IMob(id)
     tick_speed_ = 1;
     SetSprite("icons/human.dmi");
     SetState("african1_m_s");
-    SetPassable(D_ALL, Passable::BIG_ITEM);
+    SetPassable(Dir::ALL, Passable::BIG_ITEM);
     v_level = 9;
     attack_cooldown_ = 0;
     name = "Morgan James";
@@ -128,22 +128,22 @@ void Human::ProcessMessage(const Message2 &msg)
         {
             if (Network2::IsKey(obj, Input::MOVE_UP))
             {
-                ApplyForce(DirToVDir[D_UP]);
+                ApplyForce(DirToVDir(Dir::UP));
                 return;
             }
             else if (Network2::IsKey(obj, Input::MOVE_DOWN))
             {
-                ApplyForce(DirToVDir[D_DOWN]);
+                ApplyForce(DirToVDir(Dir::DOWN));
                 return;
             }
             else if (Network2::IsKey(obj, Input::MOVE_LEFT))
             {
-                ApplyForce(DirToVDir[D_LEFT]);
+                ApplyForce(DirToVDir(Dir::LEFT));
                 return;
             }
             else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
             {
-                ApplyForce(DirToVDir[D_RIGHT]);
+                ApplyForce(DirToVDir(Dir::RIGHT));
                 return;
             }
         }
@@ -311,14 +311,14 @@ void Human::SetLying(bool value)
     {
         GetGame().GetChat().PostSimpleText(name + " is lying now", owner->GetId());
         view_.SetAngle(90);
-        SetPassable(D_ALL, Passable::FULL);
+        SetPassable(Dir::ALL, Passable::FULL);
         v_level = 8;
     }
     else
     {
         GetGame().GetChat().PostSimpleText(name + " is standing now!", owner->GetId());
         view_.SetAngle(0);
-        SetPassable(D_ALL, Passable::BIG_ITEM);
+        SetPassable(Dir::ALL, Passable::BIG_ITEM);
         v_level = 9;
     }
     interface_.UpdateLaying();
@@ -493,7 +493,7 @@ void Human::Represent()
     }
     else
     {
-        ent.dir = D_DOWN;
+        ent.dir = Dir::DOWN;
     }
     GetRepresentation().AddToNewFrame(ent);
 }
@@ -535,7 +535,7 @@ void Human::RotationAction(IdPtr<IOnMapBase> item)
             {
                 return;
             }
-            movable->Rotate((movable->GetDir() + 1) % 4);
+            movable->Rotate(static_cast<Dir>((static_cast<int>(movable->GetDir()) + 1) % 4));
         }
     }
 }

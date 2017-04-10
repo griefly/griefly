@@ -14,7 +14,7 @@ Girder::Girder(quint32 id) : Structure(id)
     SetSprite("icons/structures.dmi");
     SetState("girder");
 
-    SetPassable(D_ALL, Passable::AIR);
+    SetPassable(Dir::ALL, Passable::AIR);
 
     anchored_ = true;
     name = "Girder";

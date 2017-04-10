@@ -32,7 +32,7 @@ unsigned int hash(const std::vector<Dir>& content)
     int i = 1;
     for (auto it = content.begin(); it != content.end(); ++it, ++i)
     {
-        retval += *it * i;
+        retval += hash(*it) * i;
     }
     return retval;
 }
@@ -40,7 +40,7 @@ unsigned int hash(const std::vector<Dir>& content)
 
 Projectile::Projectile(quint32 id) : IMovable(id)
 {
-    SetPassable(D_ALL, Passable::FULL);
+    SetPassable(Dir::ALL, Passable::FULL);
     damage_ = 0;
     burn_damage_ = 0;
     SetSprite("icons/projectiles.dmi");
@@ -120,51 +120,51 @@ void Projectile::MakeMovementPattern(VDir target, Dir facing)
     {
         if (y < 0)
         {
-            if (facing == D_LEFT || facing == D_RIGHT)
+            if (facing == Dir::LEFT || facing == Dir::RIGHT)
             {
                 if (x > 0)
                 {
-                    MakeMovementLoops(abs_y, abs_x, D_RIGHT, D_UP);
+                    MakeMovementLoops(abs_y, abs_x, Dir::RIGHT, Dir::UP);
                 }
                 else
                 {
-                    MakeMovementLoops(abs_y, abs_x, D_LEFT, D_UP);
+                    MakeMovementLoops(abs_y, abs_x, Dir::LEFT, Dir::UP);
                 }
             }
             else
             {
                 if (x > 0)
                 {
-                    MakeMovementLoops(abs_y, abs_x, D_UP, D_RIGHT);
+                    MakeMovementLoops(abs_y, abs_x, Dir::UP, Dir::RIGHT);
                 }
                 else
                 {
-                    MakeMovementLoops(abs_y, abs_x, D_UP, D_LEFT);
+                    MakeMovementLoops(abs_y, abs_x, Dir::UP, Dir::LEFT);
                 }
             }
         }
         else
         {
-            if (facing == D_LEFT || facing == D_RIGHT)
+            if (facing == Dir::LEFT || facing == Dir::RIGHT)
             {
                 if (x > 0)
                 {
-                    MakeMovementLoops(abs_y, abs_x, D_RIGHT, D_DOWN);
+                    MakeMovementLoops(abs_y, abs_x, Dir::RIGHT, Dir::DOWN);
                 }
                 else
                 {
-                    MakeMovementLoops(abs_y, abs_x, D_LEFT, D_DOWN);
+                    MakeMovementLoops(abs_y, abs_x, Dir::LEFT, Dir::DOWN);
                 }
             }
             else
             {
                 if (x > 0)
                 {
-                    MakeMovementLoops(abs_y, abs_x, D_DOWN, D_RIGHT);
+                    MakeMovementLoops(abs_y, abs_x, Dir::DOWN, Dir::RIGHT);
                 }
                 else
                 {
-                    MakeMovementLoops(abs_y, abs_x, D_DOWN, D_LEFT);
+                    MakeMovementLoops(abs_y, abs_x, Dir::DOWN, Dir::LEFT);
                 }
             }
         }
@@ -173,44 +173,44 @@ void Projectile::MakeMovementPattern(VDir target, Dir facing)
     {
        if (y > x)
        {
-            MakeMovementLoops(abs_y, abs_x, D_DOWN, D_RIGHT);
+            MakeMovementLoops(abs_y, abs_x, Dir::DOWN, Dir::RIGHT);
        }
        else if (x > y)
        {
-            MakeMovementLoops(abs_x, abs_y, D_RIGHT, D_DOWN);
+            MakeMovementLoops(abs_x, abs_y, Dir::RIGHT, Dir::DOWN);
        }
     }
     else if(x <= 0 && y <= 0)
     {   
        if (abs_y > abs_x  )
        {
-           MakeMovementLoops(abs_y, abs_x, D_UP, D_LEFT);
+           MakeMovementLoops(abs_y, abs_x, Dir::UP, Dir::LEFT);
        }
        else if (abs_x > abs_y)
        {
-           MakeMovementLoops(abs_x, abs_y, D_LEFT, D_UP);
+           MakeMovementLoops(abs_x, abs_y, Dir::LEFT, Dir::UP);
        }
     }
     else if (x < 0 && y > 0)
     {
         if (y > abs_x)
         {
-             MakeMovementLoops(abs_y, abs_x, D_DOWN, D_LEFT);
+             MakeMovementLoops(abs_y, abs_x, Dir::DOWN, Dir::LEFT);
         }
         else if (abs_x > abs_y)
         {
-            MakeMovementLoops(abs_x, abs_y, D_LEFT, D_DOWN);
+            MakeMovementLoops(abs_x, abs_y, Dir::LEFT, Dir::DOWN);
         }
     }
     else if (x > 0 && y < 0)
     {
         if (abs_y > x)
         {
-            MakeMovementLoops(abs_y, abs_x, D_UP, D_RIGHT);
+            MakeMovementLoops(abs_y, abs_x, Dir::UP, Dir::RIGHT);
         }
         else if (x > abs_y )
         {
-            MakeMovementLoops(abs_x, abs_y, D_RIGHT, D_UP);
+            MakeMovementLoops(abs_x, abs_y, Dir::RIGHT, Dir::UP);
         }
         
     }

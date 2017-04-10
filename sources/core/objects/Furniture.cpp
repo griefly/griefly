@@ -27,7 +27,7 @@ void Chair::AfterWorldCreation()
 {
     IMovable::AfterWorldCreation();
 
-    if (GetDir() == D_UP)
+    if (GetDir() == Dir::UP)
     {
         v_level = 10;
     }

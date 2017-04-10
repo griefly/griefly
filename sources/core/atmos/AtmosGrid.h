@@ -27,7 +27,7 @@ namespace atmos
         = { 3, 2, 1, 0 };
 
     const Dir INDEXES_TO_DIRS[DIRS_SIZE]
-        = { D_LEFT, D_UP, D_DOWN, D_RIGHT };
+        = { Dir::LEFT, Dir::UP, Dir::DOWN, Dir::RIGHT };
     const int CELL_GROUP_SIZE = 32;
 
     class AtmosGrid
@@ -110,13 +110,13 @@ namespace atmos
         {
             switch (dir)
             {
-            case D_DOWN:
+            case Dir::DOWN:
                 return At(x, y + 1);
-            case D_UP:
+            case Dir::UP:
                 return At(x, y - 1);
-            case D_RIGHT:
+            case Dir::RIGHT:
                 return At(x + 1, y);
-            case D_LEFT:
+            case Dir::LEFT:
                 return At(x - 1, y);
             }
         }

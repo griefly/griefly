@@ -63,22 +63,22 @@ bool CubeTile::CanTouch(IdPtr<IOnMapBase> item) const
     {
         if (posy() > cube_tile_posy)
         {
-            return CanTouch(item, D_UP);
+            return CanTouch(item, Dir::UP);
         }
         else
         {
-            return CanTouch(item, D_DOWN);
+            return CanTouch(item, Dir::DOWN);
         }
     }
     if (posy() == cube_tile_posy)
     {
         if (posx() > cube_tile_posx)
         {
-            return CanTouch(item, D_LEFT);
+            return CanTouch(item, Dir::LEFT);
         }
         else
         {
-            return CanTouch(item, D_RIGHT);
+            return CanTouch(item, Dir::RIGHT);
         }
     }
 
@@ -86,31 +86,31 @@ bool CubeTile::CanTouch(IdPtr<IOnMapBase> item) const
     if (   (posy() > cube_tile_posy)
         && (posx() > cube_tile_posx))
     {
-        return    CanTouch(item, D_LEFT, D_UP)
-               || CanTouch(item, D_UP, D_LEFT);
+        return    CanTouch(item, Dir::LEFT, Dir::UP)
+               || CanTouch(item, Dir::UP, Dir::LEFT);
     }
     // Down Right
     if (   (posy() < cube_tile_posy)
         && (posx() < cube_tile_posx))
     {
-        return    CanTouch(item, D_RIGHT, D_DOWN)
-               || CanTouch(item, D_DOWN, D_RIGHT);
+        return    CanTouch(item, Dir::RIGHT, Dir::DOWN)
+               || CanTouch(item, Dir::DOWN, Dir::RIGHT);
     }
 
     // Up Right
     if (   (posy() > cube_tile_posy)
         && (posx() < cube_tile_posx))
     {
-        return    CanTouch(item, D_RIGHT, D_UP)
-               || CanTouch(item, D_UP, D_RIGHT);
+        return    CanTouch(item, Dir::RIGHT, Dir::UP)
+               || CanTouch(item, Dir::UP, Dir::RIGHT);
     }
 
     // Down Left
     if (   (posy() < cube_tile_posy)
         && (posx() > cube_tile_posx))
     {
-        return    CanTouch(item, D_LEFT, D_DOWN)
-               || CanTouch(item, D_DOWN, D_LEFT);
+        return    CanTouch(item, Dir::LEFT, Dir::DOWN)
+               || CanTouch(item, Dir::DOWN, Dir::LEFT);
     }
 
     // It should not be reached
@@ -126,11 +126,11 @@ bool CubeTile::CanTouch(IdPtr<IOnMapBase> item, Dir dir) const
     }
 
     // TODO: implementation is not perfect, but fine for a while
-    if (!CanPass(item->GetPassable(helpers::revert_dir(dir)), Passable::BIG_ITEM))
+    if (!CanPass(item->GetPassable(RevertDir(dir)), Passable::BIG_ITEM))
     {
         return true;
     }
-    if (CanPass(item->GetOwner()->GetPassable(helpers::revert_dir(dir)), Passable::BIG_ITEM))
+    if (CanPass(item->GetOwner()->GetPassable(RevertDir(dir)), Passable::BIG_ITEM))
     {
         return true;
     }
@@ -146,8 +146,8 @@ bool CubeTile::CanTouch(IdPtr<IOnMapBase> item, Dir first_dir, Dir second_dir) c
 
     auto tile = GetNeighbour(first_dir);
 
-    if (   !CanPass(tile->GetPassable(helpers::revert_dir(first_dir)), Passable::BIG_ITEM)
-        || !CanPass(tile->GetPassable(helpers::revert_dir(D_ALL)), Passable::BIG_ITEM))
+    if (   !CanPass(tile->GetPassable(RevertDir(first_dir)), Passable::BIG_ITEM)
+        || !CanPass(tile->GetPassable(RevertDir(Dir::ALL)), Passable::BIG_ITEM))
     {
         return false;
     }
@@ -157,12 +157,12 @@ bool CubeTile::CanTouch(IdPtr<IOnMapBase> item, Dir first_dir, Dir second_dir) c
         return false;
     }
 
-    if (!CanPass(item->GetPassable(helpers::revert_dir(second_dir)), Passable::BIG_ITEM))
+    if (!CanPass(item->GetPassable(RevertDir(second_dir)), Passable::BIG_ITEM))
     {
         return true;
     }
 
-    if (CanPass(item->GetOwner()->GetPassable(helpers::revert_dir(second_dir)), Passable::BIG_ITEM))
+    if (CanPass(item->GetOwner()->GetPassable(RevertDir(second_dir)), Passable::BIG_ITEM))
     {
         return true;
     }
@@ -174,29 +174,29 @@ void CubeTile::MoveToDir(Dir dir, int *x, int *y, int *z) const
 {
     if (x)
     {
-        *x += DirToVDir[dir].x;
+        *x += DirToVDir(dir).x;
         if (*x >= GetGame().GetMap().GetWidth() ||
             *x <= -1)
         {
-            *x -= DirToVDir[dir].x;
+            *x -= DirToVDir(dir).x;
         }
     }
     if (y)
     {
-        *y += DirToVDir[dir].y;
+        *y += DirToVDir(dir).y;
         if (*y >= GetGame().GetMap().GetHeight() ||
             *y <= -1)
         {
-            *y -= DirToVDir[dir].y;
+            *y -= DirToVDir(dir).y;
         }
     }
     if (z)
     {
-        *z += DirToVDir[dir].z;
+        *z += DirToVDir(dir).z;
         if (*z >= GetGame().GetMap().GetDepth() ||
             *z <= -1)
         {
-            *z -= DirToVDir[dir].z;
+            *z -= DirToVDir(dir).z;
         }
     }
 }
@@ -232,13 +232,13 @@ void CubeTile::Bump(IdPtr<IMovable> item)
     }
 
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!CanPass((*it)->GetPassable(helpers::revert_dir(item->GetDir())), item->passable_level))
+        if (!CanPass((*it)->GetPassable(RevertDir(item->GetDir())), item->passable_level))
         {
             (*it)->Bump(item);
             return;
         }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!CanPass((*it)->GetPassable(D_ALL), item->passable_level))
+        if (!CanPass((*it)->GetPassable(Dir::ALL), item->passable_level))
         {
             (*it)->Bump(item);
             return;
@@ -262,13 +262,13 @@ void CubeTile::BumpByGas(Dir dir, bool inside)
     }
 
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!CanPass((*it)->GetPassable(helpers::revert_dir(dir)), Passable::AIR))
+        if (!CanPass((*it)->GetPassable(RevertDir(dir)), Passable::AIR))
         {
             (*it)->BumpByGas(dir);
             return;
         }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!CanPass((*it)->GetPassable(D_ALL), Passable::AIR))
+        if (!CanPass((*it)->GetPassable(Dir::ALL), Passable::AIR))
         {
             (*it)->BumpByGas(dir);
             return;
@@ -286,11 +286,11 @@ bool CubeTile::AddItem(IdPtr<IOnMapBase> item_raw)
     inside_list_.push_back(item);
     item->SetOwner(GetId());
 
-    sum_passable_all_ = std::min(sum_passable_all_, item->GetPassable(D_ALL));
-    sum_passable_up_ = std::min(sum_passable_up_, item->GetPassable(D_UP));
-    sum_passable_down_ = std::min(sum_passable_down_, item->GetPassable(D_DOWN));
-    sum_passable_left_ = std::min(sum_passable_left_, item->GetPassable(D_LEFT));
-    sum_passable_right_ = std::min(sum_passable_right_, item->GetPassable(D_RIGHT));
+    sum_passable_all_ = std::min(sum_passable_all_, item->GetPassable(Dir::ALL));
+    sum_passable_up_ = std::min(sum_passable_up_, item->GetPassable(Dir::UP));
+    sum_passable_down_ = std::min(sum_passable_down_, item->GetPassable(Dir::DOWN));
+    sum_passable_left_ = std::min(sum_passable_left_, item->GetPassable(Dir::LEFT));
+    sum_passable_right_ = std::min(sum_passable_right_, item->GetPassable(Dir::RIGHT));
 
     UpdateAtmosPassable();
     return true;
@@ -343,11 +343,11 @@ PassableLevel CubeTile::GetPassable(Dir direct) const
 {
     switch (direct)
     {
-    case D_UP:    return sum_passable_up_;
-    case D_DOWN:  return sum_passable_down_;
-    case D_LEFT:  return sum_passable_left_;
-    case D_RIGHT: return sum_passable_right_;
-    case D_ALL:   return sum_passable_all_;
+    case Dir::UP:    return sum_passable_up_;
+    case Dir::DOWN:  return sum_passable_down_;
+    case Dir::LEFT:  return sum_passable_left_;
+    case Dir::RIGHT: return sum_passable_right_;
+    case Dir::ALL:   return sum_passable_all_;
     }
     return Passable::FULL;
 }
@@ -362,19 +362,19 @@ void CubeTile::UpdatePassable()
 
     if (turf_.IsValid())
     {
-        sum_passable_all_ = std::min(sum_passable_all_, turf_->GetPassable(D_ALL));
-        sum_passable_up_ = std::min(sum_passable_up_, turf_->GetPassable(D_UP));
-        sum_passable_down_ = std::min(sum_passable_down_, turf_->GetPassable(D_DOWN));
-        sum_passable_left_ = std::min(sum_passable_left_, turf_->GetPassable(D_LEFT));
-        sum_passable_right_ = std::min(sum_passable_right_, turf_->GetPassable(D_RIGHT));
+        sum_passable_all_ = std::min(sum_passable_all_, turf_->GetPassable(Dir::ALL));
+        sum_passable_up_ = std::min(sum_passable_up_, turf_->GetPassable(Dir::UP));
+        sum_passable_down_ = std::min(sum_passable_down_, turf_->GetPassable(Dir::DOWN));
+        sum_passable_left_ = std::min(sum_passable_left_, turf_->GetPassable(Dir::LEFT));
+        sum_passable_right_ = std::min(sum_passable_right_, turf_->GetPassable(Dir::RIGHT));
     }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
     {
-        sum_passable_all_ = std::min(sum_passable_all_, (*it)->GetPassable(D_ALL));
-        sum_passable_up_ = std::min(sum_passable_up_, (*it)->GetPassable(D_UP));
-        sum_passable_down_ = std::min(sum_passable_down_, (*it)->GetPassable(D_DOWN));
-        sum_passable_left_ = std::min(sum_passable_left_, (*it)->GetPassable(D_LEFT));
-        sum_passable_right_ = std::min(sum_passable_right_, (*it)->GetPassable(D_RIGHT));
+        sum_passable_all_ = std::min(sum_passable_all_, (*it)->GetPassable(Dir::ALL));
+        sum_passable_up_ = std::min(sum_passable_up_, (*it)->GetPassable(Dir::UP));
+        sum_passable_down_ = std::min(sum_passable_down_, (*it)->GetPassable(Dir::DOWN));
+        sum_passable_left_ = std::min(sum_passable_left_, (*it)->GetPassable(Dir::LEFT));
+        sum_passable_right_ = std::min(sum_passable_right_, (*it)->GetPassable(Dir::RIGHT));
     }
 
     UpdateAtmosPassable();
@@ -426,11 +426,11 @@ void CubeTile::LoadInMap()
 void CubeTile::UpdateAtmosPassable()
 {
     const Dir dirs[5]
-        = { D_ALL,
-            D_UP,
-            D_DOWN,
-            D_LEFT,
-            D_RIGHT };
+        = { Dir::ALL,
+            Dir::UP,
+            Dir::DOWN,
+            Dir::LEFT,
+            Dir::RIGHT };
     const IAtmosphere::Flags bit_dirs[5]
         = { atmos::CENTER_BLOCK,
             atmos::UP_BLOCK,

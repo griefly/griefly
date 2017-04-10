@@ -12,7 +12,7 @@ Space::Space(quint32 id) : ITurf(id)
 {
     SetAtmosState(atmos::SPACE);
 
-    SetPassable(D_ALL, Passable::FULL);
+    SetPassable(Dir::ALL, Passable::FULL);
     transparent = true;
     
     SetFriction(0);

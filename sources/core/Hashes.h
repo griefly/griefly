@@ -7,6 +7,7 @@
 #include <QString>
 
 #include "Idptr.h"
+#include "Constheader.h"
 
 inline unsigned int hash(const QString& str)
 {
@@ -65,3 +66,9 @@ inline unsigned int hash(int value)
     // The conversion is well-defined
     return static_cast<unsigned int>(value);
 }
+
+inline unsigned int hash(Dir dir)
+{
+    return hash(static_cast<int>(dir));
+}
+

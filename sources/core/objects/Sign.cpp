@@ -3,7 +3,7 @@
 WallSign::WallSign(quint32 id) : IOnMapObject(id)
 {
     transparent = true;
-    SetPassable(D_ALL, Passable::FULL);
+    SetPassable(Dir::ALL, Passable::FULL);
     v_level = 6;
 
     SetSprite("icons/decals.dmi");

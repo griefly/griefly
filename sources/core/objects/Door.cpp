@@ -12,7 +12,7 @@
 Door::Door(quint32 id) : IOnMapObject(id)
 {
     transparent = true;
-    SetPassable(D_ALL, Passable::EMPTY);
+    SetPassable(Dir::ALL, Passable::EMPTY);
 
     v_level = 10;
 
@@ -45,7 +45,7 @@ void Door::Close()
     }
     SetState("door_closing");
     PlaySoundIfVisible("airlock.wav");
-    SetPassable(D_ALL, Passable::EMPTY);
+    SetPassable(Dir::ALL, Passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;
 }
@@ -57,7 +57,7 @@ void Door::Process()
         if (MAIN_TICK - last_tick_ > 11)
         {
             door_state_ = OPEN;
-            SetPassable(D_ALL, Passable::FULL);
+            SetPassable(Dir::ALL, Passable::FULL);
             last_tick_ = MAIN_TICK;
             SetState("door_open");
         }

@@ -84,7 +84,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
             cell.flows[dir] = 0;
             if (flow <= FLOW_MOVE_BORDER)
             {
-                VDir local = DirToVDir[atmos::INDEXES_TO_DIRS[dir]];
+                VDir local = DirToVDir(atmos::INDEXES_TO_DIRS[static_cast<int>(dir)]);
                 force.x += local.x;
                 force.y += local.y;
             }
@@ -150,7 +150,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
             {
                 if (!cell.IsPassable(atmos::DIRS[dir]))
                 {
-                    Dir revert_dir = atmos::REVERT_DIRS_INDEXES[dir];
+                    int revert_dir = atmos::REVERT_DIRS_INDEXES[dir];
                     Dir bump_dir = atmos::INDEXES_TO_DIRS[revert_dir];
                     tile->BumpByGas(bump_dir, true);
                     continue;

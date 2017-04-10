@@ -26,7 +26,7 @@ void IOnMapObject::Represent()
     ent.pos_y = GetY();
     ent.vlevel = v_level;
     ent.view = *GetView();
-    ent.dir = D_DOWN;
+    ent.dir = Dir::DOWN;
     GetRepresentation().AddToNewFrame(ent);
 }
 

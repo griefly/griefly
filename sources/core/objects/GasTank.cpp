@@ -21,7 +21,7 @@ GasTank::GasTank(quint32 id)
 
     v_level = 5;
 
-    SetPassable(D_ALL, Passable::AIR);
+    SetPassable(Dir::ALL, Passable::AIR);
 
     SetSprite("icons/atmos.dmi");
     SetState("blue");
