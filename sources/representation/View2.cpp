@@ -80,9 +80,12 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
     return qAlpha(pixel) < 1;
 }
 
-const int ANIMATION_MUL = 100;
+namespace
+{
+    const int ANIMATION_MUL = 100;
+}
 
-void View2::FramesetState::Draw(quint32 shift, int x, int y, int angle)
+void View2::FramesetState::Draw(quint32 shift, int x, int y, int angle, int transparency)
 {
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
     {
@@ -100,10 +103,11 @@ void View2::FramesetState::Draw(quint32 shift, int x, int y, int angle)
     int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
     int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
 
-    GetScreen().Draw(GetSprite(),
-                      x, y,
-                      image_state_w_, image_state_h_,
-                      static_cast<float>(angle));
+    GetScreen().Draw(
+        GetSprite(), x, y,
+        image_state_w_, image_state_h_,
+        static_cast<float>(angle),
+        static_cast<float>(transparency) / ViewInfo::MAX_TRANSPARENCY);
 
     if (GetMetadata()->frames_sequence.size() == 1)
     {
@@ -183,17 +187,18 @@ bool View2::IsTransp(int x, int y, quint32 shift)
 
 void View2::Draw(int x_shift, int y_shift, quint32 shift)
 {
+    int transparency = info_.GetTransparency();
     for (int i = underlays_.size() - 1; i >= 0; --i)
     {
         const auto& underlay = info_.GetUnderlays()[i];
         int sum_angle = info_.GetAngle() + underlay.GetAngle();
         int sum_x = GetX() + x_shift + underlay.GetShiftX();
         int sum_y = GetY() + y_shift + underlay.GetShiftY();
-        underlays_[i].Draw(shift, sum_x, sum_y, sum_angle);
+        underlays_[i].Draw(shift, sum_x, sum_y, sum_angle, transparency);
     }
     {
         int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
-        base_frameset_.Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle);
+        base_frameset_.Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle, transparency);
     }
     for (int i = 0; i < static_cast<int>(overlays_.size()); ++i)
     {
@@ -201,7 +206,7 @@ void View2::Draw(int x_shift, int y_shift, quint32 shift)
         int sum_angle = info_.GetAngle() + overlay.GetAngle();
         int sum_x = GetX() + x_shift + overlay.GetShiftX();
         int sum_y = GetY() + y_shift + overlay.GetShiftY();
-        overlays_[i].Draw(shift, sum_x, sum_y, sum_angle);
+        overlays_[i].Draw(shift, sum_x, sum_y, sum_angle, transparency);
     }
 }
 

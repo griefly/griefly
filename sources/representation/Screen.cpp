@@ -27,7 +27,10 @@ void Screen::Clear()
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int imageH, float angle)
+void Screen::Draw(
+        const GLSprite* sprite_in,
+        int x, int y, int image_w_, int image_h_,
+        float angle, float transparency)
 {
     if (sprite_in == nullptr)
     {
@@ -36,8 +39,8 @@ void Screen::Draw(const GLSprite* sprite_in, int x, int y, int imageW, int image
 
     const GLSprite& sprite = *sprite_in;
 
-    glColor4f(1, 1, 1, 1);
-    glBindTexture(GL_TEXTURE_2D, sprite[imageH][imageW]);
+    glColor4f(1.0f, 1.0f, 1.0f, transparency);
+    glBindTexture(GL_TEXTURE_2D, sprite[image_h_][image_w_]);
     if (glGetError())
     {
         qDebug() << glGetError();

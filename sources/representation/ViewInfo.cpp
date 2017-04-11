@@ -19,6 +19,7 @@ FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info)
     }
 
     file << view_info.angle_;
+    file << view_info.transparency_;
 
     return file;
 }
@@ -47,6 +48,7 @@ FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info)
     }
 
     file >> view_info.angle_;
+    file >> view_info.transparency_;
 
     return file;
 }
@@ -143,6 +145,11 @@ bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
         return false;
     }
 
+    if (left.transparency_ != right.transparency_)
+    {
+        return false;
+    }
+
     if (!FramesetInfo::IsSameSprites(left.base_frameset_, right.base_frameset_))
     {
         return false;
@@ -168,11 +175,17 @@ bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
 ViewInfo::ViewInfo()
 {
     angle_ = 0;
+    transparency_ = MAX_TRANSPARENCY;
 }
 
 void ViewInfo::SetAngle(int angle)
 {
     angle_ = angle;
+}
+
+void ViewInfo::SetTransparency(int transparency)
+{
+    transparency_ = transparency;
 }
 
 ViewInfo::FramesetInfo& ViewInfo::AddOverlay(

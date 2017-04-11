@@ -21,6 +21,7 @@ class ViewInfo
 
     friend unsigned int hash(const ViewInfo& view_info);
 public:
+    static const int MAX_TRANSPARENCY = 100000;
     // Check if framesets are same
     static bool IsSameFramesets(const ViewInfo& left, const ViewInfo& right);
 
@@ -69,9 +70,11 @@ public:
     void SetSprite(const QString& sprite) { base_frameset_.SetSprite(sprite); }
     void SetState(const QString& sprite) { base_frameset_.SetState(sprite); }
     void SetAngle(int angle);
+    void SetTransparency(int transparency);
 
     const FramesetInfo& GetBaseFrameset() const { return base_frameset_; }
     int GetAngle() const { return angle_; }
+    int GetTransparency() const { return transparency_; }
 
     const QVector<FramesetInfo>& GetOverlays() const { return overlays_; }
     const QVector<FramesetInfo>& GetUnderlays() const { return underlays_; }
@@ -80,6 +83,7 @@ private:
     QVector<FramesetInfo> underlays_;
 
     int angle_;
+    int transparency_;
     FramesetInfo base_frameset_;
 };
 
@@ -95,7 +99,8 @@ inline unsigned int hash(const ViewInfo& view_info)
         loc += hash(*it);
     }
     loc += hash(view_info.base_frameset_);
-    loc += view_info.angle_;
+    loc += hash(view_info.angle_);
+    loc += hash(view_info.transparency_);
     return loc;
 }
 

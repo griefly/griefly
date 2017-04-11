@@ -9,7 +9,9 @@ class Screen
 {
 public:
     Screen(unsigned int x, unsigned int y, bool fullscreen = false);
-    void Draw(const GLSprite* sprite, int x, int y, int imageW, int imageH, float angle = 0.0f);
+    void Draw(const GLSprite* sprite,
+              int x, int y, int image_w_, int image_h_,
+              float angle = 0.0f, float transparency = 1.0f);
     void ResetScreen(int x, int y);
     void Clear();
     bool Fail();
