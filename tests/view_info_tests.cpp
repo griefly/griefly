@@ -243,9 +243,6 @@ TEST(ViewInfo, IsSameFramesets)
 
     view_info2.SetAngle(10);
     view_info2.SetTransparency(555);
-    EXPECT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
-
-    view_info2.SetAngle(10);
     view_info2.SetSprite("sprite1");
     view_info2.SetState("state");
     EXPECT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
@@ -274,6 +271,10 @@ TEST(ViewInfo, IsSameFramesets)
     view_info2.AddOverlay("1", "1");
     EXPECT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info2));
 
+    view_info2.SetTransparency(554);
+    EXPECT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
+
+    view_info2.SetTransparency(555);
     view_info2.AddOverlay("111", "111");
     EXPECT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
 
