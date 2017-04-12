@@ -21,8 +21,8 @@ void ITurf::Represent()
     {
         atmos::AtmosHolder* holder = tile->GetAtmosHolder();
         int plasma = holder->GetGase(atmos::PLASMA);
-        const int VISIBLE_PLASMA_TRESHOLD = 75;
-        if (plasma > VISIBLE_PLASMA_TRESHOLD)
+        const int VISIBILITY_THRESHOLD = 5;
+        if (plasma > VISIBILITY_THRESHOLD)
         {
             Representation::Entity ent;
             // TODO: dirty hack, fix me
@@ -32,6 +32,9 @@ void ITurf::Represent()
             ent.vlevel = 11;
             ent.view.SetSprite("icons/plasma.dmi");
             ent.view.SetState("plasma");
+            const double FULL_VISIBILITY_THRESHOLD = 100.0;
+            const double visibility = (plasma * 1.0) * (ViewInfo::MAX_TRANSPARENCY / FULL_VISIBILITY_THRESHOLD);
+            ent.view.SetTransparency(qMin(static_cast<int>(visibility), ViewInfo::MAX_TRANSPARENCY));
             ent.clickable = false;
             ent.dir = Dir::DOWN;
             GetRepresentation().AddToNewFrame(ent);
