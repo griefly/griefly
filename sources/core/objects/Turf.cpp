@@ -27,6 +27,7 @@ void ITurf::Represent()
             Representation::Entity ent;
             // TODO: dirty hack, fix me
             ent.id = GetId() + 1000000;
+            ent.click_id = 0;
             ent.pos_x = GetX();
             ent.pos_y = GetY();
             ent.vlevel = 11;
@@ -35,7 +36,6 @@ void ITurf::Represent()
             const double FULL_VISIBILITY_THRESHOLD = 100.0;
             const double visibility = (plasma * 1.0) * (ViewInfo::MAX_TRANSPARENCY / FULL_VISIBILITY_THRESHOLD);
             ent.view.SetTransparency(qMin(static_cast<int>(visibility), ViewInfo::MAX_TRANSPARENCY));
-            ent.clickable = false;
             ent.dir = Dir::DOWN;
             GetRepresentation().AddToNewFrame(ent);
         }

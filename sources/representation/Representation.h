@@ -26,12 +26,11 @@ public:
 
         ViewInfo view;
         quint32 id;
+        quint32 click_id;
         int pos_x;
         int pos_y;
         int vlevel;
         Dir dir;
-
-        bool clickable;
     };
 
     struct InterfaceUnit

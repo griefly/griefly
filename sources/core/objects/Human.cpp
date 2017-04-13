@@ -483,6 +483,7 @@ void Human::Represent()
 {
     Representation::Entity ent;
     ent.id = GetId();
+    ent.click_id = GetId();
     ent.pos_x = GetX();
     ent.pos_y = GetY();
     ent.vlevel = v_level;

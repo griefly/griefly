@@ -188,11 +188,11 @@ void Representation::HandleInput()
 Representation::Entity::Entity()
 {
     id = 0;
+    click_id = 0;
     pos_x = 0;
     pos_y = 0;
     vlevel = 0;
     dir = Dir::DOWN;
-    clickable = true;
 }
 
 Representation::InterfaceUnit::InterfaceUnit()
@@ -284,7 +284,7 @@ void Representation::Click(int x, int y)
 
     for (auto it = ents.rbegin(); it != ents.rend(); ++it)
     {
-        if (!it->clickable)
+        if (it->click_id == 0)
         {
             continue;
         }
@@ -294,7 +294,7 @@ void Representation::Click(int x, int y)
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
                 //qDebug() << "Clicked " << it->id;
-                id_to_send = it->id;
+                id_to_send = it->click_id;
                 break;
             }
         }
@@ -304,7 +304,7 @@ void Representation::Click(int x, int y)
     {
         for (auto it = ents.rbegin(); it != ents.rend(); ++it)
         {
-            if (!it->clickable)
+            if (it->click_id == 0)
             {
                 continue;
             }
@@ -315,7 +315,7 @@ void Representation::Click(int x, int y)
             int bdir = helpers::DirToByond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                id_to_send = it->id;
+                id_to_send = it->click_id;
                 break;
             }
         }
