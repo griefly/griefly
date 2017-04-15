@@ -7,69 +7,82 @@
 
 #include "qt/qtopengl.h"
 
-unsigned int GLSprite::FrameW() const
+GLSprite::GLSprite(const QString& name)
 {
-    return gl_sprites_[0].size();
+    MakeCurrentGLContext();
+
+    InitMetadataAndFrames(name);
+    InitTextures();
 }
 
-unsigned int GLSprite::FrameH() const
+GLSprite::~GLSprite()
 {
-    return gl_sprites_.size();
+    MakeCurrentGLContext();
+    for (quint32 i = 0; i < gl_sprites_.size(); ++i)
+    {
+        glDeleteTextures(gl_sprites_[i].size(), &gl_sprites_[i][0]);
+    }
 }
 
-int GLSprite::W() const
+void GLSprite::InitMetadataAndFrames(const QString& path)
 {
-    return w_;
+    QImage image;
+    if (!image.load(path))
+    {
+        KvAbort(QString("Image load error: : %1").arg(path));
+    }
+
+    metadata_.Init(path, image.width(), image.height());
+    if (!metadata_.Valid())
+    {
+        KvAbort(QString("Invalid metadata, aborting: %1").arg(path));
+    }
+
+    frames_w_ = image.width() / metadata_.GetW();
+    frames_h_ = image.height() / metadata_.GetH();
+
+    qDebug() << frames_w_ << "x" << frames_h_ << " - loaded " << path;
+    frames_.resize(frames_w_ * frames_h_);
+
+    for(int j = 0; j < frames_h_; ++j)
+    {
+        for(int i = 0; i < frames_w_; ++i)
+        {
+            frames_[i * frames_h_ + j]
+                = image.copy(i * W(), j * H(), W(), H());
+        }
+    }
 }
 
-int GLSprite::H() const
-{
-    return h_;
-}
-
-const std::vector<GLuint>& GLSprite::operator[](quint32 num) const
-{
-    return gl_sprites_[num];
-}
-
-void GLSprite::Init(Sprite* sprite)
+void GLSprite::InitTextures()
 {
     fail_ = true;
 
-    // Hack for mapeditor
-    bool force_no_fail = false;
+    // Hack for map editor
     if (GetGLWidget() == nullptr)
     {
-        force_no_fail = true;
+        GLint max_texture_size;
+        glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size);
+        if (   W() > max_texture_size
+            || H() > max_texture_size)
+        {
+            qDebug() << "OpenGL texture load fail: texture too big, maximal allowed size is "
+                     << max_texture_size;
+            return;
+        }
     }
 
-    GLint maxTexSize;
-    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
-    if ((sprite->w > maxTexSize || sprite->h > maxTexSize) && !force_no_fail)
+    gl_sprites_.resize(frames_h_);
+    for (int i = 0; i < frames_h_; ++i)
     {
-        qDebug() << "OpenGL texture load fail: texture too big, maximal allowed size is "
-                 << maxTexSize;
-        return;
+        gl_sprites_[i].resize(frames_w_);
     }
 
-    sdl_sprite_ = sprite;
-    w_ = sprite->w;
-    h_ = sprite->h;
-
-    gl_sprites_.resize(sprite->frames_h_);
-    for (int i = 0; i < sprite->frames_h_; ++i)
-        gl_sprites_[i].resize(sprite->frames_w_);
-
-    GLuint glFormat_text = GL_RGBA;
-    GLuint glFormat_surf = GL_RGBA;
-
-    for (int i = 0; i < sprite->frames_h_; ++i)
+    for (int i = 0; i < frames_h_; ++i)
     {
         glGenTextures(gl_sprites_[i].size(), &(gl_sprites_[i][0]));
-        for (int j = 0; j < sprite->frames_w_; ++j)
+        for (int j = 0; j < frames_w_; ++j)
         {
-            //SYSTEM_STREAM << i << " " << j << std::endl;
-
             glBindTexture(GL_TEXTURE_2D, gl_sprites_[i][j]);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -77,21 +90,21 @@ void GLSprite::Init(Sprite* sprite)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-            QImage image = QGLWidget::convertToGLFormat(sprite->frames[j * sprite->frames_h_ + i]);
+            QImage image = QGLWidget::convertToGLFormat(frames_[j * frames_h_ + i]);
             glTexImage2D(
                 GL_TEXTURE_2D,
                 0,
-                glFormat_text,
-                sprite->w,
-                sprite->h,
+                GL_RGBA,
+                W(),
+                H(),
                 0,
-                glFormat_surf,
+                GL_RGBA,
                 GL_UNSIGNED_BYTE,
                 image.bits());
 
             if (glGetError())
             {
-                qDebug() << glGetError();
+                qDebug() << "Some OpenGL error has occured:" << glGetError();
             }
         }
     }
@@ -99,40 +112,32 @@ void GLSprite::Init(Sprite* sprite)
     fail_ = false;
 }
 
-GLSprite::GLSprite(const QString& name)
+unsigned int GLSprite::FrameW() const
 {
-    MakeCurrentGLContext();
-    Sprite* sprite = new Sprite;
-
-    InitSprite data;
-    data.file = name;
-    data.numFrameH = 0;
-    data.numFrameW = 0;
-    fail_ = false;
-    if (!sprite->init(data))
-    {
-        fail_ = true;
-        qDebug() << "Fail to load sprite " << name;
-        return;
-    }
-
-    Init(sprite);
+    return frames_w_;
 }
 
-GLSprite::~GLSprite()
+unsigned int GLSprite::FrameH() const
 {
-    MakeCurrentGLContext();
-    for (quint32 i = 0; i < gl_sprites_.size(); ++i)
-        glDeleteTextures(gl_sprites_[i].size(), &gl_sprites_[i][0]);
-    delete sdl_sprite_;
+    return frames_h_;
+}
+
+int GLSprite::W() const
+{
+    return metadata_.GetW();
+}
+
+int GLSprite::H() const
+{
+    return metadata_.GetH();
+}
+
+const std::vector<GLuint>& GLSprite::operator[](quint32 num) const
+{
+    return gl_sprites_[num];
 }
 
 bool GLSprite::Fail() const
 {
     return fail_;
-}
-
-Sprite* GLSprite::GetSDLSprite() const
-{
-    return sdl_sprite_;
 }

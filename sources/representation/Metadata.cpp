@@ -9,12 +9,17 @@
 #include "JsonValidator.h"
 
 const ImageMetadata::SpriteMetadata& 
-    ImageMetadata::GetSpriteMetadata(const QString& name)
+    ImageMetadata::GetSpriteMetadata(const QString& name) const
 {
-    return sprites_metadata_[name];
+    auto it = sprites_metadata_.find(name);
+    if (it == sprites_metadata_.end())
+    {
+        KvAbort(QString("Unable to find sprite metadata for: %1").arg(name));
+    }
+    return *it;
 }
 
-bool ImageMetadata::IsValidState(const QString& name)
+bool ImageMetadata::IsValidState(const QString& name) const
 {
     if (!Valid())
     {

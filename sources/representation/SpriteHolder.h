@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Sprite.h"
 #include <map>
 #include <string>
 

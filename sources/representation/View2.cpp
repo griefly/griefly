@@ -27,11 +27,11 @@ void View2::FramesetState::LoadFramesetInfo(const ViewInfo::FramesetInfo& frames
     {
         return;
     }
-    if (!sprite_->GetSDLSprite()->metadata.IsValidState(frameset_info.GetState()))
+    if (!sprite_->GetMetadata().IsValidState(frameset_info.GetState()))
     {
         return;
     }
-    metadata_ = &sprite_->GetSDLSprite()->metadata.GetSpriteMetadata(frameset_info.GetState());
+    metadata_ = &sprite_->GetMetadata().GetSpriteMetadata(frameset_info.GetState());
 }
 
 bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
@@ -60,8 +60,10 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
     x = new_x + GetSprite()->W() / 2;
     y = new_y + GetSprite()->H() / 2;
 
-    const Sprite* loc = GetSprite()->GetSDLSprite();
-    if (y >= loc->h || x >= loc->w || x < 0 || y < 0)
+    if (   y >= GetSprite()->H()
+        || x >= GetSprite()->W()
+        || x < 0
+        || y < 0)
     {
         return true;
     }
@@ -74,7 +76,7 @@ bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
     int image_state_h_ = current_frame_pos / GetSprite()->FrameW();
     int image_state_w_ = current_frame_pos % GetSprite()->FrameW();
 
-    QImage image = loc->frames[image_state_w_ * loc->frames_h_ + image_state_h_];
+    QImage image = GetSprite()->GetFrames()[image_state_w_ * GetSprite()->FrameH() + image_state_h_];
 
     QRgb pixel = image.pixel(x, y);
     return qAlpha(pixel) < 1;

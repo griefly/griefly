@@ -7,7 +7,7 @@
 
 #include "platform/gl.h"
 
-#include "Sprite.h"
+#include "Metadata.h"
 
 class GLSprite
 {
@@ -21,15 +21,18 @@ public:
     int W() const;
     int H() const;
 
-    Sprite* GetSDLSprite() const;
+    const ImageMetadata& GetMetadata() const { return metadata_; }
+    const std::vector<QImage>& GetFrames() const { return frames_; }
 
     unsigned int FrameW() const;
     unsigned int FrameH() const;
 private:
-    void Init(Sprite* sprite);
-    int w_;
-    int h_;
+    void InitTextures();
+    void InitMetadataAndFrames(const QString& path);
+    int frames_w_;
+    int frames_h_;
     std::vector<std::vector<GLuint>> gl_sprites_;
-    Sprite* sdl_sprite_;
+    ImageMetadata metadata_;
+    std::vector<QImage> frames_;
     bool fail_;
 };

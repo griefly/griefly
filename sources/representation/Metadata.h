@@ -58,8 +58,8 @@ public:
     }
     void Init(const QString& file_name, int width, int height);
 
-    const SpriteMetadata& GetSpriteMetadata(const QString& name);
-    bool IsValidState(const QString& name);
+    const SpriteMetadata& GetSpriteMetadata(const QString& name) const;
+    bool IsValidState(const QString& name) const;
 private:
     void InitWithoutMetadata();
 
