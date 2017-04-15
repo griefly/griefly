@@ -107,7 +107,7 @@ void View2::FramesetState::Draw(quint32 shift, int x, int y, int angle, int tran
         GetSprite(), x, y,
         image_state_w_, image_state_h_,
         static_cast<float>(angle),
-        static_cast<float>(transparency) / ViewInfo::MAX_TRANSPARENCY);
+        static_cast<float>(transparency) / MAX_TRANSPARENCY);
 
     if (GetMetadata()->frames_sequence.size() == 1)
     {

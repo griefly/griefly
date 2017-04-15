@@ -22,7 +22,7 @@ public:
         const ImageMetadata::SpriteMetadata* GetMetadata() const { return metadata_; }
 
         bool IsTransp(int x, int y, int shift, int angle);
-        void Draw(quint32 shift, int x, int y, int angle = 0, int transparency = ViewInfo::MAX_TRANSPARENCY);
+        void Draw(quint32 shift, int x, int y, int angle = 0, int transparency = MAX_TRANSPARENCY);
     private:
         void Reset();
 

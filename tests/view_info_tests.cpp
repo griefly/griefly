@@ -134,7 +134,7 @@ TEST(FramesetInfo, Hash)
 TEST(ViewInfo, AngleAndBaseFrameset)
 {
     // Gtest static const members workaround
-    const int MAX_TRANSPARENCY = ViewInfo::MAX_TRANSPARENCY;
+    const int MAX_TRANSPARENCY = MAX_TRANSPARENCY;
 
     ViewInfo view_info;
     EXPECT_EQ(view_info.GetAngle(), 0);

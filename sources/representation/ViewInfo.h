@@ -14,6 +14,8 @@ FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info);
 
 inline unsigned int hash(const ViewInfo& view_info);
 
+const int MAX_TRANSPARENCY = 100000;
+
 class ViewInfo
 {
     friend FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info);
@@ -21,7 +23,6 @@ class ViewInfo
 
     friend unsigned int hash(const ViewInfo& view_info);
 public:
-    static const int MAX_TRANSPARENCY = 100000;
     // Check if framesets are same
     static bool IsSameFramesets(const ViewInfo& left, const ViewInfo& right);
 
