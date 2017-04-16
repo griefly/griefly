@@ -2,6 +2,8 @@
 
 #include <gmock/gmock.h>
 
+#include <qglobal.h>
+
 #include "Interfaces.h"
 
 #include "representation/Text.h"
@@ -53,9 +55,6 @@ public:
     MOCK_METHOD1(DeleteLater, void(quint32 id));
     MOCK_METHOD0(ProcessDeletion, void());
     MOCK_METHOD1(AddProcessingItem, void(quint32 item));
-    MOCK_METHOD2(SetPlayerId, void(quint32 net_id, quint32 real_id));
-    MOCK_METHOD1(GetPlayerId, quint32(quint32 net_id));
-    MOCK_METHOD1(GetNetId, quint32(quint32 real_id));
 };
 
 class MockIChat : public IChat {
@@ -88,5 +87,10 @@ public:
     MOCK_METHOD1(SetMob, void(quint32 new_mob));
     MOCK_METHOD2(PlayMusic, void(const QString& name, float volume));
     MOCK_METHOD1(AddSound, void(const QString& name));
+    MOCK_METHOD2(SetPlayerId, void(quint32, quint32));
+    MOCK_METHOD1(GetPlayerId, quint32(quint32 net_id));
+    MOCK_METHOD1(GetNetId, quint32(quint32 real_id));
+    using PlayersTable = std::map<quint32, quint32>;
+    MOCK_CONST_METHOD0(GetPlayersTable, const PlayersTable&());
 };
 

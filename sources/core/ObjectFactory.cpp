@@ -110,11 +110,14 @@ void ObjectFactory::SaveMapHeader(FastSerializer& savefile)
     savefile << game_->GetMap().GetDepth();
 
     // Save player table
-    savefile << static_cast<quint32>(players_table_.size());
-    for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
+
+    auto& players_table = game_->GetPlayersTable();
+
+    savefile << static_cast<quint32>(players_table.size());
+    for (auto it : players_table)
     {
-        savefile << it->first;
-        savefile << it->second;
+        savefile << it.first;
+        savefile << it.second;
     }
 }
 
@@ -158,7 +161,7 @@ void ObjectFactory::LoadMapHeader(FastDeserializer& savefile)
 
         qDebug() << first;
         qDebug() << second;
-        SetPlayerId(first, second);
+        game_->SetPlayerId(first, second);
     }
 }
 
@@ -203,7 +206,7 @@ void ObjectFactory::Load(FastDeserializer& savefile, quint32 real_this_mob)
         object->Load(savefile);
     }
 
-    quint32 player_id = GetPlayerId(real_this_mob);
+    quint32 player_id = game_->GetPlayerId(real_this_mob);
     game_->SetMob(player_id);
     qDebug() << "Player id:" << player_id;
     game_->ChangeMob(player_id);
@@ -344,7 +347,6 @@ void ObjectFactory::Clear()
     ids_to_delete_.clear();
     process_table_.clear();
     add_to_process_.clear();
-    players_table_.clear();
     add_to_process_.clear();
 
     id_ = 1;
@@ -458,32 +460,6 @@ unsigned int ObjectFactory::Hash()
     }
 
     return h;
-}
-
-void ObjectFactory::SetPlayerId(quint32 net_id, quint32 real_id)
-{
-    players_table_[net_id] = real_id;
-}
-quint32 ObjectFactory::GetPlayerId(quint32 net_id)
-{
-    auto it = players_table_.find(net_id);
-    if (it != players_table_.end())
-    {
-        return it->second;
-    }
-    return 0;
-}
-
-quint32 ObjectFactory::GetNetId(quint32 real_id)
-{
-    for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
-    {
-        if (it->second == real_id)
-        {
-            return it->first;
-        }
-    }
-    return 0;
 }
 
 void ObjectFactory::AddProcessingItem(quint32 item)

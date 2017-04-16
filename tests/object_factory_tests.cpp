@@ -12,6 +12,8 @@
 #include "core/objects/test/TestMainObject.h"
 #include "core/objects/test/UnsyncGenerator.h"
 
+#include "core/Game.h"
+
 using ::testing::ReturnRef;
 using ::testing::Return;
 
@@ -310,30 +312,30 @@ TEST(ObjectFactory, DeleteLater)
     }
 }
 
-TEST(ObjectFactory, PlayersIds)
+// TODO: move to separate file
+TEST(Game, PlayersIds)
 {
-    MockIGame game;
-    ObjectFactory factory(&game);
+    Game game;
 
     for (int i = 0; i < 100; ++i)
     {
-        EXPECT_EQ(factory.GetNetId(i), 0);
-        EXPECT_EQ(factory.GetPlayerId(i), 0);
+        EXPECT_EQ(game.GetNetId(i), 0);
+        EXPECT_EQ(game.GetPlayerId(i), 0);
     }
 
-    factory.SetPlayerId(1, 9915);
-    EXPECT_EQ(factory.GetNetId(9915), 1);
-    EXPECT_EQ(factory.GetPlayerId(1), 9915);
+    game.SetPlayerId(1, 9915);
+    EXPECT_EQ(game.GetNetId(9915), 1);
+    EXPECT_EQ(game.GetPlayerId(1), 9915);
 
     for (int i = 100; i < 200; ++i)
     {
-        EXPECT_EQ(factory.GetNetId(i), 0);
-        EXPECT_EQ(factory.GetPlayerId(i), 0);
+        EXPECT_EQ(game.GetNetId(i), 0);
+        EXPECT_EQ(game.GetPlayerId(i), 0);
     }
 
-    factory.SetPlayerId(543, 10000000);
-    EXPECT_EQ(factory.GetNetId(10000000), 543);
-    EXPECT_EQ(factory.GetPlayerId(543), 10000000);
+    game.SetPlayerId(543, 10000000);
+    EXPECT_EQ(game.GetNetId(10000000), 543);
+    EXPECT_EQ(game.GetPlayerId(543), 10000000);
 }
 
 TEST(ObjectFactory, Hash)
@@ -388,6 +390,10 @@ TEST(ObjectFactory, SaveAndLoadNoObjects)
 
         hash = factory.Hash();
 
+        MockIGame::PlayersTable table;
+        table[1] = 1;
+        EXPECT_CALL(game, GetPlayersTable())
+            .WillOnce(ReturnRef(table));
         EXPECT_CALL(game, GetRandom())
             .WillOnce(ReturnRef(rand))
             .WillOnce(ReturnRef(rand));
@@ -413,6 +419,9 @@ TEST(ObjectFactory, SaveAndLoadNoObjects)
         MockIAtmosphere atmos;
         ObjectFactory factory(&game);
 
+        EXPECT_CALL(game, SetPlayerId(1, 1));
+        EXPECT_CALL(game, GetPlayerId(0))
+            .WillOnce(Return(0));
         EXPECT_CALL(game, GetRandom())
             .WillOnce(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
@@ -451,10 +460,13 @@ TEST(ObjectFactory, SaveAndLoadWithObjects)
         factory.CreateImpl(TestMainObject::GetTypeStatic());
         factory.CreateImpl(TestMainObject::GetTypeStatic());
 
-        factory.SetPlayerId(1234, 2);
-
         hash = factory.Hash();
 
+        MockIGame::PlayersTable table;
+        table[1] = 1;
+
+        EXPECT_CALL(game, GetPlayersTable())
+            .WillOnce(ReturnRef(table));
         EXPECT_CALL(game, GetRandom())
             .WillOnce(ReturnRef(rand))
             .WillOnce(ReturnRef(rand));
@@ -480,6 +492,9 @@ TEST(ObjectFactory, SaveAndLoadWithObjects)
         MockIAtmosphere atmos;
         ObjectFactory factory(&game);
 
+        EXPECT_CALL(game, SetPlayerId(1, 1));
+        EXPECT_CALL(game, GetPlayerId(0))
+            .WillOnce(Return(0));
         EXPECT_CALL(game, GetRandom())
             .WillOnce(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
@@ -518,8 +533,8 @@ TEST(ObjectFactory, SaveAndLoadWithObjects)
         }
 
         EXPECT_EQ(factory.Hash(), hash);
-        EXPECT_EQ(factory.GetNetId(2), 1234);
-        EXPECT_EQ(factory.GetPlayerId(1234), 2);
+        //EXPECT_EQ(factory.GetNetId(2), 1234);
+        //EXPECT_EQ(factory.GetPlayerId(1234), 2);
     }
 }
 

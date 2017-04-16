@@ -410,12 +410,12 @@ IdPtr<IOnMapBase> Human::GetNeighbour(Dir) const
 
 void Human::OnDeath()
 {
-    quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
+    quint32 net_id = GetGame().GetNetId(GetId());
     if (net_id)
     {
         auto ghost = Create<Ghost>(Ghost::GetTypeStatic());
         ghost->name = name;
-        GetGame().GetFactory().SetPlayerId(net_id, ghost.Id());
+        GetGame().SetPlayerId(net_id, ghost.Id());
         owner->AddItem(ghost);
         if (GetId() == GetGame().GetMob().Id())
         {

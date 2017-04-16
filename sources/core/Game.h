@@ -45,6 +45,11 @@ public:
     virtual void ChangeMob(IdPtr<IMob> new_mob) override;
     virtual IdPtr<IMob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
+
+    virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
+    virtual quint32 GetPlayerId(quint32 net_id) override;
+    virtual quint32 GetNetId(quint32 real_id) override;
+    virtual const std::map<quint32, quint32>& GetPlayersTable() const override;
 public slots:
     void process();
     void endProcess();
@@ -119,4 +124,6 @@ private:
 
     IdPtr<UnsyncGenerator> unsync_generator_;
     IdPtr<IMob> current_mob_;
+
+    std::map<quint32, quint32> players_table_;
 };

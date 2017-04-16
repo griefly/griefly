@@ -314,7 +314,7 @@ void Game::InitWorld(int id, QString map_name)
             quint32 newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
 
             ChangeMob(newmob);
-            GetFactory().SetPlayerId(id, newmob);
+            SetPlayerId(id, newmob);
 
             GetMap().GetAtmosphere().LoadGrid();
             GetMap().FillAtmosphere();
@@ -456,7 +456,7 @@ void Game::ProcessInputMessages()
             QJsonValue new_id_v = obj["id"];
             int new_id = new_id_v.toVariant().toInt();
 
-            quint32 game_id = GetFactory().GetPlayerId(new_id);
+            quint32 game_id = GetPlayerId(new_id);
 
             if (game_id != 0)
             {
@@ -468,7 +468,7 @@ void Game::ProcessInputMessages()
 
             qDebug() << "New client " << newmob;
 
-            GetFactory().SetPlayerId(new_id, newmob);
+            SetPlayerId(new_id, newmob);
             continue;
         }
         if (msg.type == MessageType::MAP_UPLOAD)
@@ -750,7 +750,7 @@ void Game::ProcessBroadcastedMessages()
          QJsonObject obj = Network2::ParseJson(*it);
          QJsonValue v = obj["id"];
          int net_id = v.toVariant().toInt();
-         quint32 game_id = GetFactory().GetPlayerId(net_id);
+         quint32 game_id = GetPlayerId(net_id);
          if (game_id == 0)
          {
              qDebug() << "Game id is 0";
@@ -775,4 +775,35 @@ void Game::CheckMessagesOrderCorrectness()
     {
         KvAbort("CheckMessagesOrderCorrectness fail");
     }
+}
+
+void Game::SetPlayerId(quint32 net_id, quint32 real_id)
+{
+    players_table_[net_id] = real_id;
+}
+quint32 Game::GetPlayerId(quint32 net_id)
+{
+    auto it = players_table_.find(net_id);
+    if (it != players_table_.end())
+    {
+        return it->second;
+    }
+    return 0;
+}
+
+quint32 Game::GetNetId(quint32 real_id)
+{
+    for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
+    {
+        if (it->second == real_id)
+        {
+            return it->first;
+        }
+    }
+    return 0;
+}
+
+const std::map<quint32, quint32>&Game::GetPlayersTable() const
+{
+    return players_table_;
 }

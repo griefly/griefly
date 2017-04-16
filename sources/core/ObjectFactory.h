@@ -33,10 +33,6 @@ public:
     virtual void ProcessDeletion() override;
 
     virtual void AddProcessingItem(quint32 item) override;
-
-    virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
-    virtual quint32 GetPlayerId(quint32 net_id) override;
-    virtual quint32 GetNetId(quint32 real_id) override;
 private:
     void Clear();
     void ClearProcessing();
@@ -65,7 +61,4 @@ private:
     QVector<IdPtr<IMainObject>> add_to_process_;
 
     quint32 id_;
-
-    std::map<quint32, quint32> players_table_;
-
 };

@@ -81,7 +81,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
             return;
         }
         qDebug() << "Begin human creation in LoginMob";
-        quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
+        quint32 net_id = GetGame().GetNetId(GetId());
         if (net_id)
         {
             IdPtr<Human> human = Create<Human>(Human::GetTypeStatic());
@@ -122,7 +122,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 qDebug() << "Unknown profession id!";
             }
 
-            GetGame().GetFactory().SetPlayerId(net_id, human.Id());
+            GetGame().SetPlayerId(net_id, human.Id());
 
             if (tiles.empty())
             {

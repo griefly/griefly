@@ -109,12 +109,12 @@ void Ghost::Process()
     --seconds_until_respawn_;
     if (seconds_until_respawn_ < 0)
     {
-        quint32 net_id = GetGame().GetFactory().GetNetId(GetId());
+        quint32 net_id = GetGame().GetNetId(GetId());
         if (net_id)
         {
             auto login_mob = Create<IMob>(LoginMob::GetTypeStatic(), 0);
 
-            GetGame().GetFactory().SetPlayerId(net_id, login_mob.Id());
+            GetGame().SetPlayerId(net_id, login_mob.Id());
             if (GetId() == GetGame().GetMob().Id())
             {
                 GetGame().ChangeMob(login_mob);
