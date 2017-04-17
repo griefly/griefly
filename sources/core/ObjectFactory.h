@@ -19,28 +19,23 @@ public:
 
     virtual unsigned int Hash() override;
 
-    virtual void Save(FastSerializer& str) override;
-    virtual void Load(FastDeserializer& str, quint32 real_this_mob) override;
-    
-    virtual void LoadFromMapGen(const QString& name) override;
-
     virtual void BeginWorldCreation() override;
     virtual void FinishWorldCreation() override;
+    virtual void MarkWorldAsCreated() override;
 
     virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) override;
+    virtual IMainObject* CreateVoid(const QString& hash, quint32 id_new) override;
 
     virtual void DeleteLater(quint32 id) override;
     virtual void ProcessDeletion() override;
 
     virtual void AddProcessingItem(quint32 item) override;
+    virtual void Clear() override;
+
+    virtual int GetId() override { return id_; }
+    virtual void SetId(int id) override { id_ = id; }
 private:
-    void Clear();
     void ClearProcessing();
-
-    void SaveMapHeader(FastSerializer& str);
-    void LoadMapHeader(FastDeserializer& savefile);
-
-    IMainObject* CreateVoid(const QString& hash, quint32 id_new);
 
     static IMainObject* NewVoidObject(const QString& type, quint32 id);
     static IMainObject* NewVoidObjectSaved(const QString& type);

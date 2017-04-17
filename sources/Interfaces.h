@@ -68,20 +68,22 @@ public:
 
     virtual unsigned int Hash() = 0;
 
-    virtual void Save(FastSerializer& str) = 0;
-    virtual void Load(FastDeserializer& str, quint32 real_this_mob) = 0;
-
-    virtual void LoadFromMapGen(const QString& name) = 0;
-
     virtual void BeginWorldCreation() = 0;
     virtual void FinishWorldCreation() = 0;
+    virtual void MarkWorldAsCreated() = 0;
 
     virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) = 0;
+    virtual IMainObject* CreateVoid(const QString& hash, quint32 id_new) = 0;
 
     virtual void DeleteLater(quint32 id) = 0;
     virtual void ProcessDeletion() = 0;
 
     virtual void AddProcessingItem(quint32 item) = 0;
+
+    virtual void Clear() = 0;
+
+    virtual int GetId() = 0;
+    virtual void SetId(int id) = 0;
 };
 
 class IChat

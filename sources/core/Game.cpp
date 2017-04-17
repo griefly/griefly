@@ -115,6 +115,7 @@ void Game::InitGlobalObjects()
     Chat* chat = new Chat(this);
     chat_ = chat;
     names_ = new Names(sync_random_);
+    world_loader_saver_ = new WorldLoaderSaver(this);
     qDebug() << "End init global objects";
 
     qDebug() << "Some moving and connecting";
@@ -290,7 +291,7 @@ void Game::InitWorld(int id, QString map_name)
             unsigned int seed = static_cast<unsigned int>(qrand());
             GetRandom().SetRand(seed, 0);
 
-            GetFactory().LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
+            world_loader_saver_->LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
 
             GetFactory().CreateImpl(Lobby::GetTypeStatic());
 
@@ -341,7 +342,7 @@ void Game::InitWorld(int id, QString map_name)
 
         FastDeserializer deserializer(map_data.data(), map_data.size());
 
-        GetFactory().Load(deserializer, id);
+        world_loader_saver_->Load(deserializer, id);
 
         qDebug() << "Map is loaded, " << load_timer.elapsed() << " ms";
     }
@@ -492,7 +493,7 @@ void Game::ProcessInputMessages()
                 qDebug() << "Map will be generated";
 
                 serializer_.ResetIndex();
-                GetFactory().Save(serializer_);
+                world_loader_saver_->Save(serializer_);
                 data = QByteArray(serializer_.GetData(), serializer_.GetIndex());
 
                 AddLastMessages(&data);

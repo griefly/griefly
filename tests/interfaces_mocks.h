@@ -46,15 +46,17 @@ public:
     MOCK_METHOD0(GetIdTable, QVector<ObjectInfo>&());
     MOCK_METHOD0(ForeachProcess, void());
     MOCK_METHOD0(Hash, unsigned int());
-    MOCK_METHOD1(Save, void(FastSerializer& str));
-    MOCK_METHOD2(Load, void(FastDeserializer& str, quint32 real_this_mob));
-    MOCK_METHOD1(LoadFromMapGen, void(const QString& name));
     MOCK_METHOD0(BeginWorldCreation, void());
     MOCK_METHOD0(FinishWorldCreation, void());
+    MOCK_METHOD0(MarkWorldAsCreated, void());
     MOCK_METHOD2(CreateImpl, quint32(const QString&, quint32));
+    MOCK_METHOD2(CreateVoid, IMainObject*(const QString& hash, quint32 id_new));
     MOCK_METHOD1(DeleteLater, void(quint32 id));
     MOCK_METHOD0(ProcessDeletion, void());
     MOCK_METHOD1(AddProcessingItem, void(quint32 item));
+    MOCK_METHOD0(Clear, void());
+    MOCK_METHOD0(GetId, int());
+    MOCK_METHOD1(SetId, void(int id));
 };
 
 class MockIChat : public IChat {

@@ -7,6 +7,7 @@
 
 #include "SyncRandom.h"
 #include "Names.h"
+#include "WorldLoaderSaver.h"
 
 #include <QApplication>
 #include <QKeyEvent>
@@ -121,6 +122,7 @@ private:
 
     SyncRandom* sync_random_;
     Names* names_;
+    WorldLoaderSaver* world_loader_saver_;
 
     IdPtr<UnsyncGenerator> unsync_generator_;
     IdPtr<IMob> current_mob_;
