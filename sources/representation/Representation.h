@@ -75,6 +75,8 @@ public:
     void ResetKeysState();
     void HandleInput();
 
+    quint32 GetUniqueIdForNewFrame(quint32 base_id, quint32 number);
+
     SoundPlayer& GetSoundPlayer() { return player_; }
 private:
     QMap<Qt::Key, bool> keys_state_;

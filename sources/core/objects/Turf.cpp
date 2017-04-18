@@ -25,8 +25,7 @@ void ITurf::Represent()
         if (plasma > VISIBILITY_THRESHOLD)
         {
             Representation::Entity ent;
-            // TODO: dirty hack, fix me
-            ent.id = GetId() + 1000000;
+            ent.id = GetRepresentation().GetUniqueIdForNewFrame(GetId(), 1);
             ent.click_id = 0;
             ent.pos_x = GetX();
             ent.pos_y = GetY();
