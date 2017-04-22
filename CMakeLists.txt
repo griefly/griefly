@@ -30,45 +30,24 @@ endif()
 # Qt5 search
 #
 ###########################
-find_package(Qt5Core REQUIRED)
-if(Qt5Core_FOUND)
-    message(STATUS "Qt5Core has been found")
-endif()
+find_package(Qt5 5.8 COMPONENTS Core Network Widgets OpenGL Multimedia REQUIRED)
+
+message(STATUS "Qt5 has been found: ${Qt5_VERSION}")
 
 get_target_property(QtCore_location Qt5::Core LOCATION)
-message(STATUS "${QtCore_location}")
-
-find_package(Qt5Network REQUIRED)
-if(Qt5Network_FOUND)
-    message(STATUS "Qt5Network has been found")
-endif()
+message(STATUS "Core path: ${QtCore_location}")
 
 get_target_property(QtNetwork_location Qt5::Network LOCATION)
-message(STATUS "${QtNetwork_location}")
-
-find_package(Qt5Widgets REQUIRED)
-if(Qt5Widgets_FOUND)
-    message(STATUS "Qt5Widgets has been found")
-endif()
+message(STATUS "Network path: ${QtNetwork_location}")
 
 get_target_property(QtWidgets_location Qt5::Widgets LOCATION)
-message(STATUS "${QtWidgets_location}")
-
-find_package(Qt5OpenGL REQUIRED)
-if(Qt5OpenGL_FOUND)
-    message(STATUS "Qt5OpenGL has been found")
-endif()
+message(STATUS "Widgets path: ${QtWidgets_location}")
 
 get_target_property(QtOpenGL_location Qt5::OpenGL LOCATION)
-message(STATUS "${QtOpenGL_location}")
-
-find_package(Qt5Multimedia REQUIRED)
-if(Qt5Multimedia_FOUND)
-    message(STATUS "Qt5Multimedia has been found")
-endif()
+message(STATUS "OpenGL path: ${QtOpenGL_location}")
 
 get_target_property(QtMultimedia_location Qt5::Multimedia LOCATION)
-message(STATUS "${QtMultimedia_location}")
+message(STATUS "Multimedia path: ${QtMultimedia_location}")
 
 # Some variables neeeded by Qt
 set(CMAKE_AUTOMOC ON)
