@@ -10,7 +10,7 @@
 using ::testing::ReturnRef;
 using ::testing::Return;
 
-TEST(ObjectFactory, SaveAndLoadNoObjects)
+TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
 {
     FastSerializer serializer;
     quint32 hash = 0;
@@ -84,7 +84,7 @@ TEST(ObjectFactory, SaveAndLoadNoObjects)
     }
 }
 
-TEST(ObjectFactory, SaveAndLoadWithObjects)
+TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 {
     FastSerializer serializer;
     quint32 hash = 0;

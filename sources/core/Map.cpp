@@ -137,11 +137,19 @@ int MapMaster::GetWidth() const
 
 int MapMaster::GetHeight() const
 {
+    if (!GetWidth())
+    {
+        return 0;
+    }
     return squares_[0].size();
 }
 
 int MapMaster::GetDepth() const
 {
+    if (!GetHeight())
+    {
+        return 0;
+    }
     return squares_[0][0].size();
 }
 
