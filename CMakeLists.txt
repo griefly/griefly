@@ -112,11 +112,7 @@ if(BUILD_TESTS)
                      ${CMAKE_BINARY_DIR}/googletest-build
                      EXCLUDE_FROM_ALL)
 
-    if(MSVC)
-        add_definitions(/D _BUILD_TESTS)
-    else()
-        add_definitions(-D _BUILD_TESTS)
-    endif()
+    add_definitions(-D _BUILD_TESTS)
 endif()
 
 ###
