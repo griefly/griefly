@@ -11,7 +11,7 @@
 
 #include "representation/Text.h"
 
-Atmosphere::Atmosphere(IMapMaster* map, TextPainter *texts)
+Atmosphere::Atmosphere(IMap* map, TextPainter *texts)
     : map_(map),
       texts_(texts)
 {

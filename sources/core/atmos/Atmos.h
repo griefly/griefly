@@ -8,7 +8,7 @@
 #include "Interfaces.h"
 
 class SyncRandom;
-class IMapMaster;
+class IMap;
 namespace atmos
 {
     class AtmosGrid;
@@ -18,7 +18,7 @@ class TextPainter;
 class Atmosphere : public IAtmosphere
 {
 public:
-    Atmosphere(IMapMaster* map, TextPainter* texts);
+    Atmosphere(IMap* map, TextPainter* texts);
     virtual void Resize(quint32 x, quint32 y, quint32 z) override;
     virtual void Process() override;
     virtual void ProcessMove() override;
@@ -37,6 +37,6 @@ private:
     int y_size_;
     int z_size_;
 
-    IMapMaster* map_;
+    IMap* map_;
     TextPainter* texts_;
 };

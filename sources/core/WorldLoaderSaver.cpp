@@ -230,7 +230,7 @@ void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
     deserializer >> y;
     deserializer >> z;
 
-    game_->GetMap().ResizeMap(x, y, z);
+    game_->GetMap().Resize(x, y, z);
 
     // Load player table
     quint32 s;

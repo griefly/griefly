@@ -16,7 +16,7 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
     quint32 hash = 0;
     {
         MockIGame game;
-        MockIMapMaster map;
+        MockIMap map;
         SyncRandom rand;
         rand.SetRand(4242, 32);
         ObjectFactory factory(&game);
@@ -48,7 +48,7 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
     FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
     {
         MockIGame game;
-        MockIMapMaster map;
+        MockIMap map;
         SyncRandom rand;
         MockIAtmosphere atmos;
         ObjectFactory factory(&game);
@@ -61,7 +61,7 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
         EXPECT_CALL(game, GetMap())
             .WillOnce(ReturnRef(map))
             .WillOnce(ReturnRef(map));
-        EXPECT_CALL(map, ResizeMap(13, 17, 23));
+        EXPECT_CALL(map, Resize(13, 17, 23));
         EXPECT_CALL(game, SetMob(0));
 
         IdPtr<IMob> mob = 0;
@@ -90,7 +90,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
     quint32 hash = 0;
     {
         MockIGame game;
-        MockIMapMaster map;
+        MockIMap map;
         SyncRandom rand;
         rand.SetRand(4242, 32);
         ObjectFactory factory(&game);
@@ -128,7 +128,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
     FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
     {
         MockIGame game;
-        MockIMapMaster map;
+        MockIMap map;
         SyncRandom rand;
         MockIAtmosphere atmos;
         ObjectFactory factory(&game);
@@ -143,7 +143,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         EXPECT_CALL(game, GetMap())
             .WillOnce(ReturnRef(map))
             .WillOnce(ReturnRef(map));
-        EXPECT_CALL(map, ResizeMap(13, 17, 23));
+        EXPECT_CALL(map, Resize(13, 17, 23));
         EXPECT_CALL(game, SetMob(0));
 
         IdPtr<IMob> mob = 0;

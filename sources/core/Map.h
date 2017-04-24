@@ -11,11 +11,11 @@
 
 #include "Interfaces.h"
 
-class MapMaster;
+class Map;
 class LOSfinder
 {
 public:
-    LOSfinder(IMapMaster* map);
+    LOSfinder(IMap* map);
     std::list<PosPoint>* CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0);
 private:
     int pos2corner(int pos);
@@ -35,15 +35,15 @@ private:
     void Clear();
     std::list<PosPoint> worklist;
 
-    IMapMaster* map_;
+    IMap* map_;
 };
 
 class SyncRandom;
-class MapMaster : public IMapMaster
+class Map : public IMap
 {
 public:
-    MapMaster(SyncRandom* sync_random, TextPainter* texts);
-    ~MapMaster();
+    Map(SyncRandom* sync_random, TextPainter* texts);
+    ~Map();
 
     typedef IdPtr<CubeTile> SqType;
 
@@ -58,7 +58,7 @@ public:
 
     virtual std::list<PosPoint>* GetVisiblePoints() override;
 
-    virtual void ResizeMap(int x, int y, int z) override;
+    virtual void Resize(int x, int y, int z) override;
     virtual void FillAtmosphere() override;
 
     virtual void Represent() override;

@@ -109,7 +109,7 @@ void Game::InitGlobalObjects()
     texts_ = texts;
     sync_random_ = new SyncRandom;
     qDebug() << "Begin master load";
-    map_ = new MapMaster(sync_random_, texts);
+    map_ = new Map(sync_random_, texts);
     qDebug() << "End master load";
     factory_ = new ObjectFactory(this);
     Chat* chat = new Chat(this);
@@ -129,7 +129,7 @@ void Game::InitGlobalObjects()
 
 void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
 {
-    GetMap().ResizeMap(new_map_x, new_map_y, new_map_z);
+    GetMap().Resize(new_map_x, new_map_y, new_map_z);
     for (int x = 0; x < GetMap().GetWidth(); x++)
     {
         for (int y = 0; y < GetMap().GetHeight(); y++)
@@ -623,12 +623,12 @@ void Game::AddSound(const QString& name)
     GetRepresentation().AddToNewFrame(name);
 }
 
-IMapMaster& Game::GetMap()
+IMap& Game::GetMap()
 {
     return *map_;
 }
 
-const IMapMaster& Game::GetMap() const
+const IMap& Game::GetMap() const
 {
     return *map_;
 }

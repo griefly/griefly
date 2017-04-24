@@ -8,13 +8,13 @@
 using ::testing::ReturnRef;
 using ::testing::Return;
 
-TEST(MapMaster, Constructor)
+TEST(Map, Constructor)
 {
     // TODO: MapMaster should take 'IAtmosphere' as argument in constructor
     TextPainter text_painter;
     SyncRandom sync_random;
 
-    MapMaster map(&sync_random, &text_painter);
+    Map map(&sync_random, &text_painter);
     EXPECT_EQ(map.GetWidth(), 0);
     EXPECT_EQ(map.GetHeight(), 0);
     EXPECT_EQ(map.GetDepth(), 0);

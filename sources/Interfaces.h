@@ -29,10 +29,10 @@ public:
     virtual void LoadGrid() = 0;
 };
 
-class IMapMaster
+class IMap
 {
 public:
-    virtual ~IMapMaster() { }
+    virtual ~IMap() { }
 
     virtual int GetWidth() const = 0;
     virtual int GetHeight() const = 0;
@@ -40,7 +40,7 @@ public:
 
     virtual void Represent() = 0;
 
-    virtual void ResizeMap(int new_map_x, int new_map_y, int new_map_z) = 0;
+    virtual void Resize(int new_map_x, int new_map_y, int new_map_z) = 0;
 
     typedef IdPtr<CubeTile> SqType;
     virtual QVector<QVector<QVector<SqType>>>& GetSquares() = 0;
@@ -107,8 +107,8 @@ class IGame
 public:
     virtual ~IGame() { }
 
-    virtual IMapMaster& GetMap() = 0;
-    virtual const IMapMaster& GetMap() const = 0;
+    virtual IMap& GetMap() = 0;
+    virtual const IMap& GetMap() const = 0;
     virtual IObjectFactory& GetFactory() = 0;
     virtual IChat& GetChat() = 0;
     virtual TextPainter& GetTexts() = 0;

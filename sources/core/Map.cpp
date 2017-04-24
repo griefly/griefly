@@ -13,7 +13,7 @@
 #include "AutogenMetadata.h"
 #include "representation/Representation.h"
 
-void MapMaster::FillAtmosphere()
+void Map::FillAtmosphere()
 {
     for (int z = 0; z < GetDepth(); ++z)
     {
@@ -34,7 +34,7 @@ void MapMaster::FillAtmosphere()
     }
 }
 
-void MapMaster::Represent()
+void Map::Represent()
 {
     if (!GetVisiblePoints())
     {
@@ -88,7 +88,7 @@ void MapMaster::Represent()
     }
 }
 
-void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
+void Map::Resize(int new_map_x, int new_map_y, int new_map_z)
 {
     squares_.resize(new_map_x);
     for (int x = 0; x < new_map_x; ++x)
@@ -102,40 +102,40 @@ void MapMaster::ResizeMap(int new_map_x, int new_map_y, int new_map_z)
     atmosphere_->Resize(new_map_x, new_map_y, new_map_z);
 }
 
-MapMaster::MapMaster(SyncRandom* sync_random, TextPainter* texts)
+Map::Map(SyncRandom* sync_random, TextPainter* texts)
     : losf_(this),
       atmosphere_(new Atmosphere(this, texts))
 {
     visible_points_ = new std::list<PosPoint>;
 }
 
-MapMaster::~MapMaster()
+Map::~Map()
 {
     delete atmosphere_;
     delete visible_points_;
 }
 
-IAtmosphere& MapMaster::GetAtmosphere()
+IAtmosphere& Map::GetAtmosphere()
 {
     return *atmosphere_;
 }
 
-QVector<QVector<QVector<MapMaster::SqType>>>& MapMaster::GetSquares()
+QVector<QVector<QVector<Map::SqType>>>& Map::GetSquares()
 {
     return squares_;
 }
 
-const QVector<QVector<QVector<MapMaster::SqType>>>& MapMaster::GetSquares() const
+const QVector<QVector<QVector<Map::SqType>>>& Map::GetSquares() const
 {
     return squares_;
 }
 
-int MapMaster::GetWidth() const
+int Map::GetWidth() const
 {
     return squares_.size();
 }
 
-int MapMaster::GetHeight() const
+int Map::GetHeight() const
 {
     if (!GetWidth())
     {
@@ -144,7 +144,7 @@ int MapMaster::GetHeight() const
     return squares_[0].size();
 }
 
-int MapMaster::GetDepth() const
+int Map::GetDepth() const
 {
     if (!GetHeight())
     {
@@ -153,7 +153,7 @@ int MapMaster::GetDepth() const
     return squares_[0][0].size();
 }
 
-bool MapMaster::CheckBorders(const int* x, const int* y, const int* z) const
+bool Map::CheckBorders(const int* x, const int* y, const int* z) const
 {
     if (x)
     {
@@ -191,7 +191,7 @@ bool MapMaster::CheckBorders(const int* x, const int* y, const int* z) const
     return true;
 }
 
-bool MapMaster::IsTransparent(int posx, int posy, int posz)
+bool Map::IsTransparent(int posx, int posy, int posz)
 {
     if (!CheckBorders(&posx, &posy, &posz))
     {
@@ -200,7 +200,7 @@ bool MapMaster::IsTransparent(int posx, int posy, int posz)
     return squares_[posx][posy][posz]->IsTransparent();
 }
 
-bool MapMaster::IsTileVisible(quint32 tile_id)
+bool Map::IsTileVisible(quint32 tile_id)
 {
     auto l = GetVisiblePoints();
     if (!l)
@@ -217,12 +217,12 @@ bool MapMaster::IsTileVisible(quint32 tile_id)
     return false;
 }
 
-std::list<PosPoint>* MapMaster::GetVisiblePoints()
+std::list<PosPoint>* Map::GetVisiblePoints()
 {
     return visible_points_;
 }
 
-void MapMaster::CalculateVisisble(std::list<PosPoint> *retval, int posx, int posy, int posz)
+void Map::CalculateVisisble(std::list<PosPoint> *retval, int posx, int posy, int posz)
 {
     losf_.CalculateVisisble(retval, posx, posy, posz);
 }
@@ -449,7 +449,7 @@ void LOSfinder::mark_tiles_of_corner_as_visible(
     }
 }
 
-LOSfinder::LOSfinder(IMapMaster* map)
+LOSfinder::LOSfinder(IMap* map)
 {
     map_ = map;
 }

@@ -34,8 +34,8 @@ public:
     virtual void PlayMusic(const QString& name, float volume) override;
     virtual void AddSound(const QString& name) override;
 
-    virtual IMapMaster& GetMap() override;
-    virtual const IMapMaster& GetMap() const override;
+    virtual IMap& GetMap() override;
+    virtual const IMap& GetMap() const override;
     virtual IObjectFactory& GetFactory() override;
     virtual IChat& GetChat() override;
     virtual TextPainter& GetTexts() override;
@@ -115,7 +115,7 @@ private:
 
     QThread thread_;
 
-    IMapMaster* map_;
+    IMap* map_;
     IObjectFactory* factory_;
     IChat* chat_;
     TextPainter* texts_;

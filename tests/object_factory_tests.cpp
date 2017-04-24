@@ -55,7 +55,7 @@ TEST(ObjectFactoryDeathTest, CreateImplFailFindType)
 TEST(ObjectFactory, CreateImpl)
 {
     MockIGame game;
-    MockIMapMaster map;
+    MockIMap map;
     MockIAtmosphere atmos;
     ObjectFactory factory(&game);
     {

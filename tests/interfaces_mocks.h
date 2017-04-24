@@ -21,14 +21,14 @@ public:
     MOCK_METHOD0(LoadGrid, void());
 };
 
-class MockIMapMaster : public IMapMaster
+class MockIMap : public IMap
 {
 public:
     MOCK_CONST_METHOD0(GetWidth, int());
     MOCK_CONST_METHOD0(GetHeight, int());
     MOCK_CONST_METHOD0(GetDepth, int());
     MOCK_METHOD0(Represent, void());
-    MOCK_METHOD3(ResizeMap, void(int new_map_x, int new_map_y, int new_map_z));
+    MOCK_METHOD3(Resize, void(int new_map_x, int new_map_y, int new_map_z));
     MOCK_METHOD0(GetSquares, QVector<QVector<QVector<SqType>>>&());
     MOCK_CONST_METHOD0(GetSquares, const QVector<QVector<QVector<SqType>>>&());
     MOCK_METHOD0(GetVisiblePoints, std::list<PosPoint>*());
@@ -75,8 +75,8 @@ public:
 class MockIGame : public IGame
 {
 public:
-    MOCK_METHOD0(GetMap, IMapMaster&());
-    MOCK_CONST_METHOD0(GetMap, const IMapMaster&());
+    MOCK_METHOD0(GetMap, IMap&());
+    MOCK_CONST_METHOD0(GetMap, const IMap&());
     MOCK_METHOD0(GetFactory, IObjectFactory&());
     MOCK_METHOD0(GetChat, IChat&());
     MOCK_METHOD0(GetTexts, TextPainter&());
