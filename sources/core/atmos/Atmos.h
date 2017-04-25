@@ -7,7 +7,6 @@
 #include "../Constheader.h"
 #include "Interfaces.h"
 
-class SyncRandom;
 class IMap;
 namespace atmos
 {
