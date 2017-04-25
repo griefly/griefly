@@ -42,7 +42,7 @@ class SyncRandom;
 class Map : public IMap
 {
 public:
-    Map(SyncRandom* sync_random, TextPainter* texts);
+    Map(TextPainter* texts);
     ~Map();
 
     typedef IdPtr<CubeTile> SqType;
@@ -73,5 +73,5 @@ private:
     LOSfinder losf_;
     IAtmosphere* atmosphere_;
     QVector<QVector<QVector<SqType>>> squares_;
-    std::list<PosPoint>* visible_points_;
+    std::list<PosPoint> visible_points_;
 };

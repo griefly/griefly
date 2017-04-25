@@ -109,7 +109,7 @@ void Game::InitGlobalObjects()
     texts_ = texts;
     sync_random_ = new SyncRandom;
     qDebug() << "Begin master load";
-    map_ = new Map(sync_random_, texts);
+    map_ = new Map(texts);
     qDebug() << "End master load";
     factory_ = new ObjectFactory(this);
     Chat* chat = new Chat(this);

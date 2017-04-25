@@ -102,17 +102,15 @@ void Map::Resize(int new_map_x, int new_map_y, int new_map_z)
     atmosphere_->Resize(new_map_x, new_map_y, new_map_z);
 }
 
-Map::Map(SyncRandom* sync_random, TextPainter* texts)
+Map::Map(TextPainter* texts)
     : losf_(this),
       atmosphere_(new Atmosphere(this, texts))
 {
-    visible_points_ = new std::list<PosPoint>;
 }
 
 Map::~Map()
 {
     delete atmosphere_;
-    delete visible_points_;
 }
 
 IAtmosphere& Map::GetAtmosphere()
@@ -219,7 +217,7 @@ bool Map::IsTileVisible(quint32 tile_id)
 
 std::list<PosPoint>* Map::GetVisiblePoints()
 {
-    return visible_points_;
+    return &visible_points_;
 }
 
 void Map::CalculateVisisble(std::list<PosPoint> *retval, int posx, int posy, int posz)
