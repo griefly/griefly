@@ -130,7 +130,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 int x = map.GetWidth() / 2;
                 int y = map.GetHeight() / 2;
                 int z = map.GetDepth() / 2;
-                tiles.push_back(map.GetSquares()[x][y][z]);
+                tiles.push_back(map.At(x, y, z));
             }
             int index = GetRand() % tiles.size();
             tiles[index]->AddItem(human);

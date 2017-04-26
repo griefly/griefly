@@ -91,7 +91,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
         }
         if (IsNonZero(force))
         {
-            auto tile = map_->GetSquares()[x][y][z];
+            auto tile = map_->At(x, y, z);
             if (tile->GetInsideList().size())
             {
                 auto i = tile->GetInsideList().rbegin();
@@ -129,7 +129,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
         return;
     }
 
-    auto tile = map_->GetSquares()[x][y][z];
+    auto tile = map_->At(x, y, z);
     for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
         atmos::AtmosGrid::Cell& nearby = grid_->Get(x, y, atmos::INDEXES_TO_DIRS[dir]);
@@ -186,14 +186,13 @@ void Atmosphere::SetFlags(quint32 x, quint32 y, quint32 z, IAtmosphere::Flags fl
 
 void Atmosphere::LoadGrid()
 {
-    auto& squares = map_->GetSquares();
     for (int z = 0; z < z_size_; ++z)
     {
         for (int x = 0; x < x_size_; ++x)
         {
             for (int y = 0; y < y_size_; ++y)
             {
-                auto& tile = squares[x][y][z];
+                auto& tile = map_->At(x, y, z);
                 tile->UpdateAtmosPassable();
                 atmos::AtmosHolder* holder = tile->GetAtmosHolder();
                 atmos::AtmosGrid::Cell& cell = grid_->At(x, y);

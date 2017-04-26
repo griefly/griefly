@@ -155,17 +155,19 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         }
 
         //qDebug() << "id_ptr_on<ITurf> t = i";
-        if (IdPtr<ITurf> t = i)
+        auto& tile = game_->GetMap().At(x, y, z);
+        if (IdPtr<ITurf> turf = i)
         {
-            if (game_->GetMap().GetSquares()[x][y][z]->GetTurf())
+            if (tile->GetTurf())
             {
                 qDebug() << "DOUBLE TURF!";
+                KvAbort(QString("Double turf at %1, %2, %2").arg(x, y, z));
             }
-            game_->GetMap().GetSquares()[x][y][z]->SetTurf(t);
+            tile->SetTurf(turf);
         }
         else
         {
-            game_->GetMap().GetSquares()[x][y][z]->AddItem(i);
+            tile->AddItem(i);
         }
     }
     factory.FinishWorldCreation();

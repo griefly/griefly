@@ -42,9 +42,9 @@ public:
 
     virtual void Resize(int new_map_x, int new_map_y, int new_map_z) = 0;
 
-    typedef IdPtr<CubeTile> SqType;
-    virtual QVector<QVector<QVector<SqType>>>& GetSquares() = 0;
-    virtual const QVector<QVector<QVector<SqType>>>& GetSquares() const = 0;
+    using SqType = IdPtr<CubeTile>;
+    virtual SqType& At(int x, int y, int z) = 0;
+    virtual const SqType& At(int x, int y, int z) const = 0;
 
     virtual std::list<PosPoint>* GetVisiblePoints() = 0;
     virtual IAtmosphere& GetAtmosphere() = 0;

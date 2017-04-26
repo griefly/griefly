@@ -49,8 +49,8 @@ public:
 
     virtual IAtmosphere& GetAtmosphere() override;
 
-    virtual QVector<QVector<QVector<SqType>>>& GetSquares() override;
-    virtual const QVector<QVector<QVector<SqType>>>& GetSquares() const override;
+    virtual SqType& At(int x, int y, int z) override;
+    virtual const SqType& At(int x, int y, int z) const override;
 
     virtual int GetWidth() const override;
     virtual int GetHeight() const override;

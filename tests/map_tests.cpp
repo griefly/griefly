@@ -16,7 +16,5 @@ TEST(Map, Constructor)
     EXPECT_EQ(map.GetWidth(), 0);
     EXPECT_EQ(map.GetHeight(), 0);
     EXPECT_EQ(map.GetDepth(), 0);
-
-    EXPECT_EQ(map.GetSquares().size(), 0);
 }
 

@@ -118,14 +118,14 @@ IAtmosphere& Map::GetAtmosphere()
     return *atmosphere_;
 }
 
-QVector<QVector<QVector<Map::SqType>>>& Map::GetSquares()
+Map::SqType& Map::At(int x, int y, int z)
 {
-    return squares_;
+    return squares_[x][y][z];
 }
 
-const QVector<QVector<QVector<Map::SqType>>>& Map::GetSquares() const
+const Map::SqType& Map::At(int x, int y, int z) const
 {
-    return squares_;
+    return squares_[x][y][z];
 }
 
 int Map::GetWidth() const

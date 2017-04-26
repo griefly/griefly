@@ -336,7 +336,7 @@ IdPtr<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
     int new_y = posy_;
     int new_z = posz_;
     MoveToDir(direct, &new_x, &new_y, &new_z);
-    return GetGame().GetMap().GetSquares()[new_x][new_y][new_z];
+    return GetGame().GetMap().At(new_x, new_y, new_z);
 }
 
 PassableLevel CubeTile::GetPassable(Dir direct) const
@@ -420,7 +420,7 @@ void CubeTile::ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
 
 void CubeTile::LoadInMap()
 {
-    GetGame().GetMap().GetSquares()[posx_][posy_][posz_] = GetId();
+    GetGame().GetMap().At(posx_, posy_, posz_) = GetId();
 }
 
 void CubeTile::UpdateAtmosPassable()
