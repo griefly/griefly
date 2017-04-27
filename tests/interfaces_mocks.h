@@ -13,7 +13,6 @@
 class MockIAtmosphere : public IAtmosphere
 {
 public:
-    MOCK_METHOD3(Resize, void(quint32 x, quint32 y, quint32 z));
     MOCK_METHOD0(Process, void());
     MOCK_METHOD0(ProcessMove, void());
 

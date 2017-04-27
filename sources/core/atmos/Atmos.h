@@ -18,13 +18,16 @@ class Atmosphere : public IAtmosphere
 {
 public:
     Atmosphere(IMap* map, TextPainter* texts);
-    virtual void Resize(quint32 x, quint32 y, quint32 z) override;
+
     virtual void Process() override;
     virtual void ProcessMove() override;
 
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) override;
+    // TODO: LoadGrid(IMap* map), so IAtmosphere could be injected into Map
     virtual void LoadGrid() override;
 private:
+    void Resize(quint32 x, quint32 y, quint32 z);
+
     atmos::AtmosGrid* grid_;
 
     qint64 grid_processing_ns_;

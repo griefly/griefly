@@ -316,11 +316,6 @@ void Game::InitWorld(int id, QString map_name)
 
             ChangeMob(newmob);
             SetPlayerId(id, newmob);
-
-            GetMap().GetAtmosphere().LoadGrid();
-            GetMap().FillAtmosphere();
-            qDebug() << "End fill atmpsphere";
-
         }
         else
         {

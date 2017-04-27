@@ -112,6 +112,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
     ss >> z;
 
     game_->MakeTiles(x, y, z);
+    game_->GetMap().GetAtmosphere().LoadGrid();
 
     qDebug() << "Begin loading cycle";
     while (!ss.IsEnd())
@@ -127,14 +128,11 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         ss >> y;
         ss >> z;
 
-        //qDebug() << "Create<IOnMapObject>" << &game_->GetFactory();
-        //qDebug() << "Create<IOnMapObject> " << QString::fromStdString(GetType);
         IdPtr<IOnMapObject> i = factory.CreateImpl(item_type);
         if (!i.IsValid())
         {
             KvAbort(QString("Unable to cast: %1").arg(item_type));
         }
-        //qDebug() << "Success!";
 
         MapgenVariablesType variables;
         WrapReadMessage(ss, variables);
@@ -154,13 +152,11 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
             setters_for_type[item_type][it->first](i.operator*(), local);
         }
 
-        //qDebug() << "id_ptr_on<ITurf> t = i";
         auto& tile = game_->GetMap().At(x, y, z);
         if (IdPtr<ITurf> turf = i)
         {
             if (tile->GetTurf())
             {
-                qDebug() << "DOUBLE TURF!";
                 KvAbort(QString("Double turf at %1, %2, %2").arg(x, y, z));
             }
             tile->SetTurf(turf);
@@ -170,7 +166,9 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
             tile->AddItem(i);
         }
     }
+
     factory.FinishWorldCreation();
+    game_->GetMap().FillAtmosphere();
 }
 
 void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)

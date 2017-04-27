@@ -20,11 +20,10 @@ class IAtmosphere
 public:
     virtual ~IAtmosphere() { }
 
-    virtual void Resize(quint32 x, quint32 y, quint32 z) = 0;
     virtual void Process() = 0;
     virtual void ProcessMove() = 0;
 
-    typedef char Flags;
+    using Flags = char;
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) = 0;
     virtual void LoadGrid() = 0;
 };

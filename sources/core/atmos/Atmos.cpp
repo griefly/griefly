@@ -186,6 +186,8 @@ void Atmosphere::SetFlags(quint32 x, quint32 y, quint32 z, IAtmosphere::Flags fl
 
 void Atmosphere::LoadGrid()
 {
+    Resize(map_->GetWidth(), map_->GetHeight(), map_->GetDepth());
+
     for (int z = 0; z < z_size_; ++z)
     {
         for (int x = 0; x < x_size_; ++x)

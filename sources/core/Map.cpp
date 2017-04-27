@@ -99,7 +99,6 @@ void Map::Resize(int new_map_x, int new_map_y, int new_map_z)
             squares_[x][y].resize(new_map_z);
         }
     }
-    atmosphere_->Resize(new_map_x, new_map_y, new_map_z);
 }
 
 Map::Map(TextPainter* texts)

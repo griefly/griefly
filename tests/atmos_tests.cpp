@@ -5,6 +5,9 @@
 
 #include "representation/Text.h"
 
+using ::testing::ReturnRef;
+using ::testing::Return;
+
 class AtmosTest : public ::testing::Test
 {
 protected:
@@ -21,35 +24,30 @@ protected:
 
 using AtmosDeathTest = AtmosTest;
 
-TEST_F(AtmosDeathTest, ResizeWidth)
+TEST_F(AtmosDeathTest, LoadGridWidthFail)
 {
-    MockIMap map;
-    TextPainter painter;
-    Atmosphere atmos(&map, &painter);
-
     ASSERT_DEATH(
     {
-        atmos.Resize(17, 32, 1);
+        EXPECT_CALL(map, GetWidth())
+            .WillOnce(Return(17));
+        EXPECT_CALL(map, GetHeight())
+            .WillOnce(Return(32));
+        EXPECT_CALL(map, GetDepth())
+            .WillOnce(Return(1));
+        atmos.LoadGrid();
     }, "Width is not multiplier of 32!");
 }
 
-TEST_F(AtmosDeathTest, ResizeHeight)
+TEST_F(AtmosDeathTest, LoadGridHeightFail)
 {
-    MockIMap map;
-    TextPainter painter;
-    Atmosphere atmos(&map, &painter);
-
     ASSERT_DEATH(
     {
-        atmos.Resize(32, 17, 1);
+        EXPECT_CALL(map, GetWidth())
+            .WillOnce(Return(32));
+        EXPECT_CALL(map, GetHeight())
+            .WillOnce(Return(17));
+        EXPECT_CALL(map, GetDepth())
+            .WillOnce(Return(1));
+        atmos.LoadGrid();
     }, "Height is not multiplier of 32!");
-}
-
-TEST(AtmosTest, Resize)
-{
-    MockIMap map;
-    TextPainter painter;
-
-    Atmosphere atmos(&map, &painter);
-    atmos.Resize(32, 32, 1);
 }
