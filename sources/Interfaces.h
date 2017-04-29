@@ -14,6 +14,7 @@ class TextPainter;
 class IMainObject;
 class CubeTile;
 class IOnMapBase;
+class IMap;
 
 class IAtmosphere
 {
@@ -25,7 +26,7 @@ public:
 
     using Flags = char;
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) = 0;
-    virtual void LoadGrid() = 0;
+    virtual void LoadGrid(IMap* map) = 0;
 };
 
 class IMap

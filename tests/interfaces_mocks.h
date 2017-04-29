@@ -17,7 +17,7 @@ public:
     MOCK_METHOD0(ProcessMove, void());
 
     MOCK_METHOD4(SetFlags, void(quint32 x, quint32 y, quint32 z, Flags flags));
-    MOCK_METHOD0(LoadGrid, void());
+    MOCK_METHOD1(LoadGrid, void(IMap*));
 };
 
 class MockIMap : public IMap

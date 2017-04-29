@@ -103,7 +103,8 @@ void Map::Resize(int new_map_x, int new_map_y, int new_map_z)
 
 Map::Map(TextPainter* texts)
     : losf_(this),
-      atmosphere_(new Atmosphere(this, texts))
+      // TODO: create atmos in Game
+      atmosphere_(new Atmosphere(texts))
 {
 }
 

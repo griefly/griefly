@@ -11,8 +11,8 @@
 
 #include "representation/Text.h"
 
-Atmosphere::Atmosphere(IMap* map, TextPainter *texts)
-    : map_(map),
+Atmosphere::Atmosphere(TextPainter *texts)
+    : map_(nullptr),
       texts_(texts)
 {
     grid_processing_ns_ = 0;
@@ -53,6 +53,8 @@ void Atmosphere::Resize(quint32 x, quint32 y, quint32 z)
 
 void Atmosphere::Process()
 {
+    AssertGrid();
+
     QElapsedTimer timer;
     timer.start();
     grid_->Process();
@@ -162,6 +164,8 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
 
 void Atmosphere::ProcessMove()
 {
+    AssertGrid();
+
     QElapsedTimer timer;
     timer.start();
 
@@ -181,11 +185,15 @@ void Atmosphere::ProcessMove()
 
 void Atmosphere::SetFlags(quint32 x, quint32 y, quint32 z, IAtmosphere::Flags flags)
 {
+    AssertGrid();
+
     grid_->At(x, y).flags = flags;
 }
 
-void Atmosphere::LoadGrid()
+void Atmosphere::LoadGrid(IMap* map)
 {
+    map_ = map;
+
     Resize(map_->GetWidth(), map_->GetHeight(), map_->GetDepth());
 
     for (int z = 0; z < z_size_; ++z)
@@ -203,5 +211,13 @@ void Atmosphere::LoadGrid()
                 holder->SetAtmosData(&cell.data);
             }
         }
+    }
+}
+
+void Atmosphere::AssertGrid()
+{
+    if (!map_)
+    {
+        KvAbort("Atmosphere: Grid is not loaded!");
     }
 }

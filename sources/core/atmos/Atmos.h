@@ -17,15 +17,16 @@ class TextPainter;
 class Atmosphere : public IAtmosphere
 {
 public:
-    Atmosphere(IMap* map, TextPainter* texts);
+    Atmosphere(TextPainter* texts);
 
     virtual void Process() override;
     virtual void ProcessMove() override;
 
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) override;
-    // TODO: LoadGrid(IMap* map), so IAtmosphere could be injected into Map
-    virtual void LoadGrid() override;
+    virtual void LoadGrid(IMap* map) override;
 private:
+    void AssertGrid();
+
     void Resize(quint32 x, quint32 y, quint32 z);
 
     atmos::AtmosGrid* grid_;

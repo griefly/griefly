@@ -12,7 +12,7 @@ class AtmosTest : public ::testing::Test
 {
 protected:
     AtmosTest()
-        : atmos(&map, &painter)
+        : atmos(&painter)
     {
         // Nothing
     }
@@ -24,6 +24,30 @@ protected:
 
 using AtmosDeathTest = AtmosTest;
 
+TEST_F(AtmosDeathTest, ProcessWithoutLoadGrid)
+{
+    ASSERT_DEATH(
+    {
+        atmos.Process();
+    }, "Grid is not loaded");
+}
+
+TEST_F(AtmosDeathTest, ProcessMoveWithoutLoadGrid)
+{
+    ASSERT_DEATH(
+    {
+        atmos.ProcessMove();
+    }, "Grid is not loaded");
+}
+
+TEST_F(AtmosDeathTest, SetFlagWithoutLoadGrid)
+{
+    ASSERT_DEATH(
+    {
+        atmos.SetFlags(0, 0, 0, atmos::CLEAR);
+    }, "Grid is not loaded");
+}
+
 TEST_F(AtmosDeathTest, LoadGridWidthFail)
 {
     ASSERT_DEATH(
@@ -34,7 +58,7 @@ TEST_F(AtmosDeathTest, LoadGridWidthFail)
             .WillOnce(Return(32));
         EXPECT_CALL(map, GetDepth())
             .WillOnce(Return(1));
-        atmos.LoadGrid();
+        atmos.LoadGrid(&map);
     }, "Width is not multiplier of 32!");
 }
 
@@ -48,6 +72,6 @@ TEST_F(AtmosDeathTest, LoadGridHeightFail)
             .WillOnce(Return(17));
         EXPECT_CALL(map, GetDepth())
             .WillOnce(Return(1));
-        atmos.LoadGrid();
+        atmos.LoadGrid(&map);
     }, "Height is not multiplier of 32!");
 }
