@@ -456,5 +456,5 @@ void CubeTile::UpdateAtmosPassable()
         flags |= atmos::NO_OBJECTS;
     }
 
-    GetGame().GetMap().GetAtmosphere().SetFlags(posx_, posy_, posz_, flags);
+    GetGame().GetAtmosphere().SetFlags(posx_, posy_, posz_, flags);
 }

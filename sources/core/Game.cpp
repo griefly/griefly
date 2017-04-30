@@ -104,26 +104,28 @@ Game::~Game()
 
 void Game::InitGlobalObjects()
 {
-    qDebug() << "Begin init global objects";
-    TextPainter* texts = new TextPainter;
-    texts_ = texts;
+    qDebug() << "Game global object initialization";
+
+    texts_ = new TextPainter;
+    atmos_ = new Atmosphere(texts_);
     sync_random_ = new SyncRandom;
-    qDebug() << "Begin master load";
-    map_ = new Map(texts);
-    qDebug() << "End master load";
+    map_ = new Map;
     factory_ = new ObjectFactory(this);
     Chat* chat = new Chat(this);
     chat_ = chat;
     names_ = new Names(sync_random_);
     world_loader_saver_ = new WorldLoaderSaver(this);
-    qDebug() << "End init global objects";
 
-    qDebug() << "Some moving and connecting";
+    qDebug() << "Successfull initialization!";
+
+    qDebug() << "Some QObject moving and connecting";
+
     chat->moveToThread(&thread_);
-    texts->moveToThread(&thread_);
+    texts_->moveToThread(&thread_);
 
     connect(chat, &Chat::insertHtmlIntoChat, this, &Game::insertHtmlIntoChat);
-    connect(texts, &TextPainter::addSystemText, this, &Game::addSystemText);
+    connect(texts_, &TextPainter::addSystemText, this, &Game::addSystemText);
+
     qDebug() << "End some moving and connecting";
 }
 
@@ -201,11 +203,11 @@ void Game::Process()
             timer.start();
             if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
             {
-                GetMap().GetAtmosphere().Process();
+                GetAtmosphere().Process();
             }
             if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
             {
-                GetMap().GetAtmosphere().ProcessMove();
+                GetAtmosphere().ProcessMove();
             }
             atmos_process_ns_ += timer.nsecsElapsed();
             atmos_process_ns_ /= 2;
@@ -616,6 +618,11 @@ void Game::PlayMusic(const QString& name, float volume)
 void Game::AddSound(const QString& name)
 {
     GetRepresentation().AddToNewFrame(name);
+}
+
+IAtmosphere&Game::GetAtmosphere()
+{
+    return *atmos_;
 }
 
 IMap& Game::GetMap()

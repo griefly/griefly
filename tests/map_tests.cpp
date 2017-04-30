@@ -10,9 +10,7 @@ using ::testing::Return;
 
 TEST(Map, Constructor)
 {
-    TextPainter text_painter;
-
-    Map map(&text_painter);
+    Map map;
     EXPECT_EQ(map.GetWidth(), 0);
     EXPECT_EQ(map.GetHeight(), 0);
     EXPECT_EQ(map.GetDepth(), 0);

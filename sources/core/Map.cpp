@@ -13,7 +13,7 @@
 #include "AutogenMetadata.h"
 #include "representation/Representation.h"
 
-void Map::FillAtmosphere()
+void Map::FillTilesAtmosHolders()
 {
     for (int z = 0; z < GetDepth(); ++z)
     {
@@ -101,21 +101,15 @@ void Map::Resize(int new_map_x, int new_map_y, int new_map_z)
     }
 }
 
-Map::Map(TextPainter* texts)
-    : losf_(this),
-      // TODO: create atmos in Game
-      atmosphere_(new Atmosphere(texts))
+Map::Map()
+    : losf_(this)
 {
+    // Nothing
 }
 
 Map::~Map()
 {
-    delete atmosphere_;
-}
-
-IAtmosphere& Map::GetAtmosphere()
-{
-    return *atmosphere_;
+    // Nothing
 }
 
 Map::SqType& Map::At(int x, int y, int z)

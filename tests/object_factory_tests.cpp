@@ -87,9 +87,7 @@ TEST(ObjectFactory, CreateImpl)
         CubeTile* tile = static_cast<CubeTile*>(object);
         tile->SetPos(0, 0);
 
-        EXPECT_CALL(game, GetMap())
-            .WillOnce(ReturnRef(map));
-        EXPECT_CALL(map, GetAtmosphere())
+        EXPECT_CALL(game, GetAtmosphere())
             .WillOnce(ReturnRef(atmos));
         EXPECT_CALL(atmos, SetFlags(0, 0, 0, '\0'));
         quint32 id2 = factory.CreateImpl(IOnMapObject::GetTypeStatic(), id);
@@ -103,9 +101,7 @@ TEST(ObjectFactory, CreateImpl)
             EXPECT_EQ(on_map_object->GetOwner().Id(), id);
         }
 
-        EXPECT_CALL(game, GetMap())
-            .WillOnce(ReturnRef(map));
-        EXPECT_CALL(map, GetAtmosphere())
+        EXPECT_CALL(game, GetAtmosphere())
             .WillOnce(ReturnRef(atmos));
         EXPECT_CALL(atmos, SetFlags(0, 0, 0, '\0'));
         quint32 id3 = factory.CreateImpl(ITurf::GetTypeStatic(), id);

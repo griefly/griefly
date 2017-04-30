@@ -66,7 +66,7 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
         IdPtr<IMob> mob = 0;
         EXPECT_CALL(game, ChangeMob(mob));
 
-        EXPECT_CALL(map, GetAtmosphere())
+        EXPECT_CALL(game, GetAtmosphere())
             .WillRepeatedly(ReturnRef(atmos));
         EXPECT_CALL(atmos, LoadGrid(&map))
             .Times(1);
@@ -144,7 +144,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         IdPtr<IMob> mob = 0;
         EXPECT_CALL(game, ChangeMob(mob));
 
-        EXPECT_CALL(map, GetAtmosphere())
+        EXPECT_CALL(game, GetAtmosphere())
             .WillRepeatedly(ReturnRef(atmos));
         EXPECT_CALL(atmos, LoadGrid(&map))
             .Times(1);

@@ -72,7 +72,7 @@ void WorldLoaderSaver::Load(FastDeserializer& deserializer, quint32 real_this_mo
     game_->ChangeMob(player_id);
     factory.MarkWorldAsCreated();
 
-    game_->GetMap().GetAtmosphere().LoadGrid(&game_->GetMap());
+    game_->GetAtmosphere().LoadGrid(&game_->GetMap());
 }
 
 void WorldLoaderSaver::LoadFromMapGen(const QString& name)
@@ -112,7 +112,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
     ss >> z;
 
     game_->MakeTiles(x, y, z);
-    game_->GetMap().GetAtmosphere().LoadGrid(&game_->GetMap());
+    game_->GetAtmosphere().LoadGrid(&game_->GetMap());
 
     qDebug() << "Begin loading cycle";
     while (!ss.IsEnd())
@@ -168,7 +168,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
     }
 
     factory.FinishWorldCreation();
-    game_->GetMap().FillAtmosphere();
+    game_->GetMap().FillTilesAtmosHolders();
 }
 
 void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)

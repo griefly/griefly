@@ -42,12 +42,10 @@ class SyncRandom;
 class Map : public IMap
 {
 public:
-    Map(TextPainter* texts);
+    Map();
     ~Map();
 
     typedef IdPtr<CubeTile> SqType;
-
-    virtual IAtmosphere& GetAtmosphere() override;
 
     virtual SqType& At(int x, int y, int z) override;
     virtual const SqType& At(int x, int y, int z) const override;
@@ -59,7 +57,7 @@ public:
     virtual std::list<PosPoint>* GetVisiblePoints() override;
 
     virtual void Resize(int x, int y, int z) override;
-    virtual void FillAtmosphere() override;
+    virtual void FillTilesAtmosHolders() override;
 
     virtual void Represent() override;
 

@@ -47,8 +47,7 @@ public:
     virtual const SqType& At(int x, int y, int z) const = 0;
 
     virtual std::list<PosPoint>* GetVisiblePoints() = 0;
-    virtual IAtmosphere& GetAtmosphere() = 0;
-    virtual void FillAtmosphere() = 0;
+    virtual void FillTilesAtmosHolders() = 0;
     virtual void CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) = 0;
     virtual bool IsTileVisible(quint32 tile_id) = 0;
 
@@ -107,6 +106,7 @@ class IGame
 public:
     virtual ~IGame() { }
 
+    virtual IAtmosphere& GetAtmosphere() = 0;
     virtual IMap& GetMap() = 0;
     virtual const IMap& GetMap() const = 0;
     virtual IObjectFactory& GetFactory() = 0;
