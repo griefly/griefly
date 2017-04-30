@@ -35,7 +35,6 @@ public:
     MOCK_METHOD4(CalculateVisisble, void(std::list<PosPoint>*, int, int, int));
     MOCK_METHOD1(IsTileVisible, bool(quint32 tile_id));
     MOCK_METHOD3(IsTransparent, bool(int, int, int));
-    MOCK_CONST_METHOD3(CheckBorders, bool(const int* x, const int* y, const int* z));
 };
 
 class MockIObjectFactory : public IObjectFactory

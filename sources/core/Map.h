@@ -11,34 +11,34 @@
 
 #include "Interfaces.h"
 
-class Map;
-class LOSfinder
+class LosCalculator
 {
 public:
-    LOSfinder(IMap* map);
-    std::list<PosPoint>* CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0);
+    LosCalculator(IMap* map);
+    void Calculate(std::list<PosPoint>* retval, int posx, int posy, int posz = 0);
 private:
-    int pos2corner(int pos);
-    int corner2pos(int corner);
-    int sign(int value);
-    bool check_corner(PosPoint p);
-    PosPoint corner_point2point(PosPoint p);
-    bool is_transparent(PosPoint p);
-    bool bresen_x(PosPoint source, PosPoint target);
-    bool bresen_y(PosPoint source, PosPoint target);
-    bool ray_trace(PosPoint source, PosPoint target);
-    void mark_tiles_of_corner_as_visible(
+    static int PosToCorner(int pos);
+    static int CornerToPos(int corner);
+    static int Sign(int value);
+    static PosPoint CornerPointToPoint(PosPoint p);
+
+    bool CheckCorner(PosPoint p);
+    bool CheckBorders(int x, int y, int z);
+    bool IsTransparent(PosPoint p);
+    bool BresenX(PosPoint source, PosPoint target);
+    bool BresenY(PosPoint source, PosPoint target);
+    bool RayTrace(PosPoint source, PosPoint target);
+    void MarkTilesOfCornerAsVisible(
             std::list<PosPoint>* retlist,
             PosPoint at,
             PosPoint center,
             char visibility[]);
     void Clear();
-    std::list<PosPoint> worklist;
+    std::list<PosPoint> worklist_;
 
     IMap* map_;
 };
 
-class SyncRandom;
 class Map : public IMap
 {
 public:
@@ -65,10 +65,8 @@ public:
     virtual bool IsTransparent(int posx, int posy, int posz = 0) override;
 
     virtual void CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) override;
-
-    virtual bool CheckBorders(const int* x, const int* y, const int* z) const override;
 private:
-    LOSfinder losf_;
+    LosCalculator los_calculator_;
     IAtmosphere* atmosphere_;
     QVector<QVector<QVector<SqType>>> squares_;
     std::list<PosPoint> visible_points_;

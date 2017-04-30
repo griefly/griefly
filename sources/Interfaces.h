@@ -52,8 +52,6 @@ public:
     virtual bool IsTileVisible(quint32 tile_id) = 0;
 
     virtual bool IsTransparent(int posx, int posy, int posz = 0) = 0;
-
-    virtual bool CheckBorders(const int* x, const int* y, const int* z) const = 0;
 };
 
 class IObjectFactory
