@@ -56,7 +56,7 @@ public:
 
     virtual std::list<PosPoint>* GetVisiblePoints() override;
 
-    virtual void Resize(int x, int y, int z) override;
+    virtual void Resize(int new_x, int new_y, int new_z) override;
     virtual void FillTilesAtmosHolders() override;
 
     virtual void Represent() override;

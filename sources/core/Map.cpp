@@ -88,15 +88,22 @@ void Map::Represent()
     }
 }
 
-void Map::Resize(int new_map_x, int new_map_y, int new_map_z)
+void Map::Resize(int new_x, int new_y, int new_z)
 {
-    squares_.resize(new_map_x);
-    for (int x = 0; x < new_map_x; ++x)
+    if (   new_x < 1
+        || new_y < 1
+        || new_z < 1)
     {
-        squares_[x].resize(new_map_y);
-        for (int y = 0; y < new_map_y; ++y)
+        KvAbort(QString("Incorrect map new size (%1, %2, %3)").arg(new_x).arg(new_y).arg(new_z));
+    }
+
+    squares_.resize(new_x);
+    for (int x = 0; x < new_x; ++x)
+    {
+        squares_[x].resize(new_y);
+        for (int y = 0; y < new_y; ++y)
         {
-            squares_[x][y].resize(new_map_z);
+            squares_[x][y].resize(new_z);
         }
     }
 }
