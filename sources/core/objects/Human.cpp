@@ -503,7 +503,7 @@ void Human::CalculateVisible(std::list<PosPoint>* visible_list)
 {
     if (CalculateHealth() >= 0)
     {
-        GetGame().GetMap().CalculateVisisble(
+        GetGame().GetMap().CalculateLos(
             visible_list,
             GetX(),
             GetY(),

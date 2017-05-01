@@ -48,7 +48,7 @@ public:
 
     virtual std::list<PosPoint>* GetVisiblePoints() = 0;
     virtual void FillTilesAtmosHolders() = 0;
-    virtual void CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) = 0;
+    virtual void CalculateLos(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) = 0;
     virtual bool IsTileVisible(quint32 tile_id) = 0;
 
     virtual bool IsTransparent(int posx, int posy, int posz = 0) = 0;

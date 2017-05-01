@@ -179,7 +179,7 @@ std::list<PosPoint>* Map::GetVisiblePoints()
     return &visible_points_;
 }
 
-void Map::CalculateVisisble(std::list<PosPoint> *retval, int posx, int posy, int posz)
+void Map::CalculateLos(std::list<PosPoint> *retval, int posx, int posy, int posz)
 {
     los_calculator_.Calculate(retval, posx, posy, posz);
 }
@@ -394,7 +394,7 @@ void LosCalculator::MarkTilesOfCornerAsVisible(
         std::list<PosPoint>* retlist,
         PosPoint at,
         PosPoint center,
-        char visibility[])
+        std::vector<char>* visibility)
 {
     for (int dx = -1; dx <= 0; dx++)
     {
@@ -415,13 +415,13 @@ void LosCalculator::MarkTilesOfCornerAsVisible(
                 continue;
             }
 
-            if (visibility[vis_idx] == 1)
+            if ((*visibility)[vis_idx] == 1)
             {
                 continue;
             }
 
             retlist->push_back(p);
-            visibility[vis_idx] = 1;
+            (*visibility)[vis_idx] = 1;
         }
     }
 }
@@ -442,10 +442,11 @@ LosCalculator::LosCalculator(IMap* map)
 // otherwise tile is invisible
 void LosCalculator::Calculate(std::list<PosPoint>* retlist, int posx, int posy, int posz)
 {
-    Clear();
-
     const int VISIBLE_TILES_SIZE = 4 * (SIZE_H_SQ + 2) * (SIZE_W_SQ + 2);
-    char* visible_tiles = new char[VISIBLE_TILES_SIZE];
+
+    std::vector<char> visible_tiles;
+    visible_tiles.resize(VISIBLE_TILES_SIZE);
+
     for (int i = 0; i < VISIBLE_TILES_SIZE; ++i)
     {
         visible_tiles[i] = 0;
@@ -472,15 +473,8 @@ void LosCalculator::Calculate(std::list<PosPoint>* retlist, int posx, int posy, 
             {
                 // add all tiles with this corner to visible list
                 MarkTilesOfCornerAsVisible(
-                    retlist, CornerPointToPoint(p), CornerPointToPoint(source), visible_tiles);
+                    retlist, CornerPointToPoint(p), CornerPointToPoint(source), &visible_tiles);
             }
         }
     }
-
-    delete[] visible_tiles;
-}
-
-void LosCalculator::Clear()
-{
-    worklist_.clear();
 }

@@ -28,14 +28,10 @@ private:
     bool BresenX(PosPoint source, PosPoint target);
     bool BresenY(PosPoint source, PosPoint target);
     bool RayTrace(PosPoint source, PosPoint target);
-    void MarkTilesOfCornerAsVisible(
-            std::list<PosPoint>* retlist,
+    void MarkTilesOfCornerAsVisible(std::list<PosPoint>* retlist,
             PosPoint at,
             PosPoint center,
-            char visibility[]);
-    void Clear();
-    std::list<PosPoint> worklist_;
-
+            std::vector<char>* visibility);
     IMap* map_;
 };
 
@@ -64,7 +60,7 @@ public:
     virtual bool IsTileVisible(quint32 tile_id) override;
     virtual bool IsTransparent(int posx, int posy, int posz = 0) override;
 
-    virtual void CalculateVisisble(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) override;
+    virtual void CalculateLos(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) override;
 private:
     LosCalculator los_calculator_;
     IAtmosphere* atmosphere_;

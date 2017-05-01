@@ -32,7 +32,7 @@ public:
     MOCK_METHOD3(At, SqType&(int x, int y, int z));
     MOCK_METHOD0(GetVisiblePoints, std::list<PosPoint>*());
     MOCK_METHOD0(FillTilesAtmosHolders, void());
-    MOCK_METHOD4(CalculateVisisble, void(std::list<PosPoint>*, int, int, int));
+    MOCK_METHOD4(CalculateLos, void(std::list<PosPoint>*, int, int, int));
     MOCK_METHOD1(IsTileVisible, bool(quint32 tile_id));
     MOCK_METHOD3(IsTransparent, bool(int, int, int));
 };
