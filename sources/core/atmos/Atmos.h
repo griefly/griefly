@@ -7,14 +7,14 @@
 #include "../Constheader.h"
 #include "Interfaces.h"
 
-class IMap;
+class MapInterface;
 namespace atmos
 {
     class AtmosGrid;
 }
 class TextPainter;
 
-class Atmosphere : public IAtmosphere
+class Atmosphere : public AtmosInterface
 {
 public:
     Atmosphere(TextPainter* texts);
@@ -23,7 +23,7 @@ public:
     virtual void ProcessMove() override;
 
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) override;
-    virtual void LoadGrid(IMap* map) override;
+    virtual void LoadGrid(MapInterface* map) override;
 private:
     void AssertGrid();
 
@@ -40,6 +40,6 @@ private:
     int y_size_;
     int z_size_;
 
-    IMap* map_;
+    MapInterface* map_;
     TextPainter* texts_;
 };

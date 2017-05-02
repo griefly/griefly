@@ -10,17 +10,17 @@
 #include "core/SyncRandom.h"
 #include "core/Names.h"
 
-class MockIAtmosphere : public IAtmosphere
+class MockIAtmosphere : public AtmosInterface
 {
 public:
     MOCK_METHOD0(Process, void());
     MOCK_METHOD0(ProcessMove, void());
 
     MOCK_METHOD4(SetFlags, void(quint32 x, quint32 y, quint32 z, Flags flags));
-    MOCK_METHOD1(LoadGrid, void(IMap*));
+    MOCK_METHOD1(LoadGrid, void(MapInterface*));
 };
 
-class MockIMap : public IMap
+class MockIMap : public MapInterface
 {
 public:
     MOCK_CONST_METHOD0(GetWidth, int());
@@ -37,7 +37,7 @@ public:
     MOCK_METHOD3(IsTransparent, bool(int, int, int));
 };
 
-class MockIObjectFactory : public IObjectFactory
+class MockIObjectFactory : public ObjectFactoryInterface
 {
 public:
     MOCK_METHOD0(GetIdTable, QVector<ObjectInfo>&());
@@ -56,7 +56,7 @@ public:
     MOCK_METHOD1(SetId, void(int id));
 };
 
-class MockIChat : public IChat {
+class MockIChat : public ChatInterface {
 public:
     MOCK_METHOD2(PostTextFor, void(const QString& str, IdPtr<IOnMapBase> owner));
     MOCK_METHOD2(PostHtmlFor, void(const QString& str, IdPtr<IOnMapBase> owner));
@@ -69,14 +69,14 @@ public:
     MOCK_METHOD3(PostWords, void(const QString& who, const QString& text, quint32 tile_id));
 };
 
-class MockIGame : public IGame
+class MockIGame : public GameInterface
 {
 public:
-    MOCK_METHOD0(GetAtmosphere, IAtmosphere&());
-    MOCK_METHOD0(GetMap, IMap&());
-    MOCK_CONST_METHOD0(GetMap, const IMap&());
-    MOCK_METHOD0(GetFactory, IObjectFactory&());
-    MOCK_METHOD0(GetChat, IChat&());
+    MOCK_METHOD0(GetAtmosphere, AtmosInterface&());
+    MOCK_METHOD0(GetMap, MapInterface&());
+    MOCK_CONST_METHOD0(GetMap, const MapInterface&());
+    MOCK_METHOD0(GetFactory, ObjectFactoryInterface&());
+    MOCK_METHOD0(GetChat, ChatInterface&());
     MOCK_METHOD0(GetTexts, TextPainter&());
     MOCK_METHOD0(GetRandom, SyncRandom&());
     MOCK_METHOD0(GetNames, Names&());

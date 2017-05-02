@@ -7,10 +7,10 @@
 
 class IOnMapBase;
 
-class ObjectFactory : public IObjectFactory
+class ObjectFactory : public ObjectFactoryInterface
 {
 public:
-    ObjectFactory(IGame* game);
+    ObjectFactory(GameInterface* game);
     virtual ~ObjectFactory();
 
     virtual QVector<ObjectInfo>& GetIdTable() override;
@@ -40,7 +40,7 @@ private:
     static IMainObject* NewVoidObject(const QString& type, quint32 id);
     static IMainObject* NewVoidObjectSaved(const QString& type);
 
-    IGame* game_;
+    GameInterface* game_;
 
     QByteArray saved_map_;
 

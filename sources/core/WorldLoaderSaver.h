@@ -6,7 +6,7 @@
 class WorldLoaderSaver
 {
 public:
-    WorldLoaderSaver(IGame* game);
+    WorldLoaderSaver(GameInterface* game);
 
     void Save(FastSerializer& serializer);
     // TODO: 'real_this_mob' should be removed from here
@@ -16,5 +16,5 @@ private:
     void SaveMapHeader(FastSerializer& serializer);
     void LoadMapHeader(FastDeserializer& deserializer);
 
-    IGame* game_;
+    GameInterface* game_;
 };

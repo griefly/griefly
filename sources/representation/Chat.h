@@ -8,12 +8,12 @@
 #include <QTextBrowser>
 #include <QObject>
 
-class Chat: public QObject, public IChat
+class Chat: public QObject, public ChatInterface
 {
     Q_OBJECT
 public:
     static bool IsOOCMessage(const QString& text);
-    Chat(IGame* game);
+    Chat(GameInterface* game);
 
     virtual void PostTextFor(const QString& str, IdPtr<IOnMapBase> owner) override;
     virtual void PostHtmlFor(const QString& str, IdPtr<IOnMapBase> owner) override;
@@ -26,5 +26,5 @@ public:
 signals:
     void insertHtmlIntoChat(QString html);
 private:
-    IGame* game_;
+    GameInterface* game_;
 };

@@ -15,7 +15,7 @@
 
 #include "AutogenMetadata.h"
 
-WorldLoaderSaver::WorldLoaderSaver(IGame* game)
+WorldLoaderSaver::WorldLoaderSaver(GameInterface* game)
     : game_(game)
 {
     // Nothing
@@ -43,7 +43,7 @@ void WorldLoaderSaver::Save(FastSerializer& serializer)
 
 void WorldLoaderSaver::Load(FastDeserializer& deserializer, quint32 real_this_mob)
 {
-    IObjectFactory& factory = game_->GetFactory();
+    ObjectFactoryInterface& factory = game_->GetFactory();
 
     factory.Clear();
 
@@ -77,7 +77,7 @@ void WorldLoaderSaver::Load(FastDeserializer& deserializer, quint32 real_this_mo
 
 void WorldLoaderSaver::LoadFromMapGen(const QString& name)
 {
-    IObjectFactory& factory = game_->GetFactory();
+    ObjectFactoryInterface& factory = game_->GetFactory();
 
     factory.Clear();
 
@@ -173,7 +173,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
 
 void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
 {
-    IObjectFactory& factory = game_->GetFactory();
+    ObjectFactoryInterface& factory = game_->GetFactory();
 
     serializer << MAIN_TICK;
     serializer << factory.GetId();
@@ -202,7 +202,7 @@ void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
 
 void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
 {
-    IObjectFactory& factory = game_->GetFactory();
+    ObjectFactoryInterface& factory = game_->GetFactory();
 
     deserializer >> MAIN_TICK;
     qDebug() << "MAIN_TICK: " << MAIN_TICK;

@@ -183,14 +183,14 @@ void Atmosphere::ProcessMove()
         = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
 }
 
-void Atmosphere::SetFlags(quint32 x, quint32 y, quint32 z, IAtmosphere::Flags flags)
+void Atmosphere::SetFlags(quint32 x, quint32 y, quint32 z, AtmosInterface::Flags flags)
 {
     AssertGrid();
 
     grid_->At(x, y).flags = flags;
 }
 
-void Atmosphere::LoadGrid(IMap* map)
+void Atmosphere::LoadGrid(MapInterface* map)
 {
     map_ = map;
 

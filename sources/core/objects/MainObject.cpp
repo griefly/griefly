@@ -52,7 +52,7 @@ void IMainObject::SetFreq(int freq)
     }
 }
 
-const IGame& IMainObject::GetGame() const
+const GameInterface& IMainObject::GetGame() const
 {
     if (game_ == nullptr)
     {
@@ -61,12 +61,12 @@ const IGame& IMainObject::GetGame() const
     return *game_;
 }
 
-IObjectFactory& IMainObject::GetFactory()
+ObjectFactoryInterface& IMainObject::GetFactory()
 {
     return GetGame().GetFactory();
 }
 
-IGame& IMainObject::GetGame()
+GameInterface& IMainObject::GetGame()
 {
     if (game_ == nullptr)
     {

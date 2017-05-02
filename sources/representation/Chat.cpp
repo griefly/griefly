@@ -9,7 +9,7 @@
 #include <QUuid>
 #include <QTextCursor>
 
-Chat::Chat(IGame* game)
+Chat::Chat(GameInterface* game)
 {
     game_ = game;
 }

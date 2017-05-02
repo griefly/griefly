@@ -5,7 +5,7 @@
 class LosCalculator
 {
 public:
-    LosCalculator(IMap* map);
+    LosCalculator(MapInterface* map);
     void Calculate(std::list<PosPoint>* retval, int posx, int posy, int posz = 0);
 private:
     static int PosToCorner(int pos);
@@ -23,5 +23,5 @@ private:
             PosPoint at,
             PosPoint center,
             std::vector<char>* visibility);
-    IMap* map_;
+    MapInterface* map_;
 };

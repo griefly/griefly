@@ -117,7 +117,7 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
 
         IMainObject object(43);
         object.SetGame(&game);
-        IGame* interface_game = &object.GetGame();
+        GameInterface* interface_game = &object.GetGame();
         ASSERT_EQ(interface_game, &game);
 
         const IMainObject& object_const_ref = object;

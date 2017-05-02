@@ -242,7 +242,7 @@ void LosCalculator::MarkTilesOfCornerAsVisible(
     }
 }
 
-LosCalculator::LosCalculator(IMap* map)
+LosCalculator::LosCalculator(MapInterface* map)
 {
     map_ = map;
 }

@@ -19,7 +19,7 @@
 
 class TextPainter;
 
-class Game : public QObject, public IGame
+class Game : public QObject, public GameInterface
 {
     Q_OBJECT
 public:
@@ -34,11 +34,11 @@ public:
     virtual void PlayMusic(const QString& name, float volume) override;
     virtual void AddSound(const QString& name) override;
 
-    virtual IAtmosphere& GetAtmosphere() override;
-    virtual IMap& GetMap() override;
-    virtual const IMap& GetMap() const override;
-    virtual IObjectFactory& GetFactory() override;
-    virtual IChat& GetChat() override;
+    virtual AtmosInterface& GetAtmosphere() override;
+    virtual MapInterface& GetMap() override;
+    virtual const MapInterface& GetMap() const override;
+    virtual ObjectFactoryInterface& GetFactory() override;
+    virtual ChatInterface& GetChat() override;
     virtual TextPainter& GetTexts() override;
     virtual SyncRandom& GetRandom() override;
     virtual Names& GetNames() override;
@@ -116,10 +116,10 @@ private:
 
     QThread thread_;
 
-    IAtmosphere* atmos_;
-    IMap* map_;
-    IObjectFactory* factory_;
-    IChat* chat_;
+    AtmosInterface* atmos_;
+    MapInterface* map_;
+    ObjectFactoryInterface* factory_;
+    ChatInterface* chat_;
     TextPainter* texts_;
 
     SyncRandom* sync_random_;

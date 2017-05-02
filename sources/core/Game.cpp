@@ -620,27 +620,27 @@ void Game::AddSound(const QString& name)
     GetRepresentation().AddToNewFrame(name);
 }
 
-IAtmosphere&Game::GetAtmosphere()
+AtmosInterface&Game::GetAtmosphere()
 {
     return *atmos_;
 }
 
-IMap& Game::GetMap()
+MapInterface& Game::GetMap()
 {
     return *map_;
 }
 
-const IMap& Game::GetMap() const
+const MapInterface& Game::GetMap() const
 {
     return *map_;
 }
 
-IObjectFactory& Game::GetFactory()
+ObjectFactoryInterface& Game::GetFactory()
 {
     return *factory_;
 }
 
-IChat& Game::GetChat()
+ChatInterface& Game::GetChat()
 {
     return *chat_;
 }

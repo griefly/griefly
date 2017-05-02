@@ -14,25 +14,25 @@ class TextPainter;
 class IMainObject;
 class CubeTile;
 class IOnMapBase;
-class IMap;
+class MapInterface;
 
-class IAtmosphere
+class AtmosInterface
 {
 public:
-    virtual ~IAtmosphere() { }
+    virtual ~AtmosInterface() { }
 
     virtual void Process() = 0;
     virtual void ProcessMove() = 0;
 
     using Flags = char;
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) = 0;
-    virtual void LoadGrid(IMap* map) = 0;
+    virtual void LoadGrid(MapInterface* map) = 0;
 };
 
-class IMap
+class MapInterface
 {
 public:
-    virtual ~IMap() { }
+    virtual ~MapInterface() { }
 
     virtual int GetWidth() const = 0;
     virtual int GetHeight() const = 0;
@@ -54,10 +54,10 @@ public:
     virtual bool IsTransparent(int posx, int posy, int posz = 0) = 0;
 };
 
-class IObjectFactory
+class ObjectFactoryInterface
 {
 public:
-    virtual ~IObjectFactory() { }
+    virtual ~ObjectFactoryInterface() { }
 
     virtual QVector<ObjectInfo>& GetIdTable() = 0;
 
@@ -83,10 +83,10 @@ public:
     virtual void SetId(int id) = 0;
 };
 
-class IChat
+class ChatInterface
 {
 public:
-    virtual ~IChat() { }
+    virtual ~ChatInterface() { }
 
     virtual void PostTextFor(const QString& str, IdPtr<IOnMapBase> owner) = 0;
     virtual void PostHtmlFor(const QString& str, IdPtr<IOnMapBase> owner) = 0;
@@ -99,16 +99,16 @@ public:
     virtual void PostWords(const QString& who, const QString& text, quint32 tile_id) = 0;
 };
 
-class IGame
+class GameInterface
 {
 public:
-    virtual ~IGame() { }
+    virtual ~GameInterface() { }
 
-    virtual IAtmosphere& GetAtmosphere() = 0;
-    virtual IMap& GetMap() = 0;
-    virtual const IMap& GetMap() const = 0;
-    virtual IObjectFactory& GetFactory() = 0;
-    virtual IChat& GetChat() = 0;
+    virtual AtmosInterface& GetAtmosphere() = 0;
+    virtual MapInterface& GetMap() = 0;
+    virtual const MapInterface& GetMap() const = 0;
+    virtual ObjectFactoryInterface& GetFactory() = 0;
+    virtual ChatInterface& GetChat() = 0;
     virtual TextPainter& GetTexts() = 0;
     virtual SyncRandom& GetRandom() = 0;
     virtual Names& GetNames() = 0;

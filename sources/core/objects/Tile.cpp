@@ -431,14 +431,14 @@ void CubeTile::UpdateAtmosPassable()
             Dir::DOWN,
             Dir::LEFT,
             Dir::RIGHT };
-    const IAtmosphere::Flags bit_dirs[5]
+    const AtmosInterface::Flags bit_dirs[5]
         = { atmos::CENTER_BLOCK,
             atmos::UP_BLOCK,
             atmos::DOWN_BLOCK,
             atmos::LEFT_BLOCK,
             atmos::RIGHT_BLOCK };
 
-    IAtmosphere::Flags flags = atmos::CLEAR;
+    AtmosInterface::Flags flags = atmos::CLEAR;
     for (int i = 0; i < 5; ++i)
     {
         if (!CanPass(GetPassable(dirs[i]), Passable::AIR))

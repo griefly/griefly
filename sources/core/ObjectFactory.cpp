@@ -13,7 +13,7 @@
 
 #include "MapEditor.h"
 
-ObjectFactory::ObjectFactory(IGame* game)
+ObjectFactory::ObjectFactory(GameInterface* game)
 {
     objects_table_.resize(100);
     id_ = 1;

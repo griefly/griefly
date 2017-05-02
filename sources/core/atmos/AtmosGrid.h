@@ -10,18 +10,18 @@ namespace atmos
 {
     const int DIRS_SIZE = 4;
 
-    const IAtmosphere::Flags CLEAR = 0;
-    const IAtmosphere::Flags UP_BLOCK = 1;
-    const IAtmosphere::Flags DOWN_BLOCK = 2;
-    const IAtmosphere::Flags LEFT_BLOCK = 4;
-    const IAtmosphere::Flags RIGHT_BLOCK = 8;
-    const IAtmosphere::Flags CENTER_BLOCK = 16;
-    const IAtmosphere::Flags SPACE_TILE = 32;
-    const IAtmosphere::Flags NO_OBJECTS = 64;
+    const AtmosInterface::Flags CLEAR = 0;
+    const AtmosInterface::Flags UP_BLOCK = 1;
+    const AtmosInterface::Flags DOWN_BLOCK = 2;
+    const AtmosInterface::Flags LEFT_BLOCK = 4;
+    const AtmosInterface::Flags RIGHT_BLOCK = 8;
+    const AtmosInterface::Flags CENTER_BLOCK = 16;
+    const AtmosInterface::Flags SPACE_TILE = 32;
+    const AtmosInterface::Flags NO_OBJECTS = 64;
 
-    const IAtmosphere::Flags DIRS[DIRS_SIZE]
+    const AtmosInterface::Flags DIRS[DIRS_SIZE]
         = { LEFT_BLOCK, UP_BLOCK, DOWN_BLOCK, RIGHT_BLOCK };
-    const IAtmosphere::Flags REVERT_DIRS[DIRS_SIZE]
+    const AtmosInterface::Flags REVERT_DIRS[DIRS_SIZE]
         = { RIGHT_BLOCK, DOWN_BLOCK, UP_BLOCK, LEFT_BLOCK };
     const int REVERT_DIRS_INDEXES[DIRS_SIZE]
         = { 3, 2, 1, 0 };
@@ -39,7 +39,7 @@ namespace atmos
 
             int flows[atmos::DIRS_SIZE];
 
-            IAtmosphere::Flags flags;
+            AtmosInterface::Flags flags;
             Cell()
             {
                 for (int i = 0; i < GASES_NUM; ++i)

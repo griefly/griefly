@@ -67,11 +67,11 @@ public:
 
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
-    void SetGame(IGame* game) { game_ = game; }
+    void SetGame(GameInterface* game) { game_ = game; }
 
-    IGame& GetGame();
-    const IGame& GetGame() const;
-    IObjectFactory& GetFactory();
+    GameInterface& GetGame();
+    const GameInterface& GetGame() const;
+    ObjectFactoryInterface& GetFactory();
     unsigned int GetRand();
 
     template<typename T>
@@ -87,7 +87,7 @@ public:
 private:
     quint32 CreateImpl(const QString& type, quint32 owner = 0);
 
-    IGame* game_;
+    GameInterface* game_;
     quint32 id_;
     int how_often_;
 };
