@@ -1,6 +1,6 @@
 #include "MedbayTools.h"
 
-HealthAnalyzer::HealthAnalyzer(quint32 id) : Item(id)
+HealthAnalyzer::HealthAnalyzer()
 {
     SetSprite("icons/device.dmi");
     SetState("health");
@@ -54,7 +54,7 @@ void HealthAnalyzer::Scan(IdPtr<Human> target)
             .arg(brute).arg(burn).arg(suffocation),
         GetOwner());
 }
-Medicine::Medicine(quint32 id) : Item(id)
+Medicine::Medicine()
 {
     burn_heal_ = 0;
     brute_heal_ = 0;
@@ -67,14 +67,14 @@ void Medicine::Heal(IdPtr<Human> target)
     Delete();
 }
 
-Ointment::Ointment(quint32 id) : Medicine(id)
+Ointment::Ointment()
 {
     SetState("ointment");
     burn_heal_ = 1000;
     name = "Ointment";
 }
 
-BruisePack::BruisePack(quint32 id) : Medicine(id)
+BruisePack::BruisePack()
 {
     SetState("brutepack");
     brute_heal_ = 1000;

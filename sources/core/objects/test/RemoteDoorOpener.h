@@ -8,7 +8,7 @@ class RemoteDoorOpener : public Item
 public:
     DECLARE_SAVED(RemoteDoorOpener, Item);
     DECLARE_GET_TYPE_ITEM(RemoteDoorOpener);
-    RemoteDoorOpener(quint32 id);
+    RemoteDoorOpener();
 
     virtual void AttackBy(IdPtr<Item> item) override;
 

@@ -36,7 +36,7 @@ void IOnMapObject::Delete()
     IOnMapBase::Delete();
 }
 
-IOnMapObject::IOnMapObject(quint32 id) : IOnMapBase(id)
+IOnMapObject::IOnMapObject()
 {
     v_level = 0;
     passable_all = Passable::FULL;

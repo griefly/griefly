@@ -30,7 +30,7 @@ class IOnMapBase: public IDraw
 public:
     DECLARE_SAVED(IOnMapBase, IDraw);
     DECLARE_GET_TYPE_ITEM(IOnMapBase);
-    IOnMapBase(quint32 id) : IDraw(id) {owner = 0;}
+    IOnMapBase() { owner = 0; }
     virtual bool IsVisibleByPlayer() const
     {
         return true;

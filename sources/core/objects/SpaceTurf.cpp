@@ -8,7 +8,7 @@
 #include "../ObjectFactory.h"
 #include "../Game.h"
 
-Space::Space(quint32 id) : ITurf(id)
+Space::Space()
 {
     SetAtmosState(atmos::SPACE);
 

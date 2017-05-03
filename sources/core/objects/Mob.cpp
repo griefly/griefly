@@ -5,7 +5,7 @@
 #include "net/MagicStrings.h"
 #include "net/NetworkMessagesTypes.h"
 
-IMob::IMob(quint32 id) : IMessageReceiver(id)
+IMob::IMob()
 {
     // Nothing
 }

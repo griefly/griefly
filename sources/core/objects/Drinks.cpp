@@ -1,6 +1,6 @@
 #include "Drinks.h"
 
-Drinks::Drinks(quint32 id) : Item(id)
+Drinks::Drinks()
 {
     name = "BaseDrink";
     SetSprite("icons/drinks.dmi");
@@ -30,17 +30,17 @@ void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
         QString("%1 is empty.").arg(name), consumer->GetId());
     
 }
-Vodka::Vodka(quint32 id) : Drinks(id)
+Vodka::Vodka()
 {
     name = "Vodka";
     SetState("vodkabottle");
 }
-Beer::Beer(quint32 id) : Drinks(id)
+Beer::Beer()
 {
     name = "Beer";
     SetState("beer");
 }
-Tea::Tea(quint32 id) : Drinks(id)
+Tea::Tea()
 {
     name = "Tea";
     SetState("tea");

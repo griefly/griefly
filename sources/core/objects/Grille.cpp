@@ -8,7 +8,7 @@
 #include "../Game.h"
 #include "Materials.h"
 
-Grille::Grille(quint32 id) : Breakable(id)
+Grille::Grille()
 {
     transparent = true;
     SetPassable(Dir::ALL, Passable::AIR);

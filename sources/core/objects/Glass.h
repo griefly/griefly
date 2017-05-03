@@ -7,7 +7,7 @@ class FlatGlass: public Breakable
 public:
     DECLARE_SAVED(FlatGlass, Breakable);
     DECLARE_GET_TYPE_ITEM(FlatGlass);
-    FlatGlass(quint32 id);
+    FlatGlass();
 
     virtual void AfterWorldCreation() override;
 
@@ -24,6 +24,6 @@ class ReinforcedFlatGlass: public FlatGlass
 public:
     DECLARE_SAVED(ReinforcedFlatGlass, FlatGlass);
     DECLARE_GET_TYPE_ITEM(ReinforcedFlatGlass);
-    ReinforcedFlatGlass(quint32 id);
+    ReinforcedFlatGlass();
 };
 ADD_TO_TYPELIST(ReinforcedFlatGlass);

@@ -2,12 +2,12 @@
 
 #include "Movable.h"
 
-class Table: public IMovable
+class Table : public IMovable
 {
 public:
     DECLARE_SAVED(Table, IMovable);
     DECLARE_GET_TYPE_ITEM(Table);
-    Table(quint32 id);
+    Table();
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Delete() override;
     void NotifyNeighborhood(bool is_in_existence);
@@ -22,11 +22,11 @@ ADD_TO_TYPELIST(Table);
 
 
 
-class MetalTable: public Table
+class MetalTable : public Table
 {
 public:
     DECLARE_SAVED(MetalTable, Table);
     DECLARE_GET_TYPE_ITEM(MetalTable);
-    MetalTable(quint32 id);
+    MetalTable();
 }
 ADD_TO_TYPELIST(MetalTable);

@@ -1,6 +1,6 @@
 #include "Sign.h"
 
-WallSign::WallSign(quint32 id) : IOnMapObject(id)
+WallSign::WallSign()
 {
     transparent = true;
     SetPassable(Dir::ALL, Passable::FULL);

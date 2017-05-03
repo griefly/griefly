@@ -41,7 +41,7 @@ class CubeTile: public IOnMapBase
 public:
     DECLARE_SAVED(CubeTile, IOnMapBase);
     DECLARE_GET_TYPE_ITEM(CubeTile);
-    CubeTile(quint32 id);
+    CubeTile();
     virtual bool AddItem(IdPtr<IOnMapBase> item) override;
     virtual bool RemoveItem(IdPtr<IOnMapBase> item) override;
     virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const override;

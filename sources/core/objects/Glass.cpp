@@ -6,7 +6,7 @@
 #include "Breakable.h"
 #include "Shard.h"
 
-FlatGlass::FlatGlass(quint32 id) : Breakable(id)
+FlatGlass::FlatGlass()
 {
     transparent = true;
 
@@ -85,7 +85,7 @@ void FlatGlass::AttackBy(IdPtr<Item> item)
     Breakable::AttackBy(item);
 }
 
-ReinforcedFlatGlass::ReinforcedFlatGlass(quint32 id) : FlatGlass(id)
+ReinforcedFlatGlass::ReinforcedFlatGlass()
 {
     SetState("rwindow");
     name = "Reinforced window";

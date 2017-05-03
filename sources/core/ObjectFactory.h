@@ -37,7 +37,7 @@ public:
 private:
     void ClearProcessing();
 
-    static IMainObject* NewVoidObject(const QString& type, quint32 id);
+    static IMainObject* NewVoidObject(const QString& type);
     static IMainObject* NewVoidObjectSaved(const QString& type);
 
     GameInterface* game_;

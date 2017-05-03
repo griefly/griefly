@@ -9,7 +9,7 @@ class Lobby: public IMainObject
 public:
     DECLARE_SAVED(Lobby, IMainObject);
     DECLARE_GET_TYPE_ITEM(Lobby)
-    Lobby(quint32 id);
+    Lobby();
     virtual void AfterWorldCreation() override;
 
     int GetSecondUntilStart();

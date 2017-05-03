@@ -24,7 +24,7 @@
 #include "Drinks.h"
 #include "MedbayTools.h"
 
-Human::Human(quint32 id) : IMob(id)
+Human::Human()
 {
     tick_speed_ = 1;
     SetSprite("icons/human.dmi");

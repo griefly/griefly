@@ -6,15 +6,15 @@
 #include "ProjectileTypes.h"
 #include "../Game.h"
 
-class Gun: public Item
+class Gun : public Item
 {
 public:
     DECLARE_SAVED(Gun, Item);
     DECLARE_GET_TYPE_ITEM(Gun);
-    Gun(quint32 id);
+    Gun();
     virtual void Shoot(VDir target);
     bool AddAmmo();
-    bool UseAmmo();   
+    bool UseAmmo();
     virtual void AttackBy(IdPtr<Item> item);
     static bool Targetable(IdPtr<IOnMapBase> item);
     VDir TargetTileLoc(IdPtr<IOnMapBase> item) const;

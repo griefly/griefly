@@ -7,7 +7,7 @@ class Ghost: public IMob
 public:
     DECLARE_SAVED(Ghost, IMob);
     DECLARE_GET_TYPE_ITEM(Ghost);
-    Ghost(quint32 id);
+    Ghost();
     virtual void AfterWorldCreation() override;
     virtual void Represent() override;
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;

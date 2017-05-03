@@ -4,7 +4,7 @@
 
 #include "../../Game.h"
 
-UnsyncGenerator::UnsyncGenerator(quint32 id) : IMainObject(id)
+UnsyncGenerator::UnsyncGenerator()
 {
     unsync_string_ = "default";
 }

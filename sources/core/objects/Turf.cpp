@@ -4,7 +4,7 @@
 #include "Tile.h"
 #include "representation/Representation.h"
 
-ITurf::ITurf(quint32 id) : IOnMapObject(id)
+ITurf::ITurf()
 {
     friction_ = Friction::BASE_FRICTION;
     atmos_state_ = atmos::SIMULATED;

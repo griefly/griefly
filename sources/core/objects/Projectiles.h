@@ -10,9 +10,11 @@ unsigned int hash(const std::vector<Dir>& content);
 class Projectile : public IMovable
 {
 public:
-    Projectile(quint32 id);
     DECLARE_SAVED(Projectile, IMovable)
     DECLARE_GET_TYPE_ITEM(Projectile)
+
+    Projectile();
+
     void MakeMovementPattern(VDir target, Dir facing);
     virtual void Process() override;
     virtual void BumpByGas(Dir dir, bool inside = false) override {}

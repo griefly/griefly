@@ -5,12 +5,12 @@
 #include "Tile.h"
 #include "Item.h"
 
-class Closet: public IMovable
+class Closet : public IMovable
 {
 public:
     DECLARE_SAVED(Closet, IMovable);
     DECLARE_GET_TYPE_ITEM(Closet);
-    Closet(quint32 id);
+    Closet();
 
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Bump(IdPtr<IMovable> item) override;
@@ -36,12 +36,12 @@ protected:
 };
 ADD_TO_TYPELIST(Closet);
 
-class SecurityLocker: public Closet
+class SecurityLocker : public Closet
 {
 public:
     DECLARE_SAVED(SecurityLocker, Closet);
     DECLARE_GET_TYPE_ITEM(SecurityLocker);
-    SecurityLocker(quint32 id);
+    SecurityLocker();
     virtual void AttackBy(IdPtr<Item> item) override;
 protected:
     virtual void Lock();

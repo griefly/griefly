@@ -2,7 +2,7 @@
 #include "Mob.h"
 #include "Projectiles.h"
 
-Breakable::Breakable(quint32 id) : Structure(id)
+Breakable::Breakable()
 {
     hit_points_ = 1;
 }

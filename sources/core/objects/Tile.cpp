@@ -8,7 +8,7 @@
 #include "Movable.h"
 #include "../atmos/AtmosGrid.h"
 
-CubeTile::CubeTile(quint32 id) : IOnMapBase(id)
+CubeTile::CubeTile()
 {
     turf_ = 0;
 

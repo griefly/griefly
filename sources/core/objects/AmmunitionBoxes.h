@@ -2,12 +2,12 @@
 
 #include "Item.h"
 
-class AmmunitionBox: public Item
+class AmmunitionBox : public Item
 {
 public:
     DECLARE_SAVED(AmmunitionBox, Item);
     DECLARE_GET_TYPE_ITEM(AmmunitionBox);
-    AmmunitionBox(quint32 id);
+    AmmunitionBox();
     void RemoveBullet();
     bool CheckBullets();
 private:

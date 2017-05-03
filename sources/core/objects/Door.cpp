@@ -9,7 +9,7 @@
 
 #include "test/RemoteDoorOpener.h"
 
-Door::Door(quint32 id) : IOnMapObject(id)
+Door::Door()
 {
     transparent = true;
     SetPassable(Dir::ALL, Passable::EMPTY);
@@ -143,13 +143,13 @@ void Door::AttackBy(IdPtr<Item> item)
     }
 }
 
-SecurityDoor::SecurityDoor(quint32 id) : Door(id)
+SecurityDoor::SecurityDoor()
 {
     SetSprite("icons/Doorsecglass.dmi");
 }
 
 
-NontransparentDoor::NontransparentDoor(quint32 id) : Door(id)
+NontransparentDoor::NontransparentDoor()
 {
     SetSprite("icons/Doorsec.dmi");
     transparent = false;
@@ -175,17 +175,17 @@ void NontransparentDoor::Close()
     Door::Close();
 }
 
-ExternalDoor::ExternalDoor(quint32 id) : NontransparentDoor(id)
+ExternalDoor::ExternalDoor()
 {
     SetSprite("icons/Doorext.dmi");
 }
 
-MaintenanceDoor::MaintenanceDoor(quint32 id) : NontransparentDoor(id)
+MaintenanceDoor::MaintenanceDoor()
 {
     SetSprite("icons/Doormaint.dmi");
 }
 
-GlassDoor::GlassDoor(quint32 id) : IMovable(id)
+GlassDoor::GlassDoor()
 {
     transparent = true;
 

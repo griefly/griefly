@@ -7,6 +7,6 @@ class FloorTile: public Item
 public:
     DECLARE_SAVED(FloorTile, Item);
     DECLARE_GET_TYPE_ITEM(FloorTile);
-    FloorTile(quint32 id);
+    FloorTile();
 };
 ADD_TO_TYPELIST(FloorTile);

@@ -13,7 +13,7 @@ class ITurf : public IOnMapObject
 public:
     DECLARE_SAVED(ITurf, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(ITurf);
-    ITurf(quint32 id);
+    ITurf();
     virtual void Delete() override;
 
     int GetFriction() const { return friction_; }

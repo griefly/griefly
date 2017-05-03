@@ -1,6 +1,6 @@
 #include "Computers.h"
 
-Computer::Computer(quint32 id) : IOnMapObject(id)
+Computer::Computer()
 {
     transparent = true;
     SetPassable(Dir::ALL, Passable::AIR);

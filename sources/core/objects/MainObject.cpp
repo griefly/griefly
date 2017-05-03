@@ -84,9 +84,3 @@ quint32 IMainObject::CreateImpl(const QString& type, quint32 owner)
 {
     return GetFactory().CreateImpl(type, owner);
 }
-
-void IMainObject::SetId(quint32 id)
-{
-    id_ = id;
-    SetFreq(GetFreq());
-}

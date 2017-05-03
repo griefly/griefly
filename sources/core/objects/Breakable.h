@@ -7,7 +7,7 @@ class Breakable : public Structure
 public:
     DECLARE_SAVED(Breakable, Structure);
     DECLARE_GET_TYPE_ITEM(Breakable);
-    Breakable(quint32 id);
+    Breakable();
 
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Bump(IdPtr<IMovable> item) override;

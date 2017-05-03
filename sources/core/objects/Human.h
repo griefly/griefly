@@ -10,7 +10,7 @@ class Human: public IMob
 public:
     DECLARE_SAVED(Human, IMob);
     DECLARE_GET_TYPE_ITEM(Human);
-    Human(quint32 id);
+    Human();
 
     virtual void AfterWorldCreation() override;
 

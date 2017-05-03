@@ -2,12 +2,12 @@
 
 #include "Turf.h"
 
-class Space: public ITurf
+class Space : public ITurf
 {
 public:
     DECLARE_SAVED(Space, ITurf);
     DECLARE_GET_TYPE_ITEM(Space);
-    Space(quint32 id);
+    Space();
     virtual void AfterWorldCreation() override;
     virtual void AttackBy(IdPtr<Item> item) override;
 };

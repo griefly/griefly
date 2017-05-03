@@ -10,7 +10,7 @@ class GasTank : public IMovable
 public:
     DECLARE_SAVED(GasTank, IMovable);
     DECLARE_GET_TYPE_ITEM(GasTank);
-    GasTank(quint32 id);
+    GasTank();
     virtual void AfterWorldCreation() override;
 
     virtual void AttackBy(IdPtr<Item> item) override;
@@ -31,7 +31,7 @@ class MagicGasTank : public GasTank
 public:
     DECLARE_SAVED(MagicGasTank, GasTank);
     DECLARE_GET_TYPE_ITEM(MagicGasTank);
-    MagicGasTank(quint32 id);
+    MagicGasTank();
     virtual void AfterWorldCreation() override;
     virtual void Process() override;
 };
@@ -42,6 +42,6 @@ class PlasmaGasTank : public GasTank
 public:
     DECLARE_SAVED(PlasmaGasTank, GasTank);
     DECLARE_GET_TYPE_ITEM(PlasmaGasTank);
-    PlasmaGasTank(quint32 id);
+    PlasmaGasTank();
 };
 ADD_TO_TYPELIST(PlasmaGasTank);

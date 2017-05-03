@@ -7,7 +7,7 @@ class WallSign: public IOnMapObject
 public:
     DECLARE_SAVED(WallSign, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(WallSign);
-    WallSign(quint32 id);
+    WallSign();
     virtual void AfterWorldCreation() override;
 
     virtual void AttackBy(IdPtr<Item> item) override;

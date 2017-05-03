@@ -12,7 +12,7 @@
 
 #include "Human.h"
 
-Ghost::Ghost(quint32 id) : IMob(id)
+Ghost::Ghost()
 {
     tick_speed_ = 1;
 

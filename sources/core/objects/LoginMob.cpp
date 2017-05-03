@@ -17,11 +17,18 @@
 
 const char* LOGIN_CLICK = "login_click";
 
-LoginMob::LoginMob(quint32 id) : IMob(id)
+LoginMob::LoginMob()
 {
-    name = QString("LobbyPlayer%1").arg(id);
+    name = "LobbyPlayer";
 
     interface_.Init();
+}
+
+void LoginMob::AfterWorldCreation()
+{
+    IMob::AfterWorldCreation();
+
+    name = QString("LobbyPlayer%1").arg(GetId());
 }
 
 void LoginMob::DeinitGUI()

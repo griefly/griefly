@@ -8,7 +8,7 @@
 class IOnMapObject: public IOnMapBase
 {
 public:
-    IOnMapObject(quint32 id);
+    IOnMapObject();
     DECLARE_SAVED(IOnMapObject, IOnMapBase);
     DECLARE_GET_TYPE_ITEM(ionmapitem);
     virtual bool IsVisibleByPlayer() const override

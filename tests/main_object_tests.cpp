@@ -9,8 +9,8 @@ using ::testing::Return;
 
 TEST(MainObject, Constructor)
 {
-    IMainObject object(42);
-    ASSERT_EQ(object.GetId(), 42);
+    IMainObject object;
+    ASSERT_EQ(object.GetId(), 0);
     ASSERT_EQ(object.GetFreq(), 0);
 
     IMainObject object2(/*NotLoadItem*/nouse);
@@ -21,7 +21,7 @@ TEST(MainObject, Constructor)
 TEST(MainObject, Types)
 {
    ASSERT_EQ(IMainObject::GetTypeStatic(), "main");
-   IMainObject object(42);
+   IMainObject object;
    ASSERT_EQ(object.GetType(), "main");
 
    ASSERT_EQ(object.GetTypeIndex(), 0);
@@ -30,14 +30,14 @@ TEST(MainObject, Types)
 
 TEST(MainObject, Hash)
 {
-    IMainObject object(24);
-    ASSERT_EQ(object.Hash(), 24);
+    IMainObject object;
+    ASSERT_EQ(object.Hash(), 0);
 }
 
 TEST(MainObject, EmptyFunctions)
 {
     // They just should not crash the game
-    IMainObject object(11);
+    IMainObject object;
     object.AfterWorldCreation();
     object.Process();
 }
@@ -45,7 +45,8 @@ TEST(MainObject, EmptyFunctions)
 TEST(MainObject, Save)
 {
     {
-        IMainObject object(42);
+        IMainObject object;
+        object.id_ = 42;
         FastSerializer save(1);
         object.Save(save);
 
@@ -66,8 +67,9 @@ TEST(MainObject, Save)
         EXPECT_CALL(factory, AddProcessingItem(42))
             .WillOnce(Return());
 
-        IMainObject object(42);
-        object.SetGame(&game);
+        IMainObject object;
+        object.id_ = 42;
+        object.game_ = &game;
         FastDeserializer save("\x02\x08\x00\x00\x00", 5);
         object.Load(save);
         EXPECT_EQ(object.GetFreq(), 8);
@@ -77,14 +79,14 @@ TEST(MainObject, Save)
 TEST(MainObjectDeathTest, Deaths)
 {
     {
-        IMainObject object(42);
+        IMainObject object;
         ASSERT_DEATH(
         {
             object.GetGame();
         }, "IMainObject::GetGame\\(\\) is called during construction of object");
     }
     {
-        IMainObject object(42);
+        IMainObject object;
         const IMainObject* ptr = &object;
         ASSERT_DEATH(
         {
@@ -92,16 +94,16 @@ TEST(MainObjectDeathTest, Deaths)
         }, "IMainObject::GetGame\\(\\) is called during construction of object");
     }
     {
-        IMainObject object(42);
+        IMainObject object;
         ASSERT_DEATH(
         {
             object.SetFreq(0);
         }, "SetFreq is called in constructor");
     }
     {
-        IMainObject object(0);
+        IMainObject object;
         MockIGame game;
-        object.SetGame(&game);
+        object.game_ = &game;
         ASSERT_DEATH(
         {
             object.SetFreq(0);
@@ -115,8 +117,9 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         MockIGame game;
         MockIObjectFactory factory;
 
-        IMainObject object(43);
-        object.SetGame(&game);
+        IMainObject object;
+        object.id_ = 43;
+        object.game_ = &game;
         GameInterface* interface_game = &object.GetGame();
         ASSERT_EQ(interface_game, &game);
 
@@ -139,17 +142,14 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
 
-        IMainObject object(43);
-        object.SetGame(&game);
+        IMainObject object;
+        object.id_ = 43;
+        object.game_ = &game;
         ASSERT_EQ(object.GetFreq(), 0);
 
         EXPECT_CALL(factory, AddProcessingItem(43));
         object.SetFreq(46);
         ASSERT_EQ(object.GetFreq(), 46);
-
-        EXPECT_CALL(factory, AddProcessingItem(84));
-        object.SetId(84);
-        ASSERT_EQ(object.GetId(), 84);
     }
     {
         MockIGame game;
@@ -159,8 +159,9 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         EXPECT_CALL(factory, CreateImpl(QString("type"), 42))
             .WillOnce(Return(111));
 
-        IMainObject object(43);
-        object.SetGame(&game);
+        IMainObject object;
+        object.id_ = 43;
+        object.game_ = &game;
         ASSERT_EQ(object.CreateImpl("type", 42), 111);
     }
 }
@@ -172,8 +173,9 @@ TEST(MainObject, Delete)
     EXPECT_CALL(game, GetFactory())
         .WillRepeatedly(ReturnRef(factory));
 
-    IMainObject object(43);
-    object.SetGame(&game);
+    IMainObject object;
+    object.id_ = 43;
+    object.game_ = &game;
 
     EXPECT_CALL(factory, DeleteLater(43))
         .WillOnce(Return());

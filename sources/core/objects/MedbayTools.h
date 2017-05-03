@@ -8,7 +8,7 @@ class HealthAnalyzer: public Item
 public:
     DECLARE_SAVED(HealthAnalyzer, Item);
     DECLARE_GET_TYPE_ITEM(HealthAnalyzer);
-    HealthAnalyzer(quint32 id);
+    HealthAnalyzer();
     void Scan(IdPtr<Human> target);
 };
 ADD_TO_TYPELIST(HealthAnalyzer);
@@ -18,7 +18,7 @@ class Medicine: public Item
 public:
     DECLARE_SAVED(Medicine, Item);
     DECLARE_GET_TYPE_ITEM(Medicine);
-    Medicine(quint32 id);
+    Medicine();
     void Heal(IdPtr<Human> target);
 protected:
     int KV_SAVEBLE(burn_heal_);
@@ -31,7 +31,7 @@ class Ointment: public Medicine
 public:
     DECLARE_SAVED(Ointment, Medicine);
     DECLARE_GET_TYPE_ITEM(Ointment);
-    Ointment(quint32 id);
+    Ointment();
 };
 ADD_TO_TYPELIST(Ointment);
 
@@ -40,6 +40,6 @@ class BruisePack: public Medicine
 public:
     DECLARE_SAVED(BruisePack, Medicine);
     DECLARE_GET_TYPE_ITEM(BruisePack);
-    BruisePack(quint32 id);
+    BruisePack();
 };
 ADD_TO_TYPELIST(BruisePack);

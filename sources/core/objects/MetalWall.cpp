@@ -10,7 +10,7 @@
 #include "../ObjectFactory.h"
 #include "../Game.h"
 
-MetalWall::MetalWall(quint32 id) : ITurf(id)
+MetalWall::MetalWall()
 {
     transparent = false;
     SetPassable(Dir::ALL, Passable::EMPTY);
@@ -38,7 +38,7 @@ void MetalWall::AttackBy(IdPtr<Item> item)
     }
 }
 
-ReinforcedWall::ReinforcedWall(quint32 id) : ITurf(id)
+ReinforcedWall::ReinforcedWall()
 {
     transparent = false;
     SetPassable(Dir::ALL, Passable::EMPTY);

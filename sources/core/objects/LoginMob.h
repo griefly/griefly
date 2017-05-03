@@ -26,12 +26,15 @@ inline unsigned int hash(const LoginInterface& i)
     return i.hash();
 }
 
-class LoginMob: public IMob
+class LoginMob : public IMob
 {
 public:
     DECLARE_SAVED(LoginMob, IMob);
     DECLARE_GET_TYPE_ITEM(LoginMob);
-    LoginMob(quint32 id);
+    LoginMob();
+
+    virtual void AfterWorldCreation() override;
+
     virtual void DeinitGUI() override;
     virtual void InitGUI() override;
     virtual void GenerateInterfaceForFrame() override;

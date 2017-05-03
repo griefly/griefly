@@ -11,7 +11,7 @@ Lobby& GetLobby()
     return *single_lobby;
 }
 
-Lobby::Lobby(quint32 id): IMainObject(id)
+Lobby::Lobby()
 {
     seconds_ = 1;//60 * 2;
 }

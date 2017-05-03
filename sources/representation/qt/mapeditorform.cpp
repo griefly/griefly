@@ -70,7 +70,7 @@ MapEditorForm::MapEditorForm(QWidget *parent) :
     qDebug() << "Start generate images for creators";
     for (auto it = (*GetItemsCreators()).begin(); it != (*GetItemsCreators()).end(); ++it)
     {
-        IMainObject* loc = it->second(0);
+        IMainObject* loc = it->second();
         IOnMapObject* bloc = CastTo<IOnMapObject>(loc);
         if (!bloc)
         {

@@ -7,7 +7,7 @@
 
 #include <cassert>
 
-IMovable::IMovable(quint32 id) : IOnMapObject(id)
+IMovable::IMovable()
 {
     last_move_ = 0;
     tick_speed_ = 1;

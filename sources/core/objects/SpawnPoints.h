@@ -7,7 +7,7 @@ class SpawnPoint: public IOnMapObject
 public:
     DECLARE_SAVED(SpawnPoint, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(SpawnPoint);
-    SpawnPoint(quint32 id);
+    SpawnPoint();
 
     virtual void AfterWorldCreation() override;
     QString KV_SAVEBLE(spawn_type);

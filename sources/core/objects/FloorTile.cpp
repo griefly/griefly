@@ -1,6 +1,6 @@
 #include "FloorTile.h"
 
-FloorTile::FloorTile(quint32 id) : Item(id)
+FloorTile::FloorTile()
 {
     SetState("tile");
     name = "Floor tile";

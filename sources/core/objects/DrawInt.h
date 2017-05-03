@@ -7,7 +7,7 @@ class IDraw: public IMainObject
 public:
     DECLARE_SAVED(IDraw, IMainObject);
     DECLARE_GET_TYPE_ITEM(IDraw)
-    IDraw(quint32 id);
+    IDraw();
     virtual void Represent() {}
 };
 

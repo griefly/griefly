@@ -1,6 +1,6 @@
 #include "Furniture.h"
 
-Bed::Bed(quint32 id) : IMovable(id)
+Bed::Bed()
 {
     anchored_ = true;
     v_level = 3;
@@ -11,7 +11,7 @@ Bed::Bed(quint32 id) : IMovable(id)
     name = "Bed";
 }
 
-Chair::Chair(quint32 id) : IMovable(id)
+Chair::Chair()
 {
     anchored_ = true;
 
@@ -33,7 +33,7 @@ void Chair::AfterWorldCreation()
     }
 }
 
-Stool::Stool(quint32 id) : IMovable(id)
+Stool::Stool()
 {
     anchored_ = true;
 

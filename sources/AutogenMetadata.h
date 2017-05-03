@@ -4,7 +4,7 @@
 
 #include "core/objects/MainObject.h"
 
-typedef IMainObject* (*ItemCreator)(quint32 id);
+typedef IMainObject* (*ItemCreator)();
 typedef IMainObject* (*VoidItemCreator)();
 
 std::unordered_map<QString, ItemCreator>* GetItemsCreators();

@@ -1,7 +1,6 @@
 #include "RemoteDoorOpener.h"
 
-RemoteDoorOpener::RemoteDoorOpener(quint32 id)
-    : Item(id)
+RemoteDoorOpener::RemoteDoorOpener()
 {
     SetSprite("icons/device.dmi");
     SetState("multitool_red");

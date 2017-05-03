@@ -9,7 +9,7 @@ class IMob: public IMessageReceiver
 public:
     DECLARE_SAVED(IMob, IMessageReceiver);
     DECLARE_GET_TYPE_ITEM(imob)
-    IMob(quint32 id);
+    IMob();
     virtual void AfterWorldCreation() override;
     virtual void Delete();
     virtual void cautOverMind();

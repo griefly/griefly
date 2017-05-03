@@ -7,7 +7,7 @@ class Floor: public ITurf
 public:
     DECLARE_SAVED(Floor, ITurf);
     DECLARE_GET_TYPE_ITEM(Floor);
-    Floor(quint32 id);
+    Floor();
     virtual void AfterWorldCreation() override;
 
     virtual void AttackBy(IdPtr<Item> item) override;
@@ -25,7 +25,7 @@ class Plating: public Floor
 public:
     DECLARE_SAVED(Plating, Floor);
     DECLARE_GET_TYPE_ITEM(Plating);
-    Plating(quint32 id);
+    Plating();
 };
 ADD_TO_TYPELIST(Plating);
 

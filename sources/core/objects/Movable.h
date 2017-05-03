@@ -30,7 +30,7 @@ class IMovable : public IOnMapObject
 public:
     DECLARE_SAVED(IMovable, IOnMapObject);
     DECLARE_GET_TYPE_ITEM(IMovable);
-    IMovable(quint32 id);
+    IMovable();
     void processMove();//for move
     virtual bool TryMove(Dir direct);
     bool CheckMoveTime();

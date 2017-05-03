@@ -1,9 +1,8 @@
 #include "TestMainObject.h"
 
 // LCOV_EXCL_START
-TestMainObject::TestMainObject(quint32 id)
-    : IMainObject(id),
-      after_world_creation_(0),
+TestMainObject::TestMainObject()
+    : after_world_creation_(0),
       process_(0),
       creation_callback_([](){}),
       process_callback_([](){}),

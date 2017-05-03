@@ -2,7 +2,7 @@
 #include "Item.h"
 #include "Human.h"
 
-Table::Table(quint32 id) : IMovable(id)
+Table::Table()
 {
     anchored_ = true;
     v_level = 4;
@@ -288,7 +288,7 @@ int Table::CheckTable(IdPtr<IOnMapBase> container, quint32 ignored_table)
     return 1;
 }
 
-MetalTable::MetalTable(quint32 id) : Table(id)
+MetalTable::MetalTable()
 {
     SetSprite("icons/metaltables.dmi"); 
     material_ = "metal";

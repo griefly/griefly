@@ -87,7 +87,7 @@ TEST_F(IdPtrTest, EqualOperator)
 
 TEST_F(IdPtrTest, Dereference)
 {
-    IMainObject object(42);
+    IMainObject object;
     (*id_ptr_id_table)[42].object = &object;
 
     IdPtr<IMainObject> ptr;
@@ -106,7 +106,7 @@ TEST_F(IdPtrTest, Dereference)
 
 TEST_F(IdPtrTest, Validating)
 {
-    IMainObject object(42);
+    IMainObject object;
     (*id_ptr_id_table)[42].object = &object;
 
     IdPtr<IMainObject> ptr;

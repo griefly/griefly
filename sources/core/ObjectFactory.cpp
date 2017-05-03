@@ -94,14 +94,14 @@ void ObjectFactory::ForeachProcess()
     }
 }
 
-IMainObject* ObjectFactory::NewVoidObject(const QString& type, quint32 id)
+IMainObject* ObjectFactory::NewVoidObject(const QString& type)
 {
     auto creator = GetItemsCreators()->find(type);
     if (creator == GetItemsCreators()->end())
     {
         KvAbort(QString("Unable to find creator for type: %1").arg(type));
     }
-    return creator->second(id);
+    return creator->second();
 }
 
 IMainObject* ObjectFactory::NewVoidObjectSaved(const QString& type)
@@ -162,14 +162,18 @@ void ObjectFactory::MarkWorldAsCreated()
 
 quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
 {
-    IMainObject* item = NewVoidObject(type, id_);
-    item->SetGame(game_);
+    IMainObject* item = NewVoidObject(type);
+    item->game_ = game_;
 
     if (id_ >= objects_table_.size())
     {
         objects_table_.resize(id_ * 2);
     }
     objects_table_[id_].object = item;
+
+    item->id_ = id_;
+    item->SetFreq(item->GetFreq());
+
     quint32 retval = id_;
     ++id_;
     IdPtr<IOnMapBase> owner = owner_id;
@@ -195,7 +199,7 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
 IMainObject* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
 {
     IMainObject* item = NewVoidObjectSaved(hash);
-    item->SetGame(game_);
+    item->game_ = game_;
     if (id_new >= objects_table_.size())
     {
         objects_table_.resize(id_new * 2);
@@ -206,7 +210,8 @@ IMainObject* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
         id_ = id_new + 1;
     }
     objects_table_[id_new].object = item;
-    item->SetId(id_new);
+    item->id_ = id_new;
+    item->SetFreq(item->GetFreq());
     return item;
 }
 

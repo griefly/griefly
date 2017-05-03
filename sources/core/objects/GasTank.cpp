@@ -14,8 +14,7 @@ namespace
     const int PLASMA_TANK_AMOUNT = 10000;
 }
 
-GasTank::GasTank(quint32 id)
-    : IMovable(id)
+GasTank::GasTank()
 {
     name = "Oxygen tank";
 
@@ -88,7 +87,7 @@ void GasTank::Process()
     }
 }
 
-MagicGasTank::MagicGasTank(quint32 id) : GasTank(id)
+MagicGasTank::MagicGasTank()
 {
     name = "Magic tank";
 }
@@ -113,7 +112,7 @@ void MagicGasTank::Process()
     GetAtmosHolder()->AddEnergy(new_energy);
 }
 
-PlasmaGasTank::PlasmaGasTank(quint32 id) : GasTank(id)
+PlasmaGasTank::PlasmaGasTank()
 {
     name = "Plasma tank";
     SetState("orange");

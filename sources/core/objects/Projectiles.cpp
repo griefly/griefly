@@ -38,7 +38,7 @@ unsigned int hash(const std::vector<Dir>& content)
 }
 
 
-Projectile::Projectile(quint32 id) : IMovable(id)
+Projectile::Projectile()
 {
     SetPassable(Dir::ALL, Passable::FULL);
     damage_ = 0;

@@ -11,7 +11,7 @@ public:
     DECLARE_SAVED(TestMainObject, IMainObject);
     DECLARE_GET_TYPE_ITEM(TestMainObject);
 
-    TestMainObject(quint32 id);
+    TestMainObject();
     ~TestMainObject();
 
     virtual void AfterWorldCreation() override;

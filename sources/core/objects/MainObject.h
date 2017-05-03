@@ -17,16 +17,18 @@
 class IOnMapBase;
 class IMainObject
 {
-public:
+    friend class ObjectFactory;
 #ifdef _BUILD_TESTS
     FRIEND_TEST(MainObjectDeathTest, Deaths);
     FRIEND_TEST(MainObject, SettersAndGettersAndCreateImpl);
+    FRIEND_TEST(MainObject, Save);
+    FRIEND_TEST(MainObject, Delete);
 #endif // _BUILD_TESTS
+public:
     virtual ~IMainObject() { }
 
     void PlayMusic(const QString& name, float volume = 100.0f);
 
-    static const int THIS_COUNTER = __COUNTER__; 
     virtual void Save(FastSerializer& serializer);
     virtual void Load(FastDeserializer& deserializer);
 
@@ -39,7 +41,7 @@ public:
     }
 
     virtual void Delete();
-    IMainObject(quint32 id) { id_ = id; how_often_ = 0; game_ = nullptr; }
+    IMainObject() { id_ = 0; how_often_ = 0; game_ = nullptr; }
     IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
     virtual const QString& GetType() const
@@ -57,17 +59,15 @@ public:
         return TYPE_INDEX;
     }
 
-    static IMainObject* _Z_creator(quint32 id) { return new IMainObject(id); }
+    static IMainObject* _Z_creator() { return new IMainObject(); }
     static IMainObject* _Z_creatorSaved() { return new IMainObject(nouse);}
 
     virtual void Process() { }
 
-    void SetId(quint32 id);
     quint32 GetId() const { return id_; }
 
     void SetFreq(int freq);
     int GetFreq() const { return how_often_; }
-    void SetGame(GameInterface* game) { game_ = game; }
 
     GameInterface& GetGame();
     const GameInterface& GetGame() const;

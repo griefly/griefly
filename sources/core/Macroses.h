@@ -11,8 +11,8 @@ struct FakeParamClass {};
 
 #define DECLARE_SAVED(thisclass, masterclass)  \
     friend void InitSettersForTypes();\
-    typedef thisclass ThisClassType; \
-    static IMainObject* _Z_creator(quint32 id) { return new ThisClassType(id); }\
+    using ThisClassType = thisclass; \
+    static IMainObject* _Z_creator() { return new ThisClassType(); }\
     static IMainObject* _Z_creatorSaved() { return new ThisClassType(nouse);} \
     void _Z_checker()\
     {\

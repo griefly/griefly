@@ -6,7 +6,7 @@
 #include "Tile.h"
 #include "../Game.h"
 
-AtmosTool::AtmosTool(quint32 id) : Item(id)
+AtmosTool::AtmosTool()
 {
     SetSprite("icons/device.dmi");
     SetState("atmos");
@@ -52,7 +52,7 @@ void AtmosTool::AttackBy(IdPtr<Item> item)
     }
 }
 
-RemoteAtmosTool::RemoteAtmosTool(quint32 id) : AtmosTool(id)
+RemoteAtmosTool::RemoteAtmosTool()
 {
     name = "Remote atmos tool";
 }
