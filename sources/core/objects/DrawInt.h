@@ -2,7 +2,7 @@
 
 #include "MainObject.h"
 
-class IDraw: public IMainObject
+class IDraw : public kv::IMainObject
 {
 public:
     DECLARE_SAVED(IDraw, IMainObject);

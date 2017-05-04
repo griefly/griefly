@@ -17,7 +17,7 @@ TEST(HashesTest, IntegerNumber)
 
 TEST(HashesTest, IdPtrOn)
 {
-    IdPtr<IMainObject> ptr = 0;
+    IdPtr<kv::IMainObject> ptr = 0;
     ASSERT_EQ(hash(ptr), 0);
 
     ptr = 131;
@@ -29,7 +29,7 @@ TEST(HashesTest, IdPtrOn)
 
 TEST(HashesTest, VectorIdPtrOn)
 {
-    std::vector<IdPtr<IMainObject>> v;
+    std::vector<IdPtr<kv::IMainObject>> v;
     v.push_back(0);
     v.push_back(1);
     v.push_back(2);

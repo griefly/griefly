@@ -62,7 +62,7 @@ void ObjectFactory::UpdateProcessingItems()
         }
     }
     std::sort(process_table_.begin(), process_table_.end(),
-    [](IdPtr<IMainObject> item1, IdPtr<IMainObject> item2)
+    [](IdPtr<kv::IMainObject> item1, IdPtr<kv::IMainObject> item2)
     {
         return item1.Id() < item2.Id();
     });
@@ -94,7 +94,7 @@ void ObjectFactory::ForeachProcess()
     }
 }
 
-IMainObject* ObjectFactory::NewVoidObject(const QString& type)
+kv::IMainObject* ObjectFactory::NewVoidObject(const QString& type)
 {
     auto creator = GetItemsCreators()->find(type);
     if (creator == GetItemsCreators()->end())
@@ -104,7 +104,7 @@ IMainObject* ObjectFactory::NewVoidObject(const QString& type)
     return creator->second();
 }
 
-IMainObject* ObjectFactory::NewVoidObjectSaved(const QString& type)
+kv::IMainObject* ObjectFactory::NewVoidObjectSaved(const QString& type)
 {
     auto creator = GetVoidItemsCreators()->find(type);
     if (creator == GetVoidItemsCreators()->end())
@@ -162,8 +162,8 @@ void ObjectFactory::MarkWorldAsCreated()
 
 quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
 {
-    IMainObject* item = NewVoidObject(type);
-    item->game_ = game_;
+    kv::IMainObject* item = NewVoidObject(type);
+    kv::internal::GetObjectGame(item) = game_;
 
     if (id_ >= objects_table_.size())
     {
@@ -171,7 +171,7 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
     }
     objects_table_[id_].object = item;
 
-    item->id_ = id_;
+    kv::internal::GetObjectId(item) = id_;
     item->SetFreq(item->GetFreq());
 
     quint32 retval = id_;
@@ -196,10 +196,10 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
     return retval;
 }
 
-IMainObject* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
+kv::IMainObject* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
 {
-    IMainObject* item = NewVoidObjectSaved(hash);
-    item->game_ = game_;
+    kv::IMainObject* item = NewVoidObjectSaved(hash);
+    kv::internal::GetObjectGame(item) = game_;
     if (id_new >= objects_table_.size())
     {
         objects_table_.resize(id_new * 2);
@@ -210,7 +210,7 @@ IMainObject* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
         id_ = id_new + 1;
     }
     objects_table_[id_new].object = item;
-    item->id_ = id_new;
+    kv::internal::GetObjectId(item) = id_new;
     item->SetFreq(item->GetFreq());
     return item;
 }
@@ -264,7 +264,7 @@ void ObjectFactory::AddProcessingItem(quint32 item)
 
 void ObjectFactory::ClearProcessing()
 {
-    std::vector<IdPtr<IMainObject>> remove_from_process;
+    std::vector<IdPtr<kv::IMainObject>> remove_from_process;
     quint32 table_size = process_table_.size();
     for (quint32 i = 0; i < table_size; ++i)
     {

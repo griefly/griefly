@@ -11,7 +11,10 @@ class SyncRandom;
 class Names;
 class IMob;
 class TextPainter;
-class IMainObject;
+namespace kv
+{
+    class IMainObject;
+}
 class CubeTile;
 class IOnMapBase;
 class MapInterface;
@@ -70,7 +73,7 @@ public:
     virtual void MarkWorldAsCreated() = 0;
 
     virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) = 0;
-    virtual IMainObject* CreateVoid(const QString& hash, quint32 id_new) = 0;
+    virtual kv::IMainObject* CreateVoid(const QString& hash, quint32 id_new) = 0;
 
     virtual void DeleteLater(quint32 id) = 0;
     virtual void ProcessDeletion() = 0;

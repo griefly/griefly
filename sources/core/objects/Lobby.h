@@ -4,7 +4,7 @@
 #include "SpawnPoints.h"
 #include "Tile.h"
 
-class Lobby: public IMainObject
+class Lobby : public kv::IMainObject
 {
 public:
     DECLARE_SAVED(Lobby, IMainObject);

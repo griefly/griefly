@@ -30,7 +30,7 @@ TEST(IdPtrDeathTest, Death)
 
     ASSERT_DEATH(
     {
-        IdPtr<IMainObject> object(101);
+        IdPtr<kv::IMainObject> object(101);
         object.IsValid();
     }, "Id table lookup fail");
 }
@@ -43,19 +43,19 @@ private:
 
 TEST_F(IdPtrTest, Constructors)
 {
-    IdPtr<IMainObject> object(40);
+    IdPtr<kv::IMainObject> object(40);
     ASSERT_EQ(object.Id(), 40);
 
     object = 10;
     ASSERT_EQ(object.Id(), 10);
 
-    IdPtr<IMainObject> empty;
+    IdPtr<kv::IMainObject> empty;
     ASSERT_EQ(empty.Id(), 0);
 
     empty = object;
     ASSERT_EQ(empty.Id(), 10);
 
-    IdPtr<IMainObject> from_other(empty);
+    IdPtr<kv::IMainObject> from_other(empty);
     ASSERT_EQ(from_other.Id(), 10);
 
     IdPtr<UnsyncGenerator> gen_from_other(from_other);
@@ -68,17 +68,17 @@ TEST_F(IdPtrTest, Constructors)
 
 TEST_F(IdPtrTest, EqualOperator)
 {
-    IdPtr<IMainObject> object(23);
+    IdPtr<kv::IMainObject> object(23);
     ASSERT_TRUE(object == object);
     ASSERT_FALSE(object != object);
 
-    IdPtr<IMainObject> other(22);
+    IdPtr<kv::IMainObject> other(22);
     ASSERT_FALSE(object == other);
     ASSERT_FALSE(other == object);
     ASSERT_TRUE(object != other);
     ASSERT_TRUE(other != object);
 
-    IdPtr<IMainObject> object2(23);
+    IdPtr<kv::IMainObject> object2(23);
     ASSERT_TRUE(object == object2);
     ASSERT_TRUE(object2 == object);
     ASSERT_FALSE(object != object2);
@@ -87,10 +87,10 @@ TEST_F(IdPtrTest, EqualOperator)
 
 TEST_F(IdPtrTest, Dereference)
 {
-    IMainObject object;
+    kv::IMainObject object;
     (*id_ptr_id_table)[42].object = &object;
 
-    IdPtr<IMainObject> ptr;
+    IdPtr<kv::IMainObject> ptr;
     ASSERT_EQ(ptr.operator*(), nullptr);
 
     ptr = 10;
@@ -106,10 +106,10 @@ TEST_F(IdPtrTest, Dereference)
 
 TEST_F(IdPtrTest, Validating)
 {
-    IMainObject object;
+    kv::IMainObject object;
     (*id_ptr_id_table)[42].object = &object;
 
-    IdPtr<IMainObject> ptr;
+    IdPtr<kv::IMainObject> ptr;
     ASSERT_FALSE(ptr.IsValid());
     ASSERT_FALSE(ptr);
 
@@ -126,14 +126,14 @@ TEST_F(IdPtrTest, Validating)
 
 TEST_F(IdPtrTest, SaveAndLoad)
 {
-    IdPtr<IMainObject> ptr(93);
+    IdPtr<kv::IMainObject> ptr(93);
     FastSerializer serializer(1);
     serializer << ptr;
     EXPECT_EQ(
         QByteArray(serializer.GetData(), serializer.GetIndex()),
         QByteArray("\x03\x5D\x00\x00\x00", 5));
 
-    IdPtr<IMainObject> ptr2;
+    IdPtr<kv::IMainObject> ptr2;
     EXPECT_FALSE(ptr2 == ptr);
 
     FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());

@@ -10,7 +10,7 @@
 
 TEST(FastIsType, TwoArgs)
 {
-    int main_type = IMainObject::GetTypeIndexStatic();
+    int main_type = kv::IMainObject::GetTypeIndexStatic();
     int unsync_type = UnsyncGenerator::GetTypeIndexStatic();
     int draw_type = IDraw::GetTypeIndexStatic();
 
@@ -28,15 +28,15 @@ TEST(FastIsType, TwoArgs)
 
 TEST(FastIsType, OneArg)
 {
-    int main_type = IMainObject::GetTypeIndexStatic();
+    int main_type = kv::IMainObject::GetTypeIndexStatic();
     int unsync_type = UnsyncGenerator::GetTypeIndexStatic();
     int draw_type = IDraw::GetTypeIndexStatic();
 
-    ASSERT_TRUE(FastIsType<IMainObject>(main_type));
-    ASSERT_TRUE(FastIsType<IMainObject>(unsync_type));
+    ASSERT_TRUE(FastIsType<kv::IMainObject>(main_type));
+    ASSERT_TRUE(FastIsType<kv::IMainObject>(unsync_type));
     ASSERT_TRUE(FastIsType<UnsyncGenerator>(unsync_type));
     ASSERT_TRUE(FastIsType<IDraw>(draw_type));
-    ASSERT_TRUE(FastIsType<IMainObject>(draw_type));
+    ASSERT_TRUE(FastIsType<kv::IMainObject>(draw_type));
 
     ASSERT_FALSE(FastIsType<UnsyncGenerator>(main_type));
     ASSERT_FALSE(FastIsType<UnsyncGenerator>(draw_type));
@@ -46,19 +46,19 @@ TEST(FastIsType, OneArg)
 
 TEST(FastIsType, CastTo)
 {
-    IMainObject main_type(nouse);
+    kv::IMainObject main_type(nouse);
     UnsyncGenerator unsync_type(nouse);
     IDraw draw_type(nouse);
 
     IDraw* null_type = nullptr;
 
-    ASSERT_FALSE(CastTo<IMainObject>(null_type));
+    ASSERT_FALSE(CastTo<kv::IMainObject>(null_type));
 
-    ASSERT_TRUE(CastTo<IMainObject>(&main_type));
-    ASSERT_TRUE(CastTo<IMainObject>(&unsync_type));
+    ASSERT_TRUE(CastTo<kv::IMainObject>(&main_type));
+    ASSERT_TRUE(CastTo<kv::IMainObject>(&unsync_type));
     ASSERT_TRUE(CastTo<UnsyncGenerator>(&unsync_type));
     ASSERT_TRUE(CastTo<IDraw>(&draw_type));
-    ASSERT_TRUE(CastTo<IMainObject>(&draw_type));
+    ASSERT_TRUE(CastTo<kv::IMainObject>(&draw_type));
 
     ASSERT_FALSE(CastTo<UnsyncGenerator>(&main_type));
     ASSERT_FALSE(CastTo<UnsyncGenerator>(&draw_type));

@@ -7,7 +7,10 @@
 #define __forceinline __attribute__((always_inline)) inline
 #endif
 
-class IMainObject;
+namespace kv
+{
+    class IMainObject;
+}
 
 extern QVector<QBitArray>* cast_table;
 
@@ -33,7 +36,7 @@ inline Typeto* CastTo(TypeObjectFrom* ptr)
     }
     if (FastIsType<Typeto>(ptr->GetTypeIndex()))
     {
-        return static_cast<Typeto*>(static_cast<IMainObject*>(ptr));
+        return static_cast<Typeto*>(static_cast<kv::IMainObject*>(ptr));
     }
     return nullptr;
 }

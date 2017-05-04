@@ -7,6 +7,8 @@
 using ::testing::ReturnRef;
 using ::testing::Return;
 
+using namespace kv;
+
 TEST(MainObject, Constructor)
 {
     IMainObject object;
@@ -46,7 +48,7 @@ TEST(MainObject, Save)
 {
     {
         IMainObject object;
-        object.id_ = 42;
+        kv::internal::GetObjectId(&object) = 42;
         FastSerializer save(1);
         object.Save(save);
 
@@ -68,8 +70,8 @@ TEST(MainObject, Save)
             .WillOnce(Return());
 
         IMainObject object;
-        object.id_ = 42;
-        object.game_ = &game;
+        kv::internal::GetObjectId(&object) = 42;
+        kv::internal::GetObjectGame(&object) = &game;
         FastDeserializer save("\x02\x08\x00\x00\x00", 5);
         object.Load(save);
         EXPECT_EQ(object.GetFreq(), 8);
@@ -103,7 +105,7 @@ TEST(MainObjectDeathTest, Deaths)
     {
         IMainObject object;
         MockIGame game;
-        object.game_ = &game;
+        kv::internal::GetObjectGame(&object) = &game;
         ASSERT_DEATH(
         {
             object.SetFreq(0);
@@ -118,8 +120,8 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         MockIObjectFactory factory;
 
         IMainObject object;
-        object.id_ = 43;
-        object.game_ = &game;
+        kv::internal::GetObjectId(&object) = 43;
+        kv::internal::GetObjectGame(&object) = &game;
         GameInterface* interface_game = &object.GetGame();
         ASSERT_EQ(interface_game, &game);
 
@@ -143,8 +145,8 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
             .WillRepeatedly(ReturnRef(factory));
 
         IMainObject object;
-        object.id_ = 43;
-        object.game_ = &game;
+        kv::internal::GetObjectId(&object) = 43;
+        kv::internal::GetObjectGame(&object) = &game;
         ASSERT_EQ(object.GetFreq(), 0);
 
         EXPECT_CALL(factory, AddProcessingItem(43));
@@ -160,9 +162,9 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
             .WillOnce(Return(111));
 
         IMainObject object;
-        object.id_ = 43;
-        object.game_ = &game;
-        ASSERT_EQ(object.CreateImpl("type", 42), 111);
+        kv::internal::GetObjectId(&object) = 43;
+        kv::internal::GetObjectGame(&object) = &game;
+        ASSERT_EQ(kv::internal::CreateImpl(&object, "type", 42), 111);
     }
 }
 
@@ -174,8 +176,8 @@ TEST(MainObject, Delete)
         .WillRepeatedly(ReturnRef(factory));
 
     IMainObject object;
-    object.id_ = 43;
-    object.game_ = &game;
+    kv::internal::GetObjectId(&object) = 43;
+    kv::internal::GetObjectGame(&object) = &game;
 
     EXPECT_CALL(factory, DeleteLater(43))
         .WillOnce(Return());

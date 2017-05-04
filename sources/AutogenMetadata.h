@@ -4,14 +4,14 @@
 
 #include "core/objects/MainObject.h"
 
-typedef IMainObject* (*ItemCreator)();
-typedef IMainObject* (*VoidItemCreator)();
+typedef kv::IMainObject* (*ItemCreator)();
+typedef kv::IMainObject* (*VoidItemCreator)();
 
 std::unordered_map<QString, ItemCreator>* GetItemsCreators();
 
 std::unordered_map<QString, VoidItemCreator>* GetVoidItemsCreators();
 
-typedef void (*VariableSetter)(IMainObject* ptr, FastDeserializer& str);
+typedef void (*VariableSetter)(kv::IMainObject* ptr, FastDeserializer& str);
 
 typedef std::unordered_map<QString, VariableSetter> SettersForType;
 

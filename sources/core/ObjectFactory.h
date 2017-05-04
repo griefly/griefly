@@ -24,7 +24,7 @@ public:
     virtual void MarkWorldAsCreated() override;
 
     virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) override;
-    virtual IMainObject* CreateVoid(const QString& hash, quint32 id_new) override;
+    virtual kv::IMainObject* CreateVoid(const QString& hash, quint32 id_new) override;
 
     virtual void DeleteLater(quint32 id) override;
     virtual void ProcessDeletion() override;
@@ -37,8 +37,8 @@ public:
 private:
     void ClearProcessing();
 
-    static IMainObject* NewVoidObject(const QString& type);
-    static IMainObject* NewVoidObjectSaved(const QString& type);
+    static kv::IMainObject* NewVoidObject(const QString& type);
+    static kv::IMainObject* NewVoidObjectSaved(const QString& type);
 
     GameInterface* game_;
 
@@ -48,12 +48,12 @@ private:
 
     void UpdateProcessingItems();
 
-    QVector<IMainObject*> ids_to_delete_;
+    QVector<kv::IMainObject*> ids_to_delete_;
 
     QVector<ObjectInfo> objects_table_;
-    QVector<IdPtr<IMainObject>> process_table_;
+    QVector<IdPtr<kv::IMainObject>> process_table_;
 
-    QVector<IdPtr<IMainObject>> add_to_process_;
+    QVector<IdPtr<kv::IMainObject>> add_to_process_;
 
     quint32 id_;
 };

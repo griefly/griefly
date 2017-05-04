@@ -15,15 +15,21 @@
 #endif // _BUILD_TESTS
 
 class IOnMapBase;
+
+namespace kv
+{
+namespace internal
+{
+    GameInterface*& GetObjectGame(IMainObject* object);
+    quint32& GetObjectId(IMainObject* object);
+    quint32 CreateImpl(IMainObject* object, const QString& type, quint32 owner = 0);
+}
+
 class IMainObject
 {
-    friend class ObjectFactory;
-#ifdef _BUILD_TESTS
-    FRIEND_TEST(MainObjectDeathTest, Deaths);
-    FRIEND_TEST(MainObject, SettersAndGettersAndCreateImpl);
-    FRIEND_TEST(MainObject, Save);
-    FRIEND_TEST(MainObject, Delete);
-#endif // _BUILD_TESTS
+    friend GameInterface*& internal::GetObjectGame(IMainObject* object);
+    friend quint32& internal::GetObjectId(IMainObject* object);
+    friend quint32 internal::CreateImpl(IMainObject* object, const QString& type, quint32 owner);
 public:
     virtual ~IMainObject() { }
 
@@ -92,3 +98,20 @@ private:
     int how_often_;
 };
 ADD_TO_TYPELIST(IMainObject);
+
+namespace internal
+{
+    inline GameInterface*& GetObjectGame(IMainObject* object)
+    {
+        return object->game_;
+    }
+    inline quint32& GetObjectId(IMainObject* object)
+    {
+        return object->id_;
+    }
+    inline quint32 CreateImpl(IMainObject* object, const QString& type, quint32 owner)
+    {
+        return object->CreateImpl(type, owner);
+    }
+}
+}

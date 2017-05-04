@@ -4,6 +4,8 @@
 #include "../Game.h"
 #include "representation/Representation.h"
 
+using namespace kv;
+
 void IMainObject::PlayMusic(const QString& name, float volume)
 {
     GetGame().PlayMusic(name, volume);

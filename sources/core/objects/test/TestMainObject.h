@@ -5,7 +5,7 @@
 #include <functional>
 
 // LCOV_EXCL_START
-class TestMainObject : public IMainObject
+class TestMainObject : public kv::IMainObject
 {
 public:
     DECLARE_SAVED(TestMainObject, IMainObject);

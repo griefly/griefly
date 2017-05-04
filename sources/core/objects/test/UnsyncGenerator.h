@@ -2,7 +2,7 @@
 
 #include "../MainObject.h"
 
-class UnsyncGenerator: public IMainObject
+class UnsyncGenerator : public kv::IMainObject
 {
 public:
     DECLARE_SAVED(UnsyncGenerator, IMainObject);

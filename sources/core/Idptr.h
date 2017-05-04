@@ -10,7 +10,10 @@
 #include "KvAbort.h"
 #include "FastSerializer.h"
 
-class IMainObject;
+namespace kv
+{
+    class IMainObject;
+}
 
 struct ObjectInfo
 {
@@ -19,7 +22,7 @@ struct ObjectInfo
     {
         // Nothing
     }
-    IMainObject* object;
+    kv::IMainObject* object;
 };
 
 extern QVector<ObjectInfo>* id_ptr_id_table;
@@ -27,7 +30,7 @@ extern QVector<ObjectInfo>* id_ptr_id_table;
 struct IdPtrBase
 {
 protected:
-    mutable IMainObject* casted_;
+    mutable kv::IMainObject* casted_;
     quint32 id_;
 };
 
@@ -168,7 +171,7 @@ private:
             return;
         }
 
-        IMainObject* local = GetFromIdTable(id_);
+        kv::IMainObject* local = GetFromIdTable(id_);
         if (local == nullptr)
         {
             casted_ = nullptr;
@@ -185,7 +188,7 @@ private:
         }
     }
 
-    static IMainObject* GetFromIdTable(quint32 id)
+    static kv::IMainObject* GetFromIdTable(quint32 id)
     {
         if (static_cast<int>(id) >= id_ptr_id_table->size())
         {

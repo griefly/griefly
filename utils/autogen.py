@@ -31,6 +31,8 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
     for header in header_list:
         print('#include "' + header + '"', file = autogen_file)
     print("", file = autogen_file)
+    print("using namespace kv;", file = autogen_file)
+    print("", file = autogen_file)
     print("std::unordered_map<QString, SettersForType>& GetSettersForTypes()", file = autogen_file)
     print("{", file = autogen_file)
     print("    static std::unordered_map<QString, SettersForType> map;", file = autogen_file)
