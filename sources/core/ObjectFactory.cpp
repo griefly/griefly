@@ -62,7 +62,7 @@ void ObjectFactory::UpdateProcessingItems()
         }
     }
     std::sort(process_table_.begin(), process_table_.end(),
-    [](IdPtr<kv::IMainObject> item1, IdPtr<kv::IMainObject> item2)
+    [](IdPtr<kv::Object> item1, IdPtr<kv::Object> item2)
     {
         return item1.Id() < item2.Id();
     });
@@ -94,7 +94,7 @@ void ObjectFactory::ForeachProcess()
     }
 }
 
-kv::IMainObject* ObjectFactory::NewVoidObject(const QString& type)
+kv::Object* ObjectFactory::NewVoidObject(const QString& type)
 {
     auto creator = GetItemsCreators()->find(type);
     if (creator == GetItemsCreators()->end())
@@ -104,7 +104,7 @@ kv::IMainObject* ObjectFactory::NewVoidObject(const QString& type)
     return creator->second();
 }
 
-kv::IMainObject* ObjectFactory::NewVoidObjectSaved(const QString& type)
+kv::Object* ObjectFactory::NewVoidObjectSaved(const QString& type)
 {
     auto creator = GetVoidItemsCreators()->find(type);
     if (creator == GetVoidItemsCreators()->end())
@@ -162,7 +162,7 @@ void ObjectFactory::MarkWorldAsCreated()
 
 quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
 {
-    kv::IMainObject* item = NewVoidObject(type);
+    kv::Object* item = NewVoidObject(type);
     kv::internal::GetObjectGame(item) = game_;
 
     if (id_ >= objects_table_.size())
@@ -196,9 +196,9 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
     return retval;
 }
 
-kv::IMainObject* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
+kv::Object* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
 {
-    kv::IMainObject* item = NewVoidObjectSaved(hash);
+    kv::Object* item = NewVoidObjectSaved(hash);
     kv::internal::GetObjectGame(item) = game_;
     if (id_new >= objects_table_.size())
     {
@@ -264,7 +264,7 @@ void ObjectFactory::AddProcessingItem(quint32 item)
 
 void ObjectFactory::ClearProcessing()
 {
-    std::vector<IdPtr<kv::IMainObject>> remove_from_process;
+    std::vector<IdPtr<kv::Object>> remove_from_process;
     quint32 table_size = process_table_.size();
     for (quint32 i = 0; i < table_size; ++i)
     {

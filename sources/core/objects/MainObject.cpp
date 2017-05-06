@@ -6,24 +6,24 @@
 
 using namespace kv;
 
-void IMainObject::PlayMusic(const QString& name, float volume)
+void Object::PlayMusic(const QString& name, float volume)
 {
     GetGame().PlayMusic(name, volume);
 }
 
-void IMainObject::Delete()
+void Object::Delete()
 {
     GetGame().GetFactory().DeleteLater(id_);
 }
 
-void IMainObject::Save(FastSerializer& serializer)
+void Object::Save(FastSerializer& serializer)
 {
     serializer.WriteType(GetType());
     serializer << id_;
     serializer << how_often_;
 }
 
-void IMainObject::Load(FastDeserializer& deserializer)
+void Object::Load(FastDeserializer& deserializer)
 {
     // It is mainly empty because all data is loaded by
     // the outer function
@@ -33,7 +33,7 @@ void IMainObject::Load(FastDeserializer& deserializer)
     SetFreq(GetFreq());
 }
 
-void IMainObject::SetFreq(int freq)
+void Object::SetFreq(int freq)
 {
     if (game_ == nullptr)
     {
@@ -54,35 +54,35 @@ void IMainObject::SetFreq(int freq)
     }
 }
 
-const GameInterface& IMainObject::GetGame() const
+const GameInterface& Object::GetGame() const
 {
     if (game_ == nullptr)
     {
-        KvAbort("IMainObject::GetGame() is called during construction of object");
+        KvAbort("Object::GetGame() is called during construction of object");
     }
     return *game_;
 }
 
-ObjectFactoryInterface& IMainObject::GetFactory()
+ObjectFactoryInterface& Object::GetFactory()
 {
     return GetGame().GetFactory();
 }
 
-GameInterface& IMainObject::GetGame()
+GameInterface& Object::GetGame()
 {
     if (game_ == nullptr)
     {
-        KvAbort("IMainObject::GetGame() is called during construction of object");
+        KvAbort("Object::GetGame() is called during construction of object");
     }
     return *game_;
 }
 
-unsigned int IMainObject::GetRand()
+unsigned int Object::GetRand()
 {
     return GetGame().GetRandom().GetRand();
 }
 
-quint32 IMainObject::CreateImpl(const QString& type, quint32 owner)
+quint32 Object::CreateImpl(const QString& type, quint32 owner)
 {
     return GetFactory().CreateImpl(type, owner);
 }

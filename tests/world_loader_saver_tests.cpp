@@ -156,7 +156,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 
         {
             ASSERT_GE(factory.GetIdTable().size(), 2);
-            kv::IMainObject* object = factory.GetIdTable()[1].object;
+            kv::Object* object = factory.GetIdTable()[1].object;
             ASSERT_TRUE(object);
             ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
             TestMainObject* test_object = static_cast<TestMainObject*>(object);
@@ -164,7 +164,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         }
         {
             ASSERT_GE(factory.GetIdTable().size(), 3);
-            kv::IMainObject* object = factory.GetIdTable()[2].object;
+            kv::Object* object = factory.GetIdTable()[2].object;
             ASSERT_TRUE(object);
             ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
             TestMainObject* test_object = static_cast<TestMainObject*>(object);

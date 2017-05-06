@@ -2,10 +2,10 @@
 
 #include "MainObject.h"
 
-class IDraw : public kv::IMainObject
+class IDraw : public kv::Object
 {
 public:
-    DECLARE_SAVED(IDraw, IMainObject);
+    DECLARE_SAVED(IDraw, Object);
     DECLARE_GET_TYPE_ITEM(IDraw)
     IDraw();
     virtual void Represent() {}

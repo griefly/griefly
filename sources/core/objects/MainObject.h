@@ -20,18 +20,18 @@ namespace kv
 {
 namespace internal
 {
-    GameInterface*& GetObjectGame(IMainObject* object);
-    quint32& GetObjectId(IMainObject* object);
-    quint32 CreateImpl(IMainObject* object, const QString& type, quint32 owner = 0);
+    GameInterface*& GetObjectGame(Object* object);
+    quint32& GetObjectId(Object* object);
+    quint32 CreateImpl(Object* object, const QString& type, quint32 owner = 0);
 }
 
-class IMainObject
+class Object
 {
-    friend GameInterface*& internal::GetObjectGame(IMainObject* object);
-    friend quint32& internal::GetObjectId(IMainObject* object);
-    friend quint32 internal::CreateImpl(IMainObject* object, const QString& type, quint32 owner);
+    friend GameInterface*& internal::GetObjectGame(Object* object);
+    friend quint32& internal::GetObjectId(Object* object);
+    friend quint32 internal::CreateImpl(Object* object, const QString& type, quint32 owner);
 public:
-    virtual ~IMainObject() { }
+    virtual ~Object() { }
 
     void PlayMusic(const QString& name, float volume = 100.0f);
 
@@ -47,8 +47,8 @@ public:
     }
 
     virtual void Delete();
-    IMainObject() { id_ = 0; how_often_ = 0; game_ = nullptr; }
-    IMainObject(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
+    Object() { id_ = 0; how_often_ = 0; game_ = nullptr; }
+    Object(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
     virtual const QString& GetType() const
     {
@@ -65,8 +65,8 @@ public:
         return TYPE_INDEX;
     }
 
-    static IMainObject* _Z_creator() { return new IMainObject(); }
-    static IMainObject* _Z_creatorSaved() { return new IMainObject(nouse);}
+    static Object* _Z_creator() { return new Object(); }
+    static Object* _Z_creatorSaved() { return new Object(nouse);}
 
     virtual void Process() { }
 
@@ -97,19 +97,19 @@ private:
     quint32 id_;
     int how_often_;
 };
-ADD_TO_TYPELIST(IMainObject);
+ADD_TO_TYPELIST(Object);
 
 namespace internal
 {
-    inline GameInterface*& GetObjectGame(IMainObject* object)
+    inline GameInterface*& GetObjectGame(Object* object)
     {
         return object->game_;
     }
-    inline quint32& GetObjectId(IMainObject* object)
+    inline quint32& GetObjectId(Object* object)
     {
         return object->id_;
     }
-    inline quint32 CreateImpl(IMainObject* object, const QString& type, quint32 owner)
+    inline quint32 CreateImpl(Object* object, const QString& type, quint32 owner)
     {
         return object->CreateImpl(type, owner);
     }

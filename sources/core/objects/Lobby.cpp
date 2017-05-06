@@ -18,7 +18,7 @@ Lobby::Lobby()
 
 void Lobby::AfterWorldCreation()
 {
-    IMainObject::AfterWorldCreation();
+    Object::AfterWorldCreation();
     SetFreq(10);
     SetThisAsLobby();
 }

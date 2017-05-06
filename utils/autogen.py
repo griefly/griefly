@@ -39,8 +39,8 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
     print("    return map;", file = autogen_file)
     print("}", file = autogen_file)
     print("", file = autogen_file)
-    print("int IMainObject::TYPE_INDEX;", file = autogen_file)
-    print("const QString& IMainObject::GetTypeStatic()", file = autogen_file)
+    print("int Object::TYPE_INDEX;", file = autogen_file)
+    print("const QString& Object::GetTypeStatic()", file = autogen_file)
     print("{", file = autogen_file)
     print('    static const QString type = "main";', file = autogen_file)
     print("    return type;", file = autogen_file)
@@ -56,7 +56,7 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
         print("", file = autogen_file)
     print("void InitRealTypes()", file = autogen_file)
     print("{", file = autogen_file)
-    print("    IMainObject::TYPE_INDEX = 0;", file = autogen_file)
+    print("    Object::TYPE_INDEX = 0;", file = autogen_file)
     for class_data in metadata["classes"]:
         index = str(metadata["classes"].index(class_data) + 1)
         print("    " + class_data["class"] + "::TYPE_INDEX = " + index + ";", file = autogen_file)
@@ -64,8 +64,8 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
     print("", file = autogen_file)
     print("void InitCreators()", file = autogen_file)
     print("{", file = autogen_file)
-    print("    (*GetItemsCreators())[IMainObject::GetTypeStatic()] = &IMainObject::_Z_creator;", file = autogen_file)
-    print("    (*GetVoidItemsCreators())[IMainObject::GetTypeStatic()] = &IMainObject::_Z_creatorSaved;", file = autogen_file)
+    print("    (*GetItemsCreators())[Object::GetTypeStatic()] = &Object::_Z_creator;", file = autogen_file)
+    print("    (*GetVoidItemsCreators())[Object::GetTypeStatic()] = &Object::_Z_creatorSaved;", file = autogen_file)
     for class_data in metadata["classes"]:
         class_name = class_data["class"]
         print("    (*GetItemsCreators())[" + class_name + "::GetTypeStatic()] = &" + class_name + "::_Z_creator;", file = autogen_file)

@@ -9,7 +9,7 @@
 
 namespace kv
 {
-    class IMainObject;
+    class Object;
 }
 
 extern QVector<QBitArray>* cast_table;
@@ -36,7 +36,7 @@ inline Typeto* CastTo(TypeObjectFrom* ptr)
     }
     if (FastIsType<Typeto>(ptr->GetTypeIndex()))
     {
-        return static_cast<Typeto*>(static_cast<kv::IMainObject*>(ptr));
+        return static_cast<Typeto*>(static_cast<kv::Object*>(ptr));
     }
     return nullptr;
 }

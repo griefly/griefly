@@ -2,10 +2,10 @@
 
 #include "../MainObject.h"
 
-class UnsyncGenerator : public kv::IMainObject
+class UnsyncGenerator : public kv::Object
 {
 public:
-    DECLARE_SAVED(UnsyncGenerator, IMainObject);
+    DECLARE_SAVED(UnsyncGenerator, Object);
     DECLARE_GET_TYPE_ITEM(UnsyncGenerator)
     UnsyncGenerator();
     void PerformUnsync();

@@ -11,35 +11,35 @@ using namespace kv;
 
 TEST(MainObject, Constructor)
 {
-    IMainObject object;
+    Object object;
     ASSERT_EQ(object.GetId(), 0);
     ASSERT_EQ(object.GetFreq(), 0);
 
-    IMainObject object2(/*NotLoadItem*/nouse);
+    Object object2(/*NotLoadItem*/nouse);
     ASSERT_EQ(object2.GetId(), 0);
     ASSERT_EQ(object2.GetFreq(), 0);
 }
 
 TEST(MainObject, Types)
 {
-   ASSERT_EQ(IMainObject::GetTypeStatic(), "main");
-   IMainObject object;
+   ASSERT_EQ(Object::GetTypeStatic(), "main");
+   Object object;
    ASSERT_EQ(object.GetType(), "main");
 
    ASSERT_EQ(object.GetTypeIndex(), 0);
-   ASSERT_EQ(IMainObject::GetTypeIndexStatic(), 0);
+   ASSERT_EQ(Object::GetTypeIndexStatic(), 0);
 }
 
 TEST(MainObject, Hash)
 {
-    IMainObject object;
+    Object object;
     ASSERT_EQ(object.Hash(), 0);
 }
 
 TEST(MainObject, EmptyFunctions)
 {
     // They just should not crash the game
-    IMainObject object;
+    Object object;
     object.AfterWorldCreation();
     object.Process();
 }
@@ -47,7 +47,7 @@ TEST(MainObject, EmptyFunctions)
 TEST(MainObject, Save)
 {
     {
-        IMainObject object;
+        Object object;
         kv::internal::GetObjectId(&object) = 42;
         FastSerializer save(1);
         object.Save(save);
@@ -69,7 +69,7 @@ TEST(MainObject, Save)
         EXPECT_CALL(factory, AddProcessingItem(42))
             .WillOnce(Return());
 
-        IMainObject object;
+        Object object;
         kv::internal::GetObjectId(&object) = 42;
         kv::internal::GetObjectGame(&object) = &game;
         FastDeserializer save("\x02\x08\x00\x00\x00", 5);
@@ -81,29 +81,29 @@ TEST(MainObject, Save)
 TEST(MainObjectDeathTest, Deaths)
 {
     {
-        IMainObject object;
+        Object object;
         ASSERT_DEATH(
         {
             object.GetGame();
-        }, "IMainObject::GetGame\\(\\) is called during construction of object");
+        }, "Object::GetGame\\(\\) is called during construction of object");
     }
     {
-        IMainObject object;
-        const IMainObject* ptr = &object;
+        Object object;
+        const Object* ptr = &object;
         ASSERT_DEATH(
         {
             ptr->GetGame();
-        }, "IMainObject::GetGame\\(\\) is called during construction of object");
+        }, "Object::GetGame\\(\\) is called during construction of object");
     }
     {
-        IMainObject object;
+        Object object;
         ASSERT_DEATH(
         {
             object.SetFreq(0);
         }, "SetFreq is called in constructor");
     }
     {
-        IMainObject object;
+        Object object;
         MockIGame game;
         kv::internal::GetObjectGame(&object) = &game;
         ASSERT_DEATH(
@@ -119,13 +119,13 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         MockIGame game;
         MockIObjectFactory factory;
 
-        IMainObject object;
+        Object object;
         kv::internal::GetObjectId(&object) = 43;
         kv::internal::GetObjectGame(&object) = &game;
         GameInterface* interface_game = &object.GetGame();
         ASSERT_EQ(interface_game, &game);
 
-        const IMainObject& object_const_ref = object;
+        const Object& object_const_ref = object;
         ASSERT_EQ(&object_const_ref.GetGame(), &game);
 
         EXPECT_CALL(game, GetFactory())
@@ -144,7 +144,7 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
 
-        IMainObject object;
+        Object object;
         kv::internal::GetObjectId(&object) = 43;
         kv::internal::GetObjectGame(&object) = &game;
         ASSERT_EQ(object.GetFreq(), 0);
@@ -161,7 +161,7 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         EXPECT_CALL(factory, CreateImpl(QString("type"), 42))
             .WillOnce(Return(111));
 
-        IMainObject object;
+        Object object;
         kv::internal::GetObjectId(&object) = 43;
         kv::internal::GetObjectGame(&object) = &game;
         ASSERT_EQ(kv::internal::CreateImpl(&object, "type", 42), 111);
@@ -175,7 +175,7 @@ TEST(MainObject, Delete)
     EXPECT_CALL(game, GetFactory())
         .WillRepeatedly(ReturnRef(factory));
 
-    IMainObject object;
+    Object object;
     kv::internal::GetObjectId(&object) = 43;
     kv::internal::GetObjectGame(&object) = &game;
 

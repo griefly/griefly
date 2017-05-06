@@ -12,8 +12,8 @@ struct FakeParamClass {};
 #define DECLARE_SAVED(thisclass, masterclass)  \
     friend void InitSettersForTypes();\
     using ThisClassType = thisclass; \
-    static IMainObject* _Z_creator() { return new ThisClassType(); }\
-    static IMainObject* _Z_creatorSaved() { return new ThisClassType(nouse);} \
+    static kv::Object* _Z_creator() { return new ThisClassType(); }\
+    static kv::Object* _Z_creatorSaved() { return new ThisClassType(nouse);} \
     void _Z_checker()\
     {\
         static_assert(\
@@ -27,7 +27,7 @@ struct FakeParamClass {};
 
 #define KV_SAVEBLE(name) \
     name; \
-    inline static void _Z_KV_SETTERS##name (IMainObject* ptr, FastDeserializer& str) \
+    inline static void _Z_KV_SETTERS##name (kv::Object* ptr, FastDeserializer& str) \
     { \
         ThisClassType* casted = static_cast<ThisClassType*>(ptr); \
         WrapReadMessage(str, casted->name); \

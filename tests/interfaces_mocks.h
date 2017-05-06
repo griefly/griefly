@@ -47,7 +47,7 @@ public:
     MOCK_METHOD0(FinishWorldCreation, void());
     MOCK_METHOD0(MarkWorldAsCreated, void());
     MOCK_METHOD2(CreateImpl, quint32(const QString&, quint32));
-    MOCK_METHOD2(CreateVoid, kv::IMainObject*(const QString& hash, quint32 id_new));
+    MOCK_METHOD2(CreateVoid, kv::Object*(const QString& hash, quint32 id_new));
     MOCK_METHOD1(DeleteLater, void(quint32 id));
     MOCK_METHOD0(ProcessDeletion, void());
     MOCK_METHOD1(AddProcessingItem, void(quint32 item));

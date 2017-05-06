@@ -12,7 +12,7 @@
 
 namespace kv
 {
-    class IMainObject;
+    class Object;
 }
 
 struct ObjectInfo
@@ -22,7 +22,7 @@ struct ObjectInfo
     {
         // Nothing
     }
-    kv::IMainObject* object;
+    kv::Object* object;
 };
 
 extern QVector<ObjectInfo>* id_ptr_id_table;
@@ -30,7 +30,7 @@ extern QVector<ObjectInfo>* id_ptr_id_table;
 struct IdPtrBase
 {
 protected:
-    mutable kv::IMainObject* casted_;
+    mutable kv::Object* casted_;
     quint32 id_;
 };
 
@@ -171,7 +171,7 @@ private:
             return;
         }
 
-        kv::IMainObject* local = GetFromIdTable(id_);
+        kv::Object* local = GetFromIdTable(id_);
         if (local == nullptr)
         {
             casted_ = nullptr;
@@ -188,7 +188,7 @@ private:
         }
     }
 
-    static kv::IMainObject* GetFromIdTable(quint32 id)
+    static kv::Object* GetFromIdTable(quint32 id)
     {
         if (static_cast<int>(id) >= id_ptr_id_table->size())
         {

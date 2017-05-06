@@ -58,12 +58,12 @@ TEST(ObjectFactory, CreateImpl)
     MockIAtmosphere atmos;
     ObjectFactory factory(&game);
     {
-        quint32 id = factory.CreateImpl(kv::IMainObject::GetTypeStatic());
+        quint32 id = factory.CreateImpl(kv::Object::GetTypeStatic());
         EXPECT_EQ(id, 1);
 
         ASSERT_GT(factory.GetIdTable().size(), 2);
-        kv::IMainObject* object = factory.GetIdTable()[1].object;
-        EXPECT_EQ(object->GetType(), kv::IMainObject::GetTypeStatic());
+        kv::Object* object = factory.GetIdTable()[1].object;
+        EXPECT_EQ(object->GetType(), kv::Object::GetTypeStatic());
         EXPECT_EQ(object->GetId(), 1);
     }
     {
@@ -71,7 +71,7 @@ TEST(ObjectFactory, CreateImpl)
         EXPECT_EQ(id, 2);
 
         ASSERT_GT(factory.GetIdTable().size(), 3);
-        kv::IMainObject* object = factory.GetIdTable()[2].object;
+        kv::Object* object = factory.GetIdTable()[2].object;
         EXPECT_EQ(object->GetType(), UnsyncGenerator::GetTypeStatic());
         EXPECT_EQ(object->GetId(), 2);
     }
@@ -80,7 +80,7 @@ TEST(ObjectFactory, CreateImpl)
         EXPECT_EQ(id, 3);
 
         ASSERT_GT(factory.GetIdTable().size(), 4);
-        kv::IMainObject* object = factory.GetIdTable()[3].object;
+        kv::Object* object = factory.GetIdTable()[3].object;
         ASSERT_EQ(object->GetType(), CubeTile::GetTypeStatic());
         EXPECT_EQ(object->GetId(), 3);
         CubeTile* tile = static_cast<CubeTile*>(object);
@@ -93,7 +93,7 @@ TEST(ObjectFactory, CreateImpl)
         EXPECT_EQ(id2, 4);
         {
             ASSERT_GT(factory.GetIdTable().size(), 5);
-            kv::IMainObject* object = factory.GetIdTable()[4].object;
+            kv::Object* object = factory.GetIdTable()[4].object;
             ASSERT_EQ(object->GetType(), IOnMapObject::GetTypeStatic());
             EXPECT_EQ(object->GetId(), 4);
             IOnMapObject* on_map_object = static_cast<IOnMapObject*>(object);
@@ -107,7 +107,7 @@ TEST(ObjectFactory, CreateImpl)
         EXPECT_EQ(id3, 5);
         {
             ASSERT_GT(factory.GetIdTable().size(), 6);
-            kv::IMainObject* object = factory.GetIdTable()[5].object;
+            kv::Object* object = factory.GetIdTable()[5].object;
             ASSERT_EQ(object->GetType(), ITurf::GetTypeStatic());
             EXPECT_EQ(object->GetId(), 5);
             ITurf* turf = static_cast<ITurf*>(object);
@@ -123,7 +123,7 @@ TEST(ObjectFactory, CreateImplResizeTable)
 
     for (int i = 1; i < 1000; ++i)
     {
-        quint32 id = factory.CreateImpl(kv::IMainObject::GetTypeStatic());
+        quint32 id = factory.CreateImpl(kv::Object::GetTypeStatic());
         EXPECT_EQ(id, i);
     }
 }
@@ -140,7 +140,7 @@ TEST(ObjectFactory, AfterWorldCreation)
         ASSERT_EQ(id, 1);
 
         ASSERT_GT(factory.GetIdTable().size(), 2);
-        kv::IMainObject* object = factory.GetIdTable()[1].object;
+        kv::Object* object = factory.GetIdTable()[1].object;
         ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
 
         TestMainObject* test_object = static_cast<TestMainObject*>(object);
@@ -154,7 +154,7 @@ TEST(ObjectFactory, AfterWorldCreation)
         ASSERT_EQ(id, 2);
 
         ASSERT_GT(factory.GetIdTable().size(), 3);
-        kv::IMainObject* object = factory.GetIdTable()[2].object;
+        kv::Object* object = factory.GetIdTable()[2].object;
         ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
 
         TestMainObject* test_object = static_cast<TestMainObject*>(object);
@@ -172,7 +172,7 @@ TEST(ObjectFactory, Process)
         quint32 id = factory.CreateImpl(TestMainObject::GetTypeStatic());
         ASSERT_EQ(id, 1);
         ASSERT_GT(factory.GetIdTable().size(), 2);
-        kv::IMainObject* object = factory.GetIdTable()[1].object;
+        kv::Object* object = factory.GetIdTable()[1].object;
         ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
 
         TestMainObject* test_object = static_cast<TestMainObject*>(object);
@@ -223,7 +223,7 @@ TEST(ObjectFactory, Process)
         quint32 id2 = factory.CreateImpl(TestMainObject::GetTypeStatic());
         ASSERT_EQ(id2, 2);
         ASSERT_GT(factory.GetIdTable().size(), 3);
-        kv::IMainObject* object2 = factory.GetIdTable()[2].object;
+        kv::Object* object2 = factory.GetIdTable()[2].object;
         ASSERT_EQ(object2->GetType(), TestMainObject::GetTypeStatic());
 
         TestMainObject* test_object2 = static_cast<TestMainObject*>(object2);
@@ -277,7 +277,7 @@ TEST(ObjectFactory, DeleteLater)
         quint32 id = factory.CreateImpl(TestMainObject::GetTypeStatic());
         ASSERT_EQ(id, 1);
         ASSERT_GT(factory.GetIdTable().size(), 2);
-        kv::IMainObject* object = factory.GetIdTable()[1].object;
+        kv::Object* object = factory.GetIdTable()[1].object;
         ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
 
         TestMainObject* test_object = static_cast<TestMainObject*>(object);
@@ -319,7 +319,7 @@ TEST(ObjectFactory, Hash)
         quint32 id = factory.CreateImpl(TestMainObject::GetTypeStatic());
         ASSERT_EQ(id, 1);
         ASSERT_GT(factory.GetIdTable().size(), 2);
-        kv::IMainObject* object = factory.GetIdTable()[1].object;
+        kv::Object* object = factory.GetIdTable()[1].object;
         ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
 
         test_object = static_cast<TestMainObject*>(object);

@@ -62,7 +62,7 @@ void WorldLoaderSaver::Load(FastDeserializer& deserializer, quint32 real_this_mo
         quint32 id_loc;
         deserializer >> id_loc;
 
-        kv::IMainObject* object = factory.CreateVoid(type, id_loc);
+        kv::Object* object = factory.CreateVoid(type, id_loc);
         object->Load(deserializer);
     }
 

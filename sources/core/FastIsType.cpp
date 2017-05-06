@@ -58,7 +58,7 @@ private:
         }
 
         QString base_name = GetBaseNameOfClass(class_num);
-        if (base_name == "IMainObject")
+        if (base_name == "Object")
         {
             return false;
         }

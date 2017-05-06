@@ -13,7 +13,7 @@ class IMob;
 class TextPainter;
 namespace kv
 {
-    class IMainObject;
+    class Object;
 }
 class CubeTile;
 class IOnMapBase;
@@ -73,7 +73,7 @@ public:
     virtual void MarkWorldAsCreated() = 0;
 
     virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) = 0;
-    virtual kv::IMainObject* CreateVoid(const QString& hash, quint32 id_new) = 0;
+    virtual kv::Object* CreateVoid(const QString& hash, quint32 id_new) = 0;
 
     virtual void DeleteLater(quint32 id) = 0;
     virtual void ProcessDeletion() = 0;

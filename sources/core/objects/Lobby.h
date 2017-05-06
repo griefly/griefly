@@ -4,10 +4,10 @@
 #include "SpawnPoints.h"
 #include "Tile.h"
 
-class Lobby : public kv::IMainObject
+class Lobby : public kv::Object
 {
 public:
-    DECLARE_SAVED(Lobby, IMainObject);
+    DECLARE_SAVED(Lobby, Object);
     DECLARE_GET_TYPE_ITEM(Lobby)
     Lobby();
     virtual void AfterWorldCreation() override;
