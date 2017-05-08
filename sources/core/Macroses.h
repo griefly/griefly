@@ -10,7 +10,7 @@ template<int>
 struct FakeParamClass {};
 
 #define DECLARE_SAVED(thisclass, masterclass)  \
-    friend void InitSettersForTypes();\
+    friend void ::InitSettersForTypes();\
     using ThisClassType = thisclass; \
     static kv::Object* _Z_creator() { return new ThisClassType(); }\
     static kv::Object* _Z_creatorSaved() { return new ThisClassType(nouse);} \

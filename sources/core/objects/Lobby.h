@@ -4,7 +4,10 @@
 #include "SpawnPoints.h"
 #include "Tile.h"
 
-class Lobby : public kv::Object
+namespace kv
+{
+
+class Lobby : public Object
 {
 public:
     DECLARE_SAVED(Lobby, Object);
@@ -28,3 +31,5 @@ ADD_TO_TYPELIST(Lobby);
 
 void SetLobby(Lobby* lobby);
 Lobby& GetLobby();
+
+}

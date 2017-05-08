@@ -1,12 +1,14 @@
 #include "Lobby.h"
 
+using namespace kv;
+
 Lobby* single_lobby = nullptr;
-void SetLobby(Lobby* lobby)
+void kv::SetLobby(Lobby* lobby)
 {
     single_lobby = lobby;
 }
 
-Lobby& GetLobby()
+Lobby& kv::GetLobby()
 {
     return *single_lobby;
 }

@@ -87,6 +87,9 @@ print('AutogenMetadata.cpp file has been generated')
 with open("AutogenSerialization.cpp", "w") as autogen_file:
     for header in header_list:
         print('#include "' + header + '"', file = autogen_file)
+    print("", file = autogen_file)
+    print("using namespace kv;", file = autogen_file)
+    print("", file = autogen_file)
     for class_data in metadata["classes"]:
         print("", file = autogen_file)
         print("void " + class_data["class"] + "::Save(FastSerializer& file) ", file = autogen_file)
