@@ -8,7 +8,10 @@ class ITurf;
 class IMovable;
 class Item;
 
-typedef int PassableLevel;
+namespace kv
+{
+
+using PassableLevel = int;
 namespace Passable
 {
     const PassableLevel EMPTY = 0;
@@ -25,16 +28,12 @@ inline bool CanPass(PassableLevel block, PassableLevel object)
     return block >= object;
 }
 
-class IOnMapBase: public IDraw
+class IOnMapBase : public IDraw
 {
 public:
     DECLARE_SAVED(IOnMapBase, IDraw);
     DECLARE_GET_TYPE_ITEM(IOnMapBase);
     IOnMapBase() { owner = 0; }
-    virtual bool IsVisibleByPlayer() const
-    {
-        return true;
-    }
     virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
     {
         return;
@@ -149,3 +148,5 @@ protected:
     virtual quint32 GetItemImpl(unsigned int hash) { return 0; }
 };
 ADD_TO_TYPELIST(IOnMapBase);
+
+}

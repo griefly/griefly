@@ -8,7 +8,7 @@ namespace Friction
     const int BASE_FRICTION = 100;
 }
 
-class ITurf : public IOnMapObject
+class ITurf : public kv::IOnMapObject
 {
 public:
     DECLARE_SAVED(ITurf, IOnMapObject);

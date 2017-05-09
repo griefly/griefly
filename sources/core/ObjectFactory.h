@@ -5,8 +5,6 @@
 #include "Idptr.h"
 #include "objects/OnMapObject.h"
 
-class IOnMapBase;
-
 class ObjectFactory : public ObjectFactoryInterface
 {
 public:

@@ -69,7 +69,7 @@ void Chat::PostWords(const QString& who, const QString& text, quint32 tile_id)
         QString("<b>%1</b> <i>says</i>, <span>\"%2\"</span>").arg(q_who).arg(q_text));
 }
 
-void Chat::PostTextFor(const QString& str, IdPtr<IOnMapBase> owner)
+void Chat::PostTextFor(const QString& str, IdPtr<kv::IOnMapBase> owner)
 {
     if (game_->GetMob() == owner)
     {
@@ -77,7 +77,7 @@ void Chat::PostTextFor(const QString& str, IdPtr<IOnMapBase> owner)
     }
 }
 
-void Chat::PostHtmlFor(const QString& str, IdPtr<IOnMapBase> owner)
+void Chat::PostHtmlFor(const QString& str, IdPtr<kv::IOnMapBase> owner)
 {
     if (game_->GetMob() == owner)
     {

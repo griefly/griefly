@@ -31,10 +31,10 @@ namespace HumanInterfacePlaces
 
 class Human;
 
-class HumanInterface: public InterfaceBase
+class HumanInterface : public InterfaceBase
 {
 public:
-    void SetOwner(IdPtr<IOnMapObject> owner)
+    void SetOwner(IdPtr<kv::IOnMapObject> owner)
     {
         owner_ = owner;
     }

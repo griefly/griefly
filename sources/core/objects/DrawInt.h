@@ -2,7 +2,10 @@
 
 #include "MainObject.h"
 
-class IDraw : public kv::Object
+namespace kv
+{
+
+class IDraw : public Object
 {
 public:
     DECLARE_SAVED(IDraw, Object);
@@ -10,5 +13,6 @@ public:
     IDraw();
     virtual void Represent() {}
 };
-
 ADD_TO_TYPELIST(IDraw);
+
+}

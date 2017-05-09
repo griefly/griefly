@@ -6,6 +6,8 @@
 
 #include "ElectricTools.h"
 
+using namespace kv;
+
 namespace
 {
     const int O2_TANK_AMOUNT = 10000;

@@ -1,5 +1,7 @@
 #include "Computers.h"
 
+using namespace kv;
+
 Computer::Computer()
 {
     transparent = true;

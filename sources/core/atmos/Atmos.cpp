@@ -11,6 +11,8 @@
 
 #include "representation/Text.h"
 
+using namespace kv;
+
 Atmosphere::Atmosphere(TextPainter *texts)
     : map_(nullptr),
       texts_(texts)

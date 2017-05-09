@@ -2,7 +2,7 @@
 
 #include "OnMapObject.h"
 
-class WallSign: public IOnMapObject
+class WallSign : public kv::IOnMapObject
 {
 public:
     DECLARE_SAVED(WallSign, IOnMapObject);

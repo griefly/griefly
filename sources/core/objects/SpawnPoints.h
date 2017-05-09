@@ -2,7 +2,7 @@
 
 #include "OnMapObject.h"
 
-class SpawnPoint: public IOnMapObject
+class SpawnPoint : public kv::IOnMapObject
 {
 public:
     DECLARE_SAVED(SpawnPoint, IOnMapObject);

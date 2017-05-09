@@ -8,6 +8,8 @@
 #include "../Game.h"
 #include "Materials.h"
 
+using namespace kv;
+
 Grille::Grille()
 {
     transparent = true;

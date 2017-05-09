@@ -14,11 +14,13 @@
 #include <gtest/gtest.h>
 #endif // _BUILD_TESTS
 
-class IOnMapBase;
 void InitSettersForTypes();
 
 namespace kv
 {
+
+class IOnMapBase;
+
 namespace internal
 {
     GameInterface*& GetObjectGame(Object* object);

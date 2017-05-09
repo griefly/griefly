@@ -17,6 +17,8 @@
 
 const char* LOGIN_CLICK = "login_click";
 
+using namespace kv;
+
 LoginMob::LoginMob()
 {
     name = "LobbyPlayer";
@@ -43,14 +45,14 @@ void LoginMob::InitGUI()
     GetGame().GetTexts()["LoginScreenCount"].SetUpdater
     ([this](QString* str)
     {
-        if (kv::GetLobby().GetSecondUntilStart() < 0)
+        if (GetLobby().GetSecondUntilStart() < 0)
         {
             *str = "Round is in process, click on the screen";
             return;
         }
         else
         {
-            *str = QString::number(kv::GetLobby().GetSecondUntilStart());
+            *str = QString::number(GetLobby().GetSecondUntilStart());
         }
         *str = "Until start: " + *str;
     });
@@ -83,7 +85,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
     if (    msg.type == MessageType::ORDINARY
          && Network2::IsKey(obj, LOGIN_CLICK))
     {
-        if (kv::GetLobby().GetSecondUntilStart() > 0)
+        if (GetLobby().GetSecondUntilStart() > 0)
         {
             return;
         }
@@ -102,27 +104,27 @@ void LoginMob::ProcessMessage(const Message2& msg)
             {
             case 0:
                 professions::ToSecurityOfficer(human);
-                tiles = kv::GetLobby().GetTilesFor("security");
+                tiles = GetLobby().GetTilesFor("security");
                 text = GENERIC_TEXT.arg("security officer");
                 break;
             case 1:
                 professions::ToDoctor(human);
-                tiles = kv::GetLobby().GetTilesFor("doctor");
+                tiles = GetLobby().GetTilesFor("doctor");
                 text = GENERIC_TEXT.arg("doctor");
                 break;
             case 2:
                 professions::ToAssistant(human);
-                tiles = kv::GetLobby().GetTilesFor("assistant");
+                tiles = GetLobby().GetTilesFor("assistant");
                 text = GENERIC_TEXT.arg("assistant");
                 break;
             case 3:
                 professions::ToClown(human);
-                tiles = kv::GetLobby().GetTilesFor("clown");
+                tiles = GetLobby().GetTilesFor("clown");
                 text = GENERIC_TEXT.arg("clown");
                 break;
             case 4:
                 professions::ToBarman(human);
-                tiles = kv::GetLobby().GetTilesFor("barman");
+                tiles = GetLobby().GetTilesFor("barman");
                 text = GENERIC_TEXT.arg("barman");
                 break;
             default:

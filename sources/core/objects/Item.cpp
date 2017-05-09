@@ -5,6 +5,8 @@
 
 #include "../Game.h"
 
+using namespace kv;
+
 Item::Item()
 {
     passable_level = Passable::SMALL_ITEM;

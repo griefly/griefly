@@ -12,6 +12,8 @@
 
 #include "Human.h"
 
+using namespace kv;
+
 Ghost::Ghost()
 {
     tick_speed_ = 1;

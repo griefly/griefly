@@ -58,8 +58,8 @@ public:
 
 class MockIChat : public ChatInterface {
 public:
-    MOCK_METHOD2(PostTextFor, void(const QString& str, IdPtr<IOnMapBase> owner));
-    MOCK_METHOD2(PostHtmlFor, void(const QString& str, IdPtr<IOnMapBase> owner));
+    MOCK_METHOD2(PostTextFor, void(const QString& str, IdPtr<kv::IOnMapBase> owner));
+    MOCK_METHOD2(PostHtmlFor, void(const QString& str, IdPtr<kv::IOnMapBase> owner));
     MOCK_METHOD1(PostText, void(const QString& str));
     MOCK_METHOD2(PostOOCText, void(const QString& who, const QString& str));
     MOCK_METHOD2(PostSimpleText, void(const QString& str, quint32 tile_id));

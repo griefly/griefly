@@ -6,6 +6,8 @@
 #include "Breakable.h"
 #include "Shard.h"
 
+using namespace kv;
+
 FlatGlass::FlatGlass()
 {
     transparent = true;

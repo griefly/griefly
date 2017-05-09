@@ -3,7 +3,7 @@
 #include "OnMapObject.h"
 #include "Movable.h"
 
-class Door : public IOnMapObject
+class Door : public kv::IOnMapObject
 {
 public:
     DECLARE_SAVED(Door, IOnMapObject);

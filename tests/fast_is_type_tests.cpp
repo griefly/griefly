@@ -8,9 +8,11 @@
 #include "core/objects/test/UnsyncGenerator.h"
 #include "core/objects/DrawInt.h"
 
+using namespace kv;
+
 TEST(FastIsType, TwoArgs)
 {
-    int main_type = kv::Object::GetTypeIndexStatic();
+    int main_type = Object::GetTypeIndexStatic();
     int unsync_type = UnsyncGenerator::GetTypeIndexStatic();
     int draw_type = IDraw::GetTypeIndexStatic();
 
@@ -28,15 +30,15 @@ TEST(FastIsType, TwoArgs)
 
 TEST(FastIsType, OneArg)
 {
-    int main_type = kv::Object::GetTypeIndexStatic();
+    int main_type = Object::GetTypeIndexStatic();
     int unsync_type = UnsyncGenerator::GetTypeIndexStatic();
     int draw_type = IDraw::GetTypeIndexStatic();
 
-    ASSERT_TRUE(FastIsType<kv::Object>(main_type));
-    ASSERT_TRUE(FastIsType<kv::Object>(unsync_type));
+    ASSERT_TRUE(FastIsType<Object>(main_type));
+    ASSERT_TRUE(FastIsType<Object>(unsync_type));
     ASSERT_TRUE(FastIsType<UnsyncGenerator>(unsync_type));
     ASSERT_TRUE(FastIsType<IDraw>(draw_type));
-    ASSERT_TRUE(FastIsType<kv::Object>(draw_type));
+    ASSERT_TRUE(FastIsType<Object>(draw_type));
 
     ASSERT_FALSE(FastIsType<UnsyncGenerator>(main_type));
     ASSERT_FALSE(FastIsType<UnsyncGenerator>(draw_type));
@@ -52,13 +54,13 @@ TEST(FastIsType, CastTo)
 
     IDraw* null_type = nullptr;
 
-    ASSERT_FALSE(CastTo<kv::Object>(null_type));
+    ASSERT_FALSE(CastTo<Object>(null_type));
 
-    ASSERT_TRUE(CastTo<kv::Object>(&main_type));
-    ASSERT_TRUE(CastTo<kv::Object>(&unsync_type));
+    ASSERT_TRUE(CastTo<Object>(&main_type));
+    ASSERT_TRUE(CastTo<Object>(&unsync_type));
     ASSERT_TRUE(CastTo<UnsyncGenerator>(&unsync_type));
     ASSERT_TRUE(CastTo<IDraw>(&draw_type));
-    ASSERT_TRUE(CastTo<kv::Object>(&draw_type));
+    ASSERT_TRUE(CastTo<Object>(&draw_type));
 
     ASSERT_FALSE(CastTo<UnsyncGenerator>(&main_type));
     ASSERT_FALSE(CastTo<UnsyncGenerator>(&draw_type));

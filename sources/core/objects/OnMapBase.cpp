@@ -4,6 +4,8 @@
 #include "Item.h"
 #include "../ObjectFactory.h"
 
+using namespace kv;
+
 IdPtr<ITurf> IOnMapBase::GetTurf()
 {
     if (owner.IsValid())

@@ -1,6 +1,8 @@
 #include "Projectiles.h"
 #include "../Helpers.h"
 
+using namespace kv;
+
 FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& s)
 {
     file << static_cast<quint32>(s.size());

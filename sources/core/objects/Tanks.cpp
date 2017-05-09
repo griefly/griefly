@@ -3,6 +3,8 @@
 #include "Weldingtool.h"
 #include "representation/Sound.h"
 
+using namespace kv;
+
 FuelTank::FuelTank()
 {
     name = "Fueltank";

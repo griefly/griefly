@@ -17,6 +17,8 @@
 using ::testing::ReturnRef;
 using ::testing::Return;
 
+using namespace kv;
+
 TEST(ObjectFactory, Constructor)
 {
     MockIGame game;

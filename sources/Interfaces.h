@@ -13,10 +13,10 @@ class IMob;
 class TextPainter;
 namespace kv
 {
+    class IOnMapBase;
     class Object;
 }
 class CubeTile;
-class IOnMapBase;
 class MapInterface;
 
 class AtmosInterface
@@ -91,8 +91,8 @@ class ChatInterface
 public:
     virtual ~ChatInterface() { }
 
-    virtual void PostTextFor(const QString& str, IdPtr<IOnMapBase> owner) = 0;
-    virtual void PostHtmlFor(const QString& str, IdPtr<IOnMapBase> owner) = 0;
+    virtual void PostTextFor(const QString& str, IdPtr<kv::IOnMapBase> owner) = 0;
+    virtual void PostHtmlFor(const QString& str, IdPtr<kv::IOnMapBase> owner) = 0;
     virtual void PostText(const QString& str) = 0;
     virtual void PostOOCText(const QString& who, const QString& str) = 0;
     virtual void PostSimpleText(const QString& str, quint32 tile_id) = 0;

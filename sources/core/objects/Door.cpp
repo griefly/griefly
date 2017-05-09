@@ -9,6 +9,8 @@
 
 #include "test/RemoteDoorOpener.h"
 
+using namespace kv;
+
 Door::Door()
 {
     transparent = true;

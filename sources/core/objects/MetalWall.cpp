@@ -10,6 +10,8 @@
 #include "../ObjectFactory.h"
 #include "../Game.h"
 
+using namespace kv;
+
 MetalWall::MetalWall()
 {
     transparent = false;

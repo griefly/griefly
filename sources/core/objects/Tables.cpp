@@ -2,6 +2,8 @@
 #include "Item.h"
 #include "Human.h"
 
+using namespace kv;
+
 Table::Table()
 {
     anchored_ = true;

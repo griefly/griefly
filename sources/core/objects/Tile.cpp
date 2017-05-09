@@ -8,6 +8,8 @@
 #include "Movable.h"
 #include "../atmos/AtmosGrid.h"
 
+using namespace kv;
+
 CubeTile::CubeTile()
 {
     turf_ = 0;

@@ -5,16 +5,15 @@
 #include "OnMapBase.h"
 #include "representation/ViewInfo.h"
 
-class IOnMapObject: public IOnMapBase
+namespace kv
+{
+
+class IOnMapObject : public IOnMapBase
 {
 public:
     IOnMapObject();
     DECLARE_SAVED(IOnMapObject, IOnMapBase);
     DECLARE_GET_TYPE_ITEM(ionmapitem);
-    virtual bool IsVisibleByPlayer() const override
-    {
-        return owner.IsValid() && owner->IsVisibleByPlayer();
-    }
 
     virtual PassableLevel GetPassable(Dir direct) const override
     {
@@ -85,5 +84,6 @@ public:
 protected:
     ViewInfo KV_SAVEBLE(view_);
 };
-
 ADD_TO_TYPELIST(IOnMapObject);
+
+}

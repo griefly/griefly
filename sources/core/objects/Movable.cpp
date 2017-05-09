@@ -7,6 +7,8 @@
 
 #include <cassert>
 
+using namespace kv;
+
 IMovable::IMovable()
 {
     last_move_ = 0;
@@ -59,9 +61,13 @@ void IMovable::ProcessForce()
 void IMovable::ApplyForce(VDir force)
 {
     if (!IsNonZero(force))
+    {
         return;
+    }
     if (!IsNonZero(force_))
+    {
         ForceManager::Get().Add(GetId());
+    }
 
     force_.x += force.x;
     force_.y += force.y;

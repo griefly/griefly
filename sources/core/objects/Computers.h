@@ -2,7 +2,7 @@
 
 #include "OnMapObject.h"
 
-class Computer: public IOnMapObject
+class Computer : public kv::IOnMapObject
 {
 public:
     DECLARE_SAVED(Computer, IOnMapObject);

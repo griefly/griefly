@@ -9,6 +9,8 @@
 
 #include "representation/Sound.h"
 
+using namespace kv;
+
 Girder::Girder()
 {
     SetSprite("icons/structures.dmi");

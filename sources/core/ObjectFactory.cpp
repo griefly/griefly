@@ -176,7 +176,7 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
 
     quint32 retval = id_;
     ++id_;
-    IdPtr<IOnMapBase> owner = owner_id;
+    IdPtr<kv::IOnMapBase> owner = owner_id;
     if (owner.IsValid())
     {
         if (CastTo<ITurf>(item) != nullptr)

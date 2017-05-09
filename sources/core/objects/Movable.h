@@ -25,7 +25,7 @@ inline unsigned int hash(const VDir& vdir)
            + vdir.z;
 }
 
-class IMovable : public IOnMapObject
+class IMovable : public kv::IOnMapObject
 {
 public:
     DECLARE_SAVED(IMovable, IOnMapObject);

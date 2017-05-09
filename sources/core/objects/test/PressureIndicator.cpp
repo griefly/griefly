@@ -2,6 +2,8 @@
 
 #include "../Tile.h"
 
+using namespace kv;
+
 PressureIndicator::PressureIndicator()
 {
     v_level = 11;

@@ -36,7 +36,7 @@ FastDeserializer& operator>>(FastDeserializer& file, std::vector<IdPtr<T>>& cont
 
 class IMovable;
 
-class CubeTile: public IOnMapBase
+class CubeTile : public kv::IOnMapBase
 {
 public:
     DECLARE_SAVED(CubeTile, IOnMapBase);
@@ -47,12 +47,7 @@ public:
     virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const override;
     IdPtr<CubeTile> GetNeighbourImpl(Dir direct) const;
     virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback) override;
-    virtual bool IsVisibleByPlayer() const override
-    {
-        // TODO
-        return true;       
-    };
-    virtual PassableLevel GetPassable(Dir direct) const override;
+    virtual kv::PassableLevel GetPassable(Dir direct) const override;
     virtual bool IsTransparent() const override;
 
     virtual bool CanTouch(IdPtr<IOnMapBase> item) const override;
@@ -107,7 +102,7 @@ public:
     virtual void UpdatePassable() override;
     atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 
-    typedef std::vector<IdPtr<IOnMapObject>> InsideType;
+    using InsideType = std::vector<IdPtr<kv::IOnMapObject>>;
     InsideType& GetInsideList() { return inside_list_; }
 
     void UpdateAtmosPassable();
@@ -129,11 +124,11 @@ private:
 
     InsideType KV_SAVEBLE(inside_list_);
 
-    PassableLevel KV_SAVEBLE(sum_passable_all_);
-    PassableLevel KV_SAVEBLE(sum_passable_up_);
-    PassableLevel KV_SAVEBLE(sum_passable_down_);
-    PassableLevel KV_SAVEBLE(sum_passable_left_);
-    PassableLevel KV_SAVEBLE(sum_passable_right_);
+    kv::PassableLevel KV_SAVEBLE(sum_passable_all_);
+    kv::PassableLevel KV_SAVEBLE(sum_passable_up_);
+    kv::PassableLevel KV_SAVEBLE(sum_passable_down_);
+    kv::PassableLevel KV_SAVEBLE(sum_passable_left_);
+    kv::PassableLevel KV_SAVEBLE(sum_passable_right_);
 
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap();

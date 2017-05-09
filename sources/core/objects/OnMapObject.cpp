@@ -8,6 +8,8 @@
 
 #include "../Helpers.h"
 
+using namespace kv;
+
 void IOnMapObject::SetSprite(const QString& name)
 {
     view_.SetSprite(name);

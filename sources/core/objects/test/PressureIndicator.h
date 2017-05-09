@@ -2,7 +2,7 @@
 
 #include "../OnMapObject.h"
 
-class PressureIndicator : public IOnMapObject
+class PressureIndicator : public kv::IOnMapObject
 {
 public:
     DECLARE_SAVED(PressureIndicator, IOnMapObject);

@@ -9,6 +9,8 @@
 #include "../ObjectFactory.h"
 #include "../Game.h"
 
+using namespace kv;
+
 Floor::Floor()
 {
     transparent = true;

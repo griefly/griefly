@@ -1,5 +1,7 @@
 #include "Sign.h"
 
+using namespace kv;
+
 WallSign::WallSign()
 {
     transparent = true;

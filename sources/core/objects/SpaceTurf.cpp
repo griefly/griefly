@@ -8,6 +8,8 @@
 #include "../ObjectFactory.h"
 #include "../Game.h"
 
+using namespace kv;
+
 Space::Space()
 {
     SetAtmosState(atmos::SPACE);

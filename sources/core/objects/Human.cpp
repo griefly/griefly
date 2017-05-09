@@ -24,6 +24,8 @@
 #include "Drinks.h"
 #include "MedbayTools.h"
 
+using namespace kv;
+
 Human::Human()
 {
     tick_speed_ = 1;

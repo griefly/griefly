@@ -3,6 +3,8 @@
 #include "Human.h"
 #include "representation/Sound.h"
 
+using namespace kv;
+
 Closet::Closet()
 {
     v_level = 4;

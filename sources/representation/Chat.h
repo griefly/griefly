@@ -8,15 +8,15 @@
 #include <QTextBrowser>
 #include <QObject>
 
-class Chat: public QObject, public ChatInterface
+class Chat : public QObject, public ChatInterface
 {
     Q_OBJECT
 public:
     static bool IsOOCMessage(const QString& text);
     Chat(GameInterface* game);
 
-    virtual void PostTextFor(const QString& str, IdPtr<IOnMapBase> owner) override;
-    virtual void PostHtmlFor(const QString& str, IdPtr<IOnMapBase> owner) override;
+    virtual void PostTextFor(const QString& str, IdPtr<kv::IOnMapBase> owner) override;
+    virtual void PostHtmlFor(const QString& str, IdPtr<kv::IOnMapBase> owner) override;
     virtual void PostText(const QString& str) override;
     virtual void PostOOCText(const QString& who, const QString& str) override;
     virtual void PostSimpleText(const QString& str, quint32 tile_id) override;
