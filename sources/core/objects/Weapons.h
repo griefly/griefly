@@ -1,5 +1,8 @@
 #include "Gun.h"
 
+namespace kv
+{
+
 class LaserGun : public Gun
 {
 public:
@@ -19,3 +22,5 @@ public:
     virtual void Shoot(VDir target) override;
 };
 ADD_TO_TYPELIST(Revolver);
+
+}

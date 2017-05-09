@@ -1,5 +1,7 @@
 #include "Furniture.h"
 
+using namespace kv;
+
 Bed::Bed()
 {
     anchored_ = true;

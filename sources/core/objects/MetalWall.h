@@ -2,6 +2,9 @@
 
 #include "Turf.h"
 
+namespace kv
+{
+
 class MetalWall : public ITurf
 {
 public:
@@ -20,3 +23,5 @@ public:
     ReinforcedWall();
 };
 ADD_TO_TYPELIST(ReinforcedWall);
+
+}

@@ -2,7 +2,10 @@
 
 #include "Movable.h"
 
-class Structure: public IMovable
+namespace kv
+{
+
+class Structure : public IMovable
 {
 public:
     DECLARE_SAVED(Structure, IMovable);
@@ -11,3 +14,5 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(Structure);
+
+}

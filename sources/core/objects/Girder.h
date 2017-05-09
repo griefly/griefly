@@ -2,7 +2,10 @@
 
 #include "Structure.h"
 
-class Girder: public Structure
+namespace kv
+{
+
+class Girder : public Structure
 {
 public:
     DECLARE_SAVED(Girder, Structure);
@@ -11,3 +14,5 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(Girder);
+
+}

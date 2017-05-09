@@ -2,6 +2,8 @@
 #include "Mob.h"
 #include "Projectiles.h"
 
+using namespace kv;
+
 Breakable::Breakable()
 {
     hit_points_ = 1;

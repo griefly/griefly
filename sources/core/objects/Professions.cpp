@@ -5,6 +5,8 @@
 #include "Weapons.h"
 #include "Interface.h"
 
+using namespace kv;
+
 void professions::ToSecurityOfficer(IdPtr<Human> human)
 {
     HumanInterface* hud = human->GetHumanInterface();

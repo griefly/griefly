@@ -19,8 +19,6 @@ public:
     Map();
     ~Map();
 
-    typedef IdPtr<CubeTile> SqType;
-
     virtual SqType& At(int x, int y, int z) override;
     virtual const SqType& At(int x, int y, int z) const override;
 

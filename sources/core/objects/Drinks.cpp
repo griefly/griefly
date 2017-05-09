@@ -1,11 +1,14 @@
 #include "Drinks.h"
 
+using namespace kv;
+
 Drinks::Drinks()
 {
     name = "BaseDrink";
     SetSprite("icons/drinks.dmi");
     full_ = false;
 }
+
 void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
 {
     if (!full_)
@@ -30,16 +33,19 @@ void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
         QString("%1 is empty.").arg(name), consumer->GetId());
     
 }
+
 Vodka::Vodka()
 {
     name = "Vodka";
     SetState("vodkabottle");
 }
+
 Beer::Beer()
 {
     name = "Beer";
     SetState("beer");
 }
+
 Tea::Tea()
 {
     name = "Tea";

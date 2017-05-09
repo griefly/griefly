@@ -5,6 +5,9 @@
 #include "Tile.h"
 #include "Item.h"
 
+namespace kv
+{
+
 class Closet : public IMovable
 {
 public:
@@ -52,3 +55,5 @@ protected:
     bool KV_SAVEBLE(locked_);
 };
 ADD_TO_TYPELIST(SecurityLocker);
+
+}

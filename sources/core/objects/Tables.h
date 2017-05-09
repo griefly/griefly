@@ -2,6 +2,9 @@
 
 #include "Movable.h"
 
+namespace kv
+{
+
 class Table : public IMovable
 {
 public:
@@ -20,8 +23,6 @@ private:
 }
 ADD_TO_TYPELIST(Table);
 
-
-
 class MetalTable : public Table
 {
 public:
@@ -30,3 +31,5 @@ public:
     MetalTable();
 }
 ADD_TO_TYPELIST(MetalTable);
+
+}

@@ -53,9 +53,9 @@ void IMovable::ProcessForce()
     }
 
     VDir vstep = DirToVDir(step);
-    force_.x -= (vstep.x * Friction::CombinedFriction(GetTurf())) / Friction::BASE_FRICTION;
-    force_.y -= (vstep.y * Friction::CombinedFriction(GetTurf())) / Friction::BASE_FRICTION;
-    force_.z -= (vstep.z * Friction::CombinedFriction(GetTurf())) / Friction::BASE_FRICTION;
+    force_.x -= (vstep.x * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
+    force_.y -= (vstep.y * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
+    force_.z -= (vstep.z * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
 }
 
 void IMovable::ApplyForce(VDir force)

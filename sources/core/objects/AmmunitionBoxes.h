@@ -2,6 +2,9 @@
 
 #include "Item.h"
 
+namespace kv
+{
+
 class AmmunitionBox : public Item
 {
 public:
@@ -15,3 +18,4 @@ private:
 };
 ADD_TO_TYPELIST(AmmunitionBox);
 
+}

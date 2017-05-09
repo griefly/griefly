@@ -2,6 +2,8 @@
 
 #include "Slot.h"
 
+using namespace kv;
+
 Cloth::Cloth()
 {
     name = "SimpleCloth";

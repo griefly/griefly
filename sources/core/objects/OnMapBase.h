@@ -4,12 +4,11 @@
 
 #include "DrawInt.h"
 
+namespace kv
+{
 class ITurf;
 class IMovable;
 class Item;
-
-namespace kv
-{
 
 using PassableLevel = int;
 namespace Passable

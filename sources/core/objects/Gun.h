@@ -6,6 +6,9 @@
 #include "ProjectileTypes.h"
 #include "../Game.h"
 
+namespace kv
+{
+
 class Gun : public Item
 {
 public:
@@ -25,3 +28,5 @@ protected:
                    const QString& projectile_type, const QString& casing_type);
 };
 ADD_TO_TYPELIST(Gun);
+
+}

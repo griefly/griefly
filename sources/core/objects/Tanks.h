@@ -2,7 +2,10 @@
 
 #include "Movable.h"
 
-class Tank: public IMovable
+namespace kv
+{
+
+class Tank : public IMovable
 {
 public:
     DECLARE_SAVED(Tank, IMovable);
@@ -11,7 +14,7 @@ public:
 };
 ADD_TO_TYPELIST(Tank);
 
-class FuelTank: public Tank
+class FuelTank : public Tank
 {
 public:
     DECLARE_SAVED(FuelTank, Tank);
@@ -21,7 +24,7 @@ public:
 };
 ADD_TO_TYPELIST(FuelTank);
 
-class WaterTank: public Tank
+class WaterTank : public Tank
 {
 public:
     DECLARE_SAVED(WaterTank, Tank);
@@ -30,3 +33,5 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(WaterTank);
+
+}

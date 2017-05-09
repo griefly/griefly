@@ -5,15 +5,15 @@
 #include "../atmos/AtmosHolder.h"
 
 #include "Item.h"
-#include "GasTank.h"\
+#include "GasTank.h"
 
-class PipeBase: public IMovable
+class PipeBase : public kv::IMovable
 {
 public:
     DECLARE_SAVED(PipeBase, IMovable);
     DECLARE_GET_TYPE_ITEM(PipeBase);
     PipeBase();
-    virtual void AttackBy(IdPtr<Item> item) override;
+    virtual void AttackBy(IdPtr<kv::Item> item) override;
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) { return false; }
     virtual bool CanTransferGas(Dir dir) const { return false; }
     atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
@@ -24,7 +24,7 @@ protected:
 };
 ADD_TO_TYPELIST(PipeBase);
 
-class Pipe: public PipeBase
+class Pipe : public PipeBase
 {
 public:
     DECLARE_SAVED(Pipe, PipeBase);
@@ -41,7 +41,7 @@ protected:
 };
 ADD_TO_TYPELIST(Pipe);
 
-class Manifold: public PipeBase
+class Manifold : public PipeBase
 {
 public:
     DECLARE_SAVED(Manifold, PipeBase);
@@ -61,7 +61,7 @@ private:
 ADD_TO_TYPELIST(Manifold);
 
 
-class Valve: public Pipe
+class Valve : public Pipe
 {
 public:
     DECLARE_SAVED(Valve, Pipe);
@@ -69,13 +69,13 @@ public:
     Valve();
     virtual bool CanTransferGas(Dir dir) const override;
     virtual void Process() override;
-    virtual void AttackBy(IdPtr<Item> item) override;
+    virtual void AttackBy(IdPtr<kv::Item> item) override;
 private:
     bool KV_SAVEBLE(closed_);
 };
 ADD_TO_TYPELIST(Valve);
 
-class Vent: public PipeBase
+class Vent : public PipeBase
 {
 public:
     DECLARE_SAVED(Vent, PipeBase);
@@ -92,7 +92,7 @@ private:
 };
 ADD_TO_TYPELIST(Vent);
 
-class Connector: public PipeBase
+class Connector : public PipeBase
 {
 public:
     DECLARE_SAVED(Connector, PipeBase);
@@ -110,7 +110,7 @@ private:
 };
 ADD_TO_TYPELIST(Connector);
 
-class PipePump: public Pipe
+class PipePump : public Pipe
 {
 public:
     DECLARE_SAVED(PipePump, Pipe);

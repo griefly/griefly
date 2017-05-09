@@ -40,7 +40,7 @@
 #include <QElapsedTimer>
 #include <QFileInfo>
 
-int ping_send;
+using namespace kv;
 
 Game::Game()
 {

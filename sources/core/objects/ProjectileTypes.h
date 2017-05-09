@@ -2,7 +2,10 @@
 
 #include "Projectiles.h"
 
-class Bullet: public Projectile
+namespace kv
+{
+
+class Bullet : public Projectile
 {
 public:
     DECLARE_SAVED(Bullet, Projectile);
@@ -11,7 +14,7 @@ public:
 };
 ADD_TO_TYPELIST(Bullet);
 
-class Laser: public Projectile
+class Laser : public Projectile
 {
 public:
     DECLARE_SAVED(Laser, Projectile);
@@ -22,3 +25,4 @@ public:
 };
 ADD_TO_TYPELIST(Laser);
 
+}

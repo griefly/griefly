@@ -2,6 +2,9 @@
 
 #include "Structure.h"
 
+namespace kv
+{
+
 class Lattice : public Structure
 {
 public:
@@ -11,3 +14,5 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(Lattice);
+
+}

@@ -1,5 +1,7 @@
 #include "MedbayTools.h"
 
+using namespace kv;
+
 HealthAnalyzer::HealthAnalyzer()
 {
     SetSprite("icons/device.dmi");

@@ -4,6 +4,9 @@
 
 #include "../atmos/AtmosHolder.h"
 
+namespace kv
+{
+
 class AtmosTool : public Item
 {
 public:
@@ -25,3 +28,5 @@ public:
     RemoteAtmosTool();
 };
 ADD_TO_TYPELIST(RemoteAtmosTool)
+
+}

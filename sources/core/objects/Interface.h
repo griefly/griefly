@@ -47,14 +47,14 @@ public:
     friend FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf);
     virtual unsigned int hash() const override;
 
-    void Pick(IdPtr<Item> item);
+    void Pick(IdPtr<kv::Item> item);
     void Drop();
 
     void AddOverlays();
 
-    IdPtr<Item> GetRHand();
-    IdPtr<Item> GetLHand();
-    Slot<Item>& GetActiveHand();
+    IdPtr<kv::Item> GetRHand();
+    IdPtr<kv::Item> GetLHand();
+    Slot<kv::Item>& GetActiveHand();
     void SwapHands();
 
     void UpdateHealth();
@@ -63,29 +63,29 @@ public:
     void UpdateEnvironment();
 
 public:
-    void ApplyActiveHandOnSlot(Slot<Item>* slot);
+    void ApplyActiveHandOnSlot(Slot<kv::Item>* slot);
 
     IdPtr<Human> owner_;
 
     bool active_hand_;
     bool pulling_;
 
-    Slot<Item> drop_;
-    Slot<Item> swap_;
-    Slot<Item> stop_pull_;
+    Slot<kv::Item> drop_;
+    Slot<kv::Item> swap_;
+    Slot<kv::Item> stop_pull_;
 
-    Slot<Item> health_;
-    Slot<Item> temperature_;
-    Slot<Item> oxygen_;
+    Slot<kv::Item> health_;
+    Slot<kv::Item> temperature_;
+    Slot<kv::Item> oxygen_;
 
-    Slot<Item> lay_;
+    Slot<kv::Item> lay_;
 
-    Slot<Item> r_hand_;
-    Slot<Item> l_hand_;
-    Slot<Item> head_;
-    Slot<Item> suit_;
-    Slot<Item> uniform_;
-    Slot<Item> feet_;
+    Slot<kv::Item> r_hand_;
+    Slot<kv::Item> l_hand_;
+    Slot<kv::Item> head_;
+    Slot<kv::Item> suit_;
+    Slot<kv::Item> uniform_;
+    Slot<kv::Item> feet_;
 private:
     void StopPull();
 };

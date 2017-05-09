@@ -8,6 +8,8 @@
 #include "../Game.h"
 #include "representation/Sound.h"
 
+using namespace kv;
+
 Lattice::Lattice()
 {
     SetSprite("icons/structures.dmi");

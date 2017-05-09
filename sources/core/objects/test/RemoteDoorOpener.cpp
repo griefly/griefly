@@ -1,5 +1,7 @@
 #include "RemoteDoorOpener.h"
 
+using namespace kv;
+
 RemoteDoorOpener::RemoteDoorOpener()
 {
     SetSprite("icons/device.dmi");

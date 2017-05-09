@@ -5,6 +5,8 @@
 
 #include "Human.h"
 
+using namespace kv;
+
 void HumanInterface::InitSlots()
 {
     r_hand_.SetPos(0, 14);

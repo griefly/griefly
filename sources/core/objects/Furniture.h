@@ -2,6 +2,9 @@
 
 #include "Movable.h"
 
+namespace kv
+{
+
 class Bed : public IMovable
 {
 public:
@@ -30,3 +33,5 @@ public:
     Stool();
 };
 ADD_TO_TYPELIST(Stool);
+
+}

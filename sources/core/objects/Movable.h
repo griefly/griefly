@@ -25,7 +25,10 @@ inline unsigned int hash(const VDir& vdir)
            + vdir.z;
 }
 
-class IMovable : public kv::IOnMapObject
+namespace kv
+{
+
+class IMovable : public IOnMapObject
 {
 public:
     DECLARE_SAVED(IMovable, IOnMapObject);
@@ -61,17 +64,18 @@ private:
 };
 ADD_TO_TYPELIST(IMovable);
 
+}
 class ForceManager
 {
 public:
     static ForceManager& Get();
 
-    void Add(IdPtr<IMovable> m);
+    void Add(IdPtr<kv::IMovable> m);
     void Process();
     void Clear();
     unsigned int Hash();
 private:
-    std::vector<IdPtr<IMovable>> under_force_;
+    std::vector<IdPtr<kv::IMovable>> under_force_;
 
-    std::vector<IdPtr<IMovable>> to_add_;
+    std::vector<IdPtr<kv::IMovable>> to_add_;
 };

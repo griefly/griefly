@@ -2,6 +2,9 @@
 
 #include "Item.h"
 
+namespace kv
+{
+
 class Weldingtool : public Item
 {
 public:
@@ -19,3 +22,5 @@ private:
     bool KV_SAVEBLE(on_);
 };
 ADD_TO_TYPELIST(Weldingtool);
+
+}

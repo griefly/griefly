@@ -1,6 +1,8 @@
 #include "Gun.h"
 #include "Tile.h"
 
+using namespace kv;
+
 Gun::Gun()
 {
     SetSprite("icons/guns.dmi");

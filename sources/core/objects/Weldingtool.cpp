@@ -1,5 +1,7 @@
 #include "Weldingtool.h"
 
+using namespace kv;
+
 Weldingtool::Weldingtool()
 {
     SetState("welder");

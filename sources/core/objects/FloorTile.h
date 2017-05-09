@@ -2,7 +2,7 @@
 
 #include "Item.h"
 
-class FloorTile: public Item
+class FloorTile : public kv::Item
 {
 public:
     DECLARE_SAVED(FloorTile, Item);

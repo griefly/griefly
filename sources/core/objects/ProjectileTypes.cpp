@@ -1,5 +1,7 @@
 #include "ProjectileTypes.h"
 
+using namespace kv;
+
 Bullet::Bullet()
 {
     damage_ = 20;

@@ -3,7 +3,10 @@
 #include "OnMapObject.h"
 #include "Movable.h"
 
-class Door : public kv::IOnMapObject
+namespace kv
+{
+
+class Door : public IOnMapObject
 {
 public:
     DECLARE_SAVED(Door, IOnMapObject);
@@ -94,3 +97,5 @@ private:
     QString KV_SAVEBLE(door_prefix_);
 };
 ADD_TO_TYPELIST(GlassDoor);
+
+}

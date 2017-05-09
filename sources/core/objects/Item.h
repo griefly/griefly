@@ -2,7 +2,10 @@
 
 #include "Movable.h"
 
-class Item: public IMovable
+namespace kv
+{
+
+class Item : public IMovable
 {
 public:
     DECLARE_SAVED(Item, IMovable);
@@ -13,7 +16,7 @@ public:
 };
 ADD_TO_TYPELIST(Item);
 
-class Screwdriver: public Item
+class Screwdriver : public Item
 {
 public:
     DECLARE_SAVED(Screwdriver, Item);
@@ -23,7 +26,7 @@ public:
 };
 ADD_TO_TYPELIST(Screwdriver);
 
-class Wirecutters: public Item
+class Wirecutters : public Item
 {
 public:
     DECLARE_SAVED(Wirecutters, Item);
@@ -32,7 +35,7 @@ public:
 };
 ADD_TO_TYPELIST(Wirecutters);
 
-class Crowbar: public Item
+class Crowbar : public Item
 {
 public:
     DECLARE_SAVED(Crowbar, Item);
@@ -41,7 +44,7 @@ public:
 };
 ADD_TO_TYPELIST(Crowbar);
 
-class Wrench: public Item
+class Wrench : public Item
 {
 public:
     DECLARE_SAVED(Wrench, Item);
@@ -50,7 +53,7 @@ public:
 };
 ADD_TO_TYPELIST(Wrench);
 
-class BulletCasing: public Item
+class BulletCasing : public Item
 {
 public:
     DECLARE_SAVED(BulletCasing, Item);
@@ -58,3 +61,5 @@ public:
     BulletCasing();
 };
 ADD_TO_TYPELIST(BulletCasing);
+
+}

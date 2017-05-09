@@ -22,9 +22,11 @@
 #include "AutogenMetadata.h"
 #include "core/StreamWrapper.h"
 
+using namespace kv;
+
 GraphicsScene::GraphicsScene(QWidget *parent) : QGraphicsScene(parent)
 {
-
+    // Nothing
 }
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
@@ -41,9 +43,9 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
     emit keyboardPressed(event);
 }
 
-MapEditorForm::MapEditorForm(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::MapEditorForm)
+MapEditorForm::MapEditorForm(QWidget *parent)
+    : QWidget(parent),
+      ui(new Ui::MapEditorForm)
 {
     ui->setupUi(this);
 

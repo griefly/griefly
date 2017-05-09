@@ -20,8 +20,8 @@ namespace Slots
 class BaseSlot
 {
 public:
-    virtual bool Set(IdPtr<Item> ptr) = 0;
-    virtual IdPtr<Item>  Get() = 0;
+    virtual bool Set(IdPtr<kv::Item> ptr) = 0;
+    virtual IdPtr<kv::Item>  Get() = 0;
     virtual void Remove() = 0;
     virtual void Draw() = 0;
     virtual FastSerializer& operator<<(FastSerializer& file) = 0;
@@ -41,7 +41,7 @@ public:
         name_ = "noname";
         SetPos(0, 0);
     }
-    virtual bool Set(IdPtr<Item> ptr) override
+    virtual bool Set(IdPtr<kv::Item> ptr) override
     {
         if (!(item_ = ptr))
         {
@@ -50,7 +50,7 @@ public:
         }
         return true;
     }
-    virtual IdPtr<Item> Get() override
+    virtual IdPtr<kv::Item> Get() override
     {
         return item_;
     }

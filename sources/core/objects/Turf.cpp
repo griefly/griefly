@@ -4,9 +4,11 @@
 #include "Tile.h"
 #include "representation/Representation.h"
 
+using namespace kv;
+
 ITurf::ITurf()
 {
-    friction_ = Friction::BASE_FRICTION;
+    friction_ = friction::BASE_FRICTION;
     atmos_state_ = atmos::SIMULATED;
 }
 
@@ -42,14 +44,14 @@ void ITurf::Represent()
     IOnMapObject::Represent();
 }
 
-int Friction::CombinedFriction(IdPtr<ITurf> turf)
+int friction::CombinedFriction(IdPtr<ITurf> turf)
 {
     if (   turf->GetX() == 0
         || turf->GetY() == 0
         || turf->GetX() == turf->GetGame().GetMap().GetWidth() - 1
         || turf->GetY() == turf->GetGame().GetMap().GetHeight() - 1)
     {
-        return Friction::BASE_FRICTION;
+        return friction::BASE_FRICTION;
     }
 
     int retval =
@@ -58,14 +60,14 @@ int Friction::CombinedFriction(IdPtr<ITurf> turf)
         + turf->GetNeighbour(Dir::DOWN)->GetTurf()->GetFriction()
         + turf->GetNeighbour(Dir::LEFT)->GetTurf()->GetFriction()
         + turf->GetNeighbour(Dir::RIGHT)->GetTurf()->GetFriction();
-    if (retval > Friction::BASE_FRICTION)
+    if (retval > friction::BASE_FRICTION)
     {
-        retval = Friction::BASE_FRICTION;
+        retval = friction::BASE_FRICTION;
     }
 
     // TODO: Remake
 
-    if (retval < Friction::BASE_FRICTION)
+    if (retval < friction::BASE_FRICTION)
     {
         if (   turf->GetOwner()->GetItem<Lattice>()
             || turf->GetNeighbour(Dir::UP)->GetItem<Lattice>()
@@ -74,7 +76,7 @@ int Friction::CombinedFriction(IdPtr<ITurf> turf)
             || turf->GetNeighbour(Dir::RIGHT)->GetItem<Lattice>()
             )
         {
-            retval = Friction::BASE_FRICTION;
+            retval = friction::BASE_FRICTION;
         }
     }
 

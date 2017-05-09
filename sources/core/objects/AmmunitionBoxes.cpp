@@ -1,5 +1,7 @@
 #include "AmmunitionBoxes.h"
 
+using namespace kv;
+
 AmmunitionBox::AmmunitionBox()
 {
     SetSprite("icons/ammo.dmi");

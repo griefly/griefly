@@ -15,8 +15,8 @@ namespace kv
 {
     class IOnMapBase;
     class Object;
+    class CubeTile;
 }
-class CubeTile;
 class MapInterface;
 
 class AtmosInterface
@@ -45,7 +45,7 @@ public:
 
     virtual void Resize(int new_map_x, int new_map_y, int new_map_z) = 0;
 
-    using SqType = IdPtr<CubeTile>;
+    using SqType = IdPtr<kv::CubeTile>;
     virtual SqType& At(int x, int y, int z) = 0;
     virtual const SqType& At(int x, int y, int z) const = 0;
 

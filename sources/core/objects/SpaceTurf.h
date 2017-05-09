@@ -2,6 +2,9 @@
 
 #include "Turf.h"
 
+namespace kv
+{
+
 class Space : public ITurf
 {
 public:
@@ -12,3 +15,5 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(Space);
+
+}

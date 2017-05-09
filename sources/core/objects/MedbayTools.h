@@ -3,7 +3,10 @@
 #include "Item.h"
 #include "Human.h"
 
-class HealthAnalyzer: public Item
+namespace kv
+{
+
+class HealthAnalyzer : public Item
 {
 public:
     DECLARE_SAVED(HealthAnalyzer, Item);
@@ -13,7 +16,7 @@ public:
 };
 ADD_TO_TYPELIST(HealthAnalyzer);
 
-class Medicine: public Item
+class Medicine : public Item
 {
 public:
     DECLARE_SAVED(Medicine, Item);
@@ -26,7 +29,7 @@ protected:
 };
 ADD_TO_TYPELIST(Medicine);
 
-class Ointment: public Medicine
+class Ointment : public Medicine
 {
 public:
     DECLARE_SAVED(Ointment, Medicine);
@@ -35,7 +38,7 @@ public:
 };
 ADD_TO_TYPELIST(Ointment);
 
-class BruisePack: public Medicine
+class BruisePack : public Medicine
 {
 public:
     DECLARE_SAVED(BruisePack, Medicine);
@@ -43,3 +46,5 @@ public:
     BruisePack();
 };
 ADD_TO_TYPELIST(BruisePack);
+
+}

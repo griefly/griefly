@@ -2,7 +2,10 @@
 
 #include "Turf.h"
 
-class Floor: public ITurf
+namespace kv
+{
+
+class Floor : public ITurf
 {
 public:
     DECLARE_SAVED(Floor, ITurf);
@@ -10,7 +13,7 @@ public:
     Floor();
     virtual void AfterWorldCreation() override;
 
-    virtual void AttackBy(IdPtr<Item> item) override;
+    virtual void AttackBy(IdPtr<kv::Item> item) override;
     void SetOpen(bool o);
 
     bool KV_SAVEBLE(bloody);
@@ -20,7 +23,7 @@ protected:
 };
 ADD_TO_TYPELIST(Floor);
 
-class Plating: public Floor
+class Plating : public Floor
 {
 public:
     DECLARE_SAVED(Plating, Floor);
@@ -29,4 +32,4 @@ public:
 };
 ADD_TO_TYPELIST(Plating);
 
-
+}

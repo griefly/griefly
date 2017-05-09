@@ -5,7 +5,7 @@
 const int HUMAN_MAX_HEALTH = 10000;
 const int REGULAR_TEMPERATURE = 40;
 
-class Human: public IMob
+class Human : public IMob
 {
 public:
     DECLARE_SAVED(Human, IMob);
@@ -34,7 +34,7 @@ public:
   
     virtual void Bump(IdPtr<IMovable> item) override;
 
-    virtual void AttackBy(IdPtr<Item> item) override;
+    virtual void AttackBy(IdPtr<kv::Item> item) override;
 
     virtual void Represent() override;
 

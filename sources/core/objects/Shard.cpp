@@ -2,6 +2,8 @@
 
 #include "../SyncRandom.h"
 
+using namespace kv;
+
 Shard::Shard()
 {
     SetSprite("icons/shards.dmi");

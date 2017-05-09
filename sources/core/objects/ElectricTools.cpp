@@ -6,6 +6,8 @@
 #include "Tile.h"
 #include "../Game.h"
 
+using namespace kv;
+
 AtmosTool::AtmosTool()
 {
     SetSprite("icons/device.dmi");

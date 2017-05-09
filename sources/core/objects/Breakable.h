@@ -2,6 +2,9 @@
 
 #include "Structure.h"
 
+namespace kv
+{
+
 class Breakable : public Structure
 {
 public:
@@ -19,3 +22,5 @@ private:
     int KV_SAVEBLE(hit_points_);
 };
 ADD_TO_TYPELIST(Breakable);
+
+}

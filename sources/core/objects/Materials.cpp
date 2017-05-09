@@ -6,6 +6,8 @@
 #include "Floor.h"
 #include "Grille.h"
 
+using namespace kv;
+
 Rod::Rod()
 {
     SetState("rods");

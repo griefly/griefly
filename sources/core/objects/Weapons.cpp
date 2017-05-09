@@ -1,6 +1,8 @@
 #include "Weapons.h"
 #include "Tile.h"
 
+using namespace kv;
+
 LaserGun::LaserGun()
 {
     SetState("energykill100");

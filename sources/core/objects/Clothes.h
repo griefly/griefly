@@ -2,6 +2,9 @@
 
 #include "Item.h"
 
+namespace kv
+{
+
 class Cloth : public Item
 {
 public:
@@ -128,3 +131,4 @@ public:
 };
 ADD_TO_TYPELIST(WhiteShoes);
 
+}

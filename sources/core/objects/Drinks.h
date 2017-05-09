@@ -3,19 +3,22 @@
 #include "Item.h"
 #include "Human.h"
 
-class Drinks: public Item
+namespace kv
+{
+
+class Drinks : public Item
 {
 public:
     DECLARE_SAVED(Drinks, Item);
     DECLARE_GET_TYPE_ITEM(Drinks);
     Drinks();
-    void Drink(IdPtr<Human> human1, IdPtr<Human> human2);
+    void Drink(IdPtr<Human> consumer, IdPtr<Human> feeder);
 private:
     bool KV_SAVEBLE(full_);
 };
 ADD_TO_TYPELIST(Drinks);
 
-class Vodka: public Drinks
+class Vodka : public Drinks
 {
 public:
     DECLARE_SAVED(Vodka, Drinks);
@@ -24,7 +27,7 @@ public:
 };
 ADD_TO_TYPELIST(Vodka);
 
-class Beer: public Drinks
+class Beer : public Drinks
 {
 public:
     DECLARE_SAVED(Beer, Drinks);
@@ -33,7 +36,7 @@ public:
 };
 ADD_TO_TYPELIST(Beer);
 
-class Tea: public Drinks
+class Tea : public Drinks
 {
 public:
     DECLARE_SAVED(Tea, Drinks);
@@ -42,3 +45,4 @@ public:
 };
 ADD_TO_TYPELIST(Tea);
 
+}

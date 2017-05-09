@@ -2,7 +2,10 @@
 
 #include "Breakable.h"
 
-class Grille: public Breakable
+namespace kv
+{
+
+class Grille : public Breakable
 {
 public:
     DECLARE_SAVED(Grille, Breakable);
@@ -15,3 +18,5 @@ private:
     bool KV_SAVEBLE(cutted_);
 };
 ADD_TO_TYPELIST(Grille);
+
+}

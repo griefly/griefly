@@ -34,9 +34,10 @@ FastDeserializer& operator>>(FastDeserializer& file, std::vector<IdPtr<T>>& cont
     return file;
 }
 
-class IMovable;
+namespace kv
+{
 
-class CubeTile : public kv::IOnMapBase
+class CubeTile : public IOnMapBase
 {
 public:
     DECLARE_SAVED(CubeTile, IOnMapBase);
@@ -47,7 +48,7 @@ public:
     virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const override;
     IdPtr<CubeTile> GetNeighbourImpl(Dir direct) const;
     virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback) override;
-    virtual kv::PassableLevel GetPassable(Dir direct) const override;
+    virtual PassableLevel GetPassable(Dir direct) const override;
     virtual bool IsTransparent() const override;
 
     virtual bool CanTouch(IdPtr<IOnMapBase> item) const override;
@@ -102,7 +103,7 @@ public:
     virtual void UpdatePassable() override;
     atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 
-    using InsideType = std::vector<IdPtr<kv::IOnMapObject>>;
+    using InsideType = std::vector<IdPtr<IOnMapObject>>;
     InsideType& GetInsideList() { return inside_list_; }
 
     void UpdateAtmosPassable();
@@ -134,3 +135,5 @@ private:
     void LoadInMap();
 };
 ADD_TO_TYPELIST(CubeTile);
+
+}

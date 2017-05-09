@@ -2,7 +2,10 @@
 
 #include "Item.h"
 
-class Shard: public Item
+namespace kv
+{
+
+class Shard : public Item
 {
 public:
     DECLARE_SAVED(Shard, Item);
@@ -11,3 +14,5 @@ public:
     virtual void AfterWorldCreation() override;
 };
 ADD_TO_TYPELIST(Shard);
+
+}

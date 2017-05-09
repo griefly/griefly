@@ -3,12 +3,15 @@
 #include "OnMapObject.h"
 #include "../atmos/AtmosHolder.h"
 
-namespace Friction
+namespace friction
 {
     const int BASE_FRICTION = 100;
 }
 
-class ITurf : public kv::IOnMapObject
+namespace kv
+{
+
+class ITurf : public IOnMapObject
 {
 public:
     DECLARE_SAVED(ITurf, IOnMapObject);
@@ -29,7 +32,9 @@ private:
 };
 ADD_TO_TYPELIST(ITurf);
 
-namespace Friction
+}
+
+namespace friction
 {
-    int CombinedFriction(IdPtr<ITurf> turf);
+    int CombinedFriction(IdPtr<kv::ITurf> turf);
 }

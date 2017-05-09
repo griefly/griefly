@@ -6,6 +6,8 @@
 
 #include "ElectricTools.h"
 
+using namespace kv;
+
 PipeBase::PipeBase()
 {
     anchored_ = true;

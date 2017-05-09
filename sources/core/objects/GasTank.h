@@ -5,7 +5,7 @@
 #include "../atmos/AtmosHolder.h"
 #include "Item.h"
 
-class GasTank : public IMovable
+class GasTank : public kv::IMovable
 {
 public:
     DECLARE_SAVED(GasTank, IMovable);
@@ -13,7 +13,7 @@ public:
     GasTank();
     virtual void AfterWorldCreation() override;
 
-    virtual void AttackBy(IdPtr<Item> item) override;
+    virtual void AttackBy(IdPtr<kv::Item> item) override;
     virtual void Process() override;
 
     atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }

@@ -7,6 +7,9 @@ FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& content
 FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& content);
 unsigned int hash(const std::vector<Dir>& content);
 
+namespace kv
+{
+
 class Projectile : public IMovable
 {
 public:
@@ -37,3 +40,5 @@ private:
     std::vector<Dir> KV_SAVEBLE(movement_);
 };
 ADD_TO_TYPELIST(Projectile);
+
+}

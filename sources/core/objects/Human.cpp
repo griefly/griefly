@@ -124,7 +124,7 @@ void Human::ProcessMessage(const Message2 &msg)
 
     if (   msg.type == MessageType::ORDINARY
         && !lying_
-        && Friction::CombinedFriction(GetTurf()))
+        && friction::CombinedFriction(GetTurf()))
     {
         if (qAbs(force_.x) + qAbs(force_.y) + qAbs(force_.z) < 4)
         {

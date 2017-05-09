@@ -2,7 +2,10 @@
 
 #include "Breakable.h"
 
-class FlatGlass: public Breakable
+namespace kv
+{
+
+class FlatGlass : public Breakable
 {
 public:
     DECLARE_SAVED(FlatGlass, Breakable);
@@ -19,7 +22,7 @@ public:
 };
 ADD_TO_TYPELIST(FlatGlass);
 
-class ReinforcedFlatGlass: public FlatGlass
+class ReinforcedFlatGlass : public FlatGlass
 {
 public:
     DECLARE_SAVED(ReinforcedFlatGlass, FlatGlass);
@@ -27,3 +30,5 @@ public:
     ReinforcedFlatGlass();
 };
 ADD_TO_TYPELIST(ReinforcedFlatGlass);
+
+}

@@ -2,7 +2,10 @@
 
 #include "OnMapObject.h"
 
-class WallSign : public kv::IOnMapObject
+namespace kv
+{
+
+class WallSign : public IOnMapObject
 {
 public:
     DECLARE_SAVED(WallSign, IOnMapObject);
@@ -16,3 +19,4 @@ protected:
 };
 ADD_TO_TYPELIST(WallSign);
 
+}

@@ -2,7 +2,10 @@
 
 #include "Item.h"
 
-class Rod: public Item
+namespace kv
+{
+
+class Rod : public Item
 {
 public:
     DECLARE_SAVED(Rod, Item);
@@ -12,7 +15,7 @@ public:
 };
 ADD_TO_TYPELIST(Rod);
 
-class Metal: public Item
+class Metal : public Item
 {
 public:
     DECLARE_SAVED(Metal, Item);
@@ -21,3 +24,5 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
 };
 ADD_TO_TYPELIST(Metal);
+
+}

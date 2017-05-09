@@ -3,7 +3,7 @@
 #include "Movable.h"
 #include "net/Network2.h"
 
-class IMessageReceiver : public IMovable
+class IMessageReceiver : public kv::IMovable
 {
 public:
     DECLARE_SAVED(IMessageReceiver, IMovable);
