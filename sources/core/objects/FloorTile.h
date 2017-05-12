@@ -2,7 +2,10 @@
 
 #include "Item.h"
 
-class FloorTile : public kv::Item
+namespace kv
+{
+
+class FloorTile : public Item
 {
 public:
     DECLARE_SAVED(FloorTile, Item);
@@ -10,3 +13,5 @@ public:
     FloorTile();
 };
 ADD_TO_TYPELIST(FloorTile);
+
+}

@@ -4,7 +4,10 @@
 
 #include "Interface.h"
 
-class IMob: public IMessageReceiver
+namespace kv
+{
+
+class IMob : public IMessageReceiver
 {
 public:
     DECLARE_SAVED(IMob, IMessageReceiver);
@@ -23,5 +26,6 @@ public:
 
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) { ; }
 };
-
 ADD_TO_TYPELIST(IMob);
+
+}

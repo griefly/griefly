@@ -5,6 +5,8 @@
 #include "net/MagicStrings.h"
 #include "net/NetworkMessagesTypes.h"
 
+using namespace kv;
+
 IMob::IMob()
 {
     // Nothing

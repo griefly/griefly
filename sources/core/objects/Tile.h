@@ -125,11 +125,11 @@ private:
 
     InsideType KV_SAVEBLE(inside_list_);
 
-    kv::PassableLevel KV_SAVEBLE(sum_passable_all_);
-    kv::PassableLevel KV_SAVEBLE(sum_passable_up_);
-    kv::PassableLevel KV_SAVEBLE(sum_passable_down_);
-    kv::PassableLevel KV_SAVEBLE(sum_passable_left_);
-    kv::PassableLevel KV_SAVEBLE(sum_passable_right_);
+    PassableLevel KV_SAVEBLE(sum_passable_all_);
+    PassableLevel KV_SAVEBLE(sum_passable_up_);
+    PassableLevel KV_SAVEBLE(sum_passable_down_);
+    PassableLevel KV_SAVEBLE(sum_passable_left_);
+    PassableLevel KV_SAVEBLE(sum_passable_right_);
 
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap();

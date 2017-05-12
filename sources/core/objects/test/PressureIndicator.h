@@ -2,7 +2,10 @@
 
 #include "../OnMapObject.h"
 
-class PressureIndicator : public kv::IOnMapObject
+namespace kv
+{
+
+class PressureIndicator : public IOnMapObject
 {
 public:
     DECLARE_SAVED(PressureIndicator, IOnMapObject);
@@ -14,3 +17,5 @@ private:
     void SetNumber(int number);
 };
 ADD_TO_TYPELIST(PressureIndicator);
+
+}

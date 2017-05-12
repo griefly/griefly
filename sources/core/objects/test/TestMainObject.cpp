@@ -1,6 +1,8 @@
 #include "TestMainObject.h"
 
 // LCOV_EXCL_START
+using namespace kv;
+
 TestMainObject::TestMainObject()
     : after_world_creation_(0),
       process_(0),

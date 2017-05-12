@@ -4,6 +4,8 @@
 
 #include "../../Game.h"
 
+using namespace kv;
+
 UnsyncGenerator::UnsyncGenerator()
 {
     unsync_string_ = "default";

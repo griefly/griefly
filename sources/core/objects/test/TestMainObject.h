@@ -5,7 +5,10 @@
 #include <functional>
 
 // LCOV_EXCL_START
-class TestMainObject : public kv::Object
+namespace kv
+{
+
+class TestMainObject : public Object
 {
 public:
     DECLARE_SAVED(TestMainObject, Object);
@@ -30,3 +33,5 @@ private:
 };
 ADD_TO_TYPELIST(TestMainObject);
 // LCOV_EXCL_STOP
+
+}

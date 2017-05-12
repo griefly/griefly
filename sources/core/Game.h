@@ -44,8 +44,8 @@ public:
     virtual Names& GetNames() override;
 
     virtual void SetUnsyncGenerator(quint32 generator) override;
-    virtual void ChangeMob(IdPtr<IMob> new_mob) override;
-    virtual IdPtr<IMob> GetMob() override;
+    virtual void ChangeMob(IdPtr<kv::IMob> new_mob) override;
+    virtual IdPtr<kv::IMob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
 
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
@@ -62,7 +62,7 @@ signals:
     void insertHtmlIntoChat(QString html);
     void playMusic(QString name, float volume);
 private:
-    IdPtr<UnsyncGenerator> GetUnsyncGenerator();
+    IdPtr<kv::UnsyncGenerator> GetUnsyncGenerator();
     void GenerateFrame();
 
     void UpdateVisible();
@@ -126,8 +126,8 @@ private:
     Names* names_;
     WorldLoaderSaver* world_loader_saver_;
 
-    IdPtr<UnsyncGenerator> unsync_generator_;
-    IdPtr<IMob> current_mob_;
+    IdPtr<kv::UnsyncGenerator> unsync_generator_;
+    IdPtr<kv::IMob> current_mob_;
 
     std::map<quint32, quint32> players_table_;
 };

@@ -29,7 +29,10 @@ namespace HumanInterfacePlaces
     const QString LAY = "SWITCH_LAY";
 }
 
-class Human;
+namespace kv
+{
+    class Human;
+}
 
 class HumanInterface : public InterfaceBase
 {
@@ -65,7 +68,7 @@ public:
 public:
     void ApplyActiveHandOnSlot(Slot<kv::Item>* slot);
 
-    IdPtr<Human> owner_;
+    IdPtr<kv::Human> owner_;
 
     bool active_hand_;
     bool pulling_;

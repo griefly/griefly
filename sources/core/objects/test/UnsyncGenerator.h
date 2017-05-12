@@ -2,7 +2,10 @@
 
 #include "../MainObject.h"
 
-class UnsyncGenerator : public kv::Object
+namespace kv
+{
+
+class UnsyncGenerator : public Object
 {
 public:
     DECLARE_SAVED(UnsyncGenerator, Object);
@@ -17,3 +20,4 @@ private:
 };
 ADD_TO_TYPELIST(UnsyncGenerator);
 
+}

@@ -5,6 +5,9 @@
 const int HUMAN_MAX_HEALTH = 10000;
 const int REGULAR_TEMPERATURE = 40;
 
+namespace kv
+{
+
 class Human : public IMob
 {
 public:
@@ -34,7 +37,7 @@ public:
   
     virtual void Bump(IdPtr<IMovable> item) override;
 
-    virtual void AttackBy(IdPtr<kv::Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 
     virtual void Represent() override;
 
@@ -81,3 +84,5 @@ private:
     void MakeEmote(const QString& emote);
 };
 ADD_TO_TYPELIST(Human);
+
+}

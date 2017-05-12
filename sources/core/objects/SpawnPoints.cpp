@@ -2,6 +2,8 @@
 
 #include "Lobby.h"
 
+using namespace kv;
+
 SpawnPoint::SpawnPoint()
 {
     SetSprite("icons/screen1.dmi");

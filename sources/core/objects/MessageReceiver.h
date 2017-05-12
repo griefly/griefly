@@ -3,7 +3,10 @@
 #include "Movable.h"
 #include "net/Network2.h"
 
-class IMessageReceiver : public kv::IMovable
+namespace kv
+{
+
+class IMessageReceiver : public IMovable
 {
 public:
     DECLARE_SAVED(IMessageReceiver, IMovable);
@@ -11,5 +14,6 @@ public:
     virtual void ProcessMessage(const Message2& msg) { }
     IMessageReceiver() { }
 };
-
 ADD_TO_TYPELIST(IMessageReceiver);
+
+}

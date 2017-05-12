@@ -10,6 +10,8 @@
 using ::testing::ReturnRef;
 using ::testing::Return;
 
+using namespace kv;
+
 TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
 {
     FastSerializer serializer;
@@ -156,7 +158,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 
         {
             ASSERT_GE(factory.GetIdTable().size(), 2);
-            kv::Object* object = factory.GetIdTable()[1].object;
+            Object* object = factory.GetIdTable()[1].object;
             ASSERT_TRUE(object);
             ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
             TestMainObject* test_object = static_cast<TestMainObject*>(object);
@@ -164,7 +166,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         }
         {
             ASSERT_GE(factory.GetIdTable().size(), 3);
-            kv::Object* object = factory.GetIdTable()[2].object;
+            Object* object = factory.GetIdTable()[2].object;
             ASSERT_TRUE(object);
             ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
             TestMainObject* test_object = static_cast<TestMainObject*>(object);

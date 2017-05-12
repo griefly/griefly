@@ -26,6 +26,9 @@ inline unsigned int hash(const LoginInterface& i)
     return i.hash();
 }
 
+namespace kv
+{
+
 class LoginMob : public IMob
 {
 public:
@@ -66,3 +69,5 @@ private:
     LoginInterface KV_SAVEBLE(interface_);
 };
 ADD_TO_TYPELIST(LoginMob);
+
+}

@@ -2,7 +2,10 @@
 
 #include "OnMapObject.h"
 
-class Computer : public kv::IOnMapObject
+namespace kv
+{
+
+class Computer : public IOnMapObject
 {
 public:
     DECLARE_SAVED(Computer, IOnMapObject);
@@ -10,3 +13,5 @@ public:
     Computer();
 };
 ADD_TO_TYPELIST(Computer);
+
+}

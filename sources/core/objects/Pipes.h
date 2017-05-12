@@ -7,13 +7,16 @@
 #include "Item.h"
 #include "GasTank.h"
 
-class PipeBase : public kv::IMovable
+namespace kv
+{
+
+class PipeBase : public IMovable
 {
 public:
     DECLARE_SAVED(PipeBase, IMovable);
     DECLARE_GET_TYPE_ITEM(PipeBase);
     PipeBase();
-    virtual void AttackBy(IdPtr<kv::Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) { return false; }
     virtual bool CanTransferGas(Dir dir) const { return false; }
     atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
@@ -69,7 +72,7 @@ public:
     Valve();
     virtual bool CanTransferGas(Dir dir) const override;
     virtual void Process() override;
-    virtual void AttackBy(IdPtr<kv::Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
 private:
     bool KV_SAVEBLE(closed_);
 };
@@ -123,4 +126,4 @@ public:
 };
 ADD_TO_TYPELIST(PipePump);
 
-
+}

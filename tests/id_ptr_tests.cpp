@@ -58,7 +58,7 @@ TEST_F(IdPtrTest, Constructors)
     IdPtr<kv::Object> from_other(empty);
     ASSERT_EQ(from_other.Id(), 10);
 
-    IdPtr<UnsyncGenerator> gen_from_other(from_other);
+    IdPtr<kv::UnsyncGenerator> gen_from_other(from_other);
     ASSERT_EQ(from_other.Id(), 10);
 
     from_other = 33;

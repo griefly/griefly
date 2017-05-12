@@ -13,7 +13,7 @@ public:
     Floor();
     virtual void AfterWorldCreation() override;
 
-    virtual void AttackBy(IdPtr<kv::Item> item) override;
+    virtual void AttackBy(IdPtr<Item> item) override;
     void SetOpen(bool o);
 
     bool KV_SAVEBLE(bloody);

@@ -9,10 +9,10 @@
 
 class SyncRandom;
 class Names;
-class IMob;
 class TextPainter;
 namespace kv
 {
+    class IMob;
     class IOnMapBase;
     class Object;
     class CubeTile;
@@ -120,8 +120,8 @@ public:
 
     virtual void SetUnsyncGenerator(quint32 generator) = 0;
 
-    virtual void ChangeMob(IdPtr<IMob> new_mob) = 0;
-    virtual IdPtr<IMob> GetMob() = 0;
+    virtual void ChangeMob(IdPtr<kv::IMob> new_mob) = 0;
+    virtual IdPtr<kv::IMob> GetMob() = 0;
     virtual void SetMob(quint32 new_mob) = 0;
 
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) = 0;

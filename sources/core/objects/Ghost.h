@@ -2,6 +2,9 @@
 
 #include "Mob.h"
 
+namespace kv
+{
+
 class Ghost: public IMob
 {
 public:
@@ -22,3 +25,5 @@ private:
     bool IsMobGhost();
 };
 ADD_TO_TYPELIST(Ghost);
+
+}
