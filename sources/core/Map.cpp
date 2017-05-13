@@ -21,9 +21,10 @@ void Map::FillTilesAtmosHolders()
         {
             for (int y = 0; y < GetHeight(); ++y)
             {
-                if (   squares_[x][y][z]->GetTurf()
-                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != atmos::SPACE
-                    && squares_[x][y][z]->GetTurf()->GetAtmosState() != atmos::NON_SIMULATED)
+                auto turf = squares_[x][y][z]->GetTurf();
+                if (   turf.IsValid()
+                    && turf->GetAtmosState() != atmos::SPACE
+                    && turf->GetAtmosState() != atmos::NON_SIMULATED)
                 {
                     // It is not passable then still fill with air cause of doors
                     auto holder = squares_[x][y][z]->GetAtmosHolder();
@@ -41,50 +42,24 @@ void Map::Represent()
         return;
     }
 
-    for (int i = 0; i < MAX_LEVEL; ++i)
+    for (auto it = GetVisiblePoints()->begin(); it != GetVisiblePoints()->end(); ++it)
     {
-        auto it2 = GetVisiblePoints()->begin();
-        while (it2 != GetVisiblePoints()->end())
+        auto& tile = At(it->posx, it->posy, it->posz);
+        auto& objects = tile->GetInsideList();
+
+        for (auto object = objects.begin(); object != objects.end(); ++object)
         {
-            auto sq = squares_[it2->posx][it2->posy][it2->posz];
-            auto& in_list = sq->GetInsideList();
-
-            for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
-            {
-                if ((*list_it)->v_level == i)
-                {
-                    (*list_it)->Represent();
-                }
-            }
-
-            auto trf = squares_[it2->posx][it2->posy][it2->posz]->GetTurf();
-            if (trf.IsValid() && trf->v_level == i)
-            {
-                trf->Represent();
-            }
-            ++it2;
-        }
-    }
-    auto it2 = GetVisiblePoints()->begin();
-    while (it2 != GetVisiblePoints()->end())
-    {
-        auto sq = squares_[it2->posx][it2->posy][it2->posz];
-        auto& in_list = sq->GetInsideList();
-
-        for (auto list_it = in_list.begin(); list_it != in_list.end(); ++list_it)
-        {
-            if ((*list_it)->v_level >= MAX_LEVEL)
-            {
-                (*list_it)->Represent();
-            }
+            (*object)->Represent();
         }
 
-        auto trf = squares_[it2->posx][it2->posy][it2->posz]->GetTurf();
-        if (trf.IsValid() && trf->v_level >= MAX_LEVEL)
+        auto turf = tile->GetTurf();
+        if (!turf.IsValid())
         {
-            trf->Represent();
+            KvAbort(
+                QString("Invalid turf in Map::Represent() at (%1, %2, %3), but turf always should be valid!")
+                    .arg(it->posx).arg(it->posy).arg(it->posz));
         }
-        ++it2;
+        turf->Represent();
     }
 }
 
