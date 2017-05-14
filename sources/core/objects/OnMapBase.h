@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "DrawInt.h"
+#include "MainObject.h"
 
 namespace kv
 {
@@ -27,10 +27,10 @@ inline bool CanPass(PassableLevel block, PassableLevel object)
     return block >= object;
 }
 
-class IOnMapBase : public IDraw
+class IOnMapBase : public Object
 {
 public:
-    DECLARE_SAVED(IOnMapBase, IDraw);
+    DECLARE_SAVED(IOnMapBase, Object);
     DECLARE_GET_TYPE_ITEM(IOnMapBase);
     IOnMapBase() { owner = 0; }
     virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
@@ -56,7 +56,7 @@ public:
         {
             owner->RemoveItem(GetId());
         }
-        IDraw::Delete();
+        Object::Delete();
     }
 
     virtual void AttackBy(IdPtr<Item> item);
@@ -137,7 +137,8 @@ public:
     {
         return owner->GetZ();
     }
-    virtual void UpdatePassable() {}
+    virtual void Represent() { }
+    virtual void UpdatePassable() { }
     virtual IdPtr<ITurf> GetTurf();
     virtual void SetTurf(IdPtr<ITurf> turf);
     IdPtr<IOnMapBase> GetRoot();
