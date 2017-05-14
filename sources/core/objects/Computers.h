@@ -8,10 +8,10 @@ namespace kv
 class Computer : public IOnMapObject
 {
 public:
-    DECLARE_SAVED(Computer, IOnMapObject);
-    DECLARE_GET_TYPE_ITEM(Computer);
+    DECLARE_SAVEABLE(Computer, IOnMapObject);
+    REGISTER_CLASS_AS(Computer);
     Computer();
 };
-ADD_TO_TYPELIST(Computer);
+END_DECLARE(Computer);
 
 }

@@ -8,8 +8,8 @@ namespace kv
 class Table : public IMovable
 {
 public:
-    DECLARE_SAVED(Table, IMovable);
-    DECLARE_GET_TYPE_ITEM(Table);
+    DECLARE_SAVEABLE(Table, IMovable);
+    REGISTER_CLASS_AS(Table);
     Table();
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Delete() override;
@@ -17,19 +17,19 @@ public:
     void UpdateSprite(quint32 ignored_table);
     virtual void AfterWorldCreation() override;
 protected:
-    QString KV_SAVEBLE(material_);
+    QString KV_SAVEABLE(material_);
 private:
     static int CheckTable(IdPtr<IOnMapBase> container, quint32 ignored_table);
 }
-ADD_TO_TYPELIST(Table);
+END_DECLARE(Table);
 
 class MetalTable : public Table
 {
 public:
-    DECLARE_SAVED(MetalTable, Table);
-    DECLARE_GET_TYPE_ITEM(MetalTable);
+    DECLARE_SAVEABLE(MetalTable, Table);
+    REGISTER_CLASS_AS(MetalTable);
     MetalTable();
 }
-ADD_TO_TYPELIST(MetalTable);
+END_DECLARE(MetalTable);
 
 }

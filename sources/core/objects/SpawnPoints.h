@@ -8,13 +8,13 @@ namespace kv
 class SpawnPoint : public IOnMapObject
 {
 public:
-    DECLARE_SAVED(SpawnPoint, IOnMapObject);
-    DECLARE_GET_TYPE_ITEM(SpawnPoint);
+    DECLARE_SAVEABLE(SpawnPoint, IOnMapObject);
+    REGISTER_CLASS_AS(SpawnPoint);
     SpawnPoint();
 
     virtual void AfterWorldCreation() override;
-    QString KV_SAVEBLE(spawn_type);
+    QString KV_SAVEABLE(spawn_type);
 };
-ADD_TO_TYPELIST(SpawnPoint);
+END_DECLARE(SpawnPoint);
 
 }

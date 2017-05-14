@@ -13,8 +13,8 @@ namespace kv
 class PipeBase : public IMovable
 {
 public:
-    DECLARE_SAVED(PipeBase, IMovable);
-    DECLARE_GET_TYPE_ITEM(PipeBase);
+    DECLARE_SAVEABLE(PipeBase, IMovable);
+    REGISTER_CLASS_AS(PipeBase);
     PipeBase();
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) { return false; }
@@ -23,15 +23,15 @@ public:
 protected:
     void ConnectHelper(IdPtr<PipeBase>& connection, Dir dir);
     void ProcessHelper(IdPtr<PipeBase>& connection, Dir dir);
-    atmos::AtmosHolder KV_SAVEBLE(atmos_holder_);
+    atmos::AtmosHolder KV_SAVEABLE(atmos_holder_);
 };
-ADD_TO_TYPELIST(PipeBase);
+END_DECLARE(PipeBase);
 
 class Pipe : public PipeBase
 {
 public:
-    DECLARE_SAVED(Pipe, PipeBase);
-    DECLARE_GET_TYPE_ITEM(Pipe);
+    DECLARE_SAVEABLE(Pipe, PipeBase);
+    REGISTER_CLASS_AS(Pipe);
     Pipe();
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
@@ -39,16 +39,16 @@ public:
     virtual void Process() override;
 protected:
     static void GetTailAndHead(Dir dir, Dir* head, Dir* tail);
-    IdPtr<PipeBase> KV_SAVEBLE(head_);
-    IdPtr<PipeBase> KV_SAVEBLE(tail_);
+    IdPtr<PipeBase> KV_SAVEABLE(head_);
+    IdPtr<PipeBase> KV_SAVEABLE(tail_);
 };
-ADD_TO_TYPELIST(Pipe);
+END_DECLARE(Pipe);
 
 class Manifold : public PipeBase
 {
 public:
-    DECLARE_SAVED(Manifold, PipeBase);
-    DECLARE_GET_TYPE_ITEM(Manifold);
+    DECLARE_SAVEABLE(Manifold, PipeBase);
+    REGISTER_CLASS_AS(Manifold);
     Manifold();
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
@@ -57,32 +57,32 @@ public:
 private:
     static void GetConnectionsDirs(Dir dir, Dir* tail, Dir* left, Dir* right);
 
-    IdPtr<PipeBase> KV_SAVEBLE(tail_);
-    IdPtr<PipeBase> KV_SAVEBLE(left_);
-    IdPtr<PipeBase> KV_SAVEBLE(right_);
+    IdPtr<PipeBase> KV_SAVEABLE(tail_);
+    IdPtr<PipeBase> KV_SAVEABLE(left_);
+    IdPtr<PipeBase> KV_SAVEABLE(right_);
 };
-ADD_TO_TYPELIST(Manifold);
+END_DECLARE(Manifold);
 
 
 class Valve : public Pipe
 {
 public:
-    DECLARE_SAVED(Valve, Pipe);
-    DECLARE_GET_TYPE_ITEM(Valve);
+    DECLARE_SAVEABLE(Valve, Pipe);
+    REGISTER_CLASS_AS(Valve);
     Valve();
     virtual bool CanTransferGas(Dir dir) const override;
     virtual void Process() override;
     virtual void AttackBy(IdPtr<Item> item) override;
 private:
-    bool KV_SAVEBLE(closed_);
+    bool KV_SAVEABLE(closed_);
 };
-ADD_TO_TYPELIST(Valve);
+END_DECLARE(Valve);
 
 class Vent : public PipeBase
 {
 public:
-    DECLARE_SAVED(Vent, PipeBase);
-    DECLARE_GET_TYPE_ITEM(Vent);
+    DECLARE_SAVEABLE(Vent, PipeBase);
+    REGISTER_CLASS_AS(Vent);
     Vent();
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
@@ -91,15 +91,15 @@ public:
 
     void SetHidden(bool hidden);
 private:
-    IdPtr<PipeBase> KV_SAVEBLE(tail_);
+    IdPtr<PipeBase> KV_SAVEABLE(tail_);
 };
-ADD_TO_TYPELIST(Vent);
+END_DECLARE(Vent);
 
 class Connector : public PipeBase
 {
 public:
-    DECLARE_SAVED(Connector, PipeBase);
-    DECLARE_GET_TYPE_ITEM(Connector);
+    DECLARE_SAVEABLE(Connector, PipeBase);
+    REGISTER_CLASS_AS(Connector);
     Connector();
     void ConnectToGasTank(IdPtr<GasTank> tank);
     void DisconnectFromGasTank();
@@ -108,22 +108,22 @@ public:
     virtual bool CanTransferGas(Dir dir) const override { return true; }
     virtual void Process() override;
 private:
-    IdPtr<GasTank> KV_SAVEBLE(tank_);
-    IdPtr<PipeBase> KV_SAVEBLE(tail_);
+    IdPtr<GasTank> KV_SAVEABLE(tank_);
+    IdPtr<PipeBase> KV_SAVEABLE(tail_);
 };
-ADD_TO_TYPELIST(Connector);
+END_DECLARE(Connector);
 
 class PipePump : public Pipe
 {
 public:
-    DECLARE_SAVED(PipePump, Pipe);
-    DECLARE_GET_TYPE_ITEM(PipePump);
+    DECLARE_SAVEABLE(PipePump, Pipe);
+    REGISTER_CLASS_AS(PipePump);
     PipePump();
     virtual bool CanTransferGas(Dir dir) const override;
     virtual void Process() override;
 public:
-    int KV_SAVEBLE(pump_pressure_);
+    int KV_SAVEABLE(pump_pressure_);
 };
-ADD_TO_TYPELIST(PipePump);
+END_DECLARE(PipePump);
 
 }

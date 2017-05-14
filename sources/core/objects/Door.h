@@ -9,8 +9,8 @@ namespace kv
 class Door : public IOnMapObject
 {
 public:
-    DECLARE_SAVED(Door, IOnMapObject);
-    DECLARE_GET_TYPE_ITEM(Door);
+    DECLARE_SAVEABLE(Door, IOnMapObject);
+    REGISTER_CLASS_AS(Door);
     Door();
     
     enum State
@@ -26,55 +26,55 @@ public:
     bool IsState(State state) const { return state == door_state_; }
     void Weld();
 private:
-    int KV_SAVEBLE(door_state_);
-    quint32 KV_SAVEBLE(last_tick_);
+    int KV_SAVEABLE(door_state_);
+    quint32 KV_SAVEABLE(last_tick_);
 };
-ADD_TO_TYPELIST(Door);
+END_DECLARE(Door);
 
 class SecurityDoor : public Door
 {
 public:
-    DECLARE_SAVED(SecurityDoor, Door);
-    DECLARE_GET_TYPE_ITEM(SecurityDoor);
+    DECLARE_SAVEABLE(SecurityDoor, Door);
+    REGISTER_CLASS_AS(SecurityDoor);
     SecurityDoor();
 };
-ADD_TO_TYPELIST(SecurityDoor);
+END_DECLARE(SecurityDoor);
 
 class NontransparentDoor : public Door
 {
 public:
-    DECLARE_SAVED(NontransparentDoor, Door);
-    DECLARE_GET_TYPE_ITEM(NontransparentDoor);
+    DECLARE_SAVEABLE(NontransparentDoor, Door);
+    REGISTER_CLASS_AS(NontransparentDoor);
     NontransparentDoor();
 
     virtual void Open() override;
     virtual void Close() override;
 };
-ADD_TO_TYPELIST(NontransparentDoor);
+END_DECLARE(NontransparentDoor);
 
 class ExternalDoor : public NontransparentDoor
 {
 public:
-    DECLARE_SAVED(ExternalDoor, NontransparentDoor);
-    DECLARE_GET_TYPE_ITEM(ExternalDoor);
+    DECLARE_SAVEABLE(ExternalDoor, NontransparentDoor);
+    REGISTER_CLASS_AS(ExternalDoor);
     ExternalDoor();
 };
-ADD_TO_TYPELIST(ExternalDoor);
+END_DECLARE(ExternalDoor);
 
 class MaintenanceDoor : public NontransparentDoor
 {
 public:
-    DECLARE_SAVED(MaintenanceDoor, NontransparentDoor);
-    DECLARE_GET_TYPE_ITEM(MaintenanceDoor);
+    DECLARE_SAVEABLE(MaintenanceDoor, NontransparentDoor);
+    REGISTER_CLASS_AS(MaintenanceDoor);
     MaintenanceDoor();
 };
-ADD_TO_TYPELIST(MaintenanceDoor);
+END_DECLARE(MaintenanceDoor);
 
 class GlassDoor : public IMovable
 {
 public:
-    DECLARE_SAVED(GlassDoor, IMovable);
-    DECLARE_GET_TYPE_ITEM(GlassDoor);
+    DECLARE_SAVEABLE(GlassDoor, IMovable);
+    REGISTER_CLASS_AS(GlassDoor);
     GlassDoor();
 
     virtual void AfterWorldCreation() override;
@@ -91,11 +91,11 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     bool IsState(STATE state) const { return state == door_state_; };
 private:
-    int KV_SAVEBLE(door_state_);
-    quint32 KV_SAVEBLE(last_tick_);
+    int KV_SAVEABLE(door_state_);
+    quint32 KV_SAVEABLE(last_tick_);
 
-    QString KV_SAVEBLE(door_prefix_);
+    QString KV_SAVEABLE(door_prefix_);
 };
-ADD_TO_TYPELIST(GlassDoor);
+END_DECLARE(GlassDoor);
 
 }

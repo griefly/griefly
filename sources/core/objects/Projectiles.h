@@ -13,8 +13,8 @@ namespace kv
 class Projectile : public IMovable
 {
 public:
-    DECLARE_SAVED(Projectile, IMovable)
-    DECLARE_GET_TYPE_ITEM(Projectile)
+    DECLARE_SAVEABLE(Projectile, IMovable);
+    REGISTER_CLASS_AS(Projectile);
 
     Projectile();
 
@@ -29,16 +29,16 @@ public:
     virtual bool CheckPassable() override;
 protected:
     bool CheckHumanTile();
-    bool KV_SAVEBLE(harmless_);
+    bool KV_SAVEABLE(harmless_);
 
-    int KV_SAVEBLE(damage_);
-    int KV_SAVEBLE(burn_damage_);
+    int KV_SAVEABLE(damage_);
+    int KV_SAVEABLE(burn_damage_);
 private:
     bool ProcessMovement();
 
-    int KV_SAVEBLE(current_step_);
-    std::vector<Dir> KV_SAVEBLE(movement_);
+    int KV_SAVEABLE(current_step_);
+    std::vector<Dir> KV_SAVEABLE(movement_);
 };
-ADD_TO_TYPELIST(Projectile);
+END_DECLARE(Projectile);
 
 }

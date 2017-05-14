@@ -6,21 +6,21 @@ namespace kv
 class LaserGun : public Gun
 {
 public:
-    DECLARE_SAVED(LaserGun, Gun);
-    DECLARE_GET_TYPE_ITEM(LaserGun);
+    DECLARE_SAVEABLE(LaserGun, Gun);
+    REGISTER_CLASS_AS(LaserGun);
     LaserGun();
     virtual void Shoot(VDir target) override;
 };
-ADD_TO_TYPELIST(LaserGun);
+END_DECLARE(LaserGun);
 
 class Revolver : public Gun
 {
 public:
-    DECLARE_SAVED(Revolver, Gun);
-    DECLARE_GET_TYPE_ITEM(Revolver);
+    DECLARE_SAVEABLE(Revolver, Gun);
+    REGISTER_CLASS_AS(Revolver);
     Revolver();
     virtual void Shoot(VDir target) override;
 };
-ADD_TO_TYPELIST(Revolver);
+END_DECLARE(Revolver);
 
 }

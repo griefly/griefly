@@ -9,11 +9,11 @@ namespace kv
 class IMessageReceiver : public IMovable
 {
 public:
-    DECLARE_SAVED(IMessageReceiver, IMovable);
-    DECLARE_GET_TYPE_ITEM(IMessageReceiver);
+    DECLARE_SAVEABLE(IMessageReceiver, IMovable);
+    REGISTER_CLASS_AS(IMessageReceiver);
     virtual void ProcessMessage(const Message2& msg) { }
     IMessageReceiver() { }
 };
-ADD_TO_TYPELIST(IMessageReceiver);
+END_DECLARE(IMessageReceiver);
 
 }

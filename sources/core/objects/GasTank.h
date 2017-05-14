@@ -11,8 +11,8 @@ namespace kv
 class GasTank : public IMovable
 {
 public:
-    DECLARE_SAVED(GasTank, IMovable);
-    DECLARE_GET_TYPE_ITEM(GasTank);
+    DECLARE_SAVEABLE(GasTank, IMovable);
+    REGISTER_CLASS_AS(GasTank);
     GasTank();
     virtual void AfterWorldCreation() override;
 
@@ -24,29 +24,29 @@ private:
     void Open();
     void Close();
 
-    bool KV_SAVEBLE(open_);
-    atmos::AtmosHolder KV_SAVEBLE(atmos_holder_);
+    bool KV_SAVEABLE(open_);
+    atmos::AtmosHolder KV_SAVEABLE(atmos_holder_);
 };
-ADD_TO_TYPELIST(GasTank);
+END_DECLARE(GasTank);
 
 class MagicGasTank : public GasTank
 {
 public:
-    DECLARE_SAVED(MagicGasTank, GasTank);
-    DECLARE_GET_TYPE_ITEM(MagicGasTank);
+    DECLARE_SAVEABLE(MagicGasTank, GasTank);
+    REGISTER_CLASS_AS(MagicGasTank);
     MagicGasTank();
     virtual void AfterWorldCreation() override;
     virtual void Process() override;
 };
-ADD_TO_TYPELIST(MagicGasTank);
+END_DECLARE(MagicGasTank);
 
 class PlasmaGasTank : public GasTank
 {
 public:
-    DECLARE_SAVED(PlasmaGasTank, GasTank);
-    DECLARE_GET_TYPE_ITEM(PlasmaGasTank);
+    DECLARE_SAVEABLE(PlasmaGasTank, GasTank);
+    REGISTER_CLASS_AS(PlasmaGasTank);
     PlasmaGasTank();
 };
-ADD_TO_TYPELIST(PlasmaGasTank);
+END_DECLARE(PlasmaGasTank);
 
 }

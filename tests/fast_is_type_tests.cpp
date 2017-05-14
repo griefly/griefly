@@ -48,9 +48,9 @@ TEST(FastIsType, OneArg)
 
 TEST(FastIsType, CastTo)
 {
-    kv::Object main_type(nouse);
-    UnsyncGenerator unsync_type(nouse);
-    IOnMapBase base_type(nouse);
+    kv::Object main_type(kv::internal::no_initialization);
+    UnsyncGenerator unsync_type(kv::internal::no_initialization);
+    IOnMapBase base_type(kv::internal::no_initialization);
 
     IOnMapBase* null_type = nullptr;
 

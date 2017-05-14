@@ -9,40 +9,40 @@ namespace kv
 class Drinks : public Item
 {
 public:
-    DECLARE_SAVED(Drinks, Item);
-    DECLARE_GET_TYPE_ITEM(Drinks);
+    DECLARE_SAVEABLE(Drinks, Item);
+    REGISTER_CLASS_AS(Drinks);
     Drinks();
     void Drink(IdPtr<Human> consumer, IdPtr<Human> feeder);
 private:
-    bool KV_SAVEBLE(full_);
+    bool KV_SAVEABLE(full_);
 };
-ADD_TO_TYPELIST(Drinks);
+END_DECLARE(Drinks);
 
 class Vodka : public Drinks
 {
 public:
-    DECLARE_SAVED(Vodka, Drinks);
-    DECLARE_GET_TYPE_ITEM(Vodka);
+    DECLARE_SAVEABLE(Vodka, Drinks);
+    REGISTER_CLASS_AS(Vodka);
     Vodka();
 };
-ADD_TO_TYPELIST(Vodka);
+END_DECLARE(Vodka);
 
 class Beer : public Drinks
 {
 public:
-    DECLARE_SAVED(Beer, Drinks);
-    DECLARE_GET_TYPE_ITEM(Beer);
+    DECLARE_SAVEABLE(Beer, Drinks);
+    REGISTER_CLASS_AS(Beer);
     Beer();
 };
-ADD_TO_TYPELIST(Beer);
+END_DECLARE(Beer);
 
 class Tea : public Drinks
 {
 public:
-    DECLARE_SAVED(Tea, Drinks);
-    DECLARE_GET_TYPE_ITEM(Tea);
+    DECLARE_SAVEABLE(Tea, Drinks);
+    REGISTER_CLASS_AS(Tea);
     Tea();
 };
-ADD_TO_TYPELIST(Tea);
+END_DECLARE(Tea);
 
 }

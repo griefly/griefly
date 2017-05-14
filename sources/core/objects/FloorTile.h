@@ -8,10 +8,10 @@ namespace kv
 class FloorTile : public Item
 {
 public:
-    DECLARE_SAVED(FloorTile, Item);
-    DECLARE_GET_TYPE_ITEM(FloorTile);
+    DECLARE_SAVEABLE(FloorTile, Item);
+    REGISTER_CLASS_AS(FloorTile);
     FloorTile();
 };
-ADD_TO_TYPELIST(FloorTile);
+END_DECLARE(FloorTile);
 
 }

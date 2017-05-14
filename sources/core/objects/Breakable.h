@@ -8,19 +8,19 @@ namespace kv
 class Breakable : public Structure
 {
 public:
-    DECLARE_SAVED(Breakable, Structure);
-    DECLARE_GET_TYPE_ITEM(Breakable);
+    DECLARE_SAVEABLE(Breakable, Structure);
+    REGISTER_CLASS_AS(Breakable);
     Breakable();
 
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Bump(IdPtr<IMovable> item) override;
-    virtual void Break() {};
-    virtual void PlayOnHitSound() {};
+    virtual void Break() { }
+    virtual void PlayOnHitSound() { }
     void SetHitPoints(int number);
     void Hit(int damage);
 private:
-    int KV_SAVEBLE(hit_points_);
+    int KV_SAVEABLE(hit_points_);
 };
-ADD_TO_TYPELIST(Breakable);
+END_DECLARE(Breakable);
 
 }

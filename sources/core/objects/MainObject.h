@@ -34,6 +34,9 @@ class Object
     friend quint32& internal::GetObjectId(Object* object);
     friend quint32 internal::CreateImpl(Object* object, const QString& type, quint32 owner);
 public:
+    Object() { id_ = 0; how_often_ = 0; game_ = nullptr; }
+    Object(kv::internal::NoInitialization) { id_ = 0; how_often_ = 0; game_ = nullptr; }
+
     virtual ~Object() { }
 
     void PlayMusic(const QString& name, float volume = 100.0f);
@@ -50,8 +53,6 @@ public:
     }
 
     virtual void Delete();
-    Object() { id_ = 0; how_often_ = 0; game_ = nullptr; }
-    Object(NotLoadItem) { id_ = 0; how_often_ = 0; game_ = nullptr; }
     virtual void AfterWorldCreation() { }
     virtual const QString& GetType() const
     {
@@ -68,8 +69,8 @@ public:
         return TYPE_INDEX;
     }
 
-    static Object* _Z_creator() { return new Object(); }
-    static Object* _Z_creatorSaved() { return new Object(nouse);}
+    static Object* _Z_KV_Creator() { return new Object(); }
+    static Object* _Z_KV_VoidCreator() { return new Object(kv::internal::no_initialization);}
 
     virtual void Process() { }
 
@@ -100,7 +101,6 @@ private:
     quint32 id_;
     int how_often_;
 };
-ADD_TO_TYPELIST(Object);
 
 namespace internal
 {

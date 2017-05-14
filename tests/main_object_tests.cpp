@@ -15,7 +15,7 @@ TEST(MainObject, Constructor)
     ASSERT_EQ(object.GetId(), 0);
     ASSERT_EQ(object.GetFreq(), 0);
 
-    Object object2(/*NotLoadItem*/nouse);
+    Object object2(kv::internal::no_initialization);
     ASSERT_EQ(object2.GetId(), 0);
     ASSERT_EQ(object2.GetFreq(), 0);
 }

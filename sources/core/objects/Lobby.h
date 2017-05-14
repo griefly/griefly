@@ -10,8 +10,8 @@ namespace kv
 class Lobby : public Object
 {
 public:
-    DECLARE_SAVED(Lobby, Object);
-    DECLARE_GET_TYPE_ITEM(Lobby)
+    DECLARE_SAVEABLE(Lobby, Object);
+    REGISTER_CLASS_AS(Lobby);
     Lobby();
     virtual void AfterWorldCreation() override;
 
@@ -21,13 +21,13 @@ public:
     void AddSpawnPoint(IdPtr<SpawnPoint> PosPoint);
     std::vector<IdPtr<CubeTile>> GetTilesFor(const QString& type);
 private:
-    int KV_SAVEBLE(seconds_);
-    std::vector<IdPtr<SpawnPoint>> KV_SAVEBLE(spawn_points_);
+    int KV_SAVEABLE(seconds_);
+    std::vector<IdPtr<SpawnPoint>> KV_SAVEABLE(spawn_points_);
 
     KV_ON_LOAD_CALL(SetThisAsLobby);
     void SetThisAsLobby();
 };
-ADD_TO_TYPELIST(Lobby);
+END_DECLARE(Lobby);
 
 void SetLobby(Lobby* lobby);
 Lobby& GetLobby();

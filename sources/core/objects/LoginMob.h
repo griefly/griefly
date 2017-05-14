@@ -32,8 +32,8 @@ namespace kv
 class LoginMob : public IMob
 {
 public:
-    DECLARE_SAVED(LoginMob, IMob);
-    DECLARE_GET_TYPE_ITEM(LoginMob);
+    DECLARE_SAVEABLE(LoginMob, IMob);
+    REGISTER_CLASS_AS(LoginMob);
     LoginMob();
 
     virtual void AfterWorldCreation() override;
@@ -66,8 +66,8 @@ public:
 
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;
 private:
-    LoginInterface KV_SAVEBLE(interface_);
+    LoginInterface KV_SAVEABLE(interface_);
 };
-ADD_TO_TYPELIST(LoginMob);
+END_DECLARE(LoginMob);
 
 }

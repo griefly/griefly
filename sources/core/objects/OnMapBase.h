@@ -30,8 +30,8 @@ inline bool CanPass(PassableLevel block, PassableLevel object)
 class IOnMapBase : public Object
 {
 public:
-    DECLARE_SAVED(IOnMapBase, Object);
-    DECLARE_GET_TYPE_ITEM(IOnMapBase);
+    DECLARE_SAVEABLE(IOnMapBase, Object);
+    REGISTER_CLASS_AS(IOnMapBase);
     IOnMapBase() { owner = 0; }
     virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
     {
@@ -144,9 +144,9 @@ public:
     IdPtr<IOnMapBase> GetRoot();
     void PlaySoundIfVisible(const QString& name);
 protected:
-    IdPtr<IOnMapBase> KV_SAVEBLE(owner);
+    IdPtr<IOnMapBase> KV_SAVEABLE(owner);
     virtual quint32 GetItemImpl(unsigned int hash) { return 0; }
 };
-ADD_TO_TYPELIST(IOnMapBase);
+END_DECLARE(IOnMapBase);
 
 }

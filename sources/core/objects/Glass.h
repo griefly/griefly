@@ -8,8 +8,8 @@ namespace kv
 class FlatGlass : public Breakable
 {
 public:
-    DECLARE_SAVED(FlatGlass, Breakable);
-    DECLARE_GET_TYPE_ITEM(FlatGlass);
+    DECLARE_SAVEABLE(FlatGlass, Breakable);
+    REGISTER_CLASS_AS(FlatGlass);
     FlatGlass();
 
     virtual void AfterWorldCreation() override;
@@ -20,15 +20,15 @@ public:
     virtual void PlayOnHitSound() override;
     virtual void AttackBy(IdPtr<Item> item) override;
 };
-ADD_TO_TYPELIST(FlatGlass);
+END_DECLARE(FlatGlass);
 
 class ReinforcedFlatGlass : public FlatGlass
 {
 public:
-    DECLARE_SAVED(ReinforcedFlatGlass, FlatGlass);
-    DECLARE_GET_TYPE_ITEM(ReinforcedFlatGlass);
+    DECLARE_SAVEABLE(ReinforcedFlatGlass, FlatGlass);
+    REGISTER_CLASS_AS(ReinforcedFlatGlass);
     ReinforcedFlatGlass();
 };
-ADD_TO_TYPELIST(ReinforcedFlatGlass);
+END_DECLARE(ReinforcedFlatGlass);
 
 }

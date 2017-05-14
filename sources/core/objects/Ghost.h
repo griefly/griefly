@@ -8,8 +8,8 @@ namespace kv
 class Ghost: public IMob
 {
 public:
-    DECLARE_SAVED(Ghost, IMob);
-    DECLARE_GET_TYPE_ITEM(Ghost);
+    DECLARE_SAVEABLE(Ghost, IMob);
+    REGISTER_CLASS_AS(Ghost);
     Ghost();
     virtual void AfterWorldCreation() override;
     virtual void Represent() override;
@@ -21,9 +21,9 @@ public:
 
     virtual void Process() override;
 private:
-    int KV_SAVEBLE(seconds_until_respawn_);
+    int KV_SAVEABLE(seconds_until_respawn_);
     bool IsMobGhost();
 };
-ADD_TO_TYPELIST(Ghost);
+END_DECLARE(Ghost);
 
 }

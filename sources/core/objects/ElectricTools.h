@@ -10,23 +10,23 @@ namespace kv
 class AtmosTool : public Item
 {
 public:
-    DECLARE_SAVED(AtmosTool, Item);
-    DECLARE_GET_TYPE_ITEM(AtmosTool);
+    DECLARE_SAVEABLE(AtmosTool, Item);
+    REGISTER_CLASS_AS(AtmosTool);
     AtmosTool();
 
     static QString GetHtmlInfo(atmos::AtmosHolder& holder);
 
     virtual void AttackBy(IdPtr<Item> item) override;
 };
-ADD_TO_TYPELIST(AtmosTool)
+END_DECLARE(AtmosTool)
 
 class RemoteAtmosTool : public AtmosTool
 {
 public:
-    DECLARE_SAVED(RemoteAtmosTool, AtmosTool);
-    DECLARE_GET_TYPE_ITEM(RemoteAtmosTool);
+    DECLARE_SAVEABLE(RemoteAtmosTool, AtmosTool);
+    REGISTER_CLASS_AS(RemoteAtmosTool);
     RemoteAtmosTool();
 };
-ADD_TO_TYPELIST(RemoteAtmosTool)
+END_DECLARE(RemoteAtmosTool)
 
 }

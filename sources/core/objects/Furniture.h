@@ -8,30 +8,30 @@ namespace kv
 class Bed : public IMovable
 {
 public:
-    DECLARE_SAVED(Bed, IMovable);
-    DECLARE_GET_TYPE_ITEM(Bed);
+    DECLARE_SAVEABLE(Bed, IMovable);
+    REGISTER_CLASS_AS(Bed);
     Bed();
 };
-ADD_TO_TYPELIST(Bed);
+END_DECLARE(Bed);
 
 class Chair : public IMovable
 {
 public:
-    DECLARE_SAVED(Chair, IMovable);
-    DECLARE_GET_TYPE_ITEM(Chair);
+    DECLARE_SAVEABLE(Chair, IMovable);
+    REGISTER_CLASS_AS(Chair);
     Chair();
 
     virtual void AfterWorldCreation() override;
 };
-ADD_TO_TYPELIST(Chair);
+END_DECLARE(Chair);
 
 class Stool : public IMovable
 {
 public:
-    DECLARE_SAVED(Stool, IMovable);
-    DECLARE_GET_TYPE_ITEM(Stool);
+    DECLARE_SAVEABLE(Stool, IMovable);
+    REGISTER_CLASS_AS(Stool);
     Stool();
 };
-ADD_TO_TYPELIST(Stool);
+END_DECLARE(Stool);
 
 }

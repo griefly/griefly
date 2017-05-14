@@ -9,42 +9,42 @@ namespace kv
 class HealthAnalyzer : public Item
 {
 public:
-    DECLARE_SAVED(HealthAnalyzer, Item);
-    DECLARE_GET_TYPE_ITEM(HealthAnalyzer);
+    DECLARE_SAVEABLE(HealthAnalyzer, Item);
+    REGISTER_CLASS_AS(HealthAnalyzer);
     HealthAnalyzer();
     void Scan(IdPtr<Human> target);
 };
-ADD_TO_TYPELIST(HealthAnalyzer);
+END_DECLARE(HealthAnalyzer);
 
 class Medicine : public Item
 {
 public:
-    DECLARE_SAVED(Medicine, Item);
-    DECLARE_GET_TYPE_ITEM(Medicine);
+    DECLARE_SAVEABLE(Medicine, Item);
+    REGISTER_CLASS_AS(Medicine);
     Medicine();
     void Heal(IdPtr<Human> target);
 protected:
-    int KV_SAVEBLE(burn_heal_);
-    int KV_SAVEBLE(brute_heal_);
+    int KV_SAVEABLE(burn_heal_);
+    int KV_SAVEABLE(brute_heal_);
 };
-ADD_TO_TYPELIST(Medicine);
+END_DECLARE(Medicine);
 
 class Ointment : public Medicine
 {
 public:
-    DECLARE_SAVED(Ointment, Medicine);
-    DECLARE_GET_TYPE_ITEM(Ointment);
+    DECLARE_SAVEABLE(Ointment, Medicine);
+    REGISTER_CLASS_AS(Ointment);
     Ointment();
 };
-ADD_TO_TYPELIST(Ointment);
+END_DECLARE(Ointment);
 
 class BruisePack : public Medicine
 {
 public:
-    DECLARE_SAVED(BruisePack, Medicine);
-    DECLARE_GET_TYPE_ITEM(BruisePack);
+    DECLARE_SAVEABLE(BruisePack, Medicine);
+    REGISTER_CLASS_AS(BruisePack);
     BruisePack();
 };
-ADD_TO_TYPELIST(BruisePack);
+END_DECLARE(BruisePack);
 
 }

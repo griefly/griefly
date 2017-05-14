@@ -8,15 +8,15 @@ namespace kv
 class Grille : public Breakable
 {
 public:
-    DECLARE_SAVED(Grille, Breakable);
-    DECLARE_GET_TYPE_ITEM(Grille);
+    DECLARE_SAVEABLE(Grille, Breakable);
+    REGISTER_CLASS_AS(Grille);
     Grille();
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Break() override;
     virtual void PlayOnHitSound() override;
 private:
-    bool KV_SAVEBLE(cutted_);
+    bool KV_SAVEABLE(cutted_);
 };
-ADD_TO_TYPELIST(Grille);
+END_DECLARE(Grille);
 
 }

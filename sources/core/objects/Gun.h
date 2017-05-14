@@ -12,8 +12,8 @@ namespace kv
 class Gun : public Item
 {
 public:
-    DECLARE_SAVED(Gun, Item);
-    DECLARE_GET_TYPE_ITEM(Gun);
+    DECLARE_SAVEABLE(Gun, Item);
+    REGISTER_CLASS_AS(Gun);
     Gun();
     virtual void Shoot(VDir target);
     bool AddAmmo();
@@ -22,11 +22,11 @@ public:
     static bool Targetable(IdPtr<IOnMapBase> item);
     VDir TargetTileLoc(IdPtr<IOnMapBase> item) const;
 protected:
-    int KV_SAVEBLE(max_ammunition_);
-    int KV_SAVEBLE(ammunition_);
+    int KV_SAVEABLE(max_ammunition_);
+    int KV_SAVEABLE(ammunition_);
     void ShootImpl(VDir target, const QString& sound,
                    const QString& projectile_type, const QString& casing_type);
 };
-ADD_TO_TYPELIST(Gun);
+END_DECLARE(Gun);
 
 }

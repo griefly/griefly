@@ -11,8 +11,8 @@ namespace kv
 class TestMainObject : public Object
 {
 public:
-    DECLARE_SAVED(TestMainObject, Object);
-    DECLARE_GET_TYPE_ITEM(TestMainObject);
+    DECLARE_SAVEABLE(TestMainObject, Object);
+    REGISTER_CLASS_AS(TestMainObject);
 
     TestMainObject();
     ~TestMainObject();
@@ -20,8 +20,8 @@ public:
     virtual void AfterWorldCreation() override;
     virtual void Process() override;
 
-    int KV_SAVEBLE(after_world_creation_);
-    int KV_SAVEBLE(process_);
+    int KV_SAVEABLE(after_world_creation_);
+    int KV_SAVEABLE(process_);
 
     void SetCreationCallback(std::function<void()> callback);
     void SetProcessCallback(std::function<void()> callback);
@@ -31,7 +31,7 @@ private:
     std::function<void()> process_callback_;
     std::function<void()> destructor_callback_;
 };
-ADD_TO_TYPELIST(TestMainObject);
+END_DECLARE(TestMainObject);
 // LCOV_EXCL_STOP
 
 }

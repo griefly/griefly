@@ -8,11 +8,11 @@ namespace kv
 class Shard : public Item
 {
 public:
-    DECLARE_SAVED(Shard, Item);
-    DECLARE_GET_TYPE_ITEM(Shard);
+    DECLARE_SAVEABLE(Shard, Item);
+    REGISTER_CLASS_AS(Shard);
     Shard();
     virtual void AfterWorldCreation() override;
 };
-ADD_TO_TYPELIST(Shard);
+END_DECLARE(Shard);
 
 }

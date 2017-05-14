@@ -8,11 +8,11 @@ namespace kv
 class Girder : public Structure
 {
 public:
-    DECLARE_SAVED(Girder, Structure);
-    DECLARE_GET_TYPE_ITEM(Girder);
+    DECLARE_SAVEABLE(Girder, Structure);
+    REGISTER_CLASS_AS(Girder);
     Girder();
     virtual void AttackBy(IdPtr<Item> item) override;
 };
-ADD_TO_TYPELIST(Girder);
+END_DECLARE(Girder);
 
 }

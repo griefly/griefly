@@ -31,8 +31,8 @@ namespace kv
 class IMovable : public IOnMapObject
 {
 public:
-    DECLARE_SAVED(IMovable, IOnMapObject);
-    DECLARE_GET_TYPE_ITEM(IMovable);
+    DECLARE_SAVEABLE(IMovable, IOnMapObject);
+    REGISTER_CLASS_AS(IMovable);
     IMovable();
     void processMove();//for move
     virtual bool TryMove(Dir direct);
@@ -52,17 +52,17 @@ public:
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 public:
-    VDir KV_SAVEBLE(force_);
-    bool KV_SAVEBLE(anchored_);
-    int KV_SAVEBLE(last_move_);
-    int KV_SAVEBLE(tick_speed_);
+    VDir KV_SAVEABLE(force_);
+    bool KV_SAVEABLE(anchored_);
+    int KV_SAVEABLE(last_move_);
+    int KV_SAVEABLE(tick_speed_);
 
     KV_ON_LOAD_CALL(LoadInForceManager);
     void LoadInForceManager();
 private:
-    Dir KV_SAVEBLE(direction_);
+    Dir KV_SAVEABLE(direction_);
 };
-ADD_TO_TYPELIST(IMovable);
+END_DECLARE(IMovable);
 
 }
 class ForceManager

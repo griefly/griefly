@@ -8,14 +8,14 @@ namespace kv
 class AmmunitionBox : public Item
 {
 public:
-    DECLARE_SAVED(AmmunitionBox, Item);
-    DECLARE_GET_TYPE_ITEM(AmmunitionBox);
+    DECLARE_SAVEABLE(AmmunitionBox, Item);
+    REGISTER_CLASS_AS(AmmunitionBox);
     AmmunitionBox();
     void RemoveBullet();
     bool CheckBullets();
 private:
-    int KV_SAVEBLE(bullets_);
+    int KV_SAVEABLE(bullets_);
 };
-ADD_TO_TYPELIST(AmmunitionBox);
+END_DECLARE(AmmunitionBox);
 
 }

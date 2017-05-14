@@ -19,15 +19,15 @@ def parse_declare_saved_begin(file, class_and_base, filename):
     class_name = class_and_base_array[0].strip()
     base_class_name = class_and_base_array[1].strip()
     line = file.next()
-    class_type = extract_macros_params(line, "DECLARE_GET_TYPE_ITEM")
+    class_type = extract_macros_params(line, "REGISTER_CLASS_AS")
     if not class_type:
-        raise ParseError("Next line after 'DECLARE_SAVED' macros does not contain 'DECLARE_GET_TYPE_ITEM' macros")
+        raise ParseError("Next line after 'DECLARE_SAVEABLE' macros does not contain 'REGISTER_CLASS_AS' macros")
 
     variables = []
     on_load_calls = []
     while True:
         line = file.next()
-        result = extract_macros_params(line, "KV_SAVEBLE")
+        result = extract_macros_params(line, "KV_SAVEABLE")
         if result:
             variables.append(result.strip())
             continue
@@ -35,10 +35,10 @@ def parse_declare_saved_begin(file, class_and_base, filename):
         if result:
             on_load_calls.append(result.strip())
             continue
-        result = extract_macros_params(line, "ADD_TO_TYPELIST")
+        result = extract_macros_params(line, "END_DECLARE")
         if result:
             if result.strip() != class_name:
-                raise ParseError("'ADD_TO_TYPELIST' does not match 'DECLARE_SAVED'")
+                raise ParseError("'END_DECLARE' does not match 'DECLARE_SAVEABLE'")
             break
 
     SUBDIR_NAME_CONST = "ources"
@@ -57,7 +57,7 @@ def parse_declare_saved_begin(file, class_and_base, filename):
 def parse_file(fullpath, filename):
     file = open(fullpath, 'r')
     for line in file:
-        result = extract_macros_params(line, "DECLARE_SAVED")
+        result = extract_macros_params(line, "DECLARE_SAVEABLE")
         if result:
             parse_declare_saved_begin(file, result, fullpath)      
 

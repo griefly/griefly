@@ -9,16 +9,16 @@ namespace kv
 class RemoteDoorOpener : public Item
 {
 public:
-    DECLARE_SAVED(RemoteDoorOpener, Item);
-    DECLARE_GET_TYPE_ITEM(RemoteDoorOpener);
+    DECLARE_SAVEABLE(RemoteDoorOpener, Item);
+    REGISTER_CLASS_AS(RemoteDoorOpener);
     RemoteDoorOpener();
 
     virtual void AttackBy(IdPtr<Item> item) override;
 
     void SetDoor(IdPtr<Door> door);
 private:
-    IdPtr<Door> KV_SAVEBLE(door_);
+    IdPtr<Door> KV_SAVEABLE(door_);
 };
-ADD_TO_TYPELIST(RemoteDoorOpener)
+END_DECLARE(RemoteDoorOpener)
 
 }

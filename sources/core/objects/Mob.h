@@ -10,8 +10,8 @@ namespace kv
 class IMob : public IMessageReceiver
 {
 public:
-    DECLARE_SAVED(IMob, IMessageReceiver);
-    DECLARE_GET_TYPE_ITEM(imob)
+    DECLARE_SAVEABLE(IMob, IMessageReceiver);
+    REGISTER_CLASS_AS(imob);
     IMob();
     virtual void AfterWorldCreation() override;
     virtual void Delete();
@@ -26,6 +26,6 @@ public:
 
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) { ; }
 };
-ADD_TO_TYPELIST(IMob);
+END_DECLARE(IMob);
 
 }

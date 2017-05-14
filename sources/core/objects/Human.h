@@ -11,8 +11,8 @@ namespace kv
 class Human : public IMob
 {
 public:
-    DECLARE_SAVED(Human, IMob);
-    DECLARE_GET_TYPE_ITEM(Human);
+    DECLARE_SAVEABLE(Human, IMob);
+    REGISTER_CLASS_AS(Human);
     Human();
 
     virtual void AfterWorldCreation() override;
@@ -64,25 +64,25 @@ public:
     void ApplySuffocationDamage(int damage);
     void ApplyBruteDamage(int damage);
 protected:
-    int KV_SAVEBLE(attack_cooldown_);
+    int KV_SAVEABLE(attack_cooldown_);
 
-    HumanInterface KV_SAVEBLE(interface_);
+    HumanInterface KV_SAVEABLE(interface_);
 
-    int KV_SAVEBLE(lay_timer_);
+    int KV_SAVEABLE(lay_timer_);
 
-    bool KV_SAVEBLE(lying_);
-    bool KV_SAVEBLE(dead_);
+    bool KV_SAVEABLE(lying_);
+    bool KV_SAVEABLE(dead_);
 
-    int KV_SAVEBLE(max_health_);
-    int KV_SAVEBLE(suffocation_damage_);
-    int KV_SAVEBLE(burn_damage_);
-    int KV_SAVEBLE(brute_damage_);
+    int KV_SAVEABLE(max_health_);
+    int KV_SAVEABLE(suffocation_damage_);
+    int KV_SAVEABLE(burn_damage_);
+    int KV_SAVEABLE(brute_damage_);
 
-    IdPtr<IMovable> KV_SAVEBLE(pulled_object_);
+    IdPtr<IMovable> KV_SAVEABLE(pulled_object_);
 private:
     void TryClownBootsHonk();
     void MakeEmote(const QString& emote);
 };
-ADD_TO_TYPELIST(Human);
+END_DECLARE(Human);
 
 }

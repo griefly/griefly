@@ -8,58 +8,58 @@ namespace kv
 class Item : public IMovable
 {
 public:
-    DECLARE_SAVED(Item, IMovable);
-    DECLARE_GET_TYPE_ITEM(Item);
+    DECLARE_SAVEABLE(Item, IMovable);
+    REGISTER_CLASS_AS(Item);
     Item();
-    QString KV_SAVEBLE(type);
-    int KV_SAVEBLE(damage);
+    QString KV_SAVEABLE(type);
+    int KV_SAVEABLE(damage);
 };
-ADD_TO_TYPELIST(Item);
+END_DECLARE(Item);
 
 class Screwdriver : public Item
 {
 public:
-    DECLARE_SAVED(Screwdriver, Item);
-    DECLARE_GET_TYPE_ITEM(Screwdriver);
+    DECLARE_SAVEABLE(Screwdriver, Item);
+    REGISTER_CLASS_AS(Screwdriver);
     Screwdriver();
     virtual void AfterWorldCreation() override;
 };
-ADD_TO_TYPELIST(Screwdriver);
+END_DECLARE(Screwdriver);
 
 class Wirecutters : public Item
 {
 public:
-    DECLARE_SAVED(Wirecutters, Item);
-    DECLARE_GET_TYPE_ITEM(Wirecutters);
+    DECLARE_SAVEABLE(Wirecutters, Item);
+    REGISTER_CLASS_AS(Wirecutters);
     Wirecutters();
 };
-ADD_TO_TYPELIST(Wirecutters);
+END_DECLARE(Wirecutters);
 
 class Crowbar : public Item
 {
 public:
-    DECLARE_SAVED(Crowbar, Item);
-    DECLARE_GET_TYPE_ITEM(Crowbar);
+    DECLARE_SAVEABLE(Crowbar, Item);
+    REGISTER_CLASS_AS(Crowbar);
     Crowbar();
 };
-ADD_TO_TYPELIST(Crowbar);
+END_DECLARE(Crowbar);
 
 class Wrench : public Item
 {
 public:
-    DECLARE_SAVED(Wrench, Item);
-    DECLARE_GET_TYPE_ITEM(Wrench);
+    DECLARE_SAVEABLE(Wrench, Item);
+    REGISTER_CLASS_AS(Wrench);
     Wrench();
 };
-ADD_TO_TYPELIST(Wrench);
+END_DECLARE(Wrench);
 
 class BulletCasing : public Item
 {
 public:
-    DECLARE_SAVED(BulletCasing, Item);
-    DECLARE_GET_TYPE_ITEM(BulletCasing);
+    DECLARE_SAVEABLE(BulletCasing, Item);
+    REGISTER_CLASS_AS(BulletCasing);
     BulletCasing();
 };
-ADD_TO_TYPELIST(BulletCasing);
+END_DECLARE(BulletCasing);
 
 }

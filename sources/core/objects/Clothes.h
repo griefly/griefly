@@ -8,127 +8,127 @@ namespace kv
 class Cloth : public Item
 {
 public:
-    DECLARE_SAVED(Cloth, Item);
-    DECLARE_GET_TYPE_ITEM(Cloth);
+    DECLARE_SAVEABLE(Cloth, Item);
+    REGISTER_CLASS_AS(Cloth);
     Cloth();
 };
-ADD_TO_TYPELIST(Cloth);
+END_DECLARE(Cloth);
 
 class Armor : public Cloth
 {
 public:
-    DECLARE_SAVED(Armor, Cloth);
-    DECLARE_GET_TYPE_ITEM(Armor);
+    DECLARE_SAVEABLE(Armor, Cloth);
+    REGISTER_CLASS_AS(Armor);
     Armor();
 };
-ADD_TO_TYPELIST(Armor);
+END_DECLARE(Armor);
 
 class Helmet : public Cloth
 {
 public:
-    DECLARE_SAVED(Helmet, Cloth);
-    DECLARE_GET_TYPE_ITEM(Helmet);
+    DECLARE_SAVEABLE(Helmet, Cloth);
+    REGISTER_CLASS_AS(Helmet);
     Helmet();
 };
-ADD_TO_TYPELIST(Helmet);
+END_DECLARE(Helmet);
 
 class Tophat : public Cloth
 {
 public:
-    DECLARE_SAVED(Tophat, Cloth);
-    DECLARE_GET_TYPE_ITEM(Tophat);
+    DECLARE_SAVEABLE(Tophat, Cloth);
+    REGISTER_CLASS_AS(Tophat);
     Tophat();
 };
-ADD_TO_TYPELIST(Tophat);
+END_DECLARE(Tophat);
 
 class EngineUniform : public Cloth
 {
 public:
-    DECLARE_SAVED(EngineUniform, Cloth);
-    DECLARE_GET_TYPE_ITEM(EngineUniform);
+    DECLARE_SAVEABLE(EngineUniform, Cloth);
+    REGISTER_CLASS_AS(EngineUniform);
     EngineUniform();
 };
-ADD_TO_TYPELIST(EngineUniform);
+END_DECLARE(EngineUniform);
 
 class JanitorUniform : public Cloth
 {
 public:
-    DECLARE_SAVED(JanitorUniform, Cloth);
-    DECLARE_GET_TYPE_ITEM(JanitorUniform);
+    DECLARE_SAVEABLE(JanitorUniform, Cloth);
+    REGISTER_CLASS_AS(JanitorUniform);
     JanitorUniform();
 };
-ADD_TO_TYPELIST(JanitorUniform);
+END_DECLARE(JanitorUniform);
 
 class ClownUniform : public Cloth
 {
 public:
-    DECLARE_SAVED(ClownUniform, Cloth);
-    DECLARE_GET_TYPE_ITEM(ClownUniform);
+    DECLARE_SAVEABLE(ClownUniform, Cloth);
+    REGISTER_CLASS_AS(ClownUniform);
     ClownUniform();
 };
-ADD_TO_TYPELIST(ClownUniform);
+END_DECLARE(ClownUniform);
 
 class BarmanUniform : public Cloth
 {
 public:
-    DECLARE_SAVED(BarmanUniform, Cloth);
-    DECLARE_GET_TYPE_ITEM(BarmanUniform);
+    DECLARE_SAVEABLE(BarmanUniform, Cloth);
+    REGISTER_CLASS_AS(BarmanUniform);
     BarmanUniform();
 };
-ADD_TO_TYPELIST(BarmanUniform);
+END_DECLARE(BarmanUniform);
 
 class RedUniform : public Cloth
 {
 public:
-    DECLARE_SAVED(RedUniform, Cloth);
-    DECLARE_GET_TYPE_ITEM(RedUniform);
+    DECLARE_SAVEABLE(RedUniform, Cloth);
+    REGISTER_CLASS_AS(RedUniform);
     RedUniform();
 };
-ADD_TO_TYPELIST(RedUniform);
+END_DECLARE(RedUniform);
 
 class OrangeBoots : public Cloth
 {
 public:
-    DECLARE_SAVED(OrangeBoots, Cloth);
-    DECLARE_GET_TYPE_ITEM(OrangeBoots);
+    DECLARE_SAVEABLE(OrangeBoots, Cloth);
+    REGISTER_CLASS_AS(OrangeBoots);
     OrangeBoots();
 };
-ADD_TO_TYPELIST(OrangeBoots);
+END_DECLARE(OrangeBoots);
 
 class BlackBoots : public Cloth
 {
 public:
-    DECLARE_SAVED(BlackBoots, Cloth);
-    DECLARE_GET_TYPE_ITEM(BlackBoots);
+    DECLARE_SAVEABLE(BlackBoots, Cloth);
+    REGISTER_CLASS_AS(BlackBoots);
     BlackBoots();
 };
-ADD_TO_TYPELIST(BlackBoots);
+END_DECLARE(BlackBoots);
 
 class ClownBoots : public Cloth
 {
 public:
-    DECLARE_SAVED(ClownBoots, Cloth);
-    DECLARE_GET_TYPE_ITEM(ClownBoots);
+    DECLARE_SAVEABLE(ClownBoots, Cloth);
+    REGISTER_CLASS_AS(ClownBoots);
     ClownBoots();
 };
-ADD_TO_TYPELIST(ClownBoots);
+END_DECLARE(ClownBoots);
 
 class MedicalUniform : public Cloth
 {
 public:
-    DECLARE_SAVED(MedicalUniform, Cloth);
-    DECLARE_GET_TYPE_ITEM(MedicalUniform);
+    DECLARE_SAVEABLE(MedicalUniform, Cloth);
+    REGISTER_CLASS_AS(MedicalUniform);
     MedicalUniform();
 };
-ADD_TO_TYPELIST(MedicalUniform);
+END_DECLARE(MedicalUniform);
 
 class WhiteShoes : public Cloth
 {
 public:
-    DECLARE_SAVED(WhiteShoes, Cloth);
-    DECLARE_GET_TYPE_ITEM(WhiteShoes);
+    DECLARE_SAVEABLE(WhiteShoes, Cloth);
+    REGISTER_CLASS_AS(WhiteShoes);
     WhiteShoes();
 };
-ADD_TO_TYPELIST(WhiteShoes);
+END_DECLARE(WhiteShoes);
 
 }

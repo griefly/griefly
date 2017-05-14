@@ -8,28 +8,28 @@ namespace kv
 class Floor : public ITurf
 {
 public:
-    DECLARE_SAVED(Floor, ITurf);
-    DECLARE_GET_TYPE_ITEM(Floor);
+    DECLARE_SAVEABLE(Floor, ITurf);
+    REGISTER_CLASS_AS(Floor);
     Floor();
     virtual void AfterWorldCreation() override;
 
     virtual void AttackBy(IdPtr<Item> item) override;
     void SetOpen(bool o);
 
-    bool KV_SAVEBLE(bloody);
+    bool KV_SAVEABLE(bloody);
 protected:
-    bool KV_SAVEBLE(open_);
-    QString KV_SAVEBLE(floor_type_);
+    bool KV_SAVEABLE(open_);
+    QString KV_SAVEABLE(floor_type_);
 };
-ADD_TO_TYPELIST(Floor);
+END_DECLARE(Floor);
 
 class Plating : public Floor
 {
 public:
-    DECLARE_SAVED(Plating, Floor);
-    DECLARE_GET_TYPE_ITEM(Plating);
+    DECLARE_SAVEABLE(Plating, Floor);
+    REGISTER_CLASS_AS(Plating);
     Plating();
 };
-ADD_TO_TYPELIST(Plating);
+END_DECLARE(Plating);
 
 }

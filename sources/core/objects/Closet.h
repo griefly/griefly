@@ -11,8 +11,8 @@ namespace kv
 class Closet : public IMovable
 {
 public:
-    DECLARE_SAVED(Closet, IMovable);
-    DECLARE_GET_TYPE_ITEM(Closet);
+    DECLARE_SAVEABLE(Closet, IMovable);
+    REGISTER_CLASS_AS(Closet);
     Closet();
 
     virtual void AttackBy(IdPtr<Item> item) override;
@@ -33,17 +33,17 @@ protected:
     virtual void Open();
     virtual void Close();
 
-    bool KV_SAVEBLE(open_);
+    bool KV_SAVEABLE(open_);
 
-    std::vector<IdPtr<IMovable>> KV_SAVEBLE(content_);
+    std::vector<IdPtr<IMovable>> KV_SAVEABLE(content_);
 };
-ADD_TO_TYPELIST(Closet);
+END_DECLARE(Closet);
 
 class SecurityLocker : public Closet
 {
 public:
-    DECLARE_SAVED(SecurityLocker, Closet);
-    DECLARE_GET_TYPE_ITEM(SecurityLocker);
+    DECLARE_SAVEABLE(SecurityLocker, Closet);
+    REGISTER_CLASS_AS(SecurityLocker);
     SecurityLocker();
     virtual void AttackBy(IdPtr<Item> item) override;
 protected:
@@ -52,8 +52,8 @@ protected:
 
     virtual void Open() override;
     virtual void Close() override;
-    bool KV_SAVEBLE(locked_);
+    bool KV_SAVEABLE(locked_);
 };
-ADD_TO_TYPELIST(SecurityLocker);
+END_DECLARE(SecurityLocker);
 
 }

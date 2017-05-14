@@ -8,12 +8,12 @@ namespace kv
 class Space : public ITurf
 {
 public:
-    DECLARE_SAVED(Space, ITurf);
-    DECLARE_GET_TYPE_ITEM(Space);
+    DECLARE_SAVEABLE(Space, ITurf);
+    REGISTER_CLASS_AS(Space);
     Space();
     virtual void AfterWorldCreation() override;
     virtual void AttackBy(IdPtr<Item> item) override;
 };
-ADD_TO_TYPELIST(Space);
+END_DECLARE(Space);
 
 }

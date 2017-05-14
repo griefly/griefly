@@ -14,8 +14,8 @@ namespace kv
 class ITurf : public IOnMapObject
 {
 public:
-    DECLARE_SAVED(ITurf, IOnMapObject);
-    DECLARE_GET_TYPE_ITEM(ITurf);
+    DECLARE_SAVEABLE(ITurf, IOnMapObject);
+    REGISTER_CLASS_AS(ITurf);
     ITurf();
     virtual void Delete() override;
 
@@ -27,10 +27,10 @@ public:
     atmos::AtmosState GetAtmosState() const { return atmos_state_; }
     void SetAtmosState(atmos::AtmosState atmos_state) { atmos_state_ = atmos_state; }
 private:
-    int KV_SAVEBLE(friction_);
-    atmos::AtmosState KV_SAVEBLE(atmos_state_);
+    int KV_SAVEABLE(friction_);
+    atmos::AtmosState KV_SAVEABLE(atmos_state_);
 };
-ADD_TO_TYPELIST(ITurf);
+END_DECLARE(ITurf);
 
 }
 

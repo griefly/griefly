@@ -12,8 +12,8 @@ class IOnMapObject : public IOnMapBase
 {
 public:
     IOnMapObject();
-    DECLARE_SAVED(IOnMapObject, IOnMapBase);
-    DECLARE_GET_TYPE_ITEM(ionmapitem);
+    DECLARE_SAVEABLE(IOnMapObject, IOnMapBase);
+    REGISTER_CLASS_AS(ionmapitem);
 
     virtual PassableLevel GetPassable(Dir direct) const override
     {
@@ -70,20 +70,20 @@ public:
     void SetState(const QString& name);
     ViewInfo* GetView() { return &view_; }
 public:
-    int KV_SAVEBLE(v_level);
-    PassableLevel KV_SAVEBLE(passable_down);
-    PassableLevel KV_SAVEBLE(passable_up);
-    PassableLevel KV_SAVEBLE(passable_left);
-    PassableLevel KV_SAVEBLE(passable_right);
-    PassableLevel KV_SAVEBLE(passable_all);
+    int KV_SAVEABLE(v_level);
+    PassableLevel KV_SAVEABLE(passable_down);
+    PassableLevel KV_SAVEABLE(passable_up);
+    PassableLevel KV_SAVEABLE(passable_left);
+    PassableLevel KV_SAVEABLE(passable_right);
+    PassableLevel KV_SAVEABLE(passable_all);
 
-    PassableLevel KV_SAVEBLE(passable_level);
+    PassableLevel KV_SAVEABLE(passable_level);
 
-    bool KV_SAVEBLE(transparent);
-    QString KV_SAVEBLE(name);
+    bool KV_SAVEABLE(transparent);
+    QString KV_SAVEABLE(name);
 protected:
-    ViewInfo KV_SAVEBLE(view_);
+    ViewInfo KV_SAVEABLE(view_);
 };
-ADD_TO_TYPELIST(IOnMapObject);
+END_DECLARE(IOnMapObject);
 
 }

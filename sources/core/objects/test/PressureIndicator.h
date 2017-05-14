@@ -8,14 +8,14 @@ namespace kv
 class PressureIndicator : public IOnMapObject
 {
 public:
-    DECLARE_SAVED(PressureIndicator, IOnMapObject);
-    DECLARE_GET_TYPE_ITEM(PressureIndicator);
+    DECLARE_SAVEABLE(PressureIndicator, IOnMapObject);
+    REGISTER_CLASS_AS(PressureIndicator);
     PressureIndicator();
     virtual void Process() override;
     virtual void AfterWorldCreation() override;
 private:
     void SetNumber(int number);
 };
-ADD_TO_TYPELIST(PressureIndicator);
+END_DECLARE(PressureIndicator);
 
 }

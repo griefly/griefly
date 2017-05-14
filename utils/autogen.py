@@ -64,12 +64,12 @@ with open("AutogenMetadata.cpp", "w") as autogen_file:
     print("", file = autogen_file)
     print("void InitCreators()", file = autogen_file)
     print("{", file = autogen_file)
-    print("    (*GetItemsCreators())[Object::GetTypeStatic()] = &Object::_Z_creator;", file = autogen_file)
-    print("    (*GetVoidItemsCreators())[Object::GetTypeStatic()] = &Object::_Z_creatorSaved;", file = autogen_file)
+    print("    (*GetItemsCreators())[Object::GetTypeStatic()] = &Object::_Z_KV_Creator;", file = autogen_file)
+    print("    (*GetVoidItemsCreators())[Object::GetTypeStatic()] = &Object::_Z_KV_VoidCreator;", file = autogen_file)
     for class_data in metadata["classes"]:
         class_name = class_data["class"]
-        print("    (*GetItemsCreators())[" + class_name + "::GetTypeStatic()] = &" + class_name + "::_Z_creator;", file = autogen_file)
-        print("    (*GetVoidItemsCreators())[" + class_name + "::GetTypeStatic()] = &" + class_name + "::_Z_creatorSaved;", file = autogen_file)
+        print("    (*GetItemsCreators())[" + class_name + "::GetTypeStatic()] = &" + class_name + "::_Z_KV_Creator;", file = autogen_file)
+        print("    (*GetVoidItemsCreators())[" + class_name + "::GetTypeStatic()] = &" + class_name + "::_Z_KV_VoidCreator;", file = autogen_file)
     print("}", file = autogen_file)
     print("", file = autogen_file)
     print("void InitSettersForTypes()", file = autogen_file)

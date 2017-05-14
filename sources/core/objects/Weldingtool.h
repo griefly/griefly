@@ -8,8 +8,8 @@ namespace kv
 class Weldingtool : public Item
 {
 public:
-    DECLARE_SAVED(Weldingtool, Item);
-    DECLARE_GET_TYPE_ITEM(Weldingtool);
+    DECLARE_SAVEABLE(Weldingtool, Item);
+    REGISTER_CLASS_AS(Weldingtool);
     Weldingtool();
     virtual void Process() override;
     virtual void AttackBy(IdPtr<Item> item) override;
@@ -18,9 +18,9 @@ public:
     bool Working() const { return on_; }
     int AddFuel(int amount);
 private:
-    int KV_SAVEBLE(fuel_);
-    bool KV_SAVEBLE(on_);
+    int KV_SAVEABLE(fuel_);
+    bool KV_SAVEABLE(on_);
 };
-ADD_TO_TYPELIST(Weldingtool);
+END_DECLARE(Weldingtool);
 
 }

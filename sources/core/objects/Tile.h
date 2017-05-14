@@ -40,8 +40,8 @@ namespace kv
 class CubeTile : public IOnMapBase
 {
 public:
-    DECLARE_SAVED(CubeTile, IOnMapBase);
-    DECLARE_GET_TYPE_ITEM(CubeTile);
+    DECLARE_SAVEABLE(CubeTile, IOnMapBase);
+    REGISTER_CLASS_AS(CubeTile);
     CubeTile();
     virtual bool AddItem(IdPtr<IOnMapBase> item) override;
     virtual bool RemoveItem(IdPtr<IOnMapBase> item) override;
@@ -115,25 +115,25 @@ private:
 
     void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const;
 
-    IdPtr<ITurf> KV_SAVEBLE(turf_);
+    IdPtr<ITurf> KV_SAVEABLE(turf_);
 
-    atmos::AtmosHolder KV_SAVEBLE(atmos_holder_);
+    atmos::AtmosHolder KV_SAVEABLE(atmos_holder_);
 
-    int KV_SAVEBLE(posx_);
-    int KV_SAVEBLE(posy_);
-    int KV_SAVEBLE(posz_);
+    int KV_SAVEABLE(posx_);
+    int KV_SAVEABLE(posy_);
+    int KV_SAVEABLE(posz_);
 
-    InsideType KV_SAVEBLE(inside_list_);
+    InsideType KV_SAVEABLE(inside_list_);
 
-    PassableLevel KV_SAVEBLE(sum_passable_all_);
-    PassableLevel KV_SAVEBLE(sum_passable_up_);
-    PassableLevel KV_SAVEBLE(sum_passable_down_);
-    PassableLevel KV_SAVEBLE(sum_passable_left_);
-    PassableLevel KV_SAVEBLE(sum_passable_right_);
+    PassableLevel KV_SAVEABLE(sum_passable_all_);
+    PassableLevel KV_SAVEABLE(sum_passable_up_);
+    PassableLevel KV_SAVEABLE(sum_passable_down_);
+    PassableLevel KV_SAVEABLE(sum_passable_left_);
+    PassableLevel KV_SAVEABLE(sum_passable_right_);
 
     KV_ON_LOAD_CALL(LoadInMap);
     void LoadInMap();
 };
-ADD_TO_TYPELIST(CubeTile);
+END_DECLARE(CubeTile);
 
 }
