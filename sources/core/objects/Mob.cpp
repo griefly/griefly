@@ -17,10 +17,6 @@ void IMob::AfterWorldCreation()
     SetFreq(1);
 }
 
-void IMob::cautOverMind()
-{
-}
-
 void IMob::GenerateInterfaceForFrame()
 {
 }
@@ -28,7 +24,6 @@ void IMob::GenerateInterfaceForFrame()
 void IMob::Delete()
 {
     DeinitGUI();
-    cautOverMind();
     IOnMapObject::Delete();
 }
 

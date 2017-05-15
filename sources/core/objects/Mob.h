@@ -1,26 +1,27 @@
 #pragma once
 
-#include "MessageReceiver.h"
+#include "Movable.h"
 
 #include "Interface.h"
+
+#include "net/Network2.h"
 
 namespace kv
 {
 
-class IMob : public IMessageReceiver
+class IMob : public IMovable
 {
 public:
-    DECLARE_SAVEABLE(IMob, IMessageReceiver);
+    DECLARE_SAVEABLE(IMob, IMovable);
     REGISTER_CLASS_AS(imob);
     IMob();
     virtual void AfterWorldCreation() override;
     virtual void Delete();
-    virtual void cautOverMind();
 
     virtual void InitGUI(){}
     virtual void DeinitGUI(){}
     virtual void GenerateInterfaceForFrame();
-    virtual void ProcessMessage(const Message2& msg) override;
+    virtual void ProcessMessage(const Message2& msg);
 
     virtual InterfaceBase* GetInterface() { return nullptr; }
 

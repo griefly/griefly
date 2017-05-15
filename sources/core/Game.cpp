@@ -758,7 +758,7 @@ void Game::ProcessBroadcastedMessages()
          {
              qDebug() << "Game id is 0";
          }
-         IdPtr<IMessageReceiver> game_object = game_id;
+         IdPtr<IMob> game_object = game_id;
 
          if (game_object.IsValid())
          {
