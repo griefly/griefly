@@ -27,13 +27,13 @@ inline bool CanPass(PassableLevel block, PassableLevel object)
     return block >= object;
 }
 
-class IOnMapBase : public Object
+class MapObject : public Object
 {
 public:
-    DECLARE_SAVEABLE(IOnMapBase, Object);
-    REGISTER_CLASS_AS(IOnMapBase);
-    IOnMapBase() { owner = 0; }
-    virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
+    DECLARE_SAVEABLE(MapObject, Object);
+    REGISTER_CLASS_AS(MapObject);
+    MapObject() { owner_ = 0; }
+    virtual void ForEach(std::function<void(IdPtr<MapObject>)> callback)
     {
         return;
     }
@@ -52,9 +52,9 @@ public:
     
     virtual void Delete() override
     {
-        if (owner.IsValid())
+        if (owner_.IsValid())
         {
-            owner->RemoveItem(GetId());
+            owner_->RemoveObject(GetId());
         }
         Object::Delete();
     }
@@ -63,11 +63,11 @@ public:
 
     virtual void ApplyForce(VDir force) {}
 
-    virtual bool CanTouch(IdPtr<IOnMapBase> item) const
+    virtual bool CanTouch(IdPtr<MapObject> object) const
     {
-        if (owner.IsValid())
+        if (owner_.IsValid())
         {
-            return owner->CanTouch(item);
+            return owner_->CanTouch(object);
         }
         return false;
     }
@@ -76,35 +76,34 @@ public:
     // True - added
     // False - failed
     // This must not remove item from old place
-    virtual bool AddItem(IdPtr<IOnMapBase> item)
+    virtual bool AddObject(IdPtr<MapObject> object)
     {
-        if (owner.IsValid())
+        if (owner_.IsValid())
         {
-            return owner->AddItem(item);
+            return owner_->AddObject(object);
         }
         return false;
     }
     // Remove some item
     // True - removed
     // False failed
-    virtual bool RemoveItem(IdPtr<IOnMapBase> item)
+    virtual bool RemoveObject(IdPtr<MapObject> object)
     {
         return false;
     }
     // If id equal with object id, dir fail or something else (operation unsupported)
-    virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const
+    virtual IdPtr<MapObject> GetNeighbour(Dir direct) const
     {
-        if (owner.IsValid())
+        if (owner_.IsValid())
         {
-            return owner->GetNeighbour(direct);
+            return owner_->GetNeighbour(direct);
         }
         return GetId();
     }
 
-    virtual bool Contains(IdPtr<IOnMapBase> item) const
+    virtual bool Contains(IdPtr<MapObject> object) const
     {
-        // if (owner.IsValid())
-        //    return owner->Contains(item);
+        (void)object;
         return false;
     }
 
@@ -116,37 +115,38 @@ public:
     {
         return GetItemImpl(T::GetTypeIndexStatic());
     }
-    void SetOwner(quint32 value)
+    void SetOwner(IdPtr<MapObject> owner)
     {
-        owner = value;
+        owner_ = owner;
     }
-    IdPtr<IOnMapBase> GetOwner() const
+    IdPtr<MapObject> GetOwner() const
     {
-        return owner;
+        return owner_;
     }
 
     virtual int GetX() const
     {
-        return owner->GetX();
+        return owner_->GetX();
     }
     virtual int GetY() const
     {
-        return owner->GetY();
+        return owner_->GetY();
     }
     virtual int GetZ() const
     {
-        return owner->GetZ();
+        return owner_->GetZ();
     }
     virtual void Represent() { }
     virtual void UpdatePassable() { }
     virtual IdPtr<ITurf> GetTurf();
     virtual void SetTurf(IdPtr<ITurf> turf);
-    IdPtr<IOnMapBase> GetRoot();
+    IdPtr<MapObject> GetRoot();
     void PlaySoundIfVisible(const QString& name);
 protected:
-    IdPtr<IOnMapBase> KV_SAVEABLE(owner);
     virtual quint32 GetItemImpl(unsigned int hash) { return 0; }
+private:
+    IdPtr<MapObject> KV_SAVEABLE(owner_);
 };
-END_DECLARE(IOnMapBase);
+END_DECLARE(MapObject);
 
 }

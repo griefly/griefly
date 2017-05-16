@@ -35,7 +35,7 @@ void IOnMapObject::Represent()
 
 void IOnMapObject::Delete()
 {
-    IOnMapBase::Delete();
+    MapObject::Delete();
 }
 
 IOnMapObject::IOnMapObject()

@@ -163,7 +163,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         }
         else
         {
-            tile->AddItem(i);
+            tile->AddObject(i);
         }
     }
 

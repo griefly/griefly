@@ -25,7 +25,7 @@ CubeTile::CubeTile()
     sum_passable_right_ = Passable::FULL;
 }
 
-bool CubeTile::CanTouch(IdPtr<IOnMapBase> item) const
+bool CubeTile::CanTouch(IdPtr<MapObject> item) const
 {
     if (!item.IsValid())
     {
@@ -120,7 +120,7 @@ bool CubeTile::CanTouch(IdPtr<IOnMapBase> item) const
 }
 
 
-bool CubeTile::CanTouch(IdPtr<IOnMapBase> item, Dir dir) const
+bool CubeTile::CanTouch(IdPtr<MapObject> item, Dir dir) const
 {
     if (!CanPass(GetPassable(dir), Passable::BIG_ITEM))
     {
@@ -139,7 +139,7 @@ bool CubeTile::CanTouch(IdPtr<IOnMapBase> item, Dir dir) const
     return false;
 }
 
-bool CubeTile::CanTouch(IdPtr<IOnMapBase> item, Dir first_dir, Dir second_dir) const
+bool CubeTile::CanTouch(IdPtr<MapObject> item, Dir first_dir, Dir second_dir) const
 {
     if (!CanPass(GetPassable(first_dir), Passable::BIG_ITEM))
     {
@@ -203,7 +203,7 @@ void CubeTile::MoveToDir(Dir dir, int *x, int *y, int *z) const
     }
 }
 
-bool CubeTile::Contains(IdPtr<IOnMapBase> item) const
+bool CubeTile::Contains(IdPtr<MapObject> item) const
 {
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
     {
@@ -277,7 +277,7 @@ void CubeTile::BumpByGas(Dir dir, bool inside)
         }
 }
 
-bool CubeTile::AddItem(IdPtr<IOnMapBase> item_raw)
+bool CubeTile::AddObject(IdPtr<MapObject> item_raw)
 {
     IdPtr<IOnMapObject> item = item_raw;
     if (!item.IsValid())
@@ -297,7 +297,7 @@ bool CubeTile::AddItem(IdPtr<IOnMapBase> item_raw)
     UpdateAtmosPassable();
     return true;
 }
-bool CubeTile::RemoveItem(IdPtr<IOnMapBase> item_raw)
+bool CubeTile::RemoveObject(IdPtr<MapObject> item_raw)
 {
     IdPtr<IOnMapObject> item = item_raw;
     if (!item.IsValid())
@@ -327,7 +327,7 @@ bool CubeTile::RemoveItem(IdPtr<IOnMapBase> item_raw)
 
 
 
-IdPtr<IOnMapBase> CubeTile::GetNeighbour(Dir direct) const
+IdPtr<MapObject> CubeTile::GetNeighbour(Dir direct) const
 {
     return GetNeighbourImpl(direct);
 }
@@ -410,10 +410,12 @@ quint32 CubeTile::GetItemImpl(unsigned int hash)
     return 0;
 }
 
-void CubeTile::ForEach(std::function<void(IdPtr<IOnMapBase>)> callback)
+void CubeTile::ForEach(std::function<void(IdPtr<MapObject>)> callback)
 {
     InsideType copy_vector = inside_list_;
 
+    // TODO: possible bug when callback invalidate some of vector object
+    // ForEach callback may expect that all objects will be valid
     for (auto it = copy_vector.begin(); it != copy_vector.end(); ++it)
     {
         callback(*it);

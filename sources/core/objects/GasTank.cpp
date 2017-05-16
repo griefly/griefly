@@ -65,14 +65,14 @@ void GasTank::AttackBy(IdPtr<Item> item)
 
 void GasTank::Open()
 {
-    GetGame().GetChat().PostSimpleText(name + " is open", owner.Id());
+    GetGame().GetChat().PostSimpleText(name + " is open", GetOwner().Id());
 
     open_ = true;
 }
 
 void GasTank::Close()
 {
-    GetGame().GetChat().PostSimpleText(name + " is closed", owner.Id());
+    GetGame().GetChat().PostSimpleText(name + " is closed", GetOwner().Id());
 
     open_ = false;
 }
@@ -83,9 +83,9 @@ void GasTank::Process()
     {
         return;
     }
-    if (IdPtr<CubeTile> ct = owner)
+    if (IdPtr<CubeTile> tile = GetOwner())
     {
-        atmos_holder_.Connect(ct->GetAtmosHolder());
+        atmos_holder_.Connect(tile->GetAtmosHolder());
     }
 }
 

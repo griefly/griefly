@@ -18,16 +18,16 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Bump(IdPtr<IMovable> item) override;
 
-    virtual bool Contains(IdPtr<IOnMapBase> item) const override;
-    virtual bool CanTouch(IdPtr<IOnMapBase> item) const override;
+    virtual bool Contains(IdPtr<MapObject> item) const override;
+    virtual bool CanTouch(IdPtr<MapObject> item) const override;
 
-    virtual bool AddItem(IdPtr<IOnMapBase> item) override;
-    virtual bool RemoveItem(IdPtr<IOnMapBase> item) override;
+    virtual bool AddObject(IdPtr<MapObject> item) override;
+    virtual bool RemoveObject(IdPtr<MapObject> item) override;
 
     virtual void AfterWorldCreation() override;
 
     virtual void Delete() override;
-    virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const override;
+    virtual IdPtr<MapObject> GetNeighbour(Dir direct) const override;
     // TODO: ForEach (?)
 protected:
     virtual void Open();

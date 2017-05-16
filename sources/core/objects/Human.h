@@ -25,7 +25,7 @@ public:
     virtual void Live();
     virtual void Regeneration();
 
-    virtual IdPtr<IOnMapBase> GetNeighbour(Dir) const;
+    virtual IdPtr<MapObject> GetNeighbour(Dir) const;
 
     virtual void OnDeath();
     int CalculateHealth();
@@ -52,8 +52,8 @@ public:
 
     int GetHealth() { return CalculateHealth(); }
 
-    void RotationAction(IdPtr<IOnMapBase> item);
-    void PullAction(IdPtr<IOnMapBase> item);
+    void RotationAction(IdPtr<MapObject> item);
+    void PullAction(IdPtr<MapObject> item);
     void StopPull();
     
     int GetBurnDamage() { return burn_damage_; }

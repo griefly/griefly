@@ -270,13 +270,13 @@ void Table::AttackBy(IdPtr<Item> item)
     {
         if (IdPtr<Human> human = item->GetOwner())
         {
-            GetOwner()->AddItem(item);
+            GetOwner()->AddObject(item);
             human->GetHumanInterface()->Drop();
             human->UpdateOverlays();
         }
     }
 }
-int Table::CheckTable(IdPtr<IOnMapBase> container, quint32 ignored_table)
+int Table::CheckTable(IdPtr<MapObject> container, quint32 ignored_table)
 {
     IdPtr<Table> table = container->GetItem<Table>();
     if (!table.IsValid())

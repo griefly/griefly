@@ -37,22 +37,22 @@ FastDeserializer& operator>>(FastDeserializer& file, std::vector<IdPtr<T>>& cont
 namespace kv
 {
 
-class CubeTile : public IOnMapBase
+class CubeTile : public MapObject
 {
 public:
-    DECLARE_SAVEABLE(CubeTile, IOnMapBase);
+    DECLARE_SAVEABLE(CubeTile, MapObject);
     REGISTER_CLASS_AS(CubeTile);
     CubeTile();
-    virtual bool AddItem(IdPtr<IOnMapBase> item) override;
-    virtual bool RemoveItem(IdPtr<IOnMapBase> item) override;
-    virtual IdPtr<IOnMapBase> GetNeighbour(Dir direct) const override;
+    virtual bool AddObject(IdPtr<MapObject> item) override;
+    virtual bool RemoveObject(IdPtr<MapObject> item) override;
+    virtual IdPtr<MapObject> GetNeighbour(Dir direct) const override;
     IdPtr<CubeTile> GetNeighbourImpl(Dir direct) const;
-    virtual void ForEach(std::function<void(IdPtr<IOnMapBase>)> callback) override;
+    virtual void ForEach(std::function<void(IdPtr<MapObject>)> callback) override;
     virtual PassableLevel GetPassable(Dir direct) const override;
     virtual bool IsTransparent() const override;
 
-    virtual bool CanTouch(IdPtr<IOnMapBase> item) const override;
-    virtual bool Contains(IdPtr<IOnMapBase> item) const override;
+    virtual bool CanTouch(IdPtr<MapObject> item) const override;
+    virtual bool Contains(IdPtr<MapObject> item) const override;
 
     virtual void Bump(IdPtr<IMovable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
@@ -110,8 +110,8 @@ public:
 protected:
     virtual quint32 GetItemImpl(unsigned int hash) override;
 private:
-    bool CanTouch(IdPtr<IOnMapBase> item, Dir dir) const;
-    bool CanTouch(IdPtr<IOnMapBase> item, Dir first_dir, Dir second_dir) const;
+    bool CanTouch(IdPtr<MapObject> item, Dir dir) const;
+    bool CanTouch(IdPtr<MapObject> item, Dir first_dir, Dir second_dir) const;
 
     void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const;
 

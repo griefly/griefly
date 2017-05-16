@@ -19,7 +19,7 @@ void ITurf::Delete()
 
 void ITurf::Represent()
 {
-    if (IdPtr<CubeTile> tile = owner)
+    if (IdPtr<CubeTile> tile = GetOwner())
     {
         atmos::AtmosHolder* holder = tile->GetAtmosHolder();
         int plasma = holder->GetGase(atmos::PLASMA);

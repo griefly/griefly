@@ -41,7 +41,7 @@ void FlatGlass::Bump(IdPtr<IMovable> item)
     {
         if (item->GetDir() != GetDir())
         {
-            if (!CanPass(owner->GetPassable(Dir::ALL), passable_level) || anchored_)
+            if (!CanPass(GetOwner()->GetPassable(Dir::ALL), passable_level) || anchored_)
             {
                 return;
             }

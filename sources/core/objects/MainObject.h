@@ -19,7 +19,7 @@ void InitSettersForTypes();
 namespace kv
 {
 
-class IOnMapBase;
+class MapObject;
 
 namespace internal
 {
@@ -85,7 +85,7 @@ public:
     unsigned int GetRand();
 
     template<typename T>
-    IdPtr<T> Create(const QString& type, IdPtr<IOnMapBase> owner = 0)
+    IdPtr<T> Create(const QString& type, IdPtr<MapObject> owner = 0)
     {
         IdPtr<T> retval = CreateImpl(type, owner.Id());
         if (!retval.IsValid())

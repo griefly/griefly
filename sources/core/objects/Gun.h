@@ -19,8 +19,8 @@ public:
     bool AddAmmo();
     bool UseAmmo();
     virtual void AttackBy(IdPtr<Item> item);
-    static bool Targetable(IdPtr<IOnMapBase> item);
-    VDir TargetTileLoc(IdPtr<IOnMapBase> item) const;
+    static bool Targetable(IdPtr<MapObject> item);
+    VDir TargetTileLoc(IdPtr<MapObject> item) const;
 protected:
     int KV_SAVEABLE(max_ammunition_);
     int KV_SAVEABLE(ammunition_);

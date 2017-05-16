@@ -6,8 +6,9 @@
 
 using namespace kv;
 
-IdPtr<ITurf> IOnMapBase::GetTurf()
+IdPtr<ITurf> MapObject::GetTurf()
 {
+    auto owner = GetOwner();
     if (owner.IsValid())
     {
         return owner->GetTurf();
@@ -15,7 +16,7 @@ IdPtr<ITurf> IOnMapBase::GetTurf()
     return 0;
 }
 
-IdPtr<IOnMapBase> IOnMapBase::GetRoot()
+IdPtr<MapObject> MapObject::GetRoot()
 {
     if (!GetOwner().IsValid())
     {
@@ -24,7 +25,7 @@ IdPtr<IOnMapBase> IOnMapBase::GetRoot()
     return GetOwner()->GetRoot();
 }
 
-void IOnMapBase::PlaySoundIfVisible(const QString& name)
+void MapObject::PlaySoundIfVisible(const QString& name)
 {
     if (GetGame().GetMap().IsTileVisible(GetRoot().Id()))
     {
@@ -32,25 +33,26 @@ void IOnMapBase::PlaySoundIfVisible(const QString& name)
     }
 }
 
-void IOnMapBase::SetTurf(IdPtr<ITurf> turf)
+void MapObject::SetTurf(IdPtr<ITurf> turf)
 {
+    auto owner = GetOwner();
     if (owner.IsValid())
     {
         owner->SetTurf(turf);
     }
 }
 
-void IOnMapBase::Bump(IdPtr<IMovable> item)
+void MapObject::Bump(IdPtr<IMovable> item)
 {
    // nothing
 }
 
-void IOnMapBase::BumpByGas(Dir dir, bool inside)
+void MapObject::BumpByGas(Dir dir, bool inside)
 {
    // nothing
 }
 
-void IOnMapBase::AttackBy(IdPtr<Item> item)
+void MapObject::AttackBy(IdPtr<Item> item)
 {
     // nothing
 }

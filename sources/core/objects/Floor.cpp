@@ -62,7 +62,7 @@ void Floor::SetOpen(bool o)
     {
         SetState("plating");
         v_level = 0;
-        if (auto vent = owner->GetItem<Vent>())
+        if (auto vent = GetOwner()->GetItem<Vent>())
         {
             vent->SetHidden(false);
         }
@@ -71,7 +71,7 @@ void Floor::SetOpen(bool o)
     {
         SetState(floor_type_);
         v_level = 2;
-        if (auto vent = owner->GetItem<Vent>())
+        if (auto vent = GetOwner()->GetItem<Vent>())
         {
             vent->SetHidden(true);
         }

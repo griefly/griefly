@@ -98,6 +98,7 @@ bool IMovable::CheckPassable()
     {
         SetPassable(GetDir(), Passable::FULL);
     }
+    auto owner = GetOwner();
     if (!CanPass(owner->GetPassable(GetDir()), passable_level))
     {
         owner->Bump(GetId());
@@ -137,14 +138,14 @@ bool IMovable::Rotate(Dir dir)
 
 bool IMovable::MainMove()
 {
-    auto new_owner = owner->GetNeighbour(GetDir());
-    if (new_owner == owner)
+    auto new_owner = GetOwner()->GetNeighbour(GetDir());
+    if (new_owner == GetOwner())
     {
         return false;
     }
 
-    owner->RemoveItem(GetId());
-    new_owner->AddItem(GetId());
+    GetOwner()->RemoveObject(GetId());
+    new_owner->AddObject(GetId());
 
     last_move_ = static_cast<int>(MAIN_TICK);
     return true;

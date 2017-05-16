@@ -176,14 +176,14 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
 
     quint32 retval = id_;
     ++id_;
-    IdPtr<kv::IOnMapBase> owner = owner_id;
+    IdPtr<kv::MapObject> owner = owner_id;
     if (owner.IsValid())
     {
         if (CastTo<kv::ITurf>(item) != nullptr)
         {
             owner->SetTurf(item->GetId());
         }
-        else if (!owner->AddItem(item->GetId()))
+        else if (!owner->AddObject(item->GetId()))
         {
             KvAbort("AddItem failed");
         }

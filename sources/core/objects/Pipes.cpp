@@ -35,7 +35,7 @@ void PipeBase::ConnectHelper(IdPtr<PipeBase>& connection, Dir dir)
     if (!connection.IsValid())
     {
         GetNeighbour(dir)->ForEach(
-        [&](IdPtr<IOnMapBase> obj)
+        [&](IdPtr<MapObject> obj)
         {
             if (connection.IsValid())
             {
@@ -63,7 +63,7 @@ void PipeBase::ProcessHelper(IdPtr<PipeBase>& connection, Dir dir)
     }
     else
     {
-        if (IdPtr<CubeTile> cube = owner)
+        if (IdPtr<CubeTile> cube = GetOwner())
         {
             cube->GetAtmosHolder()->Connect(GetAtmosHolder());
         }
@@ -274,7 +274,7 @@ void Vent::AfterWorldCreation()
 void Vent::Process()
 {
     ProcessHelper(tail_, GetDir());
-    if (IdPtr<CubeTile> cube = owner)
+    if (IdPtr<CubeTile> cube = GetOwner())
     {
         cube->GetAtmosHolder()->Connect(GetAtmosHolder());
     }
@@ -369,7 +369,7 @@ void Connector::AfterWorldCreation()
     PipeBase::AfterWorldCreation();
     SetFreq(1);
     ConnectHelper(tail_, GetDir());
-    if (auto tank = owner->GetItem<GasTank>())
+    if (auto tank = GetOwner()->GetItem<GasTank>())
     {
         ConnectToGasTank(tank);
         tank->anchored_ = true;
@@ -415,7 +415,7 @@ void PipePump::Process()
     }
     if (head_connection == nullptr)
     {
-        if (IdPtr<CubeTile> cube = owner)
+        if (IdPtr<CubeTile> cube = GetOwner())
         {
             head_connection = cube->GetAtmosHolder();
         }

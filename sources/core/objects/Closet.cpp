@@ -23,7 +23,7 @@ Closet::Closet()
     SetState("closed");
 }
 
-bool Closet::Contains(IdPtr<IOnMapBase> item) const
+bool Closet::Contains(IdPtr<MapObject> item) const
 {
     for (auto it = content_.begin(); it != content_.end(); ++it)
     {
@@ -35,7 +35,7 @@ bool Closet::Contains(IdPtr<IOnMapBase> item) const
     return false;
 }
 
-bool Closet::CanTouch(IdPtr<IOnMapBase> item) const
+bool Closet::CanTouch(IdPtr<MapObject> item) const
 {
     if (Contains(item))
     {
@@ -74,12 +74,12 @@ void Closet::Bump(IdPtr<IMovable> item)
     IMovable::Bump(item);
 }
 
-IdPtr<IOnMapBase> Closet::GetNeighbour(Dir direct) const
+IdPtr<MapObject> Closet::GetNeighbour(Dir direct) const
 {
     return GetId();
 }
 
-bool Closet::AddItem(IdPtr<IOnMapBase> item)
+bool Closet::AddObject(IdPtr<MapObject> item)
 {
     if (IdPtr<Item> i = item)
     {
@@ -96,7 +96,7 @@ bool Closet::AddItem(IdPtr<IOnMapBase> item)
     return false;
 }
 
-bool Closet::RemoveItem(IdPtr<IOnMapBase> item)
+bool Closet::RemoveObject(IdPtr<MapObject> item)
 {
     for (auto it = content_.begin(); it != content_.end(); ++it)
     {
@@ -113,16 +113,16 @@ void Closet::AfterWorldCreation()
 {
     IMovable::AfterWorldCreation();
 
-    if (!owner)
+    if (!GetOwner())
     {
         return;
     }
 
-    owner->ForEach([this](IdPtr<IOnMapBase> object)
+    GetOwner()->ForEach([this](IdPtr<MapObject> object)
     {
-       if (AddItem(object))
+       if (AddObject(object))
        {
-           owner->RemoveItem(object);
+           GetOwner()->RemoveObject(object);
        }
     });
 }
@@ -143,11 +143,11 @@ void Closet::Delete()
 
 void Closet::Close()
 {
-    owner->ForEach([this](IdPtr<IOnMapBase> item)
+    GetOwner()->ForEach([this](IdPtr<MapObject> item)
     {
-        if (AddItem(item))
+        if (AddObject(item))
         {
-            owner->RemoveItem(item);
+            GetOwner()->RemoveObject(item);
         }
     });
 
@@ -162,7 +162,7 @@ void Closet::Open()
 {
     for (auto it = content_.begin(); it != content_.end(); ++it)
     {
-        owner->AddItem(*it);
+        GetOwner()->AddObject(*it);
     }
     content_.clear();
 

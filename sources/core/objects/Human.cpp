@@ -99,7 +99,7 @@ bool Human::TryMove(Dir direct)
     }
     if (IMob::TryMove(direct))
     {   
-        if (owner->GetItem<Shard>().IsValid())
+        if (GetOwner()->GetItem<Shard>().IsValid())
         {
             PlaySoundIfVisible("glass_step.wav");
         }
@@ -168,7 +168,7 @@ void Human::ProcessMessage(const Message2 &msg)
         }
         if (!found)
         {
-            GetGame().GetChat().PostWords(name, text, owner.Id());
+            GetGame().GetChat().PostWords(name, text, GetOwner().Id());
         }
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
@@ -222,7 +222,7 @@ void Human::ProcessMessage(const Message2 &msg)
             return;
         }
 
-        if (IdPtr<IOnMapBase> object_owner = object->GetOwner())
+        if (IdPtr<MapObject> object_owner = object->GetOwner())
         {
             if (CanTouch(object))
             {
@@ -232,9 +232,9 @@ void Human::ProcessMessage(const Message2 &msg)
                     interface_.Pick(object);
                     if (interface_.GetActiveHand().Get())
                     {
-                        if (!object_owner->RemoveItem(object))
+                        if (!object_owner->RemoveObject(object))
                         {
-                            KvAbort("Unable to RemoveItem from owner during"
+                            KvAbort("Unable to RemoveItem from GetOwner() during"
                                     " the pick phase!");
                         }
                         object->SetOwner(GetId());
@@ -311,14 +311,14 @@ void Human::SetLying(bool value)
     lying_ = value;
     if (lying_)
     {
-        GetGame().GetChat().PostSimpleText(name + " is lying now", owner->GetId());
+        GetGame().GetChat().PostSimpleText(name + " is lying now", GetOwner()->GetId());
         view_.SetAngle(90);
         SetPassable(Dir::ALL, Passable::FULL);
         v_level = 8;
     }
     else
     {
-        GetGame().GetChat().PostSimpleText(name + " is standing now!", owner->GetId());
+        GetGame().GetChat().PostSimpleText(name + " is standing now!", GetOwner()->GetId());
         view_.SetAngle(0);
         SetPassable(Dir::ALL, Passable::BIG_ITEM);
         v_level = 9;
@@ -340,7 +340,7 @@ void Human::Live()
 
     interface_.UpdateEnvironment();
 
-    if (IdPtr<CubeTile> t = owner)
+    if (IdPtr<CubeTile> t = GetOwner())
     {
         unsigned int oxygen = t->GetAtmosHolder()->GetGase(atmos::OXYGEN);
         int temperature = t->GetAtmosHolder()->GetTemperature();
@@ -405,7 +405,7 @@ void Human::Regeneration()
     ApplySuffocationDamage(-1 * 50);
 }
 
-IdPtr<IOnMapBase> Human::GetNeighbour(Dir) const
+IdPtr<MapObject> Human::GetNeighbour(Dir) const
 {
     return GetId();
 }
@@ -418,7 +418,7 @@ void Human::OnDeath()
         auto ghost = Create<Ghost>(Ghost::GetTypeStatic());
         ghost->name = name;
         GetGame().SetPlayerId(net_id, ghost.Id());
-        owner->AddItem(ghost);
+        GetOwner()->AddObject(ghost);
         if (GetId() == GetGame().GetMob().Id())
         {
             GetGame().ChangeMob(ghost);
@@ -453,7 +453,7 @@ void Human::AttackBy(IdPtr<Item> item)
         PlaySoundIfVisible(sound);
         if (IdPtr<IOnMapObject> item_owner = item->GetOwner())
         {
-            GetGame().GetChat().PostDamage(item_owner->name, name, item->name, owner.Id());
+            GetGame().GetChat().PostDamage(item_owner->name, name, item->name, GetOwner().Id());
         }
 
         damaged = true;
@@ -469,7 +469,7 @@ void Human::AttackBy(IdPtr<Item> item)
         {
             SetLying(true);
             AddLyingTimer(100);
-            GetGame().GetChat().PostSimpleText(name + " has been knocked out!", owner->GetId());
+            GetGame().GetChat().PostSimpleText(name + " has been knocked out!", GetOwner()->GetId());
         }
 
         damaged = true;
@@ -528,7 +528,7 @@ void Human::Bump(IdPtr<IMovable> item)
     IMovable::Bump(item);
 }
 
-void Human::RotationAction(IdPtr<IOnMapBase> item)
+void Human::RotationAction(IdPtr<MapObject> item)
 {
     if (IdPtr<IMovable> movable = item)
     {
@@ -543,7 +543,7 @@ void Human::RotationAction(IdPtr<IOnMapBase> item)
     }
 }
 
-void Human::PullAction(IdPtr<IOnMapBase> item)
+void Human::PullAction(IdPtr<MapObject> item)
 {
     if (IdPtr<IMovable> movable = item)
     {
@@ -592,7 +592,7 @@ void Human::MakeEmote(const QString& emote)
 {
     GetGame().GetChat().PostHtmlText(
         QString("<b>%1</b> %2").arg(name.toHtmlEscaped()).arg(emote.toHtmlEscaped()),
-        owner->GetId());
+        GetOwner()->GetId());
 }
 
 int Human::CalculateHealth()

@@ -126,7 +126,7 @@ void Gun::AttackBy(IdPtr<Item> item)
     }
 }
 
-bool Gun::Targetable(IdPtr<IOnMapBase> item)
+bool Gun::Targetable(IdPtr<MapObject> item)
 {
     if (!item.IsValid())
     {
@@ -147,7 +147,7 @@ bool Gun::Targetable(IdPtr<IOnMapBase> item)
     return true;
 }
 
-VDir Gun::TargetTileLoc(IdPtr<IOnMapBase> item) const
+VDir Gun::TargetTileLoc(IdPtr<MapObject> item) const
 {
     IdPtr<CubeTile> cube_tile = item->GetOwner();
     VDir f;

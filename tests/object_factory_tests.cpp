@@ -38,8 +38,8 @@ TEST(ObjectFactoryDeathTest, CreateImplFailAdd)
 
     ASSERT_DEATH(
     {
-        quint32 id = factory.CreateImpl(IOnMapBase::GetTypeStatic());
-        factory.CreateImpl(IOnMapBase::GetTypeStatic(), id);
+        quint32 id = factory.CreateImpl(MapObject::GetTypeStatic());
+        factory.CreateImpl(MapObject::GetTypeStatic(), id);
     }, "AddItem failed");
 }
 

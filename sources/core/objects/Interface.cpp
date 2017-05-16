@@ -277,7 +277,7 @@ void HumanInterface::HandleClick(const QString& place)
         if (GetActiveHand().Get())
         {
             //qDebug() << "Begin add item";
-            owner_->GetOwner()->AddItem(GetActiveHand().Get());
+            owner_->GetOwner()->AddObject(GetActiveHand().Get());
             //qDebug() << "End add item";
             Drop();
             //qDebug() << "End drop item";

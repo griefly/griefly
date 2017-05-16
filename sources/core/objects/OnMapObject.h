@@ -8,11 +8,11 @@
 namespace kv
 {
 
-class IOnMapObject : public IOnMapBase
+class IOnMapObject : public MapObject
 {
 public:
     IOnMapObject();
-    DECLARE_SAVEABLE(IOnMapObject, IOnMapBase);
+    DECLARE_SAVEABLE(IOnMapObject, MapObject);
     REGISTER_CLASS_AS(ionmapitem);
 
     virtual PassableLevel GetPassable(Dir direct) const override
@@ -53,7 +53,7 @@ public:
             passable_all = p;
             break;
         }
-        if (owner)
+        if (IdPtr<MapObject> owner = GetOwner())
         {
             owner->UpdatePassable();
         }

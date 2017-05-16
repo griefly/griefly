@@ -19,7 +19,7 @@ public:
 protected:
     QString KV_SAVEABLE(material_);
 private:
-    static int CheckTable(IdPtr<IOnMapBase> container, quint32 ignored_table);
+    static int CheckTable(IdPtr<MapObject> container, quint32 ignored_table);
 }
 END_DECLARE(Table);
 
