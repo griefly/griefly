@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class WallSign : public IOnMapObject
+class WallSign : public MaterialObject
 {
 public:
-    DECLARE_SAVEABLE(WallSign, IOnMapObject);
+    DECLARE_SAVEABLE(WallSign, MaterialObject);
     REGISTER_CLASS_AS(WallSign);
     WallSign();
     virtual void AfterWorldCreation() override;

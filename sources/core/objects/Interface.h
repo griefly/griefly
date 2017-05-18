@@ -37,7 +37,7 @@ namespace kv
 class HumanInterface : public InterfaceBase
 {
 public:
-    void SetOwner(IdPtr<kv::IOnMapObject> owner)
+    void SetOwner(IdPtr<kv::MaterialObject> owner)
     {
         owner_ = owner;
     }

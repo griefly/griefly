@@ -24,7 +24,7 @@ void IMob::GenerateInterfaceForFrame()
 void IMob::Delete()
 {
     DeinitGUI();
-    IOnMapObject::Delete();
+    MaterialObject::Delete();
 }
 
 void IMob::ProcessMessage(const Message2 &msg)

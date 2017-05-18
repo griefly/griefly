@@ -31,11 +31,11 @@ Human::Human()
     tick_speed_ = 1;
     SetSprite("icons/human.dmi");
     SetState("african1_m_s");
-    SetPassable(Dir::ALL, Passable::BIG_ITEM);
+    SetPassable(Dir::ALL, passable::BIG_ITEM);
     v_level = 9;
     attack_cooldown_ = 0;
     name = "Morgan James";
-    passable_level = Passable::BIG_CREATURE;
+    passable_level = passable::BIG_CREATURE;
 
     lay_timer_ = 0;
 
@@ -181,7 +181,7 @@ void Human::ProcessMessage(const Message2 &msg)
         }
         attack_cooldown_ = MAIN_TICK;
 
-        IdPtr<IOnMapObject> object = Network2::ExtractObjId(obj);
+        IdPtr<MaterialObject> object = Network2::ExtractObjId(obj);
         if (!object.IsValid())
         {
             return;
@@ -313,14 +313,14 @@ void Human::SetLying(bool value)
     {
         GetGame().GetChat().PostSimpleText(name + " is lying now", GetOwner()->GetId());
         view_.SetAngle(90);
-        SetPassable(Dir::ALL, Passable::FULL);
+        SetPassable(Dir::ALL, passable::FULL);
         v_level = 8;
     }
     else
     {
         GetGame().GetChat().PostSimpleText(name + " is standing now!", GetOwner()->GetId());
         view_.SetAngle(0);
-        SetPassable(Dir::ALL, Passable::BIG_ITEM);
+        SetPassable(Dir::ALL, passable::BIG_ITEM);
         v_level = 9;
     }
     interface_.UpdateLaying();
@@ -451,7 +451,7 @@ void Human::AttackBy(IdPtr<Item> item)
         ApplyBruteDamage(item->damage * 100);
         QString sound = QString("genhit%1.wav").arg(GetRand() % 3 + 1);
         PlaySoundIfVisible(sound);
-        if (IdPtr<IOnMapObject> item_owner = item->GetOwner())
+        if (IdPtr<MaterialObject> item_owner = item->GetOwner())
         {
             GetGame().GetChat().PostDamage(item_owner->name, name, item->name, GetOwner().Id());
         }

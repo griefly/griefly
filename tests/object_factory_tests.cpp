@@ -91,14 +91,14 @@ TEST(ObjectFactory, CreateImpl)
         EXPECT_CALL(game, GetAtmosphere())
             .WillOnce(ReturnRef(atmos));
         EXPECT_CALL(atmos, SetFlags(0, 0, 0, '\0'));
-        quint32 id2 = factory.CreateImpl(IOnMapObject::GetTypeStatic(), id);
+        quint32 id2 = factory.CreateImpl(MaterialObject::GetTypeStatic(), id);
         EXPECT_EQ(id2, 4);
         {
             ASSERT_GT(factory.GetIdTable().size(), 5);
             kv::Object* object = factory.GetIdTable()[4].object;
-            ASSERT_EQ(object->GetType(), IOnMapObject::GetTypeStatic());
+            ASSERT_EQ(object->GetType(), MaterialObject::GetTypeStatic());
             EXPECT_EQ(object->GetId(), 4);
-            IOnMapObject* on_map_object = static_cast<IOnMapObject*>(object);
+            MaterialObject* on_map_object = static_cast<MaterialObject*>(object);
             EXPECT_EQ(on_map_object->GetOwner().Id(), id);
         }
 

@@ -103,7 +103,7 @@ public:
     virtual void UpdatePassable() override;
     atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 
-    using InsideType = std::vector<IdPtr<IOnMapObject>>;
+    using InsideType = std::vector<IdPtr<MaterialObject>>;
     InsideType& GetInsideList() { return inside_list_; }
 
     void UpdateAtmosPassable();

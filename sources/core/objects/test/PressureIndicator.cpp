@@ -23,7 +23,7 @@ void PressureIndicator::Process()
 
 void PressureIndicator::AfterWorldCreation()
 {
-    IOnMapObject::AfterWorldCreation();
+    MaterialObject::AfterWorldCreation();
     SetFreq(1);
 }
 

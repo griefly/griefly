@@ -9,7 +9,7 @@ using namespace kv;
 
 Item::Item()
 {
-    passable_level = Passable::SMALL_ITEM;
+    passable_level = passable::SMALL_ITEM;
 
     type = Slots::DEFAULT;
 

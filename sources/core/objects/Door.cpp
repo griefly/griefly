@@ -14,7 +14,7 @@ using namespace kv;
 Door::Door()
 {
     transparent = true;
-    SetPassable(Dir::ALL, Passable::EMPTY);
+    SetPassable(Dir::ALL, passable::EMPTY);
 
     v_level = 10;
 
@@ -47,7 +47,7 @@ void Door::Close()
     }
     SetState("door_closing");
     PlaySoundIfVisible("airlock.wav");
-    SetPassable(Dir::ALL, Passable::EMPTY);
+    SetPassable(Dir::ALL, passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;
 }
@@ -59,7 +59,7 @@ void Door::Process()
         if (MAIN_TICK - last_tick_ > 11)
         {
             door_state_ = OPEN;
-            SetPassable(Dir::ALL, Passable::FULL);
+            SetPassable(Dir::ALL, passable::FULL);
             last_tick_ = MAIN_TICK;
             SetState("door_open");
         }
@@ -209,7 +209,7 @@ void GlassDoor::AfterWorldCreation()
 {
     IMovable::AfterWorldCreation();
 
-    SetPassable(GetDir(), Passable::EMPTY);
+    SetPassable(GetDir(), passable::EMPTY);
     SetState(door_prefix_);
 }
 
@@ -234,7 +234,7 @@ void GlassDoor::Close()
     }
     SetState(door_prefix_ + "closing");
     PlaySoundIfVisible("windowdoor.wav");
-    SetPassable(GetDir(), Passable::EMPTY);
+    SetPassable(GetDir(), passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = MAIN_TICK;
 }
@@ -246,7 +246,7 @@ void GlassDoor::Process()
         if (MAIN_TICK - last_tick_ > 9)
         {
             door_state_ = OPEN;
-            SetPassable(GetDir(), Passable::FULL);
+            SetPassable(GetDir(), passable::FULL);
             last_tick_ = MAIN_TICK;
             SetState(door_prefix_ + "open");
         }

@@ -73,7 +73,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
     for (auto it = (*GetItemsCreators()).begin(); it != (*GetItemsCreators()).end(); ++it)
     {
         kv::Object* loc = it->second();
-        kv::IOnMapObject* bloc = CastTo<kv::IOnMapObject>(loc);
+        kv::MaterialObject* bloc = CastTo<kv::MaterialObject>(loc);
         if (!bloc)
         {
             qDebug() << it->first;

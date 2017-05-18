@@ -13,7 +13,7 @@ using namespace kv;
 Grille::Grille()
 {
     transparent = true;
-    SetPassable(Dir::ALL, Passable::AIR);
+    SetPassable(Dir::ALL, passable::AIR);
 
     tick_speed_ = 5;
     SetHitPoints(15);
@@ -36,13 +36,13 @@ void Grille::AttackBy(IdPtr<Item> item)
         if (!cutted_)
         {
             SetState("brokengrille");
-            SetPassable(Dir::ALL, Passable::FULL);
+            SetPassable(Dir::ALL, passable::FULL);
             cutted_ = true;
-            Create<IOnMapObject>(Rod::GetTypeStatic(), GetOwner());
+            Create<MaterialObject>(Rod::GetTypeStatic(), GetOwner());
         }
         else
         {
-            Create<IOnMapObject>(Rod::GetTypeStatic(), GetOwner());
+            Create<MaterialObject>(Rod::GetTypeStatic(), GetOwner());
             Delete();
         }
         return;
@@ -60,14 +60,14 @@ void Grille::Break()
     if (!cutted_)
     {
         SetState("brokengrille");
-        SetPassable(Dir::ALL, Passable::FULL);
+        SetPassable(Dir::ALL, passable::FULL);
         cutted_ = true;
-        Create<IOnMapObject>(Rod::GetTypeStatic(), GetOwner());
+        Create<MaterialObject>(Rod::GetTypeStatic(), GetOwner());
         SetHitPoints(7);
     }
     else
     {
-        Create<IOnMapObject>(Rod::GetTypeStatic(), GetOwner());
+        Create<MaterialObject>(Rod::GetTypeStatic(), GetOwner());
         Delete();
     }
 }

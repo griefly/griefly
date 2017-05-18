@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class PressureIndicator : public IOnMapObject
+class PressureIndicator : public MaterialObject
 {
 public:
-    DECLARE_SAVEABLE(PressureIndicator, IOnMapObject);
+    DECLARE_SAVEABLE(PressureIndicator, MaterialObject);
     REGISTER_CLASS_AS(PressureIndicator);
     PressureIndicator();
     virtual void Process() override;

@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class SpawnPoint : public IOnMapObject
+class SpawnPoint : public MaterialObject
 {
 public:
-    DECLARE_SAVEABLE(SpawnPoint, IOnMapObject);
+    DECLARE_SAVEABLE(SpawnPoint, MaterialObject);
     REGISTER_CLASS_AS(SpawnPoint);
     SpawnPoint();
 

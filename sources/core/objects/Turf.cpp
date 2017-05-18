@@ -14,7 +14,7 @@ ITurf::ITurf()
 
 void ITurf::Delete() 
 {
-    IOnMapObject::Delete();
+    MaterialObject::Delete();
 }
 
 void ITurf::Represent()
@@ -41,7 +41,7 @@ void ITurf::Represent()
             GetRepresentation().AddToNewFrame(ent);
         }
     }
-    IOnMapObject::Represent();
+    MaterialObject::Represent();
 }
 
 int friction::CombinedFriction(IdPtr<ITurf> turf)

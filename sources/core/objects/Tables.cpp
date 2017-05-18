@@ -8,7 +8,7 @@ Table::Table()
 {
     anchored_ = true;
     v_level = 4;
-    SetPassable(Dir::ALL, Passable::SMALL_CREATURE);
+    SetPassable(Dir::ALL, passable::SMALL_CREATURE);
     SetSprite(""); 
     material_ = "";
     SetState(material_ + "_table_d0");
@@ -22,7 +22,7 @@ void Table::AfterWorldCreation()
 void Table::Delete()
 {
     NotifyNeighborhood(false);
-    IOnMapObject::Delete();
+    MaterialObject::Delete();
 }
 void Table::NotifyNeighborhood(bool is_in_existence)
 {

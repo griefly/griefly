@@ -5,7 +5,7 @@ using namespace kv;
 WallSign::WallSign()
 {
     transparent = true;
-    SetPassable(Dir::ALL, Passable::FULL);
+    SetPassable(Dir::ALL, passable::FULL);
     v_level = 6;
 
     SetSprite("icons/decals.dmi");
@@ -18,7 +18,7 @@ WallSign::WallSign()
 
 void WallSign::AfterWorldCreation()
 {
-    IOnMapObject::AfterWorldCreation();
+    MaterialObject::AfterWorldCreation();
     SetState(sign_type_);
 }
 

@@ -19,7 +19,7 @@ void Rod::AttackBy(IdPtr<Item> item)
 {
     if (item.Id() == GetId()) // Attack self
     {
-        Create<IOnMapObject>(Grille::GetTypeStatic(), GetTurf());
+        Create<MaterialObject>(Grille::GetTypeStatic(), GetTurf());
         Delete();
     }
 }
@@ -37,7 +37,7 @@ void Metal::AttackBy(IdPtr<Item> item)
     {
         if (IdPtr<Floor> floor = GetTurf())
         {
-            Create<IOnMapObject>(Girder::GetTypeStatic(), GetTurf());
+            Create<MaterialObject>(Girder::GetTypeStatic(), GetTurf());
             Delete();
         }
     }

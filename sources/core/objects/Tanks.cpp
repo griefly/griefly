@@ -16,7 +16,7 @@ FuelTank::FuelTank()
     SetSprite("icons/objects.dmi");
     SetState("weldtank");
 
-    SetPassable(Dir::ALL, Passable::AIR);
+    SetPassable(Dir::ALL, passable::AIR);
 }
 
 void FuelTank::AttackBy(IdPtr<Item> item)
@@ -39,7 +39,7 @@ WaterTank::WaterTank()
     SetSprite("icons/objects.dmi");
     SetState("watertank");
 
-    SetPassable(Dir::ALL, Passable::AIR);
+    SetPassable(Dir::ALL, passable::AIR);
 }
 
 void WaterTank::AttackBy(IdPtr<Item> item)

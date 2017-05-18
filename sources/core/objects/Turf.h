@@ -11,10 +11,10 @@ namespace friction
 namespace kv
 {
 
-class ITurf : public IOnMapObject
+class ITurf : public MaterialObject
 {
 public:
-    DECLARE_SAVEABLE(ITurf, IOnMapObject);
+    DECLARE_SAVEABLE(ITurf, MaterialObject);
     REGISTER_CLASS_AS(ITurf);
     ITurf();
     virtual void Delete() override;

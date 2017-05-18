@@ -6,10 +6,10 @@
 namespace kv
 {
 
-class Door : public IOnMapObject
+class Door : public MaterialObject
 {
 public:
-    DECLARE_SAVEABLE(Door, IOnMapObject);
+    DECLARE_SAVEABLE(Door, MaterialObject);
     REGISTER_CLASS_AS(Door);
     Door();
     

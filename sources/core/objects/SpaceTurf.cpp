@@ -14,7 +14,7 @@ Space::Space()
 {
     SetAtmosState(atmos::SPACE);
 
-    SetPassable(Dir::ALL, Passable::FULL);
+    SetPassable(Dir::ALL, passable::FULL);
     transparent = true;
     
     SetFriction(0);
@@ -35,6 +35,6 @@ void Space::AttackBy(IdPtr<Item> item)
     if (IdPtr<Rod> rod = item)
     {
         rod->Delete();
-        Create<IOnMapObject>(Lattice::GetTypeStatic(), GetOwner());
+        Create<MaterialObject>(Lattice::GetTypeStatic(), GetOwner());
     }
 }

@@ -94,9 +94,9 @@ bool IMovable::CheckMoveTime()
 bool IMovable::CheckPassable()
 {
     PassableLevel loc = GetPassable(GetDir());
-    if (loc != Passable::FULL)
+    if (loc != passable::FULL)
     {
-        SetPassable(GetDir(), Passable::FULL);
+        SetPassable(GetDir(), passable::FULL);
     }
     auto owner = GetOwner();
     if (!CanPass(owner->GetPassable(GetDir()), passable_level))
@@ -105,13 +105,13 @@ bool IMovable::CheckPassable()
         force_.x = 0;
         force_.y = 0;
         force_.z = 0;
-        if (loc != Passable::FULL)
+        if (loc != passable::FULL)
         {
             SetPassable(GetDir(), loc);
         }
         return false;
     }
-    if (loc != Passable::FULL)
+    if (loc != passable::FULL)
     {
         SetPassable(GetDir(), loc);
     }

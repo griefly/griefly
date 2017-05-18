@@ -28,10 +28,10 @@ inline unsigned int hash(const VDir& vdir)
 namespace kv
 {
 
-class IMovable : public IOnMapObject
+class IMovable : public MaterialObject
 {
 public:
-    DECLARE_SAVEABLE(IMovable, IOnMapObject);
+    DECLARE_SAVEABLE(IMovable, MaterialObject);
     REGISTER_CLASS_AS(IMovable);
     IMovable();
     void processMove();//for move
@@ -46,7 +46,7 @@ public:
     virtual void ProcessForce();
     virtual void ApplyForce(VDir force) override;
 
-    virtual void Delete() override { IOnMapObject::Delete(); }
+    virtual void Delete() override { MaterialObject::Delete(); }
 
     virtual void Represent() override;
     virtual void Bump(IdPtr<IMovable> item) override;

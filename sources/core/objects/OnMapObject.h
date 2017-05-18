@@ -8,11 +8,11 @@
 namespace kv
 {
 
-class IOnMapObject : public MapObject
+class MaterialObject : public MapObject
 {
 public:
-    IOnMapObject();
-    DECLARE_SAVEABLE(IOnMapObject, MapObject);
+    MaterialObject();
+    DECLARE_SAVEABLE(MaterialObject, MapObject);
     REGISTER_CLASS_AS(ionmapitem);
 
     virtual PassableLevel GetPassable(Dir direct) const override
@@ -29,8 +29,10 @@ public:
             return passable_right;
         case Dir::ALL:
             return passable_all;
+        default:
+            break;
         }
-        return false;
+        return passable::FULL;
     }
 
     void SetPassable(Dir direct, PassableLevel p)
@@ -66,7 +68,7 @@ public:
     
     virtual void Delete() override;
     virtual void Represent() override;
-    void SetSprite(const QString& T_SPR);
+    void SetSprite(const QString& sprite);
     void SetState(const QString& name);
     ViewInfo* GetView() { return &view_; }
 public:
@@ -84,6 +86,6 @@ public:
 protected:
     ViewInfo KV_SAVEABLE(view_);
 };
-END_DECLARE(IOnMapObject);
+END_DECLARE(MaterialObject);
 
 }

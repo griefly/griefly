@@ -128,7 +128,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         ss >> y;
         ss >> z;
 
-        IdPtr<kv::IOnMapObject> i = factory.CreateImpl(item_type);
+        IdPtr<kv::MaterialObject> i = factory.CreateImpl(item_type);
         if (!i.IsValid())
         {
             KvAbort(QString("Unable to cast: %1").arg(item_type));

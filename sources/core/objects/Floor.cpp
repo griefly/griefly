@@ -14,7 +14,7 @@ using namespace kv;
 Floor::Floor()
 {
     transparent = true;
-    SetPassable(Dir::ALL, Passable::FULL);
+    SetPassable(Dir::ALL, passable::FULL);
 
     SetSprite("icons/floors.dmi");
     SetState("floor");

@@ -100,7 +100,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
             {
                 auto i = tile->GetInsideList().rbegin();
                 while (   (i != tile->GetInsideList().rend())
-                       && ((*i)->passable_level == Passable::EMPTY))
+                       && ((*i)->passable_level == passable::EMPTY))
                 {
                     ++i;
                 }

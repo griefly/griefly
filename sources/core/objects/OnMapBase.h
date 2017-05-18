@@ -11,7 +11,7 @@ class IMovable;
 class Item;
 
 using PassableLevel = int;
-namespace Passable
+namespace passable
 {
     const PassableLevel EMPTY = 0;
     const PassableLevel AIR = 10;
@@ -43,7 +43,7 @@ public:
     //
     virtual PassableLevel GetPassable(Dir direct) const
     {
-        return Passable::EMPTY;
+        return passable::EMPTY;
     }
     virtual bool IsTransparent() const
     {

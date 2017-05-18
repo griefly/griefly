@@ -10,17 +10,17 @@
 
 using namespace kv;
 
-void IOnMapObject::SetSprite(const QString& name)
+void MaterialObject::SetSprite(const QString& sprite)
 {
-    view_.SetSprite(name);
+    view_.SetSprite(sprite);
 }
 
-void IOnMapObject::SetState(const QString& name)
+void MaterialObject::SetState(const QString& name)
 {
     view_.SetState(name);
 }
 
-void IOnMapObject::Represent()
+void MaterialObject::Represent()
 { 
     Representation::Entity ent;
     ent.id = GetId();
@@ -33,21 +33,21 @@ void IOnMapObject::Represent()
     GetRepresentation().AddToNewFrame(ent);
 }
 
-void IOnMapObject::Delete()
+void MaterialObject::Delete()
 {
     MapObject::Delete();
 }
 
-IOnMapObject::IOnMapObject()
+MaterialObject::MaterialObject()
 {
     v_level = 0;
-    passable_all = Passable::FULL;
-    passable_up = Passable::FULL;
-    passable_down = Passable::FULL;
-    passable_left = Passable::FULL;
-    passable_right = Passable::FULL;
+    passable_all = passable::FULL;
+    passable_up = passable::FULL;
+    passable_down = passable::FULL;
+    passable_left = passable::FULL;
+    passable_right = passable::FULL;
 
-    passable_level = Passable::FULL;
+    passable_level = passable::FULL;
 
     transparent = true;
     name = "nameless";

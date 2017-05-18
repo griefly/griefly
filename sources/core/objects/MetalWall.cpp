@@ -15,7 +15,7 @@ using namespace kv;
 MetalWall::MetalWall()
 {
     transparent = false;
-    SetPassable(Dir::ALL, Passable::EMPTY);
+    SetPassable(Dir::ALL, passable::EMPTY);
 
     v_level = 2;
 
@@ -32,8 +32,8 @@ void MetalWall::AttackBy(IdPtr<Item> item)
         if (wtool->Working())
         {
             PlaySoundIfVisible("Welder.wav");
-            Create<IOnMapObject>(Girder::GetTypeStatic(), GetOwner());
-            Create<IOnMapObject>(Metal::GetTypeStatic(), GetOwner());
+            Create<MaterialObject>(Girder::GetTypeStatic(), GetOwner());
+            Create<MaterialObject>(Metal::GetTypeStatic(), GetOwner());
             Create<ITurf>(Plating::GetTypeStatic(), GetOwner());
             Delete();
         }
@@ -43,7 +43,7 @@ void MetalWall::AttackBy(IdPtr<Item> item)
 ReinforcedWall::ReinforcedWall()
 {
     transparent = false;
-    SetPassable(Dir::ALL, Passable::EMPTY);
+    SetPassable(Dir::ALL, passable::EMPTY);
 
     v_level = 2;
 

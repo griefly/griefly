@@ -14,7 +14,7 @@ SpawnPoint::SpawnPoint()
 
 void SpawnPoint::AfterWorldCreation()
 {
-    IOnMapObject::AfterWorldCreation();
+    MaterialObject::AfterWorldCreation();
 
     SetState("");
 

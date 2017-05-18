@@ -5,7 +5,7 @@ using namespace kv;
 Computer::Computer()
 {
     transparent = true;
-    SetPassable(Dir::ALL, Passable::AIR);
+    SetPassable(Dir::ALL, passable::AIR);
 
     SetSprite("icons/computer.dmi");
     SetState("securityb");
