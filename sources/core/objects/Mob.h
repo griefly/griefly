@@ -9,17 +9,17 @@
 namespace kv
 {
 
-class IMob : public IMovable
+class Mob : public Movable
 {
 public:
-    DECLARE_SAVEABLE(IMob, IMovable);
+    DECLARE_SAVEABLE(Mob, Movable);
     REGISTER_CLASS_AS(imob);
-    IMob();
+    Mob();
     virtual void AfterWorldCreation() override;
     virtual void Delete();
 
-    virtual void InitGUI(){}
-    virtual void DeinitGUI(){}
+    virtual void InitGUI() { }
+    virtual void DeinitGUI() { }
     virtual void GenerateInterfaceForFrame();
     virtual void ProcessMessage(const Message2& msg);
 
@@ -27,6 +27,6 @@ public:
 
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) { ; }
 };
-END_DECLARE(IMob);
+END_DECLARE(Mob);
 
 }

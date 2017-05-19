@@ -28,7 +28,7 @@ Floor::Floor()
 
 void Floor::AfterWorldCreation()
 {
-    ITurf::AfterWorldCreation();
+    Turf::AfterWorldCreation();
     SetOpen(open_);
 }
 

@@ -6,8 +6,8 @@
 
 namespace kv
 {
-class ITurf;
-class IMovable;
+class Turf;
+class Movable;
 class Item;
 
 using PassableLevel = int;
@@ -107,7 +107,7 @@ public:
         return false;
     }
 
-    virtual void Bump(IdPtr<IMovable> item);
+    virtual void Bump(IdPtr<Movable> item);
     virtual void BumpByGas(Dir dir, bool inside = false);
 
     template<class T>
@@ -138,8 +138,8 @@ public:
     }
     virtual void Represent() { }
     virtual void UpdatePassable() { }
-    virtual IdPtr<ITurf> GetTurf();
-    virtual void SetTurf(IdPtr<ITurf> turf);
+    virtual IdPtr<Turf> GetTurf();
+    virtual void SetTurf(IdPtr<Turf> turf);
     IdPtr<MapObject> GetRoot();
     void PlaySoundIfVisible(const QString& name);
 protected:

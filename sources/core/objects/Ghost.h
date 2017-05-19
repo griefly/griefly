@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class Ghost: public IMob
+class Ghost: public Mob
 {
 public:
-    DECLARE_SAVEABLE(Ghost, IMob);
+    DECLARE_SAVEABLE(Ghost, Mob);
     REGISTER_CLASS_AS(Ghost);
     Ghost();
     virtual void AfterWorldCreation() override;

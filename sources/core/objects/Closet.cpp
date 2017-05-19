@@ -61,7 +61,7 @@ void Closet::AttackBy(IdPtr<Item> item)
     }
 }
 
-void Closet::Bump(IdPtr<IMovable> item)
+void Closet::Bump(IdPtr<Movable> item)
 {
     if (Contains(item))
     {
@@ -71,7 +71,7 @@ void Closet::Bump(IdPtr<IMovable> item)
         }
         return;
     }
-    IMovable::Bump(item);
+    Movable::Bump(item);
 }
 
 IdPtr<MapObject> Closet::GetNeighbour(Dir direct) const
@@ -111,7 +111,7 @@ bool Closet::RemoveObject(IdPtr<MapObject> item)
 
 void Closet::AfterWorldCreation()
 {
-    IMovable::AfterWorldCreation();
+    Movable::AfterWorldCreation();
 
     if (!GetOwner())
     {
@@ -129,7 +129,7 @@ void Closet::AfterWorldCreation()
 
 void Closet::Delete()
 {
-    std::vector<IdPtr<IMovable>> copy = content_;
+    std::vector<IdPtr<Movable>> copy = content_;
     for (auto it = copy.begin(); it != copy.end(); ++it)
     {
         if (!it->IsValid())
@@ -138,7 +138,7 @@ void Closet::Delete()
         }
         (*it)->Delete();
     }
-    IMovable::Delete();
+    Movable::Delete();
 }
 
 void Closet::Close()

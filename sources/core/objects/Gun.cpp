@@ -25,7 +25,7 @@ void Gun::ShootImpl(VDir target, const QString& sound,
                     const QString& projectile_type, const QString& casing_type)
 {
     IdPtr<CubeTile> tile = GetOwner()->GetOwner();
-    IdPtr<IMovable> shooter = GetOwner();
+    IdPtr<Movable> shooter = GetOwner();
     if (tile.IsValid())
     {	
         if (UseAmmo())

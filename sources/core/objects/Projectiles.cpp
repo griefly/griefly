@@ -75,7 +75,7 @@ bool Projectile::CheckPassable()
             return false;
         }
     }
-    if (IMovable::CheckPassable())
+    if (Movable::CheckPassable())
     {
         return true;
     }
@@ -241,7 +241,7 @@ void Projectile::MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2)
 }
 void Projectile::AfterWorldCreation()
 {
-    IMovable::AfterWorldCreation();
+    Movable::AfterWorldCreation();
     SetFreq(1);
 }
 int Projectile::GetDamage()

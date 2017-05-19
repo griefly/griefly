@@ -5,20 +5,20 @@
 namespace kv
 {
 
-class MetalWall : public ITurf
+class MetalWall : public Turf
 {
 public:
-    DECLARE_SAVEABLE(MetalWall, ITurf);
+    DECLARE_SAVEABLE(MetalWall, Turf);
     REGISTER_CLASS_AS(MetalWall);
     MetalWall();
     virtual void AttackBy(IdPtr<Item> item) override;
 };
 END_DECLARE(MetalWall);
 
-class ReinforcedWall : public ITurf
+class ReinforcedWall : public Turf
 {
 public:
-    DECLARE_SAVEABLE(ReinforcedWall, ITurf);
+    DECLARE_SAVEABLE(ReinforcedWall, Turf);
     REGISTER_CLASS_AS(ReinforcedWall);
     ReinforcedWall();
 };

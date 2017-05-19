@@ -10,10 +10,10 @@ unsigned int hash(const std::vector<Dir>& content);
 namespace kv
 {
 
-class Projectile : public IMovable
+class Projectile : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Projectile, IMovable);
+    DECLARE_SAVEABLE(Projectile, Movable);
     REGISTER_CLASS_AS(Projectile);
 
     Projectile();

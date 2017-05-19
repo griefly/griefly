@@ -29,10 +29,10 @@ inline unsigned int hash(const LoginInterface& i)
 namespace kv
 {
 
-class LoginMob : public IMob
+class LoginMob : public Mob
 {
 public:
-    DECLARE_SAVEABLE(LoginMob, IMob);
+    DECLARE_SAVEABLE(LoginMob, Mob);
     REGISTER_CLASS_AS(LoginMob);
     LoginMob();
 

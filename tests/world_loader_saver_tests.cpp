@@ -65,7 +65,7 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
         EXPECT_CALL(map, Resize(13, 17, 23));
         EXPECT_CALL(game, SetMob(0));
 
-        IdPtr<IMob> mob = 0;
+        IdPtr<Mob> mob = 0;
         EXPECT_CALL(game, ChangeMob(mob));
 
         EXPECT_CALL(game, GetAtmosphere())
@@ -143,7 +143,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         EXPECT_CALL(map, Resize(13, 17, 23));
         EXPECT_CALL(game, SetMob(0));
 
-        IdPtr<IMob> mob = 0;
+        IdPtr<Mob> mob = 0;
         EXPECT_CALL(game, ChangeMob(mob));
 
         EXPECT_CALL(game, GetAtmosphere())

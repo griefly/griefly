@@ -6,18 +6,18 @@
 
 using namespace kv;
 
-ITurf::ITurf()
+Turf::Turf()
 {
     friction_ = friction::BASE_FRICTION;
     atmos_state_ = atmos::SIMULATED;
 }
 
-void ITurf::Delete() 
+void Turf::Delete()
 {
     MaterialObject::Delete();
 }
 
-void ITurf::Represent()
+void Turf::Represent()
 {
     if (IdPtr<CubeTile> tile = GetOwner())
     {
@@ -44,7 +44,7 @@ void ITurf::Represent()
     MaterialObject::Represent();
 }
 
-int friction::CombinedFriction(IdPtr<ITurf> turf)
+int friction::CombinedFriction(IdPtr<Turf> turf)
 {
     if (   turf->GetX() == 0
         || turf->GetY() == 0

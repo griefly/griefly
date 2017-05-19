@@ -32,7 +32,7 @@ Ghost::Ghost()
 
 void Ghost::AfterWorldCreation()
 {
-    IMob::AfterWorldCreation();
+    Mob::AfterWorldCreation();
     SetFreq(10);
 }
 
@@ -63,7 +63,7 @@ void Ghost::Represent()
 {
     if (IsMobGhost())
     {
-        IMob::Represent();
+        Mob::Represent();
     }
 }
 
@@ -89,7 +89,7 @@ void Ghost::CalculateVisible(std::list<PosPoint>* visible_list)
 
 void Ghost::ProcessMessage(const Message2& msg)
 {
-    IMob::ProcessMessage(msg);
+    Mob::ProcessMessage(msg);
 }
 
 void Ghost::InitGUI()
@@ -114,7 +114,7 @@ void Ghost::Process()
         quint32 net_id = GetGame().GetNetId(GetId());
         if (net_id)
         {
-            auto login_mob = Create<IMob>(LoginMob::GetTypeStatic(), 0);
+            auto login_mob = Create<Mob>(LoginMob::GetTypeStatic(), 0);
 
             GetGame().SetPlayerId(net_id, login_mob.Id());
             if (GetId() == GetGame().GetMob().Id())

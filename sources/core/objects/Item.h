@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class Item : public IMovable
+class Item : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Item, IMovable);
+    DECLARE_SAVEABLE(Item, Movable);
     REGISTER_CLASS_AS(Item);
     Item();
     QString KV_SAVEABLE(type);

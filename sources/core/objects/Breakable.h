@@ -13,7 +13,7 @@ public:
     Breakable();
 
     virtual void AttackBy(IdPtr<Item> item) override;
-    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void Bump(IdPtr<Movable> item) override;
     virtual void Break() { }
     virtual void PlayOnHitSound() { }
     void SetHitPoints(int number);

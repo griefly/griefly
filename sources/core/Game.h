@@ -44,8 +44,8 @@ public:
     virtual Names& GetNames() override;
 
     virtual void SetUnsyncGenerator(quint32 generator) override;
-    virtual void ChangeMob(IdPtr<kv::IMob> new_mob) override;
-    virtual IdPtr<kv::IMob> GetMob() override;
+    virtual void ChangeMob(IdPtr<kv::Mob> new_mob) override;
+    virtual IdPtr<kv::Mob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
 
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
@@ -127,7 +127,7 @@ private:
     WorldLoaderSaver* world_loader_saver_;
 
     IdPtr<kv::UnsyncGenerator> unsync_generator_;
-    IdPtr<kv::IMob> current_mob_;
+    IdPtr<kv::Mob> current_mob_;
 
     std::map<quint32, quint32> players_table_;
 };

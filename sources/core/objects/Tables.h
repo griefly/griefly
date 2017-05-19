@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class Table : public IMovable
+class Table : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Table, IMovable);
+    DECLARE_SAVEABLE(Table, Movable);
     REGISTER_CLASS_AS(Table);
     Table();
     virtual void AttackBy(IdPtr<Item> item) override;

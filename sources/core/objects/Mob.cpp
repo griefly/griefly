@@ -7,27 +7,27 @@
 
 using namespace kv;
 
-IMob::IMob()
+Mob::Mob()
 {
     // Nothing
 }
 
-void IMob::AfterWorldCreation()
+void Mob::AfterWorldCreation()
 {
     SetFreq(1);
 }
 
-void IMob::GenerateInterfaceForFrame()
+void Mob::GenerateInterfaceForFrame()
 {
 }
 
-void IMob::Delete()
+void Mob::Delete()
 {
     DeinitGUI();
     MaterialObject::Delete();
 }
 
-void IMob::ProcessMessage(const Message2 &msg)
+void Mob::ProcessMessage(const Message2 &msg)
 {
     if (msg.type != MessageType::ORDINARY)
     {

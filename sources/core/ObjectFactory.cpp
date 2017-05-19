@@ -179,7 +179,7 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
     IdPtr<kv::MapObject> owner = owner_id;
     if (owner.IsValid())
     {
-        if (CastTo<kv::ITurf>(item) != nullptr)
+        if (CastTo<kv::Turf>(item) != nullptr)
         {
             owner->SetTurf(item->GetId());
         }

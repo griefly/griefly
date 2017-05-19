@@ -29,7 +29,7 @@ void Girder::AttackBy(IdPtr<Item> item)
         metal->Delete();
 
         GetTurf()->Delete();
-        Create<ITurf>(MetalWall::GetTypeStatic(), GetOwner());
+        Create<Turf>(MetalWall::GetTypeStatic(), GetOwner());
 
         Delete();
     }

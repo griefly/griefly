@@ -54,7 +54,7 @@ public:
     virtual bool CanTouch(IdPtr<MapObject> item) const override;
     virtual bool Contains(IdPtr<MapObject> item) const override;
 
-    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void Bump(IdPtr<Movable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 
     void SetPos(int posx, int posy, int posz = 0)
@@ -87,11 +87,11 @@ public:
     {
         return posz();
     }
-    virtual IdPtr<ITurf> GetTurf()  override
+    virtual IdPtr<Turf> GetTurf()  override
     {
         return turf_;
     }
-    virtual void SetTurf(IdPtr<ITurf> turf) override
+    virtual void SetTurf(IdPtr<Turf> turf) override
     {
         turf_ = turf;
         if (turf_.IsValid())
@@ -115,7 +115,7 @@ private:
 
     void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const;
 
-    IdPtr<ITurf> KV_SAVEABLE(turf_);
+    IdPtr<Turf> KV_SAVEABLE(turf_);
 
     atmos::AtmosHolder KV_SAVEABLE(atmos_holder_);
 

@@ -153,7 +153,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         }
 
         auto& tile = game_->GetMap().At(x, y, z);
-        if (IdPtr<kv::ITurf> turf = i)
+        if (IdPtr<kv::Turf> turf = i)
         {
             if (tile->GetTurf())
             {

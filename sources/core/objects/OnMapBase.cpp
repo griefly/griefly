@@ -6,7 +6,7 @@
 
 using namespace kv;
 
-IdPtr<ITurf> MapObject::GetTurf()
+IdPtr<Turf> MapObject::GetTurf()
 {
     auto owner = GetOwner();
     if (owner.IsValid())
@@ -33,7 +33,7 @@ void MapObject::PlaySoundIfVisible(const QString& name)
     }
 }
 
-void MapObject::SetTurf(IdPtr<ITurf> turf)
+void MapObject::SetTurf(IdPtr<Turf> turf)
 {
     auto owner = GetOwner();
     if (owner.IsValid())
@@ -42,7 +42,7 @@ void MapObject::SetTurf(IdPtr<ITurf> turf)
     }
 }
 
-void MapObject::Bump(IdPtr<IMovable> item)
+void MapObject::Bump(IdPtr<Movable> item)
 {
    // nothing
 }

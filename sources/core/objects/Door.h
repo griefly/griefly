@@ -21,7 +21,7 @@ public:
     virtual void Open();
     virtual void Close();
     virtual void Process() override;
-    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void Bump(IdPtr<Movable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
     bool IsState(State state) const { return state == door_state_; }
     void Weld();
@@ -70,10 +70,10 @@ public:
 };
 END_DECLARE(MaintenanceDoor);
 
-class GlassDoor : public IMovable
+class GlassDoor : public Movable
 {
 public:
-    DECLARE_SAVEABLE(GlassDoor, IMovable);
+    DECLARE_SAVEABLE(GlassDoor, Movable);
     REGISTER_CLASS_AS(GlassDoor);
     GlassDoor();
 
@@ -87,7 +87,7 @@ public:
     virtual void Open();
     virtual void Close();
     virtual void Process() override;
-    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void Bump(IdPtr<Movable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
     bool IsState(STATE state) const { return state == door_state_; };
 private:

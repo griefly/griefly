@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class Floor : public ITurf
+class Floor : public Turf
 {
 public:
-    DECLARE_SAVEABLE(Floor, ITurf);
+    DECLARE_SAVEABLE(Floor, Turf);
     REGISTER_CLASS_AS(Floor);
     Floor();
     virtual void AfterWorldCreation() override;

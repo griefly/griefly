@@ -5,19 +5,19 @@
 namespace kv
 {
 
-class Bed : public IMovable
+class Bed : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Bed, IMovable);
+    DECLARE_SAVEABLE(Bed, Movable);
     REGISTER_CLASS_AS(Bed);
     Bed();
 };
 END_DECLARE(Bed);
 
-class Chair : public IMovable
+class Chair : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Chair, IMovable);
+    DECLARE_SAVEABLE(Chair, Movable);
     REGISTER_CLASS_AS(Chair);
     Chair();
 
@@ -25,10 +25,10 @@ public:
 };
 END_DECLARE(Chair);
 
-class Stool : public IMovable
+class Stool : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Stool, IMovable);
+    DECLARE_SAVEABLE(Stool, Movable);
     REGISTER_CLASS_AS(Stool);
     Stool();
 };

@@ -80,7 +80,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
             continue;
         }
         bool is_turf = false;
-        if (CastTo<ITurf>(loc))
+        if (CastTo<Turf>(loc))
         {
             is_turf = true;
         }

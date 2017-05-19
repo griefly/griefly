@@ -28,7 +28,7 @@ LoginMob::LoginMob()
 
 void LoginMob::AfterWorldCreation()
 {
-    IMob::AfterWorldCreation();
+    Mob::AfterWorldCreation();
 
     name = QString("LobbyPlayer%1").arg(GetId());
 }

@@ -35,9 +35,9 @@ void FlatGlass::AfterWorldCreation()
     SetPassable(GetDir(), passable::EMPTY);
 }
 
-void FlatGlass::Bump(IdPtr<IMovable> item)
+void FlatGlass::Bump(IdPtr<Movable> item)
 {
-    if (IdPtr<IMob> mob = item)
+    if (IdPtr<Mob> mob = item)
     {
         if (item->GetDir() != GetDir())
         {
@@ -48,7 +48,7 @@ void FlatGlass::Bump(IdPtr<IMovable> item)
 
             Rotate(item->GetDir());
         }
-        IMovable::Bump(item);
+        Movable::Bump(item);
         return;
     }
     Breakable::Bump(item);

@@ -28,13 +28,12 @@ inline unsigned int hash(const VDir& vdir)
 namespace kv
 {
 
-class IMovable : public MaterialObject
+class Movable : public MaterialObject
 {
 public:
-    DECLARE_SAVEABLE(IMovable, MaterialObject);
-    REGISTER_CLASS_AS(IMovable);
-    IMovable();
-    void processMove();//for move
+    DECLARE_SAVEABLE(Movable, MaterialObject);
+    REGISTER_CLASS_AS(Movable);
+    Movable();
     virtual bool TryMove(Dir direct);
     bool CheckMoveTime();
     virtual bool CheckPassable();
@@ -49,7 +48,7 @@ public:
     virtual void Delete() override { MaterialObject::Delete(); }
 
     virtual void Represent() override;
-    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void Bump(IdPtr<Movable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 public:
     VDir KV_SAVEABLE(force_);
@@ -62,7 +61,7 @@ public:
 private:
     Dir KV_SAVEABLE(direction_);
 };
-END_DECLARE(IMovable);
+END_DECLARE(Movable);
 
 }
 class ForceManager
@@ -70,12 +69,12 @@ class ForceManager
 public:
     static ForceManager& Get();
 
-    void Add(IdPtr<kv::IMovable> m);
+    void Add(IdPtr<kv::Movable> m);
     void Process();
     void Clear();
     unsigned int Hash();
 private:
-    std::vector<IdPtr<kv::IMovable>> under_force_;
+    std::vector<IdPtr<kv::Movable>> under_force_;
 
-    std::vector<IdPtr<kv::IMovable>> to_add_;
+    std::vector<IdPtr<kv::Movable>> to_add_;
 };

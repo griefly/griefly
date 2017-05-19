@@ -8,15 +8,15 @@
 namespace kv
 {
 
-class Closet : public IMovable
+class Closet : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Closet, IMovable);
+    DECLARE_SAVEABLE(Closet, Movable);
     REGISTER_CLASS_AS(Closet);
     Closet();
 
     virtual void AttackBy(IdPtr<Item> item) override;
-    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void Bump(IdPtr<Movable> item) override;
 
     virtual bool Contains(IdPtr<MapObject> item) const override;
     virtual bool CanTouch(IdPtr<MapObject> item) const override;
@@ -35,7 +35,7 @@ protected:
 
     bool KV_SAVEABLE(open_);
 
-    std::vector<IdPtr<IMovable>> KV_SAVEABLE(content_);
+    std::vector<IdPtr<Movable>> KV_SAVEABLE(content_);
 };
 END_DECLARE(Closet);
 

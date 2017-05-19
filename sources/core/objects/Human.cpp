@@ -51,7 +51,7 @@ Human::Human()
 
 void Human::AfterWorldCreation()
 {
-    IMob::AfterWorldCreation();
+    Mob::AfterWorldCreation();
 
     interface_.InitSlots();
     interface_.SetOwner(GetId());
@@ -78,7 +78,7 @@ void Human::DeinitGUI()
 }
 void Human::GenerateInterfaceForFrame()
 {
-    IMob::GenerateInterfaceForFrame();
+    Mob::GenerateInterfaceForFrame();
     interface_.Draw();
 }
 
@@ -97,7 +97,7 @@ bool Human::TryMove(Dir direct)
             pos.y = GetY() - pulled_object_->GetY();
         }
     }
-    if (IMob::TryMove(direct))
+    if (Mob::TryMove(direct))
     {   
         if (GetOwner()->GetItem<Shard>().IsValid())
         {
@@ -290,7 +290,7 @@ void Human::UpdateOverlays()
 
 void Human::Process()
 {
-    IMob::Process();
+    Mob::Process();
     Live();
     if (pulled_object_)
     {
@@ -513,7 +513,7 @@ void Human::CalculateVisible(std::list<PosPoint>* visible_list)
     }
 }
 
-void Human::Bump(IdPtr<IMovable> item)
+void Human::Bump(IdPtr<Movable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
@@ -525,12 +525,12 @@ void Human::Bump(IdPtr<IMovable> item)
         // TODO (?): sound
         return;
     }
-    IMovable::Bump(item);
+    Movable::Bump(item);
 }
 
 void Human::RotationAction(IdPtr<MapObject> item)
 {
-    if (IdPtr<IMovable> movable = item)
+    if (IdPtr<Movable> movable = item)
     {
         if (!movable->anchored_)
         {
@@ -545,7 +545,7 @@ void Human::RotationAction(IdPtr<MapObject> item)
 
 void Human::PullAction(IdPtr<MapObject> item)
 {
-    if (IdPtr<IMovable> movable = item)
+    if (IdPtr<Movable> movable = item)
     {
         if (CanTouch(movable))
         {

@@ -27,7 +27,7 @@ Chair::Chair()
 
 void Chair::AfterWorldCreation()
 {
-    IMovable::AfterWorldCreation();
+    Movable::AfterWorldCreation();
 
     if (GetDir() == Dir::UP)
     {

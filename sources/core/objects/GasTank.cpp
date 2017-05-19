@@ -35,7 +35,7 @@ GasTank::GasTank()
 
 void GasTank::AfterWorldCreation()
 {
-    IMovable::AfterWorldCreation();
+    Movable::AfterWorldCreation();
     SetFreq(1);
 }
 

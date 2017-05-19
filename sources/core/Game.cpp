@@ -670,7 +670,7 @@ IdPtr<UnsyncGenerator> Game::GetUnsyncGenerator()
     return unsync_generator_;
 }
 
-void Game::ChangeMob(IdPtr<IMob> i)
+void Game::ChangeMob(IdPtr<Mob> i)
 {
     if (!GetParamsHolder().GetParamBool("-editor") && current_mob_.IsValid())
     {
@@ -690,7 +690,7 @@ void Game::ChangeMob(IdPtr<IMob> i)
     qDebug() << "Current mob change: " << current_mob_.Id();
 }
 
-IdPtr<IMob> Game::GetMob()
+IdPtr<Mob> Game::GetMob()
 {
     return current_mob_;
 }
@@ -758,7 +758,7 @@ void Game::ProcessBroadcastedMessages()
          {
              qDebug() << "Game id is 0";
          }
-         IdPtr<IMob> game_object = game_id;
+         IdPtr<Mob> game_object = game_id;
 
          if (game_object.IsValid())
          {

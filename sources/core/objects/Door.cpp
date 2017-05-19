@@ -85,9 +85,9 @@ void Door::Process()
     }
 }
 
-void Door::Bump(IdPtr<IMovable> item)
+void Door::Bump(IdPtr<Movable> item)
 {
-    if (IdPtr<IMob> mob = item)
+    if (IdPtr<Mob> mob = item)
     {
         if (IsState(CLOSED))
         {
@@ -207,7 +207,7 @@ GlassDoor::GlassDoor()
 
 void GlassDoor::AfterWorldCreation()
 {
-    IMovable::AfterWorldCreation();
+    Movable::AfterWorldCreation();
 
     SetPassable(GetDir(), passable::EMPTY);
     SetState(door_prefix_);
@@ -272,9 +272,9 @@ void GlassDoor::Process()
     }
 }
 
-void GlassDoor::Bump(IdPtr<IMovable> item)
+void GlassDoor::Bump(IdPtr<Movable> item)
 {
-    if (IdPtr<IMob> mob = item)
+    if (IdPtr<Mob> mob = item)
     {
         if (IsState(CLOSED))
         {

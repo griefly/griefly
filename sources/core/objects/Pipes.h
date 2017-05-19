@@ -10,10 +10,10 @@
 namespace kv
 {
 
-class PipeBase : public IMovable
+class PipeBase : public Movable
 {
 public:
-    DECLARE_SAVEABLE(PipeBase, IMovable);
+    DECLARE_SAVEABLE(PipeBase, Movable);
     REGISTER_CLASS_AS(PipeBase);
     PipeBase();
     virtual void AttackBy(IdPtr<Item> item) override;

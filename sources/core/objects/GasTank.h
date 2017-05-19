@@ -8,10 +8,10 @@
 namespace kv
 {
 
-class GasTank : public IMovable
+class GasTank : public Movable
 {
 public:
-    DECLARE_SAVEABLE(GasTank, IMovable);
+    DECLARE_SAVEABLE(GasTank, Movable);
     REGISTER_CLASS_AS(GasTank);
     GasTank();
     virtual void AfterWorldCreation() override;

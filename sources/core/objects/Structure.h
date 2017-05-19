@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class Structure : public IMovable
+class Structure : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Structure, IMovable);
+    DECLARE_SAVEABLE(Structure, Movable);
     REGISTER_CLASS_AS(Structure);
     Structure() { v_level = 3; };
     virtual void AttackBy(IdPtr<Item> item) override;

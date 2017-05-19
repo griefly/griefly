@@ -105,14 +105,14 @@ TEST(ObjectFactory, CreateImpl)
         EXPECT_CALL(game, GetAtmosphere())
             .WillOnce(ReturnRef(atmos));
         EXPECT_CALL(atmos, SetFlags(0, 0, 0, '\0'));
-        quint32 id3 = factory.CreateImpl(ITurf::GetTypeStatic(), id);
+        quint32 id3 = factory.CreateImpl(Turf::GetTypeStatic(), id);
         EXPECT_EQ(id3, 5);
         {
             ASSERT_GT(factory.GetIdTable().size(), 6);
             kv::Object* object = factory.GetIdTable()[5].object;
-            ASSERT_EQ(object->GetType(), ITurf::GetTypeStatic());
+            ASSERT_EQ(object->GetType(), Turf::GetTypeStatic());
             EXPECT_EQ(object->GetId(), 5);
-            ITurf* turf = static_cast<ITurf*>(object);
+            Turf* turf = static_cast<Turf*>(object);
             EXPECT_EQ(turf->GetOwner().Id(), id);
         }
     }

@@ -215,7 +215,7 @@ bool CubeTile::Contains(IdPtr<MapObject> item) const
     return false;
 }
 
-void CubeTile::Bump(IdPtr<IMovable> item)
+void CubeTile::Bump(IdPtr<Movable> item)
 {
     if (GetTurf())
     {

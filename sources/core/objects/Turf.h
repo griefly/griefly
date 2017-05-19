@@ -11,12 +11,12 @@ namespace friction
 namespace kv
 {
 
-class ITurf : public MaterialObject
+class Turf : public MaterialObject
 {
 public:
-    DECLARE_SAVEABLE(ITurf, MaterialObject);
-    REGISTER_CLASS_AS(ITurf);
-    ITurf();
+    DECLARE_SAVEABLE(Turf, MaterialObject);
+    REGISTER_CLASS_AS(Turf);
+    Turf();
     virtual void Delete() override;
 
     int GetFriction() const { return friction_; }
@@ -30,11 +30,11 @@ private:
     int KV_SAVEABLE(friction_);
     atmos::AtmosState KV_SAVEABLE(atmos_state_);
 };
-END_DECLARE(ITurf);
+END_DECLARE(Turf);
 
 }
 
 namespace friction
 {
-    int CombinedFriction(IdPtr<kv::ITurf> turf);
+    int CombinedFriction(IdPtr<kv::Turf> turf);
 }

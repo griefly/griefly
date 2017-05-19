@@ -5,10 +5,10 @@
 namespace kv
 {
 
-class Tank : public IMovable
+class Tank : public Movable
 {
 public:
-    DECLARE_SAVEABLE(Tank, IMovable);
+    DECLARE_SAVEABLE(Tank, Movable);
     REGISTER_CLASS_AS(Tank);
     Tank() { }
 };

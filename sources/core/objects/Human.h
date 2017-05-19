@@ -8,10 +8,10 @@ const int REGULAR_TEMPERATURE = 40;
 namespace kv
 {
 
-class Human : public IMob
+class Human : public Mob
 {
 public:
-    DECLARE_SAVEABLE(Human, IMob);
+    DECLARE_SAVEABLE(Human, Mob);
     REGISTER_CLASS_AS(Human);
     Human();
 
@@ -35,7 +35,7 @@ public:
 
     void AddLyingTimer(int value);
   
-    virtual void Bump(IdPtr<IMovable> item) override;
+    virtual void Bump(IdPtr<Movable> item) override;
 
     virtual void AttackBy(IdPtr<Item> item) override;
 
@@ -78,7 +78,7 @@ protected:
     int KV_SAVEABLE(burn_damage_);
     int KV_SAVEABLE(brute_damage_);
 
-    IdPtr<IMovable> KV_SAVEABLE(pulled_object_);
+    IdPtr<Movable> KV_SAVEABLE(pulled_object_);
 private:
     void TryClownBootsHonk();
     void MakeEmote(const QString& emote);

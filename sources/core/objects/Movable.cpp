@@ -9,7 +9,7 @@
 
 using namespace kv;
 
-IMovable::IMovable()
+Movable::Movable()
 {
     last_move_ = 0;
     tick_speed_ = 1;
@@ -20,7 +20,7 @@ IMovable::IMovable()
     force_.z = 0;
 }
 
-bool IMovable::TryMove(Dir direct)
+bool Movable::TryMove(Dir direct)
 {
     if (!CheckMoveTime())
     {
@@ -41,7 +41,7 @@ bool IMovable::TryMove(Dir direct)
     return MainMove();
 }
 
-void IMovable::ProcessForce()
+void Movable::ProcessForce()
 {
     Dir step = VDirToDir(force_);
 
@@ -58,7 +58,7 @@ void IMovable::ProcessForce()
     force_.z -= (vstep.z * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
 }
 
-void IMovable::ApplyForce(VDir force)
+void Movable::ApplyForce(VDir force)
 {
     if (!IsNonZero(force))
     {
@@ -74,7 +74,7 @@ void IMovable::ApplyForce(VDir force)
     force_.z += force.z;
 }
 
-void IMovable::LoadInForceManager()
+void Movable::LoadInForceManager()
 {
     if (IsNonZero(force_))
     {
@@ -82,7 +82,7 @@ void IMovable::LoadInForceManager()
     }
 }
 
-bool IMovable::CheckMoveTime()
+bool Movable::CheckMoveTime()
 {
     if ((static_cast<int>(MAIN_TICK) - last_move_) < tick_speed_)
     {
@@ -91,7 +91,7 @@ bool IMovable::CheckMoveTime()
     return true;
 }
 
-bool IMovable::CheckPassable()
+bool Movable::CheckPassable()
 {
     PassableLevel loc = GetPassable(GetDir());
     if (loc != passable::FULL)
@@ -130,13 +130,13 @@ bool IMovable::CheckPassable()
     return true;
 }
 
-bool IMovable::Rotate(Dir dir)
+bool Movable::Rotate(Dir dir)
 {
     direction_ = dir;
     return true;
 }
 
-bool IMovable::MainMove()
+bool Movable::MainMove()
 {
     auto new_owner = GetOwner()->GetNeighbour(GetDir());
     if (new_owner == GetOwner())
@@ -151,7 +151,7 @@ bool IMovable::MainMove()
     return true;
 }
 
-void IMovable::Represent()
+void Movable::Represent()
 {
     Representation::Entity ent;
     ent.id = GetId();
@@ -164,15 +164,15 @@ void IMovable::Represent()
     GetRepresentation().AddToNewFrame(ent);
 }
 
-void IMovable::Bump(IdPtr<IMovable> item)
+void Movable::Bump(IdPtr<Movable> item)
 {
-    if (IdPtr<IMob> mob = item)
+    if (IdPtr<Mob> mob = item)
     {
         ApplyForce(DirToVDir(mob->GetDir()));
     }
 }
 
-void IMovable::BumpByGas(Dir dir, bool inside)
+void Movable::BumpByGas(Dir dir, bool inside)
 {
     ApplyForce(DirToVDir(dir));
 }
@@ -183,7 +183,7 @@ ForceManager& ForceManager::Get()
     return *fm;
 }
 
-void ForceManager::Add(IdPtr<IMovable> movable)
+void ForceManager::Add(IdPtr<Movable> movable)
 {
     to_add_.push_back(movable);
 }
@@ -228,7 +228,7 @@ void ForceManager::Process()
     if (to_add_.size())
     {
         std::sort(under_force_.begin(), under_force_.end(),
-        [](IdPtr<IMovable> item1, IdPtr<IMovable> item2)
+        [](IdPtr<Movable> item1, IdPtr<Movable> item2)
         {
             return item1.Id() < item2.Id();
         });
@@ -248,7 +248,7 @@ void ForceManager::Process()
 
 void ForceManager::Clear()
 {
-    std::vector<IdPtr<IMovable>> to_remove;
+    std::vector<IdPtr<Movable>> to_remove;
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
         if (   !(*movable)
