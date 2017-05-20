@@ -3,7 +3,7 @@
 
 #include "core/WorldLoaderSaver.h"
 #include "core/ObjectFactory.h"
-#include "core/objects/test/TestMainObject.h"
+#include "core/objects/test/TestObject.h"
 
 #include "interfaces_mocks.h"
 
@@ -96,8 +96,8 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         rand.SetRand(4242, 32);
         ObjectFactory factory(&game);
 
-        factory.CreateImpl(TestMainObject::GetTypeStatic());
-        factory.CreateImpl(TestMainObject::GetTypeStatic());
+        factory.CreateImpl(TestObject::GetTypeStatic());
+        factory.CreateImpl(TestObject::GetTypeStatic());
 
         hash = factory.Hash();
 
@@ -160,16 +160,16 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
             ASSERT_GE(factory.GetIdTable().size(), 2);
             Object* object = factory.GetIdTable()[1].object;
             ASSERT_TRUE(object);
-            ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
-            TestMainObject* test_object = static_cast<TestMainObject*>(object);
+            ASSERT_EQ(object->GetType(), TestObject::GetTypeStatic());
+            TestObject* test_object = static_cast<TestObject*>(object);
             test_object->SetDestructorCallback([](){});
         }
         {
             ASSERT_GE(factory.GetIdTable().size(), 3);
             Object* object = factory.GetIdTable()[2].object;
             ASSERT_TRUE(object);
-            ASSERT_EQ(object->GetType(), TestMainObject::GetTypeStatic());
-            TestMainObject* test_object = static_cast<TestMainObject*>(object);
+            ASSERT_EQ(object->GetType(), TestObject::GetTypeStatic());
+            TestObject* test_object = static_cast<TestObject*>(object);
             test_object->SetDestructorCallback([](){});
         }
 

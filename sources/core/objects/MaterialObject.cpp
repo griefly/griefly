@@ -1,6 +1,6 @@
 #include <cassert>
 
-#include "OnMapObject.h"
+#include "MaterialObject.h"
 #include "../Map.h"
 #include "Mob.h"
 #include "../Game.h"

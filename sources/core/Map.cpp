@@ -5,7 +5,7 @@
 #include <QDebug>
 
 #include "Map.h"
-#include "objects/MainObject.h"
+#include "objects/Object.h"
 #include "objects/Tile.h"
 #include "Game.h"
 #include "ObjectFactory.h"

@@ -3,8 +3,8 @@
 #include <vector>
 
 #include "Turf.h"
-#include "OnMapBase.h"
-#include "OnMapObject.h"
+#include "MapObject.h"
+#include "MaterialObject.h"
 #include "../atmos/AtmosHolder.h"
 
 template<class T>

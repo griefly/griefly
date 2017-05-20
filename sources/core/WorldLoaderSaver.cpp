@@ -4,8 +4,8 @@
 
 #include "Idptr.h"
 
-#include "objects/MainObject.h"
-#include "objects/OnMapObject.h"
+#include "objects/Object.h"
+#include "objects/MaterialObject.h"
 #include "objects/Turf.h"
 #include "objects/Tile.h"
 

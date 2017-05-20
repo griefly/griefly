@@ -3,7 +3,7 @@
 #include "GLSprite.h"
 #include "core/Constheader.h"
 
-#include "core/objects/MainObject.h"
+#include "core/objects/Object.h"
 
 #include "qt/qtopengl.h"
 

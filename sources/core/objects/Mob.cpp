@@ -23,7 +23,7 @@ void Mob::GenerateInterfaceForFrame()
 
 void Mob::Delete()
 {
-    DeinitGUI();
+    DeinitGui();
     MaterialObject::Delete();
 }
 

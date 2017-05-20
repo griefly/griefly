@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../MainObject.h"
+#include "../Object.h"
 
 namespace kv
 {

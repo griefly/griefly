@@ -3,7 +3,7 @@
 #include <vector>
 #include <random>
 
-typedef std::ranlux24 RandomGenerator;
+using RandomGenerator = std::ranlux24;
 
 class SyncRandom
 {

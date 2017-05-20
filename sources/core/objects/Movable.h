@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OnMapObject.h"
+#include "MaterialObject.h"
 
 inline FastDeserializer& operator>>(FastDeserializer& file, VDir& vdir)
 {

@@ -8,7 +8,7 @@ AmmunitionBox::AmmunitionBox()
     SetState("357");
 
     name = "Revolver Ammunition",
-	
+
     bullets_ = 50;
 }
 

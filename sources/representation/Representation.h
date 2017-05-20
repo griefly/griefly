@@ -110,7 +110,7 @@ private:
         int camera_pos_y;
     };
 
-    typedef FrameData DataType;
+    using DataType = FrameData;
 
     DataType* old_frame_;
     DataType* new_frame_;

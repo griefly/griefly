@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "Idptr.h"
-#include "objects/OnMapObject.h"
+#include "objects/MaterialObject.h"
 
 class ObjectFactory : public ObjectFactoryInterface
 {

@@ -13,7 +13,7 @@
 #include <QKeyEvent>
 #include <QVector>
 
-typedef std::map<QString, QByteArray> MapgenVariablesType;
+using MapgenVariablesType = std::map<QString, QByteArray>;
 
 class MapEditor: public QObject
 {
@@ -127,6 +127,6 @@ private:
 
     QGraphicsScene* scene_;
 
-    typedef QVector<QVector<QVector<EditorTile>>> MapType;
+    using MapType = QVector<QVector<QVector<EditorTile>>>;
     MapType editor_map_;
 };

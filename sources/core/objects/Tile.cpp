@@ -3,7 +3,7 @@
 #include "../Helpers.h"
 #include "../Map.h"
 #include "../Game.h"
-#include "OnMapObject.h"
+#include "MaterialObject.h"
 #include "Tile.h"
 #include "Movable.h"
 #include "../atmos/AtmosGrid.h"

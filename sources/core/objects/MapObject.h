@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "MainObject.h"
+#include "Object.h"
 
 namespace kv
 {
@@ -103,7 +103,7 @@ public:
 
     virtual bool Contains(IdPtr<MapObject> object) const
     {
-        (void)object;
+        Q_UNUSED(object);
         return false;
     }
 

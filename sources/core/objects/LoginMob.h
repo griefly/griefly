@@ -38,8 +38,8 @@ public:
 
     virtual void AfterWorldCreation() override;
 
-    virtual void DeinitGUI() override;
-    virtual void InitGUI() override;
+    virtual void DeinitGui() override;
+    virtual void InitGui() override;
     virtual void GenerateInterfaceForFrame() override;
     virtual void ProcessMessage(const Message2& msg) override;
 

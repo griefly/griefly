@@ -674,7 +674,7 @@ void Game::ChangeMob(IdPtr<Mob> i)
 {
     if (!GetParamsHolder().GetParamBool("-editor") && current_mob_.IsValid())
     {
-        current_mob_->DeinitGUI();
+        current_mob_->DeinitGui();
     }
 
     current_mob_ = i;
@@ -683,7 +683,7 @@ void Game::ChangeMob(IdPtr<Mob> i)
     {
         if (!GetParamsHolder().GetParamBool("-editor"))
         {
-            current_mob_->InitGUI();
+            current_mob_->InitGui();
         }
     }
 

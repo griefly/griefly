@@ -2,7 +2,7 @@
 
 #include "interfaces_mocks.h"
 
-#include "core/objects/MainObject.h"
+#include "core/objects/Object.h"
 
 using ::testing::ReturnRef;
 using ::testing::Return;

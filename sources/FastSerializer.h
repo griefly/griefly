@@ -16,7 +16,7 @@ class FastSerializer
         FastSerializer& serializer,
         const T& value);
 public:
-    typedef char Type;
+    using Type = char;
 
     static const Type BOOL_TYPE = 1;
     static const Type INT32_TYPE = 2;

@@ -2,18 +2,18 @@
 
 #include <unordered_map>
 
-#include "core/objects/MainObject.h"
+#include "core/objects/Object.h"
 
-typedef kv::Object* (*ItemCreator)();
-typedef kv::Object* (*VoidItemCreator)();
+using ItemCreator = kv::Object*(*)();
+using VoidItemCreator = kv::Object*(*)();
 
 std::unordered_map<QString, ItemCreator>* GetItemsCreators();
 
 std::unordered_map<QString, VoidItemCreator>* GetVoidItemsCreators();
 
-typedef void (*VariableSetter)(kv::Object* ptr, FastDeserializer& str);
+using VariableSetter = void(*)(kv::Object* ptr, FastDeserializer& str);
 
-typedef std::unordered_map<QString, VariableSetter> SettersForType;
+using SettersForType = std::unordered_map<QString, VariableSetter>;
 
 std::unordered_map<QString, SettersForType>& GetSettersForTypes();
 

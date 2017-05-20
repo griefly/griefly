@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OnMapObject.h"
+#include "MaterialObject.h"
 #include "Movable.h"
 
 namespace kv

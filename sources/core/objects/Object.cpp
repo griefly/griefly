@@ -1,4 +1,4 @@
-#include "MainObject.h"
+#include "Object.h"
 #include "../Map.h"
 #include "../ObjectFactory.h"
 #include "../Game.h"

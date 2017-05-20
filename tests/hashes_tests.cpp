@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/objects/MainObject.h"
+#include "core/objects/Object.h"
 #include "core/Hashes.h"
 
 TEST(HashesTest, IntegerNumber)

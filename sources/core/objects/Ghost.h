@@ -5,7 +5,7 @@
 namespace kv
 {
 
-class Ghost: public Mob
+class Ghost : public Mob
 {
 public:
     DECLARE_SAVEABLE(Ghost, Mob);
@@ -16,8 +16,8 @@ public:
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;
     virtual void ProcessMessage(const Message2& msg) override;
 
-    virtual void InitGUI() override;
-    virtual void DeinitGUI() override;
+    virtual void InitGui() override;
+    virtual void DeinitGui() override;
 
     virtual void Process() override;
 private:

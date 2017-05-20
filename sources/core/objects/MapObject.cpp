@@ -1,4 +1,4 @@
-#include "OnMapBase.h"
+#include "MapObject.h"
 #include "Turf.h"
 #include "Movable.h"
 #include "Item.h"

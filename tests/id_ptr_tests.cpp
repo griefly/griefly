@@ -2,7 +2,7 @@
 
 #include "core/Idptr.h"
 
-#include "core/objects/MainObject.h"
+#include "core/objects/Object.h"
 #include "core/objects/test/UnsyncGenerator.h"
 
 class TempTable

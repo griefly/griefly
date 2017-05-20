@@ -2,8 +2,8 @@
 
 #include "KvAbort.h"
 
-#include "objects/MainObject.h"
-#include "objects/OnMapObject.h"
+#include "objects/Object.h"
+#include "objects/MaterialObject.h"
 #include "Game.h"
 #include "Map.h"
 #include "SyncRandom.h"

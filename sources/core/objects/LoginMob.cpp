@@ -33,14 +33,14 @@ void LoginMob::AfterWorldCreation()
     name = QString("LobbyPlayer%1").arg(GetId());
 }
 
-void LoginMob::DeinitGUI()
+void LoginMob::DeinitGui()
 {
     GetGame().GetTexts().Delete("LoginScreenCount");
     PlayMusic("");
 }
 
 
-void LoginMob::InitGUI()
+void LoginMob::InitGui()
 {
     GetGame().GetTexts()["LoginScreenCount"].SetUpdater
     ([this](QString* str)

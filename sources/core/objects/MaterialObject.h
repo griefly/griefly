@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "OnMapBase.h"
+#include "MapObject.h"
 #include "representation/ViewInfo.h"
 
 namespace kv

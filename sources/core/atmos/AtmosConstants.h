@@ -32,7 +32,7 @@ namespace atmos
 
     const int MAX_GAS_LEVEL = 1000;
 
-    typedef int AtmosState;
+    using AtmosState = int;
     const AtmosState NON_SIMULATED = -1;
     const AtmosState SPACE = 0;
     const AtmosState SIMULATED = 1;

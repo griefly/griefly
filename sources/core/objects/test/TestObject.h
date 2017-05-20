@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../MainObject.h"
+#include "../Object.h"
 
 #include <functional>
 
@@ -8,14 +8,14 @@
 namespace kv
 {
 
-class TestMainObject : public Object
+class TestObject : public Object
 {
 public:
-    DECLARE_SAVEABLE(TestMainObject, Object);
-    REGISTER_CLASS_AS(TestMainObject);
+    DECLARE_SAVEABLE(TestObject, Object);
+    REGISTER_CLASS_AS(TestObject);
 
-    TestMainObject();
-    ~TestMainObject();
+    TestObject();
+    ~TestObject();
 
     virtual void AfterWorldCreation() override;
     virtual void Process() override;
@@ -31,7 +31,7 @@ private:
     std::function<void()> process_callback_;
     std::function<void()> destructor_callback_;
 };
-END_DECLARE(TestMainObject);
+END_DECLARE(TestObject);
 // LCOV_EXCL_STOP
 
 }

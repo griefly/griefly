@@ -4,9 +4,9 @@
 
 #include "core/FastIsType.h"
 
-#include "core/objects/MainObject.h"
+#include "core/objects/Object.h"
 #include "core/objects/test/UnsyncGenerator.h"
-#include "core/objects/OnMapBase.h"
+#include "core/objects/MapObject.h"
 
 using namespace kv;
 
