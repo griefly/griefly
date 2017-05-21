@@ -145,8 +145,6 @@ void MainForm::startGameLoop(int id, QString map)
             this, &MainForm::insertHtmlIntoChat);
     connect(game, &Game::addSystemText,
             this, &MainForm::addSystemText);
-    connect(game, &Game::playMusic,
-            this, &MainForm::playMusic);
 
     connect(game, &Game::sendMap,
             &Network2::GetInstance(), &Network2::sendMap);
@@ -283,19 +281,6 @@ void MainForm::RemoveFirstBlockFromTextEditor()
     {
         cursor.deleteChar();
         cursor.select(QTextCursor::BlockUnderCursor);
-    }
-}
-
-void MainForm::playMusic(QString name, float volume)
-{
-    qDebug() << name << " " << volume;
-    if (name != "")
-    {
-        GetRepresentation().GetSoundPlayer().PlayMusic(name, volume);
-    }
-    else
-    {
-        GetRepresentation().GetSoundPlayer().StopMusic();
     }
 }
 
