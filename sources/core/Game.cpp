@@ -603,10 +603,26 @@ void Game::GenerateFrame()
     map_->Represent();
     GetMob()->GenerateInterfaceForFrame();
 
+    AppendSoundsToFrame();
 
     // TODO: reset all shifts
     GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
     GetRepresentation().Swap();
+}
+
+void Game::AppendSoundsToFrame()
+{
+    const std::list<PosPoint>* points = GetMap().GetVisiblePoints();
+    // TODO: Sounds for frame may be hash table or some sorted vector
+    // now scalability is quite bad
+    for (auto it : qAsConst(sounds_for_frame_))
+    {
+        if (std::find(points->begin(), points->end(), it.first) != points->end())
+        {
+            GetRepresentation().AddToNewFrame(it.second);
+        }
+    }
+    sounds_for_frame_.clear();
 }
 
 void Game::PlayMusic(const QString& name, float volume)
@@ -615,9 +631,9 @@ void Game::PlayMusic(const QString& name, float volume)
     emit playMusic(name, volume);
 }
 
-void Game::AddSound(const QString& name)
+void Game::AddSound(const QString& name, PosPoint position)
 {
-    GetRepresentation().AddToNewFrame(name);
+    sounds_for_frame_.append({position, name});
 }
 
 AtmosInterface&Game::GetAtmosphere()

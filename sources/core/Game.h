@@ -32,7 +32,7 @@ public:
     virtual void MakeTiles(int size_x, int size_y, int size_z) override;
 
     virtual void PlayMusic(const QString& name, float volume) override;
-    virtual void AddSound(const QString& name) override;
+    virtual void AddSound(const QString& name, PosPoint position) override;
 
     virtual AtmosInterface& GetAtmosphere() override;
     virtual MapInterface& GetMap() override;
@@ -64,6 +64,7 @@ signals:
 private:
     IdPtr<kv::UnsyncGenerator> GetUnsyncGenerator();
     void GenerateFrame();
+    void AppendSoundsToFrame();
 
     void UpdateVisible();
     void ProcessInputMessages();
@@ -130,4 +131,6 @@ private:
     IdPtr<kv::Mob> current_mob_;
 
     std::map<quint32, quint32> players_table_;
+
+    QVector<QPair<PosPoint, QString>> sounds_for_frame_;
 };

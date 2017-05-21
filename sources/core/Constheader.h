@@ -61,6 +61,15 @@ struct PosPoint
 {
     PosPoint(int new_x = 0, int new_y = 0, int new_z = 0)
         : posx(new_x), posy(new_y), posz(new_z) { }
+    bool operator==(const PosPoint& other) const
+    {
+        return (posx == other.posx) && (posy == other.posy) && (posz == other.posz);
+    }
+    bool operator!=(const PosPoint& other) const
+    {
+        return !operator==(other);
+    }
+
     int posx;
     int posy;
     int posz;
