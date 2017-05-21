@@ -85,7 +85,7 @@ public:
     MOCK_METHOD1(ChangeMob, void(IdPtr<kv::Mob> new_mob));
     MOCK_METHOD0(GetMob, IdPtr<kv::Mob>());
     MOCK_METHOD1(SetMob, void(quint32 new_mob));
-    MOCK_METHOD2(PlayMusic, void(const QString& name, float volume));
+    MOCK_METHOD3(PlayMusic, void(const QString& name, float volume, quint32 mob));
     MOCK_METHOD2(AddSound, void(const QString& name, PosPoint position));
     MOCK_METHOD2(SetPlayerId, void(quint32, quint32));
     MOCK_METHOD1(GetPlayerId, quint32(quint32 net_id));

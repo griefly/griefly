@@ -39,7 +39,6 @@ void LoginMob::DeinitGui()
     PlayMusic("");
 }
 
-
 void LoginMob::InitGui()
 {
     GetGame().GetTexts()["LoginScreenCount"].SetUpdater
@@ -131,8 +130,6 @@ void LoginMob::ProcessMessage(const Message2& msg)
                 qDebug() << "Unknown profession id!";
             }
 
-            GetGame().SetPlayerId(net_id, human.Id());
-
             if (tiles.empty())
             {
                 auto& map = GetGame().GetMap();
@@ -147,6 +144,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
             {
                 GetGame().ChangeMob(human);
             }
+            GetGame().SetPlayerId(net_id, human.Id());
 
             GetGame().GetChat().PostHtmlFor(text, human);
         }

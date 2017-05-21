@@ -13,8 +13,6 @@
 
 #include "Sound.h"
 
-const char* const STOP_MUSIC = "^";
-
 class Representation
 {
 public:
@@ -51,6 +49,12 @@ public:
         QString name;
     };
 
+    struct Music
+    {
+        QString name;
+        float volume;
+    };
+
     struct Performance
     {
         QElapsedTimer timer;
@@ -63,6 +67,8 @@ public:
     void AddToNewFrame(const InterfaceUnit& unit);
     void AddToNewFrame(const Entity& ent);
     void AddToNewFrame(const Sound& sound);
+
+    void SetMusic(const Music& music);
 
     void SetCameraForFrame(int pos_x, int pos_y);
 
@@ -106,6 +112,7 @@ private:
         QVector<Entity> entities;
         QVector<QString> sounds;
         QVector<InterfaceUnit> units;
+        Music music;
         int camera_pos_x;
         int camera_pos_y;
     };

@@ -130,5 +130,5 @@ public:
     virtual const std::map<quint32, quint32>& GetPlayersTable() const = 0;
 
     virtual void AddSound(const QString& name, PosPoint position) = 0;
-    virtual void PlayMusic(const QString& name, float volume) = 0;
+    virtual void PlayMusic(const QString& name, float volume, quint32 mob) = 0;
 };

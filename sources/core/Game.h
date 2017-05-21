@@ -31,7 +31,7 @@ public:
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) override;
 
-    virtual void PlayMusic(const QString& name, float volume) override;
+    virtual void PlayMusic(const QString& name, float volume, quint32 mob) override;
     virtual void AddSound(const QString& name, PosPoint position) override;
 
     virtual AtmosInterface& GetAtmosphere() override;
@@ -133,4 +133,5 @@ private:
     std::map<quint32, quint32> players_table_;
 
     QVector<QPair<PosPoint, QString>> sounds_for_frame_;
+    QMap<quint32, QPair<QString, float>> musics_for_mobs_;
 };

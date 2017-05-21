@@ -69,6 +69,11 @@ void Representation::AddToNewFrame(const Sound &sound)
     new_frame_->sounds.push_back(sound.name);
 }
 
+void Representation::SetMusic(const Representation::Music& music)
+{
+    new_frame_->music = music;
+}
+
 void Representation::SetCameraForFrame(int pos_x, int pos_y)
 {
     new_frame_->camera_pos_x = pos_x;
@@ -357,6 +362,7 @@ void Representation::Click(int x, int y)
 
 void Representation::SynchronizeViews()
 {
+    Music old_music = current_frame_.music;
     {
         QMutexLocker lock(&mutex_);
         if (!is_updated_)
@@ -392,6 +398,21 @@ void Representation::SynchronizeViews()
     {
         GetSoundPlayer().PlaySound(*it);
     }
+
+    Music music = current_frame_.music;
+
+    if (old_music.name != music.name)
+    {
+        if (music.name != "")
+        {
+            GetSoundPlayer().PlayMusic(music.name, music.volume);
+        }
+        else
+        {
+            GetSoundPlayer().StopMusic();
+        }
+    }
+
 
     ++current_frame_id_;
     is_updated_ = false;

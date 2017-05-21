@@ -316,8 +316,8 @@ void Game::InitWorld(int id, QString map_name)
 
             quint32 newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
 
-            ChangeMob(newmob);
             SetPlayerId(id, newmob);
+            ChangeMob(newmob);
         }
         else
         {
@@ -623,12 +623,20 @@ void Game::AppendSoundsToFrame()
         }
     }
     sounds_for_frame_.clear();
+
+    quint32 net_id = GetNetId(GetMob().Id());
+
+    auto music = musics_for_mobs_.find(net_id);
+    if (music != musics_for_mobs_.end())
+    {
+        GetRepresentation().SetMusic({music->first, music->second});
+    }
 }
 
-void Game::PlayMusic(const QString& name, float volume)
+void Game::PlayMusic(const QString& name, float volume, quint32 mob)
 {
-    qDebug() << name;
-    emit playMusic(name, volume);
+    qDebug() << "Music playing:" << mob << name << volume;
+    musics_for_mobs_[mob] = {name, volume};
 }
 
 void Game::AddSound(const QString& name, PosPoint position)

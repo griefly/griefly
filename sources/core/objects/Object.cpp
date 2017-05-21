@@ -8,7 +8,12 @@ using namespace kv;
 
 void Object::PlayMusic(const QString& name, float volume)
 {
-    GetGame().PlayMusic(name, volume);
+    quint32 net_id = GetGame().GetNetId(GetId());
+    qDebug() << net_id;
+    if (net_id != 0)
+    {
+        GetGame().PlayMusic(name, volume, net_id);
+    }
 }
 
 void Object::Delete()
