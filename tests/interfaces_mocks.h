@@ -88,8 +88,8 @@ public:
     MOCK_METHOD3(PlayMusic, void(const QString& name, float volume, quint32 mob));
     MOCK_METHOD2(AddSound, void(const QString& name, PosPoint position));
     MOCK_METHOD2(SetPlayerId, void(quint32, quint32));
-    MOCK_METHOD1(GetPlayerId, quint32(quint32 net_id));
-    MOCK_METHOD1(GetNetId, quint32(quint32 real_id));
+    MOCK_CONST_METHOD1(GetPlayerId, quint32(quint32 net_id));
+    MOCK_CONST_METHOD1(GetNetId, quint32(quint32 real_id));
     using PlayersTable = std::map<quint32, quint32>;
     MOCK_CONST_METHOD0(GetPlayersTable, const PlayersTable&());
 };

@@ -808,7 +808,7 @@ void Game::SetPlayerId(quint32 net_id, quint32 real_id)
 {
     players_table_[net_id] = real_id;
 }
-quint32 Game::GetPlayerId(quint32 net_id)
+quint32 Game::GetPlayerId(quint32 net_id) const
 {
     auto it = players_table_.find(net_id);
     if (it != players_table_.end())
@@ -818,7 +818,7 @@ quint32 Game::GetPlayerId(quint32 net_id)
     return 0;
 }
 
-quint32 Game::GetNetId(quint32 real_id)
+quint32 Game::GetNetId(quint32 real_id) const
 {
     for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
     {

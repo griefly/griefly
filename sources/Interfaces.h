@@ -125,8 +125,8 @@ public:
     virtual void SetMob(quint32 new_mob) = 0;
 
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) = 0;
-    virtual quint32 GetPlayerId(quint32 net_id) = 0;
-    virtual quint32 GetNetId(quint32 real_id) = 0;
+    virtual quint32 GetPlayerId(quint32 net_id) const = 0;
+    virtual quint32 GetNetId(quint32 real_id) const = 0;
     virtual const std::map<quint32, quint32>& GetPlayersTable() const = 0;
 
     virtual void AddSound(const QString& name, PosPoint position) = 0;

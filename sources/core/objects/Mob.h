@@ -23,6 +23,9 @@ public:
     virtual void GenerateInterfaceForFrame();
     virtual void ProcessMessage(const Message2& msg);
 
+    void MoveMindTo(IdPtr<Mob> other);
+    bool IsMinded() const;
+
     virtual InterfaceBase* GetInterface() { return nullptr; }
 
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) { ; }

@@ -53,3 +53,32 @@ void Mob::ProcessMessage(const Message2 &msg)
         TryMove(Dir::RIGHT);
     }
 }
+
+void Mob::MoveMindTo(IdPtr<Mob> other)
+{
+    quint32 net_id = GetGame().GetNetId(GetId());
+    if (net_id == 0)
+    {
+        return;
+    }
+
+    DeinitGui();
+
+    GetGame().SetPlayerId(net_id, other.Id());
+    if (GetId() == GetGame().GetMob().Id())
+    {
+        GetGame().SetMob(other.Id());
+    }
+
+    other->InitGui();
+}
+
+bool Mob::IsMinded() const
+{
+    quint32 net_id = GetGame().GetNetId(GetId());
+    if (net_id == 0)
+    {
+        return false;
+    }
+    return true;
+}
