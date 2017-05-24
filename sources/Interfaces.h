@@ -120,7 +120,6 @@ public:
 
     virtual void SetUnsyncGenerator(quint32 generator) = 0;
 
-    virtual void ChangeMob(IdPtr<kv::Mob> new_mob) = 0;
     virtual IdPtr<kv::Mob> GetMob() = 0;
     virtual void SetMob(quint32 new_mob) = 0;
 

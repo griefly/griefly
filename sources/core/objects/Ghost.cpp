@@ -111,18 +111,11 @@ void Ghost::Process()
     --seconds_until_respawn_;
     if (seconds_until_respawn_ < 0)
     {
-        quint32 net_id = GetGame().GetNetId(GetId());
-        if (net_id)
+        if (IsMinded())
         {
             auto login_mob = Create<Mob>(LoginMob::GetTypeStatic(), 0);
-
-            GetGame().SetPlayerId(net_id, login_mob.Id());
-            if (GetId() == GetGame().GetMob().Id())
-            {
-                GetGame().ChangeMob(login_mob);
-            }
+            MoveMindTo(login_mob);
             Delete();
-            //qDebug() << "Ghost deleted: net_id: " << net_id;
         }
     }
 }

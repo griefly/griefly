@@ -82,7 +82,6 @@ public:
     MOCK_METHOD0(GetNames, Names&());
     MOCK_METHOD3(MakeTiles, void(int size_x, int size_y, int size_z));
     MOCK_METHOD1(SetUnsyncGenerator, void(quint32 generator));
-    MOCK_METHOD1(ChangeMob, void(IdPtr<kv::Mob> new_mob));
     MOCK_METHOD0(GetMob, IdPtr<kv::Mob>());
     MOCK_METHOD1(SetMob, void(quint32 new_mob));
     MOCK_METHOD3(PlayMusic, void(const QString& name, float volume, quint32 mob));

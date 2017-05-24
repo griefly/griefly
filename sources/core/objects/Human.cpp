@@ -412,17 +412,12 @@ IdPtr<MapObject> Human::GetNeighbour(Dir) const
 
 void Human::OnDeath()
 {
-    quint32 net_id = GetGame().GetNetId(GetId());
-    if (net_id)
+    if (IsMinded())
     {
-        auto ghost = Create<Ghost>(Ghost::GetTypeStatic());
+        auto ghost = Create<Ghost>(Ghost::GetTypeStatic(), GetOwner());
         ghost->name = name;
-        GetGame().SetPlayerId(net_id, ghost.Id());
-        GetOwner()->AddObject(ghost);
-        if (GetId() == GetGame().GetMob().Id())
-        {
-            GetGame().ChangeMob(ghost);
-        }
+
+        MoveMindTo(ghost);
     }
     dead_ = true;
     SetFreq(0);

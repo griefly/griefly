@@ -44,7 +44,6 @@ public:
     virtual Names& GetNames() override;
 
     virtual void SetUnsyncGenerator(quint32 generator) override;
-    virtual void ChangeMob(IdPtr<kv::Mob> new_mob) override;
     virtual IdPtr<kv::Mob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
 

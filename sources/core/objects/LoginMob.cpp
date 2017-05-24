@@ -89,66 +89,65 @@ void LoginMob::ProcessMessage(const Message2& msg)
             return;
         }
         qDebug() << "Begin human creation in LoginMob";
-        quint32 net_id = GetGame().GetNetId(GetId());
-        if (net_id)
+        if (!IsMinded())
         {
-            IdPtr<Human> human = Create<Human>(Human::GetTypeStatic());
-
-            QString human_state = HUMAN_STATES[GetRand() % HUMAN_STATES_AMOUNT];
-            human->SetState(human_state);
-
-            std::vector<IdPtr<CubeTile>> tiles;
-            QString text;
-            switch (GetRand() % 5)
-            {
-            case 0:
-                professions::ToSecurityOfficer(human);
-                tiles = GetLobby().GetTilesFor("security");
-                text = GENERIC_TEXT.arg("security officer");
-                break;
-            case 1:
-                professions::ToDoctor(human);
-                tiles = GetLobby().GetTilesFor("doctor");
-                text = GENERIC_TEXT.arg("doctor");
-                break;
-            case 2:
-                professions::ToAssistant(human);
-                tiles = GetLobby().GetTilesFor("assistant");
-                text = GENERIC_TEXT.arg("assistant");
-                break;
-            case 3:
-                professions::ToClown(human);
-                tiles = GetLobby().GetTilesFor("clown");
-                text = GENERIC_TEXT.arg("clown");
-                break;
-            case 4:
-                professions::ToBarman(human);
-                tiles = GetLobby().GetTilesFor("barman");
-                text = GENERIC_TEXT.arg("barman");
-                break;
-            default:
-                qDebug() << "Unknown profession id!";
-            }
-
-            if (tiles.empty())
-            {
-                auto& map = GetGame().GetMap();
-                int x = map.GetWidth() / 2;
-                int y = map.GetHeight() / 2;
-                int z = map.GetDepth() / 2;
-                tiles.push_back(map.At(x, y, z));
-            }
-            int index = GetRand() % tiles.size();
-            tiles[index]->AddObject(human);
-            if (GetId() == GetGame().GetMob().Id())
-            {
-                GetGame().ChangeMob(human);
-            }
-            GetGame().SetPlayerId(net_id, human.Id());
-
-            GetGame().GetChat().PostHtmlFor(text, human);
+            return;
         }
+        IdPtr<Human> human = Create<Human>(Human::GetTypeStatic());
+
+        QString human_state = HUMAN_STATES[GetRand() % HUMAN_STATES_AMOUNT];
+        human->SetState(human_state);
+
+        std::vector<IdPtr<CubeTile>> tiles;
+        QString text;
+        switch (GetRand() % 5)
+        {
+        case 0:
+            professions::ToSecurityOfficer(human);
+            tiles = GetLobby().GetTilesFor("security");
+            text = GENERIC_TEXT.arg("security officer");
+            break;
+        case 1:
+            professions::ToDoctor(human);
+            tiles = GetLobby().GetTilesFor("doctor");
+            text = GENERIC_TEXT.arg("doctor");
+            break;
+        case 2:
+            professions::ToAssistant(human);
+            tiles = GetLobby().GetTilesFor("assistant");
+            text = GENERIC_TEXT.arg("assistant");
+            break;
+        case 3:
+            professions::ToClown(human);
+            tiles = GetLobby().GetTilesFor("clown");
+            text = GENERIC_TEXT.arg("clown");
+            break;
+        case 4:
+            professions::ToBarman(human);
+            tiles = GetLobby().GetTilesFor("barman");
+            text = GENERIC_TEXT.arg("barman");
+            break;
+        default:
+            qDebug() << "Unknown profession id!";
+        }
+
+        if (tiles.empty())
+        {
+            auto& map = GetGame().GetMap();
+            int x = map.GetWidth() / 2;
+            int y = map.GetHeight() / 2;
+            int z = map.GetDepth() / 2;
+            tiles.push_back(map.At(x, y, z));
+        }
+        int index = GetRand() % tiles.size();
+        tiles[index]->AddObject(human);
+
+        MoveMindTo(human);
+
+        GetGame().GetChat().PostHtmlFor(text, human);
+
         qDebug() << "End human creation in LoginMob";
+        Delete();
     }
 }
 

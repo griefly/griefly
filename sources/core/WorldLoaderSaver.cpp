@@ -8,6 +8,7 @@
 #include "objects/MaterialObject.h"
 #include "objects/Turf.h"
 #include "objects/Tile.h"
+#include "objects/Mob.h"
 
 #include "SyncRandom.h"
 
@@ -66,10 +67,10 @@ void WorldLoaderSaver::Load(FastDeserializer& deserializer, quint32 real_this_mo
         object->Load(deserializer);
     }
 
-    quint32 player_id = game_->GetPlayerId(real_this_mob);
-    game_->SetMob(player_id);
-    qDebug() << "Player id:" << player_id;
-    game_->ChangeMob(player_id);
+    IdPtr<kv::Mob> player = game_->GetPlayerId(real_this_mob);
+    game_->SetMob(player.Id());
+    qDebug() << "Player id:" << player.Id();
+    player->InitGui();
     factory.MarkWorldAsCreated();
 
     game_->GetAtmosphere().LoadGrid(&game_->GetMap());

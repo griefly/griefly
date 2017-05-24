@@ -314,10 +314,11 @@ void Game::InitWorld(int id, QString map_name)
                 }
             }
 
-            quint32 newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
+            IdPtr<LoginMob> newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
 
-            SetPlayerId(id, newmob);
-            ChangeMob(newmob);
+            SetPlayerId(id, newmob.Id());
+            SetMob(newmob.Id());
+            newmob->InitGui();
         }
         else
         {
@@ -692,26 +693,6 @@ void Game::SetUnsyncGenerator(quint32 generator)
 IdPtr<UnsyncGenerator> Game::GetUnsyncGenerator()
 {
     return unsync_generator_;
-}
-
-void Game::ChangeMob(IdPtr<Mob> i)
-{
-    if (!GetParamsHolder().GetParamBool("-editor") && current_mob_.IsValid())
-    {
-        current_mob_->DeinitGui();
-    }
-
-    current_mob_ = i;
-
-    if (current_mob_.IsValid())
-    {
-        if (!GetParamsHolder().GetParamBool("-editor"))
-        {
-            current_mob_->InitGui();
-        }
-    }
-
-    qDebug() << "Current mob change: " << current_mob_.Id();
 }
 
 IdPtr<Mob> Game::GetMob()
