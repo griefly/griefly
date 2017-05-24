@@ -17,8 +17,8 @@ public:
 
     virtual void AfterWorldCreation() override;
 
-    virtual void DeinitGui() override;
-    virtual void InitGui() override;
+    virtual void MindExit() override;
+    virtual void MindEnter() override;
     virtual void GenerateInterfaceForFrame() override;
     virtual void ProcessMessage(const Message2& msg) override;
     virtual void Process() override;

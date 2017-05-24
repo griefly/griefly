@@ -18,8 +18,8 @@ public:
     virtual void AfterWorldCreation() override;
     virtual void Delete();
 
-    virtual void InitGui() { }
-    virtual void DeinitGui() { }
+    virtual void MindEnter() { }
+    virtual void MindExit() { }
     virtual void GenerateInterfaceForFrame();
     virtual void ProcessMessage(const Message2& msg);
 

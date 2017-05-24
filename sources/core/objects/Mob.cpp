@@ -23,7 +23,7 @@ void Mob::GenerateInterfaceForFrame()
 
 void Mob::Delete()
 {
-    DeinitGui();
+    MindExit();
     MaterialObject::Delete();
 }
 
@@ -62,7 +62,7 @@ void Mob::MoveMindTo(IdPtr<Mob> other)
         return;
     }
 
-    DeinitGui();
+    MindExit();
 
     GetGame().SetPlayerId(net_id, other.Id());
     if (GetId() == GetGame().GetMob().Id())
@@ -70,7 +70,7 @@ void Mob::MoveMindTo(IdPtr<Mob> other)
         GetGame().SetMob(other.Id());
     }
 
-    other->InitGui();
+    other->MindEnter();
 }
 
 bool Mob::IsMinded() const

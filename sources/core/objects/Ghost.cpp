@@ -92,7 +92,7 @@ void Ghost::ProcessMessage(const Message2& msg)
     Mob::ProcessMessage(msg);
 }
 
-void Ghost::InitGui()
+void Ghost::MindEnter()
 {
     GetGame().GetTexts()["RespawnCount"].SetUpdater
     ([this](QString* str)
@@ -101,7 +101,7 @@ void Ghost::InitGui()
     }).SetFreq(250);
 }
 
-void Ghost::DeinitGui()
+void Ghost::MindExit()
 {
     GetGame().GetTexts().Delete("RespawnCount");
 }

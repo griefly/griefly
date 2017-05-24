@@ -318,7 +318,7 @@ void Game::InitWorld(int id, QString map_name)
 
             SetPlayerId(id, newmob.Id());
             SetMob(newmob.Id());
-            newmob->InitGui();
+            newmob->MindEnter();
         }
         else
         {

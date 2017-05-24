@@ -16,8 +16,8 @@ public:
     virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;
     virtual void ProcessMessage(const Message2& msg) override;
 
-    virtual void InitGui() override;
-    virtual void DeinitGui() override;
+    virtual void MindEnter() override;
+    virtual void MindExit() override;
 
     virtual void Process() override;
 private:

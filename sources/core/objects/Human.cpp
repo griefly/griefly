@@ -69,11 +69,11 @@ void Human::AfterWorldCreation()
     name = GetGame().GetNames().GetMaleName();
 }
 
-void Human::InitGui()
+void Human::MindEnter()
 {
 }
 
-void Human::DeinitGui()
+void Human::MindExit()
 {
 }
 void Human::GenerateInterfaceForFrame()
