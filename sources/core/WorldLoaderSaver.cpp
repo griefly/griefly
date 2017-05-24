@@ -70,7 +70,10 @@ void WorldLoaderSaver::Load(FastDeserializer& deserializer, quint32 real_this_mo
     IdPtr<kv::Mob> player = game_->GetPlayerId(real_this_mob);
     game_->SetMob(player.Id());
     qDebug() << "Player id:" << player.Id();
-    player->InitGui();
+    if (player.Id() != 0)
+    {
+        player->InitGui();
+    }
     factory.MarkWorldAsCreated();
 
     game_->GetAtmosphere().LoadGrid(&game_->GetMap());
