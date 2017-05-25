@@ -56,7 +56,7 @@ void LoginMob::MindEnter()
         *str = "Until start: " + *str;
     });
 
-    PlayMusic("lobby.ogg", 10.0f);
+    PlayMusic("lobby.ogg", 10);
 }
 
 

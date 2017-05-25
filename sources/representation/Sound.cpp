@@ -41,7 +41,7 @@ void SoundPlayer::PlaySound(const QString& name, float volume)
     ptr->play();
 }
 
-void SoundPlayer::PlayMusic(const QString &name, float volume)
+void SoundPlayer::PlayMusic(const QString &name, int volume)
 {
     StopMusic();
 

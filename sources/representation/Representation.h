@@ -52,7 +52,7 @@ public:
     struct Music
     {
         QString name;
-        float volume;
+        int volume;
     };
 
     struct Performance

@@ -39,7 +39,7 @@ public:
 
     virtual ~Object() { }
 
-    void PlayMusic(const QString& name, float volume = 100.0f);
+    void PlayMusic(const QString& name, int volume = 100);
 
     virtual void Save(FastSerializer& serializer);
     virtual void Load(FastDeserializer& deserializer);

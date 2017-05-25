@@ -18,7 +18,7 @@ class SoundPlayer
 public:
     SoundPlayer();
     void PlaySound(const QString& name, float volume = 15.0f);
-    void PlayMusic(const QString& name, float volume = 100.0f);
+    void PlayMusic(const QString& name, int volume = 100);
     void StopMusic();
 private:
     QMediaPlayer media_player_;

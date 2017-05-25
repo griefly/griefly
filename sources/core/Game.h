@@ -4,6 +4,7 @@
 
 #include "objects/Mob.h"
 #include "objects/test/UnsyncGenerator.h"
+#include "objects/GlobalObjectsHolder.h"
 
 #include "SyncRandom.h"
 #include "Names.h"
@@ -31,7 +32,7 @@ public:
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) override;
 
-    virtual void PlayMusic(const QString& name, float volume, quint32 mob) override;
+    virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
     virtual void AddSound(const QString& name, PosPoint position) override;
 
     virtual AtmosInterface& GetAtmosphere() override;
@@ -46,6 +47,9 @@ public:
     virtual void SetUnsyncGenerator(quint32 generator) override;
     virtual IdPtr<kv::Mob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
+
+    virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals();
+    virtual void SetGlobals(quint32 globals);
 
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
     virtual quint32 GetPlayerId(quint32 net_id) const override;
@@ -127,9 +131,9 @@ private:
 
     IdPtr<kv::UnsyncGenerator> unsync_generator_;
     IdPtr<kv::Mob> current_mob_;
+    IdPtr<kv::GlobalObjectsHolder> global_objects_;
 
     std::map<quint32, quint32> players_table_;
 
     QVector<QPair<PosPoint, QString>> sounds_for_frame_;
-    QMap<quint32, QPair<QString, float>> musics_for_mobs_;
 };

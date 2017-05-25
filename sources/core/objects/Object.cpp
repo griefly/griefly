@@ -6,7 +6,7 @@
 
 using namespace kv;
 
-void Object::PlayMusic(const QString& name, float volume)
+void Object::PlayMusic(const QString& name, int volume)
 {
     quint32 net_id = GetGame().GetNetId(GetId());
     qDebug() << net_id;

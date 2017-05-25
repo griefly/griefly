@@ -295,6 +295,7 @@ void Game::InitWorld(int id, QString map_name)
 
             world_loader_saver_->LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
 
+            global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
             GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
 
             if (GetParamsHolder().GetParamBool("-unsync_generation"))
@@ -463,11 +464,11 @@ void Game::ProcessInputMessages()
                 continue;
             }
 
-            quint32 newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
+            IdPtr<LoginMob> newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
+            SetPlayerId(new_id, newmob.Id());
+            newmob->MindEnter();
 
-            qDebug() << "New client " << newmob;
-
-            SetPlayerId(new_id, newmob);
+            qDebug() << "New client " << newmob.Id();
             continue;
         }
         if (msg.type == MessageType::MAP_UPLOAD)
@@ -627,17 +628,20 @@ void Game::AppendSoundsToFrame()
 
     quint32 net_id = GetNetId(GetMob().Id());
 
-    auto music = musics_for_mobs_.find(net_id);
-    if (music != musics_for_mobs_.end())
+    auto& musics_for_mobs = global_objects_->musics_for_mobs;
+
+    auto music = musics_for_mobs.find(net_id);
+    if (music != musics_for_mobs.end())
     {
         GetRepresentation().SetMusic({music->first, music->second});
     }
 }
 
-void Game::PlayMusic(const QString& name, float volume, quint32 mob)
+void Game::PlayMusic(const QString& name, int volume, quint32 mob)
 {
     qDebug() << "Music playing:" << mob << name << volume;
-    musics_for_mobs_[mob] = {name, volume};
+    auto& musics_for_mobs = global_objects_->musics_for_mobs;
+    musics_for_mobs[mob] = {name, volume};
 }
 
 void Game::AddSound(const QString& name, PosPoint position)
@@ -703,6 +707,16 @@ IdPtr<Mob> Game::GetMob()
 void Game::SetMob(quint32 new_mob)
 {
     current_mob_ = new_mob;
+}
+
+IdPtr<GlobalObjectsHolder> Game::GetGlobals()
+{
+    return global_objects_;
+}
+
+void Game::SetGlobals(quint32 globals)
+{
+    global_objects_ = globals;
 }
 
 void Game::process()

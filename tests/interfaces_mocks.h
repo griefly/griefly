@@ -84,7 +84,9 @@ public:
     MOCK_METHOD1(SetUnsyncGenerator, void(quint32 generator));
     MOCK_METHOD0(GetMob, IdPtr<kv::Mob>());
     MOCK_METHOD1(SetMob, void(quint32 new_mob));
-    MOCK_METHOD3(PlayMusic, void(const QString& name, float volume, quint32 mob));
+    MOCK_METHOD0(GetGlobals, IdPtr<kv::GlobalObjectsHolder>());
+    MOCK_METHOD1(SetGlobals, void(quint32 globals));
+    MOCK_METHOD3(PlayMusic, void(const QString& name, int volume, quint32 mob));
     MOCK_METHOD2(AddSound, void(const QString& name, PosPoint position));
     MOCK_METHOD2(SetPlayerId, void(quint32, quint32));
     MOCK_CONST_METHOD1(GetPlayerId, quint32(quint32 net_id));
