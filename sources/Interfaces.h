@@ -119,8 +119,6 @@ public:
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) = 0;
 
-    virtual void SetUnsyncGenerator(quint32 generator) = 0;
-
     virtual IdPtr<kv::Mob> GetMob() = 0;
     virtual void SetMob(quint32 new_mob) = 0;
 

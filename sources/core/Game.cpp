@@ -87,9 +87,6 @@ Game::Game()
     chat_ = nullptr;
     sync_random_ = nullptr;
     names_= nullptr;
-
-    unsync_generator_ = 0;
-    current_mob_ = 0;
 }
 
 Game::~Game()
@@ -300,9 +297,8 @@ void Game::InitWorld(int id, QString map_name)
 
             if (GetParamsHolder().GetParamBool("-unsync_generation"))
             {
-                quint32 unsync_generator
+                global_objects_->unsync_generator
                     = GetFactory().CreateImpl(UnsyncGenerator::GetTypeStatic());
-                SetUnsyncGenerator(unsync_generator);
             }
 
             for (auto it = GetFactory().GetIdTable().begin();
@@ -649,7 +645,7 @@ void Game::AddSound(const QString& name, PosPoint position)
     sounds_for_frame_.append({position, name});
 }
 
-AtmosInterface&Game::GetAtmosphere()
+AtmosInterface& Game::GetAtmosphere()
 {
     return *atmos_;
 }
@@ -689,16 +685,6 @@ Names& Game::GetNames()
     return *names_;
 }
 
-void Game::SetUnsyncGenerator(quint32 generator)
-{
-    unsync_generator_ = generator;
-}
-
-IdPtr<UnsyncGenerator> Game::GetUnsyncGenerator()
-{
-    return unsync_generator_;
-}
-
 IdPtr<Mob> Game::GetMob()
 {
     return current_mob_;
@@ -732,9 +718,9 @@ void Game::endProcess()
 
 void Game::generateUnsync()
 {
-    if (GetUnsyncGenerator().IsValid())
+    if (global_objects_->unsync_generator.IsValid())
     {
-        GetUnsyncGenerator()->PerformUnsync();
+        global_objects_->unsync_generator->PerformUnsync();
     }
 }
 

@@ -70,6 +70,7 @@ inline unsigned int hash(const QPair<TFirst, TSecond>& pair)
 
 namespace kv
 {
+class UnsyncGenerator;
 
 class GlobalObjectsHolder : public Object
 {
@@ -79,6 +80,7 @@ public:
     GlobalObjectsHolder();
 
     QMap<quint32, QPair<QString, int>> KV_SAVEABLE(musics_for_mobs);
+    IdPtr<UnsyncGenerator> KV_SAVEABLE(unsync_generator);
 };
 END_DECLARE(GlobalObjectsHolder);
 

@@ -44,7 +44,6 @@ public:
     virtual SyncRandom& GetRandom() override;
     virtual Names& GetNames() override;
 
-    virtual void SetUnsyncGenerator(quint32 generator) override;
     virtual IdPtr<kv::Mob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
 
@@ -64,7 +63,6 @@ signals:
     void addSystemText(QString key, QString text);
     void insertHtmlIntoChat(QString html);
 private:
-    IdPtr<kv::UnsyncGenerator> GetUnsyncGenerator();
     void GenerateFrame();
     void AppendSoundsToFrame();
 
@@ -129,7 +127,6 @@ private:
     Names* names_;
     WorldLoaderSaver* world_loader_saver_;
 
-    IdPtr<kv::UnsyncGenerator> unsync_generator_;
     IdPtr<kv::Mob> current_mob_;
     IdPtr<kv::GlobalObjectsHolder> global_objects_;
 

@@ -39,7 +39,6 @@ public:
     virtual void CalculateLos(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) override;
 private:
     LosCalculator los_calculator_;
-    AtmosInterface* atmosphere_;
     QVector<QVector<QVector<SqType>>> squares_;
     std::list<PosPoint> visible_points_;
 };

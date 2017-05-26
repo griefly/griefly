@@ -14,9 +14,6 @@ public:
     void PerformUnsync();
 private:
     QString KV_SAVEABLE(unsync_string_);
-
-    void SetThisAsUnsyncGenerator();
-    KV_ON_LOAD_CALL(SetThisAsUnsyncGenerator);
 };
 END_DECLARE(UnsyncGenerator);
 
