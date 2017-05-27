@@ -91,7 +91,5 @@ public:
     MOCK_METHOD2(SetPlayerId, void(quint32, quint32));
     MOCK_CONST_METHOD1(GetPlayerId, quint32(quint32 net_id));
     MOCK_CONST_METHOD1(GetNetId, quint32(quint32 real_id));
-    using PlayersTable = std::map<quint32, quint32>;
-    MOCK_CONST_METHOD0(GetPlayersTable, const PlayersTable&());
 };
 

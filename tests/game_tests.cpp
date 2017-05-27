@@ -1,10 +1,15 @@
 #include <gtest/gtest.h>
 
 #include "core/Game.h"
+#include "core/ObjectFactory.h"
+#include "core/objects/GlobalObjectsHolder.h"
 
 TEST(Game, PlayersIds)
 {
     Game game;
+
+    ObjectFactory factory(&game);
+    game.SetGlobals(factory.CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic()));
 
     for (int i = 0; i < 100; ++i)
     {

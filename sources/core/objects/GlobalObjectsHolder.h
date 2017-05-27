@@ -81,6 +81,7 @@ public:
 
     QMap<quint32, QPair<QString, int>> KV_SAVEABLE(musics_for_mobs);
     IdPtr<UnsyncGenerator> KV_SAVEABLE(unsync_generator);
+    QMap<quint32, quint32> KV_SAVEABLE(players_table);
 };
 END_DECLARE(GlobalObjectsHolder);
 

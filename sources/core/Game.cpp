@@ -787,31 +787,28 @@ void Game::CheckMessagesOrderCorrectness()
 
 void Game::SetPlayerId(quint32 net_id, quint32 real_id)
 {
-    players_table_[net_id] = real_id;
+    global_objects_->players_table[net_id] = real_id;
 }
 quint32 Game::GetPlayerId(quint32 net_id) const
 {
-    auto it = players_table_.find(net_id);
-    if (it != players_table_.end())
+    auto& players_table = global_objects_->players_table;
+    auto it = players_table.find(net_id);
+    if (it != players_table.end())
     {
-        return it->second;
+        return it.value();
     }
     return 0;
 }
 
 quint32 Game::GetNetId(quint32 real_id) const
 {
-    for (auto it = players_table_.begin(); it != players_table_.end(); ++it)
+    auto& players_table = global_objects_->players_table;
+    for (auto it = players_table.begin(); it != players_table.end(); ++it)
     {
-        if (it->second == real_id)
+        if (it.value() == real_id)
         {
-            return it->first;
+            return it.key();
         }
     }
     return 0;
-}
-
-const std::map<quint32, quint32>&Game::GetPlayersTable() const
-{
-    return players_table_;
 }

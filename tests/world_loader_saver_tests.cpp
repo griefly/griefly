@@ -4,6 +4,7 @@
 #include "core/WorldLoaderSaver.h"
 #include "core/ObjectFactory.h"
 #include "core/objects/test/TestObject.h"
+#include "core/objects/GlobalObjectsHolder.h"
 
 #include "interfaces_mocks.h"
 
@@ -25,14 +26,13 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
 
         hash = factory.Hash();
 
-        MockIGame::PlayersTable table;
-        table[1] = 1;
-        EXPECT_CALL(game, GetPlayersTable())
-            .WillRepeatedly(ReturnRef(table));
         EXPECT_CALL(game, GetRandom())
             .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
+        IdPtr<kv::GlobalObjectsHolder> globals = 99;
+        EXPECT_CALL(game, GetGlobals())
+            .WillRepeatedly(Return(globals));
 
         EXPECT_CALL(map, GetWidth())
             .WillOnce(Return(13));
@@ -55,9 +55,7 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
         MockIAtmosphere atmos;
         ObjectFactory factory(&game);
 
-        EXPECT_CALL(game, SetPlayerId(1, 1));
-        EXPECT_CALL(game, GetPlayerId(0))
-            .WillOnce(Return(0));
+        EXPECT_CALL(game, SetGlobals(99));
         EXPECT_CALL(game, GetRandom())
             .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
@@ -86,6 +84,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 {
     FastSerializer serializer;
     quint32 hash = 0;
+    quint32 globals_id = 0;
     {
         MockIGame game;
         MockIMap map;
@@ -95,20 +94,20 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 
         factory.CreateImpl(TestObject::GetTypeStatic());
         factory.CreateImpl(TestObject::GetTypeStatic());
+        IdPtr<GlobalObjectsHolder> globals
+            = factory.CreateImpl(GlobalObjectsHolder::GetTypeStatic());;
+        globals_id = globals.Id();
 
         hash = factory.Hash();
 
-        MockIGame::PlayersTable table;
-        table[1] = 1;
-
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
-        EXPECT_CALL(game, GetPlayersTable())
-            .WillRepeatedly(ReturnRef(table));
         EXPECT_CALL(game, GetRandom())
             .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
+        EXPECT_CALL(game, GetGlobals())
+            .WillRepeatedly(Return(globals));
 
         EXPECT_CALL(map, GetWidth())
             .WillRepeatedly(Return(13));
@@ -130,9 +129,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
-        EXPECT_CALL(game, SetPlayerId(1, 1));
-        EXPECT_CALL(game, GetPlayerId(0))
-            .WillOnce(Return(0));
+        EXPECT_CALL(game, SetGlobals(globals_id));
         EXPECT_CALL(game, GetRandom())
             .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())

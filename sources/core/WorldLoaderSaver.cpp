@@ -189,17 +189,6 @@ void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
     serializer << game_->GetMap().GetWidth();
     serializer << game_->GetMap().GetHeight();
     serializer << game_->GetMap().GetDepth();
-
-    // Save player table
-
-    auto& players_table = game_->GetPlayersTable();
-
-    serializer << static_cast<quint32>(players_table.size());
-    for (auto it : players_table)
-    {
-        serializer << it.first;
-        serializer << it.second;
-    }
 }
 
 void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
@@ -237,19 +226,4 @@ void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
     deserializer >> z;
 
     game_->GetMap().Resize(x, y, z);
-
-    // Load player table
-    quint32 s;
-    deserializer >> s;
-    for (quint32 i = 0; i < s; ++i)
-    {
-        quint32 first;
-        deserializer >> first;
-        quint32 second;
-        deserializer >> second;
-
-        qDebug() << first;
-        qDebug() << second;
-        game_->SetPlayerId(first, second);
-    }
 }

@@ -53,7 +53,6 @@ public:
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
     virtual quint32 GetPlayerId(quint32 net_id) const override;
     virtual quint32 GetNetId(quint32 real_id) const override;
-    virtual const std::map<quint32, quint32>& GetPlayersTable() const override;
 public slots:
     void process();
     void endProcess();
@@ -127,10 +126,8 @@ private:
     Names* names_;
     WorldLoaderSaver* world_loader_saver_;
 
-    IdPtr<kv::Mob> current_mob_;
     IdPtr<kv::GlobalObjectsHolder> global_objects_;
 
-    std::map<quint32, quint32> players_table_;
-
+    IdPtr<kv::Mob> current_mob_;
     QVector<QPair<PosPoint, QString>> sounds_for_frame_;
 };
