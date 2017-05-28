@@ -28,7 +28,7 @@ public:
 
     virtual InterfaceBase* GetInterface() { return nullptr; }
 
-    virtual void CalculateVisible(std::list<PosPoint>* visible_list) { ; }
+    virtual void CalculateVisible(VisiblePoints* visible_list) const { Q_UNUSED(visible_list); }
 };
 END_DECLARE(Mob);
 

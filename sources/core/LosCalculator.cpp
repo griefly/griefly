@@ -25,7 +25,7 @@ int LosCalculator::Sign(int value)
     return 0;
 }
 
-bool LosCalculator::CheckCorner(PosPoint p)
+bool LosCalculator::CheckCorner(PosPoint p) const
 {
     int x = CornerToPos(p.posx);
     int y = CornerToPos(p.posy);
@@ -33,7 +33,7 @@ bool LosCalculator::CheckCorner(PosPoint p)
     return CheckBorders(x, y, z);
 }
 
-bool LosCalculator::CheckBorders(const int x, const int y, const int z)
+bool LosCalculator::CheckBorders(const int x, const int y, const int z) const
 {
     if (   x < 0
         || x >= map_->GetWidth())
@@ -60,13 +60,13 @@ PosPoint LosCalculator::CornerPointToPoint(PosPoint p)
     return retval;
 }
 
-bool LosCalculator::IsTransparent(PosPoint p)
+bool LosCalculator::IsTransparent(PosPoint p) const
 {
     PosPoint tilePoint = CornerPointToPoint(p);
     return map_->IsTransparent(tilePoint.posx, tilePoint.posy, tilePoint.posz);
 }
 
-bool LosCalculator::BresenX(PosPoint source, PosPoint target)
+bool LosCalculator::BresenX(PosPoint source, PosPoint target) const
 {
     int y = source.posy;
     int error = 0;
@@ -128,7 +128,7 @@ bool LosCalculator::BresenX(PosPoint source, PosPoint target)
     return true;
 }
 
-bool LosCalculator::BresenY(PosPoint source, PosPoint target)
+bool LosCalculator::BresenY(PosPoint source, PosPoint target) const
 {
     int x = source.posx;
     int error = 0;
@@ -191,7 +191,7 @@ bool LosCalculator::BresenY(PosPoint source, PosPoint target)
     return true;
 }
 
-bool LosCalculator::RayTrace(PosPoint source, PosPoint target)
+bool LosCalculator::RayTrace(PosPoint source, PosPoint target) const
 {
     // run Bresenham's line algorithm
     if (std::abs(source.posx - target.posx) > std::abs(source.posy - target.posy))
@@ -207,10 +207,10 @@ bool LosCalculator::RayTrace(PosPoint source, PosPoint target)
 }
 
 void LosCalculator::MarkTilesOfCornerAsVisible(
-        std::list<PosPoint>* retlist,
-        PosPoint at,
-        PosPoint center,
-        std::vector<char>* visibility)
+    VisiblePoints* retlist,
+    PosPoint at,
+    PosPoint center,
+    std::vector<char>* visibility) const
 {
     for (int dx = -1; dx <= 0; dx++)
     {
@@ -256,7 +256,7 @@ LosCalculator::LosCalculator(MapInterface* map)
 // if ray passes through edge it checks both adjasent tiles. They both must be transparent, otherwise ray blocks
 // if tile has at least one visible corner then this tile is visible
 // otherwise tile is invisible
-void LosCalculator::Calculate(std::list<PosPoint>* retlist, int posx, int posy, int posz)
+void LosCalculator::Calculate(VisiblePoints* retlist, int posx, int posy, int posz) const
 {
     const int VISIBLE_TILES_SIZE = 4 * (SIZE_H_SQ + 2) * (SIZE_W_SQ + 2);
 

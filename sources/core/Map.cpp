@@ -35,29 +35,24 @@ void Map::FillTilesAtmosHolders()
     }
 }
 
-void Map::Represent()
+void Map::Represent(const VisiblePoints& points) const
 {
-    if (!GetVisiblePoints())
+    for (const PosPoint& point : points)
     {
-        return;
-    }
+        const auto& tile = At(point.posx, point.posy, point.posz);
+        const auto& objects = tile->GetInsideList();
 
-    for (auto it = GetVisiblePoints()->begin(); it != GetVisiblePoints()->end(); ++it)
-    {
-        auto& tile = At(it->posx, it->posy, it->posz);
-        auto& objects = tile->GetInsideList();
-
-        for (auto object = objects.begin(); object != objects.end(); ++object)
+        for (const auto object : objects)
         {
             (*object)->Represent();
         }
 
-        auto turf = tile->GetTurf();
+        const auto turf = tile->GetTurf();
         if (!turf.IsValid())
         {
             KvAbort(
                 QString("Invalid turf in Map::Represent() at (%1, %2, %3), but turf always should be valid!")
-                    .arg(it->posx).arg(it->posy).arg(it->posz));
+                    .arg(point.posx).arg(point.posy).arg(point.posz));
         }
         turf->Represent();
     }
@@ -134,27 +129,11 @@ bool Map::IsTransparent(int posx, int posy, int posz)
 
 bool Map::IsTileVisible(quint32 tile_id)
 {
-    auto l = GetVisiblePoints();
-    if (!l)
-    {
-        return false;
-    }
-    for (auto it = l->begin(); it != l->end(); ++it)
-    {
-        if (tile_id == squares_[it->posx][it->posy][it->posz].Id())
-        {
-            return true;
-        }
-    }
-    return false;
+    // TODO: remove this function
+    return true;
 }
 
-std::list<PosPoint>* Map::GetVisiblePoints()
-{
-    return &visible_points_;
-}
-
-void Map::CalculateLos(std::list<PosPoint> *retval, int posx, int posy, int posz)
+void Map::CalculateLos(QVector<PosPoint>* retval, int posx, int posy, int posz) const
 {
     los_calculator_.Calculate(retval, posx, posy, posz);
 }

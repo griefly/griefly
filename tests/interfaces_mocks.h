@@ -26,13 +26,12 @@ public:
     MOCK_CONST_METHOD0(GetWidth, int());
     MOCK_CONST_METHOD0(GetHeight, int());
     MOCK_CONST_METHOD0(GetDepth, int());
-    MOCK_METHOD0(Represent, void());
+    MOCK_CONST_METHOD1(Represent, void(const VisiblePoints& points));
     MOCK_METHOD3(Resize, void(int new_map_x, int new_map_y, int new_map_z));
     MOCK_CONST_METHOD3(At, const SqType&(int x, int y, int z));
     MOCK_METHOD3(At, SqType&(int x, int y, int z));
-    MOCK_METHOD0(GetVisiblePoints, std::list<PosPoint>*());
     MOCK_METHOD0(FillTilesAtmosHolders, void());
-    MOCK_METHOD4(CalculateLos, void(std::list<PosPoint>*, int, int, int));
+    MOCK_CONST_METHOD4(CalculateLos, void(VisiblePoints*, int, int, int));
     MOCK_METHOD1(IsTileVisible, bool(quint32 tile_id));
     MOCK_METHOD3(IsTransparent, bool(int, int, int));
 };

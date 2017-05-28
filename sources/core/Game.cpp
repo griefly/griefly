@@ -143,12 +143,6 @@ void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
     }
 }
 
-void Game::UpdateVisible() 
-{
-    GetMap().GetVisiblePoints()->clear();
-    GetMob()->CalculateVisible(GetMap().GetVisiblePoints());
-}
-
 void Game::Process()
 {
     QElapsedTimer fps_timer;
@@ -213,11 +207,6 @@ void Game::Process()
             GetFactory().ProcessDeletion();
             deletion_process_ns_ += timer.nsecsElapsed();
             deletion_process_ns_ /= 2;
-
-            timer.start();
-            UpdateVisible();
-            update_visibility_ns_ += timer.nsecsElapsed();
-            update_visibility_ns_ /= 2;
 
             timer.start();
             GenerateFrame();
@@ -598,24 +587,25 @@ void Game::ProcessInputMessages()
 
 void Game::GenerateFrame()
 {
-    map_->Represent();
+    points_.clear();
+    GetMob()->CalculateVisible(&points_);
+    map_->Represent(points_);
     GetMob()->GenerateInterfaceForFrame();
 
-    AppendSoundsToFrame();
+    AppendSoundsToFrame(points_);
 
     // TODO: reset all shifts
     GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
     GetRepresentation().Swap();
 }
 
-void Game::AppendSoundsToFrame()
+void Game::AppendSoundsToFrame(const VisiblePoints& points)
 {
-    const std::list<PosPoint>* points = GetMap().GetVisiblePoints();
     // TODO: Sounds for frame may be hash table or some sorted vector
     // now scalability is quite bad
     for (auto it : qAsConst(sounds_for_frame_))
     {
-        if (std::find(points->begin(), points->end(), it.first) != points->end())
+        if (std::find(points.begin(), points.end(), it.first) != points.end())
         {
             GetRepresentation().AddToNewFrame(it.second);
         }

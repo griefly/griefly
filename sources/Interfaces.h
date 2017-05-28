@@ -33,6 +33,8 @@ public:
     virtual void LoadGrid(MapInterface* map) = 0;
 };
 
+using VisiblePoints = QVector<PosPoint>;
+
 class MapInterface
 {
 public:
@@ -42,7 +44,7 @@ public:
     virtual int GetHeight() const = 0;
     virtual int GetDepth() const = 0;
 
-    virtual void Represent() = 0;
+    virtual void Represent(const VisiblePoints& points) const = 0;
 
     virtual void Resize(int new_map_x, int new_map_y, int new_map_z) = 0;
 
@@ -50,9 +52,8 @@ public:
     virtual SqType& At(int x, int y, int z) = 0;
     virtual const SqType& At(int x, int y, int z) const = 0;
 
-    virtual std::list<PosPoint>* GetVisiblePoints() = 0;
     virtual void FillTilesAtmosHolders() = 0;
-    virtual void CalculateLos(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) = 0;
+    virtual void CalculateLos(VisiblePoints* retval, int posx, int posy, int posz = 0) const = 0;
     virtual bool IsTileVisible(quint32 tile_id) = 0;
 
     virtual bool IsTransparent(int posx, int posy, int posz = 0) = 0;

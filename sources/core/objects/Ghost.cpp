@@ -67,7 +67,7 @@ void Ghost::Represent()
     }
 }
 
-void Ghost::CalculateVisible(std::list<PosPoint>* visible_list)
+void Ghost::CalculateVisible(VisiblePoints* visible_list) const
 {
     visible_list->clear();
     PosPoint p;

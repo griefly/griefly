@@ -26,19 +26,16 @@ public:
     virtual int GetHeight() const override;
     virtual int GetDepth() const override;
 
-    virtual std::list<PosPoint>* GetVisiblePoints() override;
-
     virtual void Resize(int new_x, int new_y, int new_z) override;
     virtual void FillTilesAtmosHolders() override;
 
-    virtual void Represent() override;
+    virtual void Represent(const VisiblePoints& points) const override;
 
     virtual bool IsTileVisible(quint32 tile_id) override;
     virtual bool IsTransparent(int posx, int posy, int posz = 0) override;
 
-    virtual void CalculateLos(std::list<PosPoint>* retval, int posx, int posy, int posz = 0) override;
+    virtual void CalculateLos(QVector<PosPoint>* retval, int posx, int posy, int posz = 0) const override;
 private:
     LosCalculator los_calculator_;
     QVector<QVector<QVector<SqType>>> squares_;
-    std::list<PosPoint> visible_points_;
 };

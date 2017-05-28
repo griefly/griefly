@@ -63,9 +63,8 @@ signals:
     void insertHtmlIntoChat(QString html);
 private:
     void GenerateFrame();
-    void AppendSoundsToFrame();
+    void AppendSoundsToFrame(const VisiblePoints& points);
 
-    void UpdateVisible();
     void ProcessInputMessages();
     void InitGlobalObjects();
     void Process();
@@ -130,4 +129,5 @@ private:
 
     IdPtr<kv::Mob> current_mob_;
     QVector<QPair<PosPoint, QString>> sounds_for_frame_;
+    VisiblePoints points_;
 };

@@ -496,7 +496,7 @@ void Human::Represent()
     GetRepresentation().AddToNewFrame(ent);
 }
 
-void Human::CalculateVisible(std::list<PosPoint>* visible_list)
+void Human::CalculateVisible(QVector<PosPoint>* visible_list) const
 {
     if (CalculateHealth() >= 0)
     {
@@ -590,7 +590,7 @@ void Human::MakeEmote(const QString& emote)
         GetOwner()->GetId());
 }
 
-int Human::CalculateHealth()
+int Human::CalculateHealth() const
 {
     return max_health_ - (suffocation_damage_ + burn_damage_ + brute_damage_);
 }

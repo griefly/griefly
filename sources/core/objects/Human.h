@@ -28,7 +28,7 @@ public:
     virtual IdPtr<MapObject> GetNeighbour(Dir) const;
 
     virtual void OnDeath();
-    int CalculateHealth();
+    int CalculateHealth() const;
 
     void SetLying(bool value);
     bool GetLying() const { return lying_; }
@@ -46,7 +46,7 @@ public:
     
     HumanInterface* GetHumanInterface() { return &interface_; }
 
-    virtual void CalculateVisible(std::list<PosPoint>* visible_list) override;
+    virtual void CalculateVisible(VisiblePoints* visible_list) const override;
 
     void UpdateOverlays();
 
