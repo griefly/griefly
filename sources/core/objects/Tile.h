@@ -130,9 +130,6 @@ private:
     PassableLevel KV_SAVEABLE(sum_passable_down_);
     PassableLevel KV_SAVEABLE(sum_passable_left_);
     PassableLevel KV_SAVEABLE(sum_passable_right_);
-
-    KV_ON_LOAD_CALL(LoadInMap);
-    void LoadInMap();
 };
 END_DECLARE(CubeTile);
 

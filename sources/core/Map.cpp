@@ -1,17 +1,14 @@
-#include <cmath>
-#include <iostream>
-#include <cassert>
-
-#include <QDebug>
-
 #include "Map.h"
-#include "objects/Object.h"
+
+/*#include "objects/Object.h"
 #include "objects/Tile.h"
 #include "Game.h"
 #include "ObjectFactory.h"
 #include "Helpers.h"
 #include "AutogenMetadata.h"
-#include "representation/Representation.h"
+#include "representation/Representation.h"*/
+
+using namespace kv;
 
 void Map::FillTilesAtmosHolders()
 {
@@ -44,7 +41,7 @@ void Map::Represent(const VisiblePoints& points) const
 
         for (const auto object : objects)
         {
-            (*object)->Represent();
+            object->Represent();
         }
 
         const auto turf = tile->GetTurf();
@@ -79,7 +76,6 @@ void Map::Resize(int new_x, int new_y, int new_z)
 }
 
 Map::Map()
-    : los_calculator_(this)
 {
     // Nothing
 }
@@ -122,7 +118,7 @@ int Map::GetDepth() const
     return squares_[0][0].size();
 }
 
-bool Map::IsTransparent(int posx, int posy, int posz)
+bool Map::IsTransparent(int posx, int posy, int posz) const
 {
     return At(posx, posy, posz)->IsTransparent();
 }
@@ -133,7 +129,7 @@ bool Map::IsTileVisible(quint32 tile_id)
     return true;
 }
 
-void Map::CalculateLos(QVector<PosPoint>* retval, int posx, int posy, int posz) const
+void Map::CalculateLos(VisiblePoints* retval, int posx, int posy, int posz) const
 {
-    los_calculator_.Calculate(retval, posx, posy, posz);
+    los_calculator_.Calculate(this, retval, posx, posy, posz);
 }

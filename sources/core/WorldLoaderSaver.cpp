@@ -79,8 +79,6 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
 {
     ObjectFactoryInterface& factory = game_->GetFactory();
 
-    factory.Clear();
-
     QFile file(name);
     if (!file.open(QIODevice::ReadOnly))
     {
@@ -149,7 +147,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
             FastDeserializer local(variable_data.data(), variable_data.size());
 
             auto& setters_for_type = GetSettersForTypes();
-            setters_for_type[item_type][it->first](i.operator*(), local);
+            setters_for_type[item_type][it->first](i.operator->(), local);
         }
 
         auto& tile = game_->GetMap().At(x, y, z);
@@ -183,12 +181,6 @@ void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
     // Random save
     serializer << game_->GetRandom().GetSeed();
     serializer << game_->GetRandom().GetCallsCounter();
-
-    // Save Map Size
-
-    serializer << game_->GetMap().GetWidth();
-    serializer << game_->GetMap().GetHeight();
-    serializer << game_->GetMap().GetDepth();
 }
 
 void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
@@ -215,15 +207,4 @@ void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
     game_->GetRandom().SetRand(new_seed, new_calls_counter);
 
     factory.GetIdTable().resize(id + 1);
-
-    // Load map size
-    int x;
-    int y;
-    int z;
-
-    deserializer >> x;
-    deserializer >> y;
-    deserializer >> z;
-
-    game_->GetMap().Resize(x, y, z);
 }

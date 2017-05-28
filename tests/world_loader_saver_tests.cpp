@@ -34,13 +34,6 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
         EXPECT_CALL(game, GetGlobals())
             .WillRepeatedly(Return(globals));
 
-        EXPECT_CALL(map, GetWidth())
-            .WillOnce(Return(13));
-        EXPECT_CALL(map, GetHeight())
-            .WillOnce(Return(17));
-        EXPECT_CALL(map, GetDepth())
-            .WillOnce(Return(23));
-
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
 
@@ -60,7 +53,6 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
             .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
-        EXPECT_CALL(map, Resize(13, 17, 23));
         EXPECT_CALL(game, SetMob(0));
 
         EXPECT_CALL(game, GetAtmosphere())
@@ -109,13 +101,6 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         EXPECT_CALL(game, GetGlobals())
             .WillRepeatedly(Return(globals));
 
-        EXPECT_CALL(map, GetWidth())
-            .WillRepeatedly(Return(13));
-        EXPECT_CALL(map, GetHeight())
-            .WillRepeatedly(Return(17));
-        EXPECT_CALL(map, GetDepth())
-            .WillRepeatedly(Return(23));
-
         WorldLoaderSaver loader_saver(&game);
         loader_saver.Save(serializer);
     }
@@ -134,7 +119,6 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
             .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
-        EXPECT_CALL(map, Resize(13, 17, 23));
         EXPECT_CALL(game, SetMob(0));
 
         EXPECT_CALL(game, GetAtmosphere())

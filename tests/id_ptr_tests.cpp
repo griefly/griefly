@@ -33,6 +33,12 @@ TEST(IdPtrDeathTest, Death)
         IdPtr<kv::Object> object(101);
         object.IsValid();
     }, "Id table lookup fail");
+
+    ASSERT_DEATH(
+    {
+        IdPtr<kv::Object> ptr;
+        ptr.operator*();
+    }, "Unable to dereference");
 }
 
 class IdPtrTest : public ::testing::Test
@@ -91,17 +97,15 @@ TEST_F(IdPtrTest, Dereference)
     (*id_ptr_id_table)[42].object = &object;
 
     IdPtr<kv::Object> ptr;
-    ASSERT_EQ(ptr.operator*(), nullptr);
-
     ptr = 10;
-    ASSERT_EQ(ptr.operator*(), nullptr);
+    ASSERT_EQ(ptr.operator->(), nullptr);
 
     ptr = 42;
-    ASSERT_EQ(ptr.operator*(), &object);
+    ASSERT_EQ(ptr.operator->(), &object);
     // Cache
-    ASSERT_EQ(ptr.operator*(), &object);
+    ASSERT_EQ(ptr.operator->(), &object);
 
-    ASSERT_EQ(ptr.operator*(), ptr.operator->());
+    ASSERT_EQ(ptr.operator->(), ptr.operator->());
 }
 
 TEST_F(IdPtrTest, Validating)

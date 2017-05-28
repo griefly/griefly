@@ -116,7 +116,6 @@ private:
     QThread thread_;
 
     AtmosInterface* atmos_;
-    MapInterface* map_;
     ObjectFactoryInterface* factory_;
     ChatInterface* chat_;
     TextPainter* texts_;

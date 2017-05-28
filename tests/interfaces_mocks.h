@@ -33,7 +33,7 @@ public:
     MOCK_METHOD0(FillTilesAtmosHolders, void());
     MOCK_CONST_METHOD4(CalculateLos, void(VisiblePoints*, int, int, int));
     MOCK_METHOD1(IsTileVisible, bool(quint32 tile_id));
-    MOCK_METHOD3(IsTransparent, bool(int, int, int));
+    MOCK_CONST_METHOD3(IsTransparent, bool(int, int, int));
 };
 
 class MockIObjectFactory : public ObjectFactoryInterface

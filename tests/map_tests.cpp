@@ -8,6 +8,8 @@
 using ::testing::ReturnRef;
 using ::testing::Return;
 
+using namespace kv;
+
 TEST(Map, Constructor)
 {
     Map map;

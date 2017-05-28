@@ -242,9 +242,9 @@ void LosCalculator::MarkTilesOfCornerAsVisible(
     }
 }
 
-LosCalculator::LosCalculator(MapInterface* map)
+LosCalculator::LosCalculator()
 {
-    map_ = map;
+    map_ = nullptr;
 }
 
 // LOSfinder::calculateVisisble calculates visibility list of map from given map point
@@ -256,8 +256,10 @@ LosCalculator::LosCalculator(MapInterface* map)
 // if ray passes through edge it checks both adjasent tiles. They both must be transparent, otherwise ray blocks
 // if tile has at least one visible corner then this tile is visible
 // otherwise tile is invisible
-void LosCalculator::Calculate(VisiblePoints* retlist, int posx, int posy, int posz) const
+void LosCalculator::Calculate(const MapInterface* map, VisiblePoints* retlist, int posx, int posy, int posz) const
 {
+    map_ = map;
+
     const int VISIBLE_TILES_SIZE = 4 * (SIZE_H_SQ + 2) * (SIZE_W_SQ + 2);
 
     std::vector<char> visible_tiles;

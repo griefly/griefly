@@ -422,11 +422,6 @@ void CubeTile::ForEach(std::function<void(IdPtr<MapObject>)> callback)
     }
 }
 
-void CubeTile::LoadInMap()
-{
-    GetGame().GetMap().At(posx_, posy_, posz_) = GetId();
-}
-
 void CubeTile::UpdateAtmosPassable()
 {
     const Dir dirs[5]

@@ -121,28 +121,28 @@ public:
         return *this;
     }
 
-    T* operator*() const
+    T& operator*() const
     {
         if (id_ == 0)
         {
-            return nullptr;
+            KvAbort("Unable to dereference IdPtr with 0 id");
         }
         if (casted_ == nullptr)
         {
             Update();
         }
-        return static_cast<T*>(casted_);
+        return *static_cast<T*>(casted_);
     }
 
     T* operator->() const
     {
-        return operator*();
+        return &operator*();
     }
 
     bool IsValid() const
     {
         Update();
-        return operator*() != nullptr;
+        return casted_ != nullptr;
     }
     explicit operator bool() const
     {

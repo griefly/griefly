@@ -7,8 +7,8 @@
 class LosCalculator
 {
 public:
-    LosCalculator(MapInterface* map);
-    void Calculate(VisiblePoints* retval, int posx, int posy, int posz = 0) const;
+    LosCalculator();
+    void Calculate(const MapInterface* map, VisiblePoints* retval, int posx, int posy, int posz = 0) const;
 private:
     static int PosToCorner(int pos);
     static int CornerToPos(int corner);
@@ -26,5 +26,7 @@ private:
         PosPoint at,
         PosPoint center,
         std::vector<char>* visibility) const;
-    MapInterface* map_;
+
+    // TODO: Make this class as pure function, because the only member class is not needed
+    mutable const MapInterface* map_;
 };

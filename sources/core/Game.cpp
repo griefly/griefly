@@ -81,7 +81,6 @@ Game::Game()
     this->moveToThread(&thread_);
     connect(&thread_, &QThread::started, this, &Game::process);
 
-    map_ = nullptr;
     factory_ = nullptr;
     texts_ = nullptr;
     chat_ = nullptr;
@@ -91,7 +90,6 @@ Game::Game()
 
 Game::~Game()
 {
-    delete map_;
     delete factory_;
     delete texts_;
     delete chat_;
@@ -106,7 +104,6 @@ void Game::InitGlobalObjects()
     texts_ = new TextPainter;
     atmos_ = new Atmosphere(texts_);
     sync_random_ = new SyncRandom;
-    map_ = new Map;
     factory_ = new ObjectFactory(this);
     Chat* chat = new Chat(this);
     chat_ = chat;
@@ -279,9 +276,11 @@ void Game::InitWorld(int id, QString map_name)
             unsigned int seed = static_cast<unsigned int>(qrand());
             GetRandom().SetRand(seed, 0);
 
+            global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
+            global_objects_->map = GetFactory().CreateImpl(kv::Map::GetTypeStatic());
+
             world_loader_saver_->LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
 
-            global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
             GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
 
             if (GetParamsHolder().GetParamBool("-unsync_generation"))
@@ -589,7 +588,7 @@ void Game::GenerateFrame()
 {
     points_.clear();
     GetMob()->CalculateVisible(&points_);
-    map_->Represent(points_);
+    GetMap().Represent(points_);
     GetMob()->GenerateInterfaceForFrame();
 
     AppendSoundsToFrame(points_);
@@ -642,12 +641,12 @@ AtmosInterface& Game::GetAtmosphere()
 
 MapInterface& Game::GetMap()
 {
-    return *map_;
+    return *(global_objects_->map);
 }
 
 const MapInterface& Game::GetMap() const
 {
-    return *map_;
+    return *(global_objects_->map);
 }
 
 ObjectFactoryInterface& Game::GetFactory()
