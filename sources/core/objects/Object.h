@@ -6,7 +6,7 @@
 #include "../Constheader.h"
 #include "../Idptr.h"
 #include "../Hashes.h"
-#include "../Macroses.h"
+#include "../KvMacros.h"
 
 #include "Interfaces.h"
 

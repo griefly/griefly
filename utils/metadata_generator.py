@@ -84,7 +84,7 @@ def main():
     for directory, directory_names, filenames in os.walk(dir_name):
         for filename in [f for f in filenames if f.endswith(".h")]:
             fullpath = os.path.join(directory, filename)
-            if not "Macroses.h" in fullpath:
+            if not "KvMacros.h" in fullpath:
                 #print("Parse file '" + fullpath + "'")
                 parse_file(fullpath, filename)
 
