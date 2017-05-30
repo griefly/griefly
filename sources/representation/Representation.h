@@ -13,10 +13,11 @@
 
 #include "Sound.h"
 
-class Representation
+class Representation : public QObject
 {
+    Q_OBJECT
 public:
-    Representation();
+    Representation(QObject* parent = nullptr);
 
     struct Entity
     {
@@ -45,8 +46,12 @@ public:
 
     struct Sound
     {
-        Sound(const QString& name) : name(name) {}
         QString name;
+    };
+
+    struct ChatMessage
+    {
+        QString html;
     };
 
     struct Music
@@ -65,8 +70,9 @@ public:
     void ResetPerformance();
 
     void AddToNewFrame(const InterfaceUnit& unit);
-    void AddToNewFrame(const Entity& ent);
+    void AddToNewFrame(const Entity& entity);
     void AddToNewFrame(const Sound& sound);
+    void AddToNewFrame(const ChatMessage& sound);
 
     void SetMusic(const Music& music);
 
@@ -84,6 +90,8 @@ public:
     quint32 GetUniqueIdForNewFrame(quint32 base_id, quint32 number);
 
     SoundPlayer& GetSoundPlayer() { return player_; }
+signals:
+    void chatMessage(const QString& html);
 private:
     QMap<Qt::Key, bool> keys_state_;
 
@@ -112,6 +120,7 @@ private:
         QVector<Entity> entities;
         QVector<QString> sounds;
         QVector<InterfaceUnit> units;
+        QVector<ChatMessage> messages;
         Music music;
         int camera_pos_x;
         int camera_pos_y;

@@ -132,7 +132,8 @@ void MainForm::startGameLoop(int id, QString map)
         fps_cap_ = GetParamsHolder().GetParam<int>("-max_fps");
     }
 
-    SetRepresentation(new Representation);
+    Representation* representation = new Representation;
+    SetRepresentation(representation);
     connect(ui->widget, &QtOpenGL::focusLost,
     []()
     {
@@ -148,6 +149,7 @@ void MainForm::startGameLoop(int id, QString map)
 
     connect(game, &Game::sendMap,
             &Network2::GetInstance(), &Network2::sendMap);
+    connect(representation, &Representation::chatMessage, this, &MainForm::insertHtmlIntoChat);
 
     game->InitWorld(id, map);
 

@@ -21,7 +21,8 @@ void Chat::PostSimpleText(const QString& str, quint32 tile_id)
         return;
     }
 
-    emit insertHtmlIntoChat(str.toHtmlEscaped());
+    GetRepresentation().AddToNewFrame(
+        Representation::ChatMessage{str.toHtmlEscaped()});
 }
 
 void Chat::PostHtmlText(const QString& str, quint32 tile_id)
@@ -31,7 +32,8 @@ void Chat::PostHtmlText(const QString& str, quint32 tile_id)
         return;
     }
 
-    emit insertHtmlIntoChat(str);
+    GetRepresentation().AddToNewFrame(
+        Representation::ChatMessage{str});
 }
 
 void Chat::PostDamage(const QString& by, const QString& who, const QString& object, quint32 tile_id)
@@ -45,9 +47,9 @@ void Chat::PostDamage(const QString& by, const QString& who, const QString& obje
     QString q_who = who.toHtmlEscaped();
     QString q_object = object.toHtmlEscaped();
 
-    emit insertHtmlIntoChat(
+    GetRepresentation().AddToNewFrame(Representation::ChatMessage{
         QString("<font color=\"red\">%1 is attacked by %2 with %3</font>")
-            .arg(q_by).arg(q_who).arg(q_object));
+            .arg(q_by).arg(q_who).arg(q_object)});
 }
 
 void Chat::PostWords(const QString& who, const QString& text, quint32 tile_id)
@@ -65,8 +67,8 @@ void Chat::PostWords(const QString& who, const QString& text, quint32 tile_id)
         q_text[0] = q_text[0].toUpper();
     }
 
-    emit insertHtmlIntoChat(
-        QString("<b>%1</b> <i>says</i>, <span>\"%2\"</span>").arg(q_who).arg(q_text));
+    GetRepresentation().AddToNewFrame(Representation::ChatMessage{
+        QString("<b>%1</b> <i>says</i>, <span>\"%2\"</span>").arg(q_who).arg(q_text)});
 }
 
 void Chat::PostTextFor(const QString& str, IdPtr<kv::MapObject> owner)
@@ -81,14 +83,15 @@ void Chat::PostHtmlFor(const QString& str, IdPtr<kv::MapObject> owner)
 {
     if (game_->GetMob() == owner)
     {
-        emit insertHtmlIntoChat(str);
+        GetRepresentation().AddToNewFrame(Representation::ChatMessage{str});
     }
 }
 
 void Chat::PostText(const QString& str)
 {
     QString loc = str.toHtmlEscaped();
-    emit insertHtmlIntoChat(loc.replace('\n', "<br>"));
+    loc.replace('\n', "<br>");
+    GetRepresentation().AddToNewFrame(Representation::ChatMessage{loc});
 }
 
 void Chat::PostOOCText(const QString &who, const QString& text)
@@ -96,7 +99,7 @@ void Chat::PostOOCText(const QString &who, const QString& text)
     QString q_who = who.toHtmlEscaped();
     QString q_text = text.toHtmlEscaped();
 
-    emit insertHtmlIntoChat(
+    GetRepresentation().AddToNewFrame(Representation::ChatMessage{
         QString("<font color=\"blue\"><b>%1</b>: <span>%2</span></font>")
-            .arg(q_who).arg(q_text));
+            .arg(q_who).arg(q_text)});
 }

@@ -19,7 +19,8 @@
 #include <QMutexLocker>
 #include <QCoreApplication>
 
-Representation::Representation()
+Representation::Representation(QObject* parent)
+    : QObject(parent)
 {
     old_frame_ = &first_data_;
     new_frame_ = &second_data_;
@@ -59,17 +60,22 @@ void Representation::AddToNewFrame(const Representation::InterfaceUnit &unit)
     new_frame_->units.push_back(unit);
 }
 
-void Representation::AddToNewFrame(const Representation::Entity& ent)
+void Representation::AddToNewFrame(const Entity& entity)
 {
-    new_frame_->entities.push_back(ent);
+    new_frame_->entities.push_back(entity);
 }
 
-void Representation::AddToNewFrame(const Sound &sound)
+void Representation::AddToNewFrame(const Sound& sound)
 {
     new_frame_->sounds.push_back(sound.name);
 }
 
-void Representation::SetMusic(const Representation::Music& music)
+void Representation::AddToNewFrame(const ChatMessage& message)
+{
+    new_frame_->messages.push_back(message);
+}
+
+void Representation::SetMusic(const Music& music)
 {
     new_frame_->music = music;
 }
@@ -89,6 +95,7 @@ void Representation::Swap()
     new_frame_->entities.clear();
     new_frame_->sounds.clear();
     new_frame_->units.clear();
+    new_frame_->messages.clear();
 }
 
 const int SUPPORTED_KEYS_SIZE = 8;
@@ -413,6 +420,10 @@ void Representation::SynchronizeViews()
         }
     }
 
+    for (const ChatMessage& message : qAsConst(current_frame_.messages))
+    {
+        emit chatMessage(message.html);
+    }
 
     ++current_frame_id_;
     is_updated_ = false;

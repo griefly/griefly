@@ -8,9 +8,8 @@
 #include <QTextBrowser>
 #include <QObject>
 
-class Chat : public QObject, public ChatInterface
+class Chat : public ChatInterface
 {
-    Q_OBJECT
 public:
     static bool IsOOCMessage(const QString& text);
     Chat(GameInterface* game);
@@ -23,8 +22,6 @@ public:
     virtual void PostHtmlText(const QString& str, quint32 tile_id) override;
     virtual void PostDamage(const QString& by, const QString& who, const QString& object, quint32 tile_id) override;
     virtual void PostWords(const QString& who, const QString& text, quint32 tile_id) override;
-signals:
-    void insertHtmlIntoChat(QString html);
 private:
     GameInterface* game_;
 };

@@ -114,10 +114,7 @@ void Game::InitGlobalObjects()
 
     qDebug() << "Some QObject moving and connecting";
 
-    chat->moveToThread(&thread_);
     texts_->moveToThread(&thread_);
-
-    connect(chat, &Chat::insertHtmlIntoChat, this, &Game::insertHtmlIntoChat);
     connect(texts_, &TextPainter::addSystemText, this, &Game::addSystemText);
 
     qDebug() << "End some moving and connecting";
@@ -606,7 +603,7 @@ void Game::AppendSoundsToFrame(const VisiblePoints& points)
     {
         if (std::find(points.begin(), points.end(), it.first) != points.end())
         {
-            GetRepresentation().AddToNewFrame(it.second);
+            GetRepresentation().AddToNewFrame(Representation::Sound{it.second});
         }
     }
     sounds_for_frame_.clear();
