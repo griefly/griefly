@@ -9,7 +9,8 @@ namespace kv
 
 struct Phrase
 {
-    // TODO:
+    QString text;
+    QString from;
 };
 
 class Hearer
