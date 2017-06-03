@@ -5,14 +5,10 @@
 
 #include "Constheader.h"
 
+#include "Hearer.h"
+
 namespace kv
 {
-class Hearer;
-
-struct Phrase
-{
-    // TODO
-};
 
 class ChatFrameInfo
 {
@@ -28,7 +24,7 @@ public:
 
     void AddFromVisibleToPersonal(const QVector<PosPoint>& points, quint32 net_id);
 
-    void ApplyHear(const QVector<PosPoint>& points, const Hearer& hearer);
+    void ApplyHear(const QVector<PosPoint>& points,Hearer* hearer);
 private:
     QHash<quint32, QVector<QString>> personal_;
     QHash<PosPoint, QVector<QString>> visible_;

@@ -75,6 +75,15 @@ struct PosPoint
     int posz;
 };
 
+inline uint qHash(const PosPoint& point, uint seed = 0)
+{
+    uint retval = 59;
+    retval = retval * 13 + qHash(point.posz, seed);
+    retval = retval * 13 + qHash(point.posx, seed);
+    retval = retval * 13 + qHash(point.posy, seed);
+    return retval;
+}
+
 inline bool IsNonZero(const VDir& vdir)
 {
     return    vdir.x
