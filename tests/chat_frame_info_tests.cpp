@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include <QString>
+
 using namespace kv;
 
 namespace
@@ -89,6 +91,88 @@ TEST(ChatFrameInfo, PostVisible)
     // Just in case
     EXPECT_EQ(info.GetPersonalTexts(10).size(), 1);
     EXPECT_TRUE(info.GetPersonalTexts(10).contains("test4"));
+
+    info.Reset();
+    CheckInfoEmpty(info);
+}
+
+namespace
+{
+
+class TestHearer : public Hearer
+{
+public:
+    TestHearer(ChatFrameInfo* info, quint32 net_id, const QVector<PosPoint>& heard_points)
+        : info_(info),
+          net_id_(net_id),
+          heard_points_(heard_points)
+    {
+        // Nothing
+    }
+
+    virtual QVector<PosPoint> GetHeardPoints() const override
+    {
+        return heard_points_;
+    }
+    virtual void Hear(const Phrase &phrase) override
+    {
+        info_->PostPersonal(QString("%1:%2").arg(phrase.from).arg(phrase.text), net_id_);
+    }
+private:
+    ChatFrameInfo* info_;
+    quint32 net_id_;
+    QVector<PosPoint> heard_points_;
+};
+
+}
+
+TEST(ChatFrameInfo, PostHear)
+{
+    ChatFrameInfo info;
+
+    {
+        Phrase phrase;
+
+        phrase.from = "human1";
+        phrase.text = "text1";
+        info.PostHear(phrase, {1, 1, 0});
+
+        phrase.from = "human2";
+        phrase.text = "text2";
+        info.PostHear(phrase, {3, 10, 0});
+
+        phrase.from = "human3";
+        phrase.text = "text3";
+        info.PostHear(phrase, {3, 10, 0});
+
+        phrase.from = "human5";
+        phrase.text = "text5";
+        info.PostHear(phrase, {111, 111, 111});
+    }
+
+    CheckInfoEmpty(info);
+
+    {
+        TestHearer hearer(&info, 10, {{1, 1, 0}, {3, 10, 0}, {5, 5, 5}});
+
+        info.ApplyHear(&hearer);
+        EXPECT_EQ(info.GetPersonalTexts(10).size(), 3);
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human1:text1"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human2:text2"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human3:text3"));
+    }
+    {
+        TestHearer hearer(&info, 100, {{111, 111, 111}});
+
+        info.ApplyHear(&hearer);
+        EXPECT_EQ(info.GetPersonalTexts(100).size(), 1);
+        EXPECT_TRUE(info.GetPersonalTexts(100).contains("human5:text5"));
+
+        EXPECT_EQ(info.GetPersonalTexts(10).size(), 3);
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human1:text1"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human2:text2"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human3:text3"));
+    }
 
     info.Reset();
     CheckInfoEmpty(info);

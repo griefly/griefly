@@ -16,7 +16,7 @@ struct Phrase
 class Hearer
 {
 public:
-    virtual const QVector<PosPoint>& GetHeardPoints() const = 0;
+    virtual QVector<PosPoint> GetHeardPoints() const = 0;
     virtual void Hear(const Phrase& phrase) = 0;
 };
 

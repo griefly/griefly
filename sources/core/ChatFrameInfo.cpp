@@ -48,8 +48,9 @@ void ChatFrameInfo::AddFromVisibleToPersonal(
     }
 }
 
-void ChatFrameInfo::ApplyHear(const QVector<PosPoint>& points, Hearer* hearer)
+void ChatFrameInfo::ApplyHear(Hearer* hearer)
 {
+    const auto& points = hearer->GetHeardPoints();
     for (const auto& point : points)
     {
         const auto phrases = hear_.find(point);
