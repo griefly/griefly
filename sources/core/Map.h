@@ -9,40 +9,7 @@
 
 #include "LosCalculator.h"
 
-template<class TValue>
-inline FastSerializer& operator<<(FastSerializer& file, const QVector<TValue>& vector)
-{
-    file << vector.size();
-    for (const auto& value : vector)
-    {
-        file << value;
-    }
-    return file;
-}
-
-template<class TValue>
-inline FastDeserializer& operator>>(FastDeserializer& file, QVector<TValue>& vector)
-{
-    int size;
-    file >> size;
-    vector.resize(size);
-    for (int i = 0; i < size; ++i)
-    {
-        file >> vector[i];
-    }
-    return file;
-}
-
-template<class TValue>
-inline unsigned int hash(const QVector<TValue>& vector)
-{
-    unsigned int retval = 0;
-    for (int i = 0; i < vector.size(); ++i)
-    {
-        retval += i * hash(vector[i]);
-    }
-    return retval;
-}
+#include "SaveableOperators.h"
 
 namespace kv
 {

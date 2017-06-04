@@ -18,6 +18,15 @@ namespace
     }
 }
 
+TEST(ChatFrameInfoDeathTest, ApplyHearNullptr)
+{
+    EXPECT_DEATH(
+    {
+        ChatFrameInfo info;
+        info.ApplyHear(nullptr);
+    }, "hearer is nullptr");
+}
+
 TEST(ChatFrameInfo, Constructor)
 {
     ChatFrameInfo info;

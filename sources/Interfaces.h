@@ -17,6 +17,7 @@ namespace kv
     class Object;
     class CubeTile;
     class GlobalObjectsHolder;
+    class ChatFrameInfo;
 }
 class MapInterface;
 
@@ -117,6 +118,7 @@ public:
     virtual TextPainter& GetTexts() = 0;
     virtual SyncRandom& GetRandom() = 0;
     virtual Names& GetNames() = 0;
+    virtual kv::ChatFrameInfo& GetChatFrameInfo() = 0;
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) = 0;
 

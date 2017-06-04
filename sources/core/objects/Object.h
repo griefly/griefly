@@ -20,6 +20,7 @@ namespace kv
 {
 
 class MapObject;
+class Hearer;
 
 namespace internal
 {
@@ -83,6 +84,8 @@ public:
     const GameInterface& GetGame() const;
     ObjectFactoryInterface& GetFactory();
     unsigned int GetRand();
+
+    virtual Hearer* ToHearer() { return nullptr; }
 
     template<typename T>
     IdPtr<T> Create(const QString& type, IdPtr<MapObject> owner = 0)

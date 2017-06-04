@@ -9,6 +9,7 @@
 #include "SyncRandom.h"
 #include "Names.h"
 #include "WorldLoaderSaver.h"
+#include "ChatFrameInfo.h"
 
 #include <QApplication>
 #include <QKeyEvent>
@@ -43,6 +44,7 @@ public:
     virtual TextPainter& GetTexts() override;
     virtual SyncRandom& GetRandom() override;
     virtual Names& GetNames() override;
+    virtual kv::ChatFrameInfo& GetChatFrameInfo() override;
 
     virtual IdPtr<kv::Mob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
@@ -64,10 +66,12 @@ signals:
 private:
     void GenerateFrame();
     void AppendSoundsToFrame(const VisiblePoints& points);
+    void AppendChatMessages();
 
     void ProcessInputMessages();
     void InitGlobalObjects();
     void Process();
+    void ProcessHearers();
 
     void AddLastMessages(QByteArray* data);
     void AddMessageToMessageLog(Message2 message);
@@ -123,6 +127,8 @@ private:
     SyncRandom* sync_random_;
     Names* names_;
     WorldLoaderSaver* world_loader_saver_;
+
+    kv::ChatFrameInfo chat_frame_info_;
 
     IdPtr<kv::GlobalObjectsHolder> global_objects_;
 

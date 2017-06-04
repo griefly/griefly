@@ -50,6 +50,11 @@ void ChatFrameInfo::AddFromVisibleToPersonal(
 
 void ChatFrameInfo::ApplyHear(Hearer* hearer)
 {
+    if (hearer == nullptr)
+    {
+        KvAbort("ChatFrameInfo::ApplyHear(): hearer is nullptr");
+    }
+
     const auto& points = hearer->GetHeardPoints();
     for (const auto& point : points)
     {

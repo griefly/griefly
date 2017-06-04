@@ -197,6 +197,8 @@ void Game::Process()
             atmos_process_ns_ += timer.nsecsElapsed();
             atmos_process_ns_ /= 2;
 
+            ProcessHearers();
+
             timer.start();
             GetFactory().ProcessDeletion();
             deletion_process_ns_ += timer.nsecsElapsed();
@@ -234,6 +236,27 @@ void Game::Process()
         process_in_ = false;
     }
     thread_.exit();
+}
+
+void Game::ProcessHearers()
+{
+    QVector<IdPtr<Object>>& hearers = global_objects_->hearers;
+    QVector<IdPtr<Object>> deleted_hearers;
+
+    for (const IdPtr<Object>& hearer : qAsConst(hearers))
+    {
+        if (!hearer.IsValid())
+        {
+            deleted_hearers.append(hearer);
+            continue;
+        }
+        chat_frame_info_.ApplyHear(hearer->ToHearer());
+    }
+
+    for (const IdPtr<Object>& deleted : qAsConst(deleted_hearers))
+    {
+        hearers.erase(std::find(hearers.begin(), hearers.end(), deleted));
+    }
 }
 
 const QString ON_LOGIN_MESSAGE =
@@ -589,6 +612,7 @@ void Game::GenerateFrame()
     GetMob()->GenerateInterfaceForFrame();
 
     AppendSoundsToFrame(points_);
+    AppendChatMessages();
 
     // TODO: reset all shifts
     GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
@@ -616,6 +640,16 @@ void Game::AppendSoundsToFrame(const VisiblePoints& points)
     if (music != musics_for_mobs.end())
     {
         GetRepresentation().SetMusic({music->first, music->second});
+    }
+}
+
+void Game::AppendChatMessages()
+{
+    quint32 net_id = GetNetId(GetMob().Id());
+
+    for (const auto& personal : chat_frame_info_.GetPersonalTexts(net_id))
+    {
+        GetRepresentation().AddToNewFrame(Representation::ChatMessage{personal});
     }
 }
 
@@ -669,6 +703,11 @@ SyncRandom& Game::GetRandom()
 Names& Game::GetNames()
 {
     return *names_;
+}
+
+ChatFrameInfo& Game::GetChatFrameInfo()
+{
+    return chat_frame_info_;
 }
 
 IdPtr<Mob> Game::GetMob()
