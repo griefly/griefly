@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mob.h"
+#include "core/Hearer.h"
 
 const int HUMAN_MAX_HEALTH = 10000;
 const int REGULAR_TEMPERATURE = 40;
@@ -8,11 +9,16 @@ const int REGULAR_TEMPERATURE = 40;
 namespace kv
 {
 
-class Human : public Mob
+class Human : public Mob, public Hearer
 {
 public:
     DECLARE_SAVEABLE(Human, Mob);
     REGISTER_CLASS_AS(Human);
+
+    virtual Hearer* ToHearer() override { return this; }
+    virtual QVector<PosPoint> GetHeardPoints() const override;
+    virtual void Hear(const Phrase& phrase) override;
+
     Human();
 
     virtual void AfterWorldCreation() override;

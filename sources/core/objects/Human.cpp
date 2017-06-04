@@ -26,6 +26,23 @@
 
 using namespace kv;
 
+QVector<PosPoint> Human::GetHeardPoints() const
+{
+    QVector<PosPoint> retval;
+    CalculateVisible(&retval);
+    return retval;
+}
+
+void Human::Hear(const Phrase& phrase)
+{
+    if (IsMinded())
+    {
+        GetGame().GetChatFrameInfo().PostPersonal(
+            QString("<b>%1</b> <i>says</i>, <span>\"%2\"</span>").arg(phrase.from).arg(phrase.text),
+            GetGame().GetNetId(GetId()));
+    }
+}
+
 Human::Human()
 {
     tick_speed_ = 1;
@@ -168,7 +185,11 @@ void Human::ProcessMessage(const Message2 &msg)
         }
         if (!found)
         {
-            GetGame().GetChat().PostWords(name, text, GetOwner().Id());
+            // GetGame().GetChat().PostWords(name, text, GetOwner().Id());
+            Phrase phrase;
+            phrase.from = name;
+            phrase.text = text;
+            GetGame().GetChatFrameInfo().PostHear(phrase, {GetX(), GetY(), GetZ()});
         }
     }
     else if (msg.type == MessageType::MOUSE_CLICK)

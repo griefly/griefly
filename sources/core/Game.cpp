@@ -651,6 +651,7 @@ void Game::AppendChatMessages()
     {
         GetRepresentation().AddToNewFrame(Representation::ChatMessage{personal});
     }
+    chat_frame_info_.Reset();
 }
 
 void Game::PlayMusic(const QString& name, int volume, quint32 mob)
