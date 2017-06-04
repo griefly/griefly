@@ -347,3 +347,22 @@ TEST(ObjectFactory, Hash)
     factory.ProcessDeletion();
     EXPECT_EQ(factory.Hash(), 0);
 }
+
+TEST(ObjectFactory, Hearer)
+{
+    MockIGame game;
+    ObjectFactory factory(&game);
+
+    IdPtr<GlobalObjectsHolder> globals
+        = factory.CreateImpl(GlobalObjectsHolder::GetTypeStatic());
+
+    EXPECT_CALL(game, GetGlobals())
+        .WillRepeatedly(Return(globals));
+
+    EXPECT_EQ(globals->hearers.size(), 0);
+
+    IdPtr<Object> hearer = factory.CreateImpl(TestHearer::GetTypeStatic());
+
+    ASSERT_EQ(globals->hearers.size(), 1);
+    EXPECT_EQ(globals->hearers[0], hearer);
+}

@@ -189,6 +189,11 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
         }
     }
 
+    if (item->ToHearer())
+    {
+        game_->GetGlobals()->hearers.append(retval);
+    }
+
     if (!is_world_generating_)
     {
         item->AfterWorldCreation();

@@ -1,5 +1,7 @@
 #include "TestObject.h"
 
+#include "core/ChatFrameInfo.h"
+
 // LCOV_EXCL_START
 using namespace kv;
 
@@ -43,5 +45,26 @@ void TestObject::SetProcessCallback(std::function<void ()> callback)
 void TestObject::SetDestructorCallback(std::function<void ()> callback)
 {
     destructor_callback_ = callback;
+}
+
+TestHearer::TestHearer()
+{
+    // Nothing
+}
+
+TestHearer::~TestHearer()
+{
+    // Nothing
+}
+
+QVector<PosPoint> TestHearer::GetHeardPoints() const
+{
+    return {{10, 10, 0}, {14, 2, 0}};
+}
+
+void TestHearer::Hear(const Phrase& phrase)
+{
+    GetGame().GetChatFrameInfo().PostPersonal(
+        QString("%1:%2").arg(phrase.from).arg(phrase.text), 42);
 }
 // LCOV_EXCL_STOP

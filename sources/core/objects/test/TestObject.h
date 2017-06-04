@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../Object.h"
+#include "core/objects/Object.h"
+#include "core/Hearer.h"
 
 #include <functional>
 
@@ -32,6 +33,22 @@ private:
     std::function<void()> destructor_callback_;
 };
 END_DECLARE(TestObject);
-// LCOV_EXCL_STOP
+
+class TestHearer : public Object, public Hearer
+{
+public:
+    DECLARE_SAVEABLE(TestHearer, Object);
+    REGISTER_CLASS_AS(TestHearer);
+
+    TestHearer();
+    ~TestHearer();
+
+    virtual Hearer* ToHearer() override { return this; }
+
+    virtual QVector<PosPoint> GetHeardPoints() const override;
+    virtual void Hear(const Phrase& phrase) override;
+};
+END_DECLARE(TestHearer);
 
 }
+// LCOV_EXCL_STOP
