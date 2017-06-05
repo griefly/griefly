@@ -3,6 +3,8 @@
 #include <QMap>
 #include <QVector>
 
+#include "FastSerializer.h"
+
 template<class TKey, class TValue>
 inline FastSerializer& operator<<(FastSerializer& file, const QMap<TKey, TValue>& map)
 {
