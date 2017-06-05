@@ -612,6 +612,7 @@ void Game::GenerateFrame()
     GetMob()->GenerateInterfaceForFrame();
 
     AppendSoundsToFrame(points_);
+    GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));
     AppendChatMessages();
 
     // TODO: reset all shifts

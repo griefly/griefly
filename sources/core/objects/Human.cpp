@@ -606,9 +606,9 @@ void Human::TryClownBootsHonk()
 
 void Human::MakeEmote(const QString& emote)
 {
-    GetGame().GetChat().PostHtmlText(
+    GetGame().GetChatFrameInfo().PostVisible(
         QString("<b>%1</b> %2").arg(name.toHtmlEscaped()).arg(emote.toHtmlEscaped()),
-        GetOwner()->GetId());
+        {GetX(), GetY(), GetZ()});
 }
 
 int Human::CalculateHealth() const
