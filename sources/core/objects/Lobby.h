@@ -18,7 +18,7 @@ public:
     int GetSecondUntilStart();
     virtual void Process() override;
 
-    void AddSpawnPoint(IdPtr<SpawnPoint> PosPoint);
+    void AddSpawnPoint(IdPtr<SpawnPoint> Position);
     std::vector<IdPtr<CubeTile>> GetTilesFor(const QString& type);
 private:
     int KV_SAVEABLE(seconds_);

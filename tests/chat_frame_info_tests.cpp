@@ -111,7 +111,7 @@ namespace
 class TestHearer : public Hearer
 {
 public:
-    TestHearer(ChatFrameInfo* info, quint32 net_id, const QVector<PosPoint>& heard_points)
+    TestHearer(ChatFrameInfo* info, quint32 net_id, const QVector<Position>& heard_points)
         : info_(info),
           net_id_(net_id),
           heard_points_(heard_points)
@@ -119,7 +119,7 @@ public:
         // Nothing
     }
 
-    virtual QVector<PosPoint> GetHeardPoints() const override
+    virtual QVector<Position> GetHeardPoints() const override
     {
         return heard_points_;
     }
@@ -130,7 +130,7 @@ public:
 private:
     ChatFrameInfo* info_;
     quint32 net_id_;
-    QVector<PosPoint> heard_points_;
+    QVector<Position> heard_points_;
 };
 
 }

@@ -16,7 +16,7 @@ public:
     REGISTER_CLASS_AS(Human);
 
     virtual Hearer* ToHearer() override { return this; }
-    virtual QVector<PosPoint> GetHeardPoints() const override;
+    virtual QVector<Position> GetHeardPoints() const override;
     virtual void Hear(const Phrase& phrase) override;
 
     Human();

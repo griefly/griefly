@@ -34,9 +34,9 @@ void Map::FillTilesAtmosHolders()
 
 void Map::Represent(const VisiblePoints& points) const
 {
-    for (const PosPoint& point : points)
+    for (const Position& point : points)
     {
-        const auto& tile = At(point.posx, point.posy, point.posz);
+        const auto& tile = At(point.x, point.y, point.z);
         const auto& objects = tile->GetInsideList();
 
         for (const auto object : objects)
@@ -49,7 +49,7 @@ void Map::Represent(const VisiblePoints& points) const
         {
             KvAbort(
                 QString("Invalid turf in Map::Represent() at (%1, %2, %3), but turf always should be valid!")
-                    .arg(point.posx).arg(point.posy).arg(point.posz));
+                    .arg(point.x).arg(point.y).arg(point.z));
         }
         turf->Represent();
     }

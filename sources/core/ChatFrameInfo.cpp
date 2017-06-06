@@ -14,12 +14,12 @@ void ChatFrameInfo::PostPersonal(const QString& text, quint32 net_id)
     personal_[net_id].append(text);
 }
 
-void ChatFrameInfo::PostVisible(const QString& text, const PosPoint& place)
+void ChatFrameInfo::PostVisible(const QString& text, const Position& place)
 {
     visible_[place].append(text);
 }
 
-void ChatFrameInfo::PostHear(const Phrase& phrase, const PosPoint& place)
+void ChatFrameInfo::PostHear(const Phrase& phrase, const Position& place)
 {
     hear_[place].append(phrase);
 }
@@ -36,7 +36,7 @@ const QVector<QString>& ChatFrameInfo::GetPersonalTexts(const quint32 net_id) co
 }
 
 void ChatFrameInfo::AddFromVisibleToPersonal(
-    const QVector<PosPoint>& points, const quint32 net_id)
+    const QVector<Position>& points, const quint32 net_id)
 {
     auto& personal = personal_[net_id];
     for (const auto& point : points)

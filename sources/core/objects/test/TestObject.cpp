@@ -57,7 +57,7 @@ TestHearer::~TestHearer()
     // Nothing
 }
 
-QVector<PosPoint> TestHearer::GetHeardPoints() const
+QVector<Position> TestHearer::GetHeardPoints() const
 {
     return {{10, 10, 0}, {14, 2, 0}};
 }

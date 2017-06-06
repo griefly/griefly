@@ -26,9 +26,9 @@
 
 using namespace kv;
 
-QVector<PosPoint> Human::GetHeardPoints() const
+QVector<Position> Human::GetHeardPoints() const
 {
-    QVector<PosPoint> retval;
+    QVector<Position> retval;
     CalculateVisible(&retval);
     return retval;
 }
@@ -517,7 +517,7 @@ void Human::Represent()
     GetRepresentation().AddToNewFrame(ent);
 }
 
-void Human::CalculateVisible(QVector<PosPoint>* visible_list) const
+void Human::CalculateVisible(QVector<Position>* visible_list) const
 {
     if (CalculateHealth() >= 0)
     {

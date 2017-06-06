@@ -1,5 +1,7 @@
 #include "LosCalculator.h"
 
+using kv::Position;
+
 const int RAY_MULTIPLIER = 2;
 
 int LosCalculator::PosToCorner(int pos)
@@ -25,11 +27,11 @@ int LosCalculator::Sign(int value)
     return 0;
 }
 
-bool LosCalculator::CheckCorner(PosPoint p) const
+bool LosCalculator::CheckCorner(Position p) const
 {
-    int x = CornerToPos(p.posx);
-    int y = CornerToPos(p.posy);
-    int z = CornerToPos(p.posz);
+    int x = CornerToPos(p.x);
+    int y = CornerToPos(p.y);
+    int z = CornerToPos(p.z);
     return CheckBorders(x, y, z);
 }
 
@@ -54,34 +56,34 @@ bool LosCalculator::CheckBorders(const int x, const int y, const int z) const
 }
 
 
-PosPoint LosCalculator::CornerPointToPoint(PosPoint p)
+Position LosCalculator::CornerPointToPoint(Position p)
 {
-    PosPoint retval(CornerToPos(p.posx), CornerToPos(p.posy), CornerToPos(p.posz));
+    Position retval(CornerToPos(p.x), CornerToPos(p.y), CornerToPos(p.z));
     return retval;
 }
 
-bool LosCalculator::IsTransparent(PosPoint p) const
+bool LosCalculator::IsTransparent(Position p) const
 {
-    PosPoint tilePoint = CornerPointToPoint(p);
-    return map_->IsTransparent(tilePoint.posx, tilePoint.posy, tilePoint.posz);
+    Position tilePoint = CornerPointToPoint(p);
+    return map_->IsTransparent(tilePoint.x, tilePoint.y, tilePoint.z);
 }
 
-bool LosCalculator::BresenX(PosPoint source, PosPoint target) const
+bool LosCalculator::BresenX(Position source, Position target) const
 {
-    int y = source.posy;
+    int y = source.y;
     int error = 0;
-    int delta_x = std::abs(source.posx - target.posx);
-    int deltaerr = std::abs(source.posy - target.posy);
-    int deltastep = Sign(target.posy - source.posy);
-    int incrstep = Sign(target.posx - source.posx);
-    for (int x = source.posx; x != target.posx; x += incrstep)
+    int delta_x = std::abs(source.x - target.x);
+    int deltaerr = std::abs(source.y - target.y);
+    int deltastep = Sign(target.y - source.y);
+    int incrstep = Sign(target.x - source.x);
+    for (int x = source.x; x != target.x; x += incrstep)
     {
         if ((x % RAY_MULTIPLIER) == 0 && (y % RAY_MULTIPLIER) == 0)
         {
             // when in corner check side neighbours
             // if both of them are not transparent then corner is not transparent
-            PosPoint left_neighbour(x + incrstep, y, source.posz);
-            PosPoint right_neighbour(x, y + deltastep, source.posz);
+            Position left_neighbour(x + incrstep, y, source.z);
+            Position right_neighbour(x, y + deltastep, source.z);
             if (!IsTransparent(left_neighbour) && !IsTransparent(right_neighbour))
             {
                 return false;
@@ -91,8 +93,8 @@ bool LosCalculator::BresenX(PosPoint source, PosPoint target) const
         {
             // when ray hits an edge check both tiles - current and previous. Since ray travels through edge both of them
             // must be transparent
-            PosPoint left_neighbour(x - incrstep, y, source.posz);
-            PosPoint right_neighbour(x + incrstep, y, source.posz);
+            Position left_neighbour(x - incrstep, y, source.z);
+            Position right_neighbour(x + incrstep, y, source.z);
             if (!IsTransparent(left_neighbour) || !IsTransparent(right_neighbour))
             {
                 return false;
@@ -101,8 +103,8 @@ bool LosCalculator::BresenX(PosPoint source, PosPoint target) const
         else if (y % RAY_MULTIPLIER == 0)
         {
             // second case of edge handling
-            PosPoint left_neighbour(x, y - deltastep, source.posz);
-            PosPoint right_neighbour(x, y + deltastep, source.posz);
+            Position left_neighbour(x, y - deltastep, source.z);
+            Position right_neighbour(x, y + deltastep, source.z);
             if (!IsTransparent(left_neighbour) || !IsTransparent(right_neighbour))
             {
                 return false;
@@ -110,7 +112,7 @@ bool LosCalculator::BresenX(PosPoint source, PosPoint target) const
         }
         else
         {
-            PosPoint new_point(x, y, source.posz);
+            Position new_point(x, y, source.z);
             if (!IsTransparent(new_point))
             {
                 return false;
@@ -128,22 +130,22 @@ bool LosCalculator::BresenX(PosPoint source, PosPoint target) const
     return true;
 }
 
-bool LosCalculator::BresenY(PosPoint source, PosPoint target) const
+bool LosCalculator::BresenY(Position source, Position target) const
 {
-    int x = source.posx;
+    int x = source.x;
     int error = 0;
-    int delta_y = std::abs(source.posy - target.posy);
-    int deltaerr = std::abs(source.posx - target.posx);
-    int deltastep = Sign(target.posx - source.posx);
-    int incrstep = Sign(target.posy - source.posy);
-    for (int y = source.posy; y != target.posy; y += incrstep)
+    int delta_y = std::abs(source.y - target.y);
+    int deltaerr = std::abs(source.x - target.x);
+    int deltastep = Sign(target.x - source.x);
+    int incrstep = Sign(target.y - source.y);
+    for (int y = source.y; y != target.y; y += incrstep)
     {
         if ((x % RAY_MULTIPLIER) == 0 && (y % RAY_MULTIPLIER) == 0)
         {
             // when in corner check side neighbours
             // if both of them are not transparent then corner is not transparent
-            PosPoint left_neighbour(x + deltastep, y, source.posz);
-            PosPoint right_neighbour(x, y + incrstep, source.posz);
+            Position left_neighbour(x + deltastep, y, source.z);
+            Position right_neighbour(x, y + incrstep, source.z);
             if (!IsTransparent(left_neighbour) && !IsTransparent(right_neighbour))
             {
                 return false;
@@ -153,8 +155,8 @@ bool LosCalculator::BresenY(PosPoint source, PosPoint target) const
         {
             // when ray hits an edge check both tiles. Since ray travels through edge both of them
             // must be transparent
-            PosPoint left_neighbour(x - deltastep, y, source.posz);
-            PosPoint right_neighbour(x + deltastep, y, source.posz);
+            Position left_neighbour(x - deltastep, y, source.z);
+            Position right_neighbour(x + deltastep, y, source.z);
             if (!IsTransparent(left_neighbour) || !IsTransparent(right_neighbour))
             {
                 return false;
@@ -163,8 +165,8 @@ bool LosCalculator::BresenY(PosPoint source, PosPoint target) const
         else if (y % RAY_MULTIPLIER == 0)
         {
             // second case of edge handling
-            PosPoint left_neighbour(x, y - incrstep, source.posz);
-            PosPoint right_neighbour(x, y + incrstep, source.posz);
+            Position left_neighbour(x, y - incrstep, source.z);
+            Position right_neighbour(x, y + incrstep, source.z);
             if (!IsTransparent(left_neighbour) || !IsTransparent(right_neighbour))
             {
                 return false;
@@ -172,7 +174,7 @@ bool LosCalculator::BresenY(PosPoint source, PosPoint target) const
         }
         else
         {
-            PosPoint new_point(x, y, source.posz);
+            Position new_point(x, y, source.z);
 
             if (!IsTransparent(new_point))
             {
@@ -191,10 +193,10 @@ bool LosCalculator::BresenY(PosPoint source, PosPoint target) const
     return true;
 }
 
-bool LosCalculator::RayTrace(PosPoint source, PosPoint target) const
+bool LosCalculator::RayTrace(Position source, Position target) const
 {
     // run Bresenham's line algorithm
-    if (std::abs(source.posx - target.posx) > std::abs(source.posy - target.posy))
+    if (std::abs(source.x - target.x) > std::abs(source.y - target.y))
     {
         return BresenX(source, target);
     }
@@ -208,22 +210,22 @@ bool LosCalculator::RayTrace(PosPoint source, PosPoint target) const
 
 void LosCalculator::MarkTilesOfCornerAsVisible(
     VisiblePoints* retlist,
-    PosPoint at,
-    PosPoint center,
+    Position at,
+    Position center,
     std::vector<char>* visibility) const
 {
     for (int dx = -1; dx <= 0; dx++)
     {
         for (int dy = -1; dy <= 0; dy++)
         {
-            PosPoint p(at.posx + dx, at.posy + dy, at.posz);
-            if (!CheckBorders(p.posx, p.posy, p.posz))
+            Position p(at.x + dx, at.y + dy, at.z);
+            if (!CheckBorders(p.x, p.y, p.z))
             {
                 continue;
             }
 
-            int vis_x = (p.posx - center.posx + SIZE_W_SQ);
-            int vis_y = (p.posy - center.posy + SIZE_H_SQ);
+            int vis_x = (p.x - center.x + SIZE_W_SQ);
+            int vis_y = (p.y - center.y + SIZE_H_SQ);
             int vis_idx = 2 * SIZE_H_SQ * vis_x + vis_y;
 
             if (vis_idx < 0)
@@ -270,7 +272,7 @@ void LosCalculator::Calculate(const MapInterface* map, VisiblePoints* retlist, i
         visible_tiles[i] = 0;
     }
 
-    PosPoint source(
+    Position source(
           PosToCorner(posx) + RAY_MULTIPLIER / 2,
           PosToCorner(posy) + RAY_MULTIPLIER / 2,
           PosToCorner(posz) + 1);
@@ -278,7 +280,7 @@ void LosCalculator::Calculate(const MapInterface* map, VisiblePoints* retlist, i
     {
         for (int j = -SIZE_H_SQ; j < SIZE_H_SQ; ++j)
         {
-            PosPoint p(PosToCorner(posx + i), PosToCorner(posy + j), PosToCorner(posz));
+            Position p(PosToCorner(posx + i), PosToCorner(posy + j), PosToCorner(posz));
             if (!CheckCorner(p))
             {
                 continue;

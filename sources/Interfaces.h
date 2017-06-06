@@ -34,7 +34,7 @@ public:
     virtual void LoadGrid(MapInterface* map) = 0;
 };
 
-using VisiblePoints = QVector<PosPoint>;
+using VisiblePoints = QVector<kv::Position>;
 
 class MapInterface
 {
@@ -132,6 +132,6 @@ public:
     virtual quint32 GetPlayerId(quint32 net_id) const = 0;
     virtual quint32 GetNetId(quint32 real_id) const = 0;
 
-    virtual void AddSound(const QString& name, PosPoint position) = 0;
+    virtual void AddSound(const QString& name, kv::Position position) = 0;
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) = 0;
 };

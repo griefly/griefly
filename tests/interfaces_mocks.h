@@ -88,7 +88,7 @@ public:
     MOCK_METHOD0(GetGlobals, IdPtr<kv::GlobalObjectsHolder>());
     MOCK_METHOD1(SetGlobals, void(quint32 globals));
     MOCK_METHOD3(PlayMusic, void(const QString& name, int volume, quint32 mob));
-    MOCK_METHOD2(AddSound, void(const QString& name, PosPoint position));
+    MOCK_METHOD2(AddSound, void(const QString& name, kv::Position position));
     MOCK_METHOD2(SetPlayerId, void(quint32, quint32));
     MOCK_CONST_METHOD1(GetPlayerId, quint32(quint32 net_id));
     MOCK_CONST_METHOD1(GetNetId, quint32(quint32 real_id));

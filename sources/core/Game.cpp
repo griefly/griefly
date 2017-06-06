@@ -662,7 +662,7 @@ void Game::PlayMusic(const QString& name, int volume, quint32 mob)
     musics_for_mobs[mob] = {name, volume};
 }
 
-void Game::AddSound(const QString& name, PosPoint position)
+void Game::AddSound(const QString& name, Position position)
 {
     sounds_for_frame_.append({position, name});
 }

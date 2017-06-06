@@ -13,18 +13,18 @@ private:
     static int PosToCorner(int pos);
     static int CornerToPos(int corner);
     static int Sign(int value);
-    static PosPoint CornerPointToPoint(PosPoint p);
+    static kv::Position CornerPointToPoint(kv::Position p);
 
-    bool CheckCorner(PosPoint p) const;
+    bool CheckCorner(kv::Position p) const;
     bool CheckBorders(int x, int y, int z) const;
-    bool IsTransparent(PosPoint p) const;
-    bool BresenX(PosPoint source, PosPoint target) const;
-    bool BresenY(PosPoint source, PosPoint target) const;
-    bool RayTrace(PosPoint source, PosPoint target) const;
+    bool IsTransparent(kv::Position p) const;
+    bool BresenX(kv::Position source, kv::Position target) const;
+    bool BresenY(kv::Position source, kv::Position target) const;
+    bool RayTrace(kv::Position source, kv::Position target) const;
     void MarkTilesOfCornerAsVisible(
         VisiblePoints* retlist,
-        PosPoint at,
-        PosPoint center,
+        kv::Position at,
+        kv::Position center,
         std::vector<char>* visibility) const;
 
     // TODO: Make this class as pure function, because the only member class is not needed

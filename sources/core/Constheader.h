@@ -57,31 +57,36 @@ struct VDir
     int z;
 };
 
-struct PosPoint
+namespace kv
 {
-    PosPoint(int new_x = 0, int new_y = 0, int new_z = 0)
-        : posx(new_x), posy(new_y), posz(new_z) { }
-    bool operator==(const PosPoint& other) const
+
+struct Position
+{
+    Position(int new_x = 0, int new_y = 0, int new_z = 0)
+        : x(new_x), y(new_y), z(new_z) { }
+    bool operator==(const Position& other) const
     {
-        return (posx == other.posx) && (posy == other.posy) && (posz == other.posz);
+        return (x == other.x) && (y == other.y) && (z == other.z);
     }
-    bool operator!=(const PosPoint& other) const
+    bool operator!=(const Position& other) const
     {
         return !operator==(other);
     }
 
-    int posx;
-    int posy;
-    int posz;
+    int x;
+    int y;
+    int z;
 };
 
-inline uint qHash(const PosPoint& point, uint seed = 0)
+inline uint qHash(const kv::Position& point, uint seed = 0)
 {
     uint retval = 59;
-    retval = retval * 13 + qHash(point.posz, seed);
-    retval = retval * 13 + qHash(point.posx, seed);
-    retval = retval * 13 + qHash(point.posy, seed);
+    retval = retval * 13 + qHash(point.z, seed);
+    retval = retval * 13 + qHash(point.x, seed);
+    retval = retval * 13 + qHash(point.y, seed);
     return retval;
+}
+
 }
 
 inline bool IsNonZero(const VDir& vdir)

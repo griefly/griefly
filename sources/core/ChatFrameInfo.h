@@ -17,18 +17,18 @@ public:
 
     void PostPersonal(const QString& text, quint32 net_id);
 
-    void PostVisible(const QString& text, const PosPoint& place);
-    void PostHear(const Phrase& phrase, const PosPoint& place);
+    void PostVisible(const QString& text, const Position& place);
+    void PostHear(const Phrase& phrase, const Position& place);
 
     const QVector<QString>& GetPersonalTexts(quint32 net_id) const;
 
-    void AddFromVisibleToPersonal(const QVector<PosPoint>& points, quint32 net_id);
+    void AddFromVisibleToPersonal(const QVector<Position>& points, quint32 net_id);
 
     void ApplyHear(Hearer* hearer);
 private:
     QHash<quint32, QVector<QString>> personal_;
-    QHash<PosPoint, QVector<QString>> visible_;
-    QHash<PosPoint, QVector<Phrase>> hear_;
+    QHash<Position, QVector<QString>> visible_;
+    QHash<Position, QVector<Phrase>> hear_;
 };
 
 }
