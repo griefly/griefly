@@ -62,7 +62,8 @@ namespace kv
 
 struct Position
 {
-    Position(int new_x = 0, int new_y = 0, int new_z = 0)
+    Position() : Position(0, 0, 0) { }
+    Position(int new_x, int new_y, int new_z)
         : x(new_x), y(new_y), z(new_z) { }
     bool operator==(const Position& other) const
     {
@@ -81,9 +82,9 @@ struct Position
 inline uint qHash(const kv::Position& point, uint seed = 0)
 {
     uint retval = 59;
-    retval = retval * 13 + qHash(point.z, seed);
-    retval = retval * 13 + qHash(point.x, seed);
-    retval = retval * 13 + qHash(point.y, seed);
+    retval = retval * 13 + ::qHash(point.z, seed);
+    retval = retval * 13 + ::qHash(point.x, seed);
+    retval = retval * 13 + ::qHash(point.y, seed);
     return retval;
 }
 

@@ -76,6 +76,8 @@ TEST(ChatFrameInfo, PostVisible)
     info.PostVisible("test4", {1, 100, 3});
     info.PostVisible("test5", {3, 3, 10});
 
+    qDebug() << "Post visible end";
+
     CheckInfoEmpty(info);
 
     info.AddFromVisibleToPersonal({{1, 100, 3}}, 10);
