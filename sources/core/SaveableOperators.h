@@ -34,6 +34,18 @@ inline FastDeserializer& operator>>(FastDeserializer& file, QMap<TKey, TValue>& 
     return file;
 }
 
+template<class TKey, class TValue>
+inline unsigned int hash(const QMap<TKey, TValue>& map)
+{
+    unsigned int retval = 0;
+    for (auto it = map.cbegin(); it != map.cend(); ++it)
+    {
+        retval += hash(it.key());
+        retval += hash(it.value());
+    }
+    return retval;
+}
+
 template<class TFirst, class TSecond>
 inline FastSerializer& operator<<(FastSerializer& file, const QPair<TFirst, TSecond>& pair)
 {
@@ -48,18 +60,6 @@ inline FastDeserializer& operator>>(FastDeserializer& file, QPair<TFirst, TSecon
     file >> pair.first;
     file >> pair.second;
     return file;
-}
-
-template<class TKey, class TValue>
-inline unsigned int hash(const QMap<TKey, TValue>& map)
-{
-    unsigned int retval = 0;
-    for (auto it = map.cbegin(); it != map.cend(); ++it)
-    {
-        retval += hash(it.key());
-        retval += hash(it.value());
-    }
-    return retval;
 }
 
 template<class TFirst, class TSecond>
