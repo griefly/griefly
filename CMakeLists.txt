@@ -261,6 +261,8 @@ endif()
 # Add opengl lib
 if(WIN32)
     target_link_libraries(KVEngine opengl32)
+elseif(APPLE)
+    target_link_libraries(KVEngine /System/Library/Frameworks/OpenGL.framework)
 else()
     target_link_libraries(KVEngine GL)
 endif()
