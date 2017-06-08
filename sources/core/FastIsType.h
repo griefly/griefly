@@ -3,7 +3,7 @@
 #include <QVector>
 #include <QBitArray>
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #define __forceinline __attribute__((always_inline)) inline
 #endif
 

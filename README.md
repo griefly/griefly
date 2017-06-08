@@ -44,6 +44,14 @@ How to build everything on Linux
 **Note:** gccgo is not supported! The current `FindGo.cmake` cannot parse the gccgo version string, so you will obtain an error. Use the official version instead.  
 **Note:** There may be some issues with CMake 3.0.2, so try to update your CMake if issues appear.  
 
+How to build everything on MacOS
+--------------------------------
+
+1. Install dependencies using brew. `brew install qt`
+2. Look at the tips in `make.sh` and adjust your enviorment accordingly.
+3. `./make.sh`. Build project will be placed under `exec` directory Server will be
+   built in `gopath/src/griefly-server` directory.
+
 How to start server
 -------------------
 
