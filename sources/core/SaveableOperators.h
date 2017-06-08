@@ -101,7 +101,7 @@ inline unsigned int hash(const QVector<TValue>& vector)
     unsigned int retval = 0;
     for (int i = 0; i < vector.size(); ++i)
     {
-        retval += i * hash(vector[i]);
+        retval += (i + 1) * hash(vector[i]);
     }
     return retval;
 }

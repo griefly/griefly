@@ -57,3 +57,39 @@ TEST(SaveableOperators, PairOperators)
     EXPECT_EQ(other_pair.second, 12);
     EXPECT_EQ(hash(other_pair), hash(pair));
 }
+
+TEST(SaveableOperators, VectorOperatorsEmpty)
+{
+    FastSerializer serializer(1);
+    QVector<qint32> vector;
+    EXPECT_EQ(hash(vector), 0);
+    serializer << vector;
+
+    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    QVector<qint32> other_vector;
+    deserializer >> other_vector;
+
+    EXPECT_TRUE(other_vector.isEmpty());
+    EXPECT_EQ(hash(other_vector), hash(vector));
+}
+
+TEST(SaveableOperators, VectorOperators)
+{
+    FastSerializer serializer(1);
+    QVector<qint32> vector{7, 2, 3, 4, 5, 43};
+    EXPECT_EQ(hash(vector), 319);
+    serializer << vector;
+
+    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    QVector<qint32> other_vector;
+    deserializer >> other_vector;
+
+    ASSERT_EQ(other_vector.size(), 6);
+    EXPECT_EQ(other_vector[0], 7);
+    EXPECT_EQ(other_vector[1], 2);
+    EXPECT_EQ(other_vector[2], 3);
+    EXPECT_EQ(other_vector[3], 4);
+    EXPECT_EQ(other_vector[4], 5);
+    EXPECT_EQ(other_vector[5], 43);
+    EXPECT_EQ(hash(other_vector), hash(vector));
+}
