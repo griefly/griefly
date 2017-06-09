@@ -48,17 +48,18 @@ inline FastDeserializer& operator>>(FastDeserializer& file, Dir& dir)
     return file;
 }
 
-struct VDir
+namespace kv
 {
-    VDir(int new_x = 0, int new_y = 0, int new_z = 0)
+
+struct Vector
+{
+    Vector() : Vector(0, 0, 0) { }
+    Vector(int new_x, int new_y, int new_z)
         : x(new_x), y(new_y), z(new_z) { }
     int x;
     int y;
     int z;
 };
-
-namespace kv
-{
 
 struct Position
 {
@@ -90,32 +91,55 @@ inline uint qHash(const kv::Position& point, uint seed = 0)
 
 }
 
-inline bool IsNonZero(const VDir& vdir)
+inline FastDeserializer& operator>>(FastDeserializer& file, kv::Vector& vdir)
+{
+    file >> vdir.x;
+    file >> vdir.y;
+    file >> vdir.z;
+    return file;
+}
+
+inline FastSerializer& operator<<(FastSerializer& file, const kv::Vector& vdir)
+{
+    file << vdir.x;
+    file << vdir.y;
+    file << vdir.z;
+    return file;
+}
+
+inline unsigned int hash(const kv::Vector& vdir)
+{
+    return   vdir.x
+           + vdir.y
+           + vdir.z;
+}
+
+inline bool IsNonZero(const kv::Vector& vdir)
 {
     return    vdir.x
            || vdir.y
            || vdir.z;
 }
 
-const VDir VD_LEFT(-1, 0, 0); // west
-const VDir VD_RIGHT(1, 0, 0); // east
-const VDir VD_UP(0, -1, 0); // north
-const VDir VD_DOWN(0, 1, 0); // south
-const VDir VD_ZUP(0, 0, 1);
-const VDir VD_ZDOWN(0, 0, -1);
+const kv::Vector VD_LEFT(-1, 0, 0); // west
+const kv::Vector VD_RIGHT(1, 0, 0); // east
+const kv::Vector VD_UP(0, -1, 0); // north
+const kv::Vector VD_DOWN(0, 1, 0); // south
+const kv::Vector VD_ZUP(0, 0, 1);
+const kv::Vector VD_ZDOWN(0, 0, -1);
 
 namespace helpers
 {
-    const VDir DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
+    const kv::Vector DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
 }
-inline VDir DirToVDir(Dir dir)
+inline kv::Vector DirToVDir(Dir dir)
 {
     // TODO: switch
     int index = static_cast<int>(dir);
     return helpers::DirToVDir[index];
 }
 
-inline Dir VDirToDir(const VDir& vdir)
+inline Dir VDirToDir(const kv::Vector& vdir)
 {
     int abs_x = std::abs(vdir.x);
     int abs_y = std::abs(vdir.y);

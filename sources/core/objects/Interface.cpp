@@ -366,8 +366,8 @@ void HumanInterface::Pick(IdPtr<Item> item)
     if (item.IsValid())
     {
         // Disable movement
-        VDir force = item->force_;
-        VDir revert_force(-1 * force.x, -1 * force.y, -1 * force.z);
+        Vector force = item->force_;
+        Vector revert_force(-1 * force.x, -1 * force.y, -1 * force.z);
         item->ApplyForce(revert_force);
     }
 

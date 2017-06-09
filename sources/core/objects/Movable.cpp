@@ -52,13 +52,13 @@ void Movable::ProcessForce()
         return;
     }
 
-    VDir vstep = DirToVDir(step);
+    Vector vstep = DirToVDir(step);
     force_.x -= (vstep.x * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
     force_.y -= (vstep.y * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
     force_.z -= (vstep.z * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
 }
 
-void Movable::ApplyForce(VDir force)
+void Movable::ApplyForce(Vector force)
 {
     if (!IsNonZero(force))
     {

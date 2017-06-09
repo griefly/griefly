@@ -15,16 +15,16 @@ public:
     DECLARE_SAVEABLE(Gun, Item);
     REGISTER_CLASS_AS(Gun);
     Gun();
-    virtual void Shoot(VDir target);
+    virtual void Shoot(Vector target);
     bool AddAmmo();
     bool UseAmmo();
     virtual void AttackBy(IdPtr<Item> item);
     static bool Targetable(IdPtr<MapObject> item);
-    VDir TargetTileLoc(IdPtr<MapObject> item) const;
+    Vector TargetTileLoc(IdPtr<MapObject> item) const;
 protected:
     int KV_SAVEABLE(max_ammunition_);
     int KV_SAVEABLE(ammunition_);
-    void ShootImpl(VDir target, const QString& sound,
+    void ShootImpl(Vector target, const QString& sound,
                    const QString& projectile_type, const QString& casing_type);
 };
 END_DECLARE(Gun);

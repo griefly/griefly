@@ -21,7 +21,7 @@ bool Gun::UseAmmo()
     return true;
 }
 
-void Gun::ShootImpl(VDir target, const QString& sound,
+void Gun::ShootImpl(Vector target, const QString& sound,
                     const QString& projectile_type, const QString& casing_type)
 {
     IdPtr<CubeTile> tile = GetOwner()->GetOwner();
@@ -97,7 +97,7 @@ void Gun::ShootImpl(VDir target, const QString& sound,
     }	
 }
 
-void Gun::Shoot(VDir target)
+void Gun::Shoot(Vector target)
 {
 }
 
@@ -147,10 +147,10 @@ bool Gun::Targetable(IdPtr<MapObject> item)
     return true;
 }
 
-VDir Gun::TargetTileLoc(IdPtr<MapObject> item) const
+Vector Gun::TargetTileLoc(IdPtr<MapObject> item) const
 {
     IdPtr<CubeTile> cube_tile = item->GetOwner();
-    VDir f;
+    Vector f;
     f.x = (cube_tile->GetX() - GetOwner()->GetX());
     f.y = (cube_tile->GetY() - GetOwner()->GetY());
     f.z = 0;

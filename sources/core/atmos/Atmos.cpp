@@ -71,7 +71,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
 {
     atmos::AtmosGrid::Cell& cell = grid_->At(x, y);
 
-    VDir force;
+    Vector force;
 
     if (cell.flags & atmos::NO_OBJECTS)
     {
@@ -88,7 +88,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
             cell.flows[dir] = 0;
             if (flow <= FLOW_MOVE_BORDER)
             {
-                VDir local = DirToVDir(atmos::INDEXES_TO_DIRS[static_cast<int>(dir)]);
+                Vector local = DirToVDir(atmos::INDEXES_TO_DIRS[static_cast<int>(dir)]);
                 force.x += local.x;
                 force.y += local.y;
             }

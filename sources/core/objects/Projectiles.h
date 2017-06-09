@@ -18,7 +18,7 @@ public:
 
     Projectile();
 
-    void MakeMovementPattern(VDir target, Dir facing);
+    void MakeMovementPattern(Vector target, Dir facing);
     virtual void Process() override;
     virtual void BumpByGas(Dir dir, bool inside = false) override {}
     virtual void AfterWorldCreation() override;

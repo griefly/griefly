@@ -61,7 +61,7 @@ public:
 
     virtual void AttackBy(IdPtr<Item> item);
 
-    virtual void ApplyForce(VDir force) {}
+    virtual void ApplyForce(Vector force) {}
 
     virtual bool CanTouch(IdPtr<MapObject> object) const
     {

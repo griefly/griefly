@@ -101,7 +101,7 @@ void Human::GenerateInterfaceForFrame()
 
 bool Human::TryMove(Dir direct)
 {
-    VDir pos;
+    Vector pos;
     if (pulled_object_)
     {
         if (!CanTouch(pulled_object_))
