@@ -27,7 +27,7 @@ IdPtr<MapObject> MapObject::GetRoot()
 
 void MapObject::PlaySoundIfVisible(const QString& name)
 {
-    GetGame().AddSound(name, {GetX(), GetY(), GetZ()});
+    GetGame().AddSound(name, GetPosition());
 }
 
 void MapObject::SetTurf(IdPtr<Turf> turf)

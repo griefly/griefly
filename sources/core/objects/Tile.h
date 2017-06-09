@@ -57,35 +57,13 @@ public:
     virtual void Bump(IdPtr<Movable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 
-    void SetPos(int posx, int posy, int posz = 0)
+    void SetPos(Position position)
     {
-        posx_ = posx;
-        posy_ = posy;
-        posz_ = posz;
+        position_ = position;
     }
-    int posx() const
+    virtual Position GetPosition() const override
     {
-        return posx_;
-    }
-    int posy() const
-    {
-        return posy_;
-    }
-    int posz() const
-    {
-        return posz_;
-    }
-    virtual int GetX() const override
-    {
-        return posx();
-    }
-    virtual int GetY() const override
-    {
-        return posy();
-    }
-    virtual int GetZ() const override
-    {
-        return posz();
+        return position_;
     }
     virtual IdPtr<Turf> GetTurf()  override
     {
@@ -113,15 +91,13 @@ private:
     bool CanTouch(IdPtr<MapObject> item, Dir dir) const;
     bool CanTouch(IdPtr<MapObject> item, Dir first_dir, Dir second_dir) const;
 
-    void MoveToDir(Dir dir, int* x, int* y, int* z = nullptr) const;
+    void MoveToDir(Dir dir, Position* position) const;
 
     IdPtr<Turf> KV_SAVEABLE(turf_);
 
     atmos::AtmosHolder KV_SAVEABLE(atmos_holder_);
 
-    int KV_SAVEABLE(posx_);
-    int KV_SAVEABLE(posy_);
-    int KV_SAVEABLE(posz_);
+    Position KV_SAVEABLE(position_);
 
     InsideType KV_SAVEABLE(inside_list_);
 

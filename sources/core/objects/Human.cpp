@@ -110,8 +110,8 @@ bool Human::TryMove(Dir direct)
         }
         else
         {
-            pos.x = GetX() - pulled_object_->GetX();
-            pos.y = GetY() - pulled_object_->GetY();
+            pos.x = GetPosition().x - pulled_object_->GetPosition().x;
+            pos.y = GetPosition().y - pulled_object_->GetPosition().y;
         }
     }
     if (Mob::TryMove(direct))
@@ -189,7 +189,7 @@ void Human::ProcessMessage(const Message2 &msg)
             Phrase phrase;
             phrase.from = name;
             phrase.text = text;
-            GetGame().GetChatFrameInfo().PostHear(phrase, {GetX(), GetY(), GetZ()});
+            GetGame().GetChatFrameInfo().PostHear(phrase, GetPosition());
         }
     }
     else if (msg.type == MessageType::MOUSE_CLICK)
@@ -502,8 +502,8 @@ void Human::Represent()
     Representation::Entity ent;
     ent.id = GetId();
     ent.click_id = GetId();
-    ent.pos_x = GetX();
-    ent.pos_y = GetY();
+    ent.pos_x = GetPosition().x;
+    ent.pos_y = GetPosition().y;
     ent.vlevel = v_level;
     ent.view = *GetView();
     if (!lying_)
@@ -523,9 +523,9 @@ void Human::CalculateVisible(QVector<Position>* visible_list) const
     {
         GetGame().GetMap().CalculateLos(
             visible_list,
-            GetX(),
-            GetY(),
-            GetZ());
+            GetPosition().x,
+            GetPosition().y,
+            GetPosition().z);
     }
 }
 
@@ -608,7 +608,7 @@ void Human::MakeEmote(const QString& emote)
 {
     GetGame().GetChatFrameInfo().PostVisible(
         QString("<b>%1</b> %2").arg(name.toHtmlEscaped()).arg(emote.toHtmlEscaped()),
-        {GetX(), GetY(), GetZ()});
+        GetPosition());
 }
 
 int Human::CalculateHealth() const

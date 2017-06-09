@@ -45,22 +45,10 @@ public:
 
     virtual void Process() override;
 
-    virtual int GetX() const override
+    virtual Position GetPosition() const override
     {
-        return 0;
+        return Position();
     }
-
-    virtual int GetY() const override
-    {
-        return 0;
-    }
-
-    virtual int GetZ() const override
-    {
-        return 0;
-    }
-
-    // virtual void processImage(DrawType type) override;
 
     virtual InterfaceBase* GetInterface() override { return &interface_; }
 

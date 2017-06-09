@@ -130,7 +130,7 @@ void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
             for (int z = 0; z < GetMap().GetDepth(); z++)
             {
                 IdPtr<CubeTile> tile = GetFactory().CreateImpl(CubeTile::GetTypeStatic());
-                tile->SetPos(x, y, z);
+                tile->SetPos({x, y, z});
                 GetMap().At(x, y, z) = tile;
             }
         }
@@ -616,7 +616,7 @@ void Game::GenerateFrame()
     AppendChatMessages();
 
     // TODO: reset all shifts
-    GetRepresentation().SetCameraForFrame(GetMob()->GetX(), GetMob()->GetY());
+    GetRepresentation().SetCameraForFrame(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
     GetRepresentation().Swap();
 }
 

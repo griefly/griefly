@@ -151,8 +151,11 @@ Vector Gun::TargetTileLoc(IdPtr<MapObject> item) const
 {
     IdPtr<CubeTile> cube_tile = item->GetOwner();
     Vector f;
-    f.x = (cube_tile->GetX() - GetOwner()->GetX());
-    f.y = (cube_tile->GetY() - GetOwner()->GetY());
+    // TODO: `Vector operator-(Position, Position)`
+    const Position cube_position = cube_tile->GetPosition();
+    const Position owner_position = GetOwner()->GetPosition();
+    f.x = cube_position.x - owner_position.x;
+    f.y = cube_position.y - owner_position.y;
     f.z = 0;
     return f;
 }

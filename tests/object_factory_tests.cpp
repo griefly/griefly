@@ -86,7 +86,7 @@ TEST(ObjectFactory, CreateImpl)
         ASSERT_EQ(object->GetType(), CubeTile::GetTypeStatic());
         EXPECT_EQ(object->GetId(), 3);
         CubeTile* tile = static_cast<CubeTile*>(object);
-        tile->SetPos(0, 0);
+        tile->SetPos({0, 0, 0});
 
         EXPECT_CALL(game, GetAtmosphere())
             .WillOnce(ReturnRef(atmos));

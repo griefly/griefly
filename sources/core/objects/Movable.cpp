@@ -156,8 +156,11 @@ void Movable::Represent()
     Representation::Entity ent;
     ent.id = GetId();
     ent.click_id = GetId();
-    ent.pos_x = GetX();
-    ent.pos_y = GetY();
+
+    const Position position = GetPosition();
+    ent.pos_x = position.x;
+    ent.pos_y = position.y;
+
     ent.vlevel = v_level;
     ent.view = *GetView();
     ent.dir = GetDir();

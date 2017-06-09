@@ -124,17 +124,9 @@ public:
         return owner_;
     }
 
-    virtual int GetX() const
+    virtual Position GetPosition() const
     {
-        return owner_->GetX();
-    }
-    virtual int GetY() const
-    {
-        return owner_->GetY();
-    }
-    virtual int GetZ() const
-    {
-        return owner_->GetZ();
+        return owner_->GetPosition();
     }
     virtual void Represent() { }
     virtual void UpdatePassable() { }

@@ -29,8 +29,8 @@ void Turf::Represent()
             Representation::Entity ent;
             ent.id = GetRepresentation().GetUniqueIdForNewFrame(GetId(), 1);
             ent.click_id = 0;
-            ent.pos_x = GetX();
-            ent.pos_y = GetY();
+            ent.pos_x = GetPosition().x;
+            ent.pos_y = GetPosition().y;
             ent.vlevel = 11;
             ent.view.SetSprite("icons/plasma.dmi");
             ent.view.SetState("plasma");
@@ -46,10 +46,10 @@ void Turf::Represent()
 
 int friction::CombinedFriction(IdPtr<Turf> turf)
 {
-    if (   turf->GetX() == 0
-        || turf->GetY() == 0
-        || turf->GetX() == turf->GetGame().GetMap().GetWidth() - 1
-        || turf->GetY() == turf->GetGame().GetMap().GetHeight() - 1)
+    if (   turf->GetPosition().x == 0
+        || turf->GetPosition().y == 0
+        || turf->GetPosition().x == turf->GetGame().GetMap().GetWidth() - 1
+        || turf->GetPosition().y == turf->GetGame().GetMap().GetHeight() - 1)
     {
         return friction::BASE_FRICTION;
     }

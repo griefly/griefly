@@ -11,18 +11,14 @@
 using namespace kv;
 
 CubeTile::CubeTile()
+    : position_(-1, -1, -1),
+      sum_passable_all_(passable::FULL),
+      sum_passable_up_(passable::FULL),
+      sum_passable_down_(passable::FULL),
+      sum_passable_left_(passable::FULL),
+      sum_passable_right_(passable::FULL)
 {
-    turf_ = 0;
-
-    posx_ = -1;
-    posy_ = -1;
-    posz_ = -1;
-
-    sum_passable_all_ = passable::FULL;
-    sum_passable_up_ = passable::FULL;
-    sum_passable_down_ = passable::FULL;
-    sum_passable_left_ = passable::FULL;
-    sum_passable_right_ = passable::FULL;
+    // Nothing
 }
 
 bool CubeTile::CanTouch(IdPtr<MapObject> item) const
@@ -43,27 +39,31 @@ bool CubeTile::CanTouch(IdPtr<MapObject> item) const
         return false;
     }
 
-    int cube_tile_posx = cube_tile->posx();
-    int cube_tile_posy = cube_tile->posy();
+    const Position cube_tile_position = item->GetPosition();
+    const int cube_tile_posx = cube_tile_position.x;
+    const int cube_tile_posy = cube_tile_position.y;
 
-    if (std::abs(posx() - cube_tile_posx) > 1)
+    const int posx = position_.x;
+    const int posy = position_.y;
+
+    if (qAbs(posx - cube_tile_posx) > 1)
     {
         return false;
     }
-    if (std::abs(posy() - cube_tile_posy) > 1)
+    if (qAbs(posy - cube_tile_posy) > 1)
     {
         return false;
     }
 
-    if (   (posx() == cube_tile_posx)
-        && (posy() == cube_tile_posy))
+    if (   (posx == cube_tile_posx)
+        && (posy == cube_tile_posy))
     {
         return true;
     }
 
-    if (posx() == cube_tile_posx)
+    if (posx == cube_tile_posx)
     {
-        if (posy() > cube_tile_posy)
+        if (posy > cube_tile_posy)
         {
             return CanTouch(item, Dir::UP);
         }
@@ -72,9 +72,9 @@ bool CubeTile::CanTouch(IdPtr<MapObject> item) const
             return CanTouch(item, Dir::DOWN);
         }
     }
-    if (posy() == cube_tile_posy)
+    if (posy == cube_tile_posy)
     {
-        if (posx() > cube_tile_posx)
+        if (posx > cube_tile_posx)
         {
             return CanTouch(item, Dir::LEFT);
         }
@@ -85,31 +85,31 @@ bool CubeTile::CanTouch(IdPtr<MapObject> item) const
     }
 
     // Up Left
-    if (   (posy() > cube_tile_posy)
-        && (posx() > cube_tile_posx))
+    if (   (posy > cube_tile_posy)
+        && (posx > cube_tile_posx))
     {
         return    CanTouch(item, Dir::LEFT, Dir::UP)
                || CanTouch(item, Dir::UP, Dir::LEFT);
     }
     // Down Right
-    if (   (posy() < cube_tile_posy)
-        && (posx() < cube_tile_posx))
+    if (   (posy < cube_tile_posy)
+        && (posx < cube_tile_posx))
     {
         return    CanTouch(item, Dir::RIGHT, Dir::DOWN)
                || CanTouch(item, Dir::DOWN, Dir::RIGHT);
     }
 
     // Up Right
-    if (   (posy() > cube_tile_posy)
-        && (posx() < cube_tile_posx))
+    if (   (posy > cube_tile_posy)
+        && (posx < cube_tile_posx))
     {
         return    CanTouch(item, Dir::RIGHT, Dir::UP)
                || CanTouch(item, Dir::UP, Dir::RIGHT);
     }
 
     // Down Left
-    if (   (posy() < cube_tile_posy)
-        && (posx() > cube_tile_posx))
+    if (   (posy < cube_tile_posy)
+        && (posx > cube_tile_posx))
     {
         return    CanTouch(item, Dir::LEFT, Dir::DOWN)
                || CanTouch(item, Dir::DOWN, Dir::LEFT);
@@ -172,34 +172,25 @@ bool CubeTile::CanTouch(IdPtr<MapObject> item, Dir first_dir, Dir second_dir) co
     return false;
 }
 
-void CubeTile::MoveToDir(Dir dir, int *x, int *y, int *z) const
+void CubeTile::MoveToDir(Dir dir, Position* position) const
 {
-    if (x)
+    position->x += DirToVDir(dir).x;
+    if (position->x >= GetGame().GetMap().GetWidth() ||
+        position->x <= -1)
     {
-        *x += DirToVDir(dir).x;
-        if (*x >= GetGame().GetMap().GetWidth() ||
-            *x <= -1)
-        {
-            *x -= DirToVDir(dir).x;
-        }
+        position->x -= DirToVDir(dir).x;
     }
-    if (y)
+    position->y += DirToVDir(dir).y;
+    if (position->y >= GetGame().GetMap().GetHeight() ||
+        position->y <= -1)
     {
-        *y += DirToVDir(dir).y;
-        if (*y >= GetGame().GetMap().GetHeight() ||
-            *y <= -1)
-        {
-            *y -= DirToVDir(dir).y;
-        }
+        position->y -= DirToVDir(dir).y;
     }
-    if (z)
+    position->z += DirToVDir(dir).z;
+    if (position->z >= GetGame().GetMap().GetDepth() ||
+        position->z <= -1)
     {
-        *z += DirToVDir(dir).z;
-        if (*z >= GetGame().GetMap().GetDepth() ||
-            *z <= -1)
-        {
-            *z -= DirToVDir(dir).z;
-        }
+        position->z -= DirToVDir(dir).z;
     }
 }
 
@@ -334,22 +325,25 @@ IdPtr<MapObject> CubeTile::GetNeighbour(Dir direct) const
 
 IdPtr<CubeTile> CubeTile::GetNeighbourImpl(Dir direct) const
 {
-    int new_x = posx_;
-    int new_y = posy_;
-    int new_z = posz_;
-    MoveToDir(direct, &new_x, &new_y, &new_z);
-    return GetGame().GetMap().At(new_x, new_y, new_z);
+    Position new_position = GetPosition();
+    MoveToDir(direct, &new_position);
+    return GetGame().GetMap().At(new_position.x, new_position.y, new_position.z);
 }
 
 PassableLevel CubeTile::GetPassable(Dir direct) const
 {
     switch (direct)
     {
-    case Dir::UP:    return sum_passable_up_;
-    case Dir::DOWN:  return sum_passable_down_;
-    case Dir::LEFT:  return sum_passable_left_;
-    case Dir::RIGHT: return sum_passable_right_;
-    case Dir::ALL:   return sum_passable_all_;
+    case Dir::UP:
+        return sum_passable_up_;
+    case Dir::DOWN:
+        return sum_passable_down_;
+    case Dir::LEFT:
+        return sum_passable_left_;
+    case Dir::RIGHT:
+        return sum_passable_right_;
+    case Dir::ALL:
+        return sum_passable_all_;
     }
     return passable::FULL;
 }
@@ -455,5 +449,5 @@ void CubeTile::UpdateAtmosPassable()
         flags |= atmos::NO_OBJECTS;
     }
 
-    GetGame().GetAtmosphere().SetFlags(posx_, posy_, posz_, flags);
+    GetGame().GetAtmosphere().SetFlags(position_.x, position_.y, position_.z, flags);
 }
