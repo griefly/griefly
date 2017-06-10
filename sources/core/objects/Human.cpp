@@ -185,10 +185,13 @@ void Human::ProcessMessage(const Message2 &msg)
         }
         if (!found)
         {
-            // GetGame().GetChat().PostWords(name, text, GetOwner().Id());
             Phrase phrase;
-            phrase.from = name;
-            phrase.text = text;
+            phrase.from = name.toHtmlEscaped();
+            phrase.text = text.toHtmlEscaped();
+            if (!phrase.text.isEmpty())
+            {
+                phrase.text[0] = phrase.text[0].toUpper();
+            }
             GetGame().GetChatFrameInfo().PostHear(phrase, GetPosition());
         }
     }

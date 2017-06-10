@@ -102,7 +102,6 @@ public:
     virtual void PostHtmlText(const QString& str, quint32 tile_id) = 0;
     virtual void PostDamage(const QString& by, const QString& who,
                             const QString& object, quint32 tile_id) = 0;
-    virtual void PostWords(const QString& who, const QString& text, quint32 tile_id) = 0;
 };
 
 class GameInterface

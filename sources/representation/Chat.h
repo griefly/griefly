@@ -21,7 +21,6 @@ public:
     virtual void PostSimpleText(const QString& str, quint32 tile_id) override;
     virtual void PostHtmlText(const QString& str, quint32 tile_id) override;
     virtual void PostDamage(const QString& by, const QString& who, const QString& object, quint32 tile_id) override;
-    virtual void PostWords(const QString& who, const QString& text, quint32 tile_id) override;
 private:
     GameInterface* game_;
 };

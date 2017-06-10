@@ -52,25 +52,6 @@ void Chat::PostDamage(const QString& by, const QString& who, const QString& obje
             .arg(q_by).arg(q_who).arg(q_object)});
 }
 
-void Chat::PostWords(const QString& who, const QString& text, quint32 tile_id)
-{
-    if (!game_->GetMap().IsTileVisible(tile_id))
-    {
-        return;
-    }
-
-    QString q_who = who.toHtmlEscaped();
-    QString q_text = text.toHtmlEscaped();
-
-    if (q_text.size() > 0)
-    {
-        q_text[0] = q_text[0].toUpper();
-    }
-
-    GetRepresentation().AddToNewFrame(Representation::ChatMessage{
-        QString("<b>%1</b> <i>says</i>, <span>\"%2\"</span>").arg(q_who).arg(q_text)});
-}
-
 void Chat::PostTextFor(const QString& str, IdPtr<kv::MapObject> owner)
 {
     if (game_->GetMob() == owner)
