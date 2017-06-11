@@ -16,10 +16,13 @@ void HealthAnalyzer::Scan(IdPtr<Human> target)
     float burn = target->GetBurnDamage() / 100.0f;
     float brute = target->GetBruteDamage() / 100.0f;
 
+    // TODO: that should done with one call of PostHtmlFor
+    // Just one big string should be made
+
     GetGame().GetChat().PostHtmlFor(
         QString("<b>Analyzing results for %1:</b>").arg(target->name.toHtmlEscaped()),
         GetOwner());
-    GetGame().GetChat().PostTextFor("Overall status:", GetOwner());
+    PostHtmlFor("Overall status:", GetOwner());
 
     QString healthy = QString("<b>%1%</b> healthy").arg(health);
     QString deceased("<b><font color=\"red\">Deceased</font></b>");

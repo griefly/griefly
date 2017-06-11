@@ -16,8 +16,7 @@ void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
         full_ = true;
         if (consumer == feeder)
         {
-            GetGame().GetChat().PostTextFor(
-                QString("You swallow a gulp of %1.").arg(name), consumer->GetId());
+            PostHtmlFor(QString("You swallow a gulp of %1.").arg(name), consumer);
         }
         else
         {
@@ -29,9 +28,7 @@ void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
         PlaySoundIfVisible("drink.wav");
         return;
     }
-    GetGame().GetChat().PostTextFor(
-        QString("%1 is empty.").arg(name), consumer->GetId());
-    
+    PostHtmlFor(QString("%1 is empty.").arg(name), consumer);
 }
 
 Vodka::Vodka()

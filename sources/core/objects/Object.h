@@ -86,6 +86,7 @@ public:
     unsigned int GetRand();
 
     virtual Hearer* ToHearer() { return nullptr; }
+    void PostHtmlFor(const QString& html, IdPtr<Object> mob);
 
     template<typename T>
     IdPtr<T> Create(const QString& type, IdPtr<MapObject> owner = 0)

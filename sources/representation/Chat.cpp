@@ -52,14 +52,6 @@ void Chat::PostDamage(const QString& by, const QString& who, const QString& obje
             .arg(q_by).arg(q_who).arg(q_object)});
 }
 
-void Chat::PostTextFor(const QString& str, IdPtr<kv::MapObject> owner)
-{
-    if (game_->GetMob() == owner)
-    {
-        PostText(str);
-    }
-}
-
 void Chat::PostHtmlFor(const QString& str, IdPtr<kv::MapObject> owner)
 {
     if (game_->GetMob() == owner)

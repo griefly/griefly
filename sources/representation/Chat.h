@@ -13,7 +13,6 @@ class Chat : public ChatInterface
 public:
     Chat(GameInterface* game);
 
-    virtual void PostTextFor(const QString& str, IdPtr<kv::MapObject> owner) override;
     virtual void PostHtmlFor(const QString& str, IdPtr<kv::MapObject> owner) override;
     virtual void PostText(const QString& str) override;
     virtual void PostSimpleText(const QString& str, quint32 tile_id) override;
