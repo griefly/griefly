@@ -74,13 +74,3 @@ void Chat::PostText(const QString& str)
     loc.replace('\n', "<br>");
     GetRepresentation().AddToNewFrame(Representation::ChatMessage{loc});
 }
-
-void Chat::PostOOCText(const QString &who, const QString& text)
-{
-    QString q_who = who.toHtmlEscaped();
-    QString q_text = text.toHtmlEscaped();
-
-    GetRepresentation().AddToNewFrame(Representation::ChatMessage{
-        QString("<font color=\"blue\"><b>%1</b>: <span>%2</span></font>")
-            .arg(q_who).arg(q_text)});
-}
