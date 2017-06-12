@@ -94,7 +94,6 @@ class ChatInterface
 public:
     virtual ~ChatInterface() { }
 
-    virtual void PostHtmlFor(const QString& str, IdPtr<kv::MapObject> owner) = 0;
     virtual void PostText(const QString& str) = 0;
     virtual void PostSimpleText(const QString& str, quint32 tile_id) = 0;
     virtual void PostHtmlText(const QString& str, quint32 tile_id) = 0;
