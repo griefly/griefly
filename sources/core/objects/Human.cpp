@@ -471,7 +471,10 @@ void Human::AttackBy(IdPtr<Item> item)
         PlaySoundIfVisible(sound);
         if (IdPtr<MaterialObject> item_owner = item->GetOwner())
         {
-            GetGame().GetChat().PostDamage(item_owner->name, name, item->name, GetOwner().Id());
+            PostVisible(
+                QString("<font color=\"red\">%1 is attacked by %2 with %3</font>")
+                    .arg(name).arg(item_owner->name).arg(item->name),
+                GetPosition());
         }
 
         damaged = true;
