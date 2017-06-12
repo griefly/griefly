@@ -87,6 +87,7 @@ public:
 
     virtual Hearer* ToHearer() { return nullptr; }
     void PostHtmlFor(const QString& html, IdPtr<Object> mob);
+    void PostVisible(const QString& html, const Position& place);
 
     template<typename T>
     IdPtr<T> Create(const QString& type, IdPtr<MapObject> owner = 0)

@@ -20,10 +20,10 @@ void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
         }
         else
         {
-            GetGame().GetChat().PostSimpleText(
+            PostVisible(
                 QString("%1 attempts to feed the contents of %2 to %3.")
                     .arg(feeder->name).arg(name).arg(consumer->name),
-                consumer->GetId());
+                consumer->GetPosition());
         }
         PlaySoundIfVisible("drink.wav");
         return;

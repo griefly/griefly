@@ -14,28 +14,6 @@ Chat::Chat(GameInterface* game)
     game_ = game;
 }
 
-void Chat::PostSimpleText(const QString& str, quint32 tile_id)
-{
-    if (!game_->GetMap().IsTileVisible(tile_id))
-    {
-        return;
-    }
-
-    GetRepresentation().AddToNewFrame(
-        Representation::ChatMessage{str.toHtmlEscaped()});
-}
-
-void Chat::PostHtmlText(const QString& str, quint32 tile_id)
-{
-    if (!game_->GetMap().IsTileVisible(tile_id))
-    {
-        return;
-    }
-
-    GetRepresentation().AddToNewFrame(
-        Representation::ChatMessage{str});
-}
-
 void Chat::PostDamage(const QString& by, const QString& who, const QString& object, quint32 tile_id)
 {
     if (!game_->GetMap().IsTileVisible(tile_id))

@@ -65,14 +65,14 @@ void GasTank::AttackBy(IdPtr<Item> item)
 
 void GasTank::Open()
 {
-    GetGame().GetChat().PostSimpleText(name + " is open", GetOwner().Id());
+    PostVisible(name + " is open", GetPosition());
 
     open_ = true;
 }
 
 void GasTank::Close()
 {
-    GetGame().GetChat().PostSimpleText(name + " is closed", GetOwner().Id());
+    PostVisible(name + " is closed", GetPosition());
 
     open_ = false;
 }

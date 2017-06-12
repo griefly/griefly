@@ -98,6 +98,11 @@ void Object::PostHtmlFor(const QString& html, IdPtr<Object> uncasted_mob)
     }
 }
 
+void Object::PostVisible(const QString& html, const Position& place)
+{
+    GetGame().GetChatFrameInfo().PostVisible(html, place);
+}
+
 quint32 Object::CreateImpl(const QString& type, quint32 owner)
 {
     return GetFactory().CreateImpl(type, owner);
