@@ -1,29 +1,62 @@
-language: cpp
-sudo: required
-dist: trusty
+matrix:
+  include:
+    - os: osx
+      sudo: required
+      osx_image: xcode7.3
+    - os: linux
+      sudo: required
+      dist: trusty
+
+language: cpp 
+
 compiler: gcc
+
 before_install:
   - export CXX="g++-4.9"
+  
 install:
-  - eval "$(gimme 1.6)"
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo add-apt-repository -y ppa:beineri/opt-qt58-trusty
-  - sudo apt-get update -qq
-  - sudo apt-get install -y g++-4.9
-  - sudo apt-get install -y qt58base
-  - sudo apt-get install -y qt58multimedia
-  - sudo apt-get install -y lcov
-  - gem install coveralls-lcov
-  - sudo /opt/qt58/bin/qt58-env.sh
-  - export CMAKE_PREFIX_PATH=/opt/qt58/
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    eval "$(gimme 1.6)";
+    sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
+    sudo add-apt-repository -y ppa:beineri/opt-qt58-trusty;
+    sudo apt-get update -qq;
+    sudo apt-get install -y g++-4.9;
+    sudo apt-get install -y qt58base;
+    sudo apt-get install -y qt58multimedia;
+    sudo apt-get install -y lcov;
+    gem install coveralls-lcov;
+    sudo /opt/qt58/bin/qt58-env.sh;
+    export CMAKE_PREFIX_PATH=/opt/qt58/;
+    fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    brew update;
+    brew install gimme;
+    eval "$(gimme 1.6)";
+    brew install qt;
+    brew info qt;
+    brew install lcov;
+    gem install coveralls-lcov;
+    export CMAKE_PREFIX_PATH=/opt/qt58/;
+    export PATH="/usr/local/opt/qt/bin:$PATH";
+    export PATH="/usr/local/Cellar/gcc@4.9/4.9.3/bin:$PATH";
+    sudo ln -s /usr/local/Cellar/gcc@4.9/4.9.3/bin/gcov-4.9 /usr/local/Cellar/gcc@4.9/4.9.3/bin/gcov;
+    export LDFLAGS="-L/usr/local/opt/qt/lib";
+    export CPPFLAGS="-I/usr/local/opt/qt/include";
+    fi
+    
 before_script:
   - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - if [[ "${TRAVIS_OS_NAME}" = "osx" ]]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8; echo ok )& fi
+  - if [[ "${TRAVIS_OS_NAME}" = "linux" ]]; then 
+    sh -e /etc/init.d/xvfb start;
+    fi
   - sleep 3
+  
 script:
   - ./make.sh -DBUILD_TESTS=ON -DBUILD_COVER=ON -DCMAKE_BUILD_TYPE=Debug
   - cd exec
   - ./KVEngine --run-tests
+  
 after_success:
   - cd ${TRAVIS_BUILD_DIR}
   - lcov -c -d . -o coverage.info
