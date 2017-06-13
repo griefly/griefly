@@ -89,14 +89,6 @@ public:
     virtual void SetId(int id) = 0;
 };
 
-class ChatInterface
-{
-public:
-    virtual ~ChatInterface() { }
-
-    virtual void PostText(const QString& str) = 0;
-};
-
 class GameInterface
 {
 public:
@@ -106,7 +98,6 @@ public:
     virtual MapInterface& GetMap() = 0;
     virtual const MapInterface& GetMap() const = 0;
     virtual ObjectFactoryInterface& GetFactory() = 0;
-    virtual ChatInterface& GetChat() = 0;
     virtual TextPainter& GetTexts() = 0;
     virtual SyncRandom& GetRandom() = 0;
     virtual Names& GetNames() = 0;

@@ -8,7 +8,6 @@
 #include "../Game.h"
 #include "Lobby.h"
 #include "net/MagicStrings.h"
-#include "representation/Chat.h"
 #include "../Helpers.h"
 #include "representation/Representation.h"
 #include "Professions.h"

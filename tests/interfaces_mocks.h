@@ -56,11 +56,6 @@ public:
     MOCK_METHOD1(SetId, void(int id));
 };
 
-class MockIChat : public ChatInterface {
-public:
-    MOCK_METHOD1(PostText, void(const QString& str));
-};
-
 class MockIGame : public GameInterface
 {
 public:
@@ -68,7 +63,6 @@ public:
     MOCK_METHOD0(GetMap, MapInterface&());
     MOCK_CONST_METHOD0(GetMap, const MapInterface&());
     MOCK_METHOD0(GetFactory, ObjectFactoryInterface&());
-    MOCK_METHOD0(GetChat, ChatInterface&());
     MOCK_METHOD0(GetTexts, TextPainter&());
     MOCK_METHOD0(GetRandom, SyncRandom&());
     MOCK_METHOD0(GetNames, Names&());

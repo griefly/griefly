@@ -15,7 +15,6 @@
 
 #include "qtopengl.h"
 
-#include "representation/Chat.h"
 #include "net/Network2.h"
 #include "net/NetworkMessagesTypes.h"
 #include "representation/Text.h"

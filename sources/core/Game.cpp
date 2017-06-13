@@ -14,7 +14,6 @@
 #include "Params.h"
 
 #include "objects/Mob.h"
-#include "representation/Chat.h"
 #include "Names.h"
 #include "objects/Movable.h"
 #include "objects/Human.h"
@@ -83,7 +82,6 @@ Game::Game()
 
     factory_ = nullptr;
     texts_ = nullptr;
-    chat_ = nullptr;
     sync_random_ = nullptr;
     names_= nullptr;
 }
@@ -92,7 +90,6 @@ Game::~Game()
 {
     delete factory_;
     delete texts_;
-    delete chat_;
     delete sync_random_;
     delete names_;
 }
@@ -105,8 +102,6 @@ void Game::InitGlobalObjects()
     atmos_ = new Atmosphere(texts_);
     sync_random_ = new SyncRandom;
     factory_ = new ObjectFactory(this);
-    Chat* chat = new Chat(this);
-    chat_ = chat;
     names_ = new Names(sync_random_);
     world_loader_saver_ = new WorldLoaderSaver(this);
 
@@ -350,7 +345,7 @@ void Game::InitWorld(int id, QString map_name)
         qDebug() << "Map is loaded, " << load_timer.elapsed() << " ms";
     }
 
-    GetChat().PostText(ON_LOGIN_MESSAGE);
+    emit insertHtmlIntoChat(ON_LOGIN_MESSAGE);
 
     GetTexts()["CpuLoad"].SetUpdater
     ([this](QString* str)
@@ -573,22 +568,22 @@ void Game::ProcessInputMessages()
 
         if (msg.type == MessageType::CLIENT_IS_OUT_OF_SYNC)
         {
-            GetChat().PostText("The client is out of sync, so the server will drop the connection. Try to reconnect.");
+            emit insertHtmlIntoChat("The client is out of sync, so the server will drop the connection. Try to reconnect.");
             continue;
         }
         if (msg.type == MessageType::CLIENT_TOO_SLOW)
         {
-            GetChat().PostText("The client is too slow, so the server will drop the connection. Try to reconnect.");
+            emit insertHtmlIntoChat("The client is too slow, so the server will drop the connection. Try to reconnect.");
             continue;
         }
         if (msg.type == MessageType::SERVER_IS_RESTARTING)
         {
-            GetChat().PostText("The server is restarting, so the connection will be dropped. Try to reconnect.");
+            emit insertHtmlIntoChat("The server is restarting, so the connection will be dropped. Try to reconnect.");
             continue;
         }
         if (msg.type == MessageType::EXIT_SERVER)
         {
-            GetChat().PostText("The server is near to exit, so it will drop the connection. Try to reconnect.");
+            emit insertHtmlIntoChat("The server is near to exit, so it will drop the connection. Try to reconnect.");
             continue;
         }  
         if (   msg.type == MessageType::ORDINARY
@@ -685,11 +680,6 @@ const MapInterface& Game::GetMap() const
 ObjectFactoryInterface& Game::GetFactory()
 {
     return *factory_;
-}
-
-ChatInterface& Game::GetChat()
-{
-    return *chat_;
 }
 
 TextPainter& Game::GetTexts()

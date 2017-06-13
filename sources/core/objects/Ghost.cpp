@@ -3,7 +3,6 @@
 #include "../Map.h"
 
 #include "net/MagicStrings.h"
-#include "representation/Chat.h"
 #include "../ObjectFactory.h"
 #include "Lobby.h"
 #include "representation/Text.h"

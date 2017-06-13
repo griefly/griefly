@@ -1,7 +1,6 @@
 #include "Pipes.h"
 
 #include "../Helpers.h"
-#include "representation/Chat.h"
 #include "../Game.h"
 
 #include "ElectricTools.h"

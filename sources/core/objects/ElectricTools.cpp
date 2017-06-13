@@ -2,7 +2,6 @@
 
 #include <QTextStream>
 
-#include "representation/Chat.h"
 #include "Tile.h"
 #include "../Game.h"
 

@@ -40,7 +40,6 @@ public:
     virtual MapInterface& GetMap() override;
     virtual const MapInterface& GetMap() const override;
     virtual ObjectFactoryInterface& GetFactory() override;
-    virtual ChatInterface& GetChat() override;
     virtual TextPainter& GetTexts() override;
     virtual SyncRandom& GetRandom() override;
     virtual Names& GetNames() override;
@@ -123,7 +122,6 @@ private:
 
     AtmosInterface* atmos_;
     ObjectFactoryInterface* factory_;
-    ChatInterface* chat_;
     TextPainter* texts_;
 
     SyncRandom* sync_random_;
