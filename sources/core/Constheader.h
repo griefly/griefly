@@ -219,5 +219,3 @@ inline Dir RevertDir(Dir dir)
 }
 
 const int MAX_LEVEL = 20;
-
-extern quint32 MAIN_TICK;

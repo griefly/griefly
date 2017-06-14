@@ -89,6 +89,8 @@ public:
     void PostHtmlFor(const QString& html, IdPtr<Object> mob);
     void PostVisible(const QString& html, const Position& place);
 
+    qint32 GetGameTick() const;
+
     template<typename T>
     IdPtr<T> Create(const QString& type, IdPtr<MapObject> owner = 0)
     {

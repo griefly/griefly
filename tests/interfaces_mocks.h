@@ -14,8 +14,8 @@
 class MockIAtmosphere : public AtmosInterface
 {
 public:
-    MOCK_METHOD0(Process, void());
-    MOCK_METHOD0(ProcessMove, void());
+    MOCK_METHOD1(Process, void(qint32 game_tick));
+    MOCK_METHOD1(ProcessMove, void(qint32 game_tick));
 
     MOCK_METHOD4(SetFlags, void(quint32 x, quint32 y, quint32 z, Flags flags));
     MOCK_METHOD1(LoadGrid, void(MapInterface*));
@@ -71,7 +71,7 @@ public:
     MOCK_METHOD1(SetUnsyncGenerator, void(quint32 generator));
     MOCK_METHOD0(GetMob, IdPtr<kv::Mob>());
     MOCK_METHOD1(SetMob, void(quint32 new_mob));
-    MOCK_METHOD0(GetGlobals, IdPtr<kv::GlobalObjectsHolder>());
+    MOCK_CONST_METHOD0(GetGlobals, IdPtr<kv::GlobalObjectsHolder>());
     MOCK_METHOD1(SetGlobals, void(quint32 globals));
     MOCK_METHOD3(PlayMusic, void(const QString& name, int volume, quint32 mob));
     MOCK_METHOD2(AddSound, void(const QString& name, kv::Position position));

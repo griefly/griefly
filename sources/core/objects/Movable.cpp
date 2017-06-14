@@ -84,7 +84,7 @@ void Movable::LoadInForceManager()
 
 bool Movable::CheckMoveTime()
 {
-    if ((static_cast<int>(MAIN_TICK) - last_move_) < tick_speed_)
+    if ((GetGameTick() - last_move_) < tick_speed_)
     {
         return false;
     }
@@ -147,7 +147,7 @@ bool Movable::MainMove()
     GetOwner()->RemoveObject(GetId());
     new_owner->AddObject(GetId());
 
-    last_move_ = static_cast<int>(MAIN_TICK);
+    last_move_ = GetGameTick();
     return true;
 }
 
@@ -206,7 +206,7 @@ unsigned int ForceManager::Hash()
 void ForceManager::Process()
 {
     const int CLEAR_TICK = 10;
-    if (MAIN_TICK % CLEAR_TICK == 1)
+    if (true/* TODO: when ForceManager will be derived from kv::Object GetGameTick() % CLEAR_TICK == 1*/)
     {
         Clear();
     }

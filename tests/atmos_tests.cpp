@@ -28,7 +28,7 @@ TEST_F(AtmosDeathTest, ProcessWithoutLoadGrid)
 {
     ASSERT_DEATH(
     {
-        atmos.Process();
+        atmos.Process(0);
     }, "Grid is not loaded");
 }
 
@@ -36,7 +36,7 @@ TEST_F(AtmosDeathTest, ProcessMoveWithoutLoadGrid)
 {
     ASSERT_DEATH(
     {
-        atmos.ProcessMove();
+        atmos.ProcessMove(0);
     }, "Grid is not loaded");
 }
 

@@ -103,6 +103,11 @@ void Object::PostVisible(const QString& html, const Position& place)
     GetGame().GetChatFrameInfo().PostVisible(html, place);
 }
 
+qint32 Object::GetGameTick() const
+{
+    return GetGame().GetGlobals()->game_tick;
+}
+
 quint32 Object::CreateImpl(const QString& type, quint32 owner)
 {
     return GetFactory().CreateImpl(type, owner);

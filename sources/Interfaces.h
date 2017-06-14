@@ -26,8 +26,8 @@ class AtmosInterface
 public:
     virtual ~AtmosInterface() { }
 
-    virtual void Process() = 0;
-    virtual void ProcessMove() = 0;
+    virtual void Process(qint32 game_tick) = 0;
+    virtual void ProcessMove(qint32 game_tick) = 0;
 
     using Flags = char;
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) = 0;
@@ -108,7 +108,7 @@ public:
     virtual IdPtr<kv::Mob> GetMob() = 0;
     virtual void SetMob(quint32 new_mob) = 0;
 
-    virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() = 0;
+    virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const = 0;
     virtual void SetGlobals(quint32 globals) = 0;
 
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) = 0;

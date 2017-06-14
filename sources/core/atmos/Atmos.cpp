@@ -53,13 +53,13 @@ void Atmosphere::Resize(quint32 x, quint32 y, quint32 z)
     grid_ = new atmos::AtmosGrid(x_size_, y_size_);
 }
 
-void Atmosphere::Process()
+void Atmosphere::Process(qint32 game_tick)
 {
     AssertGrid();
 
     QElapsedTimer timer;
     timer.start();
-    grid_->Process();
+    grid_->Process(game_tick);
     grid_processing_ns_ = (grid_processing_ns_ + timer.nsecsElapsed()) / 2;
     timer.start();
 }
@@ -67,7 +67,7 @@ void Atmosphere::Process()
 const int PRESSURE_MOVE_BORDER = 1000;
 const int FLOW_MOVE_BORDER = -15;
 
-void Atmosphere::ProcessTileMove(int x, int y, int z)
+void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
 {
     atmos::AtmosGrid::Cell& cell = grid_->At(x, y);
 
@@ -128,7 +128,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
     }
 
     const int UNPASSABLE_FREQUENCY = 6;
-    if (((x + y) % UNPASSABLE_FREQUENCY) != (MAIN_TICK % UNPASSABLE_FREQUENCY))
+    if (((x + y) % UNPASSABLE_FREQUENCY) != (game_tick % UNPASSABLE_FREQUENCY))
     {
         return;
     }
@@ -164,7 +164,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z)
     }
 }
 
-void Atmosphere::ProcessMove()
+void Atmosphere::ProcessMove(qint32 game_tick)
 {
     AssertGrid();
 
@@ -177,7 +177,7 @@ void Atmosphere::ProcessMove()
         {
             for (int y = 0; y < y_size_; ++y)
             {
-                ProcessTileMove(x, y, z);
+                ProcessTileMove(x, y, z, game_tick);
             }
         }
     }

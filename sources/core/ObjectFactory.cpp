@@ -73,8 +73,10 @@ void ObjectFactory::ForeachProcess()
 {
     UpdateProcessingItems();
 
+    const int game_tick = game_->GetGlobals()->game_tick;
+
     const int CLEAR_TICK = 10;
-    if (MAIN_TICK % CLEAR_TICK == 1)
+    if (game_tick % CLEAR_TICK == 1)
     {
         ClearProcessing();
     }
@@ -87,7 +89,7 @@ void ObjectFactory::ForeachProcess()
         {
             continue;
         }
-        else if ((MAIN_TICK % process_table_[i]->GetFreq()) == 0)
+        else if ((game_tick % process_table_[i]->GetFreq()) == 0)
         {
             process_table_[i]->Process();
         }

@@ -48,7 +48,7 @@ public:
     virtual IdPtr<kv::Mob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
 
-    virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals();
+    virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const;
     virtual void SetGlobals(quint32 globals);
 
     virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;

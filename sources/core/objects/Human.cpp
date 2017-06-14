@@ -198,11 +198,11 @@ void Human::ProcessMessage(const Message2 &msg)
     {
         // TODO: shorter cd when shooting with weapons
         const int ATTACK_CD = 6;
-        if ((MAIN_TICK - attack_cooldown_) < ATTACK_CD)
+        if ((GetGameTick() - attack_cooldown_) < ATTACK_CD)
         {
             return;
         }
-        attack_cooldown_ = MAIN_TICK;
+        attack_cooldown_ = GetGameTick();
 
         IdPtr<MaterialObject> object = Network2::ExtractObjId(obj);
         if (!object.IsValid())
@@ -383,7 +383,7 @@ void Human::Live()
         {
             ApplySuffocationDamage(100);
             
-            if (GetRand() % 5 == 0 && ((MAIN_TICK % 3) == 0))
+            if (GetRand() % 5 == 0 && ((GetGameTick() % 3) == 0))
             {
                 MakeEmote("gasps!");
             }
@@ -406,7 +406,7 @@ void Human::Live()
         if (CalculateHealth() >= -1 * HUMAN_MAX_HEALTH)
         {
             ApplySuffocationDamage(100);
-            if (GetRand() % 4 == 0 && ((MAIN_TICK % 4) == 0))
+            if (GetRand() % 4 == 0 && ((GetGameTick() % 4) == 0))
             {
                 MakeEmote("gasps!");
             }
@@ -591,7 +591,7 @@ void Human::TryClownBootsHonk()
     {
         return;
     }
-    if (MAIN_TICK % 3 != 0)
+    if (GetGameTick() % 3 != 0)
     {
         return;
     }

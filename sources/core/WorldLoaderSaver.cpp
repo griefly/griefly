@@ -173,7 +173,6 @@ void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
 {
     ObjectFactoryInterface& factory = game_->GetFactory();
 
-    serializer << MAIN_TICK;
     serializer << factory.GetId();
 
     serializer << game_->GetGlobals();
@@ -186,9 +185,6 @@ void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
 void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
 {
     ObjectFactoryInterface& factory = game_->GetFactory();
-
-    deserializer >> MAIN_TICK;
-    qDebug() << "MAIN_TICK: " << MAIN_TICK;
 
     int id;
     deserializer >> id;

@@ -35,7 +35,7 @@ void Door::Open()
     SetState("door_opening");
     PlaySoundIfVisible("airlock.wav");
     door_state_ = OPENING;
-    last_tick_ = MAIN_TICK;
+    last_tick_ = GetGameTick();
     SetFreq(1);
 }
 
@@ -49,28 +49,28 @@ void Door::Close()
     PlaySoundIfVisible("airlock.wav");
     SetPassable(Dir::ALL, passable::EMPTY);
     door_state_ = CLOSING;
-    last_tick_ = MAIN_TICK;
+    last_tick_ = GetGameTick();
 }
 
 void Door::Process()
 {
     if (IsState(OPENING))
     {
-        if (MAIN_TICK - last_tick_ > 11)
+        if (GetGameTick() - last_tick_ > 11)
         {
             door_state_ = OPEN;
             SetPassable(Dir::ALL, passable::FULL);
-            last_tick_ = MAIN_TICK;
+            last_tick_ = GetGameTick();
             SetState("door_open");
         }
         return;
     }
     if (IsState(CLOSING))
     {
-        if (MAIN_TICK - last_tick_ > 11)
+        if (GetGameTick() - last_tick_ > 11)
         {
             door_state_ = CLOSED;
-            last_tick_ = MAIN_TICK;
+            last_tick_ = GetGameTick();
             SetState("door_closed");
             SetFreq(0);
         }
@@ -78,7 +78,7 @@ void Door::Process()
     }
     if (IsState(OPEN))
     {
-        if (MAIN_TICK - last_tick_ > 50)
+        if (GetGameTick() - last_tick_ > 50)
         {
             Close();
         }
@@ -222,7 +222,7 @@ void GlassDoor::Open()
     SetState(door_prefix_ + "opening");
     PlaySoundIfVisible("windowdoor.wav");
     door_state_ = OPENING;
-    last_tick_ = MAIN_TICK;
+    last_tick_ = GetGameTick();
     SetFreq(1);
 }
 
@@ -236,28 +236,28 @@ void GlassDoor::Close()
     PlaySoundIfVisible("windowdoor.wav");
     SetPassable(GetDir(), passable::EMPTY);
     door_state_ = CLOSING;
-    last_tick_ = MAIN_TICK;
+    last_tick_ = GetGameTick();
 }
 
 void GlassDoor::Process()
 {
     if (IsState(OPENING))
     {
-        if (MAIN_TICK - last_tick_ > 9)
+        if (GetGameTick() - last_tick_ > 9)
         {
             door_state_ = OPEN;
             SetPassable(GetDir(), passable::FULL);
-            last_tick_ = MAIN_TICK;
+            last_tick_ = GetGameTick();
             SetState(door_prefix_ + "open");
         }
         return;
     }
     if (IsState(CLOSING))
     {
-        if (MAIN_TICK - last_tick_ > 9)
+        if (GetGameTick() - last_tick_ > 9)
         {
             door_state_ = CLOSED;
-            last_tick_ = MAIN_TICK;
+            last_tick_ = GetGameTick();
             SetState(door_prefix_);
             SetFreq(0);
         }
@@ -265,7 +265,7 @@ void GlassDoor::Process()
     }
     if (IsState(OPEN))
     {
-        if (MAIN_TICK - last_tick_ > 50)
+        if (GetGameTick() - last_tick_ > 50)
         {
             Close();
         }

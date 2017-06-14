@@ -130,10 +130,10 @@ namespace atmos
             Cell* group = &(cells_[(group_y + group_x * group_height_) * atmos::CELL_GROUP_SIZE * atmos::CELL_GROUP_SIZE]);
             return group[y_in_group + x_in_group * atmos::CELL_GROUP_SIZE];
         }
-        void Process();
+        void Process(qint32 game_tick);
     private:
-        void ProcessGroups();
-        void ProcessGroupsBorders();
+        void ProcessGroups(qint32 game_tick);
+        void ProcessGroupsBorders(qint32 game_tick);
         void Finalize();
 
         void ProcessBorderGroupCell(Cell* current, int x, int y);

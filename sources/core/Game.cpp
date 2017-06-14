@@ -181,13 +181,16 @@ void Game::Process()
             force_process_ns_ /= 2;
 
             timer.start();
-            if (ATMOS_OFTEN == 1 || MAIN_TICK % ATMOS_OFTEN == 1)
+
+            const int game_tick = GetGlobals()->game_tick;
+
+            if (ATMOS_OFTEN == 1 || (game_tick % ATMOS_OFTEN == 1))
             {
-                GetAtmosphere().Process();
+                GetAtmosphere().Process(game_tick);
             }
-            if (ATMOS_MOVE_OFTEN == 1 || MAIN_TICK % ATMOS_MOVE_OFTEN == 1)
+            if (ATMOS_MOVE_OFTEN == 1 || (game_tick % ATMOS_MOVE_OFTEN == 1))
             {
-                GetAtmosphere().ProcessMove();
+                GetAtmosphere().ProcessMove(game_tick);
             }
             atmos_process_ns_ += timer.nsecsElapsed();
             atmos_process_ns_ /= 2;
@@ -367,7 +370,7 @@ void Game::InitWorld(int id, QString map_name)
     GetTexts()["Tick"].SetUpdater
     ([&](QString* str)
     {
-        *str = QString("Main tick: %1").arg(MAIN_TICK);
+        *str = QString("Game tick: %1").arg(GetGlobals()->game_tick);
     });
 
     GetTexts()["AmountConnections"].SetUpdater
@@ -445,7 +448,7 @@ void Game::ProcessInputMessages()
         if (msg.type == MessageType::NEW_TICK)
         {
             process_in_ = true;
-            ++MAIN_TICK;
+            GetGlobals()->game_tick += 1;
             break;
         }
         if (msg.type == MessageType::NEW_CLIENT)
@@ -482,11 +485,11 @@ void Game::ProcessInputMessages()
             int tick = tick_v.toVariant().toInt();
 
             qDebug() << "Map upload to " << map_url << ", tick " << tick;
-            qDebug() << "Current game tick: " << MAIN_TICK;
+            qDebug() << "Current game tick: " << GetGlobals()->game_tick;
 
             QByteArray data;
 
-            if (tick == MAIN_TICK)
+            if (tick == GetGlobals()->game_tick)
             {
                 qDebug() << "Map will be generated";
 
@@ -514,9 +517,9 @@ void Game::ProcessInputMessages()
             QJsonValue tick_v = obj["tick"];
             int tick = tick_v.toVariant().toInt();
 
-            if (tick != MAIN_TICK)
+            if (tick != GetGlobals()->game_tick)
             {
-                KvAbort(QString("Tick mismatch! %1 %2").arg(tick).arg(MAIN_TICK));
+                KvAbort(QString("Tick mismatch! %1 %2").arg(tick).arg(GetGlobals()->game_tick));
             }
             unsigned int hash = GetFactory().Hash();
 
@@ -527,7 +530,7 @@ void Game::ProcessInputMessages()
                       "{\"hash\":"
                     + QString::number(hash)
                     + ",\"tick\":"
-                    + QString::number(MAIN_TICK)
+                    + QString::number(GetGlobals()->game_tick)
                     + "}");
 
             Network2::GetInstance().SendMsg(msg);
@@ -712,7 +715,7 @@ void Game::SetMob(quint32 new_mob)
     current_mob_ = new_mob;
 }
 
-IdPtr<GlobalObjectsHolder> Game::GetGlobals()
+IdPtr<GlobalObjectsHolder> Game::GetGlobals() const
 {
     return global_objects_;
 }

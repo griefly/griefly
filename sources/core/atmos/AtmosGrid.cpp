@@ -3,10 +3,10 @@
 namespace atmos
 {
 
-void AtmosGrid::Process()
+void AtmosGrid::Process(qint32 game_tick)
 {
-    ProcessGroups();
-    ProcessGroupsBorders();
+    ProcessGroups(game_tick);
+    ProcessGroupsBorders(game_tick);
     Finalize();
 }
 
@@ -87,9 +87,9 @@ namespace
 {
     const int AMOUNT_CELLS_IN_GROUP = atmos::CELL_GROUP_SIZE * atmos::CELL_GROUP_SIZE;
     const int STAGES_AMOUNT = 5;
-    inline bool BelongsToStage(int x, int y, int stage)
+    inline bool BelongsToStage(int x, int y, int stage, qint32 game_tick)
     {
-        return (((x + (y * 2)) % STAGES_AMOUNT) == ((MAIN_TICK + stage) % STAGES_AMOUNT));
+        return (((x + (y * 2)) % STAGES_AMOUNT) == ((game_tick + stage) % STAGES_AMOUNT));
     }
 
     inline void ProcessInnerGroupCell(AtmosGrid::Cell* current)
@@ -148,7 +148,7 @@ inline void AtmosGrid::ProcessBorderGroupCell(Cell* current, int x, int y)
     ProcessFiveCells(near_cells);
 }
 
-void AtmosGrid::ProcessGroups()
+void AtmosGrid::ProcessGroups(qint32 game_tick)
 {
     Cell* current_group = &cells_[0];
     const int GROUPS_AMOUNT = group_height_ * group_width_;
@@ -160,7 +160,7 @@ void AtmosGrid::ProcessGroups()
             {
                 for (int y = 1; y < atmos::CELL_GROUP_SIZE - 1; ++y)
                 {
-                    if (!BelongsToStage(x, y, stage))
+                    if (!BelongsToStage(x, y, stage, game_tick))
                     {
                         continue;
                     }
@@ -172,7 +172,7 @@ void AtmosGrid::ProcessGroups()
     }
 }
 
-void AtmosGrid::ProcessGroupsBorders()
+void AtmosGrid::ProcessGroupsBorders(qint32 game_tick)
 {
     for (int group_x = 1; group_x < group_width_ - 1; ++group_x)
     {
@@ -184,7 +184,7 @@ void AtmosGrid::ProcessGroupsBorders()
             {
                 for (int y = 1; y < height_ - 1; ++y)
                 {
-                    if (!BelongsToStage(x, y, stage))
+                    if (!BelongsToStage(x, y, stage, game_tick))
                     {
                         continue;
                     }
@@ -204,7 +204,7 @@ void AtmosGrid::ProcessGroupsBorders()
             {
                 for (int x = 1; x < width_ - 1; ++x)
                 {
-                    if (!BelongsToStage(x, y, stage))
+                    if (!BelongsToStage(x, y, stage, game_tick))
                     {
                         continue;
                     }

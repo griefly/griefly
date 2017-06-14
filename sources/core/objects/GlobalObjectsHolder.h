@@ -15,6 +15,8 @@ public:
     REGISTER_CLASS_AS(GlobalObjectsHolder);
     GlobalObjectsHolder();
 
+    qint32 KV_SAVEABLE(game_tick);
+
     IdPtr<UnsyncGenerator> KV_SAVEABLE(unsync_generator);
     IdPtr<Map> KV_SAVEABLE(map);
 
