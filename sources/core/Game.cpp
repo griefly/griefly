@@ -1,7 +1,5 @@
 #include "Game.h"
 
-#include <iomanip>
-
 #include "KvAbort.h"
 
 #include "Map.h"
@@ -13,11 +11,11 @@
 #include "objects/Tile.h"
 #include "Params.h"
 
-#include "objects/Mob.h"
+#include "objects/mobs/Mob.h"
 #include "Names.h"
-#include "objects/Movable.h"
-#include "objects/Human.h"
-#include "objects/LoginMob.h"
+#include "objects/movable/Movable.h"
+#include "objects/mobs/Human.h"
+#include "objects/mobs/LoginMob.h"
 #include "objects/Lobby.h"
 #include "objects/SpawnPoints.h"
 #include "objects/test/UnsyncGenerator.h"

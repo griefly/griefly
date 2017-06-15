@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "Slot.h"
-#include "Item.h"
+#include "movable/items/Item.h"
 
 class InterfaceBase
 {

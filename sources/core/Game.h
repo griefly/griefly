@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "objects/Mob.h"
+#include "objects/mobs/Mob.h"
 #include "objects/test/UnsyncGenerator.h"
 #include "objects/GlobalObjectsHolder.h"
 

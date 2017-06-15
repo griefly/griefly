@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Item.h"
+#include "core/objects/movable/items/Item.h"
 
 #include "representation/ViewInfo.h"
 
-#include "../Hashes.h"
+#include "core/Hashes.h"
 #include "representation/Representation.h"
 
 namespace Slots

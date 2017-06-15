@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MaterialObject.h"
-#include "Movable.h"
+#include "movable/Movable.h"
 
 namespace kv
 {

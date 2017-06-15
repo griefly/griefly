@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "Turf.h"
+#include "turfs/Turf.h"
 #include "MapObject.h"
 #include "MaterialObject.h"
-#include "../atmos/AtmosHolder.h"
+#include "core/atmos/AtmosHolder.h"
 
 template<class T>
 FastSerializer& operator<<(FastSerializer& file, const std::vector<IdPtr<T>>& content)

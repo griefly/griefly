@@ -1,7 +1,7 @@
 #include "MapObject.h"
-#include "Turf.h"
-#include "Movable.h"
-#include "Item.h"
+#include "turfs/Turf.h"
+#include "movable/Movable.h"
+#include "movable/items/Item.h"
 #include "../ObjectFactory.h"
 
 using namespace kv;

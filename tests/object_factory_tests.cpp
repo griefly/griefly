@@ -7,8 +7,8 @@
 #include "core/objects/Object.h"
 #include "core/objects/Tile.h"
 #include "core/objects/MaterialObject.h"
-#include "core/objects/Turf.h"
-#include "core/objects/Mob.h"
+#include "core/objects/turfs/Turf.h"
+#include "core/objects/mobs/Mob.h"
 #include "core/objects/test/TestObject.h"
 #include "core/objects/test/UnsyncGenerator.h"
 

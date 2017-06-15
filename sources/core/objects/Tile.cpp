@@ -5,7 +5,7 @@
 #include "../Game.h"
 #include "MaterialObject.h"
 #include "Tile.h"
-#include "Movable.h"
+#include "movable/Movable.h"
 #include "../atmos/AtmosGrid.h"
 
 using namespace kv;

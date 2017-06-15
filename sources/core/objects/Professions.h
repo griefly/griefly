@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Human.h"
+#include "mobs/Human.h"
 
 // TODO: classes (?)
 

@@ -2,10 +2,10 @@
 
 #include "representation/Sound.h"
 
-#include "Movable.h"
-#include "Mob.h"
-#include "Item.h"
-#include "Weldingtool.h"
+#include "movable/Movable.h"
+#include "mobs/Mob.h"
+#include "movable/items/Item.h"
+#include "movable/items/Weldingtool.h"
 
 #include "test/RemoteDoorOpener.h"
 

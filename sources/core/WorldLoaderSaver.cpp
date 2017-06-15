@@ -6,9 +6,9 @@
 
 #include "objects/Object.h"
 #include "objects/MaterialObject.h"
-#include "objects/Turf.h"
+#include "objects/turfs/Turf.h"
 #include "objects/Tile.h"
-#include "objects/Mob.h"
+#include "objects/mobs/Mob.h"
 
 #include "SyncRandom.h"
 

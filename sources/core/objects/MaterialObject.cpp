@@ -1,12 +1,12 @@
 #include <cassert>
 
 #include "MaterialObject.h"
-#include "../Map.h"
-#include "Mob.h"
-#include "../Game.h"
+#include "core/Map.h"
+#include "mobs/Mob.h"
+#include "core/Game.h"
 #include "Tile.h"
 
-#include "../Helpers.h"
+#include "core/Helpers.h"
 
 using namespace kv;
 

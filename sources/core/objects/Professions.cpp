@@ -1,8 +1,9 @@
 #include "Professions.h"
 
-#include "Clothes.h"
-#include "MedbayTools.h"
-#include "Weapons.h"
+#include "movable/items/Clothes.h"
+#include "movable/items/MedbayTools.h"
+#include "movable/items/Weapons.h"
+
 #include "Interface.h"
 
 using namespace kv;

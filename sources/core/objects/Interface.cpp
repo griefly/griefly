@@ -1,9 +1,9 @@
 #include "Interface.h"
 
-#include "Item.h"
-#include "../Helpers.h"
+#include "core/objects/movable/items/Item.h"
+#include "core/Helpers.h"
 
-#include "Human.h"
+#include "core/objects/mobs/Human.h"
 
 using namespace kv;
 
