@@ -35,6 +35,9 @@ class Object
     friend quint32& internal::GetObjectId(Object* object);
     friend quint32 internal::CreateImpl(Object* object, const QString& type, quint32 owner);
 public:
+    Object(const Object& other) = delete;
+    Object& operator=(const Object& other) = delete;
+
     Object() { id_ = 0; how_often_ = 0; game_ = nullptr; }
     Object(kv::internal::NoInitialization) { id_ = 0; how_often_ = 0; game_ = nullptr; }
 
