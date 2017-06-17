@@ -19,17 +19,10 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
     quint32 hash = 0;
     {
         MockIGame game;
-        MockIMap map;
-        SyncRandom rand;
-        rand.SetRand(4242, 32);
         ObjectFactory factory(&game);
 
         hash = factory.Hash();
 
-        EXPECT_CALL(game, GetRandom())
-            .WillRepeatedly(ReturnRef(rand));
-        EXPECT_CALL(game, GetMap())
-            .WillRepeatedly(ReturnRef(map));
         IdPtr<kv::GlobalObjectsHolder> globals = 99;
         EXPECT_CALL(game, GetGlobals())
             .WillRepeatedly(Return(globals));
@@ -44,13 +37,10 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
     {
         MockIGame game;
         MockIMap map;
-        SyncRandom rand;
         MockIAtmosphere atmos;
         ObjectFactory factory(&game);
 
         EXPECT_CALL(game, SetGlobals(99));
-        EXPECT_CALL(game, GetRandom())
-            .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
         EXPECT_CALL(game, SetMob(0));
@@ -65,8 +55,6 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
 
         WorldLoaderSaver loader_saver(&game);
         loader_saver.Load(deserializer, 0);
-        EXPECT_EQ(rand.GetCallsCounter(), 32);
-        EXPECT_EQ(rand.GetSeed(), 4242);
 
         EXPECT_EQ(factory.Hash(), hash);
     }
@@ -80,8 +68,6 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
     {
         MockIGame game;
         MockIMap map;
-        SyncRandom rand;
-        rand.SetRand(4242, 32);
         ObjectFactory factory(&game);
 
         factory.CreateImpl(TestObject::GetTypeStatic());
@@ -94,8 +80,6 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
-        EXPECT_CALL(game, GetRandom())
-            .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
         EXPECT_CALL(game, GetGlobals())
@@ -108,15 +92,12 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
     {
         MockIGame game;
         MockIMap map;
-        SyncRandom rand;
         MockIAtmosphere atmos;
         ObjectFactory factory(&game);
 
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
         EXPECT_CALL(game, SetGlobals(globals_id));
-        EXPECT_CALL(game, GetRandom())
-            .WillRepeatedly(ReturnRef(rand));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
         EXPECT_CALL(game, SetMob(0));
@@ -128,8 +109,6 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 
         WorldLoaderSaver loader_saver(&game);
         loader_saver.Load(deserializer, 0);
-        EXPECT_EQ(rand.GetCallsCounter(), 32);
-        EXPECT_EQ(rand.GetSeed(), 4242);
 
         {
             ASSERT_GE(factory.GetIdTable().size(), 2);

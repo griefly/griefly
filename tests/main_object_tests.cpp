@@ -131,12 +131,6 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
         EXPECT_CALL(game, GetFactory())
             .WillRepeatedly(ReturnRef(factory));
         ASSERT_EQ(&object.GetFactory(), &factory);
-
-        SyncRandom random;
-        random.SetRand(42, 42);
-        EXPECT_CALL(game, GetRandom())
-            .WillRepeatedly(ReturnRef(random));
-        ASSERT_EQ(object.GetRand(), 5885939);
     }
     {
         MockIGame game;

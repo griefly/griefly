@@ -86,7 +86,7 @@ public:
     GameInterface& GetGame();
     const GameInterface& GetGame() const;
     ObjectFactoryInterface& GetFactory();
-    unsigned int GetRand();
+    quint32 GenerateRandom();
 
     virtual Hearer* ToHearer() { return nullptr; }
     void PostHtmlFor(const QString& html, IdPtr<Object> mob);

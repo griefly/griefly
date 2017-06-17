@@ -94,12 +94,12 @@ void LoginMob::ProcessMessage(const Message2& msg)
         }
         IdPtr<Human> human = Create<Human>(Human::GetTypeStatic());
 
-        QString human_state = HUMAN_STATES[GetRand() % HUMAN_STATES_AMOUNT];
+        QString human_state = HUMAN_STATES[GenerateRandom() % HUMAN_STATES_AMOUNT];
         human->SetState(human_state);
 
         std::vector<IdPtr<CubeTile>> tiles;
         QString text;
-        switch (GetRand() % 5)
+        switch (GenerateRandom() % 5)
         {
         case 0:
             professions::ToSecurityOfficer(human);
@@ -138,7 +138,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
             int z = map.GetDepth() / 2;
             tiles.push_back(map.At(x, y, z));
         }
-        int index = GetRand() % tiles.size();
+        int index = GenerateRandom() % tiles.size();
         tiles[index]->AddObject(human);
 
         MoveMindTo(human);

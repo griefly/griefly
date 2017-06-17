@@ -41,7 +41,6 @@ public:
     virtual const MapInterface& GetMap() const override;
     virtual ObjectFactoryInterface& GetFactory() override;
     virtual TextPainter& GetTexts() override;
-    virtual SyncRandom& GetRandom() override;
     virtual Names& GetNames() override;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() override;
 
@@ -124,7 +123,6 @@ private:
     ObjectFactoryInterface* factory_;
     TextPainter* texts_;
 
-    SyncRandom* sync_random_;
     Names* names_;
     WorldLoaderSaver* world_loader_saver_;
 

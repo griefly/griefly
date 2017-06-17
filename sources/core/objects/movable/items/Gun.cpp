@@ -84,7 +84,7 @@ void Gun::ShootImpl(Vector target, const QString& sound,
             projectile->Process();
             if (!casing_type.isEmpty())
             {
-                Dir dir = static_cast<Dir>(GetRand() % 4);
+                Dir dir = static_cast<Dir>(GenerateRandom() % 4);
                 IdPtr<Item> casing = Create<Item>(casing_type, tile.Id());
                 casing->Rotate(dir);
             } 	

@@ -1,19 +1,18 @@
 #pragma once
 
 #include <QString>
+#include <QVector>
 
-#include <string>
-#include <vector>
+#include "Interfaces.h"
 
-class SyncRandom;
 class Names
 {
 public:
-    Names(SyncRandom* random);
+    Names(GameInterface* game);
     QString GetMaleName();
 private:
     void LoadNames();
     std::vector<QString> male_names_;
     std::vector<QString> last_name_;
-    SyncRandom* random_;
+    GameInterface* game_;
 };

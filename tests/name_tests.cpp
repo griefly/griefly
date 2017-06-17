@@ -1,17 +1,33 @@
 #include <gtest/gtest.h>
 
 #include "core/Names.h"
+
 #include "core/SyncRandom.h"
+#include "core/objects/GlobalObjectsHolder.h"
+
+#include "core/ObjectFactory.h"
+#include "interfaces_mocks.h"
+
+using ::testing::Return;
 
 TEST(Names, Basics)
 {
-    SyncRandom random;
-    Names names(&random);
+    MockIGame game;
+    ObjectFactory factory(&game);
+
+    IdPtr<kv::GlobalObjectsHolder> globals = factory.CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
+    globals->random = factory.CreateImpl(kv::SynchronizedRandom::GetTypeStatic());
+
+    EXPECT_CALL(game, GetGlobals())
+        .WillRepeatedly(Return(globals));
+
+    Names names(&game);
     for (int i = 0; i < 20; ++i)
     {
         QString name = names.GetMaleName();
         EXPECT_FALSE(name.isEmpty());
-        for (QChar ch : name)
+        EXPECT_TRUE(name.contains(' '));
+        for (const QChar ch : name)
         {
             EXPECT_NE(ch, QChar('\n'));
         }

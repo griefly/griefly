@@ -7,7 +7,6 @@
 
 #include <QString>
 
-class SyncRandom;
 class Names;
 class TextPainter;
 namespace kv
@@ -99,7 +98,6 @@ public:
     virtual const MapInterface& GetMap() const = 0;
     virtual ObjectFactoryInterface& GetFactory() = 0;
     virtual TextPainter& GetTexts() = 0;
-    virtual SyncRandom& GetRandom() = 0;
     virtual Names& GetNames() = 0;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() = 0;
 

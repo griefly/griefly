@@ -30,7 +30,7 @@ void Screwdriver::AfterWorldCreation()
 {
     Item::AfterWorldCreation();
 
-    unsigned int value = GetRand() % 8;
+    unsigned int value = GenerateRandom() % 8;
     SetState(QString("screwdriver%1").arg(value));
 }
 

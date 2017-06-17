@@ -7,6 +7,7 @@ namespace kv
 {
 class UnsyncGenerator;
 class Map;
+class SynchronizedRandom;
 
 class GlobalObjectsHolder : public Object
 {
@@ -19,6 +20,7 @@ public:
 
     IdPtr<UnsyncGenerator> KV_SAVEABLE(unsync_generator);
     IdPtr<Map> KV_SAVEABLE(map);
+    IdPtr<SynchronizedRandom> KV_SAVEABLE(random);
 
     QMap<quint32, QPair<QString, int>> KV_SAVEABLE(musics_for_mobs);
     QMap<quint32, quint32> KV_SAVEABLE(players_table);

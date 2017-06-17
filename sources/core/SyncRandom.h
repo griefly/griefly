@@ -1,24 +1,35 @@
 #pragma once
 
-#include <vector>
 #include <random>
 
-using RandomGenerator = std::ranlux24;
+#include "objects/Object.h"
 
-class SyncRandom
+namespace kv
+{
+
+class SynchronizedRandom : public Object
 {
 public:
-    SyncRandom();
-    unsigned int GetRand();
-    inline int RandomShuffle(int v)
-    {
-        return static_cast<int>(GetRand() % v);
-    }
-    void SetRand(unsigned int seed, unsigned int calls_counter);
-    unsigned int GetSeed();
-    unsigned int GetCallsCounter();
+    DECLARE_SAVEABLE(SynchronizedRandom, Object);
+    REGISTER_CLASS_AS(SynchronizedRandom);
+
+    SynchronizedRandom();
+
+    quint32 Generate();
+
+    void SetParams(quint32 seed, quint32 calls_counter);
+    quint32 GetSeed() const;
+    quint32 GetCallsCounter() const;
 private:
-    unsigned int seed_;
-    unsigned int calls_counter_;
+    quint32 KV_SAVEABLE(seed_);
+    quint32 KV_SAVEABLE(calls_counter_);
+
+    KV_ON_LOAD_CALL(InsertParamsIntoGenerator);
+    void InsertParamsIntoGenerator();
+
+    using RandomGenerator = std::ranlux24;
     RandomGenerator generator_;
 };
+END_DECLARE(SynchronizedRandom);
+
+}

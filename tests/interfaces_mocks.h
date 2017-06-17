@@ -64,7 +64,6 @@ public:
     MOCK_CONST_METHOD0(GetMap, const MapInterface&());
     MOCK_METHOD0(GetFactory, ObjectFactoryInterface&());
     MOCK_METHOD0(GetTexts, TextPainter&());
-    MOCK_METHOD0(GetRandom, SyncRandom&());
     MOCK_METHOD0(GetNames, Names&());
     MOCK_METHOD0(GetChatFrameInfo, kv::ChatFrameInfo&());
     MOCK_METHOD3(MakeTiles, void(int size_x, int size_y, int size_z));

@@ -13,7 +13,7 @@ Shard::Shard()
 
 void Shard::AfterWorldCreation()
 {
-    unsigned int val = GetRand() % 3;
+    unsigned int val = GenerateRandom() % 3;
     QString st;
     if (val == 0)
     {

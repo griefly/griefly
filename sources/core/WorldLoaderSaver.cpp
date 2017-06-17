@@ -176,10 +176,6 @@ void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
     serializer << factory.GetId();
 
     serializer << game_->GetGlobals();
-
-    // Random save
-    serializer << game_->GetRandom().GetSeed();
-    serializer << game_->GetRandom().GetCallsCounter();
 }
 
 void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
@@ -194,13 +190,6 @@ void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
     quint32 globals;
     deserializer >> globals;
     game_->SetGlobals(globals);
-
-    unsigned int new_seed;
-    unsigned int new_calls_counter;
-    deserializer >> new_seed;
-    deserializer >> new_calls_counter;
-
-    game_->GetRandom().SetRand(new_seed, new_calls_counter);
 
     factory.GetIdTable().resize(id + 1);
 }

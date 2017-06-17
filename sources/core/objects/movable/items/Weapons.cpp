@@ -15,7 +15,7 @@ LaserGun::LaserGun()
 
 void LaserGun::Shoot(Vector target)
 {
-    unsigned int value = GetRand() % 2;
+    unsigned int value = GenerateRandom() % 2;
     QString snd;
     if (value == 0)
     {

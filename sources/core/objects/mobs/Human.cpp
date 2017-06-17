@@ -383,7 +383,7 @@ void Human::Live()
         {
             ApplySuffocationDamage(100);
             
-            if (GetRand() % 5 == 0 && ((GetGameTick() % 3) == 0))
+            if (GenerateRandom() % 5 == 0 && ((GetGameTick() % 3) == 0))
             {
                 MakeEmote("gasps!");
             }
@@ -406,7 +406,7 @@ void Human::Live()
         if (CalculateHealth() >= -1 * HUMAN_MAX_HEALTH)
         {
             ApplySuffocationDamage(100);
-            if (GetRand() % 4 == 0 && ((GetGameTick() % 4) == 0))
+            if (GenerateRandom() % 4 == 0 && ((GetGameTick() % 4) == 0))
             {
                 MakeEmote("gasps!");
             }
@@ -466,7 +466,7 @@ void Human::AttackBy(IdPtr<Item> item)
     if (item.IsValid() && (item->damage > 0))
     {
         ApplyBruteDamage(item->damage * 100);
-        QString sound = QString("genhit%1.wav").arg(GetRand() % 3 + 1);
+        QString sound = QString("genhit%1.wav").arg(GenerateRandom() % 3 + 1);
         PlaySoundIfVisible(sound);
         if (IdPtr<MaterialObject> item_owner = item->GetOwner())
         {
@@ -482,10 +482,10 @@ void Human::AttackBy(IdPtr<Item> item)
     {
         ApplyBruteDamage(100);
 
-        unsigned int punch_value = (GetRand() % 4) + 1;
+        unsigned int punch_value = (GenerateRandom() % 4) + 1;
         PlaySoundIfVisible(QString("punch%1.wav").arg(punch_value));
 
-        if (GetRand() % 5 == 0)
+        if (GenerateRandom() % 5 == 0)
         {
             SetLying(true);
             AddLyingTimer(100);
@@ -604,7 +604,7 @@ void Human::TryClownBootsHonk()
     {
         return;
     }
-    QString sound = QString("clownstep%1.wav").arg(GetRand() % 2 + 1);
+    QString sound = QString("clownstep%1.wav").arg(GenerateRandom() % 2 + 1);
     PlaySoundIfVisible(sound);
 }
 
@@ -640,11 +640,11 @@ void Human::ApplyBruteDamage(int damage)
     {
         const int ALWAYS_BLOOD_BORDER = 1000;
         int brute_helper = qMax(1, ALWAYS_BLOOD_BORDER - brute_damage_);
-        if ((GetRand() % brute_helper) == 1)
+        if ((GenerateRandom() % brute_helper) == 1)
         {
             return;
         }
-        unsigned int blood_value = (GetRand() % 7) + 1;
+        unsigned int blood_value = (GenerateRandom() % 7) + 1;
 
         if (IdPtr<Floor> floor = GetTurf())
         {

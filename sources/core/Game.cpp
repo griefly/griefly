@@ -80,7 +80,6 @@ Game::Game()
 
     factory_ = nullptr;
     texts_ = nullptr;
-    sync_random_ = nullptr;
     names_= nullptr;
 }
 
@@ -88,7 +87,6 @@ Game::~Game()
 {
     delete factory_;
     delete texts_;
-    delete sync_random_;
     delete names_;
 }
 
@@ -98,9 +96,8 @@ void Game::InitGlobalObjects()
 
     texts_ = new TextPainter;
     atmos_ = new Atmosphere(texts_);
-    sync_random_ = new SyncRandom;
     factory_ = new ObjectFactory(this);
-    names_ = new Names(sync_random_);
+    names_ = new Names(this);
     world_loader_saver_ = new WorldLoaderSaver(this);
 
     qDebug() << "Successfull initialization!";
@@ -289,11 +286,13 @@ void Game::InitWorld(int id, QString map_name)
         if (QFileInfo::exists(mapgen_name))
         {
             qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
-            unsigned int seed = static_cast<unsigned int>(qrand());
-            GetRandom().SetRand(seed, 0);
 
             global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
             global_objects_->map = GetFactory().CreateImpl(kv::Map::GetTypeStatic());
+            global_objects_->random = GetFactory().CreateImpl(kv::SynchronizedRandom::GetTypeStatic());
+
+            quint32 seed = static_cast<quint32>(qrand());
+            global_objects_->random->SetParams(seed, 0);
 
             world_loader_saver_->LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
 
@@ -686,11 +685,6 @@ ObjectFactoryInterface& Game::GetFactory()
 TextPainter& Game::GetTexts()
 {
     return *texts_;
-}
-
-SyncRandom& Game::GetRandom()
-{
-    return *sync_random_;
 }
 
 Names& Game::GetNames()

@@ -26,7 +26,7 @@ Space::Space()
 
 void Space::AfterWorldCreation()
 {
-    quint32 value = GetRand() % 25 + 1;
+    quint32 value = GenerateRandom() % 25 + 1;
     SetState(QString::number(value));
 }
 

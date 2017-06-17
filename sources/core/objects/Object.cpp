@@ -82,9 +82,9 @@ GameInterface& Object::GetGame()
     return *game_;
 }
 
-unsigned int Object::GetRand()
+quint32 Object::GenerateRandom()
 {
-    return GetGame().GetRandom().GetRand();
+    return GetGame().GetGlobals()->random->Generate();
 }
 
 void Object::PostHtmlFor(const QString& html, IdPtr<Object> uncasted_mob)
