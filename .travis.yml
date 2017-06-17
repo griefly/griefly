@@ -1,11 +1,11 @@
 matrix:
   include:
-    - os: osx
-      sudo: required
-      osx_image: xcode7.3
     - os: linux
       sudo: required
       dist: trusty
+    - os: osx
+      sudo: required
+      osx_image: xcode7.3
 
 language: cpp 
 
