@@ -1,4 +1,4 @@
-#include "SyncRandom.h"
+#include "SynchronizedRandom.h"
 
 using namespace kv;
 

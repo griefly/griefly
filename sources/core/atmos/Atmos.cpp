@@ -4,7 +4,7 @@
 
 #include <algorithm>
 
-#include "../SyncRandom.h"
+#include "../SynchronizedRandom.h"
 #include "../Helpers.h"
 
 #include "AtmosGrid.h"

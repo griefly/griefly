@@ -1,6 +1,6 @@
 #include "SpaceTurf.h"
 
-#include "core/SyncRandom.h"
+#include "core/SynchronizedRandom.h"
 
 #include "core/objects/movable/items/Item.h"
 #include "core/objects/movable/items/Materials.h"

@@ -7,7 +7,7 @@
 #include "Interfaces.h"
 
 #include "representation/Text.h"
-#include "core/SyncRandom.h"
+#include "core/SynchronizedRandom.h"
 #include "core/Names.h"
 #include "core/ChatFrameInfo.h"
 

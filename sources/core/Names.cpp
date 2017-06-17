@@ -1,7 +1,7 @@
 #include "Names.h"
 
 #include "Game.h"
-#include "SyncRandom.h"
+#include "SynchronizedRandom.h"
 
 void Names::LoadNames()
 {

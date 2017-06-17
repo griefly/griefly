@@ -1,6 +1,6 @@
 #include "Item.h"
 
-#include "core/SyncRandom.h"
+#include "core/SynchronizedRandom.h"
 #include "core/Game.h"
 
 #include "core/objects/Slot.h"

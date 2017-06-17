@@ -6,7 +6,7 @@
 #include "objects/test/UnsyncGenerator.h"
 #include "objects/GlobalObjectsHolder.h"
 
-#include "SyncRandom.h"
+#include "SynchronizedRandom.h"
 #include "Names.h"
 #include "WorldLoaderSaver.h"
 #include "ChatFrameInfo.h"

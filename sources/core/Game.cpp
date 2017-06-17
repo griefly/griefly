@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "representation/Text.h"
 
-#include "SyncRandom.h"
+#include "SynchronizedRandom.h"
 #include "ObjectFactory.h"
 #include "net/MagicStrings.h"
 #include "objects/Tile.h"

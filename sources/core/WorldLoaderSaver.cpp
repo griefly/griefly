@@ -10,7 +10,7 @@
 #include "objects/Tile.h"
 #include "objects/mobs/Mob.h"
 
-#include "SyncRandom.h"
+#include "SynchronizedRandom.h"
 
 #include "MapEditor.h"
 

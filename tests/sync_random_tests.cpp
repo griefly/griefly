@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/SyncRandom.h"
+#include "core/SynchronizedRandom.h"
 
 using namespace kv;
 

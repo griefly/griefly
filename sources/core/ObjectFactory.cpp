@@ -6,7 +6,7 @@
 #include "objects/MaterialObject.h"
 #include "Game.h"
 #include "Map.h"
-#include "SyncRandom.h"
+#include "SynchronizedRandom.h"
 #include "net/MagicStrings.h"
 #include "net/NetworkMessagesTypes.h"
 #include "AutogenMetadata.h"

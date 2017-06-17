@@ -2,7 +2,7 @@
 
 #include "core/Names.h"
 
-#include "core/SyncRandom.h"
+#include "core/SynchronizedRandom.h"
 #include "core/objects/GlobalObjectsHolder.h"
 
 #include "core/ObjectFactory.h"
