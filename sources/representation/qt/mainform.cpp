@@ -104,6 +104,12 @@ void MainForm::addSystemText(QString key, QString text)
     }
 }
 
+void MainForm::addSytemTextToTab(const QString& tab, const QString& text)
+{
+    // TODO: tab
+    ui->mainTabTextBrowser->insertHtml(QString("%1: %2<br>").arg(tab).arg(text));
+}
+
 void MainForm::resizeEvent(QResizeEvent* event) {
     ui->lineEdit->resize(width(), ui->lineEdit->height());
     ui->lineEdit->move(ui->lineEdit->x(), height() - ui->lineEdit->height());
@@ -145,6 +151,8 @@ void MainForm::startGameLoop(int id, QString map)
             this, &MainForm::insertHtmlIntoChat);
     connect(game, &Game::addSystemText,
             this, &MainForm::addSystemText);
+    connect(representation, &Representation::systemText,
+            this, &MainForm::addSytemTextToTab);
 
     connect(game, &Game::sendMap,
             &Network2::GetInstance(), &Network2::sendMap);

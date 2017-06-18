@@ -75,6 +75,11 @@ void Representation::AddToNewFrame(const ChatMessage& message)
     new_frame_->messages.push_back(message);
 }
 
+void Representation::AddToNewFrame(const Representation::TextEntry& text)
+{
+    new_frame_->texts.push_back(text);
+}
+
 void Representation::SetMusic(const Music& music)
 {
     new_frame_->music = music;
@@ -96,6 +101,7 @@ void Representation::Swap()
     new_frame_->sounds.clear();
     new_frame_->units.clear();
     new_frame_->messages.clear();
+    new_frame_->texts.clear();
 }
 
 const int SUPPORTED_KEYS_SIZE = 8;
@@ -423,6 +429,10 @@ void Representation::SynchronizeViews()
     for (const ChatMessage& message : qAsConst(current_frame_.messages))
     {
         emit chatMessage(message.html);
+    }
+    for (const TextEntry& text : qAsConst(current_frame_.texts))
+    {
+        emit systemText(text.tab, text.text);
     }
 
     ++current_frame_id_;

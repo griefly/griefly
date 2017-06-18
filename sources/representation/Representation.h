@@ -54,6 +54,12 @@ public:
         QString html;
     };
 
+    struct TextEntry
+    {
+        QString tab;
+        QString text;
+    };
+
     struct Music
     {
         QString name;
@@ -72,7 +78,8 @@ public:
     void AddToNewFrame(const InterfaceUnit& unit);
     void AddToNewFrame(const Entity& entity);
     void AddToNewFrame(const Sound& sound);
-    void AddToNewFrame(const ChatMessage& sound);
+    void AddToNewFrame(const ChatMessage& message);
+    void AddToNewFrame(const TextEntry& text);
 
     void SetMusic(const Music& music);
 
@@ -92,6 +99,7 @@ public:
     SoundPlayer& GetSoundPlayer() { return player_; }
 signals:
     void chatMessage(const QString& html);
+    void systemText(const QString& tab, const QString& text);
 private:
     QMap<Qt::Key, bool> keys_state_;
 
@@ -121,6 +129,7 @@ private:
         QVector<QString> sounds;
         QVector<InterfaceUnit> units;
         QVector<ChatMessage> messages;
+        QVector<TextEntry> texts;
         Music music;
         int camera_pos_x;
         int camera_pos_y;

@@ -22,6 +22,7 @@ public:
     ~MainForm();
 public slots:
     void addSystemText(QString key, QString text);
+    void addSytemTextToTab(const QString& tab, const QString& text);
 
     void startGameLoop(int id, QString map);
     void connectionFailed(QString reason);

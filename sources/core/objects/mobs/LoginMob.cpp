@@ -40,21 +40,6 @@ void LoginMob::MindExit()
 
 void LoginMob::MindEnter()
 {
-    GetGame().GetTexts()["LoginScreenCount"].SetUpdater
-    ([this](QString* str)
-    {
-        if (GetLobby().GetSecondUntilStart() < 0)
-        {
-            *str = "Round is in process, click on the screen";
-            return;
-        }
-        else
-        {
-            *str = QString::number(GetLobby().GetSecondUntilStart());
-        }
-        *str = "Until start: " + *str;
-    });
-
     PlayMusic("lobby.ogg", 10);
 }
 
@@ -178,14 +163,23 @@ void LoginInterface::Init()
 
 void LoginInterface::Draw()
 {
-    //view_.Draw(0, 0, 0);
     Representation::InterfaceUnit unit;
     unit.name = LOGIN_CLICK;
     unit.pixel_x = 0;
     unit.pixel_y = 0;
     unit.view = view_;
     GetRepresentation().AddToNewFrame(unit);
-    //qDebug() << "Login interface";
+
+    QString text;
+    if (GetLobby().GetSecondUntilStart() < 0)
+    {
+        text = "Round is in process, click on the screen";
+    }
+    else
+    {
+        text = QString("Until start: %1").arg(GetLobby().GetSecondUntilStart());
+    }
+    GetRepresentation().AddToNewFrame(Representation::TextEntry{"test", text});
 }
 
 unsigned int LoginInterface::hash() const
