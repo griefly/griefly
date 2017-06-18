@@ -199,7 +199,6 @@ void Game::Process()
 
             timer.start();
             GenerateFrame();
-            GetTexts().Process();
             frame_generation_ns_ += timer.nsecsElapsed();
             frame_generation_ns_ /= 2;
         }

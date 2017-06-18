@@ -430,6 +430,7 @@ void Representation::SynchronizeViews()
     {
         emit chatMessage(message.html);
     }
+    emit clearSystemTexts();
     for (const TextEntry& text : qAsConst(current_frame_.texts))
     {
         emit systemText(text.tab, text.text);

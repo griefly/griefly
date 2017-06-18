@@ -100,6 +100,7 @@ public:
 signals:
     void chatMessage(const QString& html);
     void systemText(const QString& tab, const QString& text);
+    void clearSystemTexts();
 private:
     QMap<Qt::Key, bool> keys_state_;
 

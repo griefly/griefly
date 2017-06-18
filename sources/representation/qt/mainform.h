@@ -23,6 +23,7 @@ public:
 public slots:
     void addSystemText(QString key, QString text);
     void addSytemTextToTab(const QString& tab, const QString& text);
+    void clearSystemTexts();
 
     void startGameLoop(int id, QString map);
     void connectionFailed(QString reason);

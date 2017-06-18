@@ -110,6 +110,12 @@ void MainForm::addSytemTextToTab(const QString& tab, const QString& text)
     ui->mainTabTextBrowser->insertHtml(QString("%1: %2<br>").arg(tab).arg(text));
 }
 
+void MainForm::clearSystemTexts()
+{
+    // TODO: tab
+    ui->mainTabTextBrowser->clear();
+}
+
 void MainForm::resizeEvent(QResizeEvent* event) {
     ui->lineEdit->resize(width(), ui->lineEdit->height());
     ui->lineEdit->move(ui->lineEdit->x(), height() - ui->lineEdit->height());
@@ -151,6 +157,8 @@ void MainForm::startGameLoop(int id, QString map)
             this, &MainForm::insertHtmlIntoChat);
     connect(game, &Game::addSystemText,
             this, &MainForm::addSystemText);
+    connect(representation, &Representation::clearSystemTexts,
+            this, &MainForm::clearSystemTexts);
     connect(representation, &Representation::systemText,
             this, &MainForm::addSytemTextToTab);
 
@@ -162,28 +170,6 @@ void MainForm::startGameLoop(int id, QString map)
 
     connect(this, &MainForm::closing, game, &Game::endProcess);
     connect(this, &MainForm::generateUnsync, game, &Game::generateUnsync);
-
-
-    QTimer text_updater;
-    text_updater.setInterval(500);
-    connect(&text_updater, &QTimer::timeout,
-    [&]()
-    {
-        ui->mainTabTextBrowser->clear();
-        ui->performanceTextBrowser->clear();
-        for (auto it = texts_.begin(); it != texts_.end(); ++it)
-        {
-            // TODO: constants?
-            if (it.key().startsWith("{Perf}"))
-            {
-                ui->performanceTextBrowser->insertHtml(*it + "<br>");
-                continue;
-            }
-            ui->mainTabTextBrowser->insertHtml(*it + "<br>");
-        }
-    });
-
-    text_updater.start();
 
     QElapsedTimer fps_timer;
     fps_timer.start();
