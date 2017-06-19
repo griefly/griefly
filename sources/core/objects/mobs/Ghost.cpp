@@ -91,18 +91,18 @@ void Ghost::ProcessMessage(const Message2& msg)
     Mob::ProcessMessage(msg);
 }
 
+void Ghost::GenerateInterfaceForFrame()
+{
+    QString text = QString("Until respawn: %1").arg(seconds_until_respawn_);;
+    GetRepresentation().AddToNewFrame(Representation::TextEntry{"test", text});
+}
+
 void Ghost::MindEnter()
 {
-    GetGame().GetTexts()["RespawnCount"].SetUpdater
-    ([this](QString* str)
-    {
-        *str = QString("Until respawn: %1").arg(seconds_until_respawn_);
-    }).SetFreq(250);
 }
 
 void Ghost::MindExit()
 {
-    GetGame().GetTexts().Delete("RespawnCount");
 }
 
 void Ghost::Process()

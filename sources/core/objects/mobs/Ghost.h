@@ -16,6 +16,8 @@ public:
     virtual void CalculateVisible(VisiblePoints* visible_list) const override;
     virtual void ProcessMessage(const Message2& msg) override;
 
+    virtual void GenerateInterfaceForFrame() override;
+
     virtual void MindEnter() override;
     virtual void MindExit() override;
 
