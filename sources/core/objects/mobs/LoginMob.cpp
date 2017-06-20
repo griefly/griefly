@@ -34,7 +34,6 @@ void LoginMob::AfterWorldCreation()
 
 void LoginMob::MindExit()
 {
-    GetGame().GetTexts().Delete("LoginScreenCount");
     PlayMusic("");
 }
 

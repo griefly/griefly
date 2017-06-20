@@ -63,6 +63,7 @@ signals:
     void insertHtmlIntoChat(QString html);
 private:
     void GenerateFrame();
+    void AppendSystemTexts();
     void AppendSoundsToFrame(const VisiblePoints& points);
     void AppendChatMessages();
 

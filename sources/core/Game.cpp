@@ -346,12 +346,6 @@ void Game::InitWorld(int id, QString map_name)
 
     emit insertHtmlIntoChat(ON_LOGIN_MESSAGE);
 
-    GetTexts()["CpuLoad"].SetUpdater
-    ([this](QString* str)
-    {
-        *str = QString("CPU load: %1%").arg(cpu_load_);
-    }).SetFreq(1000);
-
     GetTexts()["CpuLoadAverage"].SetUpdater
     ([this](QString* str)
     {
@@ -600,6 +594,8 @@ void Game::ProcessInputMessages()
 
 void Game::GenerateFrame()
 {
+    AppendSystemTexts();
+
     points_.clear();
     GetMob()->CalculateVisible(&points_);
     GetMap().Represent(points_);
@@ -612,6 +608,11 @@ void Game::GenerateFrame()
     // TODO: reset all shifts
     GetRepresentation().SetCameraForFrame(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
     GetRepresentation().Swap();
+}
+
+void Game::AppendSystemTexts()
+{
+    GetRepresentation().AddToNewFrame(Representation::TextEntry{"test", QString("CPU load: %1%").arg(cpu_load_)});
 }
 
 void Game::AppendSoundsToFrame(const VisiblePoints& points)
