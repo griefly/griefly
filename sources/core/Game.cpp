@@ -346,35 +346,6 @@ void Game::InitWorld(int id, QString map_name)
 
     emit insertHtmlIntoChat(ON_LOGIN_MESSAGE);
 
-    GetTexts()["CpuLoadAverage"].SetUpdater
-    ([this](QString* str)
-    {
-        float sum = 0.0f;
-        for (float load : cpu_loads_)
-        {
-            sum += load;
-        }
-        *str = QString("Average CPU load: %1%").arg(sum / cpu_loads_.size());
-    }).SetFreq(1000);
-
-    GetTexts()["Tick"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Game tick: %1").arg(GetGlobals()->game_tick);
-    });
-
-    GetTexts()["AmountConnections"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Players: %1").arg(current_connections_);
-    });
-
-    GetTexts()["PingTimer"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Ping: %1 ms").arg(current_ping_);
-    });
-
     GetTexts()["{Perf}ProcessMessages"].SetUpdater
     ([&](QString* str)
     {
@@ -612,7 +583,22 @@ void Game::GenerateFrame()
 
 void Game::AppendSystemTexts()
 {
-    GetRepresentation().AddToNewFrame(Representation::TextEntry{"test", QString("CPU load: %1%").arg(cpu_load_)});
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{"test", QString("CPU load: %1%").arg(cpu_load_)});
+
+    float sum = 0.0f;
+    for (float load : cpu_loads_)
+    {
+        sum += load;
+    }
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{"test", QString("Average CPU load: %1%").arg(sum / cpu_loads_.size())});
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{"test", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{"test", QString("Players: %1").arg(current_connections_)});
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{"test", QString("Ping: %1 ms").arg(current_ping_)});
 }
 
 void Game::AppendSoundsToFrame(const VisiblePoints& points)
