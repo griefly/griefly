@@ -346,55 +346,6 @@ void Game::InitWorld(int id, QString map_name)
 
     emit insertHtmlIntoChat(ON_LOGIN_MESSAGE);
 
-    GetTexts()["{Perf}ProcessMessages"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Process messages: %1 ms")
-            .arg((process_messages_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
-
-    GetTexts()["{Perf}ProcessForeach"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Process objects: %1 ms")
-            .arg((foreach_process_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
-
-    GetTexts()["{Perf}ProcessForce"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Process force movement: %1 ms")
-            .arg((force_process_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
-
-    GetTexts()["{Perf}ProcessAtmos"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Process atmos: %1 ms")
-            .arg((atmos_process_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
-
-    GetTexts()["{Perf}ProcessDelete"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Process deletion: %1 ms")
-            .arg((deletion_process_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
-
-    GetTexts()["{Perf}UpdateVisibility"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Update visibility: %1 ms")
-            .arg((update_visibility_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
-
-    GetTexts()["{Perf}FrameGeneration"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Frame generation: %1 ms")
-            .arg((frame_generation_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
-
     thread_.start();
 }
 
@@ -584,7 +535,7 @@ void Game::GenerateFrame()
 void Game::AppendSystemTexts()
 {
     GetRepresentation().AddToNewFrame(
-        Representation::TextEntry{"test", QString("CPU load: %1%").arg(cpu_load_)});
+        Representation::TextEntry{"Main", QString("CPU load: %1%").arg(cpu_load_)});
 
     float sum = 0.0f;
     for (float load : cpu_loads_)
@@ -592,13 +543,48 @@ void Game::AppendSystemTexts()
         sum += load;
     }
     GetRepresentation().AddToNewFrame(
-        Representation::TextEntry{"test", QString("Average CPU load: %1%").arg(sum / cpu_loads_.size())});
+        Representation::TextEntry{"Main", QString("Average CPU load: %1%").arg(sum / cpu_loads_.size())});
     GetRepresentation().AddToNewFrame(
-        Representation::TextEntry{"test", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
+        Representation::TextEntry{"Main", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
     GetRepresentation().AddToNewFrame(
-        Representation::TextEntry{"test", QString("Players: %1").arg(current_connections_)});
+        Representation::TextEntry{"Main", QString("Players: %1").arg(current_connections_)});
     GetRepresentation().AddToNewFrame(
-        Representation::TextEntry{"test", QString("Ping: %1 ms").arg(current_ping_)});
+        Representation::TextEntry{"Main", QString("Ping: %1 ms").arg(current_ping_)});
+
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Process messages: %1 ms").arg((process_messages_ns_ * 1.0) / 1000000.0)});
+
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Process objects: %1 ms").arg((foreach_process_ns_ * 1.0) / 1000000.0)});
+
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Process force movement: %1 ms").arg((force_process_ns_ * 1.0) / 1000000.0)});
+
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Process atmos: %1 ms").arg((atmos_process_ns_ * 1.0) / 1000000.0)});
+
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Process deletion: %1 ms").arg((deletion_process_ns_ * 1.0) / 1000000.0)});
+
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Update visibility: %1 ms").arg((update_visibility_ns_ * 1.0) / 1000000.0)});
+
+    GetRepresentation().AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Frame generation: %1 ms").arg((frame_generation_ns_ * 1.0) / 1000000.0)});
 }
 
 void Game::AppendSoundsToFrame(const VisiblePoints& points)
