@@ -25,6 +25,7 @@ install:
     sudo apt-get install -y qt58multimedia;
     sudo apt-get install -y lcov;
     sudo apt-get install -y mesa-common-dev;
+    sudo apt-get install -y libglu1-mesa-dev;
     gem install coveralls-lcov;
     sudo /opt/qt58/bin/qt58-env.sh;
     export CMAKE_PREFIX_PATH=/opt/qt58/;
