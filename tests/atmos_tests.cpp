@@ -12,13 +12,11 @@ class AtmosTest : public ::testing::Test
 {
 protected:
     AtmosTest()
-        : atmos(&painter)
     {
         // Nothing
     }
 
     MockIMap map;
-    TextPainter painter;
     Atmosphere atmos;
 };
 

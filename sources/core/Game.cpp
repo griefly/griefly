@@ -95,7 +95,7 @@ void Game::InitGlobalObjects()
     qDebug() << "Game global object initialization";
 
     texts_ = new TextPainter;
-    atmos_ = new Atmosphere(texts_);
+    atmos_ = new Atmosphere;
     factory_ = new ObjectFactory(this);
     names_ = new Names(this);
     world_loader_saver_ = new WorldLoaderSaver(this);
@@ -522,6 +522,8 @@ void Game::GenerateFrame()
     GetMob()->CalculateVisible(&points_);
     GetMap().Represent(points_);
     GetMob()->GenerateInterfaceForFrame();
+
+    GetAtmosphere().Represent(&GetRepresentation());
 
     AppendSoundsToFrame(points_);
     GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));

@@ -9,13 +9,12 @@
 
 #include "AtmosGrid.h"
 
-#include "representation/Text.h"
+#include "representation/Representation.h"
 
 using namespace kv;
 
-Atmosphere::Atmosphere(TextPainter *texts)
-    : map_(nullptr),
-      texts_(texts)
+Atmosphere::Atmosphere()
+    : map_(nullptr)
 {
     grid_processing_ns_ = 0;
     movement_processing_ns_ = 0;
@@ -23,20 +22,6 @@ Atmosphere::Atmosphere(TextPainter *texts)
     x_size_ = 0;
     y_size_ = 0;
     z_size_ = 0;
-
-    (*texts_)["{Perf}AtmosGridProcessing"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Atmos grid processing: %1 ms")
-            .arg((grid_processing_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
-
-    (*texts_)["{Perf}AtmosMove"].SetUpdater
-    ([&](QString* str)
-    {
-        *str = QString("Atmos move processing: %1 ms")
-            .arg((movement_processing_ns_ * 1.0) / 1000000.0);
-    }).SetFreq(1000);
 
     qDebug() << "Atmosphere load";
     z_size_ = 1;
@@ -182,7 +167,20 @@ void Atmosphere::ProcessMove(qint32 game_tick)
         }
     }
     movement_processing_ns_
-        = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
+            = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
+}
+
+void Atmosphere::Represent(Representation* representation) const
+{
+    representation->AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Atmos grid processing: %1 ms").arg((grid_processing_ns_ * 1.0) / 1000000.0)});
+
+    representation->AddToNewFrame(
+        Representation::TextEntry{
+            "Performance",
+            QString("Atmos move processing: %1 ms").arg((movement_processing_ns_ * 1.0) / 1000000.0)});
 }
 
 void Atmosphere::SetFlags(quint32 x, quint32 y, quint32 z, AtmosInterface::Flags flags)

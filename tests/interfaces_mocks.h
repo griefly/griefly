@@ -16,6 +16,7 @@ class MockIAtmosphere : public AtmosInterface
 public:
     MOCK_METHOD1(Process, void(qint32 game_tick));
     MOCK_METHOD1(ProcessMove, void(qint32 game_tick));
+    MOCK_CONST_METHOD1(Represent, void(Representation* representation));
 
     MOCK_METHOD4(SetFlags, void(quint32 x, quint32 y, quint32 z, Flags flags));
     MOCK_METHOD1(LoadGrid, void(MapInterface*));

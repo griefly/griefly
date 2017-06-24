@@ -19,6 +19,7 @@ namespace kv
     class ChatFrameInfo;
 }
 class MapInterface;
+class Representation;
 
 class AtmosInterface
 {
@@ -27,6 +28,8 @@ public:
 
     virtual void Process(qint32 game_tick) = 0;
     virtual void ProcessMove(qint32 game_tick) = 0;
+
+    virtual void Represent(Representation* representation) const = 0;
 
     using Flags = char;
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) = 0;

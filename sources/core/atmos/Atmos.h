@@ -17,10 +17,12 @@ class TextPainter;
 class Atmosphere : public AtmosInterface
 {
 public:
-    Atmosphere(TextPainter* texts);
+    Atmosphere();
 
     virtual void Process(qint32 game_tick) override;
     virtual void ProcessMove(qint32 game_tick) override;
+
+    virtual void Represent(Representation* representation) const;
 
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) override;
     virtual void LoadGrid(MapInterface* map) override;
@@ -41,5 +43,4 @@ private:
     int z_size_;
 
     MapInterface* map_;
-    TextPainter* texts_;
 };
