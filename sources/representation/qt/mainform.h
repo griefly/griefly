@@ -49,6 +49,8 @@ signals:
     void closing();
     void generateUnsync();
 private:
+    void AddSystemTexts();
+
     QElapsedTimer close_request_timer_;
     bool map_sending_;
 
@@ -61,6 +63,8 @@ private:
     char** argv_;
     Ui::MainForm *ui;
     int fps_cap_;
+
+    int current_fps_;
 
     QMap<QString, QString> texts_;
 

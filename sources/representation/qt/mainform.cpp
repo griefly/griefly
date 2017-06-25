@@ -32,7 +32,8 @@
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainForm),
-    fps_cap_(-1)
+    fps_cap_(-1),
+    current_fps_(0)
 {
     ui->setupUi(this);
 
@@ -173,6 +174,7 @@ void MainForm::startGameLoop(int id, QString map)
 
     QElapsedTimer fps_timer;
     fps_timer.start();
+
     int fps_counter = 0;
 
     QElapsedTimer process_performance;
@@ -210,7 +212,10 @@ void MainForm::startGameLoop(int id, QString map)
 
         if (fps_timer.elapsed() > 1000)
         {
-            addSystemText("FPS", "FPS: " + QString::number(fps_counter));
+            current_fps_ = fps_counter;
+
+            AddSystemTexts();
+
             addSystemText(
                 "{Perf}Represent",
                 QString("Represent max: %1 ms").arg(max_process_time / 1e6));
@@ -352,6 +357,13 @@ void MainForm::connectToHost()
     }
 
     Network2::GetInstance().TryConnect(adrs, port, login, password);
+}
+
+void MainForm::AddSystemTexts()
+{
+    ui->performanceTextBrowser->clear();
+
+    ui->performanceTextBrowser->insertHtml(QString("%1<br>").arg(QString("FPS: %1").arg(current_fps_)));
 }
 
 bool IsOOCMessage(const QString& text)
