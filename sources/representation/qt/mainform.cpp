@@ -33,7 +33,8 @@ MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainForm),
     fps_cap_(-1),
-    current_fps_(0)
+    current_fps_(0),
+    represent_max_ms_(0)
 {
     ui->setupUi(this);
 
@@ -213,12 +214,10 @@ void MainForm::startGameLoop(int id, QString map)
         if (fps_timer.elapsed() > 1000)
         {
             current_fps_ = fps_counter;
+            represent_max_ms_ = max_process_time / 1e6;
 
             AddSystemTexts();
 
-            addSystemText(
-                "{Perf}Represent",
-                QString("Represent max: %1 ms").arg(max_process_time / 1e6));
             qint64 mutex_ns = GetRepresentation().GetPerformance().mutex_ns;
             addSystemText(
                 "{Perf}RepresentMutex",
@@ -363,7 +362,8 @@ void MainForm::AddSystemTexts()
 {
     ui->performanceTextBrowser->clear();
 
-    ui->performanceTextBrowser->insertHtml(QString("%1<br>").arg(QString("FPS: %1").arg(current_fps_)));
+    ui->performanceTextBrowser->insertHtml(QString("FPS: %1<br>").arg(current_fps_));
+    ui->performanceTextBrowser->insertHtml(QString("Represent max: %1 ms<br>").arg(represent_max_ms_));
 }
 
 bool IsOOCMessage(const QString& text)

@@ -65,6 +65,7 @@ private:
     int fps_cap_;
 
     int current_fps_;
+    qint64 represent_max_ms_;
 
     QMap<QString, QString> texts_;
 
