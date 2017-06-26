@@ -218,10 +218,6 @@ void MainForm::startGameLoop(int id, QString map)
 
             AddSystemTexts();
 
-            qint64 mutex_ns = GetRepresentation().GetPerformance().mutex_ns;
-            addSystemText(
-                "{Perf}RepresentMutex",
-                QString("Represent mutex lock max: %1 ms").arg(mutex_ns / 1e6));
             GetRepresentation().ResetPerformance();
             max_process_time = 0;
             fps_timer.restart();
@@ -364,6 +360,9 @@ void MainForm::AddSystemTexts()
 
     ui->performanceTextBrowser->insertHtml(QString("FPS: %1<br>").arg(current_fps_));
     ui->performanceTextBrowser->insertHtml(QString("Represent max: %1 ms<br>").arg(represent_max_ms_));
+
+    const qint64 mutex_ns = GetRepresentation().GetPerformance().mutex_ns;
+    ui->performanceTextBrowser->insertHtml(QString("Represent mutex lock max: %1 ms").arg(mutex_ns / 1e6));
 }
 
 bool IsOOCMessage(const QString& text)

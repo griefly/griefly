@@ -232,11 +232,6 @@ Representation::InterfaceUnit::InterfaceUnit()
 
 void Representation::Process()
 {
-    performance_.timer.start();
-
-    performance_.mutex_ns
-        = qMax(performance_.mutex_ns, performance_.timer.nsecsElapsed());
-
     SynchronizeViews();
 
     const int AUTOPLAY_INTERVAL = 10;
@@ -377,12 +372,18 @@ void Representation::SynchronizeViews()
 {
     Music old_music = current_frame_.music;
     {
+        performance_.timer.start();
         QMutexLocker lock(&mutex_);
+        if (is_updated_)
+        {
+            current_frame_ = *old_frame_;
+        }
+        performance_.mutex_ns
+            = qMax(performance_.mutex_ns, performance_.timer.nsecsElapsed());
         if (!is_updated_)
         {
             return;
         }
-        current_frame_ = *old_frame_;
     }
 
     camera_.SetPos(current_frame_.camera_pos_x, current_frame_.camera_pos_y);
