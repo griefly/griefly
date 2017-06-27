@@ -3,7 +3,6 @@
 #include "KvAbort.h"
 
 #include "Map.h"
-#include "representation/Text.h"
 
 #include "SynchronizedRandom.h"
 #include "ObjectFactory.h"
@@ -75,18 +74,16 @@ Game::Game()
     }
     log_pos_ = 0;
 
-    this->moveToThread(&thread_);
+    moveToThread(&thread_);
     connect(&thread_, &QThread::started, this, &Game::process);
 
     factory_ = nullptr;
-    texts_ = nullptr;
     names_= nullptr;
 }
 
 Game::~Game()
 {
     delete factory_;
-    delete texts_;
     delete names_;
 }
 
@@ -94,20 +91,12 @@ void Game::InitGlobalObjects()
 {
     qDebug() << "Game global object initialization";
 
-    texts_ = new TextPainter;
     atmos_ = new Atmosphere;
     factory_ = new ObjectFactory(this);
     names_ = new Names(this);
     world_loader_saver_ = new WorldLoaderSaver(this);
 
     qDebug() << "Successfull initialization!";
-
-    qDebug() << "Some QObject moving and connecting";
-
-    texts_->moveToThread(&thread_);
-    connect(texts_, &TextPainter::addSystemText, this, &Game::addSystemText);
-
-    qDebug() << "End some moving and connecting";
 }
 
 void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
@@ -654,11 +643,6 @@ const MapInterface& Game::GetMap() const
 ObjectFactoryInterface& Game::GetFactory()
 {
     return *factory_;
-}
-
-TextPainter& Game::GetTexts()
-{
-    return *texts_;
 }
 
 Names& Game::GetNames()

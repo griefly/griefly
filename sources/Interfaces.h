@@ -8,7 +8,6 @@
 #include <QString>
 
 class Names;
-class TextPainter;
 namespace kv
 {
     class Mob;
@@ -100,7 +99,6 @@ public:
     virtual MapInterface& GetMap() = 0;
     virtual const MapInterface& GetMap() const = 0;
     virtual ObjectFactoryInterface& GetFactory() = 0;
-    virtual TextPainter& GetTexts() = 0;
     virtual Names& GetNames() = 0;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() = 0;
 

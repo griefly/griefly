@@ -10,7 +10,6 @@
 #include "net/MagicStrings.h"
 #include "Params.h"
 
-#include "Text.h"
 #include "SpriteHolder.h"
 #include "ImageLoader.h"
 

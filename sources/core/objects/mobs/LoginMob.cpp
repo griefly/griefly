@@ -1,6 +1,5 @@
 #include "LoginMob.h"
 
-#include "representation/Text.h"
 #include "representation/Sound.h"
 #include "Human.h"
 #include "core/ObjectFactory.h"

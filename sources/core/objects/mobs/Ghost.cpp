@@ -5,7 +5,6 @@
 #include "net/MagicStrings.h"
 #include "core/ObjectFactory.h"
 #include "core/objects/Lobby.h"
-#include "representation/Text.h"
 #include "LoginMob.h"
 #include "core/Game.h"
 

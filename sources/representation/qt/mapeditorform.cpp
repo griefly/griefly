@@ -3,7 +3,6 @@
 
 #include "core/ObjectFactory.h"
 #include "core/Map.h"
-#include "representation/Text.h"
 
 #include "representation/View2.h"
 #include "representation/SpriteHolder.h"

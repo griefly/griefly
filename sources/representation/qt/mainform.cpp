@@ -17,7 +17,6 @@
 
 #include "net/Network2.h"
 #include "net/NetworkMessagesTypes.h"
-#include "representation/Text.h"
 
 #include <QDebug>
 #include <QString>
@@ -97,15 +96,6 @@ MainForm::~MainForm()
     delete ui;
 }
 
-void MainForm::addSystemText(QString key, QString text)
-{
-    texts_[key] = text;
-    if (text == "")
-    {
-        texts_.remove(key);
-    }
-}
-
 void MainForm::addSytemTextToTab(const QString& tab, const QString& text)
 {
     // TODO: tab
@@ -157,8 +147,6 @@ void MainForm::startGameLoop(int id, QString map)
 
     connect(game, &Game::insertHtmlIntoChat,
             this, &MainForm::insertHtmlIntoChat);
-    connect(game, &Game::addSystemText,
-            this, &MainForm::addSystemText);
     connect(representation, &Representation::clearSystemTexts,
             this, &MainForm::clearSystemTexts);
     connect(representation, &Representation::systemText,

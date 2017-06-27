@@ -12,7 +12,6 @@ namespace atmos
 {
     class AtmosGrid;
 }
-class TextPainter;
 
 class Atmosphere : public AtmosInterface
 {

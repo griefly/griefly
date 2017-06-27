@@ -21,7 +21,6 @@ public:
     explicit MainForm(QWidget *parent = 0);
     ~MainForm();
 public slots:
-    void addSystemText(QString key, QString text);
     void addSytemTextToTab(const QString& tab, const QString& text);
     void clearSystemTexts();
 
@@ -66,8 +65,6 @@ private:
 
     int current_fps_;
     qint64 represent_max_ms_;
-
-    QMap<QString, QString> texts_;
 
     QVector<QString> chat_messages_;
 };

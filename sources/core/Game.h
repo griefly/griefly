@@ -19,8 +19,6 @@
 
 #include "Interfaces.h"
 
-class TextPainter;
-
 class Game : public QObject, public GameInterface
 {
     Q_OBJECT
@@ -40,7 +38,6 @@ public:
     virtual MapInterface& GetMap() override;
     virtual const MapInterface& GetMap() const override;
     virtual ObjectFactoryInterface& GetFactory() override;
-    virtual TextPainter& GetTexts() override;
     virtual Names& GetNames() override;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() override;
 
@@ -59,7 +56,6 @@ public slots:
     void generateUnsync();
 signals:    
     void sendMap(QString url, QByteArray data);
-    void addSystemText(QString key, QString text);
     void insertHtmlIntoChat(QString html);
 private:
     void GenerateFrame();
@@ -122,7 +118,6 @@ private:
 
     AtmosInterface* atmos_;
     ObjectFactoryInterface* factory_;
-    TextPainter* texts_;
 
     Names* names_;
     WorldLoaderSaver* world_loader_saver_;

@@ -3,8 +3,6 @@
 #include "core/atmos/Atmos.h"
 #include "interfaces_mocks.h"
 
-#include "representation/Text.h"
-
 using ::testing::ReturnRef;
 using ::testing::Return;
 

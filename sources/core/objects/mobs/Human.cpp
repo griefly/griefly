@@ -1,6 +1,5 @@
 #include "Human.h"
 
-#include "representation/Text.h"
 #include "core/ObjectFactory.h"
 #include "core/Names.h"
 #include "representation/Sound.h"
