@@ -43,25 +43,12 @@ MainForm::MainForm(QWidget *parent) :
     ui->textBrowser->setReadOnly(true);
     ui->textBrowser->setUndoRedoEnabled(false);
 
-    {
-        QList<int> sizes;
-        sizes.push_back(512);
-        sizes.push_back(256);
-        ui->splitter->setSizes(sizes);
-    }
-    {
-        QList<int> sizes;
-        sizes.push_back(100);
-        sizes.push_back(256);
-        ui->splitterRight->setSizes(sizes);
-    }
-
+    left_column = 512;
+    right_column = 256;
 
     setWindowTitle("Griefly " + QString(GetGameVersion()));
 
-    left_column = ui->leftColumn->width();
-    right_column = ui->rightColumn->width();
-
+    // Without GL widget looks weird
     ui->widget->hide();
 
     connect(&Network2::GetInstance(), &Network2::connectionSuccess,
@@ -108,15 +95,11 @@ void MainForm::clearSystemTexts()
     ui->mainTabTextBrowser->clear();
 }
 
-void MainForm::resizeEvent(QResizeEvent* event) {
-    ui->lineEdit->resize(width(), ui->lineEdit->height());
-    ui->lineEdit->move(ui->lineEdit->x(), height() - ui->lineEdit->height());
-    ui->splitter->resize(width(), ui->lineEdit->y());
+void MainForm::resizeEvent(QResizeEvent*) {
+    const int left = (width() * left_column) / (left_column + right_column);
+    const int right = (width() * right_column) / (left_column + right_column);
+    ui->splitter->setSizes({left, right});
 
-    QList<int> sizes;
-    sizes.push_back((width() * left_column) / (left_column + right_column));
-    sizes.push_back((width() * right_column) / (left_column + right_column));
-    ui->splitter->setSizes(sizes);
     on_splitter_splitterMoved(0, 0);
 }
 
@@ -439,12 +422,12 @@ void MainForm::on_lineEdit_returnPressed()
     Network2::GetInstance().SendMsg(message);
 }
 
-void MainForm::on_splitter_splitterMoved(int pos, int index)
+void MainForm::on_splitter_splitterMoved(int, int)
 {
     left_column = ui->leftColumn->width();
     right_column = ui->rightColumn->width();
 
-    int min_size = std::min(ui->leftColumn->width(), ui->leftColumn->height());
+    int min_size = qMin(ui->leftColumn->width(), ui->leftColumn->height());
     ui->widget->resize(min_size, min_size);
 
     ui->splitterRight->resize(ui->rightColumn->width(), ui->rightColumn->height());
