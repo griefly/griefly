@@ -43,8 +43,8 @@ MainForm::MainForm(QWidget *parent) :
     ui->textBrowser->setReadOnly(true);
     ui->textBrowser->setUndoRedoEnabled(false);
 
-    left_column = 512;
-    right_column = 256;
+    left_column_ = 512;
+    right_column_ = 256;
 
     setWindowTitle("Griefly " + QString(GetGameVersion()));
 
@@ -66,7 +66,7 @@ MainForm::MainForm(QWidget *parent) :
     connect(ui->widget, &QtOpenGL::f2Pressed,
             this, &MainForm::oocPrefixToLineEdit);
 
-    connect(ui->lineEdit, &GamingLineEdit::keyToPass, ui->widget, &QtOpenGL::handlePassedKey);
+    connect(ui->command_line_edit, &GamingLineEdit::keyToPass, ui->widget, &QtOpenGL::handlePassedKey);
 
     QTimer::singleShot(0, Qt::PreciseTimer, this, SLOT(connectToHost()));
 
@@ -75,7 +75,7 @@ MainForm::MainForm(QWidget *parent) :
 
 void MainForm::setFocusOnLineEdit()
 {
-    ui->lineEdit->setFocus();
+    ui->command_line_edit->setFocus();
 }
 
 MainForm::~MainForm()
@@ -95,9 +95,10 @@ void MainForm::clearSystemTexts()
     ui->mainTabTextBrowser->clear();
 }
 
-void MainForm::resizeEvent(QResizeEvent*) {
-    const int left = (width() * left_column) / (left_column + right_column);
-    const int right = (width() * right_column) / (left_column + right_column);
+void MainForm::resizeEvent(QResizeEvent*)
+{
+    const int left = (width() * left_column_) / (left_column_ + right_column_);
+    const int right = (width() * right_column_) / (left_column_ + right_column_);
     ui->splitter->setSizes({left, right});
 
     on_splitter_splitterMoved(0, 0);
@@ -252,7 +253,7 @@ void MainForm::RemoveFirstBlockFromTextEditor()
 
 void MainForm::oocPrefixToLineEdit()
 {
-    ui->lineEdit->setText("OOC ");
+    ui->command_line_edit->setText("OOC ");
 }
 
 void MainForm::uploadStarted()
@@ -348,10 +349,10 @@ bool IsOOCMessage(const QString& text)
     return false;
 }
 
-void MainForm::on_lineEdit_returnPressed()
+void MainForm::on_command_line_edit_returnPressed()
 {
-    QString text = ui->lineEdit->text();
-    ui->lineEdit->clear();
+    QString text = ui->command_line_edit->text();
+    ui->command_line_edit->clear();
     if (text.length() == 0)
     {
         return;
@@ -424,20 +425,20 @@ void MainForm::on_lineEdit_returnPressed()
 
 void MainForm::on_splitter_splitterMoved(int, int)
 {
-    left_column = ui->leftColumn->width();
-    right_column = ui->rightColumn->width();
+    left_column_ = ui->left_column->width();
+    right_column_ = ui->right_column->width();
 
-    int min_size = qMin(ui->leftColumn->width(), ui->leftColumn->height());
+    int min_size = qMin(ui->left_column->width(), ui->left_column->height());
     ui->widget->resize(min_size, min_size);
 
-    ui->splitterRight->resize(ui->rightColumn->width(), ui->rightColumn->height());
+    ui->splitter_right->resize(ui->right_column->width(), ui->right_column->height());
 
     if (IsScreenValid())
     {
         GetScreen().PerformSizeUpdate();
     }
 
-    int x_pos = (ui->leftColumn->width() - min_size) / 2;
-    int y_pos = (ui->leftColumn->height() - min_size) / 2;
+    int x_pos = (ui->left_column->width() - min_size) / 2;
+    int y_pos = (ui->left_column->height() - min_size) / 2;
     ui->widget->move(x_pos, y_pos);
 }

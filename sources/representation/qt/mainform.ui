@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>995</width>
-    <height>639</height>
+    <width>1091</width>
+    <height>721</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
    <item row="1" column="0">
-    <widget class="GamingLineEdit" name="lineEdit"/>
+    <widget class="GamingLineEdit" name="command_line_edit"/>
    </item>
    <item row="0" column="0">
     <widget class="QSplitter" name="splitter">
@@ -31,7 +31,7 @@ stop:0.6 rgba(255, 255, 255, 0));
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="leftColumn" native="true">
+     <widget class="QWidget" name="left_column" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -41,10 +41,10 @@ stop:0.6 rgba(255, 255, 255, 0));
       <widget class="QtOpenGL" name="widget" native="true">
        <property name="geometry">
         <rect>
-         <x>238</x>
-         <y>295</y>
-         <width>16</width>
-         <height>16</height>
+         <x>163</x>
+         <y>250</y>
+         <width>411</width>
+         <height>191</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -55,7 +55,7 @@ stop:0.6 rgba(255, 255, 255, 0));
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="rightColumn" native="true">
+     <widget class="QWidget" name="right_column" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
         <horstretch>0</horstretch>
@@ -70,11 +70,11 @@ stop:0.6 rgba(255, 255, 255, 0));
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
-        <widget class="QSplitter" name="splitterRight">
+        <widget class="QSplitter" name="splitter_right">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <widget class="QTabWidget" name="tabWidget">
+         <widget class="QTabWidget" name="texts_tabs">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
             <horstretch>0</horstretch>

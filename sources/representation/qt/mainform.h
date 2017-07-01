@@ -39,7 +39,7 @@ protected:
 private slots:
     void setFocusOnLineEdit();
 
-    void on_lineEdit_returnPressed();
+    void on_command_line_edit_returnPressed();
 
     void on_splitter_splitterMoved(int pos, int index);
 
@@ -55,8 +55,8 @@ private:
 
     void RemoveFirstBlockFromTextEditor();
 
-    int left_column;
-    int right_column;
+    int left_column_;
+    int right_column_;
 
     int argc_;
     char** argv_;
