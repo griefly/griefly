@@ -1,7 +1,7 @@
 #include "mainform.h"
 #include "ui_mainform.h"
 
-#include <iostream>
+#include <QMap>
 
 #include "core/Map.h"
 #include "Params.h"
@@ -36,12 +36,6 @@ MainForm::MainForm(QWidget *parent) :
     represent_max_ms_(0)
 {
     ui->setupUi(this);
-
-    ui->textBrowser->setAcceptRichText(false);
-    ui->textBrowser->setContextMenuPolicy(Qt::NoContextMenu);
-    ui->textBrowser->setOpenLinks(false);
-    ui->textBrowser->setReadOnly(true);
-    ui->textBrowser->setUndoRedoEnabled(false);
 
     left_column_ = 512;
     right_column_ = 256;
@@ -85,14 +79,49 @@ MainForm::~MainForm()
 
 void MainForm::addSytemTextToTab(const QString& tab, const QString& text)
 {
-    // TODO: tab
-    ui->mainTabTextBrowser->insertHtml(QString("%1: %2<br>").arg(tab).arg(text));
+    if (texts_.find(tab) == texts_.end())
+    {
+        QWidget* new_tab = new QWidget;
+        auto new_grid_layout = new QGridLayout(new_tab);
+        auto new_text_edit = new QTextEdit(new_tab);
+        new_text_edit->setUndoRedoEnabled(false);
+        new_text_edit->setReadOnly(true);
+
+        new_grid_layout->addWidget(new_text_edit, 0, 0, 1, 1);
+
+        texts_.insert(tab, new_text_edit);
+
+        const int index = ui->texts_tabs->count();
+        ui->texts_tabs->insertTab(index, new_tab, tab);
+    }
+
+    QTextEdit* text_edit = texts_[tab];
+    text_edit->insertHtml(QString("%1: %2<br>").arg(tab).arg(text));
 }
 
 void MainForm::clearSystemTexts()
 {
-    // TODO: tab
-    ui->mainTabTextBrowser->clear();
+    for (const auto& text_edit : qAsConst(texts_))
+    {
+        text_edit->clear();
+    }
+}
+
+void MainForm::removeEmptyTabs()
+{
+    QVector<QString> to_remove;
+    for (const auto& text_edit : qAsConst(texts_))
+    {
+        if (text_edit->document()->isEmpty())
+        {
+            delete text_edit->parent();
+            to_remove.append(texts_.key(text_edit));
+        }
+    }
+    for (const auto& removed : qAsConst(to_remove))
+    {
+        texts_.remove(removed);
+    }
 }
 
 void MainForm::resizeEvent(QResizeEvent*)
@@ -135,6 +164,8 @@ void MainForm::startGameLoop(int id, QString map)
             this, &MainForm::clearSystemTexts);
     connect(representation, &Representation::systemText,
             this, &MainForm::addSytemTextToTab);
+    connect(representation, &Representation::removeEmptyTabs,
+            this, &MainForm::removeEmptyTabs);
 
     connect(game, &Game::sendMap,
             &Network2::GetInstance(), &Network2::sendMap);
@@ -216,9 +247,9 @@ void MainForm::connectionFailed(QString reason)
 
 void MainForm::insertHtmlIntoChat(QString html)
 {
-    QTextCursor cursor = ui->textBrowser->textCursor();
+    QTextCursor cursor = ui->chat_text_edit->textCursor();
     cursor.movePosition(QTextCursor::End);
-    ui->textBrowser->setTextCursor(cursor);
+    ui->chat_text_edit->setTextCursor(cursor);
 
     cursor.insertHtml(html);
     cursor.insertBlock();
@@ -226,20 +257,20 @@ void MainForm::insertHtmlIntoChat(QString html)
     const int MIN_TEXT_BLOCKS = 3;
     const int MAX_SIZE_OF_DOCUMENT = 1500.0;
 
-    while (   (ui->textBrowser->document()->blockCount() > MIN_TEXT_BLOCKS)
-           && (ui->textBrowser->document()->size().height() > MAX_SIZE_OF_DOCUMENT))
+    while (   (ui->chat_text_edit->document()->blockCount() > MIN_TEXT_BLOCKS)
+           && (ui->chat_text_edit->document()->size().height() > MAX_SIZE_OF_DOCUMENT))
     {
         RemoveFirstBlockFromTextEditor();
     }
 
-    cursor = ui->textBrowser->textCursor();
+    cursor = ui->chat_text_edit->textCursor();
     cursor.movePosition(QTextCursor::End);
-    ui->textBrowser->setTextCursor(cursor);
+    ui->chat_text_edit->setTextCursor(cursor);
 }
 
 void MainForm::RemoveFirstBlockFromTextEditor()
 {
-    QTextCursor cursor = ui->textBrowser->textCursor();
+    QTextCursor cursor = ui->chat_text_edit->textCursor();
     cursor.movePosition(QTextCursor::Start);
     cursor.select(QTextCursor::BlockUnderCursor);
     cursor.removeSelectedText();
@@ -328,13 +359,13 @@ void MainForm::connectToHost()
 
 void MainForm::AddSystemTexts()
 {
-    ui->performanceTextBrowser->clear();
+    ui->client_text_edit->clear();
 
-    ui->performanceTextBrowser->insertHtml(QString("FPS: %1<br>").arg(current_fps_));
-    ui->performanceTextBrowser->insertHtml(QString("Represent max: %1 ms<br>").arg(represent_max_ms_));
+    ui->client_text_edit->insertHtml(QString("FPS: %1<br>").arg(current_fps_));
+    ui->client_text_edit->insertHtml(QString("Represent max: %1 ms<br>").arg(represent_max_ms_));
 
     const qint64 mutex_ns = GetRepresentation().GetPerformance().mutex_ns;
-    ui->performanceTextBrowser->insertHtml(QString("Represent mutex lock max: %1 ms").arg(mutex_ns / 1e6));
+    ui->client_text_edit->insertHtml(QString("Represent mutex lock max: %1 ms").arg(mutex_ns / 1e6));
 }
 
 bool IsOOCMessage(const QString& text)

@@ -435,6 +435,7 @@ void Representation::SynchronizeViews()
     {
         emit systemText(text.tab, text.text);
     }
+    emit removeEmptyTabs();
 
     ++current_frame_id_;
     is_updated_ = false;

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QTextEdit>
 #include <QLineEdit>
 #include <QKeyEvent>
 #include <QCloseEvent>
@@ -23,6 +24,7 @@ public:
 public slots:
     void addSytemTextToTab(const QString& tab, const QString& text);
     void clearSystemTexts();
+    void removeEmptyTabs();
 
     void startGameLoop(int id, QString map);
     void connectionFailed(QString reason);
@@ -54,6 +56,8 @@ private:
     bool map_sending_;
 
     void RemoveFirstBlockFromTextEditor();
+
+    QMap<QString, QTextEdit*> texts_;
 
     int left_column_;
     int right_column_;

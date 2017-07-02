@@ -64,7 +64,7 @@ stop:0.6 rgba(255, 255, 255, 0));
       </property>
       <property name="minimumSize">
        <size>
-        <width>300</width>
+        <width>0</width>
         <height>0</height>
        </size>
       </property>
@@ -84,47 +84,39 @@ stop:0.6 rgba(255, 255, 255, 0));
           <property name="currentIndex">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="tab">
+          <widget class="QWidget" name="client_tab">
            <attribute name="title">
-            <string>Main</string>
+            <string>Client</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="0">
-             <widget class="QTextBrowser" name="mainTabTextBrowser">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <widget class="QTextEdit" name="client_text_edit">
+              <property name="undoRedoEnabled">
+               <bool>false</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tabPerfomance">
-           <attribute name="title">
-            <string>Performance</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="0">
-             <widget class="QTextBrowser" name="performanceTextBrowser"/>
-            </item>
-           </layout>
-          </widget>
          </widget>
-         <widget class="QTextBrowser" name="textBrowser">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>13</pointsize>
-           </font>
-          </property>
-         </widget>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTextEdit" name="chat_text_edit">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="undoRedoEnabled">
+          <bool>false</bool>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
