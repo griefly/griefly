@@ -20,13 +20,13 @@ extern bool NODRAW; // probably nodraw mode
 
 enum class Dir : int
 {
-    ALL = -1,
-    LEFT = 0,
-    RIGHT = 1,
-    UP = 2,
-    DOWN = 3,
-    ZUP = 4,
-    ZDOWN = 5,
+    ALL = -1, // Basically, the center of something
+    WEST = 0,
+    EAST = 1,
+    NORTH = 2,
+    SOUTH = 3,
+    UP = 4,
+    DOWN = 5,
 
     SOUTHEAST = 6,
     SOUTHWEST = 7,
@@ -171,42 +171,42 @@ inline Dir VDirToDir(const kv::Vector& vdir)
     {
         if (vdir.x > 0)
         {
-            return Dir::RIGHT;
+            return Dir::EAST;
         }
-        return Dir::LEFT;
+        return Dir::WEST;
     }
     if (abs_y >= abs_z)
     {
         if (vdir.y >= 0)
         {
-            return Dir::DOWN;
+            return Dir::SOUTH;
         }
-        return Dir::UP;
+        return Dir::NORTH;
     }
 
     if (vdir.z > 0)
     {
-        return Dir::ZUP;
+        return Dir::UP;
     }
-    return Dir::ZDOWN;
+    return Dir::DOWN;
 }
 
 inline Dir RevertDir(Dir dir)
 {
     switch (dir)
     {
+    case Dir::NORTH:
+        return Dir::SOUTH;
+    case Dir::SOUTH:
+        return Dir::NORTH;
+    case Dir::WEST:
+        return Dir::EAST;
+    case Dir::EAST:
+        return Dir::WEST;
     case Dir::UP:
         return Dir::DOWN;
     case Dir::DOWN:
         return Dir::UP;
-    case Dir::LEFT:
-        return Dir::RIGHT;
-    case Dir::RIGHT:
-        return Dir::LEFT;
-    case Dir::ZUP:
-        return Dir::ZDOWN;
-    case Dir::ZDOWN:
-        return Dir::ZUP;
     case Dir::NORTHEAST:
         return Dir::SOUTHWEST;
     case Dir::SOUTHWEST:

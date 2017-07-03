@@ -65,22 +65,22 @@ bool CubeTile::CanTouch(IdPtr<MapObject> item) const
     {
         if (posy > cube_tile_posy)
         {
-            return CanTouch(item, Dir::UP);
+            return CanTouch(item, Dir::NORTH);
         }
         else
         {
-            return CanTouch(item, Dir::DOWN);
+            return CanTouch(item, Dir::SOUTH);
         }
     }
     if (posy == cube_tile_posy)
     {
         if (posx > cube_tile_posx)
         {
-            return CanTouch(item, Dir::LEFT);
+            return CanTouch(item, Dir::WEST);
         }
         else
         {
-            return CanTouch(item, Dir::RIGHT);
+            return CanTouch(item, Dir::EAST);
         }
     }
 
@@ -88,31 +88,31 @@ bool CubeTile::CanTouch(IdPtr<MapObject> item) const
     if (   (posy > cube_tile_posy)
         && (posx > cube_tile_posx))
     {
-        return    CanTouch(item, Dir::LEFT, Dir::UP)
-               || CanTouch(item, Dir::UP, Dir::LEFT);
+        return    CanTouch(item, Dir::WEST, Dir::NORTH)
+               || CanTouch(item, Dir::NORTH, Dir::WEST);
     }
     // Down Right
     if (   (posy < cube_tile_posy)
         && (posx < cube_tile_posx))
     {
-        return    CanTouch(item, Dir::RIGHT, Dir::DOWN)
-               || CanTouch(item, Dir::DOWN, Dir::RIGHT);
+        return    CanTouch(item, Dir::EAST, Dir::SOUTH)
+               || CanTouch(item, Dir::SOUTH, Dir::EAST);
     }
 
     // Up Right
     if (   (posy > cube_tile_posy)
         && (posx < cube_tile_posx))
     {
-        return    CanTouch(item, Dir::RIGHT, Dir::UP)
-               || CanTouch(item, Dir::UP, Dir::RIGHT);
+        return    CanTouch(item, Dir::EAST, Dir::NORTH)
+               || CanTouch(item, Dir::NORTH, Dir::EAST);
     }
 
     // Down Left
     if (   (posy < cube_tile_posy)
         && (posx > cube_tile_posx))
     {
-        return    CanTouch(item, Dir::LEFT, Dir::DOWN)
-               || CanTouch(item, Dir::DOWN, Dir::LEFT);
+        return    CanTouch(item, Dir::WEST, Dir::SOUTH)
+               || CanTouch(item, Dir::SOUTH, Dir::WEST);
     }
 
     // It should not be reached
@@ -280,10 +280,10 @@ bool CubeTile::AddObject(IdPtr<MapObject> item_raw)
     item->SetOwner(GetId());
 
     sum_passable_all_ = std::min(sum_passable_all_, item->GetPassable(Dir::ALL));
-    sum_passable_up_ = std::min(sum_passable_up_, item->GetPassable(Dir::UP));
-    sum_passable_down_ = std::min(sum_passable_down_, item->GetPassable(Dir::DOWN));
-    sum_passable_left_ = std::min(sum_passable_left_, item->GetPassable(Dir::LEFT));
-    sum_passable_right_ = std::min(sum_passable_right_, item->GetPassable(Dir::RIGHT));
+    sum_passable_up_ = std::min(sum_passable_up_, item->GetPassable(Dir::NORTH));
+    sum_passable_down_ = std::min(sum_passable_down_, item->GetPassable(Dir::SOUTH));
+    sum_passable_left_ = std::min(sum_passable_left_, item->GetPassable(Dir::WEST));
+    sum_passable_right_ = std::min(sum_passable_right_, item->GetPassable(Dir::EAST));
 
     UpdateAtmosPassable();
     return true;
@@ -334,13 +334,13 @@ PassableLevel CubeTile::GetPassable(Dir direct) const
 {
     switch (direct)
     {
-    case Dir::UP:
+    case Dir::NORTH:
         return sum_passable_up_;
-    case Dir::DOWN:
+    case Dir::SOUTH:
         return sum_passable_down_;
-    case Dir::LEFT:
+    case Dir::WEST:
         return sum_passable_left_;
-    case Dir::RIGHT:
+    case Dir::EAST:
         return sum_passable_right_;
     case Dir::ALL:
         return sum_passable_all_;
@@ -359,18 +359,18 @@ void CubeTile::UpdatePassable()
     if (turf_.IsValid())
     {
         sum_passable_all_ = std::min(sum_passable_all_, turf_->GetPassable(Dir::ALL));
-        sum_passable_up_ = std::min(sum_passable_up_, turf_->GetPassable(Dir::UP));
-        sum_passable_down_ = std::min(sum_passable_down_, turf_->GetPassable(Dir::DOWN));
-        sum_passable_left_ = std::min(sum_passable_left_, turf_->GetPassable(Dir::LEFT));
-        sum_passable_right_ = std::min(sum_passable_right_, turf_->GetPassable(Dir::RIGHT));
+        sum_passable_up_ = std::min(sum_passable_up_, turf_->GetPassable(Dir::NORTH));
+        sum_passable_down_ = std::min(sum_passable_down_, turf_->GetPassable(Dir::SOUTH));
+        sum_passable_left_ = std::min(sum_passable_left_, turf_->GetPassable(Dir::WEST));
+        sum_passable_right_ = std::min(sum_passable_right_, turf_->GetPassable(Dir::EAST));
     }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
     {
         sum_passable_all_ = std::min(sum_passable_all_, (*it)->GetPassable(Dir::ALL));
-        sum_passable_up_ = std::min(sum_passable_up_, (*it)->GetPassable(Dir::UP));
-        sum_passable_down_ = std::min(sum_passable_down_, (*it)->GetPassable(Dir::DOWN));
-        sum_passable_left_ = std::min(sum_passable_left_, (*it)->GetPassable(Dir::LEFT));
-        sum_passable_right_ = std::min(sum_passable_right_, (*it)->GetPassable(Dir::RIGHT));
+        sum_passable_up_ = std::min(sum_passable_up_, (*it)->GetPassable(Dir::NORTH));
+        sum_passable_down_ = std::min(sum_passable_down_, (*it)->GetPassable(Dir::SOUTH));
+        sum_passable_left_ = std::min(sum_passable_left_, (*it)->GetPassable(Dir::WEST));
+        sum_passable_right_ = std::min(sum_passable_right_, (*it)->GetPassable(Dir::EAST));
     }
 
     UpdateAtmosPassable();
@@ -420,10 +420,10 @@ void CubeTile::UpdateAtmosPassable()
 {
     const Dir dirs[5]
         = { Dir::ALL,
-            Dir::UP,
-            Dir::DOWN,
-            Dir::LEFT,
-            Dir::RIGHT };
+            Dir::NORTH,
+            Dir::SOUTH,
+            Dir::WEST,
+            Dir::EAST };
     const AtmosInterface::Flags bit_dirs[5]
         = { atmos::CENTER_BLOCK,
             atmos::UP_BLOCK,

@@ -145,22 +145,22 @@ void Human::ProcessMessage(const Message2 &msg)
         {
             if (Network2::IsKey(obj, Input::MOVE_UP))
             {
-                ApplyForce(DirToVDir(Dir::UP));
+                ApplyForce(DirToVDir(Dir::NORTH));
                 return;
             }
             else if (Network2::IsKey(obj, Input::MOVE_DOWN))
             {
-                ApplyForce(DirToVDir(Dir::DOWN));
+                ApplyForce(DirToVDir(Dir::SOUTH));
                 return;
             }
             else if (Network2::IsKey(obj, Input::MOVE_LEFT))
             {
-                ApplyForce(DirToVDir(Dir::LEFT));
+                ApplyForce(DirToVDir(Dir::WEST));
                 return;
             }
             else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
             {
-                ApplyForce(DirToVDir(Dir::RIGHT));
+                ApplyForce(DirToVDir(Dir::EAST));
                 return;
             }
         }
@@ -515,7 +515,7 @@ void Human::Represent()
     }
     else
     {
-        ent.dir = Dir::DOWN;
+        ent.dir = Dir::SOUTH;
     }
     GetRepresentation().AddToNewFrame(ent);
 }

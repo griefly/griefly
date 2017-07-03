@@ -27,10 +27,10 @@ void FlatGlass::AfterWorldCreation()
 {
     Structure::AfterWorldCreation();
 
-    SetPassable(Dir::UP, passable::FULL);
-    SetPassable(Dir::DOWN, passable::FULL);
-    SetPassable(Dir::LEFT, passable::FULL);
-    SetPassable(Dir::RIGHT, passable::FULL);
+    SetPassable(Dir::NORTH, passable::FULL);
+    SetPassable(Dir::SOUTH, passable::FULL);
+    SetPassable(Dir::WEST, passable::FULL);
+    SetPassable(Dir::EAST, passable::FULL);
 
     SetPassable(GetDir(), passable::EMPTY);
 }

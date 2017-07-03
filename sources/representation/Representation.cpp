@@ -219,7 +219,7 @@ Representation::Entity::Entity()
     pos_x = 0;
     pos_y = 0;
     vlevel = 0;
-    dir = Dir::DOWN;
+    dir = Dir::SOUTH;
 }
 
 Representation::InterfaceUnit::InterfaceUnit()

@@ -126,16 +126,16 @@ void Pipe::GetTailAndHead(Dir dir, Dir* head, Dir* tail)
 {
     static Dir DIRS_DATA[10][2]
         = {
-        {Dir::LEFT, Dir::RIGHT}, // Dir::LEFT
-        {Dir::RIGHT, Dir::LEFT}, // Dir::RIGHT
-        {Dir::UP, Dir::DOWN}, // Dir::UP
-        {Dir::DOWN, Dir::UP}, // Dir::DOWN
-        {Dir::ZUP, Dir::ZDOWN}, // Dir::ZUP
-        {Dir::ZDOWN, Dir::ZUP}, // Dir::ZDOWN
-        {Dir::RIGHT, Dir::DOWN}, // D_SOUTHEAST
-        {Dir::DOWN, Dir::LEFT}, // D_SOUTHWEST
-        {Dir::UP, Dir::RIGHT}, // D_NORTHEAST
-        {Dir::LEFT, Dir::UP} // D_NORTHWEST
+        {Dir::WEST, Dir::EAST}, // Dir::LEFT
+        {Dir::EAST, Dir::WEST}, // Dir::RIGHT
+        {Dir::NORTH, Dir::SOUTH}, // Dir::UP
+        {Dir::SOUTH, Dir::NORTH}, // Dir::DOWN
+        {Dir::UP, Dir::DOWN}, // Dir::ZUP
+        {Dir::DOWN, Dir::UP}, // Dir::ZDOWN
+        {Dir::EAST, Dir::SOUTH}, // D_SOUTHEAST
+        {Dir::SOUTH, Dir::WEST}, // D_SOUTHWEST
+        {Dir::NORTH, Dir::EAST}, // D_NORTHEAST
+        {Dir::WEST, Dir::NORTH} // D_NORTHWEST
         };
     *head = DIRS_DATA[static_cast<int>(dir)][0];
     *tail = DIRS_DATA[static_cast<int>(dir)][1];
@@ -214,25 +214,25 @@ void Manifold::Process()
 void Manifold::GetConnectionsDirs(Dir dir, Dir *tail, Dir *left, Dir *right)
 {
     *tail = RevertDir(dir);
-    if (dir == Dir::DOWN)
+    if (dir == Dir::SOUTH)
     {
-        *left = Dir::RIGHT;
-        *right = Dir::LEFT;
+        *left = Dir::EAST;
+        *right = Dir::WEST;
     }
-    else if (dir == Dir::UP)
+    else if (dir == Dir::NORTH)
     {
-        *left = Dir::LEFT;
-        *right = Dir::RIGHT;
+        *left = Dir::WEST;
+        *right = Dir::EAST;
     }
-    else if (dir == Dir::RIGHT)
+    else if (dir == Dir::EAST)
     {
-        *left = Dir::UP;
-        *right = Dir::DOWN;
+        *left = Dir::NORTH;
+        *right = Dir::SOUTH;
     }
     else
     {
-        *left = Dir::DOWN;
-        *right = Dir::UP;
+        *left = Dir::SOUTH;
+        *right = Dir::NORTH;
     }
 }
 

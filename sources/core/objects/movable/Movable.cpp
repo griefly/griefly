@@ -11,7 +11,7 @@ Movable::Movable()
 {
     last_move_ = 0;
     tick_speed_ = 1;
-    direction_ = Dir::DOWN;
+    direction_ = Dir::SOUTH;
     anchored_ = false;
     force_.x = 0;
     force_.y = 0;

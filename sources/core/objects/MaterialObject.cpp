@@ -29,7 +29,7 @@ void MaterialObject::Represent()
     ent.pos_y = GetPosition().y;
     ent.vlevel = v_level;
     ent.view = *GetView();
-    ent.dir = Dir::DOWN;
+    ent.dir = Dir::SOUTH;
     GetRepresentation().AddToNewFrame(ent);
 }
 

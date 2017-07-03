@@ -326,7 +326,7 @@ void HumanInterface::Draw()
     suit_.Draw();
     uniform_.Draw();
     feet_.Draw();
-    swap_.Draw(helpers::DirToByond(active_hand_ ? Dir::UP : Dir::DOWN));
+    swap_.Draw(helpers::DirToByond(active_hand_ ? Dir::NORTH : Dir::SOUTH));
     health_.Draw();
     temperature_.Draw();
     oxygen_.Draw();

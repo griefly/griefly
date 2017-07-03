@@ -39,19 +39,19 @@ void Mob::ProcessMessage(const Message2 &msg)
 
     if (Network2::IsKey(obj, Input::MOVE_UP))
     {
-        TryMove(Dir::UP);
+        TryMove(Dir::NORTH);
     }
     else if (Network2::IsKey(obj, Input::MOVE_DOWN))
     {
-        TryMove(Dir::DOWN);
+        TryMove(Dir::SOUTH);
     }
     else if (Network2::IsKey(obj, Input::MOVE_LEFT))
     {
-        TryMove(Dir::LEFT);
+        TryMove(Dir::WEST);
     }
     else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
     {
-        TryMove(Dir::RIGHT);
+        TryMove(Dir::EAST);
     }
 }
 

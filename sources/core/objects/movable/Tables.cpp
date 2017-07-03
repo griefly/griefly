@@ -32,35 +32,35 @@ void Table::NotifyNeighborhood(bool is_in_existence)
     {
         id = 0;
     }
-    if (auto table_up = GetNeighbour(Dir::UP)->GetItem<Table>())
+    if (auto table_up = GetNeighbour(Dir::NORTH)->GetItem<Table>())
     {
         table_up->UpdateSprite(id);
     }
-    if (auto table_down = GetNeighbour(Dir::DOWN)->GetItem<Table>())
+    if (auto table_down = GetNeighbour(Dir::SOUTH)->GetItem<Table>())
     {
         table_down->UpdateSprite(id);
     }
-    if (auto table_left = GetNeighbour(Dir::LEFT)->GetItem<Table>())
+    if (auto table_left = GetNeighbour(Dir::WEST)->GetItem<Table>())
     {
         table_left->UpdateSprite(id);
     }
-    if (auto table_right = GetNeighbour(Dir::RIGHT)->GetItem<Table>())
+    if (auto table_right = GetNeighbour(Dir::EAST)->GetItem<Table>())
     {
         table_right->UpdateSprite(id);
     }
-    if (auto table_upleft = GetNeighbour(Dir::LEFT)->GetNeighbour(Dir::UP)->GetItem<Table>())
+    if (auto table_upleft = GetNeighbour(Dir::WEST)->GetNeighbour(Dir::NORTH)->GetItem<Table>())
     {
         table_upleft->UpdateSprite(id);
     }
-    if (auto table_downleft = GetNeighbour(Dir::LEFT)->GetNeighbour(Dir::DOWN)->GetItem<Table>())
+    if (auto table_downleft = GetNeighbour(Dir::WEST)->GetNeighbour(Dir::SOUTH)->GetItem<Table>())
     {
         table_downleft->UpdateSprite(id);
     }
-    if (auto table_upright = GetNeighbour(Dir::UP)->GetNeighbour(Dir::RIGHT)->GetItem<Table>())
+    if (auto table_upright = GetNeighbour(Dir::NORTH)->GetNeighbour(Dir::EAST)->GetItem<Table>())
     {
         table_upright->UpdateSprite(id);
     }
-    if (auto table_downright = GetNeighbour(Dir::DOWN)->GetNeighbour(Dir::RIGHT)->GetItem<Table>())
+    if (auto table_downright = GetNeighbour(Dir::SOUTH)->GetNeighbour(Dir::EAST)->GetItem<Table>())
     {
         table_downright->UpdateSprite(id);
     }
@@ -68,14 +68,14 @@ void Table::NotifyNeighborhood(bool is_in_existence)
 }
 void Table::UpdateSprite(quint32 ignored_table)
 {
-    int up = CheckTable(GetNeighbour(Dir::UP), ignored_table);
-    int down = CheckTable(GetNeighbour(Dir::DOWN), ignored_table);
-    int left = CheckTable(GetNeighbour(Dir::LEFT), ignored_table);
-    int right = CheckTable(GetNeighbour(Dir::RIGHT), ignored_table);
-    int upright = CheckTable(GetNeighbour(Dir::UP)->GetNeighbour(Dir::RIGHT), ignored_table);
-    int downright = CheckTable(GetNeighbour(Dir::DOWN)->GetNeighbour(Dir::RIGHT), ignored_table);
-    int upleft = CheckTable(GetNeighbour(Dir::LEFT)->GetNeighbour(Dir::UP), ignored_table);
-    int downleft = CheckTable(GetNeighbour(Dir::LEFT)->GetNeighbour(Dir::DOWN), ignored_table);
+    int up = CheckTable(GetNeighbour(Dir::NORTH), ignored_table);
+    int down = CheckTable(GetNeighbour(Dir::SOUTH), ignored_table);
+    int left = CheckTable(GetNeighbour(Dir::WEST), ignored_table);
+    int right = CheckTable(GetNeighbour(Dir::EAST), ignored_table);
+    int upright = CheckTable(GetNeighbour(Dir::NORTH)->GetNeighbour(Dir::EAST), ignored_table);
+    int downright = CheckTable(GetNeighbour(Dir::SOUTH)->GetNeighbour(Dir::EAST), ignored_table);
+    int upleft = CheckTable(GetNeighbour(Dir::WEST)->GetNeighbour(Dir::NORTH), ignored_table);
+    int downleft = CheckTable(GetNeighbour(Dir::WEST)->GetNeighbour(Dir::SOUTH), ignored_table);
     if (up + down + left + right == 4)
     {
         SetState(material_ + "_table_d4");
@@ -87,22 +87,22 @@ void Table::UpdateSprite(quint32 ignored_table)
             if (upleft && downleft)
             {
                 SetState(material_ + "_table_d3");
-                Rotate(Dir::LEFT);    
+                Rotate(Dir::WEST);    
             }
             else if (!upleft && downleft)
             {
                 SetState(material_ + "_table_d3_c_m_l");
-                Rotate(Dir::RIGHT);
+                Rotate(Dir::EAST);
             }
             else if (upleft && !downleft)
             {
                 SetState(material_ + "_table_d3_c_m_l");
-                Rotate(Dir::LEFT);
+                Rotate(Dir::WEST);
             }
             else
             {
                 SetState(material_ + "_table_d3_f");
-                Rotate(Dir::LEFT);
+                Rotate(Dir::WEST);
             }
         }
         else if (up + down + right == 3)
@@ -110,22 +110,22 @@ void Table::UpdateSprite(quint32 ignored_table)
             if (upright && downright)
             {
                 SetState(material_ + "_table_d3");
-                Rotate(Dir::RIGHT);
+                Rotate(Dir::EAST);
             }
             else if (!upright && downright)
             {
                 SetState(material_ + "_table_d3_c_m_r");
-                Rotate(Dir::RIGHT);
+                Rotate(Dir::EAST);
             }
             else if (upright && !downright)
             {
                 SetState(material_ + "_table_d3_c_m_r");
-                Rotate(Dir::LEFT);
+                Rotate(Dir::WEST);
             }
             else
             {
                 SetState(material_ + "_table_d3_f");
-                Rotate(Dir::RIGHT);
+                Rotate(Dir::EAST);
             }
         }
         else if (up + right + left == 3)
@@ -133,22 +133,22 @@ void Table::UpdateSprite(quint32 ignored_table)
             if (upleft && upright)
             {
                 SetState(material_ + "_table_d3");
-                Rotate(Dir::UP);
+                Rotate(Dir::NORTH);
             }
             else if (!upleft && upright)
             {
                 SetState(material_ + "_table_d3_c_m_l");
-                Rotate(Dir::UP);
+                Rotate(Dir::NORTH);
             }
             else if (upleft && !upright)
             {
                 SetState(material_ + "_table_d3_c_m_l");
-                Rotate(Dir::DOWN);
+                Rotate(Dir::SOUTH);
             }
             else
             {
                 SetState(material_ + "_table_d3_f");
-                Rotate(Dir::UP);
+                Rotate(Dir::NORTH);
             }
         }
         else if (right + down + left == 3)
@@ -156,22 +156,22 @@ void Table::UpdateSprite(quint32 ignored_table)
             if (downleft && downright)
             {
                 SetState(material_ + "_table_d3");
-                Rotate(Dir::DOWN);
+                Rotate(Dir::SOUTH);
             }
             else if (!downleft && downright)
             {
                 SetState(material_ + "_table_d3_c_m_r");
-                Rotate(Dir::UP);
+                Rotate(Dir::NORTH);
             }
             else if (downleft && !downleft)
             {
                 SetState(material_ + "_table_d3_c_m_r");
-                Rotate(Dir::DOWN);
+                Rotate(Dir::SOUTH);
             }
             else
             {
                 SetState(material_ + "_table_d3_f");
-                Rotate(Dir::DOWN);
+                Rotate(Dir::SOUTH);
             }
         }
     }
@@ -180,19 +180,19 @@ void Table::UpdateSprite(quint32 ignored_table)
         if (up + down == 2)
         {
             SetState(material_ + "_table_d2");
-            Rotate(Dir::UP);
+            Rotate(Dir::NORTH);
         }
         else if (up + left == 2)
         {
             if (upleft)
             {
                 SetState(material_ + "_table_d2_c_r");
-                Rotate(Dir::LEFT);
+                Rotate(Dir::WEST);
             }
             else
             {
                 SetState(material_ + "_table_d2_c_f");
-                Rotate(Dir::LEFT);
+                Rotate(Dir::WEST);
             }
         }
         else if (up + right == 2)
@@ -200,12 +200,12 @@ void Table::UpdateSprite(quint32 ignored_table)
             if (upright)
             {
                 SetState(material_ + "_table_d2_c_r");
-                Rotate(Dir::RIGHT);
+                Rotate(Dir::EAST);
             }
             else
             {
                 SetState(material_ + "_table_d2_c_f");
-                Rotate(Dir::RIGHT);
+                Rotate(Dir::EAST);
             }
         }
         else if (down + left == 2)
@@ -213,12 +213,12 @@ void Table::UpdateSprite(quint32 ignored_table)
             if (downleft)
             {
                 SetState(material_ + "_table_d2_c_r");
-                Rotate(Dir::UP);
+                Rotate(Dir::NORTH);
             }
             else
             {
                 SetState(material_ + "_table_d2_c_f");
-                Rotate(Dir::UP);
+                Rotate(Dir::NORTH);
             }
         }
         else if (down + right == 2)
@@ -226,18 +226,18 @@ void Table::UpdateSprite(quint32 ignored_table)
             if (downright)
             {
                 SetState(material_ + "_table_d2_c_r");
-                Rotate(Dir::DOWN);
+                Rotate(Dir::SOUTH);
             }
             else
             {
                 SetState(material_ + "_table_d2_c_f");
-                Rotate(Dir::DOWN);
+                Rotate(Dir::SOUTH);
             }
         }
         else if (right + left == 2)
         {
             SetState(material_ + "_table_d2");
-            Rotate(Dir::LEFT);
+            Rotate(Dir::WEST);
         }
     }
     else if (up + down + left + right == 1)
@@ -245,19 +245,19 @@ void Table::UpdateSprite(quint32 ignored_table)
         SetState(material_ + "_table_d1");
         if (up == 1)
         {
-            Rotate(Dir::UP);
+            Rotate(Dir::NORTH);
         }
         if (down == 1)
         {
-            Rotate(Dir::DOWN);
+            Rotate(Dir::SOUTH);
         }
         if (left == 1)
         {
-            Rotate(Dir::LEFT);
+            Rotate(Dir::WEST);
         }
         if (right == 1)
         {
-            Rotate(Dir::RIGHT);
+            Rotate(Dir::EAST);
         }
     }
     else if (up + down + left + right == 0)

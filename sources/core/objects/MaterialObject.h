@@ -19,13 +19,13 @@ public:
     {
         switch (direct)
         {
-        case Dir::UP:
+        case Dir::NORTH:
             return passable_up;
-        case Dir::DOWN:
+        case Dir::SOUTH:
             return passable_down;
-        case Dir::LEFT:
+        case Dir::WEST:
             return passable_left;
-        case Dir::RIGHT:
+        case Dir::EAST:
             return passable_right;
         case Dir::ALL:
             return passable_all;
@@ -39,16 +39,16 @@ public:
     {
         switch (direct)
         {
-        case Dir::UP:
+        case Dir::NORTH:
             passable_up = p;
             break;
-        case Dir::DOWN:
+        case Dir::SOUTH:
             passable_down = p;
             break;
-        case Dir::LEFT:
+        case Dir::WEST:
             passable_left = p;
             break;
-        case Dir::RIGHT:
+        case Dir::EAST:
             passable_right = p;
             break;
         case Dir::ALL:

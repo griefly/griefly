@@ -122,51 +122,51 @@ void Projectile::MakeMovementPattern(Vector target, Dir facing)
     {
         if (y < 0)
         {
-            if (facing == Dir::LEFT || facing == Dir::RIGHT)
+            if (facing == Dir::WEST || facing == Dir::EAST)
             {
                 if (x > 0)
                 {
-                    MakeMovementLoops(abs_y, abs_x, Dir::RIGHT, Dir::UP);
+                    MakeMovementLoops(abs_y, abs_x, Dir::EAST, Dir::NORTH);
                 }
                 else
                 {
-                    MakeMovementLoops(abs_y, abs_x, Dir::LEFT, Dir::UP);
+                    MakeMovementLoops(abs_y, abs_x, Dir::WEST, Dir::NORTH);
                 }
             }
             else
             {
                 if (x > 0)
                 {
-                    MakeMovementLoops(abs_y, abs_x, Dir::UP, Dir::RIGHT);
+                    MakeMovementLoops(abs_y, abs_x, Dir::NORTH, Dir::EAST);
                 }
                 else
                 {
-                    MakeMovementLoops(abs_y, abs_x, Dir::UP, Dir::LEFT);
+                    MakeMovementLoops(abs_y, abs_x, Dir::NORTH, Dir::WEST);
                 }
             }
         }
         else
         {
-            if (facing == Dir::LEFT || facing == Dir::RIGHT)
+            if (facing == Dir::WEST || facing == Dir::EAST)
             {
                 if (x > 0)
                 {
-                    MakeMovementLoops(abs_y, abs_x, Dir::RIGHT, Dir::DOWN);
+                    MakeMovementLoops(abs_y, abs_x, Dir::EAST, Dir::SOUTH);
                 }
                 else
                 {
-                    MakeMovementLoops(abs_y, abs_x, Dir::LEFT, Dir::DOWN);
+                    MakeMovementLoops(abs_y, abs_x, Dir::WEST, Dir::SOUTH);
                 }
             }
             else
             {
                 if (x > 0)
                 {
-                    MakeMovementLoops(abs_y, abs_x, Dir::DOWN, Dir::RIGHT);
+                    MakeMovementLoops(abs_y, abs_x, Dir::SOUTH, Dir::EAST);
                 }
                 else
                 {
-                    MakeMovementLoops(abs_y, abs_x, Dir::DOWN, Dir::LEFT);
+                    MakeMovementLoops(abs_y, abs_x, Dir::SOUTH, Dir::WEST);
                 }
             }
         }
@@ -175,44 +175,44 @@ void Projectile::MakeMovementPattern(Vector target, Dir facing)
     {
        if (y > x)
        {
-            MakeMovementLoops(abs_y, abs_x, Dir::DOWN, Dir::RIGHT);
+            MakeMovementLoops(abs_y, abs_x, Dir::SOUTH, Dir::EAST);
        }
        else if (x > y)
        {
-            MakeMovementLoops(abs_x, abs_y, Dir::RIGHT, Dir::DOWN);
+            MakeMovementLoops(abs_x, abs_y, Dir::EAST, Dir::SOUTH);
        }
     }
     else if(x <= 0 && y <= 0)
     {   
        if (abs_y > abs_x  )
        {
-           MakeMovementLoops(abs_y, abs_x, Dir::UP, Dir::LEFT);
+           MakeMovementLoops(abs_y, abs_x, Dir::NORTH, Dir::WEST);
        }
        else if (abs_x > abs_y)
        {
-           MakeMovementLoops(abs_x, abs_y, Dir::LEFT, Dir::UP);
+           MakeMovementLoops(abs_x, abs_y, Dir::WEST, Dir::NORTH);
        }
     }
     else if (x < 0 && y > 0)
     {
         if (y > abs_x)
         {
-             MakeMovementLoops(abs_y, abs_x, Dir::DOWN, Dir::LEFT);
+             MakeMovementLoops(abs_y, abs_x, Dir::SOUTH, Dir::WEST);
         }
         else if (abs_x > abs_y)
         {
-            MakeMovementLoops(abs_x, abs_y, Dir::LEFT, Dir::DOWN);
+            MakeMovementLoops(abs_x, abs_y, Dir::WEST, Dir::SOUTH);
         }
     }
     else if (x > 0 && y < 0)
     {
         if (abs_y > x)
         {
-            MakeMovementLoops(abs_y, abs_x, Dir::UP, Dir::RIGHT);
+            MakeMovementLoops(abs_y, abs_x, Dir::NORTH, Dir::EAST);
         }
         else if (x > abs_y )
         {
-            MakeMovementLoops(abs_x, abs_y, Dir::RIGHT, Dir::UP);
+            MakeMovementLoops(abs_x, abs_y, Dir::EAST, Dir::NORTH);
         }
         
     }

@@ -29,7 +29,7 @@ void Chair::AfterWorldCreation()
 {
     Movable::AfterWorldCreation();
 
-    if (GetDir() == Dir::UP)
+    if (GetDir() == Dir::NORTH)
     {
         v_level = 10;
     }

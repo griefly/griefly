@@ -37,7 +37,7 @@ void Turf::Represent()
             const double FULL_VISIBILITY_THRESHOLD = 100.0;
             const double visibility = (plasma * 1.0) * (MAX_TRANSPARENCY / FULL_VISIBILITY_THRESHOLD);
             ent.view.SetTransparency(qMin(static_cast<int>(visibility), MAX_TRANSPARENCY));
-            ent.dir = Dir::DOWN;
+            ent.dir = Dir::SOUTH;
             GetRepresentation().AddToNewFrame(ent);
         }
     }
@@ -56,10 +56,10 @@ int friction::CombinedFriction(IdPtr<Turf> turf)
 
     int retval =
           turf->GetFriction()
-        + turf->GetNeighbour(Dir::UP)->GetTurf()->GetFriction()
-        + turf->GetNeighbour(Dir::DOWN)->GetTurf()->GetFriction()
-        + turf->GetNeighbour(Dir::LEFT)->GetTurf()->GetFriction()
-        + turf->GetNeighbour(Dir::RIGHT)->GetTurf()->GetFriction();
+        + turf->GetNeighbour(Dir::NORTH)->GetTurf()->GetFriction()
+        + turf->GetNeighbour(Dir::SOUTH)->GetTurf()->GetFriction()
+        + turf->GetNeighbour(Dir::WEST)->GetTurf()->GetFriction()
+        + turf->GetNeighbour(Dir::EAST)->GetTurf()->GetFriction();
     if (retval > friction::BASE_FRICTION)
     {
         retval = friction::BASE_FRICTION;
@@ -70,10 +70,10 @@ int friction::CombinedFriction(IdPtr<Turf> turf)
     if (retval < friction::BASE_FRICTION)
     {
         if (   turf->GetOwner()->GetItem<Lattice>()
-            || turf->GetNeighbour(Dir::UP)->GetItem<Lattice>()
-            || turf->GetNeighbour(Dir::DOWN)->GetItem<Lattice>()
-            || turf->GetNeighbour(Dir::LEFT)->GetItem<Lattice>()
-            || turf->GetNeighbour(Dir::RIGHT)->GetItem<Lattice>()
+            || turf->GetNeighbour(Dir::NORTH)->GetItem<Lattice>()
+            || turf->GetNeighbour(Dir::SOUTH)->GetItem<Lattice>()
+            || turf->GetNeighbour(Dir::WEST)->GetItem<Lattice>()
+            || turf->GetNeighbour(Dir::EAST)->GetItem<Lattice>()
             )
         {
             retval = friction::BASE_FRICTION;

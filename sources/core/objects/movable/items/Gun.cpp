@@ -42,38 +42,38 @@ void Gun::ShootImpl(Vector target, const QString& sound,
             {
                 if (y < 0)
                 {
-                    if (facing == Dir::LEFT || facing == Dir::RIGHT)
+                    if (facing == Dir::WEST || facing == Dir::EAST)
                     {
                         if (x > 0)
                         {
-                            shooting_direction = Dir::RIGHT;
+                            shooting_direction = Dir::EAST;
                         }
                         else
                         {
-                            shooting_direction = Dir::LEFT;
+                            shooting_direction = Dir::WEST;
                         }
                     }
                     else
                     {
-                        shooting_direction = Dir::UP;
+                        shooting_direction = Dir::NORTH;
                     }
                 }
                 else
                 {
-                    if (facing == Dir::LEFT || facing == Dir::RIGHT)
+                    if (facing == Dir::WEST || facing == Dir::EAST)
                     {
                         if (x > 0)
                         {
-                            shooting_direction = Dir::RIGHT;
+                            shooting_direction = Dir::EAST;
                         }
                         else
                         {
-                            shooting_direction = Dir::LEFT;
+                            shooting_direction = Dir::WEST;
                         }
                     }
                     else
                     {
-                        shooting_direction = Dir::DOWN;
+                        shooting_direction = Dir::SOUTH;
                     }
                 }
             }

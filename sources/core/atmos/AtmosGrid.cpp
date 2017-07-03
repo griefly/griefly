@@ -72,13 +72,13 @@ inline AtmosGrid::Cell& GetNearInGroup(AtmosGrid::Cell* current, Dir dir)
 {
     switch (dir)
     {
-    case Dir::DOWN:
+    case Dir::SOUTH:
         return *(current + 1);
-    case Dir::UP:
+    case Dir::NORTH:
         return *(current - 1);
-    case Dir::RIGHT:
+    case Dir::EAST:
         return *(current + atmos::CELL_GROUP_SIZE);
-    case Dir::LEFT:
+    case Dir::WEST:
         return *(current - atmos::CELL_GROUP_SIZE);
     }
 }
