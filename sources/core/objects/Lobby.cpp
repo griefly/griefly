@@ -2,17 +2,6 @@
 
 using namespace kv;
 
-Lobby* single_lobby = nullptr;
-void kv::SetLobby(Lobby* lobby)
-{
-    single_lobby = lobby;
-}
-
-Lobby& kv::GetLobby()
-{
-    return *single_lobby;
-}
-
 Lobby::Lobby()
 {
     seconds_ = 1;//60 * 2;
@@ -22,7 +11,6 @@ void Lobby::AfterWorldCreation()
 {
     Object::AfterWorldCreation();
     SetFreq(10);
-    SetThisAsLobby();
 }
 
 int Lobby::GetSecondUntilStart()
@@ -51,9 +39,4 @@ std::vector<IdPtr<CubeTile>> Lobby::GetTilesFor(const QString& type)
         }
     }
     return retval;
-}
-
-void Lobby::SetThisAsLobby()
-{
-    SetLobby(this);
 }

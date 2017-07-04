@@ -23,13 +23,6 @@ public:
 private:
     int KV_SAVEABLE(seconds_);
     std::vector<IdPtr<SpawnPoint>> KV_SAVEABLE(spawn_points_);
-
-    KV_ON_LOAD_CALL(SetThisAsLobby);
-    void SetThisAsLobby();
 };
 END_DECLARE(Lobby);
-
-void SetLobby(Lobby* lobby);
-Lobby& GetLobby();
-
 }

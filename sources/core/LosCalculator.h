@@ -27,6 +27,6 @@ private:
         kv::Position center,
         std::vector<char>* visibility) const;
 
-    // TODO: Make this class as pure function, because the only member class is not needed
+    // TODO: Cache other helpful stuff, like visibility array
     mutable const MapInterface* map_;
 };

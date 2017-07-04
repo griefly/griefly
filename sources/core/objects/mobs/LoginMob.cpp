@@ -66,7 +66,7 @@ void LoginMob::ProcessMessage(const Message2& msg)
     if (    msg.type == MessageType::ORDINARY
          && Network2::IsKey(obj, LOGIN_CLICK))
     {
-        if (GetLobby().GetSecondUntilStart() > 0)
+        if (GetGame().GetGlobals()->lobby->GetSecondUntilStart() > 0)
         {
             return;
         }
@@ -80,33 +80,34 @@ void LoginMob::ProcessMessage(const Message2& msg)
         QString human_state = HUMAN_STATES[GenerateRandom() % HUMAN_STATES_AMOUNT];
         human->SetState(human_state);
 
+        IdPtr<Lobby> lobby = GetGame().GetGlobals()->lobby;
         std::vector<IdPtr<CubeTile>> tiles;
         QString text;
         switch (GenerateRandom() % 5)
         {
         case 0:
             professions::ToSecurityOfficer(human);
-            tiles = GetLobby().GetTilesFor("security");
+            tiles = lobby->GetTilesFor("security");
             text = GENERIC_TEXT.arg("security officer");
             break;
         case 1:
             professions::ToDoctor(human);
-            tiles = GetLobby().GetTilesFor("doctor");
+            tiles = lobby->GetTilesFor("doctor");
             text = GENERIC_TEXT.arg("doctor");
             break;
         case 2:
             professions::ToAssistant(human);
-            tiles = GetLobby().GetTilesFor("assistant");
+            tiles = lobby->GetTilesFor("assistant");
             text = GENERIC_TEXT.arg("assistant");
             break;
         case 3:
             professions::ToClown(human);
-            tiles = GetLobby().GetTilesFor("clown");
+            tiles = lobby->GetTilesFor("clown");
             text = GENERIC_TEXT.arg("clown");
             break;
         case 4:
             professions::ToBarman(human);
-            tiles = GetLobby().GetTilesFor("barman");
+            tiles = lobby->GetTilesFor("barman");
             text = GENERIC_TEXT.arg("barman");
             break;
         default:
@@ -168,15 +169,15 @@ void LoginInterface::Draw()
     unit.view = view_;
     GetRepresentation().AddToNewFrame(unit);
 
-    QString text;
-    if (GetLobby().GetSecondUntilStart() < 0)
+    QString text = "TODO: LoginInterface should be inherited from kv::Object";
+    /*if (GetGame()-GetSecondUntilStart() < 0)
     {
         text = "Round is in process, click on the screen";
     }
     else
     {
         text = QString("Until start: %1").arg(GetLobby().GetSecondUntilStart());
-    }
+    }*/
     GetRepresentation().AddToNewFrame(Representation::TextEntry{"test", text});
 }
 

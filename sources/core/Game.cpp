@@ -284,7 +284,7 @@ void Game::InitWorld(int id, QString map_name)
 
             world_loader_saver_->LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
 
-            GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
+            global_objects_->lobby = GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
 
             if (GetParamsHolder().GetParamBool("-unsync_generation"))
             {
@@ -298,7 +298,7 @@ void Game::InitWorld(int id, QString map_name)
             {
                 if (it->object && (it->object->GetTypeIndex() == SpawnPoint::GetTypeIndexStatic()))
                 {
-                    kv::GetLobby().AddSpawnPoint(it->object->GetId());
+                    global_objects_->lobby->AddSpawnPoint(it->object->GetId());
                 }
             }
 
