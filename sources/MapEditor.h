@@ -15,7 +15,7 @@
 
 using MapgenVariablesType = std::map<QString, QByteArray>;
 
-class MapEditor: public QObject
+class MapEditor : public QObject
 {
     Q_OBJECT
 public:

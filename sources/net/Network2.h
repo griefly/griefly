@@ -28,7 +28,7 @@ Q_DECLARE_METATYPE(Message2)
 
 class Network2;
 
-class SocketHandler: public QObject
+class SocketHandler : public QObject
 {
     Q_OBJECT
 public:
@@ -88,7 +88,7 @@ private:
     Network2* network_;
 };
 
-class Network2: public QObject
+class Network2 : public QObject
 {
     Q_OBJECT
 public:
