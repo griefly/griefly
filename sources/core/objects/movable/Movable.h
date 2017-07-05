@@ -41,17 +41,3 @@ private:
 END_DECLARE(Movable);
 
 }
-class ForceManager
-{
-public:
-    static ForceManager& Get();
-
-    void Add(IdPtr<kv::Movable> m);
-    void Process();
-    void Clear();
-    unsigned int Hash();
-private:
-    std::vector<IdPtr<kv::Movable>> under_force_;
-
-    std::vector<IdPtr<kv::Movable>> to_add_;
-};

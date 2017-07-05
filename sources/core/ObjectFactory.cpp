@@ -4,6 +4,7 @@
 
 #include "objects/Object.h"
 #include "objects/MaterialObject.h"
+#include "objects/PhysicsEngine.h"
 #include "Game.h"
 #include "Map.h"
 #include "SynchronizedRandom.h"
@@ -249,8 +250,8 @@ unsigned int ObjectFactory::Hash()
         }
     }
 
-    ForceManager::Get().Clear();
-    h += ForceManager::Get().Hash();
+    kv::PhysicsEngine::Get().Clear();
+    h += kv::PhysicsEngine::Get().Hash();
 
     ClearProcessing();
 

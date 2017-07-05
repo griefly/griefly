@@ -16,6 +16,7 @@
 #include "objects/mobs/Human.h"
 #include "objects/mobs/LoginMob.h"
 #include "objects/Lobby.h"
+#include "objects/PhysicsEngine.h"
 #include "objects/SpawnPoints.h"
 #include "objects/test/UnsyncGenerator.h"
 
@@ -160,7 +161,7 @@ void Game::Process()
             foreach_process_ns_ /= 2;
 
             timer.start();
-            ForceManager::Get().Process();
+            PhysicsEngine::Get().Process();
             force_process_ns_ += timer.nsecsElapsed();
             force_process_ns_ /= 2;
 
