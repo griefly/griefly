@@ -160,10 +160,11 @@ void Game::Process()
             foreach_process_ns_ += timer.nsecsElapsed();
             foreach_process_ns_ /= 2;
 
-            timer.start();
-            PhysicsEngine::Get().Process();
-            force_process_ns_ += timer.nsecsElapsed();
-            force_process_ns_ /= 2;
+            // TODO: some way to measure processing calculation
+            // timer.start();
+            // PhysicsEngine::Get().Process();
+            // force_process_ns_ += timer.nsecsElapsed();
+            // force_process_ns_ /= 2;
 
             timer.start();
 
@@ -279,6 +280,7 @@ void Game::InitWorld(int id, QString map_name)
             global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
             global_objects_->map = GetFactory().CreateImpl(kv::Map::GetTypeStatic());
             global_objects_->random = GetFactory().CreateImpl(kv::SynchronizedRandom::GetTypeStatic());
+            global_objects_->physics_engine_ = GetFactory().CreateImpl(kv::PhysicsEngine::GetTypeStatic());
 
             quint32 seed = static_cast<quint32>(qrand());
             global_objects_->random->SetParams(seed, 0);

@@ -250,9 +250,6 @@ unsigned int ObjectFactory::Hash()
         }
     }
 
-    kv::PhysicsEngine::Get().Clear();
-    h += kv::PhysicsEngine::Get().Hash();
-
     ClearProcessing();
 
     int i = 1;

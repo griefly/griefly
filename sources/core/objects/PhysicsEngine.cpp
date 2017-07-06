@@ -4,10 +4,16 @@
 
 using namespace kv;
 
-PhysicsEngine& PhysicsEngine::Get()
+PhysicsEngine::PhysicsEngine()
 {
-    static PhysicsEngine* engine = new PhysicsEngine;
-    return *engine;
+    // Nothing
+}
+
+void PhysicsEngine::AfterWorldCreation()
+{
+    Object::AfterWorldCreation();
+
+    SetFreq(1);
 }
 
 void PhysicsEngine::Add(IdPtr<Movable> movable)
@@ -15,25 +21,12 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
     to_add_.push_back(movable);
 }
 
-unsigned int PhysicsEngine::Hash()
-{
-    unsigned int hash = 0;
-    int i = 1;
-    for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
-    {
-        hash += movable->Id() * i;
-        ++i;
-    }
-    return hash;
-}
-
 void PhysicsEngine::Process()
 {
     const int CLEAR_TICK = 10;
-    if (true/* TODO: when PhysicsEngine will be derived from kv::Object GetGameTick() % CLEAR_TICK == 1*/)
-    {
-        Clear();
-    }
+
+    // TODO: better clearing algorithm #443
+    Clear();
 
     for (auto movable = to_add_.begin(); movable != to_add_.end(); ++movable)
     {

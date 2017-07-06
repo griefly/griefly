@@ -32,9 +32,6 @@ public:
     bool KV_SAVEABLE(anchored_);
     int KV_SAVEABLE(last_move_);
     int KV_SAVEABLE(tick_speed_);
-
-    KV_ON_LOAD_CALL(LoadInForceManager);
-    void LoadInForceManager();
 private:
     Dir KV_SAVEABLE(direction_);
 };

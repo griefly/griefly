@@ -65,20 +65,12 @@ void Movable::ApplyForce(Vector force)
     }
     if (!IsNonZero(force_))
     {
-        PhysicsEngine::Get().Add(GetId());
+        GetGame().GetGlobals()->physics_engine_->Add(GetId());
     }
 
     force_.x += force.x;
     force_.y += force.y;
     force_.z += force.z;
-}
-
-void Movable::LoadInForceManager()
-{
-    if (IsNonZero(force_))
-    {
-        PhysicsEngine::Get().Add(GetId());
-    }
 }
 
 bool Movable::CheckMoveTime()

@@ -3,25 +3,34 @@
 #include <QVector>
 
 #include "core/Idptr.h"
+#include "Object.h"
+
+#include "core/SaveableOperators.h"
 
 namespace kv
 {
 
 class Movable;
 
-class PhysicsEngine
+class PhysicsEngine : public Object
 {
 public:
-    static PhysicsEngine& Get();
+    DECLARE_SAVEABLE(PhysicsEngine, Object);
+    REGISTER_CLASS_AS(PhysicsEngine);
 
-    void Add(IdPtr<Movable> m);
+    PhysicsEngine();
+    void AfterWorldCreation() override;
+
     void Process();
-    void Clear();
-    unsigned int Hash();
-private:
-    QVector<IdPtr<Movable>> under_force_;
 
-    QVector<IdPtr<Movable>> to_add_;
+    void Add(IdPtr<Movable> movable);
+private:
+    void Clear();
+
+    QVector<IdPtr<Movable>> KV_SAVEABLE(under_force_);
+    // TODO: remove with Clear function
+    QVector<IdPtr<Movable>> KV_SAVEABLE(to_add_);
 };
+END_DECLARE(PhysicsEngine);
 
 }
