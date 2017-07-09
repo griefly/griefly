@@ -21,7 +21,7 @@ public:
     virtual void MindEnter() { }
     virtual void MindExit() { }
     virtual void GenerateInterfaceForFrame();
-    virtual void ProcessMessage(const Message2& msg);
+    virtual void ProcessMessage(const Message& msg);
 
     void MoveMindTo(IdPtr<Mob> other);
     bool IsMinded() const;

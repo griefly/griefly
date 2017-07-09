@@ -16,7 +16,7 @@
 #include "NetworkMessagesTypes.h"
 #include "Version.h"
 
-QJsonObject Network2::ParseJson(Message2 message)
+QJsonObject Network2::ParseJson(Message message)
 {
     QJsonDocument doc = QJsonDocument::fromJson(message.json);
     return doc.object();
@@ -45,9 +45,9 @@ QString Network2::ExtractAction(const QJsonObject &json)
     return val.toVariant().toString();
 }
 
-Message2 Network2::MakeClickMessage(int object_id, QString click_type)
+Message Network2::MakeClickMessage(int object_id, QString click_type)
 {
-    Message2 msg;
+    Message msg;
 
     msg.type = MessageType::MOUSE_CLICK;
 
@@ -118,14 +118,14 @@ void Network2::TryConnect(QString host, int port, QString login, QString passwor
     emit connectRequested(host, port, login, password);
 }
 
-void Network2::SendMsg(Message2 message)
+void Network2::SendMsg(Message message)
 {
     emit sendMessage(message);
 }
 
 void Network2::SendOrdinaryMessage(QString text)
 {
-    Message2 msg;
+    Message msg;
     msg.type = MessageType::ORDINARY;
     msg.json.append("{\"key\":\"" + text + "\"}");
 
@@ -134,7 +134,7 @@ void Network2::SendOrdinaryMessage(QString text)
 
 void Network2::SendPing(QString ping_id)
 {
-    Message2 msg;
+    Message msg;
     msg.type = MessageType::PING;
     msg.json.append("{\"ping_id\":\"" + ping_id + "\"}");
 
@@ -163,13 +163,13 @@ void Network2::WaitForMessageAvailable()
     }
 }
 
-Message2 Network2::PopMessage()
+Message Network2::PopMessage()
 {
     QMutexLocker locker(&queue_mutex_);
     return received_messages_.dequeue();
 }
 
-void Network2::PushMessage(Message2 message)
+void Network2::PushMessage(Message message)
 {
     QMutexLocker locker(&queue_mutex_);
     received_messages_.enqueue(message);
@@ -312,7 +312,7 @@ bool SocketHandler::HandleBody()
         return false;
     }
 
-    Message2 new_message;
+    Message new_message;
     new_message.type = message_type_;
 
     new_message.json.append(
@@ -356,7 +356,7 @@ void SocketHandler::socketConnected()
 
     SendData("S132");
 
-    Message2 login_message;
+    Message login_message;
     login_message.type = MessageType::INITAL_LOGIN_MESSAGE;
 
     QJsonObject obj;
@@ -380,7 +380,7 @@ void SocketHandler::socketConnected()
     state_ = NetworkState::CONNECTED;
 }
 
-void SocketHandler::sendMessage(Message2 message)
+void SocketHandler::sendMessage(Message message)
 {
     QByteArray& json = message.json;
 
@@ -418,7 +418,7 @@ void SocketHandler::errorSocket(QAbstractSocket::SocketError error)
             + possible_error_reason_);
 }
 
-void SocketHandler::handleFirstMessage(Message2 m)
+void SocketHandler::handleFirstMessage(Message m)
 {
     switch (m.type)
     {
@@ -453,7 +453,7 @@ void SocketHandler::handleFirstMessage(Message2 m)
     }
 }
 
-void SocketHandler::HandleSuccessConnection(Message2 message)
+void SocketHandler::HandleSuccessConnection(Message message)
 {
     QJsonObject obj = Network2::ParseJson(message);
 

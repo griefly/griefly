@@ -133,7 +133,7 @@ bool Human::TryMove(Dir direct)
     return false;
 }
 
-void Human::ProcessMessage(const Message2 &msg)
+void Human::ProcessMessage(const Message &msg)
 {
     QJsonObject obj = Network2::ParseJson(msg);
 

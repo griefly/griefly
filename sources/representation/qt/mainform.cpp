@@ -398,7 +398,7 @@ void MainForm::on_command_line_edit_returnPressed()
     if (text == "/restart_round")
     {
         qDebug() << "Restart round message will be sended to the server...";
-        Message2 message;
+        Message message;
         message.type = MessageType::RESTART_ROUND;
         Network2::GetInstance().SendMsg(message);
         return;
@@ -420,7 +420,7 @@ void MainForm::on_command_line_edit_returnPressed()
         qDebug() <<
             QString("%1 nexttick messages will be sended to the server...")
                 .arg(count);
-        Message2 message;
+        Message message;
         message.type = MessageType::NEXT_TICK;
         for (int i = 0; i < count; ++i)
         {
@@ -429,7 +429,7 @@ void MainForm::on_command_line_edit_returnPressed()
         return;
     }
 
-    Message2 message;
+    Message message;
     message.type = MessageType::MESSAGE;
     QJsonObject object;
     if (IsOOCMessage(text))

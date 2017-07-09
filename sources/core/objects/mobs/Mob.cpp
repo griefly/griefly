@@ -28,7 +28,7 @@ void Mob::Delete()
     MaterialObject::Delete();
 }
 
-void Mob::ProcessMessage(const Message2 &msg)
+void Mob::ProcessMessage(const Message &msg)
 {
     if (msg.type != MessageType::ORDINARY)
     {

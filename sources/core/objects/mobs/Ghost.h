@@ -14,7 +14,7 @@ public:
     virtual void AfterWorldCreation() override;
     virtual void Represent() override;
     virtual void CalculateVisible(VisiblePoints* visible_list) const override;
-    virtual void ProcessMessage(const Message2& msg) override;
+    virtual void ProcessMessage(const Message& msg) override;
 
     virtual void GenerateInterfaceForFrame() override;
 

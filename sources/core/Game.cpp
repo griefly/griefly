@@ -345,7 +345,7 @@ void Game::ProcessInputMessages()
 {
     while (Network2::GetInstance().IsMessageAvailable())
     {
-        Message2 msg = Network2::GetInstance().PopMessage();
+        Message msg = Network2::GetInstance().PopMessage();
 
         AddMessageToMessageLog(msg);
 
@@ -427,7 +427,7 @@ void Game::ProcessInputMessages()
             }
             unsigned int hash = GetFactory().Hash();
 
-            Message2 msg;
+            Message msg;
 
             msg.type = MessageType::HASH_MESSAGE;
             msg.json.append(
@@ -709,7 +709,7 @@ void Game::AddLastMessages(QByteArray* data)
     }
 }
 
-void Game::AddMessageToMessageLog(Message2 message)
+void Game::AddMessageToMessageLog(Message message)
 {
     messages_log_[log_pos_] = message;
     log_pos_ = (log_pos_ + 1) % messages_log_.size();

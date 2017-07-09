@@ -69,7 +69,7 @@ private:
     void ProcessHearers();
 
     void AddLastMessages(QByteArray* data);
-    void AddMessageToMessageLog(Message2 message);
+    void AddMessageToMessageLog(Message message);
 
     void AddBuildInfo(QByteArray* data);
 
@@ -77,7 +77,7 @@ private:
 
     FastSerializer serializer_;
 
-    std::vector<Message2> messages_log_;
+    std::vector<Message> messages_log_;
     int log_pos_;
 
     bool is_end_process_;
@@ -89,7 +89,7 @@ private:
 
     QString last_touch_;
 
-    std::vector<Message2> messages_to_process_;
+    std::vector<Message> messages_to_process_;
     void ProcessBroadcastedMessages();
     void CheckMessagesOrderCorrectness();
     //bool hash_

@@ -59,7 +59,7 @@ const QString HUMAN_STATES[HUMAN_STATES_AMOUNT] =
      "asian2_m_s", "arab_m_s", "indian_m_s",
      "african1_m_s", "african2_m_s", "albino_m_s"};
 
-void LoginMob::ProcessMessage(const Message2& msg)
+void LoginMob::ProcessMessage(const Message& msg)
 {
     QJsonObject obj = Network2::ParseJson(msg);
 

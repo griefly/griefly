@@ -41,7 +41,7 @@ public:
     virtual void MindExit() override;
     virtual void MindEnter() override;
     virtual void GenerateInterfaceForFrame() override;
-    virtual void ProcessMessage(const Message2& msg) override;
+    virtual void ProcessMessage(const Message& msg) override;
 
     virtual void Process() override;
 
