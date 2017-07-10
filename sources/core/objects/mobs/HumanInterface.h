@@ -11,26 +11,6 @@ namespace kv
 class Human;
 class Item;
 
-enum class ItemSlot : quint8
-{
-    DEFAULT,
-    SUIT,
-    HEAD,
-    ANYTHING,
-    FEET,
-    UNIFORM
-};
-
-struct Slot
-{
-    ViewInfo view;
-    IdPtr<Item> item;
-    int posx;
-    int posy;
-    ItemSlot type;
-    QString name;
-};
-
 class HumanInterface2 : public Object
 {
 public:
