@@ -6,6 +6,8 @@
 #include "representation/ViewInfo.h"
 #include "core/SaveableOperators.h"
 
+#include "Slot.h"
+
 namespace kv
 {
 class Human;

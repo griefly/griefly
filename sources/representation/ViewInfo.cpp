@@ -2,7 +2,7 @@
 
 #include "core/StreamWrapper.h"
 
-FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info)
+FastSerializer& operator<<(FastSerializer& file, const ViewInfo& view_info)
 {
     WrapWriteMessage(file, view_info.base_frameset_);
 
@@ -53,7 +53,7 @@ FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info)
     return file;
 }
 
-FastSerializer& operator<<(FastSerializer& file, ViewInfo::FramesetInfo& frameset_info)
+FastSerializer& operator<<(FastSerializer& file, const ViewInfo::FramesetInfo& frameset_info)
 {
     WrapWriteMessage(file, frameset_info.sprite_name_);
     WrapWriteMessage(file, frameset_info.state_);

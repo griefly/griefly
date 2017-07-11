@@ -9,7 +9,7 @@
 
 class ViewInfo;
 
-FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info);
+FastSerializer& operator<<(FastSerializer& file, const ViewInfo& view_info);
 FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info);
 
 inline unsigned int hash(const ViewInfo& view_info);
@@ -18,7 +18,7 @@ const int MAX_TRANSPARENCY = 100000;
 
 class ViewInfo
 {
-    friend FastSerializer& operator<<(FastSerializer& file, ViewInfo& view_info);
+    friend FastSerializer& operator<<(FastSerializer& file, const ViewInfo& view_info);
     friend FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info);
 
     friend unsigned int hash(const ViewInfo& view_info);
@@ -30,7 +30,7 @@ public:
     {
         friend FastSerializer& operator<< (
                 FastSerializer& file,
-                ViewInfo::FramesetInfo& frameset_info);
+                const ViewInfo::FramesetInfo& frameset_info);
         friend FastDeserializer& operator>> (
                 FastDeserializer& file,
                 ViewInfo::FramesetInfo& frameset_info);
