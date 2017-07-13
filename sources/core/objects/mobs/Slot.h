@@ -12,7 +12,7 @@ using SlotTypeBase = quint32;
 
 enum class SlotType : SlotTypeBase
 {
-    DEFAULT,
+    DEFAULT = 0,
     SUIT,
     HEAD,
     ANYTHING,
@@ -22,7 +22,7 @@ enum class SlotType : SlotTypeBase
 
 inline FastSerializer& operator<<(FastSerializer& serializer, const SlotType& slot_type)
 {
-    serializer << static_cast<quint8>(slot_type);
+    serializer << static_cast<SlotTypeBase>(slot_type);
     return serializer;
 }
 
@@ -70,7 +70,7 @@ inline FastDeserializer& operator>>(FastDeserializer& deserializer, Slot& slot)
 
 inline unsigned int hash(const kv::SlotType& slot_type)
 {
-    return ::hash(static_cast<quint32>(slot_type));
+    return ::hash(static_cast<kv::SlotTypeBase>(slot_type));
 }
 
 inline unsigned int hash(const kv::Slot& slot)
