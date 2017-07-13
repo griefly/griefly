@@ -70,7 +70,7 @@ inline FastDeserializer& operator>>(FastDeserializer& deserializer, Slot& slot)
 
 inline unsigned int hash(const kv::SlotType& slot_type)
 {
-    return ::hash(static_cast<kv::SlotTypeBase>(slot_type));
+    return hash(static_cast<kv::SlotTypeBase>(slot_type));
 }
 
 inline unsigned int hash(const kv::Slot& slot)
@@ -78,8 +78,8 @@ inline unsigned int hash(const kv::Slot& slot)
     unsigned int retval = 0;
     retval += hash(slot.view);
     retval += hash(slot.item);
-    retval += ::hash(slot.posx);
-    retval += ::hash(slot.posy);
+    retval += hash(slot.posx);
+    retval += hash(slot.posy);
     retval += hash(slot.type);
     retval += hash(slot.name);
     return retval;

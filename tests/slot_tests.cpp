@@ -26,3 +26,31 @@ TEST(SlotType, SaveableOperators)
         EXPECT_EQ(hash(slot_type), slot_and_hash.second);
     }
 }
+
+TEST(Slot, SaveableOperators)
+{
+    Slot slot;
+    slot.item = 1;
+    slot.name = "leg";
+    slot.posx = 5;
+    slot.posy = 6;
+    slot.type = SlotType::FEET;
+    slot.view.SetSprite("test");
+
+    FastSerializer serializer(1);
+    serializer << slot;
+
+    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    Slot loaded_slot;
+    deserializer >> loaded_slot;
+
+    EXPECT_EQ(slot.item, loaded_slot.item);
+    EXPECT_EQ(slot.name, loaded_slot.name);
+    EXPECT_EQ(slot.posx, loaded_slot.posx);
+    EXPECT_EQ(slot.posy, loaded_slot.posy);
+    EXPECT_EQ(slot.type, loaded_slot.type);
+
+    EXPECT_TRUE(ViewInfo::IsSameFramesets(slot.view, loaded_slot.view));
+
+    EXPECT_EQ(hash(loaded_slot), 2658126356);
+}
