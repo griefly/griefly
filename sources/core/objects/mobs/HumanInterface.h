@@ -4,9 +4,9 @@
 
 #include "core/objects/Object.h"
 #include "representation/ViewInfo.h"
-#include "core/SaveableOperators.h"
 
 #include "Slot.h"
+#include "core/SaveableOperators.h"
 
 namespace kv
 {
@@ -19,9 +19,22 @@ public:
     DECLARE_SAVEABLE(HumanInterface2, Object);
     REGISTER_CLASS_AS(HumanInterface2);
     HumanInterface2();
+
+    void SetOwner(IdPtr<Human> human);
+
+    void HandleClick(const QString& name);
+
+    IdPtr<Item> GetItem(const QString& slot);
+    bool RemoveItem(const QString& slot);
+    bool InsertItem(const QString& slot, IdPtr<Item> item);
+
+    // TODO: RemoveItem with IdPtr
+    // TODO: ForEach
+
 private:
     IdPtr<Human> KV_SAVEABLE(owner_);
-    QMap<QString, IdPtr<Item>> KV_SAVEABLE(slots_);
+    // TODO: uncomment when #434 will be ready
+    // QVector<Slot> KV_S/AVEABLE(slots_);
 };
 END_DECLARE(HumanInterface2)
 
