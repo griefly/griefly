@@ -20,14 +20,17 @@ void HumanInterface2::HandleClick(const QString& name)
 IdPtr<Item> HumanInterface2::GetItem(const QString& slot)
 {
     // TODO
+    return 0;
 }
 
 bool HumanInterface2::RemoveItem(const QString& slot)
 {
     // TODO
+    return false;
 }
 
 bool HumanInterface2::InsertItem(const QString& slot, IdPtr<Item> item)
 {
     // TODO
+    return false;
 }
