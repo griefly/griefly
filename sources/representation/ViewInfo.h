@@ -100,16 +100,16 @@ inline unsigned int hash(const ViewInfo& view_info)
         loc += hash(*it);
     }
     loc += hash(view_info.base_frameset_);
-    loc += hash(view_info.angle_);
-    loc += hash(view_info.transparency_);
+    loc += kv::hash(view_info.angle_);
+    loc += kv::hash(view_info.transparency_);
     return loc;
 }
 
 inline unsigned int hash(const ViewInfo::FramesetInfo& frameset_info)
 {
     unsigned int loc = 0;
-    loc += hash(frameset_info.sprite_name_);
-    loc += hash(frameset_info.state_);
+    loc += kv::hash(frameset_info.sprite_name_);
+    loc += kv::hash(frameset_info.state_);
     loc += frameset_info.angle_;
     loc += frameset_info.shift_x_;
     loc += frameset_info.shift_y_;

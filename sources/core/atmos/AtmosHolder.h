@@ -8,9 +8,9 @@
 namespace atmos
 {
     class AtmosHolder;
+    unsigned int hash(const AtmosHolder& atmos_holder);
 }
 
-unsigned int hash(const atmos::AtmosHolder& atmos_holder);
 FastDeserializer& operator>>(FastDeserializer& file, atmos::AtmosHolder& atmos_holder);
 FastSerializer& operator<<(FastSerializer& file, const atmos::AtmosHolder& atmos_holder);
 
@@ -23,7 +23,7 @@ namespace atmos
         friend class ::Atmosphere;
         friend FastDeserializer& ::operator>>(FastDeserializer& file, atmos::AtmosHolder& atmos_holder);
         friend FastSerializer& ::operator<<(FastSerializer& file, const atmos::AtmosHolder& atmos_holder);
-        friend unsigned int ::hash(const atmos::AtmosHolder& atmos_holder);
+        friend unsigned int hash(const atmos::AtmosHolder& atmos_holder);
     public:
         AtmosHolder()
         {
@@ -64,18 +64,19 @@ namespace atmos
     };
 
     void AddDefaultValues(atmos::AtmosHolder* holder);
-}
 
-inline unsigned int hash(const atmos::AtmosHolder& atmos_holder)
-{
-    unsigned int retval = 0;
-    for (quint32 i = 0; i < atmos::GASES_NUM; ++i)
+    inline unsigned int hash(const atmos::AtmosHolder& atmos_holder)
     {
-        retval += atmos_holder.data_ptr_->gases[i];
+        unsigned int retval = 0;
+        for (quint32 i = 0; i < atmos::GASES_NUM; ++i)
+        {
+            retval += atmos_holder.data_ptr_->gases[i];
+        }
+        retval += atmos_holder.data_ptr_->energy;
+        retval += atmos_holder.data_ptr_->pressure;
+        retval += atmos_holder.data_ptr_->volume;
+        retval += atmos_holder.data_ptr_->temperature;
+        return retval;
     }
-    retval += atmos_holder.data_ptr_->energy;
-    retval += atmos_holder.data_ptr_->pressure;
-    retval += atmos_holder.data_ptr_->volume;
-    retval += atmos_holder.data_ptr_->temperature;
-    return retval;
+
 }

@@ -9,6 +9,21 @@
 #include "Idptr.h"
 #include "Constheader.h"
 
+namespace std
+{
+    template<>
+    class hash<QString> {
+    public:
+        size_t operator()(const QString& value) const
+        {
+            return static_cast<size_t>(qHash(value));
+        }
+    };
+}
+
+namespace kv
+{
+
 inline unsigned int hash(const QString& str)
 {
     unsigned int len = str.length();
@@ -24,18 +39,6 @@ inline unsigned int hash(const QString& str)
     hash ^= (hash >> 11);
     hash += (hash << 15);
     return hash + 1;
-}
-
-namespace std
-{
-    template<>
-    class hash<QString> {
-    public:
-        size_t operator()(const QString& value) const
-        {
-            return static_cast<size_t>(qHash(value));
-        }
-    };
 }
 
 template<class T>
@@ -72,3 +75,4 @@ inline unsigned int hash(Dir dir)
     return hash(static_cast<int>(dir));
 }
 
+}

@@ -107,11 +107,16 @@ inline FastSerializer& operator<<(FastSerializer& file, const kv::Vector& vdir)
     return file;
 }
 
-inline unsigned int hash(const kv::Vector& vdir)
+namespace kv
+{
+
+inline unsigned int hash(const Vector& vdir)
 {
     return    (vdir.x + 1)
            + ((vdir.y + 1) << 8)
            + ((vdir.z + 1) << 16);
+}
+
 }
 
 inline FastDeserializer& operator>>(FastDeserializer& file, kv::Position& position)
@@ -130,11 +135,16 @@ inline FastSerializer& operator<<(FastSerializer& file, const kv::Position& posi
     return file;
 }
 
-inline unsigned int hash(const kv::Position& position)
+namespace kv
+{
+
+inline unsigned int hash(const Position& position)
 {
     return    (position.x + 1)
            + ((position.y + 1) << 8)
            + ((position.z + 1) << 16);
+}
+
 }
 
 inline bool IsNonZero(const kv::Vector& vdir)

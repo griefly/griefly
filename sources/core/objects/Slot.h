@@ -136,10 +136,10 @@ public:
     {
         return   hash(view_)
                + hash(item_)
-               + hash(posx_)
-               + hash(posy_)
-               + hash(type_)
-               + hash(name_);
+               + kv::hash(posx_)
+               + kv::hash(posy_)
+               + kv::hash(type_)
+               + kv::hash(name_);
     }
 private:
     ViewInfo view_;

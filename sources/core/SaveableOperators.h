@@ -3,6 +3,7 @@
 #include <QMap>
 #include <QVector>
 
+#include "Hashes.h"
 #include "FastSerializer.h"
 
 template<class TKey, class TValue>
@@ -37,6 +38,8 @@ inline FastDeserializer& operator>>(FastDeserializer& file, QMap<TKey, TValue>& 
 template<class TKey, class TValue>
 inline unsigned int hash(const QMap<TKey, TValue>& map)
 {
+    using kv::hash;
+
     unsigned int retval = 0;
     for (auto it = map.cbegin(); it != map.cend(); ++it)
     {
@@ -65,6 +68,8 @@ inline FastDeserializer& operator>>(FastDeserializer& file, QPair<TFirst, TSecon
 template<class TFirst, class TSecond>
 inline unsigned int hash(const QPair<TFirst, TSecond>& pair)
 {
+    using kv::hash;
+
     unsigned int retval = 0;
     retval += hash(pair.first);
     retval += hash(pair.second);
@@ -98,6 +103,8 @@ inline FastDeserializer& operator>>(FastDeserializer& file, QVector<TValue>& vec
 template<class TValue>
 inline unsigned int hash(const QVector<TValue>& vector)
 {
+    using kv::hash;
+
     unsigned int retval = 0;
     for (int i = 0; i < vector.size(); ++i)
     {

@@ -3,6 +3,8 @@
 #include "core/objects/Object.h"
 #include "core/Hashes.h"
 
+using namespace kv;
+
 TEST(HashesTest, IntegerNumber)
 {
     ASSERT_EQ(hash(static_cast<unsigned int>(0)), 0);
