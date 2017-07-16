@@ -10,6 +10,9 @@ def extract_macros_params(line, macros_name):
     expr = re.compile(macros_name + "\((.*)\)")
     result = expr.search(line)
     if result:
+        index = result.start()
+        if line.find('//', 0, index) != -1:
+            return None
         extracted = result.group(1)
         return extracted
     return None

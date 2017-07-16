@@ -34,7 +34,7 @@ public:
 private:
     IdPtr<Human> KV_SAVEABLE(owner_);
     // TODO: uncomment when #434 will be ready
-    // QVector<Slot> KV_S/AVEABLE(slots_);
+    // QVector<Slot> KV_SAVEABLE(slots_);
 };
 END_DECLARE(HumanInterface2)
 
