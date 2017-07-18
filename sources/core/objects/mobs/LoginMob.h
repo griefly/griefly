@@ -21,7 +21,7 @@ private:
 FastSerializer& operator<<(FastSerializer& file, LoginInterface& interf);
 FastDeserializer& operator>>(FastDeserializer& file, LoginInterface& interf);
 
-inline unsigned int hash(const LoginInterface& i)
+inline unsigned int Hash(const LoginInterface& i)
 {
     return i.hash();
 }

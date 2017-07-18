@@ -96,7 +96,7 @@ private:
 FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf);
 FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf);
 
-inline unsigned int hash(const HumanInterface& i)
+inline unsigned int Hash(const HumanInterface& i)
 {
     return i.hash();
 }

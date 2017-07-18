@@ -66,20 +66,20 @@ inline FastDeserializer& operator>>(FastDeserializer& deserializer, Slot& slot)
     return deserializer;
 }
 
-inline unsigned int hash(const SlotType& slot_type)
+inline unsigned int Hash(const SlotType& slot_type)
 {
-    return hash(static_cast<SlotTypeBase>(slot_type));
+    return Hash(static_cast<SlotTypeBase>(slot_type));
 }
 
-inline unsigned int hash(const Slot& slot)
+inline unsigned int Hash(const Slot& slot)
 {
     unsigned int retval = 0;
-    retval += hash(slot.view);
-    retval += hash(slot.item);
-    retval += hash(slot.posx);
-    retval += hash(slot.posy);
-    retval += hash(slot.type);
-    retval += hash(slot.name);
+    retval += Hash(slot.view);
+    retval += Hash(slot.item);
+    retval += Hash(slot.posx);
+    retval += Hash(slot.posy);
+    retval += Hash(slot.type);
+    retval += Hash(slot.name);
     return retval;
 }
 

@@ -246,7 +246,7 @@ unsigned int ObjectFactory::Hash()
     {
         if (objects_table_[i].object != nullptr)
         {
-            h += objects_table_[i].object->Hash();
+            h += objects_table_[i].object->HashMembers();
         }
     }
 

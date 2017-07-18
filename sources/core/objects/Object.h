@@ -48,11 +48,11 @@ public:
     virtual void Save(FastSerializer& serializer);
     virtual void Load(FastDeserializer& deserializer);
 
-    virtual unsigned int Hash()
+    virtual unsigned int HashMembers()
     {
         unsigned int retval = 0;
-        retval += hash(GetId());
-        retval += hash(GetFreq());
+        retval += Hash(GetId());
+        retval += Hash(GetFreq());
         return retval;
     }
 

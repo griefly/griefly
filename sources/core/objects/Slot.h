@@ -134,12 +134,12 @@ public:
     }
     virtual unsigned int hash_member() const override
     {
-        return   hash(view_)
-               + hash(item_)
-               + kv::hash(posx_)
-               + kv::hash(posy_)
-               + kv::hash(type_)
-               + kv::hash(name_);
+        return   Hash(view_)
+               + Hash(item_)
+               + kv::Hash(posx_)
+               + kv::Hash(posy_)
+               + kv::Hash(type_)
+               + kv::Hash(name_);
     }
 private:
     ViewInfo view_;

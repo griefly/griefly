@@ -183,5 +183,5 @@ void LoginInterface::Draw()
 
 unsigned int LoginInterface::hash() const
 {
-    return ::hash(view_);
+    return ::Hash(view_);
 }

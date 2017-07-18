@@ -113,22 +113,22 @@ TEST(FramesetInfo, StreamOperators)
 TEST(FramesetInfo, Hash)
 {
     ViewInfo::FramesetInfo frameset_info;
-    ASSERT_EQ(hash(frameset_info), 2);
+    ASSERT_EQ(Hash(frameset_info), 2);
 
     frameset_info.SetSprite("sprite 1");
-    ASSERT_EQ(hash(frameset_info), 2014229692);
+    ASSERT_EQ(Hash(frameset_info), 2014229692);
 
     frameset_info.SetState("state 2");
-    ASSERT_EQ(hash(frameset_info), 230996800);
+    ASSERT_EQ(Hash(frameset_info), 230996800);
 
     frameset_info.SetAngle(84);
-    ASSERT_EQ(hash(frameset_info), 230996884);
+    ASSERT_EQ(Hash(frameset_info), 230996884);
 
     frameset_info.SetShift(0, 13);
-    ASSERT_EQ(hash(frameset_info), 230996897);
+    ASSERT_EQ(Hash(frameset_info), 230996897);
 
     frameset_info.SetShift(14, 13);
-    ASSERT_EQ(hash(frameset_info), 230996911);
+    ASSERT_EQ(Hash(frameset_info), 230996911);
 }
 
 TEST(ViewInfo, AngleAndBaseFrameset)
@@ -336,23 +336,23 @@ TEST(ViewInfo, StreamOperators)
 TEST(ViewInfo, Hash)
 {
     ViewInfo view_info;
-    EXPECT_EQ(hash(view_info), 100002);
+    EXPECT_EQ(Hash(view_info), 100002);
 
     view_info.SetAngle(10);
-    EXPECT_EQ(hash(view_info), 100012);
+    EXPECT_EQ(Hash(view_info), 100012);
 
     view_info.SetTransparency(1);
-    EXPECT_EQ(hash(view_info), 13);
+    EXPECT_EQ(Hash(view_info), 13);
 
     view_info.SetSprite("sprite");
-    EXPECT_EQ(hash(view_info), 2514701248);
+    EXPECT_EQ(Hash(view_info), 2514701248);
 
     view_info.SetState("state");
-    EXPECT_EQ(hash(view_info), 227251335);
+    EXPECT_EQ(Hash(view_info), 227251335);
 
     view_info.AddOverlay("1", "1");
-    EXPECT_EQ(hash(view_info), 241341979);
+    EXPECT_EQ(Hash(view_info), 241341979);
 
     view_info.AddUnderlay("2", "2");
-    EXPECT_EQ(hash(view_info), 834067625);
+    EXPECT_EQ(Hash(view_info), 834067625);
 }

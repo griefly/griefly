@@ -33,7 +33,7 @@ TEST(MainObject, Types)
 TEST(MainObject, Hash)
 {
     Object object;
-    ASSERT_EQ(object.Hash(), 0);
+    ASSERT_EQ(object.HashMembers(), 0);
 }
 
 TEST(MainObject, EmptyFunctions)

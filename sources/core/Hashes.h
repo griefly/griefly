@@ -24,7 +24,7 @@ namespace std
 namespace kv
 {
 
-inline unsigned int hash(const QString& str)
+inline unsigned int Hash(const QString& str)
 {
     unsigned int len = str.length();
     unsigned int hash;
@@ -42,13 +42,13 @@ inline unsigned int hash(const QString& str)
 }
 
 template<class T>
-unsigned int hash(const IdPtr<T>& h)
+unsigned int Hash(const IdPtr<T>& h)
 {
     return h.Id();
 }
 
 template<class T>
-unsigned int hash(std::vector<IdPtr<T>>& content)
+unsigned int Hash(std::vector<IdPtr<T>>& content)
 {
     unsigned int retval = 0;
     int i = 1;
@@ -59,20 +59,20 @@ unsigned int hash(std::vector<IdPtr<T>>& content)
     return retval;
 }
 
-inline unsigned int hash(unsigned int value)
+inline unsigned int Hash(unsigned int value)
 {
     return value;
 }
 
-inline unsigned int hash(int value)
+inline unsigned int Hash(int value)
 {
     // The conversion is well-defined
     return static_cast<unsigned int>(value);
 }
 
-inline unsigned int hash(Dir dir)
+inline unsigned int Hash(Dir dir)
 {
-    return hash(static_cast<int>(dir));
+    return Hash(static_cast<int>(dir));
 }
 
 }

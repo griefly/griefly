@@ -34,7 +34,7 @@ namespace internal
         : BaseClass(kv::internal::no_initialization) { }                   \
     virtual void Save(FastSerializer& file) override;                      \
     virtual void Load(FastDeserializer& file) override;                    \
-    virtual unsigned int Hash() override
+    virtual unsigned int HashMembers() override
 
 #define REGISTER_CLASS_AS(type_id)         \
     virtual const QString& GetType() const \

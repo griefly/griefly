@@ -8,7 +8,7 @@
 namespace atmos
 {
     class AtmosHolder;
-    unsigned int hash(const AtmosHolder& atmos_holder);
+    unsigned int Hash(const AtmosHolder& atmos_holder);
 }
 
 FastDeserializer& operator>>(FastDeserializer& file, atmos::AtmosHolder& atmos_holder);
@@ -23,7 +23,7 @@ namespace atmos
         friend class ::Atmosphere;
         friend FastDeserializer& ::operator>>(FastDeserializer& file, atmos::AtmosHolder& atmos_holder);
         friend FastSerializer& ::operator<<(FastSerializer& file, const atmos::AtmosHolder& atmos_holder);
-        friend unsigned int hash(const atmos::AtmosHolder& atmos_holder);
+        friend unsigned int Hash(const atmos::AtmosHolder& atmos_holder);
     public:
         AtmosHolder()
         {
@@ -65,7 +65,7 @@ namespace atmos
 
     void AddDefaultValues(atmos::AtmosHolder* holder);
 
-    inline unsigned int hash(const atmos::AtmosHolder& atmos_holder)
+    inline unsigned int Hash(const atmos::AtmosHolder& atmos_holder)
     {
         unsigned int retval = 0;
         for (quint32 i = 0; i < atmos::GASES_NUM; ++i)

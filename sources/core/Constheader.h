@@ -110,7 +110,7 @@ inline FastSerializer& operator<<(FastSerializer& file, const kv::Vector& vdir)
 namespace kv
 {
 
-inline unsigned int hash(const Vector& vdir)
+inline unsigned int Hash(const Vector& vdir)
 {
     return    (vdir.x + 1)
            + ((vdir.y + 1) << 8)
@@ -138,7 +138,7 @@ inline FastSerializer& operator<<(FastSerializer& file, const kv::Position& posi
 namespace kv
 {
 
-inline unsigned int hash(const Position& position)
+inline unsigned int Hash(const Position& position)
 {
     return    (position.x + 1)
            + ((position.y + 1) << 8)

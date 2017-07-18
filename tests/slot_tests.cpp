@@ -23,7 +23,7 @@ TEST(SlotType, SaveableOperators)
         deserializer >> slot_type;
 
         EXPECT_EQ(slot_type, slot_and_hash.first);
-        EXPECT_EQ(hash(slot_type), slot_and_hash.second);
+        EXPECT_EQ(Hash(slot_type), slot_and_hash.second);
     }
 }
 
@@ -52,5 +52,5 @@ TEST(Slot, SaveableOperators)
 
     EXPECT_TRUE(ViewInfo::IsSameFramesets(slot.view, loaded_slot.view));
 
-    EXPECT_EQ(hash(loaded_slot), 2658126356);
+    EXPECT_EQ(Hash(loaded_slot), 2658126356);
 }

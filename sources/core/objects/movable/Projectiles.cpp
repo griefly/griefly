@@ -28,13 +28,13 @@ FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& s)
     return file;
 }
 
-unsigned int hash(const std::vector<Dir>& content)
+unsigned int Hash(const std::vector<Dir>& content)
 {
     unsigned int retval = 0;
     int i = 1;
     for (auto it = content.begin(); it != content.end(); ++it, ++i)
     {
-        retval += hash(*it) * i;
+        retval += Hash(*it) * i;
     }
     return retval;
 }
