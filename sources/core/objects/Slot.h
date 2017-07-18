@@ -24,8 +24,8 @@ public:
     virtual IdPtr<kv::Item>  Get() = 0;
     virtual void Remove() = 0;
     virtual void Draw() = 0;
-    virtual FastSerializer& operator<<(FastSerializer& file) = 0;
-    virtual FastDeserializer& operator>>(FastDeserializer& file) = 0;
+    virtual kv::FastSerializer& operator<<(kv::FastSerializer& file) = 0;
+    virtual kv::FastDeserializer& operator>>(kv::FastDeserializer& file) = 0;
     virtual unsigned int hash_member() const = 0;
 };
 
@@ -112,7 +112,7 @@ public:
     {
         return &view_;
     }
-    virtual FastSerializer& operator<<(FastSerializer& file) override
+    virtual kv::FastSerializer& operator<<(kv::FastSerializer& file) override
     {
         file << view_;
         file << item_;
@@ -122,7 +122,7 @@ public:
         file << name_;
         return file;
     }
-    virtual FastDeserializer& operator>>(FastDeserializer& file) override
+    virtual kv::FastDeserializer& operator>>(kv::FastDeserializer& file) override
     {
         file >> view_;
         file >> item_;

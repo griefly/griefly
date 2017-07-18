@@ -3,7 +3,7 @@
 
 using namespace kv;
 
-FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& s)
+FastSerializer& kv::operator<<(FastSerializer& file, const std::vector<Dir>& s)
 {
     file << static_cast<quint32>(s.size());
     for (auto it : s)
@@ -13,7 +13,7 @@ FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& s)
     return file;
 }
 
-FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& s)
+FastDeserializer& kv::operator>>(FastDeserializer& file, std::vector<Dir>& s)
 {
     quint32 size;
     file >> size;
@@ -39,7 +39,6 @@ unsigned int Hash(const std::vector<Dir>& content)
     return retval;
 }
 
-
 Projectile::Projectile()
 {
     SetPassable(Dir::ALL, passable::FULL);
@@ -52,6 +51,7 @@ Projectile::Projectile()
     passable_level = passable::SMALL_ITEM;
     harmless_ = true;
 }
+
 void Projectile::Process()
 {
     Dir old_dir = GetDir();
@@ -239,18 +239,19 @@ void Projectile::MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2)
         }
     }
 }
+
 void Projectile::AfterWorldCreation()
 {
     Movable::AfterWorldCreation();
     SetFreq(1);
 }
+
 int Projectile::GetDamage()
 {
     return damage_;
 }
+
 int Projectile::GetBurnDamage()
 {
     return burn_damage_;
 }
-
-

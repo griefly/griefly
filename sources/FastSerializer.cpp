@@ -19,6 +19,8 @@ static_assert(
     sizeof(bool) == 1,
     "Unsupported platform, sizeof(bool) should be 1!");
 
+using namespace kv;
+
 FastSerializer::FastSerializer(int size)
     : index_(0)
 {
@@ -30,7 +32,7 @@ FastSerializer::~FastSerializer()
     // Nothing
 }
 
-QString Humanize(FastDeserializer *deserializer)
+QString kv::Humanize(FastDeserializer *deserializer)
 {
     QString retval;
     QTextStream stream(&retval);

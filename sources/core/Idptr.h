@@ -38,9 +38,9 @@ template<class T>
 class IdPtr : public IdPtrBase
 {
     template<class U>
-    friend FastDeserializer& operator<<(FastDeserializer& stream, const IdPtr<U>& ptr);
+    friend kv::FastDeserializer& operator<<(kv::FastDeserializer& stream, const IdPtr<U>& ptr);
     template<class U>
-    friend FastSerializer& operator>>(FastSerializer& stream, IdPtr<U>& ptr);
+    friend kv::FastSerializer& operator>>(kv::FastSerializer& stream, IdPtr<U>& ptr);
     template<class U>
     friend class IdPtr;
 public:
@@ -200,14 +200,14 @@ private:
 };
 
 template<typename T>
-FastSerializer& operator<<(FastSerializer& stream, const IdPtr<T>& ptr)
+kv::FastSerializer& operator<<(kv::FastSerializer& stream, const IdPtr<T>& ptr)
 {
     stream << ptr.Id();
     return stream;
 }
 
 template<typename T>
-FastDeserializer& operator>>(FastDeserializer& stream, IdPtr<T>& ptr)
+kv::FastDeserializer& operator>>(kv::FastDeserializer& stream, IdPtr<T>& ptr)
 {
     quint32 id;
     stream >> id;

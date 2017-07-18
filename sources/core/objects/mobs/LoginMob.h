@@ -6,8 +6,8 @@
 
 class LoginInterface: public InterfaceBase
 {
-    friend FastSerializer& operator<<(FastSerializer& file, LoginInterface& interf);
-    friend FastDeserializer& operator>>(FastDeserializer& file, LoginInterface& interf);
+    friend kv::FastSerializer& operator<<(kv::FastSerializer& file, LoginInterface& interf);
+    friend kv::FastDeserializer& operator>>(kv::FastDeserializer& file, LoginInterface& interf);
 public:
     void Init();
 
@@ -18,8 +18,8 @@ private:
     ViewInfo view_;
 };
 
-FastSerializer& operator<<(FastSerializer& file, LoginInterface& interf);
-FastDeserializer& operator>>(FastDeserializer& file, LoginInterface& interf);
+kv::FastSerializer& operator<<(kv::FastSerializer& file, LoginInterface& interf);
+kv::FastDeserializer& operator>>(kv::FastDeserializer& file, LoginInterface& interf);
 
 inline unsigned int Hash(const LoginInterface& i)
 {

@@ -4,6 +4,8 @@
 
 #include <QFile>
 
+using namespace kv;
+
 TEST(FastSerializer, Constructor)
 {
     FastSerializer serializer;

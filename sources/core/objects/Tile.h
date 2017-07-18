@@ -7,6 +7,9 @@
 #include "MaterialObject.h"
 #include "core/atmos/AtmosHolder.h"
 
+namespace kv
+{
+
 template<class T>
 FastSerializer& operator<<(FastSerializer& file, const std::vector<IdPtr<T>>& content)
 {
@@ -33,9 +36,6 @@ FastDeserializer& operator>>(FastDeserializer& file, std::vector<IdPtr<T>>& cont
     }
     return file;
 }
-
-namespace kv
-{
 
 class CubeTile : public MapObject
 {

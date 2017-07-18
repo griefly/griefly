@@ -46,8 +46,8 @@ public:
     virtual void Draw() override;
     void InitSlots();
     virtual ~HumanInterface();
-    friend FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf);
-    friend FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf);
+    friend kv::FastSerializer& operator<<(kv::FastSerializer& file, HumanInterface& interf);
+    friend kv::FastDeserializer& operator>>(kv::FastDeserializer& file, HumanInterface& interf);
     virtual unsigned int hash() const override;
 
     void Pick(IdPtr<kv::Item> item);
@@ -93,8 +93,8 @@ private:
     void StopPull();
 };
 
-FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf);
-FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf);
+kv::FastSerializer& operator<<(kv::FastSerializer& file, HumanInterface& interf);
+kv::FastDeserializer& operator>>(kv::FastDeserializer& file, HumanInterface& interf);
 
 inline unsigned int Hash(const HumanInterface& i)
 {

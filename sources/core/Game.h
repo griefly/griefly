@@ -75,7 +75,7 @@ private:
 
     void PostOoc(const QString& who, const QString& text);
 
-    FastSerializer serializer_;
+    kv::FastSerializer serializer_;
 
     std::vector<Message> messages_log_;
     int log_pos_;

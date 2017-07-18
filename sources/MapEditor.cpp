@@ -189,7 +189,7 @@ void MapEditor::SaveMapgen(const QString& name)
     int size_y = editor_map_[0].size();
     int size_z = editor_map_[0][0].size();
 
-    FastSerializer data;
+    kv::FastSerializer data;
 
     data << size_x;
     data << size_y;
@@ -273,7 +273,7 @@ void MapEditor::LoadMapgen(const QString& name)
         raw_data.append(local);
     }
     raw_data = QByteArray::fromHex(raw_data);
-    FastDeserializer data(raw_data.data(), raw_data.size());
+    kv::FastDeserializer data(raw_data.data(), raw_data.size());
 
     int x;
     data >> x;
@@ -402,7 +402,7 @@ void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
     QByteArray& data = ee->variables["direction_"];
     if (ee && data.size())
     {
-        FastDeserializer deserializer(data.data(), data.size());
+        kv::FastDeserializer deserializer(data.data(), data.size());
         Dir dir;
         deserializer >> dir;
         int byond_dir = helpers::DirToByond(dir);

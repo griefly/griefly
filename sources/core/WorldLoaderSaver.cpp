@@ -22,7 +22,7 @@ WorldLoaderSaver::WorldLoaderSaver(GameInterface* game)
     // Nothing
 }
 
-void WorldLoaderSaver::Save(FastSerializer& serializer)
+void WorldLoaderSaver::Save(kv::FastSerializer& serializer)
 {
     SaveMapHeader(serializer);
 
@@ -39,10 +39,10 @@ void WorldLoaderSaver::Save(FastSerializer& serializer)
         ++it;
     }
 
-    serializer.WriteType(END_TYPE);
+    serializer.WriteType(kv::END_TYPE);
 }
 
-void WorldLoaderSaver::Load(FastDeserializer& deserializer, quint32 real_this_mob)
+void WorldLoaderSaver::Load(kv::FastDeserializer& deserializer, quint32 real_this_mob)
 {
     ObjectFactoryInterface& factory = game_->GetFactory();
 
@@ -54,7 +54,7 @@ void WorldLoaderSaver::Load(FastDeserializer& deserializer, quint32 real_this_mo
         QString type;
         deserializer.ReadType(&type);
 
-        if (type == END_TYPE)
+        if (type == kv::END_TYPE)
         {
             qDebug() << "Zero id reached";
             break;
@@ -97,7 +97,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         raw_data.append(local);
     }
     raw_data = QByteArray::fromHex(raw_data);
-    FastDeserializer ss(raw_data.data(), raw_data.size());
+    kv::FastDeserializer ss(raw_data.data(), raw_data.size());
 
     factory.BeginWorldCreation();
 
@@ -144,7 +144,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
 
             QByteArray variable_data = it->second;
 
-            FastDeserializer local(variable_data.data(), variable_data.size());
+            kv::FastDeserializer local(variable_data.data(), variable_data.size());
 
             auto& setters_for_type = GetSettersForTypes();
             setters_for_type[item_type][it->first](i.operator->(), local);
@@ -169,7 +169,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
     game_->GetMap().FillTilesAtmosHolders();
 }
 
-void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
+void WorldLoaderSaver::SaveMapHeader(kv::FastSerializer& serializer)
 {
     ObjectFactoryInterface& factory = game_->GetFactory();
 
@@ -178,7 +178,7 @@ void WorldLoaderSaver::SaveMapHeader(FastSerializer& serializer)
     serializer << game_->GetGlobals();
 }
 
-void WorldLoaderSaver::LoadMapHeader(FastDeserializer& deserializer)
+void WorldLoaderSaver::LoadMapHeader(kv::FastDeserializer& deserializer)
 {
     ObjectFactoryInterface& factory = game_->GetFactory();
 

@@ -5,12 +5,12 @@
 
 TEST(SaveableOperators, MapOperatorsEmpty)
 {
-    FastSerializer serializer(1);
+    kv::FastSerializer serializer(1);
     QMap<qint32, qint32> map;
     EXPECT_EQ(Hash(map), 0);
     serializer << map;
 
-    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
     QMap<qint32, qint32> other_map;
     deserializer >> other_map;
 
@@ -20,7 +20,7 @@ TEST(SaveableOperators, MapOperatorsEmpty)
 
 TEST(SaveableOperators, MapOperators)
 {
-    FastSerializer serializer(1);
+    kv::FastSerializer serializer(1);
 
     QMap<QString, qint32> map;
     quint32 empty_hash = Hash(map);
@@ -34,7 +34,7 @@ TEST(SaveableOperators, MapOperators)
 
     serializer << map;
 
-    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
     QMap<QString, qint32> other_map;
     deserializer >> other_map;
 
@@ -44,12 +44,12 @@ TEST(SaveableOperators, MapOperators)
 
 TEST(SaveableOperators, PairOperators)
 {
-    FastSerializer serializer(1);
+    kv::FastSerializer serializer(1);
     QPair<qint32, qint32> pair{11, 12};
     EXPECT_EQ(Hash(pair), 23);
     serializer << pair;
 
-    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
     QPair<qint32, qint32> other_pair;
     deserializer >> other_pair;
 
@@ -60,12 +60,12 @@ TEST(SaveableOperators, PairOperators)
 
 TEST(SaveableOperators, VectorOperatorsEmpty)
 {
-    FastSerializer serializer(1);
+    kv::FastSerializer serializer(1);
     QVector<qint32> vector;
     EXPECT_EQ(Hash(vector), 0);
     serializer << vector;
 
-    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
     QVector<qint32> other_vector;
     deserializer >> other_vector;
 
@@ -75,12 +75,12 @@ TEST(SaveableOperators, VectorOperatorsEmpty)
 
 TEST(SaveableOperators, VectorOperators)
 {
-    FastSerializer serializer(1);
+    kv::FastSerializer serializer(1);
     QVector<qint32> vector{7, 2, 3, 4, 5, 43};
     EXPECT_EQ(Hash(vector), 319);
     serializer << vector;
 
-    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
     QVector<qint32> other_vector;
     deserializer >> other_vector;
 

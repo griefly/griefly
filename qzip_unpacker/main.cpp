@@ -39,9 +39,9 @@ int main(int argc, char* argv[])
     QByteArray compressed = input.readAll();
     QByteArray uncompressed = qUncompress(compressed);
 
-    FastDeserializer deserializer(uncompressed.data(), uncompressed.size());
+    kv::FastDeserializer deserializer(uncompressed.data(), uncompressed.size());
 
-    QString humanized = Humanize(&deserializer);
+    QString humanized = kv::Humanize(&deserializer);
 
     QByteArray tail = uncompressed.mid(deserializer.GetIndex());
 

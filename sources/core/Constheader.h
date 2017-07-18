@@ -35,13 +35,13 @@ enum class Dir : int
     NORTHWEST = 9,
 };
 
-inline FastSerializer& operator<<(FastSerializer& file, const Dir& dir)
+inline kv::FastSerializer& operator<<(kv::FastSerializer& file, const Dir& dir)
 {
     file << static_cast<int>(dir);
     return file;
 }
 
-inline FastDeserializer& operator>>(FastDeserializer& file, Dir& dir)
+inline kv::FastDeserializer& operator>>(kv::FastDeserializer& file, Dir& dir)
 {
     int temp;
     file >> temp;
@@ -67,6 +67,22 @@ struct Vector
     int z;
 };
 
+inline FastDeserializer& operator>>(FastDeserializer& file, Vector& vdir)
+{
+    file >> vdir.x;
+    file >> vdir.y;
+    file >> vdir.z;
+    return file;
+}
+
+inline FastSerializer& operator<<(FastSerializer& file, const Vector& vdir)
+{
+    file << vdir.x;
+    file << vdir.y;
+    file << vdir.z;
+    return file;
+}
+
 struct Position
 {
     Position() : Position(0, 0, 0) { }
@@ -86,45 +102,6 @@ struct Position
     int z;
 };
 
-inline uint qHash(const kv::Position& point, uint seed = 0)
-{
-    uint retval = 59;
-    retval = retval * 13 + ::qHash(point.z, seed);
-    retval = retval * 13 + ::qHash(point.x, seed);
-    retval = retval * 13 + ::qHash(point.y, seed);
-    return retval;
-}
-
-}
-
-inline FastDeserializer& operator>>(FastDeserializer& file, kv::Vector& vdir)
-{
-    file >> vdir.x;
-    file >> vdir.y;
-    file >> vdir.z;
-    return file;
-}
-
-inline FastSerializer& operator<<(FastSerializer& file, const kv::Vector& vdir)
-{
-    file << vdir.x;
-    file << vdir.y;
-    file << vdir.z;
-    return file;
-}
-
-namespace kv
-{
-
-inline unsigned int Hash(const Vector& vdir)
-{
-    return    (vdir.x + 1)
-           + ((vdir.y + 1) << 8)
-           + ((vdir.z + 1) << 16);
-}
-
-}
-
 inline FastDeserializer& operator>>(FastDeserializer& file, kv::Position& position)
 {
     file >> position.x;
@@ -141,8 +118,21 @@ inline FastSerializer& operator<<(FastSerializer& file, const kv::Position& posi
     return file;
 }
 
-namespace kv
+inline uint qHash(const kv::Position& point, uint seed = 0)
 {
+    uint retval = 59;
+    retval = retval * 13 + ::qHash(point.z, seed);
+    retval = retval * 13 + ::qHash(point.x, seed);
+    retval = retval * 13 + ::qHash(point.y, seed);
+    return retval;
+}
+
+inline unsigned int Hash(const Vector& vdir)
+{
+    return    (vdir.x + 1)
+           + ((vdir.y + 1) << 8)
+           + ((vdir.z + 1) << 16);
+}
 
 inline unsigned int Hash(const Position& position)
 {

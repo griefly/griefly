@@ -87,10 +87,10 @@ TEST(FramesetInfo, StreamOperators)
     frameset_info.SetAngle(84);
     frameset_info.SetShift(12, 13);
 
-    FastSerializer serialzier(1);
+    kv::FastSerializer serialzier(1);
     serialzier << frameset_info;
 
-    FastDeserializer deserializer(serialzier.GetData(), serialzier.GetIndex());
+    kv::FastDeserializer deserializer(serialzier.GetData(), serialzier.GetIndex());
 
     ViewInfo::FramesetInfo frameset_info2;
     deserializer >> frameset_info2;
@@ -101,9 +101,9 @@ TEST(FramesetInfo, StreamOperators)
     EXPECT_EQ(frameset_info2.GetShiftY(), 13);
 
     {
-        FastSerializer serializer(1);
+        kv::FastSerializer serializer(1);
         serializer << frameset_info;
-        FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+        kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
         ViewInfo::FramesetInfo frameset_info3;
         deserializer >> frameset_info3;
         EXPECT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
@@ -306,10 +306,10 @@ TEST(ViewInfo, StreamOperators)
     view_info.AddOverlay("something", "someone").SetShift(1, 10);
     view_info.AddUnderlay("tree", "weed");
 
-    FastSerializer serializer(1);
+    kv::FastSerializer serializer(1);
     serializer << view_info;
 
-    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
 
     ViewInfo view_info2;
     deserializer >> view_info2;

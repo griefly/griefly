@@ -7,6 +7,9 @@
 
 #include "KvAbort.h"
 
+namespace kv
+{
+
 const QLatin1String END_TYPE("0~$");
 
 class FastSerializer
@@ -327,6 +330,8 @@ inline FastDeserializer& operator>>(FastDeserializer& deserializer, T& value)
 }
 
 QString Humanize(FastDeserializer* deserializer);
+
+}
 
 
 

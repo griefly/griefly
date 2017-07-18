@@ -6,6 +6,9 @@
 #include "Hashes.h"
 #include "FastSerializer.h"
 
+namespace kv
+{
+
 template<class TKey, class TValue>
 inline FastSerializer& operator<<(FastSerializer& file, const QMap<TKey, TValue>& map)
 {
@@ -35,20 +38,6 @@ inline FastDeserializer& operator>>(FastDeserializer& file, QMap<TKey, TValue>& 
     return file;
 }
 
-template<class TKey, class TValue>
-inline unsigned int Hash(const QMap<TKey, TValue>& map)
-{
-    using kv::Hash;
-
-    unsigned int retval = 0;
-    for (auto it = map.cbegin(); it != map.cend(); ++it)
-    {
-        retval += Hash(it.key());
-        retval += Hash(it.value());
-    }
-    return retval;
-}
-
 template<class TFirst, class TSecond>
 inline FastSerializer& operator<<(FastSerializer& file, const QPair<TFirst, TSecond>& pair)
 {
@@ -63,17 +52,6 @@ inline FastDeserializer& operator>>(FastDeserializer& file, QPair<TFirst, TSecon
     file >> pair.first;
     file >> pair.second;
     return file;
-}
-
-template<class TFirst, class TSecond>
-inline unsigned int Hash(const QPair<TFirst, TSecond>& pair)
-{
-    using kv::Hash;
-
-    unsigned int retval = 0;
-    retval += Hash(pair.first);
-    retval += Hash(pair.second);
-    return retval;
 }
 
 template<class TValue>
@@ -100,6 +78,8 @@ inline FastDeserializer& operator>>(FastDeserializer& file, QVector<TValue>& vec
     return file;
 }
 
+}
+
 template<class TValue>
 inline unsigned int Hash(const QVector<TValue>& vector)
 {
@@ -109,6 +89,31 @@ inline unsigned int Hash(const QVector<TValue>& vector)
     for (int i = 0; i < vector.size(); ++i)
     {
         retval += (i + 1) * Hash(vector[i]);
+    }
+    return retval;
+}
+
+template<class TFirst, class TSecond>
+inline unsigned int Hash(const QPair<TFirst, TSecond>& pair)
+{
+    using kv::Hash;
+
+    unsigned int retval = 0;
+    retval += Hash(pair.first);
+    retval += Hash(pair.second);
+    return retval;
+}
+
+template<class TKey, class TValue>
+inline unsigned int Hash(const QMap<TKey, TValue>& map)
+{
+    using kv::Hash;
+
+    unsigned int retval = 0;
+    for (auto it = map.cbegin(); it != map.cend(); ++it)
+    {
+        retval += Hash(it.key());
+        retval += Hash(it.value());
     }
     return retval;
 }

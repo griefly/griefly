@@ -10,15 +10,15 @@
 #include "Idptr.h"
 
 template<class T>
-inline FastSerializer& WrapWriteMessage(FastSerializer& file, T& to_write)
+inline kv::FastSerializer& WrapWriteMessage(kv::FastSerializer& file, T& to_write)
 {
     file << to_write;
     return file;
 }
 
 template<class KeyType, class ValueType>
-inline FastSerializer& WrapWriteMessage(
-        FastSerializer& file,
+inline kv::FastSerializer& WrapWriteMessage(
+        kv::FastSerializer& file,
         std::map<KeyType, ValueType>& to_write)
 {
     file << static_cast<quint32>(to_write.size());
@@ -31,15 +31,15 @@ inline FastSerializer& WrapWriteMessage(
 }
 
 template<class T>
-inline FastDeserializer& WrapReadMessage(FastDeserializer& file, T& to_read)
+inline kv::FastDeserializer& WrapReadMessage(kv::FastDeserializer& file, T& to_read)
 {
     file >> to_read;
     return file;
 }
 
 template<class KeyType, class ValueType>
-inline FastDeserializer& WrapReadMessage(
-        FastDeserializer& file,
+inline kv::FastDeserializer& WrapReadMessage(
+        kv::FastDeserializer& file,
         std::map<KeyType, ValueType>& to_read)
 {
     quint32 size;

@@ -87,7 +87,7 @@ private:
     std::vector<QString> types_;
     std::vector<QString> turf_types_;
 
-    FastSerializer serializer_;
+    kv::FastSerializer serializer_;
 
     Ui::MapEditorForm *ui;
 };

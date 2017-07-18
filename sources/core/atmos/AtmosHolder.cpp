@@ -153,32 +153,33 @@ namespace atmos
         holder->AddGase(CO2, 1);
         holder->AddEnergy(1000);
     }
-}
 
-FastSerializer& operator<<(FastSerializer& file, const atmos::AtmosHolder& atmos_holder)
-{
-    for (quint32 i = 0; i < atmos::GASES_NUM; ++i)
+    kv::FastSerializer& operator<<(kv::FastSerializer& file, const atmos::AtmosHolder& atmos_holder)
     {
-        file << atmos_holder.data_ptr_->gases[i];
+        for (quint32 i = 0; i < atmos::GASES_NUM; ++i)
+        {
+            file << atmos_holder.data_ptr_->gases[i];
+        }
+        file << atmos_holder.data_ptr_->energy;
+        file << atmos_holder.data_ptr_->pressure;
+        file << atmos_holder.data_ptr_->volume;
+        file << atmos_holder.data_ptr_->temperature;
+
+        return file;
     }
-    file << atmos_holder.data_ptr_->energy;
-    file << atmos_holder.data_ptr_->pressure;
-    file << atmos_holder.data_ptr_->volume;
-    file << atmos_holder.data_ptr_->temperature;
 
-    return file;
-}
-
-FastDeserializer& operator>>(FastDeserializer& file, atmos::AtmosHolder& atmos_holder)
-{
-    for (quint32 i = 0; i < atmos::GASES_NUM; ++i)
+    kv::FastDeserializer& operator>>(kv::FastDeserializer& file, atmos::AtmosHolder& atmos_holder)
     {
-        file >> atmos_holder.data_ptr_->gases[i];
-    }
-    file >> atmos_holder.data_ptr_->energy;
-    file >> atmos_holder.data_ptr_->pressure;
-    file >> atmos_holder.data_ptr_->volume;
-    file >> atmos_holder.data_ptr_->temperature;
+        for (quint32 i = 0; i < atmos::GASES_NUM; ++i)
+        {
+            file >> atmos_holder.data_ptr_->gases[i];
+        }
+        file >> atmos_holder.data_ptr_->energy;
+        file >> atmos_holder.data_ptr_->pressure;
+        file >> atmos_holder.data_ptr_->volume;
+        file >> atmos_holder.data_ptr_->temperature;
 
-    return file;
+        return file;
+    }
+
 }

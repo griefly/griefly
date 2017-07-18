@@ -9,8 +9,8 @@
 
 class ViewInfo;
 
-FastSerializer& operator<<(FastSerializer& file, const ViewInfo& view_info);
-FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info);
+kv::FastSerializer& operator<<(kv::FastSerializer& file, const ViewInfo& view_info);
+kv::FastDeserializer& operator>>(kv::FastDeserializer& file, ViewInfo& view_info);
 
 inline unsigned int Hash(const ViewInfo& view_info);
 
@@ -18,8 +18,8 @@ const int MAX_TRANSPARENCY = 100000;
 
 class ViewInfo
 {
-    friend FastSerializer& operator<<(FastSerializer& file, const ViewInfo& view_info);
-    friend FastDeserializer& operator>>(FastDeserializer& file, ViewInfo& view_info);
+    friend kv::FastSerializer& operator<<(kv::FastSerializer& file, const ViewInfo& view_info);
+    friend kv::FastDeserializer& operator>>(kv::FastDeserializer& file, ViewInfo& view_info);
 
     friend unsigned int Hash(const ViewInfo& view_info);
 public:
@@ -28,11 +28,11 @@ public:
 
     class FramesetInfo
     {
-        friend FastSerializer& operator<< (
-                FastSerializer& file,
+        friend kv::FastSerializer& operator<< (
+                kv::FastSerializer& file,
                 const ViewInfo::FramesetInfo& frameset_info);
-        friend FastDeserializer& operator>> (
-                FastDeserializer& file,
+        friend kv::FastDeserializer& operator>> (
+                kv::FastDeserializer& file,
                 ViewInfo::FramesetInfo& frameset_info);
 
         friend unsigned int Hash(const ViewInfo::FramesetInfo& frameset);

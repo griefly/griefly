@@ -11,7 +11,7 @@ std::unordered_map<QString, ItemCreator>* GetItemsCreators();
 
 std::unordered_map<QString, VoidItemCreator>* GetVoidItemsCreators();
 
-using VariableSetter = void(*)(kv::Object* ptr, FastDeserializer& str);
+using VariableSetter = void(*)(kv::Object* ptr, kv::FastDeserializer& str);
 
 using SettersForType = std::unordered_map<QString, VariableSetter>;
 

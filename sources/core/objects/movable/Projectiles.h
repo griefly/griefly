@@ -3,12 +3,13 @@
 #include "Movable.h"
 #include "core/objects/mobs/Human.h"
 
-FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& content);
-FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& content);
 unsigned int Hash(const std::vector<Dir>& content);
 
 namespace kv
 {
+
+FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& content);
+FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& content);
 
 class Projectile : public Movable
 {

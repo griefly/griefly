@@ -9,10 +9,9 @@ namespace atmos
 {
     class AtmosHolder;
     unsigned int Hash(const AtmosHolder& atmos_holder);
+    kv::FastDeserializer& operator>>(kv::FastDeserializer& file, atmos::AtmosHolder& atmos_holder);
+    kv::FastSerializer& operator<<(kv::FastSerializer& file, const atmos::AtmosHolder& atmos_holder);
 }
-
-FastDeserializer& operator>>(FastDeserializer& file, atmos::AtmosHolder& atmos_holder);
-FastSerializer& operator<<(FastSerializer& file, const atmos::AtmosHolder& atmos_holder);
 
 class Atmosphere;
 
@@ -21,8 +20,8 @@ namespace atmos
     class AtmosHolder
     {
         friend class ::Atmosphere;
-        friend FastDeserializer& ::operator>>(FastDeserializer& file, atmos::AtmosHolder& atmos_holder);
-        friend FastSerializer& ::operator<<(FastSerializer& file, const atmos::AtmosHolder& atmos_holder);
+        friend kv::FastDeserializer& operator>>(kv::FastDeserializer& file, atmos::AtmosHolder& atmos_holder);
+        friend kv::FastSerializer& operator<<(kv::FastSerializer& file, const atmos::AtmosHolder& atmos_holder);
         friend unsigned int Hash(const atmos::AtmosHolder& atmos_holder);
     public:
         AtmosHolder()

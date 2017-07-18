@@ -131,7 +131,7 @@ TEST_F(IdPtrTest, Validating)
 TEST_F(IdPtrTest, SaveAndLoad)
 {
     IdPtr<kv::Object> ptr(93);
-    FastSerializer serializer(1);
+    kv::FastSerializer serializer(1);
     serializer << ptr;
     EXPECT_EQ(
         QByteArray(serializer.GetData(), serializer.GetIndex()),
@@ -140,7 +140,7 @@ TEST_F(IdPtrTest, SaveAndLoad)
     IdPtr<kv::Object> ptr2;
     EXPECT_FALSE(ptr2 == ptr);
 
-    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
 
     deserializer >> ptr2;
     EXPECT_TRUE(ptr2 == ptr);

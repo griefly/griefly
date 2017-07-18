@@ -410,6 +410,7 @@ FastSerializer& operator<<(FastSerializer& file, HumanInterface& interf)
     file << interf.owner_;
     return file;
 }
+
 FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf)
 {
     interf.r_hand_.operator>>(file);
