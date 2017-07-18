@@ -12,6 +12,7 @@
 #include <QDebug>
 
 #include "FastSerializer.h"
+#include "Hashes.h"
 
 const int SIZE_H_SQ = 12; // visible size const
 const int SIZE_W_SQ = 12;
@@ -46,6 +47,11 @@ inline FastDeserializer& operator>>(FastDeserializer& file, Dir& dir)
     file >> temp;
     dir = static_cast<Dir>(temp);
     return file;
+}
+
+inline unsigned int Hash(Dir dir)
+{
+    return kv::Hash(static_cast<int>(dir));
 }
 
 namespace kv

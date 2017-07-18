@@ -7,7 +7,6 @@
 #include <QString>
 
 #include "Idptr.h"
-#include "Constheader.h"
 
 namespace std
 {
@@ -42,12 +41,6 @@ inline unsigned int Hash(const QString& str)
 }
 
 template<class T>
-unsigned int Hash(const IdPtr<T>& h)
-{
-    return h.Id();
-}
-
-template<class T>
 unsigned int Hash(std::vector<IdPtr<T>>& content)
 {
     unsigned int retval = 0;
@@ -68,11 +61,6 @@ inline unsigned int Hash(int value)
 {
     // The conversion is well-defined
     return static_cast<unsigned int>(value);
-}
-
-inline unsigned int Hash(Dir dir)
-{
-    return Hash(static_cast<int>(dir));
 }
 
 }

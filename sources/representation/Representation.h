@@ -12,6 +12,7 @@
 #include <QElapsedTimer>
 
 #include "Sound.h"
+#include "core/Constheader.h"
 
 class Representation : public QObject
 {

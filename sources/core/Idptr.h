@@ -214,3 +214,9 @@ FastDeserializer& operator>>(FastDeserializer& stream, IdPtr<T>& ptr)
     ptr = id;
     return stream;
 }
+
+template<class T>
+unsigned int Hash(const IdPtr<T>& ptr)
+{
+    return ptr.Id();
+}
