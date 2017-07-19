@@ -146,12 +146,12 @@ void LoginMob::CalculateVisible(VisiblePoints* visible_list) const
 
 kv::FastSerializer& operator<<(kv::FastSerializer& file, LoginInterface& interf)
 {
-    WrapWriteMessage(file, interf.view_);
+    file << interf.view_;
     return file;
 }
 kv::FastDeserializer& operator>>(kv::FastDeserializer& file, LoginInterface& interf)
 {
-    WrapReadMessage(file, interf.view_);
+    file >> interf.view_;
     return file;
 }
 

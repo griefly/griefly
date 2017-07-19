@@ -13,7 +13,7 @@
 #include <QKeyEvent>
 #include <QVector>
 
-using MapgenVariablesType = std::map<QString, QByteArray>;
+using MapgenVariablesType = QMap<QString, QByteArray>;
 
 class MapEditor : public QObject
 {

@@ -10,6 +10,8 @@
 #include "objects/Tile.h"
 #include "objects/mobs/Mob.h"
 
+#include "core/SaveableOperators.h"
+
 #include "SynchronizedRandom.h"
 
 #include "MapEditor.h"
@@ -133,21 +135,21 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         }
 
         MapgenVariablesType variables;
-        WrapReadMessage(ss, variables);
+        ss >> variables;
 
         for (auto it = variables.begin(); it != variables.end(); ++it)
         {
-            if ((it->second.size() == 0) || (it->first.size() == 0))
+            if ((it.value().size() == 0) || (it.key().size() == 0))
             {
                 continue;
             }
 
-            QByteArray variable_data = it->second;
+            QByteArray variable_data = it.value();
 
             kv::FastDeserializer local(variable_data.data(), variable_data.size());
 
             auto& setters_for_type = GetSettersForTypes();
-            setters_for_type[item_type][it->first](i.operator->(), local);
+            setters_for_type[item_type][it.key()](i.operator->(), local);
         }
 
         auto& tile = game_->GetMap().At(x, y, z);

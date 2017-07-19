@@ -207,7 +207,7 @@ void MapEditor::SaveMapgen(const QString& name)
                     data << x;
                     data << y;
                     data << z;
-                    WrapWriteMessage(data, editor_map_[x][y][z].turf.variables);
+                    data << editor_map_[x][y][z].turf.variables;
                 }
                 auto& il = editor_map_[x][y][z].items;
                 for (auto it = il.begin(); it != il.end(); ++it)
@@ -216,7 +216,7 @@ void MapEditor::SaveMapgen(const QString& name)
                     data << x;
                     data << y;
                     data << z;
-                    WrapWriteMessage(data, it->variables);
+                    data << it->variables;
                 }
             }
         }

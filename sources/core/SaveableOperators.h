@@ -12,7 +12,7 @@ namespace kv
 template<class TKey, class TValue>
 inline FastSerializer& operator<<(FastSerializer& file, const QMap<TKey, TValue>& map)
 {
-    file << map.size();
+    file << static_cast<quint32>(map.size());
     // Not range-based because for Qt map it will be only values without keys
     for (auto it = map.cbegin(); it != map.cend(); ++it)
     {
@@ -25,9 +25,9 @@ inline FastSerializer& operator<<(FastSerializer& file, const QMap<TKey, TValue>
 template<class TKey, class TValue>
 inline FastDeserializer& operator>>(FastDeserializer& file, QMap<TKey, TValue>& map)
 {
-    int size;
+    quint32 size;
     file >> size;
-    for (int i = 0; i < size; ++i)
+    for (quint32 i = 0; i < size; ++i)
     {
         TKey key;
         file >> key;
