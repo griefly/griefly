@@ -350,7 +350,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         QString parsed_value("PARSING_ERROR");
         if (deserializer.IsNextType(FastSerializer::STRING_TYPE))
         {
-            WrapReadMessage(deserializer, parsed_value);
+            deserializer >> parsed_value;
         }
 
         ui->lineEditAsString->setText(parsed_value);
@@ -363,7 +363,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         if (deserializer.IsNextType(FastSerializer::INT32_TYPE))
         {
             int value;
-            WrapReadMessage(deserializer, value);
+            deserializer >> value;
             parsed_value = QString::number(value);
         }
 
@@ -376,7 +376,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         if (deserializer.IsNextType(FastSerializer::BOOL_TYPE))
         {
             bool value;
-            WrapReadMessage(deserializer, value);
+            deserializer >> value;
             parsed_value = value ? "1" : "0";
         }
 
@@ -424,7 +424,7 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
 
     FastSerializer ss(1);
     QString loc = ui->lineEditAsString->text();
-    WrapWriteMessage(ss, loc);
+    ss << loc;
 
     ee->variables[current_variable] = QByteArray(ss.GetData(), ss.GetIndex());
 
@@ -457,7 +457,7 @@ void MapEditorForm::on_lineEditAsInt_returnPressed()
         return;
     }
 
-    WrapWriteMessage(ss, value);
+    ss << value;
 
     ee->variables[current_variable] = QByteArray(ss.GetData(), ss.GetIndex());
 
@@ -492,7 +492,7 @@ void MapEditorForm::on_lineEditAsBool_returnPressed()
         return;
     }
 
-    WrapWriteMessage(ss, value);
+    ss << value;
 
     ee->variables[current_variable] = QByteArray(ss.GetData(), ss.GetIndex());
 

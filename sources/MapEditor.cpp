@@ -311,9 +311,7 @@ void MapEditor::LoadMapgen(const QString& name)
             ee = &AddItem(item_type, x, y, z);
         }
 
-        WrapReadMessage(data, ee->variables);
-
-        // TODO
+        data >> ee->variables;
         UpdateDirs(ee);
     }
 }
