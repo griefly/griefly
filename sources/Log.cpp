@@ -9,6 +9,9 @@
 
 #include "KvAbort.h"
 
+namespace
+{
+
 QFile logs;
 QTextStream logstream;
 
@@ -53,12 +56,15 @@ void KvMessageHandler(QtMsgType type, const QMessageLogContext& context, const Q
         KvAbort(QString());
     }
 }
+
 void InstallMessageHandler()
 {
     qInstallMessageHandler(KvMessageHandler);
 }
 
-void InitializeLog()
+}
+
+void kv::InitializeLog()
 {
     const QString LOG_DIRECTORY = "debug_reports";
 
@@ -86,4 +92,3 @@ void InitializeLog()
 
     InstallMessageHandler();
 }
-

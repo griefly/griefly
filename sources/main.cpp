@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
     if (GetParamsHolder().GetParamBool("-output_redirect"))
     {
-        InitializeLog();
+        kv::InitializeLog();
     }
 
     InitRealTypes();
