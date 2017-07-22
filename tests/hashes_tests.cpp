@@ -29,18 +29,6 @@ TEST(HashesTest, IdPtrOn)
     ASSERT_EQ(Hash(ptr), 1000000);
 }
 
-TEST(HashesTest, VectorIdPtrOn)
-{
-    std::vector<IdPtr<kv::Object>> v;
-    v.push_back(0);
-    v.push_back(1);
-    v.push_back(2);
-    ASSERT_EQ(Hash(v), 8);
-
-    v[0] = 4294967295;
-    ASSERT_EQ(Hash(v), 7);
-}
-
 TEST(HashesTest, String)
 {
     QString s1("hello world");
@@ -49,6 +37,3 @@ TEST(HashesTest, String)
     s1[4] = '\0';
     ASSERT_EQ(Hash(s1), 2292011938);
 }
-
-
-

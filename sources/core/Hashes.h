@@ -40,18 +40,6 @@ inline unsigned int Hash(const QString& str)
     return hash + 1;
 }
 
-template<class T>
-unsigned int Hash(std::vector<IdPtr<T>>& content)
-{
-    unsigned int retval = 0;
-    int i = 1;
-    for (auto it = content.begin(); it != content.end(); ++it, ++i)
-    {
-        retval += it->Id() * i;
-    }
-    return retval;
-}
-
 inline unsigned int Hash(unsigned int value)
 {
     return value;

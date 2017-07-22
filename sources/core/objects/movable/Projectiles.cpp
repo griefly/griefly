@@ -3,42 +3,6 @@
 
 using namespace kv;
 
-FastSerializer& kv::operator<<(FastSerializer& file, const std::vector<Dir>& s)
-{
-    file << static_cast<quint32>(s.size());
-    for (auto it : s)
-    {
-        file << it;
-    }
-    return file;
-}
-
-FastDeserializer& kv::operator>>(FastDeserializer& file, std::vector<Dir>& s)
-{
-    quint32 size;
-    file >> size;
-    s.reserve(size);
-
-    Dir dir;
-    for (quint32 i = 0; i < size; ++i)
-    {
-        file >> dir;
-        s.push_back(dir);
-    }
-    return file;
-}
-
-unsigned int Hash(const std::vector<Dir>& content)
-{
-    unsigned int retval = 0;
-    int i = 1;
-    for (auto it = content.begin(); it != content.end(); ++it, ++i)
-    {
-        retval += Hash(*it) * i;
-    }
-    return retval;
-}
-
 Projectile::Projectile()
 {
     SetPassable(Dir::ALL, passable::FULL);

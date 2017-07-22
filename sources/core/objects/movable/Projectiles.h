@@ -2,14 +2,10 @@
 
 #include "Movable.h"
 #include "core/objects/mobs/Human.h"
-
-unsigned int Hash(const std::vector<Dir>& content);
+#include "core/SaveableOperators.h"
 
 namespace kv
 {
-
-FastSerializer& operator<<(FastSerializer& file, const std::vector<Dir>& content);
-FastDeserializer& operator>>(FastDeserializer& file, std::vector<Dir>& content);
 
 class Projectile : public Movable
 {
@@ -38,7 +34,7 @@ private:
     bool ProcessMovement();
 
     int KV_SAVEABLE(current_step_);
-    std::vector<Dir> KV_SAVEABLE(movement_);
+    QVector<Dir> KV_SAVEABLE(movement_);
 };
 END_DECLARE(Projectile);
 
