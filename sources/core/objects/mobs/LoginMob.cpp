@@ -81,7 +81,7 @@ void LoginMob::ProcessMessage(const Message& msg)
         human->SetState(human_state);
 
         IdPtr<Lobby> lobby = GetGame().GetGlobals()->lobby;
-        std::vector<IdPtr<CubeTile>> tiles;
+        QVector<IdPtr<CubeTile>> tiles;
         QString text;
         switch (GenerateRandom() % 5)
         {

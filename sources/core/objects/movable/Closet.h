@@ -35,7 +35,7 @@ protected:
 
     bool KV_SAVEABLE(open_);
 
-    std::vector<IdPtr<Movable>> KV_SAVEABLE(content_);
+    QVector<IdPtr<Movable>> KV_SAVEABLE(content_);
 };
 END_DECLARE(Closet);
 

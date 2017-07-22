@@ -129,7 +129,7 @@ void Closet::AfterWorldCreation()
 
 void Closet::Delete()
 {
-    std::vector<IdPtr<Movable>> copy = content_;
+    QVector<IdPtr<Movable>> copy = content_;
     for (auto it = copy.begin(); it != copy.end(); ++it)
     {
         if (!it->IsValid())

@@ -6,36 +6,10 @@
 #include "MapObject.h"
 #include "MaterialObject.h"
 #include "core/atmos/AtmosHolder.h"
+#include "core/SaveableOperators.h"
 
 namespace kv
 {
-
-template<class T>
-FastSerializer& operator<<(FastSerializer& file, const std::vector<IdPtr<T>>& content)
-{
-    file << static_cast<quint32>(content.size());
-    for (auto it = content.begin(); it != content.end(); ++it)
-    {
-        file << it->Id();
-    }
-    return file;
-}
-
-template<class T>
-FastDeserializer& operator>>(FastDeserializer& file, std::vector<IdPtr<T>>& content)
-{
-    quint32 size;
-    file >> size;
-    content.reserve(size);
-
-    unsigned int local_id;
-    for (quint32 i = 0; i < size; ++i)
-    {
-        file >> local_id;
-        content.push_back(local_id);
-    }
-    return file;
-}
 
 class CubeTile : public MapObject
 {
@@ -81,7 +55,7 @@ public:
     virtual void UpdatePassable() override;
     atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
 
-    using InsideType = std::vector<IdPtr<MaterialObject>>;
+    using InsideType = QVector<IdPtr<MaterialObject>>;
     InsideType& GetInsideList() { return inside_list_; }
 
     void UpdateAtmosPassable();
