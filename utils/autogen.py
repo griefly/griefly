@@ -98,7 +98,7 @@ with open("AutogenSerialization.cpp", "w") as autogen_file:
         if len(class_data["variables"]):
             print("", file = autogen_file)
         for variable in class_data["variables"]:
-            print("    WrapWriteMessage(file, " + variable + ");", file = autogen_file)
+            print("    file << " + variable + ";", file = autogen_file)
         print("}", file = autogen_file)
         print("", file = autogen_file)
         print("void " + class_data["class"] + "::Load(FastDeserializer& file) ", file = autogen_file)
@@ -107,7 +107,7 @@ with open("AutogenSerialization.cpp", "w") as autogen_file:
         if len(class_data["variables"]):
             print("", file = autogen_file)
         for variable in class_data["variables"]:
-            print("    WrapReadMessage(file, " + variable + ");", file = autogen_file)
+            print("    file >> " + variable + ";", file = autogen_file)
         if len(class_data["on_load_calls"]):
             print("", file = autogen_file)
         for function in class_data["on_load_calls"]:

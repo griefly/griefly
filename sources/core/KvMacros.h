@@ -1,7 +1,5 @@
 #pragma once
 
-#include "StreamWrapper.h"
-
 namespace kv
 {
 namespace internal
@@ -52,13 +50,13 @@ namespace internal
     static const QString& GetTypeStatic(); \
     static int TYPE_INDEX
 
-#define KV_SAVEABLE(name)                                                          \
-    name;                                                                          \
-    inline static void _Z_KV_SETTERS##name(kv::Object* ptr, FastDeserializer& str) \
-    {                                                                              \
-        ThisClassType* casted = static_cast<ThisClassType*>(ptr);                  \
-        WrapReadMessage(str, casted->name);                                        \
-    }                                                                              \
+#define KV_SAVEABLE(name)                                                                   \
+    name;                                                                                   \
+    inline static void _Z_KV_SETTERS##name(kv::Object* ptr, FastDeserializer& deserializer) \
+    {                                                                                       \
+        ThisClassType* casted = static_cast<ThisClassType*>(ptr);                           \
+        deserializer >> casted->name;                                                       \
+    }                                                                                       \
     struct _Z_KV_SuppressAnnoyingExtraSemicolonWarning##name {}
 
 #define KV_ON_LOAD_CALL(function) \

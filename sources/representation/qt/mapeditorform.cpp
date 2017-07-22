@@ -19,7 +19,6 @@
 #include <QInputDialog>
 
 #include "AutogenMetadata.h"
-#include "core/StreamWrapper.h"
 
 using namespace kv;
 

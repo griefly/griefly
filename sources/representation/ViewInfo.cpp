@@ -1,7 +1,5 @@
 #include "ViewInfo.h"
 
-#include "core/StreamWrapper.h"
-
 kv::FastSerializer& operator<<(kv::FastSerializer& file, const ViewInfo& view_info)
 {
     file << view_info.base_frameset_;
