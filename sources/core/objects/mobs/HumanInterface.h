@@ -24,14 +24,18 @@ public:
 
     void HandleClick(const QString& name);
 
-    IdPtr<Item> GetItem(const QString& slot);
-    bool RemoveItem(const QString& slot);
-    bool InsertItem(const QString& slot, IdPtr<Item> item);
+    IdPtr<Item> GetItem(const QString& slot_name);
+    void RemoveItem(const QString& slot_name);
+    bool InsertItem(const QString& slot_name, IdPtr<Item> item);
+
+    void Represent();
 
     // TODO: RemoveItem with IdPtr
     // TODO: ForEach
 
 private:
+    void ApplyActiveHandOnSlot(Slot* slot);
+
     IdPtr<Human> KV_SAVEABLE(owner_);
     QVector<Slot> KV_SAVEABLE(slots_);
 };
