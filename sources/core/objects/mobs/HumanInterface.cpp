@@ -1,6 +1,7 @@
 #include "HumanInterface.h"
 
 #include "core/objects/movable/items/Item.h"
+#include "representation/Representation.h"
 
 using namespace kv;
 
@@ -24,8 +25,7 @@ void HumanInterface2::HandleClick(const QString& name)
             return;
         }
     }
-
-    // TODO: non-item slots
+    // TODO: non-item UI elements
 }
 
 IdPtr<Item> HumanInterface2::GetItem(const QString& slot_name)
@@ -72,7 +72,27 @@ bool HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
 
 void HumanInterface2::Represent()
 {
-    // TODO
+    for (const Slot& slot : slots_)
+    {
+        Representation::InterfaceUnit unit;
+        unit.name = slot.name;
+        unit.pixel_x = 32 * slot.posx;
+        unit.pixel_y = 32 * slot.posy;
+        unit.shift = 0;
+        unit.view = slot.view;
+        GetRepresentation().AddToNewFrame(unit);
+        if (slot.item.IsValid())
+        {
+            Representation::InterfaceUnit unit;
+            unit.name = slot.name;
+            unit.pixel_x = 32 * slot.posx;
+            unit.pixel_y = 32 * slot.posy;
+            unit.shift = 0;
+            unit.view = *(slot.item->GetView());
+            GetRepresentation().AddToNewFrame(unit);
+        }
+    }
+    // TODO: non-item UI elements
 }
 
 void HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
