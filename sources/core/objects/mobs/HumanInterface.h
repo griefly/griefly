@@ -34,10 +34,13 @@ public:
     // TODO: ForEach
 
 private:
+    Slot& GetSlot(const QString& slot_name);
+    Slot& GetActiveHand();
     void ApplyActiveHandOnSlot(Slot* slot);
 
     IdPtr<Human> KV_SAVEABLE(owner_);
     QVector<Slot> KV_SAVEABLE(slots_);
+    bool KV_SAVEABLE(active_hand_);
 };
 END_DECLARE(HumanInterface2)
 

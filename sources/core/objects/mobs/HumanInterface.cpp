@@ -5,7 +5,14 @@
 
 using namespace kv;
 
+namespace
+{
+    const QString LEFT_HAND = "left_hand";
+    const QString RIGHT_HAND = "right_hand";
+}
+
 HumanInterface2::HumanInterface2()
+    : active_hand_(true)
 {
     // Nothing
 }
@@ -93,6 +100,28 @@ void HumanInterface2::Represent()
         }
     }
     // TODO: non-item UI elements
+}
+
+Slot& HumanInterface2::GetSlot(const QString& slot_name)
+{
+    for (Slot& slot : slots_)
+    {
+        if (slot.name == slot_name)
+        {
+            return slot;
+        }
+    }
+    KvAbort(QString("No such slot in HumanInterface: %1").arg(slot_name));
+}
+
+Slot& HumanInterface2::GetActiveHand()
+{
+    QString active_hand_name = RIGHT_HAND;
+    if (!active_hand_)
+    {
+        active_hand_name = LEFT_HAND;
+    }
+    return GetSlot(active_hand_name);
 }
 
 void HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)

@@ -6,16 +6,12 @@
 
 #ifdef _BUILD_COVER
 extern "C" void __gcov_flush();
-void KvAbort(const QString& message)
-{
-    qDebug() << message;
-    __gcov_flush();
-    abort();
-}
-#else
-void KvAbort(const QString& message)
-{
-    qDebug() << message;
-    abort();
-}
 #endif // _BUILD_COVER
+[[noreturn]] void KvAbort(const QString& message)
+{
+    qDebug() << message;
+#ifdef _BUILD_COVER
+    __gcov_flush();
+#endif // _BUILD_COVER
+    abort();
+}
