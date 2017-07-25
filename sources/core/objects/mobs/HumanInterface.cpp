@@ -65,11 +65,10 @@ bool HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
     {
         if (slot.name == slot_name)
         {
-            // TODO: change item->type type from QString to SlotType
-            // if (slot.type != item->type)
-            // {
-            //     return false;
-            // }
+            if (!IsTypeMatch(slot, item->type))
+            {
+                return false;
+            }
             slot.item = item;
             item->SetOwner(owner_);
         }
@@ -126,5 +125,27 @@ Slot& HumanInterface2::GetActiveHand()
 
 void HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
 {
-    // TODO
+    Slot& active_hand = GetActiveHand();
+    if (active_hand.item.IsValid() && !slot->item.IsValid())
+    {
+        if (!IsTypeMatch(*slot, active_hand.item->type))
+        {
+            return;
+        }
+        slot->item = active_hand.item;
+        active_hand.item = 0;
+    }
+    else if (!active_hand.item.IsValid() && slot->item.IsValid())
+    {
+        if (!IsTypeMatch(active_hand, slot->item->type))
+        {
+            return;
+        }
+        active_hand.item = slot->item;
+        slot->item = 0;
+    }
+    else if (slot->item.IsValid())
+    {
+        slot->item->AttackBy(active_hand.item);
+    }
 }

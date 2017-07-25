@@ -44,6 +44,13 @@ struct Slot
     QString name;
 };
 
+inline bool IsTypeMatch(const Slot& slot, const /*SlotType*/QString& type)
+{
+    // TODO: return everything back once item type will be made SlotType
+    KvAbort("IsTypeMatch: fix me!");
+    // return slot.type == type;
+}
+
 inline FastSerializer& operator<<(FastSerializer& serializer, const Slot& slot)
 {
     serializer << slot.view;
