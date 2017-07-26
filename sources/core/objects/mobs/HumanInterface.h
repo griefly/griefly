@@ -24,6 +24,8 @@ public:
 
     void HandleClick(const QString& name);
 
+    bool PickItem(IdPtr<Item> item);
+
     IdPtr<Item> GetItem(const QString& slot_name);
     void RemoveItem(const QString& slot_name);
     bool InsertItem(const QString& slot_name, IdPtr<Item> item);
@@ -34,6 +36,8 @@ public:
     // TODO: ForEach
 
 private:
+    bool InsertItem(Slot* slot, IdPtr<Item> item);
+
     Slot& GetSlot(const QString& slot_name);
     Slot& GetActiveHand();
     void ApplyActiveHandOnSlot(Slot* slot);

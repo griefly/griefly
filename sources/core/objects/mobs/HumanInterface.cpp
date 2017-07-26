@@ -35,6 +35,12 @@ void HumanInterface2::HandleClick(const QString& name)
     // TODO: non-item UI elements
 }
 
+bool HumanInterface2::PickItem(IdPtr<Item> item)
+{
+    Slot& active_hand = GetActiveHand();
+    return InsertItem(&active_hand, item);
+}
+
 IdPtr<Item> HumanInterface2::GetItem(const QString& slot_name)
 {
     for (Slot& slot : slots_)
@@ -65,15 +71,25 @@ bool HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
     {
         if (slot.name == slot_name)
         {
-            if (!IsTypeMatch(slot, item->type))
-            {
-                return false;
-            }
-            slot.item = item;
-            item->SetOwner(owner_);
+            return InsertItem(&slot, item);
         }
     }
     return false;
+}
+
+bool HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
+{
+    if (slot->item.IsValid())
+    {
+        return false;
+    }
+    if (!IsTypeMatch(*slot, item->type))
+    {
+        return false;
+    }
+    slot->item = item;
+    item->SetOwner(owner_);
+    return true;
 }
 
 void HumanInterface2::Represent()
