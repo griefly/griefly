@@ -1,6 +1,8 @@
 #include "HumanInterface.h"
 
 #include "core/objects/movable/items/Item.h"
+#include "core/objects/mobs/Human.h"
+
 #include "representation/Representation.h"
 
 using namespace kv;
@@ -41,6 +43,20 @@ bool HumanInterface2::PickItem(IdPtr<Item> item)
     return InsertItem(&active_hand, item);
 }
 
+void HumanInterface2::DropItem()
+{
+    Slot& active_hand = GetActiveHand();
+    if (active_hand.item)
+    {
+        // TODO: what if AddObject somehow will force to PickItem or DropItem
+        // again?
+        if (owner_->GetOwner()->AddObject(active_hand.item))
+        {
+            RemoveItem(&active_hand);
+        }
+    }
+}
+
 IdPtr<Item> HumanInterface2::GetItem(const QString& slot_name)
 {
     for (Slot& slot : slots_)
@@ -59,10 +75,15 @@ void HumanInterface2::RemoveItem(const QString& slot_name)
     {
         if (slot.name == slot_name)
         {
-            slot.item = 0;
+            RemoveItem(&slot);
             return;
         }
     }
+}
+
+void HumanInterface2::RemoveItem(Slot* slot)
+{
+    slot->item = 0;
 }
 
 bool HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
@@ -117,7 +138,7 @@ void HumanInterface2::Represent()
     // TODO: non-item UI elements
 }
 
-Slot& HumanInterface2::GetSlot(const QString& slot_name)
+kv::Slot& HumanInterface2::GetSlot(const QString& slot_name)
 {
     for (Slot& slot : slots_)
     {
@@ -129,7 +150,7 @@ Slot& HumanInterface2::GetSlot(const QString& slot_name)
     KvAbort(QString("No such slot in HumanInterface: %1").arg(slot_name));
 }
 
-Slot& HumanInterface2::GetActiveHand()
+kv::Slot& HumanInterface2::GetActiveHand()
 {
     QString active_hand_name = RIGHT_HAND;
     if (!active_hand_)

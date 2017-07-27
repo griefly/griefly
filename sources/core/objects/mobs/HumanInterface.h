@@ -25,6 +25,7 @@ public:
     void HandleClick(const QString& name);
 
     bool PickItem(IdPtr<Item> item);
+    void DropItem();
 
     IdPtr<Item> GetItem(const QString& slot_name);
     void RemoveItem(const QString& slot_name);
@@ -37,6 +38,7 @@ public:
 
 private:
     bool InsertItem(Slot* slot, IdPtr<Item> item);
+    void RemoveItem(Slot* slot);
 
     Slot& GetSlot(const QString& slot_name);
     Slot& GetActiveHand();
