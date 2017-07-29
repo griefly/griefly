@@ -57,6 +57,12 @@ void HumanInterface2::DropItem()
     }
 }
 
+IdPtr<Item> HumanInterface2::GetItemInActiveHand()
+{
+    Slot& active_hand = GetActiveHand();
+    return active_hand.item;
+}
+
 IdPtr<Item> HumanInterface2::GetItem(const QString& slot_name)
 {
     for (Slot& slot : slots_)
@@ -136,6 +142,18 @@ void HumanInterface2::Represent()
         }
     }
     // TODO: non-item UI elements
+}
+
+void HumanInterface2::RemoveItem(IdPtr<Item> item)
+{
+    for (Slot& slot : slots_)
+    {
+        if (slot.item == item)
+        {
+            slot.item = 0;
+            return;
+        }
+    }
 }
 
 kv::Slot& HumanInterface2::GetSlot(const QString& slot_name)

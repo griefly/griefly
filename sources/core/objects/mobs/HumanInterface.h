@@ -27,15 +27,17 @@ public:
     bool PickItem(IdPtr<Item> item);
     void DropItem();
 
+    IdPtr<Item> GetItemInActiveHand();
+
     IdPtr<Item> GetItem(const QString& slot_name);
     void RemoveItem(const QString& slot_name);
     bool InsertItem(const QString& slot_name, IdPtr<Item> item);
 
     void Represent();
 
-    // TODO: RemoveItem with IdPtr
-    // TODO: ForEach
+    void RemoveItem(IdPtr<Item> item);
 
+    // TODO: ForEach
 private:
     bool InsertItem(Slot* slot, IdPtr<Item> item);
     void RemoveItem(Slot* slot);
