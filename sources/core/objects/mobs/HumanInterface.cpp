@@ -156,6 +156,11 @@ void HumanInterface2::RemoveItem(IdPtr<Item> item)
     }
 }
 
+void HumanInterface2::AddOverlays()
+{
+    // TODO: implementation
+}
+
 kv::Slot& HumanInterface2::GetSlot(const QString& slot_name)
 {
     for (Slot& slot : slots_)
@@ -203,4 +208,21 @@ void HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
     {
         slot->item->AttackBy(active_hand.item);
     }
+}
+
+void HumanInterface2::SwapHands()
+{
+    Slot& right_hand = GetSlot(RIGHT_HAND);
+    Slot& left_hand = GetSlot(LEFT_HAND);
+    if (active_hand_)
+    {
+        right_hand.view.SetState("hand_r_inactive");
+        left_hand.view.SetState("hand_l_active");
+    }
+    else
+    {
+        right_hand.view.SetState("hand_r_active");
+        left_hand.view.SetState("hand_l_inactive");
+    }
+    active_hand_ = !active_hand_;
 }

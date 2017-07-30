@@ -37,7 +37,7 @@ public:
 
     void RemoveItem(IdPtr<Item> item);
 
-    // TODO: ForEach
+    void AddOverlays();
 private:
     bool InsertItem(Slot* slot, IdPtr<Item> item);
     void RemoveItem(Slot* slot);
@@ -45,6 +45,8 @@ private:
     Slot& GetSlot(const QString& slot_name);
     Slot& GetActiveHand();
     void ApplyActiveHandOnSlot(Slot* slot);
+
+    void SwapHands();
 
     IdPtr<Human> KV_SAVEABLE(owner_);
     QVector<Slot> KV_SAVEABLE(slots_);
