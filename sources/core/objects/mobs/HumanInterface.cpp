@@ -6,6 +6,7 @@
 #include "representation/Representation.h"
 
 using namespace kv;
+using kv::Slot;
 
 namespace
 {
