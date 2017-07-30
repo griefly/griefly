@@ -7,14 +7,85 @@
 
 namespace
 {
+    // Slots
     const QString LEFT_HAND = "left_hand";
     const QString RIGHT_HAND = "right_hand";
+    const QString HEAD = "head";
+    const QString SUIT = "suit";
+    const QString UNIFORM = "uniform";
+    const QString FEET = "feet";
+
+    // Buttons
+    const QString DROP = "drop_active";
+    const QString STOP_PULL = "stop_pull";
+    const QString SWAP = "swap_hands";
+    const QString LAY = "switch_lay";
+
+    const QString DEFAULT_INTERFACE_SPRITE = "icons/screen_retro.dmi";
 }
 
 kv::HumanInterface2::HumanInterface2()
     : active_hand_(true)
 {
-    // Nothing
+    {
+        Slot right_hand;
+        right_hand.position = {0, 14};
+        right_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        right_hand.view.SetState("hand_r_active");
+        right_hand.name = RIGHT_HAND;
+        right_hand.type = SlotType::ANYTHING;
+        slots_.append(right_hand);
+    }
+
+    {
+        Slot left_hand;
+        left_hand.position = {2, 14};
+        left_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        left_hand.view.SetState("hand_l_inactive");
+        left_hand.name = LEFT_HAND;
+        left_hand.type = SlotType::ANYTHING;
+        slots_.append(left_hand);
+    }
+
+    {
+        Slot head;
+        head.position = {1, 13};
+        head.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        head.view.SetState("head");
+        head.name = HEAD;
+        head.type = SlotType::HEAD;
+        slots_.append(head);
+    }
+
+    {
+        Slot suit;
+        suit.position = {1, 14};
+        suit.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        suit.view.SetState("suit");
+        suit.type = SlotType::SUIT;
+        suit.name = SUIT;
+        slots_.append(suit);
+    }
+
+    {
+        Slot uniform;
+        uniform.position = {1, 15};
+        uniform.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        uniform.view.SetState("uniform");
+        uniform.type = SlotType::UNIFORM;
+        uniform.name = UNIFORM;
+        slots_.append(uniform);
+    }
+
+    {
+        Slot feet;
+        feet.position = {3, 14};
+        feet.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        feet.view.SetState("shoes");
+        feet.type = SlotType::FEET;
+        feet.name = FEET;
+        slots_.append(feet);
+    }
 }
 
 void kv::HumanInterface2::SetOwner(IdPtr<Human> human)
@@ -123,8 +194,8 @@ void kv::HumanInterface2::Represent()
     {
         Representation::InterfaceUnit unit;
         unit.name = slot.name;
-        unit.pixel_x = 32 * slot.posx;
-        unit.pixel_y = 32 * slot.posy;
+        unit.pixel_x = 32 * slot.position.first;
+        unit.pixel_y = 32 * slot.position.second;
         unit.shift = 0;
         unit.view = slot.view;
         GetRepresentation().AddToNewFrame(unit);
@@ -132,8 +203,8 @@ void kv::HumanInterface2::Represent()
         {
             Representation::InterfaceUnit unit;
             unit.name = slot.name;
-            unit.pixel_x = 32 * slot.posx;
-            unit.pixel_y = 32 * slot.posy;
+            unit.pixel_x = 32 * slot.position.first;
+            unit.pixel_y = 32 * slot.position.second;
             unit.shift = 0;
             unit.view = *(slot.item->GetView());
             GetRepresentation().AddToNewFrame(unit);

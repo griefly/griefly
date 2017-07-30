@@ -3,6 +3,7 @@
 #include "representation/ViewInfo.h"
 
 #include "core/Hashes.h"
+#include "core/SaveableOperators.h"
 
 namespace kv
 {
@@ -38,8 +39,7 @@ struct Slot
 {
     ViewInfo view;
     IdPtr<Item> item;
-    int posx;
-    int posy;
+    QPair<int, int> position;
     SlotType type;
     QString name;
 };
@@ -56,8 +56,7 @@ inline FastSerializer& operator<<(FastSerializer& serializer, const Slot& slot)
 {
     serializer << slot.view;
     serializer << slot.item;
-    serializer << slot.posx;
-    serializer << slot.posy;
+    serializer << slot.position;
     serializer << slot.type;
     serializer << slot.name;
     return serializer;
@@ -67,8 +66,7 @@ inline FastDeserializer& operator>>(FastDeserializer& deserializer, Slot& slot)
 {
     deserializer >> slot.view;
     deserializer >> slot.item;
-    deserializer >> slot.posx;
-    deserializer >> slot.posy;
+    deserializer >> slot.position;
     deserializer >> slot.type;
     deserializer >> slot.name;
     return deserializer;
@@ -84,8 +82,7 @@ inline unsigned int Hash(const Slot& slot)
     unsigned int retval = 0;
     retval += Hash(slot.view);
     retval += Hash(slot.item);
-    retval += Hash(slot.posx);
-    retval += Hash(slot.posy);
+    retval += Hash(slot.position);
     retval += Hash(slot.type);
     retval += Hash(slot.name);
     return retval;
