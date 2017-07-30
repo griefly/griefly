@@ -5,27 +5,24 @@
 
 #include "representation/Representation.h"
 
-using namespace kv;
-using kv::Slot;
-
 namespace
 {
     const QString LEFT_HAND = "left_hand";
     const QString RIGHT_HAND = "right_hand";
 }
 
-HumanInterface2::HumanInterface2()
+kv::HumanInterface2::HumanInterface2()
     : active_hand_(true)
 {
     // Nothing
 }
 
-void HumanInterface2::SetOwner(IdPtr<Human> human)
+void kv::HumanInterface2::SetOwner(IdPtr<Human> human)
 {
     owner_ = human;
 }
 
-void HumanInterface2::HandleClick(const QString& name)
+void kv::HumanInterface2::HandleClick(const QString& name)
 {
     for (Slot& slot : slots_)
     {
@@ -38,13 +35,13 @@ void HumanInterface2::HandleClick(const QString& name)
     // TODO: non-item UI elements
 }
 
-bool HumanInterface2::PickItem(IdPtr<Item> item)
+bool kv::HumanInterface2::PickItem(IdPtr<Item> item)
 {
     Slot& active_hand = GetActiveHand();
     return InsertItem(&active_hand, item);
 }
 
-void HumanInterface2::DropItem()
+void kv::HumanInterface2::DropItem()
 {
     Slot& active_hand = GetActiveHand();
     if (active_hand.item)
@@ -58,13 +55,13 @@ void HumanInterface2::DropItem()
     }
 }
 
-IdPtr<Item> HumanInterface2::GetItemInActiveHand()
+IdPtr<kv::Item> kv::HumanInterface2::GetItemInActiveHand()
 {
     Slot& active_hand = GetActiveHand();
     return active_hand.item;
 }
 
-IdPtr<Item> HumanInterface2::GetItem(const QString& slot_name)
+IdPtr<kv::Item> kv::HumanInterface2::GetItem(const QString& slot_name)
 {
     for (Slot& slot : slots_)
     {
@@ -76,7 +73,7 @@ IdPtr<Item> HumanInterface2::GetItem(const QString& slot_name)
     return 0;
 }
 
-void HumanInterface2::RemoveItem(const QString& slot_name)
+void kv::HumanInterface2::RemoveItem(const QString& slot_name)
 {
     for (Slot& slot : slots_)
     {
@@ -88,12 +85,12 @@ void HumanInterface2::RemoveItem(const QString& slot_name)
     }
 }
 
-void HumanInterface2::RemoveItem(Slot* slot)
+void kv::HumanInterface2::RemoveItem(Slot* slot)
 {
     slot->item = 0;
 }
 
-bool HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
+bool kv::HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
 {
     for (Slot& slot : slots_)
     {
@@ -105,7 +102,7 @@ bool HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
     return false;
 }
 
-bool HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
+bool kv::HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
 {
     if (slot->item.IsValid())
     {
@@ -120,7 +117,7 @@ bool HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
     return true;
 }
 
-void HumanInterface2::Represent()
+void kv::HumanInterface2::Represent()
 {
     for (const Slot& slot : slots_)
     {
@@ -145,7 +142,7 @@ void HumanInterface2::Represent()
     // TODO: non-item UI elements
 }
 
-void HumanInterface2::RemoveItem(IdPtr<Item> item)
+void kv::HumanInterface2::RemoveItem(IdPtr<Item> item)
 {
     for (Slot& slot : slots_)
     {
@@ -157,12 +154,12 @@ void HumanInterface2::RemoveItem(IdPtr<Item> item)
     }
 }
 
-void HumanInterface2::AddOverlays()
+void kv::HumanInterface2::AddOverlays()
 {
     // TODO: implementation
 }
 
-kv::Slot& HumanInterface2::GetSlot(const QString& slot_name)
+kv::Slot& kv::HumanInterface2::GetSlot(const QString& slot_name)
 {
     for (Slot& slot : slots_)
     {
@@ -174,7 +171,7 @@ kv::Slot& HumanInterface2::GetSlot(const QString& slot_name)
     KvAbort(QString("No such slot in HumanInterface: %1").arg(slot_name));
 }
 
-kv::Slot& HumanInterface2::GetActiveHand()
+kv::Slot& kv::HumanInterface2::GetActiveHand()
 {
     QString active_hand_name = RIGHT_HAND;
     if (!active_hand_)
@@ -184,7 +181,7 @@ kv::Slot& HumanInterface2::GetActiveHand()
     return GetSlot(active_hand_name);
 }
 
-void HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
+void kv::HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
 {
     Slot& active_hand = GetActiveHand();
     if (active_hand.item.IsValid() && !slot->item.IsValid())
@@ -211,7 +208,7 @@ void HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
     }
 }
 
-void HumanInterface2::SwapHands()
+void kv::HumanInterface2::SwapHands()
 {
     Slot& right_hand = GetSlot(RIGHT_HAND);
     Slot& left_hand = GetSlot(LEFT_HAND);
