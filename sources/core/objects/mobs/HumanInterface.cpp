@@ -21,7 +21,13 @@ namespace
     const QString SWAP = "swap_hands";
     const QString LAY = "switch_lay";
 
+    // Slots & buttons & indicators sprites
     const QString DEFAULT_INTERFACE_SPRITE = "icons/screen_retro.dmi";
+    const QString OLD_INTERFACE_SPRITE = "icons/screen1_old.dmi";
+
+    // Pull indicator states
+    const QString NOT_PULL_STATE = "pull0";
+    const QString PULL_STATE = "pull1";
 }
 
 kv::HumanInterface2::HumanInterface2()
@@ -93,6 +99,10 @@ kv::HumanInterface2::HumanInterface2()
         feet.name = FEET;
         slots_.append(feet);
     }
+
+    // TODO: buttons
+    // TODO: indicators
+    pull_view_.SetSprite(OLD_INTERFACE_SPRITE);
 }
 
 void kv::HumanInterface2::SetOwner(IdPtr<Human> human)
@@ -109,6 +119,11 @@ void kv::HumanInterface2::HandleClick(const QString& name)
             ApplyActiveHandOnSlot(&slot);
             return;
         }
+    }
+    if (name == STOP_PULL)
+    {
+        owner_->StopPull();
+        return;
     }
     // TODO: non-item UI elements
 }
@@ -203,7 +218,6 @@ void kv::HumanInterface2::Represent()
         unit.name = slot.name;
         unit.pixel_x = 32 * slot.position.first;
         unit.pixel_y = 32 * slot.position.second;
-        unit.shift = 0;
         unit.view = slot.view;
         GetRepresentation().AddToNewFrame(unit);
         if (slot.item.IsValid())
@@ -212,12 +226,19 @@ void kv::HumanInterface2::Represent()
             unit.name = slot.name;
             unit.pixel_x = 32 * slot.position.first;
             unit.pixel_y = 32 * slot.position.second;
-            unit.shift = 0;
             unit.view = *(slot.item->GetView());
             GetRepresentation().AddToNewFrame(unit);
         }
     }
-    // TODO: non-item UI elements
+
+    {
+        Representation::InterfaceUnit stop_pull;
+        stop_pull.name = STOP_PULL;
+        stop_pull.pixel_x = 32 * 8;
+        stop_pull.pixel_y = 32 * 15;
+        stop_pull.view = pull_view_;
+        GetRepresentation().AddToNewFrame(stop_pull);
+    }
 }
 
 void kv::HumanInterface2::RemoveItem(IdPtr<Item> item)
@@ -242,6 +263,12 @@ void kv::HumanInterface2::AddOverlays()
             owner_->GetView()->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
         }
     }
+}
+
+void kv::HumanInterface2::UpdatePulling(const bool is_pulling)
+{
+    const QString state = is_pulling ? PULL_STATE : NOT_PULL_STATE;
+    pull_view_.SetState(state);
 }
 
 kv::Slot& kv::HumanInterface2::GetSlot(const QString& slot_name)

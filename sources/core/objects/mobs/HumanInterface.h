@@ -38,6 +38,8 @@ public:
     void RemoveItem(IdPtr<Item> item);
 
     void AddOverlays();
+
+    void UpdatePulling(bool is_pulling);
 private:
     bool InsertItem(Slot* slot, IdPtr<Item> item);
     void RemoveItem(Slot* slot);
@@ -51,6 +53,8 @@ private:
     IdPtr<Human> KV_SAVEABLE(owner_);
     QVector<Slot> KV_SAVEABLE(slots_);
     bool KV_SAVEABLE(active_hand_);
+
+    ViewInfo KV_SAVEABLE(pull_view_);
 };
 END_DECLARE(HumanInterface2)
 
