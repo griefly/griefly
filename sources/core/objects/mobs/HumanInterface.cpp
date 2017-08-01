@@ -32,6 +32,7 @@ kv::HumanInterface2::HumanInterface2()
         right_hand.position = {0, 14};
         right_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         right_hand.view.SetState("hand_r_active");
+        right_hand.overlay_sprite = "icons/items_righthand.dmi";
         right_hand.name = RIGHT_HAND;
         right_hand.type = SlotType::ANYTHING;
         slots_.append(right_hand);
@@ -42,6 +43,7 @@ kv::HumanInterface2::HumanInterface2()
         left_hand.position = {2, 14};
         left_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         left_hand.view.SetState("hand_l_inactive");
+        left_hand.overlay_sprite = "icons/items_lefthand.dmi";
         left_hand.name = LEFT_HAND;
         left_hand.type = SlotType::ANYTHING;
         slots_.append(left_hand);
@@ -52,6 +54,7 @@ kv::HumanInterface2::HumanInterface2()
         head.position = {1, 13};
         head.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         head.view.SetState("head");
+        head.overlay_sprite = "icons/head.dmi";
         head.name = HEAD;
         head.type = SlotType::HEAD;
         slots_.append(head);
@@ -62,6 +65,7 @@ kv::HumanInterface2::HumanInterface2()
         suit.position = {1, 14};
         suit.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         suit.view.SetState("suit");
+        suit.overlay_sprite = "icons/suit.dmi";
         suit.type = SlotType::SUIT;
         suit.name = SUIT;
         slots_.append(suit);
@@ -72,6 +76,8 @@ kv::HumanInterface2::HumanInterface2()
         uniform.position = {1, 15};
         uniform.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         uniform.view.SetState("uniform");
+        uniform.overlay_sprite = "icons/uniform.dmi";
+        uniform.overlay_state_postfix = "_s";
         uniform.type = SlotType::UNIFORM;
         uniform.name = UNIFORM;
         slots_.append(uniform);
@@ -82,6 +88,7 @@ kv::HumanInterface2::HumanInterface2()
         feet.position = {3, 14};
         feet.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         feet.view.SetState("shoes");
+        feet.overlay_sprite = "icons/feet.dmi";
         feet.type = SlotType::FEET;
         feet.name = FEET;
         slots_.append(feet);
@@ -227,7 +234,14 @@ void kv::HumanInterface2::RemoveItem(IdPtr<Item> item)
 
 void kv::HumanInterface2::AddOverlays()
 {
-    // TODO: implementation
+    for (const Slot& slot : slots_)
+    {
+        if (slot.item.IsValid())
+        {
+            const QString state_name = slot.item->GetView()->GetBaseFrameset().GetState();
+            owner_->GetView()->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
+        }
+    }
 }
 
 kv::Slot& kv::HumanInterface2::GetSlot(const QString& slot_name)

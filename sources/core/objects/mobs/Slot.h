@@ -38,6 +38,9 @@ inline FastDeserializer& operator>>(FastDeserializer& deserializer, SlotType& sl
 struct Slot
 {
     ViewInfo view;
+    // TODO (?): append ViewInfo to ViewInfo as layer
+    QString overlay_sprite;
+    QString overlay_state_postfix;
     IdPtr<Item> item;
     QPair<int, int> position;
     SlotType type;
