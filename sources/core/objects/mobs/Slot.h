@@ -35,17 +35,84 @@ inline FastDeserializer& operator>>(FastDeserializer& deserializer, SlotType& sl
     return deserializer;
 }
 
-struct Slot
+inline unsigned int Hash(const SlotType& slot_type)
+{
+    return Hash(static_cast<SlotTypeBase>(slot_type));
+}
+
+struct Button
 {
     ViewInfo view;
+    QPair<int, int> position = {0, 0};
+    QString name;
+};
+
+inline FastSerializer& operator<<(FastSerializer& serializer, const Button& slot)
+{
+    serializer << slot.view;
+    serializer << slot.position;
+    serializer << slot.name;
+    return serializer;
+}
+
+inline FastDeserializer& operator>>(FastDeserializer& deserializer,Button& slot)
+{
+    deserializer >> slot.view;
+    deserializer >> slot.position;
+    deserializer >> slot.name;
+    return deserializer;
+}
+
+inline unsigned int Hash(const Button& slot)
+{
+    unsigned int retval = 0;
+    retval += Hash(slot.view);
+    retval += Hash(slot.position);
+    retval += Hash(slot.name);
+    return retval;
+}
+
+struct Slot : Button
+{
     // TODO (?): append ViewInfo to ViewInfo as layer
     QString overlay_sprite;
     QString overlay_state_postfix;
     IdPtr<Item> item;
-    QPair<int, int> position;
-    SlotType type;
-    QString name;
+    SlotType type = SlotType::DEFAULT;
 };
+
+inline FastSerializer& operator<<(FastSerializer& serializer, const Slot& slot)
+{
+    serializer << static_cast<const Button&>(slot);
+
+    serializer << slot.overlay_sprite;
+    serializer << slot.overlay_state_postfix;
+    serializer << slot.item;
+    serializer << slot.type;
+    return serializer;
+}
+
+inline FastDeserializer& operator>>(FastDeserializer& deserializer, Slot& slot)
+{
+    deserializer >> static_cast<Button&>(slot);
+
+    deserializer >> slot.overlay_sprite;
+    deserializer >> slot.overlay_state_postfix;
+    deserializer >> slot.item;
+    deserializer >> slot.type;
+    return deserializer;
+}
+
+inline unsigned int Hash(const Slot& slot)
+{
+    unsigned int retval = Hash(static_cast<const Button&>(slot));
+
+    retval += Hash(slot.overlay_sprite);
+    retval += Hash(slot.overlay_state_postfix);
+    retval += Hash(slot.item);
+    retval += Hash(slot.type);
+    return retval;
+}
 
 inline bool IsTypeMatch(const Slot& slot, const /*SlotType*/QString& type)
 {
@@ -53,42 +120,6 @@ inline bool IsTypeMatch(const Slot& slot, const /*SlotType*/QString& type)
     KvAbort("IsTypeMatch: fix me!");
     return false;
     // return slot.type == type;
-}
-
-inline FastSerializer& operator<<(FastSerializer& serializer, const Slot& slot)
-{
-    serializer << slot.view;
-    serializer << slot.item;
-    serializer << slot.position;
-    serializer << slot.type;
-    serializer << slot.name;
-    return serializer;
-}
-
-inline FastDeserializer& operator>>(FastDeserializer& deserializer, Slot& slot)
-{
-    deserializer >> slot.view;
-    deserializer >> slot.item;
-    deserializer >> slot.position;
-    deserializer >> slot.type;
-    deserializer >> slot.name;
-    return deserializer;
-}
-
-inline unsigned int Hash(const SlotType& slot_type)
-{
-    return Hash(static_cast<SlotTypeBase>(slot_type));
-}
-
-inline unsigned int Hash(const Slot& slot)
-{
-    unsigned int retval = 0;
-    retval += Hash(slot.view);
-    retval += Hash(slot.item);
-    retval += Hash(slot.position);
-    retval += Hash(slot.type);
-    retval += Hash(slot.name);
-    return retval;
 }
 
 }

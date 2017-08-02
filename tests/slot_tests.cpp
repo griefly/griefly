@@ -27,6 +27,28 @@ TEST(SlotType, SaveableOperators)
     }
 }
 
+TEST(Button, SaveableOperators)
+{
+    Button button;
+    button.name = "rainbow";
+    button.position = {9, 4};
+    button.view.SetSprite("reddish");
+
+    FastSerializer serializer(1);
+    serializer << button;
+
+    FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
+    Button loaded_button;
+    deserializer >> loaded_button;
+
+    EXPECT_EQ(button.name, loaded_button.name);
+    EXPECT_EQ(button.position, loaded_button.position);
+
+    EXPECT_TRUE(ViewInfo::IsSameFramesets(button.view, loaded_button.view));
+
+    EXPECT_EQ(Hash(loaded_button), 1546348643);
+}
+
 TEST(Slot, SaveableOperators)
 {
     Slot slot;
@@ -35,6 +57,9 @@ TEST(Slot, SaveableOperators)
     slot.position = {5, 6};
     slot.type = SlotType::FEET;
     slot.view.SetSprite("test");
+    slot.view.SetState("test2");
+    slot.overlay_sprite = "bear";
+    slot.overlay_state_postfix = "_aux";
 
     FastSerializer serializer(1);
     serializer << slot;
@@ -47,8 +72,10 @@ TEST(Slot, SaveableOperators)
     EXPECT_EQ(slot.name, loaded_slot.name);
     EXPECT_EQ(slot.position, loaded_slot.position);
     EXPECT_EQ(slot.type, loaded_slot.type);
+    EXPECT_EQ(slot.overlay_sprite, loaded_slot.overlay_sprite);
+    EXPECT_EQ(slot.overlay_state_postfix, loaded_slot.overlay_state_postfix);
 
     EXPECT_TRUE(ViewInfo::IsSameFramesets(slot.view, loaded_slot.view));
 
-    EXPECT_EQ(Hash(loaded_slot), 2658126356);
+    EXPECT_EQ(Hash(loaded_slot), 1163438966);
 }
