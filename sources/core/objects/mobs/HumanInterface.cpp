@@ -100,9 +100,14 @@ kv::HumanInterface2::HumanInterface2()
         slots_.append(feet);
     }
 
-    // TODO: buttons
-    // TODO: indicators
-    pull_view_.SetSprite(OLD_INTERFACE_SPRITE);
+    {
+        Button pull;
+        pull.position = {8, 15};
+        pull.view.SetSprite(OLD_INTERFACE_SPRITE);
+        pull.view.SetState(NOT_PULL_STATE);
+        pull.name = STOP_PULL;
+        buttons_.append(pull);
+    }
 }
 
 void kv::HumanInterface2::SetOwner(IdPtr<Human> human)
@@ -125,7 +130,7 @@ void kv::HumanInterface2::HandleClick(const QString& name)
         owner_->StopPull();
         return;
     }
-    // TODO: non-item UI elements
+    // TODO: other non-item UI elements
 }
 
 bool kv::HumanInterface2::PickItem(IdPtr<Item> item)
@@ -230,15 +235,6 @@ void kv::HumanInterface2::Represent()
             GetRepresentation().AddToNewFrame(unit);
         }
     }
-
-    {
-        Representation::InterfaceUnit stop_pull;
-        stop_pull.name = STOP_PULL;
-        stop_pull.pixel_x = 32 * 8;
-        stop_pull.pixel_y = 32 * 15;
-        stop_pull.view = pull_view_;
-        GetRepresentation().AddToNewFrame(stop_pull);
-    }
 }
 
 void kv::HumanInterface2::RemoveItem(IdPtr<Item> item)
@@ -268,7 +264,8 @@ void kv::HumanInterface2::AddOverlays()
 void kv::HumanInterface2::UpdatePulling(const bool is_pulling)
 {
     const QString state = is_pulling ? PULL_STATE : NOT_PULL_STATE;
-    pull_view_.SetState(state);
+    Button& pull = GetButton(STOP_PULL);
+    pull.view.SetState(state);
 }
 
 kv::Slot& kv::HumanInterface2::GetSlot(const QString& slot_name)
@@ -335,4 +332,16 @@ void kv::HumanInterface2::SwapHands()
         left_hand.view.SetState("hand_l_inactive");
     }
     active_hand_ = !active_hand_;
+}
+
+kv::Button& kv::HumanInterface2::GetButton(const QString& button_name)
+{
+    for (Button& button : buttons_)
+    {
+        if (button.name == button_name)
+        {
+            return button;
+        }
+    }
+    KvAbort(QString("No such button in HumanInterface: %1").arg(button_name));
 }

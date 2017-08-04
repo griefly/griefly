@@ -50,11 +50,13 @@ private:
 
     void SwapHands();
 
+    Button& GetButton(const QString& button_name);
+
     IdPtr<Human> KV_SAVEABLE(owner_);
     QVector<Slot> KV_SAVEABLE(slots_);
     bool KV_SAVEABLE(active_hand_);
 
-    ViewInfo KV_SAVEABLE(pull_view_);
+    QVector<Button> KV_SAVEABLE(buttons_);
 };
 END_DECLARE(HumanInterface2)
 
