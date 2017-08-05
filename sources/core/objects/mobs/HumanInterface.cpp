@@ -108,6 +108,15 @@ kv::HumanInterface2::HumanInterface2()
         pull.name = STOP_PULL;
         buttons_.append(pull);
     }
+
+    {
+        Button drop;
+        drop.position = {7, 15};
+        drop.view.SetSprite(OLD_INTERFACE_SPRITE);
+        drop.view.SetState("act_drop");
+        drop.name = DROP;
+        buttons_.append(drop);
+    }
 }
 
 void kv::HumanInterface2::SetOwner(IdPtr<Human> human)
@@ -128,6 +137,11 @@ void kv::HumanInterface2::HandleClick(const QString& name)
     if (name == STOP_PULL)
     {
         owner_->StopPull();
+        return;
+    }
+    else if (name == DROP)
+    {
+        DropItem();
         return;
     }
     // TODO: other non-item UI elements
