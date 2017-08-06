@@ -245,6 +245,15 @@ bool kv::HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
 
 void kv::HumanInterface2::Represent()
 {
+    for (const Button& button : buttons_)
+    {
+        Representation::InterfaceUnit unit;
+        unit.name = button.name;
+        unit.pixel_x = 32 * button.position.first;
+        unit.pixel_y = 32 * button.position.second;
+        unit.view = button.view;
+        GetRepresentation().AddToNewFrame(unit);
+    }
     for (const Slot& slot : slots_)
     {
         Representation::InterfaceUnit unit;
