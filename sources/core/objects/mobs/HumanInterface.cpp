@@ -28,6 +28,9 @@ namespace
     // Pull indicator states
     const QString NOT_PULL_STATE = "pull0";
     const QString PULL_STATE = "pull1";
+    // Lay indicator states
+    const QString NOT_LAY_STATE = "rest0";
+    const QString LAY_STATE = "rest1";
 }
 
 kv::HumanInterface2::HumanInterface2()
@@ -126,6 +129,15 @@ kv::HumanInterface2::HumanInterface2()
         swap.name = SWAP;
         buttons_.append(swap);
     }
+
+    {
+        Button lay;
+        lay.position = {15, 11};
+        lay.view.SetSprite(OLD_INTERFACE_SPRITE);
+        lay.view.SetState(NOT_LAY_STATE);
+        lay.name = LAY;
+        buttons_.append(lay);
+    }
 }
 
 void kv::HumanInterface2::SetOwner(IdPtr<Human> human)
@@ -156,6 +168,20 @@ void kv::HumanInterface2::HandleClick(const QString& name)
     else if (name == SWAP)
     {
         SwapHands();
+        return;
+    }
+    else if (name == LAY)
+    {
+        bool laying = owner_->GetLying();
+        if (laying)
+        {
+            owner_->SetLaying(false);
+        }
+        else
+        {
+            owner_->AddLayingTimer(50);
+            owner_->SetLaying(true);
+        }
         return;
     }
     // TODO: other non-item UI elements
@@ -295,6 +321,19 @@ void kv::HumanInterface2::AddOverlays()
             const QString state_name = slot.item->GetView()->GetBaseFrameset().GetState();
             owner_->GetView()->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
         }
+    }
+}
+
+void kv::HumanInterface2::UpdateLaying()
+{
+    Button& lay = GetButton(LAY);
+    if (owner_->GetLying() == true)
+    {
+        lay.view.SetState(LAY_STATE);
+    }
+    else
+    {
+        lay.view.SetState(NOT_LAY_STATE);
     }
 }
 

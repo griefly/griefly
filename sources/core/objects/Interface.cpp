@@ -290,12 +290,12 @@ void HumanInterface::HandleClick(const QString& place)
             bool laying_ = owner->GetLying();
             if (laying_)
             {
-                owner->SetLying(false);
+                owner->SetLaying(false);
             }
             else
             {
-                owner->AddLyingTimer(50);
-                owner->SetLying(true);
+                owner->AddLayingTimer(50);
+                owner->SetLaying(true);
             }
         }
     }

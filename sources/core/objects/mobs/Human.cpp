@@ -322,7 +322,7 @@ void Human::Process()
     }
 }
 
-void Human::SetLying(bool value)
+void Human::SetLaying(bool value)
 {
     if (value == false && lay_timer_ > 0)
     {
@@ -347,7 +347,7 @@ void Human::SetLying(bool value)
     interface_.UpdateLaying();
 }
 
-void Human::AddLyingTimer(int value)
+void Human::AddLayingTimer(int value)
 {
     lay_timer_ += value;
 }
@@ -400,7 +400,7 @@ void Human::Live()
     {
         if (!lying_)
         {
-            SetLying(true);
+            SetLaying(true);
         }
         if (CalculateHealth() >= -1 * HUMAN_MAX_HEALTH)
         {
@@ -486,8 +486,8 @@ void Human::AttackBy(IdPtr<Item> item)
 
         if (GenerateRandom() % 5 == 0)
         {
-            SetLying(true);
-            AddLyingTimer(100);
+            SetLaying(true);
+            AddLayingTimer(100);
             PostVisible(name + " has been knocked out!", GetPosition());
         }
 

@@ -36,10 +36,10 @@ public:
     virtual void OnDeath();
     int CalculateHealth() const;
 
-    void SetLying(bool value);
+    void SetLaying(bool value);
     bool GetLying() const { return lying_; }
 
-    void AddLyingTimer(int value);
+    void AddLayingTimer(int value);
   
     virtual void Bump(IdPtr<Movable> item) override;
 
