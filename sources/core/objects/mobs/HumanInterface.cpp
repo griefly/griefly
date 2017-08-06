@@ -101,6 +101,15 @@ kv::HumanInterface2::HumanInterface2()
     }
 
     {
+        Button drop;
+        drop.position = {7, 15};
+        drop.view.SetSprite(OLD_INTERFACE_SPRITE);
+        drop.view.SetState("act_drop");
+        drop.name = DROP;
+        buttons_.append(drop);
+    }
+
+    {
         Button pull;
         pull.position = {8, 15};
         pull.view.SetSprite(OLD_INTERFACE_SPRITE);
@@ -110,12 +119,12 @@ kv::HumanInterface2::HumanInterface2()
     }
 
     {
-        Button drop;
-        drop.position = {7, 15};
-        drop.view.SetSprite(OLD_INTERFACE_SPRITE);
-        drop.view.SetState("act_drop");
-        drop.name = DROP;
-        buttons_.append(drop);
+        Button swap;
+        swap.position = {6, 15};
+        swap.view.SetSprite(OLD_INTERFACE_SPRITE);
+        swap.view.SetState("hand");
+        swap.name = SWAP;
+        buttons_.append(swap);
     }
 }
 
@@ -142,6 +151,11 @@ void kv::HumanInterface2::HandleClick(const QString& name)
     else if (name == DROP)
     {
         DropItem();
+        return;
+    }
+    else if (name == SWAP)
+    {
+        SwapHands();
         return;
     }
     // TODO: other non-item UI elements
