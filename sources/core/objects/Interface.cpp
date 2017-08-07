@@ -150,6 +150,7 @@ void HumanInterface::UpdateHealth()
         health_.GetView()->SetState(QString("health%1").arg(state));
     }
 }
+
 void HumanInterface::UpdateEnvironment()
 {
     if (IdPtr<Human> human = owner_)

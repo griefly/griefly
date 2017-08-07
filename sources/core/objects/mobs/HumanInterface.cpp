@@ -20,17 +20,28 @@ namespace
     const QString STOP_PULL = "stop_pull";
     const QString SWAP = "swap_hands";
     const QString LAY = "switch_lay";
+    const QString HEALTH = "health";
 
     // Slots & buttons & indicators sprites
     const QString DEFAULT_INTERFACE_SPRITE = "icons/screen_retro.dmi";
     const QString OLD_INTERFACE_SPRITE = "icons/screen1_old.dmi";
 
-    // Pull indicator states
-    const QString NOT_PULL_STATE = "pull0";
-    const QString PULL_STATE = "pull1";
-    // Lay indicator states
-    const QString NOT_LAY_STATE = "rest0";
-    const QString LAY_STATE = "rest1";
+    namespace states
+    {
+        // Hands states
+        const QString RIGHT_HAND_INACTIVE = "hand_r_inactive";
+        const QString RIGHT_HAND_ACTIVE = "hand_r_active";
+        const QString LEFT_HAND_INACTIVE = "hand_l_inactive";
+        const QString LEFT_HAND_ACTIVE = "hand_l_active";
+
+        // Pull indicator states
+        const QString NOT_PULL = "pull0";
+        const QString PULL = "pull1";
+
+        // Lay indicator states
+        const QString NOT_LAY = "rest0";
+        const QString LAY = "rest1";
+    }
 }
 
 kv::HumanInterface2::HumanInterface2()
@@ -40,7 +51,7 @@ kv::HumanInterface2::HumanInterface2()
         Slot right_hand;
         right_hand.position = {0, 14};
         right_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
-        right_hand.view.SetState("hand_r_active");
+        right_hand.view.SetState(states::RIGHT_HAND_ACTIVE);
         right_hand.overlay_sprite = "icons/items_righthand.dmi";
         right_hand.name = RIGHT_HAND;
         right_hand.type = SlotType::ANYTHING;
@@ -50,7 +61,7 @@ kv::HumanInterface2::HumanInterface2()
     {
         Slot left_hand;
         left_hand.position = {2, 14};
-        left_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        left_hand.view.SetSprite(states::RIGHT_HAND_INACTIVE);
         left_hand.view.SetState("hand_l_inactive");
         left_hand.overlay_sprite = "icons/items_lefthand.dmi";
         left_hand.name = LEFT_HAND;
@@ -116,7 +127,7 @@ kv::HumanInterface2::HumanInterface2()
         Button pull;
         pull.position = {8, 15};
         pull.view.SetSprite(OLD_INTERFACE_SPRITE);
-        pull.view.SetState(NOT_PULL_STATE);
+        pull.view.SetState(states::NOT_PULL);
         pull.name = STOP_PULL;
         buttons_.append(pull);
     }
@@ -134,9 +145,18 @@ kv::HumanInterface2::HumanInterface2()
         Button lay;
         lay.position = {15, 11};
         lay.view.SetSprite(OLD_INTERFACE_SPRITE);
-        lay.view.SetState(NOT_LAY_STATE);
+        lay.view.SetState(states::NOT_LAY);
         lay.name = LAY;
         buttons_.append(lay);
+    }
+
+    {
+        Button health;
+        health.position = {15, 10};
+        health.view.SetSprite(OLD_INTERFACE_SPRITE);
+        health.view.SetState("health0");
+        health.name = HEALTH;
+        buttons_.append(health);
     }
 }
 
@@ -324,22 +344,35 @@ void kv::HumanInterface2::AddOverlays()
     }
 }
 
-void kv::HumanInterface2::UpdateLaying(bool is_laying)
+void kv::HumanInterface2::UpdateLaying(const bool is_laying)
 {
     Button& lay = GetButton(LAY);
     if (is_laying)
     {
-        lay.view.SetState(LAY_STATE);
+        lay.view.SetState(states::LAY);
     }
     else
     {
-        lay.view.SetState(NOT_LAY_STATE);
+        lay.view.SetState(states::NOT_LAY);
     }
+}
+
+void kv::HumanInterface2::UpdateHealth(const int health)
+{
+    const int MAX_NON_CRIT_STATE = 5;
+    int state = qMax(0, (health * MAX_NON_CRIT_STATE) / HUMAN_MAX_HEALTH); // it will be from 0 to 5
+    state = MAX_NON_CRIT_STATE - state; // 0 to 5, but reverted
+    if (health < 0)
+    {
+        state = MAX_NON_CRIT_STATE + 1;
+    }
+    Button& health_indicator = GetButton(HEALTH);
+    health_indicator.view.SetState(QString("health%1").arg(state));
 }
 
 void kv::HumanInterface2::UpdatePulling(const bool is_pulling)
 {
-    const QString state = is_pulling ? PULL_STATE : NOT_PULL_STATE;
+    const QString state = is_pulling ? states::PULL : states::NOT_PULL;
     Button& pull = GetButton(STOP_PULL);
     pull.view.SetState(state);
 }
@@ -399,13 +432,13 @@ void kv::HumanInterface2::SwapHands()
     Slot& left_hand = GetSlot(LEFT_HAND);
     if (active_hand_)
     {
-        right_hand.view.SetState("hand_r_inactive");
-        left_hand.view.SetState("hand_l_active");
+        right_hand.view.SetState(states::RIGHT_HAND_INACTIVE);
+        left_hand.view.SetState(states::LEFT_HAND_ACTIVE);
     }
     else
     {
-        right_hand.view.SetState("hand_r_active");
-        left_hand.view.SetState("hand_l_inactive");
+        right_hand.view.SetState(states::RIGHT_HAND_ACTIVE);
+        left_hand.view.SetState(states::LEFT_HAND_ACTIVE);
     }
     active_hand_ = !active_hand_;
 }

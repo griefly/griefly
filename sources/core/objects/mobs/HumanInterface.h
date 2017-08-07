@@ -41,6 +41,7 @@ public:
 
     void UpdatePulling(bool is_pulling);
     void UpdateLaying(bool is_laying);
+    void UpdateHealth(int health);
 private:
     bool InsertItem(Slot* slot, IdPtr<Item> item);
     void RemoveItem(Slot* slot);
