@@ -324,10 +324,10 @@ void kv::HumanInterface2::AddOverlays()
     }
 }
 
-void kv::HumanInterface2::UpdateLaying()
+void kv::HumanInterface2::UpdateLaying(bool is_laying)
 {
     Button& lay = GetButton(LAY);
-    if (owner_->GetLying() == true)
+    if (is_laying)
     {
         lay.view.SetState(LAY_STATE);
     }

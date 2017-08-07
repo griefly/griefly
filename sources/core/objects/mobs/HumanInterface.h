@@ -40,7 +40,7 @@ public:
     void AddOverlays();
 
     void UpdatePulling(bool is_pulling);
-    void UpdateLaying();
+    void UpdateLaying(bool is_laying);
 private:
     bool InsertItem(Slot* slot, IdPtr<Item> item);
     void RemoveItem(Slot* slot);
