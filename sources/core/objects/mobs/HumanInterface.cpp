@@ -21,6 +21,8 @@ namespace
     const QString SWAP = "swap_hands";
     const QString LAY = "switch_lay";
     const QString HEALTH = "health";
+    const QString OXYGEN = "oxygen";
+    const QString TEMPERATURE = "temperature";
 
     // Slots & buttons & indicators sprites
     const QString DEFAULT_INTERFACE_SPRITE = "icons/screen_retro.dmi";
@@ -41,6 +43,13 @@ namespace
         // Lay indicator states
         const QString NOT_LAY = "rest0";
         const QString LAY = "rest1";
+
+        // Oxygen states
+        const QString OXYGEN = "oxy0";
+        const QString NO_OXYGEN = "oxy1";
+
+        // Temperature template
+        const QString TEMPERATURE_TEMPLATE = "temp%1";
     }
 }
 
@@ -157,6 +166,24 @@ kv::HumanInterface2::HumanInterface2()
         health.view.SetState("health0");
         health.name = HEALTH;
         buttons_.append(health);
+    }
+
+    {
+        Button oxygen;
+        oxygen.position = {15, 12};
+        oxygen.view.SetSprite(OLD_INTERFACE_SPRITE);
+        oxygen.view.SetState(states::OXYGEN);
+        oxygen.name = OXYGEN;
+        buttons_.append(oxygen);
+    }
+
+    {
+        Button temperature;
+        temperature.position = {15, 9};
+        temperature.view.SetSprite(OLD_INTERFACE_SPRITE);
+        temperature.view.SetState(states::TEMPERATURE_TEMPLATE.arg(0));
+        temperature.name = TEMPERATURE;
+        buttons_.append(temperature);
     }
 }
 
@@ -342,6 +369,31 @@ void kv::HumanInterface2::AddOverlays()
             owner_->GetView()->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
         }
     }
+}
+
+void kv::HumanInterface2::UpdateEnvironment(
+    const int temperature, const int pressure, const int oxygen)
+{
+    Button& oxygen_indicator = GetButton(OXYGEN);
+
+    oxygen_indicator.view.SetState(states::OXYGEN);
+    if (oxygen < 1)
+    {
+        oxygen_indicator.view.SetState(states::NO_OXYGEN);
+    }
+    int state = qMax(-4, (temperature - REGULAR_TEMPERATURE) / 6);
+    state = qMin(4, state);
+
+    // When amount of atmos moles is too small
+    // temperature starts behave a little bit weird
+    const int ZERO_TEMPERATURE_PRESSURE_BORDER = 1000;
+    if (pressure < ZERO_TEMPERATURE_PRESSURE_BORDER)
+    {
+        state = -4;
+    }
+
+    Button& temperature_indicator = GetButton(TEMPERATURE);
+    temperature_indicator.view.SetState(states::TEMPERATURE_TEMPLATE.arg(state));
 }
 
 void kv::HumanInterface2::UpdateLaying(const bool is_laying)
