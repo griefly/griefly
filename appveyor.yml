@@ -12,6 +12,8 @@ environment:
 install:
   - cmd: set CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
   - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64'
+  - ps: if (-not(Test-Path($env:PYTHON))) { & appveyor\install.ps1 }
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
 
 build_script:
   - cmd: cmake -G "Visual Studio 14 2015 Win64"  -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On
