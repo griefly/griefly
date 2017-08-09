@@ -4,6 +4,11 @@ image: Visual Studio 2015
 environment:
   QT5DIR: C:\Qt\5.8
 
+  matrix:
+      - PYTHON: "C:\Python35"
+        PYTHON_VERSION: "3.5.x"
+        PYTHON_ARCH: "32"
+
 install:
   - cmd: set CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
   - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64'
