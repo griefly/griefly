@@ -66,10 +66,10 @@ endif()
 
 ###########################
 #
-# Python 2.7 search
+# Python 3.5 search
 #
 ###########################
-find_package(PythonInterp 2.7 REQUIRED)
+find_package(PythonInterp 3.5 REQUIRED)
 if(PYTHONINTERP_FOUND)
     message(STATUS "Python has been found, version: ${PYTHON_VERSION_STRING}")
 endif()

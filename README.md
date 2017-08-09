@@ -12,7 +12,7 @@ Dependencies
 -------------
 1. Some C++ compiler (it works at least with compiler from **Visual Studio 2012** and **g++**)
 2. Qt5 (e.g., **Desktop Qt 5.4.0 MSVC2012 OpenGL 32bit**). Qt Creator is optional, but desired
-3. Python 2.7
+3. Python 3.5
 4. Golang 1.5+ (https://golang.org/dl/)
 5. Git
 6. CMake 3.*
@@ -36,7 +36,7 @@ It should be possible to build everything without Qt Creator, but the guide assu
 How to build everything on Linux
 --------------------------------
 
-1. Install dependencies. Look into `.travis.yml` file for clues. (For Arch Linux only: All dependencies can be installed with ` sudo pacman -S git qt5-base qt5-multimedia go python2 mesa gcc`)
+1. Install dependencies. Look into `.travis.yml` file for clues. (For Arch Linux only: All dependencies can be installed with ` sudo pacman -S git qt5-base qt5-multimedia go python mesa gcc`)
 2. `cd` into installation directory.
 3. `git clone https://github.com/griefly/griefly.git`
 4. `cd griefly`
