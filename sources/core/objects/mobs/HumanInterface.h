@@ -33,11 +33,11 @@ public:
     void RemoveItem(const QString& slot_name);
     bool InsertItem(const QString& slot_name, IdPtr<Item> item);
 
-    void Represent();
+    void Represent(Representation* representation);
 
     void RemoveItem(IdPtr<Item> item);
 
-    void AddOverlays();
+    void AddOverlays(ViewInfo* view_info);
 
     void UpdatePulling(bool is_pulling);
     void UpdateLaying(bool is_laying);

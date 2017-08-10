@@ -316,7 +316,7 @@ bool kv::HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
     return true;
 }
 
-void kv::HumanInterface2::Represent()
+void kv::HumanInterface2::Represent(Representation* representation)
 {
     for (const Button& button : buttons_)
     {
@@ -325,7 +325,7 @@ void kv::HumanInterface2::Represent()
         unit.pixel_x = 32 * button.position.first;
         unit.pixel_y = 32 * button.position.second;
         unit.view = button.view;
-        GetRepresentation().AddToNewFrame(unit);
+        representation->AddToNewFrame(unit);
     }
     for (const Slot& slot : slots_)
     {
@@ -334,7 +334,7 @@ void kv::HumanInterface2::Represent()
         unit.pixel_x = 32 * slot.position.first;
         unit.pixel_y = 32 * slot.position.second;
         unit.view = slot.view;
-        GetRepresentation().AddToNewFrame(unit);
+        representation->AddToNewFrame(unit);
         if (slot.item.IsValid())
         {
             Representation::InterfaceUnit unit;
@@ -342,7 +342,7 @@ void kv::HumanInterface2::Represent()
             unit.pixel_x = 32 * slot.position.first;
             unit.pixel_y = 32 * slot.position.second;
             unit.view = *(slot.item->GetView());
-            GetRepresentation().AddToNewFrame(unit);
+            representation->AddToNewFrame(unit);
         }
     }
 }
@@ -359,14 +359,14 @@ void kv::HumanInterface2::RemoveItem(IdPtr<Item> item)
     }
 }
 
-void kv::HumanInterface2::AddOverlays()
+void kv::HumanInterface2::AddOverlays(ViewInfo* view_info)
 {
     for (const Slot& slot : slots_)
     {
         if (slot.item.IsValid())
         {
             const QString state_name = slot.item->GetView()->GetBaseFrameset().GetState();
-            owner_->GetView()->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
+            view_info->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
         }
     }
 }
