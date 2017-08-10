@@ -14,7 +14,7 @@ const char* GetGameVersion()
     {{
         static const char* const DEFINED_VERSION = "{game_version}";
         static const char* const UNKNOWN = "v0.0.0-unknown";
-        static const char* const VERSION = (DEFINED_VERSION[0] == '\0') ? UNKNOWN : DEFINED_VERSION;
+        static const char* const VERSION = (DEFINED_VERSION[0] == '\\0') ? UNKNOWN : DEFINED_VERSION;
         return VERSION;
     }}
 
