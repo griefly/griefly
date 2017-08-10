@@ -118,7 +118,7 @@ def generate_autogen_serializer() -> str:
 void {}::Save(FastSerializer& file)
 {{
     {}::Save(file);
-    """.format(class_data["class"], class_data["base_class"])
+""".format(class_data["class"], class_data["base_class"])
 
         if len(class_data["variables"]):
             file_content += "\n"
@@ -131,7 +131,7 @@ void {}::Save(FastSerializer& file)
 void {}::Load(FastDeserializer& file)
 {{
     {}::Load(file);
-    """.format(class_data["class"], class_data["base_class"])
+""".format(class_data["class"], class_data["base_class"])
 
         if len(class_data["variables"]):
             file_content += "\n"

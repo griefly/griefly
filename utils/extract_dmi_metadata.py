@@ -43,15 +43,16 @@ def format_metadata(image: Image) -> List[str]:
 
 
 def extract_key_value(line: str) -> Tuple[str, Union[List[float], int, float, str]]:
-    key = line.split()[0]
-    value = line.split()[2]
+    index = line.index('=')
+    key = line[:index].strip(' \t\r')
+    value = line[index + 1:].strip(' \t\r')
 
     if key == 'state':
         value = value[1:-1]  # Strip quote symbols
         return key, value
 
     if ',' in value:
-        value = map(float, value.split(','))
+        value = [float(element) for element in value.split(',')]
     else:
         try:
             value = int(value)
