@@ -3,13 +3,15 @@ image: Visual Studio 2015
 
 environment:
   QT5DIR: C:\Qt\5.8
+  PYTHON: C:\Python35
 
 install:
   - cmd: set CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
   - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64'
+  - cmd: set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
 
 build_script:
-  - cmd: cmake -G "Visual Studio 14 2015 Win64"  -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On
+  - cmd: cmake -G "Visual Studio 14 2015 Win64"  -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On -DPYTHON_ROOT_DIR=%PYTHON%
   - cmd: cmake --build . --target install --config Release -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
