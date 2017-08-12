@@ -24,14 +24,21 @@ const QString INVALID_SLOT_NAMES[]
 
 }
 
-TEST(HumanInterface, Constructor)
+class HumanInterfaceTest : public ::testing::Test
 {
+protected:
     MockIGame game;
-    ObjectFactory factory(&game);
+    ObjectFactory factory;
+    IdPtr<kv::HumanInterface2> interface;
+    HumanInterfaceTest()
+        : factory(&game)
+    {
+        interface = factory.CreateImpl(kv::HumanInterface2::GetTypeStatic());
+    }
+};
 
-    IdPtr<kv::HumanInterface2> interface
-        = factory.CreateImpl(kv::HumanInterface2::GetTypeStatic());
-
+TEST_F(HumanInterfaceTest, Constructor)
+{
     for (const QString& slot : VALID_SLOT_NAMES)
     {
         const IdPtr<kv::Item> item = interface->GetItem(slot);
