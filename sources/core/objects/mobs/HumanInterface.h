@@ -13,6 +13,19 @@ namespace kv
 class Human;
 class Item;
 
+namespace slot
+{
+
+// Slots
+const QString LEFT_HAND = "left_hand";
+const QString RIGHT_HAND = "right_hand";
+const QString HEAD = "head";
+const QString SUIT = "suit";
+const QString UNIFORM = "uniform";
+const QString FEET = "feet";
+
+}
+
 class HumanInterface2 : public Object
 {
 public:
@@ -29,7 +42,7 @@ public:
 
     IdPtr<Item> GetItemInActiveHand();
 
-    IdPtr<Item> GetItem(const QString& slot_name);
+    IdPtr<Item> GetItem(const QString& slot_name) const;
     void RemoveItem(const QString& slot_name);
     bool InsertItem(const QString& slot_name, IdPtr<Item> item);
 

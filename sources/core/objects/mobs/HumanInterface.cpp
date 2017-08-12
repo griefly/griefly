@@ -7,14 +7,6 @@
 
 namespace
 {
-    // Slots
-    const QString LEFT_HAND = "left_hand";
-    const QString RIGHT_HAND = "right_hand";
-    const QString HEAD = "head";
-    const QString SUIT = "suit";
-    const QString UNIFORM = "uniform";
-    const QString FEET = "feet";
-
     // Buttons
     const QString DROP = "drop_active";
     const QString STOP_PULL = "stop_pull";
@@ -62,7 +54,7 @@ kv::HumanInterface2::HumanInterface2()
         right_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         right_hand.view.SetState(states::RIGHT_HAND_ACTIVE);
         right_hand.overlay_sprite = "icons/items_righthand.dmi";
-        right_hand.name = RIGHT_HAND;
+        right_hand.name = slot::RIGHT_HAND;
         right_hand.type = SlotType::ANYTHING;
         slots_.append(right_hand);
     }
@@ -73,7 +65,7 @@ kv::HumanInterface2::HumanInterface2()
         left_hand.view.SetSprite(states::RIGHT_HAND_INACTIVE);
         left_hand.view.SetState("hand_l_inactive");
         left_hand.overlay_sprite = "icons/items_lefthand.dmi";
-        left_hand.name = LEFT_HAND;
+        left_hand.name = slot::LEFT_HAND;
         left_hand.type = SlotType::ANYTHING;
         slots_.append(left_hand);
     }
@@ -84,7 +76,7 @@ kv::HumanInterface2::HumanInterface2()
         head.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         head.view.SetState("head");
         head.overlay_sprite = "icons/head.dmi";
-        head.name = HEAD;
+        head.name = slot::HEAD;
         head.type = SlotType::HEAD;
         slots_.append(head);
     }
@@ -96,7 +88,7 @@ kv::HumanInterface2::HumanInterface2()
         suit.view.SetState("suit");
         suit.overlay_sprite = "icons/suit.dmi";
         suit.type = SlotType::SUIT;
-        suit.name = SUIT;
+        suit.name = slot::SUIT;
         slots_.append(suit);
     }
 
@@ -108,7 +100,7 @@ kv::HumanInterface2::HumanInterface2()
         uniform.overlay_sprite = "icons/uniform.dmi";
         uniform.overlay_state_postfix = "_s";
         uniform.type = SlotType::UNIFORM;
-        uniform.name = UNIFORM;
+        uniform.name = slot::UNIFORM;
         slots_.append(uniform);
     }
 
@@ -119,7 +111,7 @@ kv::HumanInterface2::HumanInterface2()
         feet.view.SetState("shoes");
         feet.overlay_sprite = "icons/feet.dmi";
         feet.type = SlotType::FEET;
-        feet.name = FEET;
+        feet.name = slot::FEET;
         slots_.append(feet);
     }
 
@@ -256,13 +248,13 @@ void kv::HumanInterface2::DropItem()
 
 IdPtr<kv::Item> kv::HumanInterface2::GetItemInActiveHand()
 {
-    Slot& active_hand = GetActiveHand();
+    const Slot& active_hand = GetActiveHand();
     return active_hand.item;
 }
 
-IdPtr<kv::Item> kv::HumanInterface2::GetItem(const QString& slot_name)
+IdPtr<kv::Item> kv::HumanInterface2::GetItem(const QString& slot_name) const
 {
-    for (Slot& slot : slots_)
+    for (const Slot& slot : slots_)
     {
         if (slot.name == slot_name)
         {
@@ -443,10 +435,10 @@ kv::Slot& kv::HumanInterface2::GetSlot(const QString& slot_name)
 
 kv::Slot& kv::HumanInterface2::GetActiveHand()
 {
-    QString active_hand_name = RIGHT_HAND;
+    QString active_hand_name = slot::RIGHT_HAND;
     if (!active_hand_)
     {
-        active_hand_name = LEFT_HAND;
+        active_hand_name = slot::LEFT_HAND;
     }
     return GetSlot(active_hand_name);
 }
@@ -480,8 +472,8 @@ void kv::HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
 
 void kv::HumanInterface2::SwapHands()
 {
-    Slot& right_hand = GetSlot(RIGHT_HAND);
-    Slot& left_hand = GetSlot(LEFT_HAND);
+    Slot& right_hand = GetSlot(slot::RIGHT_HAND);
+    Slot& left_hand = GetSlot(slot::LEFT_HAND);
     if (active_hand_)
     {
         right_hand.view.SetState(states::RIGHT_HAND_INACTIVE);
