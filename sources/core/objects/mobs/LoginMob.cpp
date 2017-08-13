@@ -13,7 +13,12 @@
 
 #include <QDebug>
 
+namespace
+{
+
 const char* LOGIN_CLICK = "login_click";
+
+}
 
 using namespace kv;
 
@@ -21,7 +26,7 @@ LoginMob::LoginMob()
 {
     name = "LobbyPlayer";
 
-    interface_.Init();
+    login_view_.SetSprite("icons/login_screen.jpg");
 }
 
 void LoginMob::AfterWorldCreation()
@@ -41,11 +46,30 @@ void LoginMob::MindEnter()
     PlayMusic("lobby.ogg", 10);
 }
 
-
 void LoginMob::GenerateInterfaceForFrame()
 {
-    interface_.Draw();
+    Representation::InterfaceUnit unit;
+    unit.name = LOGIN_CLICK;
+    unit.pixel_x = 0;
+    unit.pixel_y = 0;
+    unit.view = login_view_;
+    GetRepresentation().AddToNewFrame(unit);
+
+    QString text;
+    const int seconds_until_start = GetGame().GetGlobals()->lobby->GetSecondUntilStart();
+    if (seconds_until_start < 0)
+    {
+        text = "Round is in process, click on the screen";
+    }
+    else
+    {
+        text = QString("Until start: %1").arg(seconds_until_start);
+    }
+    GetRepresentation().AddToNewFrame(Representation::TextEntry{"Main", text});
 }
+
+namespace
+{
 
 const QString GENERIC_TEXT =
     "A space anomaly has moved a piece of your Space Station into an unknown part of space."
@@ -58,6 +82,8 @@ const QString HUMAN_STATES[HUMAN_STATES_AMOUNT] =
      "latino_m_s", "mediterranean_m_s", "asian1_m_s",
      "asian2_m_s", "arab_m_s", "indian_m_s",
      "african1_m_s", "african2_m_s", "albino_m_s"};
+
+}
 
 void LoginMob::ProcessMessage(const Message& msg)
 {
@@ -134,54 +160,7 @@ void LoginMob::ProcessMessage(const Message& msg)
     }
 }
 
-void LoginMob::Process()
-{
-
-}
-
 void LoginMob::CalculateVisible(VisiblePoints* visible_list) const
 {
     visible_list->clear();
-}
-
-kv::FastSerializer& operator<<(kv::FastSerializer& file, LoginInterface& interf)
-{
-    file << interf.view_;
-    return file;
-}
-kv::FastDeserializer& operator>>(kv::FastDeserializer& file, LoginInterface& interf)
-{
-    file >> interf.view_;
-    return file;
-}
-
-void LoginInterface::Init()
-{
-    view_.SetSprite("icons/login_screen.jpg");
-}
-
-void LoginInterface::Draw()
-{
-    Representation::InterfaceUnit unit;
-    unit.name = LOGIN_CLICK;
-    unit.pixel_x = 0;
-    unit.pixel_y = 0;
-    unit.view = view_;
-    GetRepresentation().AddToNewFrame(unit);
-
-    QString text = "TODO: LoginInterface should be inherited from kv::Object";
-    /*if (GetGame()-GetSecondUntilStart() < 0)
-    {
-        text = "Round is in process, click on the screen";
-    }
-    else
-    {
-        text = QString("Until start: %1").arg(GetLobby().GetSecondUntilStart());
-    }*/
-    GetRepresentation().AddToNewFrame(Representation::TextEntry{"test", text});
-}
-
-unsigned int LoginInterface::hash() const
-{
-    return ::Hash(view_);
 }

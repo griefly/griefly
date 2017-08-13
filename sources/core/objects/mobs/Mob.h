@@ -26,8 +26,6 @@ public:
     void MoveMindTo(IdPtr<Mob> other);
     bool IsMinded() const;
 
-    virtual InterfaceBase* GetInterface() { return nullptr; }
-
     virtual void CalculateVisible(VisiblePoints* visible_list) const { Q_UNUSED(visible_list); }
 };
 END_DECLARE(Mob);
