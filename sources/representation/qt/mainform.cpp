@@ -96,7 +96,7 @@ void MainForm::addSytemTextToTab(const QString& tab, const QString& text)
     }
 
     QTextEdit* text_edit = texts_[tab];
-    text_edit->insertHtml(QString("%1: %2<br>").arg(tab).arg(text));
+    text_edit->insertHtml(QString("%1<br>").arg(text));
 }
 
 void MainForm::clearSystemTexts()
