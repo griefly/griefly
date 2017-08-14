@@ -93,15 +93,17 @@ void Ghost::ProcessMessage(const Message& msg)
 void Ghost::GenerateInterfaceForFrame()
 {
     const QString text = QString("Until respawn: %1").arg(seconds_until_respawn_);
-    GetRepresentation().AddToNewFrame(Representation::TextEntry{"test", text});
+    GetRepresentation().AddToNewFrame(Representation::TextEntry{"Main", text});
 }
 
 void Ghost::MindEnter()
 {
+    // Nothing
 }
 
 void Ghost::MindExit()
 {
+    // Nothing
 }
 
 void Ghost::Process()
