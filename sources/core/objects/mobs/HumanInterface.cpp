@@ -235,15 +235,7 @@ bool kv::HumanInterface2::PickItem(IdPtr<Item> item)
 void kv::HumanInterface2::DropItem()
 {
     Slot& active_hand = GetActiveHand();
-    if (active_hand.item)
-    {
-        // TODO: what if AddObject somehow will force to PickItem or DropItem
-        // again?
-        if (owner_->GetOwner()->AddObject(active_hand.item))
-        {
-            RemoveItem(&active_hand);
-        }
-    }
+    RemoveItem(&active_hand);
 }
 
 IdPtr<kv::Item> kv::HumanInterface2::GetItemInActiveHand()

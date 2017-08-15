@@ -58,7 +58,7 @@ public:
     void UpdateEnvironment(int temperature, int pressure, int oxygen);
 private:
     bool InsertItem(Slot* slot, IdPtr<Item> item);
-    void RemoveItem(Slot* slot);
+    static void RemoveItem(Slot* slot);
 
     Slot& GetSlot(const QString& slot_name);
     Slot& GetActiveHand();
