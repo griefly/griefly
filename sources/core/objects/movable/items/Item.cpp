@@ -11,7 +11,7 @@ Item::Item()
 {
     passable_level = passable::SMALL_ITEM;
 
-    type = Slots::DEFAULT;
+    type = SlotType::DEFAULT;
 
     damage = 0;
 

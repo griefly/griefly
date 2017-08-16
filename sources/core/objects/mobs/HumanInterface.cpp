@@ -62,8 +62,8 @@ kv::HumanInterface2::HumanInterface2()
     {
         Slot left_hand;
         left_hand.position = {2, 14};
-        left_hand.view.SetSprite(states::RIGHT_HAND_INACTIVE);
-        left_hand.view.SetState("hand_l_inactive");
+        left_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        left_hand.view.SetState(states::LEFT_HAND_INACTIVE);
         left_hand.overlay_sprite = "icons/items_lefthand.dmi";
         left_hand.name = slot::LEFT_HAND;
         left_hand.type = SlotType::ANYTHING;
@@ -79,17 +79,6 @@ kv::HumanInterface2::HumanInterface2()
         head.name = slot::HEAD;
         head.type = SlotType::HEAD;
         slots_.append(head);
-    }
-
-    {
-        Slot suit;
-        suit.position = {1, 14};
-        suit.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
-        suit.view.SetState("suit");
-        suit.overlay_sprite = "icons/suit.dmi";
-        suit.type = SlotType::SUIT;
-        suit.name = slot::SUIT;
-        slots_.append(suit);
     }
 
     {
@@ -113,6 +102,17 @@ kv::HumanInterface2::HumanInterface2()
         feet.type = SlotType::FEET;
         feet.name = slot::FEET;
         slots_.append(feet);
+    }
+
+    {
+        Slot suit;
+        suit.position = {1, 14};
+        suit.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        suit.view.SetState("suit");
+        suit.overlay_sprite = "icons/suit.dmi";
+        suit.type = SlotType::SUIT;
+        suit.name = slot::SUIT;
+        slots_.append(suit);
     }
 
     {
@@ -191,23 +191,27 @@ void kv::HumanInterface2::HandleClick(const QString& name)
         if (slot.name == name)
         {
             ApplyActiveHandOnSlot(&slot);
+            owner_->UpdateOverlays();
             return;
         }
     }
     if (name == STOP_PULL)
     {
         owner_->StopPull();
-        return;
     }
     else if (name == DROP)
     {
-        DropItem();
-        return;
+        if (IdPtr<Item> item = GetItemInActiveHand())
+        {
+            if (owner_->GetOwner()->AddObject(item))
+            {
+                DropItem();
+            }
+        }
     }
     else if (name == SWAP)
     {
         SwapHands();
-        return;
     }
     else if (name == LAY)
     {
@@ -221,9 +225,9 @@ void kv::HumanInterface2::HandleClick(const QString& name)
             owner_->AddLayingTimer(50);
             owner_->SetLaying(true);
         }
-        return;
     }
-    // TODO: other non-item UI elements
+
+    owner_->UpdateOverlays();
 }
 
 bool kv::HumanInterface2::PickItem(IdPtr<Item> item)
@@ -291,6 +295,10 @@ bool kv::HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
     {
         return false;
     }
+    if (!item.IsValid())
+    {
+        return false;
+    }
     if (!IsTypeMatch(*slot, item->type))
     {
         return false;
@@ -329,6 +337,7 @@ void kv::HumanInterface2::Represent(Representation* representation)
             representation->AddToNewFrame(unit);
         }
     }
+    // TODO: swap hands dont work properly because it is based on dirs
 }
 
 void kv::HumanInterface2::RemoveItem(IdPtr<Item> item)
@@ -474,7 +483,7 @@ void kv::HumanInterface2::SwapHands()
     else
     {
         right_hand.view.SetState(states::RIGHT_HAND_ACTIVE);
-        left_hand.view.SetState(states::LEFT_HAND_ACTIVE);
+        left_hand.view.SetState(states::LEFT_HAND_INACTIVE);
     }
     active_hand_ = !active_hand_;
 }

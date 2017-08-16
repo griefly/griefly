@@ -114,12 +114,13 @@ inline unsigned int Hash(const Slot& slot)
     return retval;
 }
 
-inline bool IsTypeMatch(const Slot& slot, const /*SlotType*/QString& type)
+inline bool IsTypeMatch(const Slot& slot, const SlotType& type)
 {
-    // TODO: return everything back once item type will be made SlotType
-    KvAbort("IsTypeMatch: fix me!");
-    return false;
-    // return slot.type == type;
+    if (slot.type == SlotType::ANYTHING)
+    {
+        return true;
+    }
+    return slot.type == type;
 }
 
 }

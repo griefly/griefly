@@ -359,6 +359,7 @@ void Representation::Click(int x, int y)
         }
         else if (keys_state_[Qt::Key_R])
         {
+            qDebug() << "R key";
             message = Click::LEFT_R;
         }
 

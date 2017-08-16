@@ -34,7 +34,7 @@ namespace kv
     class Human;
 }
 
-class HumanInterface : public InterfaceBase
+/*class HumanInterface : public InterfaceBase
 {
 public:
     void SetOwner(IdPtr<kv::MaterialObject> owner)
@@ -99,4 +99,4 @@ kv::FastDeserializer& operator>>(kv::FastDeserializer& file, HumanInterface& int
 inline unsigned int Hash(const HumanInterface& i)
 {
     return i.hash();
-}
+}*/

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/objects/movable/Movable.h"
+#include "core/objects/mobs/Slot.h"
 
 namespace kv
 {
@@ -11,7 +12,7 @@ public:
     DECLARE_SAVEABLE(Item, Movable);
     REGISTER_CLASS_AS(Item);
     Item();
-    QString KV_SAVEABLE(type);
+    SlotType KV_SAVEABLE(type);
     int KV_SAVEABLE(damage);
 };
 END_DECLARE(Item);

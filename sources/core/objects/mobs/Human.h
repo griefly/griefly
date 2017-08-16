@@ -3,6 +3,8 @@
 #include "Mob.h"
 #include "core/Hearer.h"
 
+#include "HumanInterface.h"
+
 const int HUMAN_MAX_HEALTH = 10000;
 const int REGULAR_TEMPERATURE = 40;
 
@@ -48,8 +50,8 @@ public:
     virtual void Represent() override;
 
     virtual bool TryMove(Dir direct) override;
-    
-    HumanInterface* GetHumanInterface() { return &interface_; }
+
+    IdPtr<HumanInterface2> GetHumanInterface() { return interface_; }
 
     virtual void CalculateVisible(VisiblePoints* visible_list) const override;
 
@@ -71,7 +73,7 @@ public:
 protected:
     int KV_SAVEABLE(attack_cooldown_);
 
-    HumanInterface KV_SAVEABLE(interface_);
+    IdPtr<HumanInterface2> KV_SAVEABLE(interface_);
 
     int KV_SAVEABLE(lay_timer_);
 

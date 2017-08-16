@@ -68,8 +68,8 @@ void Human::AfterWorldCreation()
 {
     Mob::AfterWorldCreation();
 
-    interface_.InitSlots();
-    interface_.SetOwner(GetId());
+    interface_ = Create<HumanInterface2>(HumanInterface2::GetTypeStatic());
+    interface_->SetOwner(GetId());
 
     /*interface_.uniform_.Set(Create<Item>(JanitorUniform::GetTypeStatic()));
     interface_.feet_.Set(Create<Item>(OrangeBoots::GetTypeStatic()));
@@ -94,7 +94,7 @@ void Human::MindExit()
 void Human::GenerateInterfaceForFrame()
 {
     Mob::GenerateInterfaceForFrame();
-    interface_.Draw();
+    interface_->Represent(&GetRepresentation());
 }
 
 bool Human::TryMove(Dir direct)
@@ -248,11 +248,10 @@ void Human::ProcessMessage(const Message &msg)
         {
             if (CanTouch(object))
             {
-                //SYSTEM_STREAM << "And we can touch it!" << std::endl;
-                if(!interface_.GetActiveHand().Get())
+                if (!interface_->GetItemInActiveHand().IsValid())
                 {
-                    interface_.Pick(object);
-                    if (interface_.GetActiveHand().Get())
+                    interface_->PickItem(object);
+                    if (interface_->GetItemInActiveHand().IsValid())
                     {
                         if (!object_owner->RemoveObject(object))
                         {
@@ -263,7 +262,7 @@ void Human::ProcessMessage(const Message &msg)
                     }
                     else
                     {
-                        interface_.Pick(0);
+                        interface_->DropItem();
                         object->AttackBy(0);
                     }
                 }
@@ -271,12 +270,12 @@ void Human::ProcessMessage(const Message &msg)
                 {
                     if (GetLying() == false)
                     {
-                        object->AttackBy(interface_.GetActiveHand().Get());
+                        object->AttackBy(interface_->GetItemInActiveHand());
                     }
                 }
                 
             }
-            else if (IdPtr<Gun> tool = interface_.GetActiveHand().Get())
+            else if (IdPtr<Gun> tool = interface_->GetItemInActiveHand())
             {
                 if (GetLying() == false && Gun::Targetable(object))
                 {
@@ -284,7 +283,7 @@ void Human::ProcessMessage(const Message &msg)
                 }
             }
             else if (  IdPtr<RemoteAtmosTool> tool
-                     = interface_.GetActiveHand().Get())
+                     = interface_->GetItemInActiveHand())
             {
                 IdPtr<CubeTile> tile = object->GetOwner();
                 if (!tile)
@@ -298,7 +297,7 @@ void Human::ProcessMessage(const Message &msg)
     else
     {
         // TODO
-        interface_.HandleClick(obj["key"].toString());
+        interface_->HandleClick(obj["key"].toString());
     }
 
 }
@@ -306,7 +305,7 @@ void Human::ProcessMessage(const Message &msg)
 void Human::UpdateOverlays()
 {
     view_.RemoveOverlays();
-    interface_.AddOverlays();
+    interface_->AddOverlays(&view_);
 }
 
 void Human::Process()
@@ -344,7 +343,7 @@ void Human::SetLaying(bool value)
         SetPassable(Dir::ALL, passable::BIG_ITEM);
         v_level = 9;
     }
-    interface_.UpdateLaying();
+    interface_->UpdateLaying(lying_);
 }
 
 void Human::AddLayingTimer(int value)
@@ -359,12 +358,14 @@ void Human::Live()
         return;
     }
 
-    interface_.UpdateEnvironment();
-
     if (IdPtr<CubeTile> t = GetOwner())
     {
-        unsigned int oxygen = t->GetAtmosHolder()->GetGase(atmos::OXYGEN);
-        int temperature = t->GetAtmosHolder()->GetTemperature();
+        const unsigned int oxygen = t->GetAtmosHolder()->GetGase(atmos::OXYGEN);
+        const int temperature = t->GetAtmosHolder()->GetTemperature();
+        const int pressure = t->GetAtmosHolder()->GetPressure();
+
+        interface_->UpdateEnvironment(temperature, pressure, oxygen);
+
         const int BURNING_THRESHOLD = 3;
         const int MIN_BURN_DAMAGE = 1;
         if (qAbs(REGULAR_TEMPERATURE - temperature) > BURNING_THRESHOLD)
@@ -389,7 +390,7 @@ void Human::Live()
         }
     }
 
-    interface_.UpdateHealth();
+    interface_->UpdateHealth(CalculateHealth());
 
     if (lay_timer_ > 0)
     {
@@ -573,7 +574,7 @@ void Human::PullAction(IdPtr<MapObject> item)
                 return;
             }
             pulled_object_ = movable;
-            interface_.UpdatePulling(true);
+            interface_->UpdatePulling(true);
         }
     }
 }
@@ -581,7 +582,7 @@ void Human::PullAction(IdPtr<MapObject> item)
 void Human::StopPull()
 {
     pulled_object_ = 0;
-    interface_.UpdatePulling(false);
+    interface_->UpdatePulling(false);
 }
 
 void Human::TryClownBootsHonk()
@@ -594,7 +595,7 @@ void Human::TryClownBootsHonk()
     {
         return;
     }
-    IdPtr<ClownBoots> shoes = GetHumanInterface()->feet_.Get();
+    IdPtr<ClownBoots> shoes = GetHumanInterface()->GetItem(slot::FEET);
     if (!shoes.IsValid())
     {
         return;

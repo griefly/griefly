@@ -272,7 +272,7 @@ void Table::AttackBy(IdPtr<Item> item)
         if (IdPtr<Human> human = item->GetOwner())
         {
             GetOwner()->AddObject(item);
-            human->GetHumanInterface()->Drop();
+            human->GetHumanInterface()->DropItem();
             human->UpdateOverlays();
         }
     }

@@ -5,7 +5,7 @@
 
 #include "core/objects/mobs/Human.h"
 
-using namespace kv;
+/*using namespace kv;
 
 void HumanInterface::InitSlots()
 {
@@ -432,3 +432,4 @@ FastDeserializer& operator>>(FastDeserializer& file, HumanInterface& interf)
     file >> interf.owner_;
     return file;
 }
+*/
