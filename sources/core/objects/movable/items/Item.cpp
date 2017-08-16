@@ -3,8 +3,6 @@
 #include "core/SynchronizedRandom.h"
 #include "core/Game.h"
 
-#include "core/objects/Slot.h"
-
 using namespace kv;
 
 Item::Item()

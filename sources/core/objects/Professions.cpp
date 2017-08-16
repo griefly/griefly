@@ -4,8 +4,6 @@
 #include "movable/items/MedbayTools.h"
 #include "movable/items/Weapons.h"
 
-#include "Interface.h"
-
 using namespace kv;
 
 void professions::ToSecurityOfficer(IdPtr<Human> human)

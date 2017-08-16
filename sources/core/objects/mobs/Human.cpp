@@ -22,6 +22,8 @@
 #include "core/objects/movable/items/Drinks.h"
 #include "core/objects/movable/items/MedbayTools.h"
 
+#include "representation/Representation.h"
+
 using namespace kv;
 
 QVector<Position> Human::GetHeardPoints() const
@@ -70,14 +72,6 @@ void Human::AfterWorldCreation()
 
     interface_ = Create<HumanInterface2>(HumanInterface2::GetTypeStatic());
     interface_->SetOwner(GetId());
-
-    /*interface_.uniform_.Set(Create<Item>(JanitorUniform::GetTypeStatic()));
-    interface_.feet_.Set(Create<Item>(OrangeBoots::GetTypeStatic()));
-    interface_.r_hand_.Set(Create<Item>(Crowbar::GetTypeStatic()));
-
-    interface_.uniform_.Get()->SetOwner(GetId());
-    interface_.feet_.Get()->SetOwner(GetId());
-    interface_.r_hand_.Get()->SetOwner(GetId());*/
 
     UpdateOverlays();
 

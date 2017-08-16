@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Mob.h"
-#include "core/objects/Interface.h"
 #include "representation/ViewInfo.h"
 
 namespace kv

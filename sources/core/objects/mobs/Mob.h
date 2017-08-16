@@ -2,8 +2,6 @@
 
 #include "core/objects/movable/Movable.h"
 
-#include "core/objects/Interface.h"
-
 #include "net/Network2.h"
 
 namespace kv

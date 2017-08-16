@@ -8,6 +8,8 @@
 #include "LoginMob.h"
 #include "core/Game.h"
 
+#include "representation/Representation.h"
+
 #include "Human.h"
 
 using namespace kv;

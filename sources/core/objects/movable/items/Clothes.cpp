@@ -1,7 +1,5 @@
 #include "Clothes.h"
 
-#include "core/objects/Slot.h"
-
 using namespace kv;
 
 Cloth::Cloth()

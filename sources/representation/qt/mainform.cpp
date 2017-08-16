@@ -12,6 +12,7 @@
 
 #include "representation/Screen.h"
 #include "representation/Metadata.h"
+#include "representation/Representation.h"
 
 #include "qtopengl.h"
 

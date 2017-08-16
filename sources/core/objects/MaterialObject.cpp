@@ -8,6 +8,8 @@
 
 #include "core/Helpers.h"
 
+#include "representation/Representation.h"
+
 using namespace kv;
 
 void MaterialObject::SetSprite(const QString& sprite)

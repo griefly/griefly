@@ -6,6 +6,8 @@
 #include "core/Game.h"
 #include "core/objects/PhysicsEngine.h"
 
+#include "representation/Representation.h"
+
 using namespace kv;
 
 Movable::Movable()

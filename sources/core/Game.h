@@ -16,6 +16,7 @@
 #include <QString>
 #include <QObject>
 #include <QThread>
+#include <QElapsedTimer>
 
 #include "Interfaces.h"
 
