@@ -50,6 +50,7 @@ TEST_F(HumanInterfaceTest, Constructor)
         EXPECT_FALSE(item.IsValid());
     }
 
+    EXPECT_FALSE(interface->GetItemInActiveHand().IsValid());
 
     ViewInfo view_info;
     interface->AddOverlays(&view_info);
@@ -58,4 +59,36 @@ TEST_F(HumanInterfaceTest, Constructor)
 
     const ViewInfo empty_view_info;
     EXPECT_TRUE(ViewInfo::IsSameFramesets(view_info, empty_view_info));
+}
+
+TEST_F(HumanInterfaceTest, PickDropItem)
+{
+    // TODO (?): replace it with real human object
+    interface->SetOwner(42);
+
+    const QVector<kv::SlotType> SLOT_TYPES
+        = { kv::SlotType::DEFAULT,
+            kv::SlotType::SUIT,
+            kv::SlotType::HEAD,
+            kv::SlotType::ANYTHING,
+            kv::SlotType::FEET,
+            kv::SlotType::UNIFORM };
+
+    for (int slot_index = 0; slot_index <= SLOT_TYPES.size(); ++slot_index)
+    {
+        IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
+        EXPECT_FALSE(item->GetOwner().IsValid());
+
+        if (slot_index != SLOT_TYPES.size())
+        {
+            item->type = SLOT_TYPES[slot_index];
+        }
+
+        EXPECT_TRUE(interface->PickItem(item));
+        EXPECT_EQ(item->GetOwner().Id(), 42);
+
+        EXPECT_EQ(interface->GetItemInActiveHand().Id(), item.Id());
+        interface->DropItem();
+        EXPECT_EQ(interface->GetItemInActiveHand().Id(), 0);
+    }
 }
