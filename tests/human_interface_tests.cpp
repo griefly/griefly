@@ -90,5 +90,7 @@ TEST_F(HumanInterfaceTest, PickDropItem)
         EXPECT_EQ(interface->GetItemInActiveHand().Id(), item.Id());
         interface->DropItem();
         EXPECT_EQ(interface->GetItemInActiveHand().Id(), 0);
+        // DropItem should not do anything with item itself
+        EXPECT_EQ(item->GetOwner().Id(), 42);
     }
 }
