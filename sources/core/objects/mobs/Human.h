@@ -51,7 +51,7 @@ public:
 
     virtual bool TryMove(Dir direct) override;
 
-    IdPtr<HumanInterface2> GetHumanInterface() { return interface_; }
+    IdPtr<HumanInterface> GetHumanInterface() { return interface_; }
 
     virtual void CalculateVisible(VisiblePoints* visible_list) const override;
 
@@ -73,7 +73,7 @@ public:
 protected:
     int KV_SAVEABLE(attack_cooldown_);
 
-    IdPtr<HumanInterface2> KV_SAVEABLE(interface_);
+    IdPtr<HumanInterface> KV_SAVEABLE(interface_);
 
     int KV_SAVEABLE(lay_timer_);
 

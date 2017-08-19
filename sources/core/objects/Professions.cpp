@@ -8,7 +8,7 @@ using namespace kv;
 
 void professions::ToSecurityOfficer(IdPtr<Human> human)
 {
-    IdPtr<HumanInterface2> hud = human->GetHumanInterface();
+    IdPtr<HumanInterface> hud = human->GetHumanInterface();
 
     hud->InsertItem(slot::UNIFORM, human->Create<Item>(RedUniform::GetTypeStatic()));
     hud->InsertItem(slot::FEET, human->Create<Item>(OrangeBoots::GetTypeStatic()));
@@ -24,7 +24,7 @@ void professions::ToSecurityOfficer(IdPtr<Human> human)
 
 void professions::ToDoctor(IdPtr<Human> human)
 {
-    IdPtr<HumanInterface2> hud = human->GetHumanInterface();
+    IdPtr<HumanInterface> hud = human->GetHumanInterface();
 
     hud->InsertItem(slot::UNIFORM, human->Create<Item>(MedicalUniform::GetTypeStatic()));
     hud->InsertItem(slot::FEET, human->Create<Item>(WhiteShoes::GetTypeStatic()));
@@ -35,7 +35,7 @@ void professions::ToDoctor(IdPtr<Human> human)
 
 void professions::ToAssistant(IdPtr<Human> human)
 {
-    IdPtr<HumanInterface2> hud = human->GetHumanInterface();
+    IdPtr<HumanInterface> hud = human->GetHumanInterface();
 
     hud->InsertItem(slot::UNIFORM, human->Create<Item>(JanitorUniform::GetTypeStatic()));
     hud->InsertItem(slot::FEET, human->Create<Item>(BlackBoots::GetTypeStatic()));
@@ -49,7 +49,7 @@ void professions::ToAssistant(IdPtr<Human> human)
 
 void professions::ToClown(IdPtr<Human> human)
 {
-    IdPtr<HumanInterface2> hud = human->GetHumanInterface();
+    IdPtr<HumanInterface> hud = human->GetHumanInterface();
 
     hud->InsertItem(slot::UNIFORM, human->Create<Item>(ClownUniform::GetTypeStatic()));
     hud->InsertItem(slot::FEET, human->Create<Item>(ClownBoots::GetTypeStatic()));
@@ -59,7 +59,7 @@ void professions::ToClown(IdPtr<Human> human)
 
 void professions::ToBarman(IdPtr<Human> human)
 {
-    IdPtr<HumanInterface2> hud = human->GetHumanInterface();
+    IdPtr<HumanInterface> hud = human->GetHumanInterface();
 
     hud->InsertItem(slot::UNIFORM, human->Create<Item>(BarmanUniform::GetTypeStatic()));
     hud->InsertItem(slot::FEET, human->Create<Item>(BlackBoots::GetTypeStatic()));

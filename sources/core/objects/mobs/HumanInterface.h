@@ -26,12 +26,12 @@ const QString FEET = "feet";
 
 }
 
-class HumanInterface2 : public Object
+class HumanInterface : public Object
 {
 public:
-    DECLARE_SAVEABLE(HumanInterface2, Object);
-    REGISTER_CLASS_AS(HumanInterface2);
-    HumanInterface2();
+    DECLARE_SAVEABLE(HumanInterface, Object);
+    REGISTER_CLASS_AS(HumanInterface);
+    HumanInterface();
 
     void SetOwner(IdPtr<Human> human);
 
@@ -74,7 +74,7 @@ private:
 
     QVector<Button> KV_SAVEABLE(buttons_);
 };
-END_DECLARE(HumanInterface2)
+END_DECLARE(HumanInterface)
 
 }
 

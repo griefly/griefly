@@ -70,7 +70,7 @@ void Human::AfterWorldCreation()
 {
     Mob::AfterWorldCreation();
 
-    interface_ = Create<HumanInterface2>(HumanInterface2::GetTypeStatic());
+    interface_ = Create<HumanInterface>(HumanInterface::GetTypeStatic());
     interface_->SetOwner(GetId());
 
     UpdateOverlays();

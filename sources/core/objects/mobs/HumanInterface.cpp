@@ -45,7 +45,7 @@ namespace
     }
 }
 
-kv::HumanInterface2::HumanInterface2()
+kv::HumanInterface::HumanInterface()
     : active_hand_(true)
 {
     {
@@ -179,12 +179,12 @@ kv::HumanInterface2::HumanInterface2()
     }
 }
 
-void kv::HumanInterface2::SetOwner(IdPtr<Human> human)
+void kv::HumanInterface::SetOwner(IdPtr<Human> human)
 {
     owner_ = human;
 }
 
-void kv::HumanInterface2::HandleClick(const QString& name)
+void kv::HumanInterface::HandleClick(const QString& name)
 {
     for (Slot& slot : slots_)
     {
@@ -230,25 +230,25 @@ void kv::HumanInterface2::HandleClick(const QString& name)
     owner_->UpdateOverlays();
 }
 
-bool kv::HumanInterface2::PickItem(IdPtr<Item> item)
+bool kv::HumanInterface::PickItem(IdPtr<Item> item)
 {
     Slot& active_hand = GetActiveHand();
     return InsertItem(&active_hand, item);
 }
 
-void kv::HumanInterface2::DropItem()
+void kv::HumanInterface::DropItem()
 {
     Slot& active_hand = GetActiveHand();
     RemoveItem(&active_hand);
 }
 
-IdPtr<kv::Item> kv::HumanInterface2::GetItemInActiveHand()
+IdPtr<kv::Item> kv::HumanInterface::GetItemInActiveHand()
 {
     const Slot& active_hand = GetActiveHand();
     return active_hand.item;
 }
 
-IdPtr<kv::Item> kv::HumanInterface2::GetItem(const QString& slot_name) const
+IdPtr<kv::Item> kv::HumanInterface::GetItem(const QString& slot_name) const
 {
     for (const Slot& slot : slots_)
     {
@@ -260,7 +260,7 @@ IdPtr<kv::Item> kv::HumanInterface2::GetItem(const QString& slot_name) const
     return 0;
 }
 
-void kv::HumanInterface2::RemoveItem(const QString& slot_name)
+void kv::HumanInterface::RemoveItem(const QString& slot_name)
 {
     for (Slot& slot : slots_)
     {
@@ -272,12 +272,12 @@ void kv::HumanInterface2::RemoveItem(const QString& slot_name)
     }
 }
 
-void kv::HumanInterface2::RemoveItem(Slot* slot)
+void kv::HumanInterface::RemoveItem(Slot* slot)
 {
     slot->item = 0;
 }
 
-bool kv::HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
+bool kv::HumanInterface::InsertItem(const QString& slot_name, IdPtr<Item> item)
 {
     for (Slot& slot : slots_)
     {
@@ -289,7 +289,7 @@ bool kv::HumanInterface2::InsertItem(const QString& slot_name, IdPtr<Item> item)
     return false;
 }
 
-bool kv::HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
+bool kv::HumanInterface::InsertItem(Slot* slot, IdPtr<Item> item)
 {
     if (slot->item.IsValid())
     {
@@ -308,7 +308,7 @@ bool kv::HumanInterface2::InsertItem(Slot* slot, IdPtr<Item> item)
     return true;
 }
 
-void kv::HumanInterface2::Represent(Representation* representation)
+void kv::HumanInterface::Represent(Representation* representation)
 {
     for (const Button& button : buttons_)
     {
@@ -340,7 +340,7 @@ void kv::HumanInterface2::Represent(Representation* representation)
     // TODO: swap hands dont work properly because it is based on dirs
 }
 
-void kv::HumanInterface2::RemoveItem(IdPtr<Item> item)
+void kv::HumanInterface::RemoveItem(IdPtr<Item> item)
 {
     for (Slot& slot : slots_)
     {
@@ -352,7 +352,7 @@ void kv::HumanInterface2::RemoveItem(IdPtr<Item> item)
     }
 }
 
-void kv::HumanInterface2::AddOverlays(ViewInfo* view_info)
+void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
 {
     for (const Slot& slot : slots_)
     {
@@ -364,7 +364,7 @@ void kv::HumanInterface2::AddOverlays(ViewInfo* view_info)
     }
 }
 
-void kv::HumanInterface2::UpdateEnvironment(
+void kv::HumanInterface::UpdateEnvironment(
     const int temperature, const int pressure, const int oxygen)
 {
     Button& oxygen_indicator = GetButton(OXYGEN);
@@ -389,7 +389,7 @@ void kv::HumanInterface2::UpdateEnvironment(
     temperature_indicator.view.SetState(states::TEMPERATURE_TEMPLATE.arg(state));
 }
 
-void kv::HumanInterface2::UpdateLaying(const bool is_laying)
+void kv::HumanInterface::UpdateLaying(const bool is_laying)
 {
     Button& lay = GetButton(LAY);
     if (is_laying)
@@ -402,7 +402,7 @@ void kv::HumanInterface2::UpdateLaying(const bool is_laying)
     }
 }
 
-void kv::HumanInterface2::UpdateHealth(const int health)
+void kv::HumanInterface::UpdateHealth(const int health)
 {
     const int MAX_NON_CRIT_STATE = 5;
     int state = qMax(0, (health * MAX_NON_CRIT_STATE) / HUMAN_MAX_HEALTH); // it will be from 0 to 5
@@ -415,14 +415,14 @@ void kv::HumanInterface2::UpdateHealth(const int health)
     health_indicator.view.SetState(QString("health%1").arg(state));
 }
 
-void kv::HumanInterface2::UpdatePulling(const bool is_pulling)
+void kv::HumanInterface::UpdatePulling(const bool is_pulling)
 {
     const QString state = is_pulling ? states::PULL : states::NOT_PULL;
     Button& pull = GetButton(STOP_PULL);
     pull.view.SetState(state);
 }
 
-kv::Slot& kv::HumanInterface2::GetSlot(const QString& slot_name)
+kv::Slot& kv::HumanInterface::GetSlot(const QString& slot_name)
 {
     for (Slot& slot : slots_)
     {
@@ -434,7 +434,7 @@ kv::Slot& kv::HumanInterface2::GetSlot(const QString& slot_name)
     KvAbort(QString("No such slot in HumanInterface: %1").arg(slot_name));
 }
 
-kv::Slot& kv::HumanInterface2::GetActiveHand()
+kv::Slot& kv::HumanInterface::GetActiveHand()
 {
     QString active_hand_name = slot::RIGHT_HAND;
     if (!active_hand_)
@@ -444,7 +444,7 @@ kv::Slot& kv::HumanInterface2::GetActiveHand()
     return GetSlot(active_hand_name);
 }
 
-void kv::HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
+void kv::HumanInterface::ApplyActiveHandOnSlot(Slot* slot)
 {
     Slot& active_hand = GetActiveHand();
     if (active_hand.item.IsValid() && !slot->item.IsValid())
@@ -471,7 +471,7 @@ void kv::HumanInterface2::ApplyActiveHandOnSlot(Slot* slot)
     }
 }
 
-void kv::HumanInterface2::SwapHands()
+void kv::HumanInterface::SwapHands()
 {
     Slot& right_hand = GetSlot(slot::RIGHT_HAND);
     Slot& left_hand = GetSlot(slot::LEFT_HAND);
@@ -488,7 +488,7 @@ void kv::HumanInterface2::SwapHands()
     active_hand_ = !active_hand_;
 }
 
-kv::Button& kv::HumanInterface2::GetButton(const QString& button_name)
+kv::Button& kv::HumanInterface::GetButton(const QString& button_name)
 {
     for (Button& button : buttons_)
     {

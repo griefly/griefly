@@ -29,11 +29,11 @@ class HumanInterfaceTest : public ::testing::Test
 protected:
     MockIGame game;
     ObjectFactory factory;
-    IdPtr<kv::HumanInterface2> interface;
+    IdPtr<kv::HumanInterface> interface;
     HumanInterfaceTest()
         : factory(&game)
     {
-        interface = factory.CreateImpl(kv::HumanInterface2::GetTypeStatic());
+        interface = factory.CreateImpl(kv::HumanInterface::GetTypeStatic());
     }
 };
 
