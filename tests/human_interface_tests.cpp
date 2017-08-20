@@ -94,3 +94,20 @@ TEST_F(HumanInterfaceTest, PickDropItem)
         EXPECT_EQ(item->GetOwner().Id(), 42);
     }
 }
+
+TEST_F(HumanInterfaceTest, InsertRemoveGetItem)
+{
+    // TODO (?): replace it with real human object
+    interface->SetOwner(42);
+
+    IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
+    item->type = kv::SlotType::DEFAULT;
+
+    EXPECT_FALSE(interface->InsertItem(kv::slot::LEFT_HAND, 0));
+    EXPECT_TRUE(interface->InsertItem(kv::slot::LEFT_HAND, item));
+    EXPECT_EQ(item->GetOwner().Id(), 42);
+    EXPECT_EQ(interface->GetItem(kv::slot::LEFT_HAND), item);
+    interface->RemoveItem(kv::slot::LEFT_HAND);
+    EXPECT_FALSE(interface->GetItem(kv::slot::LEFT_HAND).IsValid());
+    EXPECT_EQ(item->GetOwner().Id(), 42);
+}
