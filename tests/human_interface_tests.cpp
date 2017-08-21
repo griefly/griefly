@@ -100,14 +100,59 @@ TEST_F(HumanInterfaceTest, InsertRemoveGetItem)
     // TODO (?): replace it with real human object
     interface->SetOwner(42);
 
-    IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
-    item->type = kv::SlotType::DEFAULT;
+    using namespace kv::slot;
 
-    EXPECT_FALSE(interface->InsertItem(kv::slot::LEFT_HAND, 0));
-    EXPECT_TRUE(interface->InsertItem(kv::slot::LEFT_HAND, item));
-    EXPECT_EQ(item->GetOwner().Id(), 42);
-    EXPECT_EQ(interface->GetItem(kv::slot::LEFT_HAND), item);
-    interface->RemoveItem(kv::slot::LEFT_HAND);
-    EXPECT_FALSE(interface->GetItem(kv::slot::LEFT_HAND).IsValid());
-    EXPECT_EQ(item->GetOwner().Id(), 42);
+    // <Slot type, appropriate slots, inapropriate slots>
+    using SlotTypeAndSlots = std::tuple<kv::SlotType, QVector<QString>, QVector<QString>>;
+    const QVector<SlotTypeAndSlots> SLOT_TYPES_AND_SLOTS
+        { SlotTypeAndSlots{kv::SlotType::DEFAULT, {LEFT_HAND, RIGHT_HAND}, {HEAD, SUIT, UNIFORM, FEET}},
+          SlotTypeAndSlots{kv::SlotType::HEAD, {LEFT_HAND, RIGHT_HAND, HEAD}, {SUIT, UNIFORM, FEET}},
+          SlotTypeAndSlots{kv::SlotType::UNIFORM, {LEFT_HAND, RIGHT_HAND, UNIFORM}, {HEAD, SUIT, FEET}},
+          SlotTypeAndSlots{kv::SlotType::FEET, {LEFT_HAND, RIGHT_HAND, FEET}, {HEAD, SUIT, UNIFORM}},
+          SlotTypeAndSlots{kv::SlotType::SUIT, {LEFT_HAND, RIGHT_HAND, SUIT}, {HEAD, UNIFORM, FEET}}
+        };
+
+    for (const auto& tuple : SLOT_TYPES_AND_SLOTS)
+    {
+        const kv::SlotType slot_type = std::get<0>(tuple);
+        const QVector<QString> appropriate_slots = std::get<1>(tuple);
+        const QVector<QString> inappropriate_slots = std::get<2>(tuple);
+
+        for (const QString& slot : appropriate_slots)
+        {
+            IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
+            item->type = slot_type;
+
+            IdPtr<kv::Item> second_item = factory.CreateImpl(kv::Item::GetTypeStatic());
+            second_item->type = slot_type;
+
+            EXPECT_FALSE(interface->GetItem(slot).IsValid());
+            EXPECT_FALSE(interface->InsertItem(slot, 0));
+            EXPECT_TRUE(interface->InsertItem(slot, item));
+            EXPECT_EQ(item->GetOwner().Id(), 42);
+            EXPECT_EQ(interface->GetItem(slot), item);
+            EXPECT_FALSE(interface->InsertItem(slot, second_item));
+            EXPECT_FALSE(second_item->GetOwner().IsValid());
+            EXPECT_EQ(item->GetOwner().Id(), 42);
+            EXPECT_EQ(interface->GetItem(slot), item);
+            interface->RemoveItem(slot);
+            EXPECT_FALSE(interface->GetItem(slot).IsValid());
+            EXPECT_EQ(item->GetOwner().Id(), 42);
+        }
+
+        for (const QString& slot : inappropriate_slots)
+        {
+            IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
+            item->type = slot_type;
+
+            EXPECT_FALSE(interface->GetItem(slot).IsValid());
+            EXPECT_FALSE(interface->InsertItem(slot, 0));
+            EXPECT_FALSE(interface->InsertItem(slot, item));
+            EXPECT_FALSE(item->GetOwner().IsValid());
+            EXPECT_FALSE(interface->GetItem(slot).IsValid());
+            interface->RemoveItem(slot);
+            EXPECT_FALSE(interface->GetItem(slot).IsValid());
+            EXPECT_FALSE(item->GetOwner().IsValid());
+        }
+    }
 }
