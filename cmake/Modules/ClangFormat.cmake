@@ -1,8 +1,8 @@
 # Highly experimental, don't use those targets unless the official guide says so
 # cmake-tidy requires CMAKE_EXPORT_COMPILE_COMMANDS=ON
 
-file(GLOB_RECURSE ALL_SOURCES "Sources/*.cpp")
-file(GLOB_RECURSE ALL_HEADERS "Sources/*.h")
+file(GLOB_RECURSE ALL_SOURCES "sources/*.cpp")
+file(GLOB_RECURSE ALL_HEADERS "sources/*.h")
 
 find_program(clang-format NAMES clang-format)
 find_program(clang-tidy NAMES clang-tidy)
