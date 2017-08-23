@@ -156,3 +156,49 @@ TEST_F(HumanInterfaceTest, InsertRemoveGetItem)
         }
     }
 }
+
+TEST_F(HumanInterfaceTest, RemoveItemByItem)
+{
+    // TODO (?): replace it with real human object
+    interface->SetOwner(42);
+
+    using namespace kv::slot;
+
+    const QVector<std::pair<kv::SlotType, QString>> TYPE_AND_SLOT_LIST
+        = { {kv::SlotType::DEFAULT, LEFT_HAND},
+            {kv::SlotType::DEFAULT, RIGHT_HAND},
+            {kv::SlotType::SUIT, SUIT},
+            {kv::SlotType::UNIFORM, UNIFORM},
+            {kv::SlotType::FEET, FEET},
+            {kv::SlotType::HEAD, HEAD}
+          };
+
+    QVector<IdPtr<kv::Item>> items;
+
+    for (const auto& type_and_slot : TYPE_AND_SLOT_LIST)
+    {
+        IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
+        item->type = type_and_slot.first;
+
+        ASSERT_TRUE(interface->InsertItem(type_and_slot.second, item));
+        ASSERT_EQ(interface->GetItem(type_and_slot.second), item);
+        ASSERT_EQ(item->GetOwner().Id(), 42);
+        items.append(item);
+    }
+
+    for (int item_id = 0; item_id < items.size(); ++item_id)
+    {
+        interface->RemoveItem(items[item_id]);
+
+        for (int before_item_id = 0; before_item_id <= item_id; ++before_item_id)
+        {
+            EXPECT_FALSE(interface->GetItem(TYPE_AND_SLOT_LIST[before_item_id].second).IsValid());
+            EXPECT_EQ(items[item_id]->GetOwner().Id(), 42);
+        }
+
+        for (int after_item_id = item_id + 1; after_item_id < items.size(); ++after_item_id)
+        {
+            EXPECT_EQ(interface->GetItem(TYPE_AND_SLOT_LIST[after_item_id].second), items[after_item_id]);
+        }
+    }
+}
