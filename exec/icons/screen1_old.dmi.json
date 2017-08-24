@@ -218,10 +218,25 @@
             "state": "act_hand"
         }, 
         {
-            "dirs": 4, 
-            "frames": 1, 
-            "state": "hand"
+            "dirs": 1,
+            "frames": 1,
+            "state": "hand_left"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "hand_right"
         }, 
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "hand_dummy_1"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "hand_dummy_2"
+        },
         {
             "dirs": 1, 
             "frames": 1, 

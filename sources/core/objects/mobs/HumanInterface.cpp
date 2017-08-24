@@ -28,6 +28,10 @@ namespace
         const QString LEFT_HAND_INACTIVE = "hand_l_inactive";
         const QString LEFT_HAND_ACTIVE = "hand_l_active";
 
+        // Swap indicator states
+        const QString RIGHT_HAND = "hand_right";
+        const QString LEFT_HAND = "hand_left";
+
         // Pull indicator states
         const QString NOT_PULL = "pull0";
         const QString PULL = "pull1";
@@ -137,7 +141,7 @@ kv::HumanInterface::HumanInterface()
         Button swap;
         swap.position = {6, 15};
         swap.view.SetSprite(OLD_INTERFACE_SPRITE);
-        swap.view.SetState("hand");
+        swap.view.SetState(states::RIGHT_HAND);
         swap.name = SWAP;
         buttons_.append(swap);
     }
@@ -337,7 +341,6 @@ void kv::HumanInterface::Represent(Representation* representation)
             representation->AddToNewFrame(unit);
         }
     }
-    // TODO: swap hands dont work properly because it is based on dirs
 }
 
 void kv::HumanInterface::RemoveItem(IdPtr<Item> item)
@@ -475,17 +478,21 @@ void kv::HumanInterface::SwapHands()
 {
     Slot& right_hand = GetSlot(slot::RIGHT_HAND);
     Slot& left_hand = GetSlot(slot::LEFT_HAND);
-    if (active_hand_)
+    Button& swap = GetButton(SWAP);
+
+    active_hand_ = !active_hand_;
+    if (!active_hand_)
     {
         right_hand.view.SetState(states::RIGHT_HAND_INACTIVE);
         left_hand.view.SetState(states::LEFT_HAND_ACTIVE);
+        swap.view.SetState(states::LEFT_HAND);
     }
     else
     {
         right_hand.view.SetState(states::RIGHT_HAND_ACTIVE);
         left_hand.view.SetState(states::LEFT_HAND_INACTIVE);
+        swap.view.SetState(states::RIGHT_HAND);
     }
-    active_hand_ = !active_hand_;
 }
 
 kv::Button& kv::HumanInterface::GetButton(const QString& button_name)
