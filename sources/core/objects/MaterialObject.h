@@ -67,7 +67,7 @@ public:
     }
     
     virtual void Delete() override;
-    virtual void Represent() override;
+    virtual void Represent(Representation* representation) override;
     void SetSprite(const QString& sprite);
     void SetState(const QString& name);
     ViewInfo* GetView() { return &view_; }

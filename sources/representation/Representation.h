@@ -178,7 +178,3 @@ private:
 
     SoundPlayer player_;
 };
-
-Representation &GetRepresentation();
-bool IsRepresentationValid();
-void SetRepresentation(Representation* g_r);

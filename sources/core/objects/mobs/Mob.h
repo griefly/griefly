@@ -18,7 +18,7 @@ public:
 
     virtual void MindEnter() { }
     virtual void MindExit() { }
-    virtual void GenerateInterfaceForFrame();
+    virtual void GenerateInterfaceForFrame(Representation* representation);
     virtual void ProcessMessage(const Message& msg);
 
     void MoveMindTo(IdPtr<Mob> other);

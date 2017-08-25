@@ -3,12 +3,16 @@
 
 #include <QGLWidget>
 
+class Representation;
+
 class QtOpenGL : public QGLWidget
 {
     Q_OBJECT
 public:
     explicit QtOpenGL(QWidget *parent = 0);
     ~QtOpenGL();
+
+    void SetRepresentation(Representation* representation);
 
 signals:
     void enterPressed();
@@ -25,6 +29,10 @@ protected:
     void initializeGL();
     void paintGL();
     void resizeGL(int width, int height);
+private:
+    bool IsRepresentationValid();
+    Representation& GetRepresentation();
+    Representation* representation_;
 };
 
 QtOpenGL* GetGLWidget();

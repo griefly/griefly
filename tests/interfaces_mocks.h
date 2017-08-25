@@ -27,7 +27,7 @@ public:
     MOCK_CONST_METHOD0(GetWidth, int());
     MOCK_CONST_METHOD0(GetHeight, int());
     MOCK_CONST_METHOD0(GetDepth, int());
-    MOCK_CONST_METHOD1(Represent, void(const VisiblePoints& points));
+    MOCK_CONST_METHOD2(Represent, void(Representation* representation, const VisiblePoints& points));
     MOCK_METHOD3(Resize, void(int new_map_x, int new_map_y, int new_map_z));
     MOCK_CONST_METHOD3(At, const SqType&(int x, int y, int z));
     MOCK_METHOD3(At, SqType&(int x, int y, int z));

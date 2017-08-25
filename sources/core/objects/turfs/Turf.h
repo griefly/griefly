@@ -22,7 +22,7 @@ public:
     int GetFriction() const { return friction_; }
     void SetFriction(int friction) { friction_ = friction; }
 
-    virtual void Represent() override;
+    virtual void Represent(Representation* representation) override;
 
     atmos::AtmosState GetAtmosState() const { return atmos_state_; }
     void SetAtmosState(atmos::AtmosState atmos_state) { atmos_state_ = atmos_state; }

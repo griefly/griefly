@@ -6,7 +6,9 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 
-QtOpenGL::QtOpenGL(QWidget *parent) : QGLWidget(parent)
+QtOpenGL::QtOpenGL(QWidget *parent)
+    : QGLWidget(parent),
+      representation_(nullptr)
 {
     setFocusPolicy(Qt::StrongFocus);
     SetGLContext(this);
@@ -14,7 +16,12 @@ QtOpenGL::QtOpenGL(QWidget *parent) : QGLWidget(parent)
 
 QtOpenGL::~QtOpenGL()
 {
+    // Nothing
+}
 
+void QtOpenGL::SetRepresentation(Representation* representation)
+{
+    representation_ = representation;
 }
 
 void QtOpenGL::handlePassedKey(QKeyEvent* event)
@@ -94,6 +101,16 @@ void QtOpenGL::resizeGL(int width, int height)
     {
         GetScreen().PerformSizeUpdate();
     }
+}
+
+bool QtOpenGL::IsRepresentationValid()
+{
+    return representation_ != nullptr;
+}
+
+Representation& QtOpenGL::GetRepresentation()
+{
+    return *representation_;
 }
 
 QtOpenGL* widget = nullptr;

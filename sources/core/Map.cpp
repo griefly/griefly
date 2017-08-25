@@ -32,7 +32,7 @@ void Map::FillTilesAtmosHolders()
     }
 }
 
-void Map::Represent(const VisiblePoints& points) const
+void Map::Represent(Representation* representation, const VisiblePoints& points) const
 {
     for (const Position& point : points)
     {
@@ -41,17 +41,17 @@ void Map::Represent(const VisiblePoints& points) const
 
         for (const auto object : objects)
         {
-            object->Represent();
+            object->Represent(representation);
         }
 
         const auto turf = tile->GetTurf();
         if (!turf.IsValid())
         {
             KvAbort(
-                QString("Invalid turf in Map::Represent() at (%1, %2, %3), but turf always should be valid!")
+                QString("Invalid turf in Map::Represent(Representation* representation) at (%1, %2, %3), but turf always should be valid!")
                     .arg(point.x).arg(point.y).arg(point.z));
         }
-        turf->Represent();
+        turf->Represent(representation);
     }
 }
 

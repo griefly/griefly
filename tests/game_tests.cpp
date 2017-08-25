@@ -6,7 +6,8 @@
 
 TEST(Game, PlayersIds)
 {
-    Game game;
+    // TODO: Representation
+    Game game(nullptr);
 
     ObjectFactory factory(&game);
     game.SetGlobals(factory.CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic()));

@@ -80,15 +80,18 @@ void Human::AfterWorldCreation()
 
 void Human::MindEnter()
 {
+    // Nothing
 }
 
 void Human::MindExit()
 {
+    // Nothing
 }
-void Human::GenerateInterfaceForFrame()
+
+void Human::GenerateInterfaceForFrame(Representation* representation)
 {
-    Mob::GenerateInterfaceForFrame();
-    interface_->Represent(&GetRepresentation());
+    Mob::GenerateInterfaceForFrame(representation);
+    interface_->Represent(representation);
 }
 
 bool Human::TryMove(Dir direct)
@@ -495,7 +498,7 @@ void Human::AttackBy(IdPtr<Item> item)
     }
 }
 
-void Human::Represent()
+void Human::Represent(Representation* representation)
 {
     Representation::Entity ent;
     ent.id = GetId();
@@ -512,7 +515,7 @@ void Human::Represent()
     {
         ent.dir = Dir::SOUTH;
     }
-    GetRepresentation().AddToNewFrame(ent);
+    representation->AddToNewFrame(ent);
 }
 
 void Human::CalculateVisible(QVector<Position>* visible_list) const

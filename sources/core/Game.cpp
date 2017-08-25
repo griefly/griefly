@@ -39,7 +39,8 @@
 
 using namespace kv;
 
-Game::Game()
+Game::Game(Representation* representation)
+    : representation_(representation)
 {
     process_messages_ns_ = 0;
     foreach_process_ns_ = 0;
@@ -512,23 +513,23 @@ void Game::GenerateFrame()
 
     points_.clear();
     GetMob()->CalculateVisible(&points_);
-    GetMap().Represent(points_);
-    GetMob()->GenerateInterfaceForFrame();
+    GetMap().Represent(representation_, points_);
+    GetMob()->GenerateInterfaceForFrame(representation_);
 
-    GetAtmosphere().Represent(&GetRepresentation());
+    GetAtmosphere().Represent(representation_);
 
     AppendSoundsToFrame(points_);
     GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));
     AppendChatMessages();
 
     // TODO: reset all shifts
-    GetRepresentation().SetCameraForFrame(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
-    GetRepresentation().Swap();
+    representation_->SetCameraForFrame(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
+    representation_->Swap();
 }
 
 void Game::AppendSystemTexts()
 {
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{"Main", QString("CPU load: %1%").arg(cpu_load_)});
 
     float sum = 0.0f;
@@ -536,46 +537,46 @@ void Game::AppendSystemTexts()
     {
         sum += load;
     }
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{"Main", QString("Average CPU load: %1%").arg(sum / cpu_loads_.size())});
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{"Main", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{"Main", QString("Players: %1").arg(current_connections_)});
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{"Main", QString("Ping: %1 ms").arg(current_ping_)});
 
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{
             "Performance",
             QString("Process messages: %1 ms").arg((process_messages_ns_ * 1.0) / 1000000.0)});
 
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{
             "Performance",
             QString("Process objects: %1 ms").arg((foreach_process_ns_ * 1.0) / 1000000.0)});
 
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{
             "Performance",
             QString("Process force movement: %1 ms").arg((force_process_ns_ * 1.0) / 1000000.0)});
 
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{
             "Performance",
             QString("Process atmos: %1 ms").arg((atmos_process_ns_ * 1.0) / 1000000.0)});
 
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{
             "Performance",
             QString("Process deletion: %1 ms").arg((deletion_process_ns_ * 1.0) / 1000000.0)});
 
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{
             "Performance",
             QString("Update visibility: %1 ms").arg((update_visibility_ns_ * 1.0) / 1000000.0)});
 
-    GetRepresentation().AddToNewFrame(
+    representation_->AddToNewFrame(
         Representation::TextEntry{
             "Performance",
             QString("Frame generation: %1 ms").arg((frame_generation_ns_ * 1.0) / 1000000.0)});
@@ -589,7 +590,7 @@ void Game::AppendSoundsToFrame(const VisiblePoints& points)
     {
         if (std::find(points.begin(), points.end(), it.first) != points.end())
         {
-            GetRepresentation().AddToNewFrame(Representation::Sound{it.second});
+            representation_->AddToNewFrame(Representation::Sound{it.second});
         }
     }
     sounds_for_frame_.clear();
@@ -601,7 +602,7 @@ void Game::AppendSoundsToFrame(const VisiblePoints& points)
     auto music = musics_for_mobs.find(net_id);
     if (music != musics_for_mobs.end())
     {
-        GetRepresentation().SetMusic({music->first, music->second});
+        representation_->SetMusic({music->first, music->second});
     }
 }
 
@@ -611,7 +612,7 @@ void Game::AppendChatMessages()
 
     for (const auto& personal : chat_frame_info_.GetPersonalTexts(net_id))
     {
-        GetRepresentation().AddToNewFrame(Representation::ChatMessage{personal});
+        representation_->AddToNewFrame(Representation::ChatMessage{personal});
     }
     chat_frame_info_.Reset();
 }

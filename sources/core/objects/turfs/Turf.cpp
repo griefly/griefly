@@ -17,7 +17,7 @@ void Turf::Delete()
     MaterialObject::Delete();
 }
 
-void Turf::Represent()
+void Turf::Represent(Representation* representation)
 {
     if (IdPtr<CubeTile> tile = GetOwner())
     {
@@ -27,7 +27,7 @@ void Turf::Represent()
         if (plasma > VISIBILITY_THRESHOLD)
         {
             Representation::Entity ent;
-            ent.id = GetRepresentation().GetUniqueIdForNewFrame(GetId(), 1);
+            ent.id = representation->GetUniqueIdForNewFrame(GetId(), 1);
             ent.click_id = 0;
             ent.pos_x = GetPosition().x;
             ent.pos_y = GetPosition().y;
@@ -38,10 +38,10 @@ void Turf::Represent()
             const double visibility = (plasma * 1.0) * (MAX_TRANSPARENCY / FULL_VISIBILITY_THRESHOLD);
             ent.view.SetTransparency(qMin(static_cast<int>(visibility), MAX_TRANSPARENCY));
             ent.dir = Dir::SOUTH;
-            GetRepresentation().AddToNewFrame(ent);
+            representation->AddToNewFrame(ent);
         }
     }
-    MaterialObject::Represent();
+    MaterialObject::Represent(representation);
 }
 
 int friction::CombinedFriction(IdPtr<Turf> turf)

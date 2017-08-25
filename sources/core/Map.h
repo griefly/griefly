@@ -33,7 +33,7 @@ public:
     virtual void Resize(int new_x, int new_y, int new_z) override;
     virtual void FillTilesAtmosHolders() override;
 
-    virtual void Represent(const VisiblePoints& points) const override;
+    virtual void Represent(Representation* representation, const VisiblePoints& points) const override;
 
     virtual bool IsTileVisible(quint32 tile_id) override;
     virtual bool IsTransparent(int posx, int posy, int posz = 0) const override;

@@ -27,7 +27,7 @@ public:
     void WaitForExit();
     void InitWorld(int id, QString map_name);
 
-    Game();
+    Game(Representation* representation);
     ~Game();
 
     virtual void MakeTiles(int size_x, int size_y, int size_z) override;
@@ -130,4 +130,6 @@ private:
     IdPtr<kv::Mob> current_mob_;
     QVector<QPair<kv::Position, QString>> sounds_for_frame_;
     VisiblePoints points_;
+
+    Representation* representation_;
 };

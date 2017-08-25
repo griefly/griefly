@@ -128,7 +128,7 @@ public:
     {
         return owner_->GetPosition();
     }
-    virtual void Represent() { }
+    virtual void Represent(Representation* representation) { }
     virtual void UpdatePassable() { }
     virtual IdPtr<Turf> GetTurf();
     virtual void SetTurf(IdPtr<Turf> turf);

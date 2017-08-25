@@ -46,14 +46,14 @@ void LoginMob::MindEnter()
     PlayMusic("lobby.ogg", 10);
 }
 
-void LoginMob::GenerateInterfaceForFrame()
+void LoginMob::GenerateInterfaceForFrame(Representation* representation)
 {
     Representation::InterfaceUnit unit;
     unit.name = LOGIN_CLICK;
     unit.pixel_x = 0;
     unit.pixel_y = 0;
     unit.view = login_view_;
-    GetRepresentation().AddToNewFrame(unit);
+    representation->AddToNewFrame(unit);
 
     QString text;
     const int seconds_until_start = GetGame().GetGlobals()->lobby->GetSecondUntilStart();
@@ -65,7 +65,7 @@ void LoginMob::GenerateInterfaceForFrame()
     {
         text = QString("Until start: %1").arg(seconds_until_start);
     }
-    GetRepresentation().AddToNewFrame(Representation::TextEntry{"Main", text});
+    representation->AddToNewFrame(Representation::TextEntry{"Main", text});
 }
 
 namespace

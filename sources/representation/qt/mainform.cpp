@@ -149,28 +149,28 @@ void MainForm::startGameLoop(int id, QString map)
         fps_cap_ = GetParamsHolder().GetParam<int>("-max_fps");
     }
 
-    Representation* representation = new Representation;
-    SetRepresentation(representation);
-    connect(ui->widget, &QtOpenGL::focusLost,
-    []()
+    representation_ = new Representation;
+    ui->widget->SetRepresentation(representation_);
+    connect(ui->widget, &QtOpenGL::focusLost, this,
+    [this]()
     {
-        GetRepresentation().ResetKeysState();
+        representation_->ResetKeysState();
     });
 
-    Game* game = new Game;
+    Game* game = new Game(representation_);
 
     connect(game, &Game::insertHtmlIntoChat,
             this, &MainForm::insertHtmlIntoChat);
-    connect(representation, &Representation::clearSystemTexts,
+    connect(representation_, &Representation::clearSystemTexts,
             this, &MainForm::clearSystemTexts);
-    connect(representation, &Representation::systemText,
+    connect(representation_, &Representation::systemText,
             this, &MainForm::addSytemTextToTab);
-    connect(representation, &Representation::removeEmptyTabs,
+    connect(representation_, &Representation::removeEmptyTabs,
             this, &MainForm::removeEmptyTabs);
 
     connect(game, &Game::sendMap,
             &Network2::GetInstance(), &Network2::sendMap);
-    connect(representation, &Representation::chatMessage, this, &MainForm::insertHtmlIntoChat);
+    connect(representation_, &Representation::chatMessage, this, &MainForm::insertHtmlIntoChat);
 
     game->InitWorld(id, map);
 
@@ -197,7 +197,7 @@ void MainForm::startGameLoop(int id, QString map)
     while (true)
     {
         process_performance.start();
-        GetRepresentation().HandleInput();
+        representation_->HandleInput();
         GetGLWidget()->updateGL();
         ++fps_counter;
         qint64 process_time = process_performance.nsecsElapsed();
@@ -222,7 +222,7 @@ void MainForm::startGameLoop(int id, QString map)
 
             AddSystemTexts();
 
-            GetRepresentation().ResetPerformance();
+            representation_->ResetPerformance();
             max_process_time = 0;
             fps_timer.restart();
             fps_counter = 0;
@@ -365,7 +365,7 @@ void MainForm::AddSystemTexts()
     ui->client_text_edit->insertHtml(QString("FPS: %1<br>").arg(current_fps_));
     ui->client_text_edit->insertHtml(QString("Represent max: %1 ms<br>").arg(represent_max_ms_));
 
-    const qint64 mutex_ns = GetRepresentation().GetPerformance().mutex_ns;
+    const qint64 mutex_ns = representation_->GetPerformance().mutex_ns;
     ui->client_text_edit->insertHtml(QString("Represent mutex lock max: %1 ms").arg(mutex_ns / 1e6));
 }
 

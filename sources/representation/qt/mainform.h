@@ -15,6 +15,8 @@ namespace Ui {
 class MainForm;
 }
 
+class Representation;
+
 class MainForm : public QWidget
 {
     Q_OBJECT
@@ -71,6 +73,7 @@ private:
     qint64 represent_max_ms_;
 
     QVector<QString> chat_messages_;
+    Representation* representation_;
 };
 
 #endif // MAINFORM_H

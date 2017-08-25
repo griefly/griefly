@@ -46,7 +46,7 @@ public:
     virtual int GetHeight() const = 0;
     virtual int GetDepth() const = 0;
 
-    virtual void Represent(const VisiblePoints& points) const = 0;
+    virtual void Represent(Representation* representation, const VisiblePoints& points) const = 0;
 
     virtual void Resize(int new_map_x, int new_map_y, int new_map_z) = 0;
 

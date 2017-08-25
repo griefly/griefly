@@ -564,20 +564,3 @@ int Representation::Camera::GetFullShiftY()
 {
     return -1 * (pos_y * 32 + pixel_shift_y_) + (AREA_SIZE_H / 2) - 16;
 }
-
-Representation* g_r = nullptr;
-Representation& GetRepresentation()
-{
-    return *g_r;
-}
-
-void SetRepresentation(Representation* new_g_r)
-{
-    g_r = new_g_r;
-}
-
-
-bool IsRepresentationValid()
-{
-    return g_r != nullptr;
-}
