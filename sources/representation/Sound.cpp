@@ -32,7 +32,7 @@ void SoundPlayer::PlaySound(const QString& name, float volume)
         {
             return;
         }
-        ptr.reset(new QSoundEffect, &QObject::deleteLater);
+        ptr.reset(new QSoundEffect, [](QSoundEffect* effect) { effect->deleteLater(); });
         ptr->setSource(QUrl::fromLocalFile("sounds/" + name));
         sound_cache.append(ptr);
     }

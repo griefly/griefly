@@ -1,13 +1,13 @@
 #pragma once
 
+#include <memory>
+
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QSoundEffect>
 
 #include <QMap>
 #include <QVector>
-
-#include <QSharedPointer>
 
 #ifdef PlaySound
 #undef PlaySound
@@ -24,6 +24,6 @@ private:
     QMediaPlayer media_player_;
     QMediaPlaylist playlist_;
 
-    using SoundPtr = QSharedPointer<QSoundEffect>;
+    using SoundPtr = std::shared_ptr<QSoundEffect>;
     QMap<QString, QVector<SoundPtr>> sounds_;
 };
