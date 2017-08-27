@@ -1,12 +1,14 @@
 #pragma once
 
+#include <memory>
+
 #include <QByteArray>
 #include <QVector>
 
 namespace kv
 {
 
-class CoreInterface
+class WorldInterface
 {
 public:
     class Frame
@@ -19,19 +21,30 @@ public:
         // TODO:
     };
 
-    virtual void LoadWorld(const QByteArray& data) = 0;
+    virtual ~WorldInterface() { }
+
     virtual void SaveWorld(QByteArray* data) const = 0;
 
-    virtual void LoadWorldFromMapgen(const QByteArray& data) = 0;
+    // TODO: Look into #360 properly
+    virtual void ProcessNextTick(const QVector<Message>& messages) = 0;
 
+    virtual void Represent(Frame* frame) const = 0;
     virtual quint32 Hash() const = 0;
 
-    // TODO: Look into #360 properly
-    virtual void ProcessNextTick(const QVector<Message>& messages);
+};
 
-    virtual void Represent(Frame* frame) const;
+class CoreInterface
+{
+public:
+    virtual ~CoreInterface() { }
 
+    using WorldPtr = std::shared_ptr<WorldInterface>;
+
+    virtual WorldPtr CreateWorldFromSave(const QByteArray& data) = 0;
+    virtual WorldPtr CreateWorldFromMapgen(const QByteArray& data) = 0;
     // TODO: metadata for map editor?
 };
+
+CoreInterface& GetCoreInstance();
 
 }
