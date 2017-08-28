@@ -8,17 +8,87 @@
 #include <QString>
 #include <QVector>
 
+#include "representation/ViewInfo.h"
+#include "core/Constheader.h"
+
 namespace kv
 {
+
+class Frame
+{
+    struct Entity
+    {
+        Entity()
+            : id(0),
+              click_id(0),
+              pos_x(0),
+              pos_y(0),
+              vlevel(0),
+              dir(Dir::SOUTH)
+        {
+            // Nothing
+        }
+
+        ViewInfo view;
+        quint32 id;
+        quint32 click_id;
+        int pos_x;
+        int pos_y;
+        int vlevel;
+        Dir dir;
+    };
+
+    struct InterfaceUnit
+    {
+        InterfaceUnit()
+            : pixel_x(0),
+              pixel_y(0),
+              shift(0)
+        {
+            // Nothing
+        }
+
+        ViewInfo view;
+        QString name;
+
+        int pixel_x;
+        int pixel_y;
+
+        int shift;
+    };
+
+    struct Sound
+    {
+        QString name;
+    };
+
+    struct ChatMessage
+    {
+        QString html;
+    };
+
+    struct TextEntry
+    {
+        QString tab;
+        QString text;
+    };
+
+    struct Music
+    {
+        Music()
+            : volume(0)
+        {
+            // Nothing
+        }
+
+        QString name;
+        int volume;
+    };
+};
 
 class WorldInterface
 {
 public:
-    class Frame
-    {
-        // TODO:
-    };
-
     class Message
     {
         qint32 id;
