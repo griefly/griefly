@@ -223,5 +223,3 @@ inline Dir RevertDir(Dir dir)
         return Dir::SOUTHEAST;
     }
 }
-
-const int MAX_LEVEL = 20;

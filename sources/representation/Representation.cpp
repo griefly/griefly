@@ -18,6 +18,13 @@
 #include <QMutexLocker>
 #include <QCoreApplication>
 
+namespace
+{
+
+const int MAX_LEVEL = 20;
+
+}
+
 Representation::Representation(QObject* parent)
     : QObject(parent)
 {
