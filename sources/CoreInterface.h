@@ -3,6 +3,9 @@
 #include <memory>
 
 #include <QByteArray>
+#include <QJsonObject>
+#include <QMap>
+#include <QString>
 #include <QVector>
 
 namespace kv
@@ -18,7 +21,8 @@ public:
 
     class Message
     {
-        // TODO:
+        qint32 id;
+        QJsonObject data;
     };
 
     virtual ~WorldInterface() { }
@@ -36,13 +40,21 @@ public:
 class CoreInterface
 {
 public:
+    struct ObjectMetadata
+    {
+        QString sprite;
+        QString state;
+    };
+
     virtual ~CoreInterface() { }
 
     using WorldPtr = std::shared_ptr<WorldInterface>;
 
     virtual WorldPtr CreateWorldFromSave(const QByteArray& data) = 0;
     virtual WorldPtr CreateWorldFromMapgen(const QByteArray& data) = 0;
-    // TODO: metadata for map editor?
+
+    // <object name, metadata>
+    virtual const QMap<QString, ObjectMetadata>& GetObjectsMetadata() const = 0;
 };
 
 CoreInterface& GetCoreInstance();
