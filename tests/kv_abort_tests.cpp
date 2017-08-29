@@ -6,6 +6,6 @@ TEST(KvAbortDeathTest, Basics)
 {
     ASSERT_DEATH(
     {
-        KvAbort("Some error message");
+        kv::Abort("Some error message");
     }, "Some error message");
 }

@@ -84,7 +84,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
     QFile file(name);
     if (!file.open(QIODevice::ReadOnly))
     {
-        KvAbort(QString("Error open: %1").arg(name));
+        kv::Abort(QString("Error open: %1").arg(name));
     }
 
     QByteArray raw_data;
@@ -131,7 +131,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         IdPtr<kv::MaterialObject> i = factory.CreateImpl(item_type);
         if (!i.IsValid())
         {
-            KvAbort(QString("Unable to cast: %1").arg(item_type));
+            kv::Abort(QString("Unable to cast: %1").arg(item_type));
         }
 
         MapgenVariablesType variables;
@@ -157,7 +157,7 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
         {
             if (tile->GetTurf())
             {
-                KvAbort(QString("Double turf at %1, %2, %3").arg(x, y, z));
+                kv::Abort(QString("Double turf at %1, %2, %3").arg(x, y, z));
             }
             tile->SetTurf(turf);
         }

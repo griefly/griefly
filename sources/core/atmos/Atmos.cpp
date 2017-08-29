@@ -218,6 +218,6 @@ void Atmosphere::AssertGrid()
 {
     if (!map_)
     {
-        KvAbort("Atmosphere: Grid is not loaded!");
+        kv::Abort("Atmosphere: Grid is not loaded!");
     }
 }

@@ -134,7 +134,7 @@ void Closet::Delete()
     {
         if (!it->IsValid())
         {
-            KvAbort("Closet contains invalid id_ptr_on");
+            kv::Abort("Closet contains invalid id_ptr_on");
         }
         (*it)->Delete();
     }

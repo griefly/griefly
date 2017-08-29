@@ -25,14 +25,14 @@ public:
             QFile json_file("metadata.json");
             if (!json_file.open(QIODevice::ReadOnly))
             {
-                KvAbort("Unable to open 'metadata.json' file!");
+                kv::Abort("Unable to open 'metadata.json' file!");
             }
             QByteArray json_raw = json_file.readAll();
             parsed_json_ = QJsonDocument::fromJson(json_raw);
             classes_data_ = parsed_json_.object().value("classes").toArray();
             if (classes_data_.isEmpty())
             {
-                KvAbort("'metadata.json' is corrupted!");
+                kv::Abort("'metadata.json' is corrupted!");
             }
 
             InitTable();

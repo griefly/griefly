@@ -2,5 +2,10 @@
 
 #include <QString>
 
+namespace kv
+{
+
 // __gcov_fflush + abort
-void KvAbort(const QString& message);
+void Abort(const QString& message);
+
+}

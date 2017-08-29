@@ -29,13 +29,13 @@ void GLSprite::InitMetadataAndFrames(const QString& path)
     QImage image;
     if (!image.load(path))
     {
-        KvAbort(QString("Image load error: : %1").arg(path));
+        kv::Abort(QString("Image load error: : %1").arg(path));
     }
 
     metadata_.Init(path, image.width(), image.height());
     if (!metadata_.Valid())
     {
-        KvAbort(QString("Invalid metadata, aborting: %1").arg(path));
+        kv::Abort(QString("Invalid metadata, aborting: %1").arg(path));
     }
 
     frames_w_ = image.width() / metadata_.GetW();

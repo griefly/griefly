@@ -47,7 +47,7 @@ void Map::Represent(Representation* representation, const VisiblePoints& points)
         const auto turf = tile->GetTurf();
         if (!turf.IsValid())
         {
-            KvAbort(
+            kv::Abort(
                 QString("Invalid turf in Map::Represent(Representation* representation) at (%1, %2, %3), but turf always should be valid!")
                     .arg(point.x).arg(point.y).arg(point.z));
         }
@@ -61,7 +61,7 @@ void Map::Resize(int new_x, int new_y, int new_z)
         || new_y < 1
         || new_z < 1)
     {
-        KvAbort(QString("Incorrect map new size (%1, %2, %3)").arg(new_x).arg(new_y).arg(new_z));
+        kv::Abort(QString("Incorrect map new size (%1, %2, %3)").arg(new_x).arg(new_y).arg(new_z));
     }
 
     squares_.resize(new_x);

@@ -52,7 +52,7 @@ void ChatFrameInfo::ApplyHear(Hearer* hearer)
 {
     if (hearer == nullptr)
     {
-        KvAbort("ChatFrameInfo::ApplyHear(): hearer is nullptr");
+        kv::Abort("ChatFrameInfo::ApplyHear(): hearer is nullptr");
     }
 
     const auto& points = hearer->GetHeardPoints();

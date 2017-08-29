@@ -10,7 +10,7 @@ void Names::LoadNames()
         QFile male_file("names/first_male.txt");
         if (!male_file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
-            KvAbort(QString("Unable to open %1").arg(male_file.fileName()));
+            kv::Abort(QString("Unable to open %1").arg(male_file.fileName()));
         }
         while (male_file.bytesAvailable())
         {
@@ -27,7 +27,7 @@ void Names::LoadNames()
         QFile last_file("names/last.txt");
         if (!last_file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
-            KvAbort(QString("Unable to open %1").arg(last_file.fileName()));
+            kv::Abort(QString("Unable to open %1").arg(last_file.fileName()));
         }
         while (last_file.bytesAvailable())
         {

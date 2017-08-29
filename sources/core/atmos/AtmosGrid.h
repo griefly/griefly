@@ -86,19 +86,19 @@ namespace atmos
         {
             if (width_ < 2)
             {
-                KvAbort("Width too small for AtmosGrid!");
+                kv::Abort("Width too small for AtmosGrid!");
             }
             if (height_ < 2)
             {
-                KvAbort("Height too small for AtmosGrid!");
+                kv::Abort("Height too small for AtmosGrid!");
             }
             if ((width_ % atmos::CELL_GROUP_SIZE) != 0)
             {
-                KvAbort(QString("Width is not multiplier of %1!").arg(atmos::CELL_GROUP_SIZE));
+                kv::Abort(QString("Width is not multiplier of %1!").arg(atmos::CELL_GROUP_SIZE));
             }
             if ((height_ % atmos::CELL_GROUP_SIZE) != 0)
             {
-                KvAbort(QString("Height is not multiplier of %1!").arg(atmos::CELL_GROUP_SIZE));
+                kv::Abort(QString("Height is not multiplier of %1!").arg(atmos::CELL_GROUP_SIZE));
             }
             cells_ = new Cell[length_];
         }

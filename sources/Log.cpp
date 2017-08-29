@@ -53,7 +53,7 @@ void KvMessageHandler(QtMsgType type, const QMessageLogContext& context, const Q
         break;
     case QtFatalMsg:
         logstream << information << endl;
-        KvAbort(QString());
+        kv::Abort(QString());
     }
 }
 
@@ -72,7 +72,7 @@ void kv::InitializeLog()
     {
         if (!QDir().mkdir(LOG_DIRECTORY))
         {
-            KvAbort(QString("Unable to create directory: %1").arg(LOG_DIRECTORY));
+            kv::Abort(QString("Unable to create directory: %1").arg(LOG_DIRECTORY));
         }
     }
 
@@ -86,7 +86,7 @@ void kv::InitializeLog()
     logs.setFileName(filename);
     if (!logs.open(QIODevice::WriteOnly))
     {
-        KvAbort(QString("%1 cannot be opened.").arg(logs.fileName()));
+        kv::Abort(QString("%1 cannot be opened.").arg(logs.fileName()));
     }
     logstream.setDevice(&logs);
 

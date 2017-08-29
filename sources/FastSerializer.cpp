@@ -81,7 +81,7 @@ QString kv::Humanize(FastDeserializer *deserializer)
         }
         else
         {
-            KvAbort(QString("Unknown type: %1").arg(type));
+            kv::Abort(QString("Unknown type: %1").arg(type));
         }
         stream << " ";
     }

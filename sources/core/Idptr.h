@@ -125,7 +125,7 @@ public:
     {
         if (id_ == 0)
         {
-            KvAbort("Unable to dereference IdPtr with 0 id");
+            kv::Abort("Unable to dereference IdPtr with 0 id");
         }
         if (casted_ == nullptr)
         {
@@ -192,7 +192,7 @@ private:
     {
         if (static_cast<int>(id) >= id_ptr_id_table->size())
         {
-            KvAbort(QString("Id table lookup fail, id: %1, size: %2")
+            kv::Abort(QString("Id table lookup fail, id: %1, size: %2")
                 .arg(id).arg(id_ptr_id_table->size()));
         }
         return (*id_ptr_id_table)[id].object;

@@ -188,7 +188,7 @@ public:
     {
         if (IsEnd())
         {
-            KvAbort("Cannot determine the next type because the end has been reached!");
+            kv::Abort("Cannot determine the next type because the end has been reached!");
         }
         return data_[index_];
     }
@@ -303,7 +303,7 @@ private:
     {
         if ((size + index_) > size_)
         {
-            KvAbort("FastDeserializer: EnsureSize fail!");
+            kv::Abort("FastDeserializer: EnsureSize fail!");
         }
     }
     void EnsureType(FastSerializer::Type type)
@@ -312,7 +312,7 @@ private:
         if (data_[index_] != type)
         {
             const QString TEMPLATE("Types mismatch: expected - %1, actual - %2");
-            KvAbort(TEMPLATE.arg(static_cast<int>(type)).arg(static_cast<int>(data_[index_])));
+            kv::Abort(TEMPLATE.arg(static_cast<int>(type)).arg(static_cast<int>(data_[index_])));
         }
         ++index_;
     }

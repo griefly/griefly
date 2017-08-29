@@ -42,7 +42,7 @@ void Object::SetFreq(int freq)
 {
     if (game_ == nullptr)
     {
-        KvAbort("SetFreq is called in constructor");
+        kv::Abort("SetFreq is called in constructor");
     }
 
     how_often_ = freq;
@@ -50,7 +50,7 @@ void Object::SetFreq(int freq)
     // TODO: Why is it here?
     if (!GetId())
     {
-        KvAbort("GetId() is zero");
+        kv::Abort("GetId() is zero");
     }
 
     if (how_often_ != 0)
@@ -63,7 +63,7 @@ const GameInterface& Object::GetGame() const
 {
     if (game_ == nullptr)
     {
-        KvAbort("Object::GetGame() is called during construction of object");
+        kv::Abort("Object::GetGame() is called during construction of object");
     }
     return *game_;
 }
@@ -77,7 +77,7 @@ GameInterface& Object::GetGame()
 {
     if (game_ == nullptr)
     {
-        KvAbort("Object::GetGame() is called during construction of object");
+        kv::Abort("Object::GetGame() is called during construction of object");
     }
     return *game_;
 }

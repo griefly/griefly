@@ -102,7 +102,7 @@ kv::Object* ObjectFactory::NewVoidObject(const QString& type)
     auto creator = GetItemsCreators()->find(type);
     if (creator == GetItemsCreators()->end())
     {
-        KvAbort(QString("Unable to find creator for type: %1").arg(type));
+        kv::Abort(QString("Unable to find creator for type: %1").arg(type));
     }
     return creator->second();
 }
@@ -112,7 +112,7 @@ kv::Object* ObjectFactory::NewVoidObjectSaved(const QString& type)
     auto creator = GetVoidItemsCreators()->find(type);
     if (creator == GetVoidItemsCreators()->end())
     {
-        KvAbort(QString("Unable to find void creator for type: %1").arg(type));
+        kv::Abort(QString("Unable to find void creator for type: %1").arg(type));
     }
     return creator->second();
 }
@@ -188,7 +188,7 @@ quint32 ObjectFactory::CreateImpl(const QString &type, quint32 owner_id)
         }
         else if (!owner->AddObject(item->GetId()))
         {
-            KvAbort("AddItem failed");
+            kv::Abort("AddItem failed");
         }
     }
 

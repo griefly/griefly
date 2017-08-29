@@ -434,7 +434,7 @@ kv::Slot& kv::HumanInterface::GetSlot(const QString& slot_name)
             return slot;
         }
     }
-    KvAbort(QString("No such slot in HumanInterface: %1").arg(slot_name));
+    kv::Abort(QString("No such slot in HumanInterface: %1").arg(slot_name));
 }
 
 kv::Slot& kv::HumanInterface::GetActiveHand()
@@ -504,5 +504,5 @@ kv::Button& kv::HumanInterface::GetButton(const QString& button_name)
             return button;
         }
     }
-    KvAbort(QString("No such button in HumanInterface: %1").arg(button_name));
+    kv::Abort(QString("No such button in HumanInterface: %1").arg(button_name));
 }
