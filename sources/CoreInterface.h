@@ -14,7 +14,7 @@
 namespace kv
 {
 
-class Frame
+struct FrameData
 {
     struct Entity
     {
@@ -84,7 +84,30 @@ class Frame
         QString name;
         int volume;
     };
+
+    QVector<Entity> entities;
+    QVector<Sound> sounds;
+    QVector<InterfaceUnit> units;
+    QVector<ChatMessage> messages;
+    QVector<TextEntry> texts;
+    Music music;
+    int camera_pos_x;
+    int camera_pos_y;
 };
+
+class GrowingFrame
+{
+public:
+    GrowingFrame(FrameData* data)
+        : frame_data_(data)
+    {
+        // Nothing
+    }
+    // TODO: append methods
+private:
+    FrameData* frame_data_;
+};
+
 
 class WorldInterface
 {
