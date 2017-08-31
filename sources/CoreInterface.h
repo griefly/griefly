@@ -103,7 +103,39 @@ public:
     {
         // Nothing
     }
-    // TODO: append methods
+    void Append(const FrameData::Entity& entity)
+    {
+        frame_data_->entities.append(entity);
+    }
+    void Append(const FrameData::Sound& sound)
+    {
+        frame_data_->sounds.append(sound);
+    }
+    void Append(const FrameData::InterfaceUnit& unit)
+    {
+        frame_data_->units.append(unit);
+    }
+    void Append(const FrameData::ChatMessage& message)
+    {
+        frame_data_->messages.append(message);
+    }
+    void Append(const FrameData::ChatMessage& message)
+    {
+        frame_data_->messages.append(message);
+    }
+    void Append(const FrameData::TextEntry& text)
+    {
+        frame_data_->messages.append(text);
+    }
+    void SetMusic(const FrameData::Music& music)
+    {
+        frame_data_->music = music;
+    }
+    void SetCamera(int posx, int posy)
+    {
+        frame_data_->camera_pos_x = posx;
+        frame_data_->camera_pos_y = posy;
+    }
 private:
     FrameData* frame_data_;
 };
