@@ -85,6 +85,13 @@ struct FrameData
         int volume;
     };
 
+    FrameData()
+        : camera_pos_x(0),
+          camera_pos_y(0)
+    {
+        // Nothing
+    }
+
     QVector<Entity> entities;
     QVector<Sound> sounds;
     QVector<InterfaceUnit> units;
@@ -119,13 +126,9 @@ public:
     {
         frame_data_->messages.append(message);
     }
-    void Append(const FrameData::ChatMessage& message)
-    {
-        frame_data_->messages.append(message);
-    }
     void Append(const FrameData::TextEntry& text)
     {
-        frame_data_->messages.append(text);
+        frame_data_->texts.append(text);
     }
     void SetMusic(const FrameData::Music& music)
     {
@@ -139,7 +142,6 @@ public:
 private:
     FrameData* frame_data_;
 };
-
 
 class WorldInterface
 {
@@ -157,7 +159,7 @@ public:
     // TODO: Look into #360 properly
     virtual void ProcessNextTick(const QVector<Message>& messages) = 0;
 
-    virtual void Represent(Frame* frame) const = 0;
+    virtual void Represent(GrowingFrame* frame) const = 0;
     virtual quint32 Hash() const = 0;
 
 };
