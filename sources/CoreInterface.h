@@ -108,7 +108,10 @@ public:
     GrowingFrame(FrameData* data)
         : frame_data_(data)
     {
-        // Nothing
+        if (frame_data_ == nullptr)
+        {
+            kv::Abort("GrowingFrame cannot accept nullptr as FrameData!");
+        }
     }
     void Append(const FrameData::Entity& entity)
     {
