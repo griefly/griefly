@@ -173,12 +173,12 @@ void Atmosphere::ProcessMove(qint32 game_tick)
 void Atmosphere::Represent(Representation* representation) const
 {
     representation->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Atmos grid processing: %1 ms").arg((grid_processing_ns_ * 1.0) / 1000000.0)});
 
     representation->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Atmos move processing: %1 ms").arg((movement_processing_ns_ * 1.0) / 1000000.0)});
 }

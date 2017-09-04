@@ -25,6 +25,10 @@ const int MAX_LEVEL = 20;
 
 }
 
+using Music = kv::FrameData::Music;
+using ChatMessage = kv::FrameData::ChatMessage;
+using TextEntry = kv::FrameData::TextEntry;
+
 Representation::Representation(QObject* parent)
     : QObject(parent)
 {
@@ -61,32 +65,32 @@ void Representation::ResetPerformance()
     performance_.mutex_ns = 0;
 }
 
-void Representation::AddToNewFrame(const Representation::InterfaceUnit &unit)
+void Representation::AddToNewFrame(const kv::FrameData::InterfaceUnit& unit)
 {
     new_frame_->units.push_back(unit);
 }
 
-void Representation::AddToNewFrame(const Entity& entity)
+void Representation::AddToNewFrame(const kv::FrameData::Entity& entity)
 {
     new_frame_->entities.push_back(entity);
 }
 
-void Representation::AddToNewFrame(const Sound& sound)
+void Representation::AddToNewFrame(const kv::FrameData::Sound& sound)
 {
-    new_frame_->sounds.push_back(sound.name);
+    new_frame_->sounds.push_back(sound);
 }
 
-void Representation::AddToNewFrame(const ChatMessage& message)
+void Representation::AddToNewFrame(const kv::FrameData::ChatMessage& message)
 {
     new_frame_->messages.push_back(message);
 }
 
-void Representation::AddToNewFrame(const Representation::TextEntry& text)
+void Representation::AddToNewFrame(const kv::FrameData::TextEntry& text)
 {
     new_frame_->texts.push_back(text);
 }
 
-void Representation::SetMusic(const Music& music)
+void Representation::SetMusic(const kv::FrameData::Music& music)
 {
     new_frame_->music = music;
 }
@@ -217,23 +221,6 @@ quint32 Representation::GetUniqueIdForNewFrame(quint32 base_id, quint32 number)
     const quint32 MAX_NUMBER = 32;
     const quint32 MAX_BASE_ID = std::numeric_limits<quint32>::max() / MAX_NUMBER;
     return base_id + MAX_BASE_ID * number;
-}
-
-Representation::Entity::Entity()
-{
-    id = 0;
-    click_id = 0;
-    pos_x = 0;
-    pos_y = 0;
-    vlevel = 0;
-    dir = Dir::SOUTH;
-}
-
-Representation::InterfaceUnit::InterfaceUnit()
-{
-    pixel_x = 0;
-    pixel_y = 0;
-    shift = 0;
 }
 
 void Representation::Process()
@@ -417,7 +404,7 @@ void Representation::SynchronizeViews()
 
     for (auto it = current_frame_.sounds.begin(); it != current_frame_.sounds.end(); ++it)
     {
-        GetSoundPlayer().PlaySound(*it);
+        GetSoundPlayer().PlaySound(it->name);
     }
 
     Music music = current_frame_.music;

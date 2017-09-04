@@ -26,19 +26,19 @@ void Turf::Represent(Representation* representation)
         const int VISIBILITY_THRESHOLD = 5;
         if (plasma > VISIBILITY_THRESHOLD)
         {
-            Representation::Entity ent;
-            ent.id = representation->GetUniqueIdForNewFrame(GetId(), 1);
-            ent.click_id = 0;
-            ent.pos_x = GetPosition().x;
-            ent.pos_y = GetPosition().y;
-            ent.vlevel = 11;
-            ent.view.SetSprite("icons/plasma.dmi");
-            ent.view.SetState("plasma");
+            FrameData::Entity entity;
+            entity.id = representation->GetUniqueIdForNewFrame(GetId(), 1);
+            entity.click_id = 0;
+            entity.pos_x = GetPosition().x;
+            entity.pos_y = GetPosition().y;
+            entity.vlevel = 11;
+            entity.view.SetSprite("icons/plasma.dmi");
+            entity.view.SetState("plasma");
             const double FULL_VISIBILITY_THRESHOLD = 100.0;
             const double visibility = (plasma * 1.0) * (MAX_TRANSPARENCY / FULL_VISIBILITY_THRESHOLD);
-            ent.view.SetTransparency(qMin(static_cast<int>(visibility), MAX_TRANSPARENCY));
-            ent.dir = Dir::SOUTH;
-            representation->AddToNewFrame(ent);
+            entity.view.SetTransparency(qMin(static_cast<int>(visibility), MAX_TRANSPARENCY));
+            entity.dir = Dir::SOUTH;
+            representation->AddToNewFrame(entity);
         }
     }
     MaterialObject::Represent(representation);

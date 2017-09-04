@@ -530,7 +530,7 @@ void Game::GenerateFrame()
 void Game::AppendSystemTexts()
 {
     representation_->AddToNewFrame(
-        Representation::TextEntry{"Main", QString("CPU load: %1%").arg(cpu_load_)});
+        FrameData::TextEntry{"Main", QString("CPU load: %1%").arg(cpu_load_)});
 
     float sum = 0.0f;
     for (float load : cpu_loads_)
@@ -538,46 +538,46 @@ void Game::AppendSystemTexts()
         sum += load;
     }
     representation_->AddToNewFrame(
-        Representation::TextEntry{"Main", QString("Average CPU load: %1%").arg(sum / cpu_loads_.size())});
+        FrameData::TextEntry{"Main", QString("Average CPU load: %1%").arg(sum / cpu_loads_.size())});
     representation_->AddToNewFrame(
-        Representation::TextEntry{"Main", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
+        FrameData::TextEntry{"Main", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
     representation_->AddToNewFrame(
-        Representation::TextEntry{"Main", QString("Players: %1").arg(current_connections_)});
+        FrameData::TextEntry{"Main", QString("Players: %1").arg(current_connections_)});
     representation_->AddToNewFrame(
-        Representation::TextEntry{"Main", QString("Ping: %1 ms").arg(current_ping_)});
+        FrameData::TextEntry{"Main", QString("Ping: %1 ms").arg(current_ping_)});
 
     representation_->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Process messages: %1 ms").arg((process_messages_ns_ * 1.0) / 1000000.0)});
 
     representation_->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Process objects: %1 ms").arg((foreach_process_ns_ * 1.0) / 1000000.0)});
 
     representation_->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Process force movement: %1 ms").arg((force_process_ns_ * 1.0) / 1000000.0)});
 
     representation_->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Process atmos: %1 ms").arg((atmos_process_ns_ * 1.0) / 1000000.0)});
 
     representation_->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Process deletion: %1 ms").arg((deletion_process_ns_ * 1.0) / 1000000.0)});
 
     representation_->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Update visibility: %1 ms").arg((update_visibility_ns_ * 1.0) / 1000000.0)});
 
     representation_->AddToNewFrame(
-        Representation::TextEntry{
+        FrameData::TextEntry{
             "Performance",
             QString("Frame generation: %1 ms").arg((frame_generation_ns_ * 1.0) / 1000000.0)});
 }
@@ -590,7 +590,7 @@ void Game::AppendSoundsToFrame(const VisiblePoints& points)
     {
         if (std::find(points.begin(), points.end(), it.first) != points.end())
         {
-            representation_->AddToNewFrame(Representation::Sound{it.second});
+            representation_->AddToNewFrame(FrameData::Sound{it.second});
         }
     }
     sounds_for_frame_.clear();
@@ -602,7 +602,10 @@ void Game::AppendSoundsToFrame(const VisiblePoints& points)
     auto music = musics_for_mobs.find(net_id);
     if (music != musics_for_mobs.end())
     {
-        representation_->SetMusic({music->first, music->second});
+        FrameData::Music frame_music;
+        frame_music.name = music->first;
+        frame_music.volume = music->second;
+        representation_->SetMusic(frame_music);
     }
 }
 
@@ -612,7 +615,7 @@ void Game::AppendChatMessages()
 
     for (const auto& personal : chat_frame_info_.GetPersonalTexts(net_id))
     {
-        representation_->AddToNewFrame(Representation::ChatMessage{personal});
+        representation_->AddToNewFrame(FrameData::ChatMessage{personal});
     }
     chat_frame_info_.Reset();
 }

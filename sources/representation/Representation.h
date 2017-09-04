@@ -14,58 +14,13 @@
 #include "Sound.h"
 #include "core/Constheader.h"
 
+#include "CoreInterface.h"
+
 class Representation : public QObject
 {
     Q_OBJECT
 public:
     Representation(QObject* parent = nullptr);
-
-    struct Entity
-    {
-        Entity();
-
-        ViewInfo view;
-        quint32 id;
-        quint32 click_id;
-        int pos_x;
-        int pos_y;
-        int vlevel;
-        Dir dir;
-    };
-
-    struct InterfaceUnit
-    {
-        InterfaceUnit();
-        ViewInfo view;
-        QString name;
-
-        int pixel_x;
-        int pixel_y;
-
-        int shift;
-    };
-
-    struct Sound
-    {
-        QString name;
-    };
-
-    struct ChatMessage
-    {
-        QString html;
-    };
-
-    struct TextEntry
-    {
-        QString tab;
-        QString text;
-    };
-
-    struct Music
-    {
-        QString name;
-        int volume;
-    };
 
     struct Performance
     {
@@ -76,13 +31,13 @@ public:
     const Performance& GetPerformance() { return performance_; }
     void ResetPerformance();
 
-    void AddToNewFrame(const InterfaceUnit& unit);
-    void AddToNewFrame(const Entity& entity);
-    void AddToNewFrame(const Sound& sound);
-    void AddToNewFrame(const ChatMessage& message);
-    void AddToNewFrame(const TextEntry& text);
+    void AddToNewFrame(const kv::FrameData::InterfaceUnit& unit);
+    void AddToNewFrame(const kv::FrameData::Entity& entity);
+    void AddToNewFrame(const kv::FrameData::Sound& sound);
+    void AddToNewFrame(const kv::FrameData::ChatMessage& message);
+    void AddToNewFrame(const kv::FrameData::TextEntry& text);
 
-    void SetMusic(const Music& music);
+    void SetMusic(const kv::FrameData::Music& music);
 
     void SetCameraForFrame(int pos_x, int pos_y);
 
@@ -126,19 +81,7 @@ private:
 
     bool is_updated_;
 
-    struct FrameData
-    {
-        QVector<Entity> entities;
-        QVector<QString> sounds;
-        QVector<InterfaceUnit> units;
-        QVector<ChatMessage> messages;
-        QVector<TextEntry> texts;
-        Music music;
-        int camera_pos_x;
-        int camera_pos_y;
-    };
-
-    using DataType = FrameData;
+    using DataType = kv::FrameData;
 
     DataType* old_frame_;
     DataType* new_frame_;

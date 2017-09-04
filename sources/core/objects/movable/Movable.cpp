@@ -146,18 +146,18 @@ bool Movable::MainMove()
 
 void Movable::Represent(Representation* representation)
 {
-    Representation::Entity ent;
-    ent.id = GetId();
-    ent.click_id = GetId();
+    FrameData::Entity entity;
+    entity.id = GetId();
+    entity.click_id = GetId();
 
     const Position position = GetPosition();
-    ent.pos_x = position.x;
-    ent.pos_y = position.y;
+    entity.pos_x = position.x;
+    entity.pos_y = position.y;
 
-    ent.vlevel = v_level;
-    ent.view = *GetView();
-    ent.dir = GetDir();
-    representation->AddToNewFrame(ent);
+    entity.vlevel = v_level;
+    entity.view = *GetView();
+    entity.dir = GetDir();
+    representation->AddToNewFrame(entity);
 }
 
 void Movable::Bump(IdPtr<Movable> item)

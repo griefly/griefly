@@ -316,7 +316,7 @@ void kv::HumanInterface::Represent(Representation* representation)
 {
     for (const Button& button : buttons_)
     {
-        Representation::InterfaceUnit unit;
+        FrameData::InterfaceUnit unit;
         unit.name = button.name;
         unit.pixel_x = 32 * button.position.first;
         unit.pixel_y = 32 * button.position.second;
@@ -325,7 +325,7 @@ void kv::HumanInterface::Represent(Representation* representation)
     }
     for (const Slot& slot : slots_)
     {
-        Representation::InterfaceUnit unit;
+        FrameData::InterfaceUnit unit;
         unit.name = slot.name;
         unit.pixel_x = 32 * slot.position.first;
         unit.pixel_y = 32 * slot.position.second;
@@ -333,7 +333,7 @@ void kv::HumanInterface::Represent(Representation* representation)
         representation->AddToNewFrame(unit);
         if (slot.item.IsValid())
         {
-            Representation::InterfaceUnit unit;
+            FrameData::InterfaceUnit unit;
             unit.name = slot.name;
             unit.pixel_x = 32 * slot.position.first;
             unit.pixel_y = 32 * slot.position.second;

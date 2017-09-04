@@ -48,7 +48,7 @@ void LoginMob::MindEnter()
 
 void LoginMob::GenerateInterfaceForFrame(Representation* representation)
 {
-    Representation::InterfaceUnit unit;
+    FrameData::InterfaceUnit unit;
     unit.name = LOGIN_CLICK;
     unit.pixel_x = 0;
     unit.pixel_y = 0;
@@ -65,7 +65,7 @@ void LoginMob::GenerateInterfaceForFrame(Representation* representation)
     {
         text = QString("Until start: %1").arg(seconds_until_start);
     }
-    representation->AddToNewFrame(Representation::TextEntry{"Main", text});
+    representation->AddToNewFrame(FrameData::TextEntry{"Main", text});
 }
 
 namespace

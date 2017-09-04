@@ -500,7 +500,7 @@ void Human::AttackBy(IdPtr<Item> item)
 
 void Human::Represent(Representation* representation)
 {
-    Representation::Entity ent;
+    FrameData::Entity ent;
     ent.id = GetId();
     ent.click_id = GetId();
     ent.pos_x = GetPosition().x;

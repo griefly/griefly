@@ -24,7 +24,7 @@ void MaterialObject::SetState(const QString& name)
 
 void MaterialObject::Represent(Representation* representation)
 { 
-    Representation::Entity ent;
+    FrameData::Entity ent;
     ent.id = GetId();
     ent.click_id = GetId();
     ent.pos_x = GetPosition().x;
