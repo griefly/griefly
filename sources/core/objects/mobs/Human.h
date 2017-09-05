@@ -27,7 +27,7 @@ public:
 
     virtual void MindExit() override;
     virtual void MindEnter() override;
-    virtual void GenerateInterfaceForFrame(Representation* representation) override;
+    virtual void GenerateInterfaceForFrame(GrowingFrame* representation) override;
     virtual void ProcessMessage(const Message& msg) override;
     virtual void Process() override;
     virtual void Live();
@@ -47,7 +47,7 @@ public:
 
     virtual void AttackBy(IdPtr<Item> item) override;
 
-    virtual void Represent(Representation* representation) override;
+    virtual void Represent(GrowingFrame* frame) override;
 
     virtual bool TryMove(Dir direct) override;
 

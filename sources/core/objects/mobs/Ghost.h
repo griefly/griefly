@@ -12,11 +12,11 @@ public:
     REGISTER_CLASS_AS(Ghost);
     Ghost();
     virtual void AfterWorldCreation() override;
-    virtual void Represent(Representation* representation) override;
+    virtual void Represent(GrowingFrame* frame) override;
     virtual void CalculateVisible(VisiblePoints* visible_list) const override;
     virtual void ProcessMessage(const Message& msg) override;
 
-    virtual void GenerateInterfaceForFrame(Representation* representation) override;
+    virtual void GenerateInterfaceForFrame(GrowingFrame* frame) override;
 
     virtual void MindEnter() override;
     virtual void MindExit() override;

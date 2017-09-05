@@ -59,11 +59,11 @@ bool Ghost::IsMobGhost()
     return draw;
 }
 
-void Ghost::Represent(Representation* representation)
+void Ghost::Represent(GrowingFrame* frame)
 {
     if (IsMobGhost())
     {
-        Mob::Represent(representation);
+        Mob::Represent(frame);
     }
 }
 
@@ -92,10 +92,10 @@ void Ghost::ProcessMessage(const Message& msg)
     Mob::ProcessMessage(msg);
 }
 
-void Ghost::GenerateInterfaceForFrame(Representation* representation)
+void Ghost::GenerateInterfaceForFrame(GrowingFrame* frame)
 {
     const QString text = QString("Until respawn: %1").arg(seconds_until_respawn_);
-    representation->AddToNewFrame(FrameData::TextEntry{"Main", text});
+    frame->Append(FrameData::TextEntry{"Main", text});
 }
 
 void Ghost::MindEnter()

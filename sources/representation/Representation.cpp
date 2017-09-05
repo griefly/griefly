@@ -65,42 +65,6 @@ void Representation::ResetPerformance()
     performance_.mutex_ns = 0;
 }
 
-void Representation::AddToNewFrame(const kv::FrameData::InterfaceUnit& unit)
-{
-    new_frame_->units.push_back(unit);
-}
-
-void Representation::AddToNewFrame(const kv::FrameData::Entity& entity)
-{
-    new_frame_->entities.push_back(entity);
-}
-
-void Representation::AddToNewFrame(const kv::FrameData::Sound& sound)
-{
-    new_frame_->sounds.push_back(sound);
-}
-
-void Representation::AddToNewFrame(const kv::FrameData::ChatMessage& message)
-{
-    new_frame_->messages.push_back(message);
-}
-
-void Representation::AddToNewFrame(const kv::FrameData::TextEntry& text)
-{
-    new_frame_->texts.push_back(text);
-}
-
-void Representation::SetMusic(const kv::FrameData::Music& music)
-{
-    new_frame_->music = music;
-}
-
-void Representation::SetCameraForFrame(int pos_x, int pos_y)
-{
-    new_frame_->camera_pos_x = pos_x;
-    new_frame_->camera_pos_y = pos_y;
-}
-
 void Representation::Swap()
 {
     QMutexLocker lock(&mutex_);

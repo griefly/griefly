@@ -18,7 +18,7 @@ void Mob::AfterWorldCreation()
     SetFreq(1);
 }
 
-void Mob::GenerateInterfaceForFrame(Representation* representation)
+void Mob::GenerateInterfaceForFrame(GrowingFrame* representation)
 {
 }
 

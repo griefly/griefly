@@ -88,7 +88,7 @@ void Human::MindExit()
     // Nothing
 }
 
-void Human::GenerateInterfaceForFrame(Representation* representation)
+void Human::GenerateInterfaceForFrame(GrowingFrame* representation)
 {
     Mob::GenerateInterfaceForFrame(representation);
     interface_->Represent(representation);
@@ -498,7 +498,7 @@ void Human::AttackBy(IdPtr<Item> item)
     }
 }
 
-void Human::Represent(Representation* representation)
+void Human::Represent(GrowingFrame* frame)
 {
     FrameData::Entity ent;
     ent.id = GetId();
@@ -515,7 +515,7 @@ void Human::Represent(Representation* representation)
     {
         ent.dir = Dir::SOUTH;
     }
-    representation->AddToNewFrame(ent);
+    frame->Append(ent);
 }
 
 void Human::CalculateVisible(QVector<Position>* visible_list) const

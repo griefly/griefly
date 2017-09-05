@@ -22,7 +22,7 @@ void MaterialObject::SetState(const QString& name)
     view_.SetState(name);
 }
 
-void MaterialObject::Represent(Representation* representation)
+void MaterialObject::Represent(GrowingFrame* frame)
 { 
     FrameData::Entity ent;
     ent.id = GetId();
@@ -32,7 +32,7 @@ void MaterialObject::Represent(Representation* representation)
     ent.vlevel = v_level;
     ent.view = *GetView();
     ent.dir = Dir::SOUTH;
-    representation->AddToNewFrame(ent);
+    frame->Append(ent);
 }
 
 void MaterialObject::Delete()

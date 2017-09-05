@@ -46,7 +46,7 @@ public:
     void RemoveItem(const QString& slot_name);
     bool InsertItem(const QString& slot_name, IdPtr<Item> item);
 
-    void Represent(Representation* representation);
+    void Represent(GrowingFrame* frame);
 
     void RemoveItem(IdPtr<Item> item);
 

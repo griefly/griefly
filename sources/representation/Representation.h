@@ -31,15 +31,10 @@ public:
     const Performance& GetPerformance() { return performance_; }
     void ResetPerformance();
 
-    void AddToNewFrame(const kv::FrameData::InterfaceUnit& unit);
-    void AddToNewFrame(const kv::FrameData::Entity& entity);
-    void AddToNewFrame(const kv::FrameData::Sound& sound);
-    void AddToNewFrame(const kv::FrameData::ChatMessage& message);
-    void AddToNewFrame(const kv::FrameData::TextEntry& text);
-
-    void SetMusic(const kv::FrameData::Music& music);
-
-    void SetCameraForFrame(int pos_x, int pos_y);
+    kv::GrowingFrame GetGrowingFrame() const
+    {
+        return kv::GrowingFrame(new_frame_);
+    }
 
     void Swap();
     void Process();

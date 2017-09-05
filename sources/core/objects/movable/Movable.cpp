@@ -144,7 +144,7 @@ bool Movable::MainMove()
     return true;
 }
 
-void Movable::Represent(Representation* representation)
+void Movable::Represent(GrowingFrame* frame)
 {
     FrameData::Entity entity;
     entity.id = GetId();
@@ -157,7 +157,7 @@ void Movable::Represent(Representation* representation)
     entity.vlevel = v_level;
     entity.view = *GetView();
     entity.dir = GetDir();
-    representation->AddToNewFrame(entity);
+    frame->Append(entity);
 }
 
 void Movable::Bump(IdPtr<Movable> item)

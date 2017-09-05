@@ -4,6 +4,7 @@
 
 #include "core/Constheader.h"
 #include "core/Idptr.h"
+#include "CoreInterface.h"
 
 #include <QString>
 
@@ -28,7 +29,7 @@ public:
     virtual void Process(qint32 game_tick) = 0;
     virtual void ProcessMove(qint32 game_tick) = 0;
 
-    virtual void Represent(Representation* representation) const = 0;
+    virtual void Represent(kv::GrowingFrame* frame) const = 0;
 
     using Flags = char;
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) = 0;
@@ -46,7 +47,7 @@ public:
     virtual int GetHeight() const = 0;
     virtual int GetDepth() const = 0;
 
-    virtual void Represent(Representation* representation, const VisiblePoints& points) const = 0;
+    virtual void Represent(kv::GrowingFrame* frame, const VisiblePoints& points) const = 0;
 
     virtual void Resize(int new_map_x, int new_map_y, int new_map_z) = 0;
 

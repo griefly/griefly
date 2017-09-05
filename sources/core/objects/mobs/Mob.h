@@ -4,6 +4,8 @@
 
 #include "net/Network2.h"
 
+#include "CoreInterface.h"
+
 namespace kv
 {
 
@@ -18,7 +20,7 @@ public:
 
     virtual void MindEnter() { }
     virtual void MindExit() { }
-    virtual void GenerateInterfaceForFrame(Representation* representation);
+    virtual void GenerateInterfaceForFrame(GrowingFrame* representation);
     virtual void ProcessMessage(const Message& msg);
 
     void MoveMindTo(IdPtr<Mob> other);

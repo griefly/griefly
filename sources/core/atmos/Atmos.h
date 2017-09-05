@@ -21,7 +21,7 @@ public:
     virtual void Process(qint32 game_tick) override;
     virtual void ProcessMove(qint32 game_tick) override;
 
-    virtual void Represent(Representation* representation) const;
+    virtual void Represent(kv::GrowingFrame* frame) const;
 
     virtual void SetFlags(quint32 x, quint32 y, quint32 z, Flags flags) override;
     virtual void LoadGrid(MapInterface* map) override;

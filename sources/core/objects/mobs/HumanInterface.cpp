@@ -312,7 +312,7 @@ bool kv::HumanInterface::InsertItem(Slot* slot, IdPtr<Item> item)
     return true;
 }
 
-void kv::HumanInterface::Represent(Representation* representation)
+void kv::HumanInterface::Represent(GrowingFrame* frame)
 {
     for (const Button& button : buttons_)
     {
@@ -321,7 +321,7 @@ void kv::HumanInterface::Represent(Representation* representation)
         unit.pixel_x = 32 * button.position.first;
         unit.pixel_y = 32 * button.position.second;
         unit.view = button.view;
-        representation->AddToNewFrame(unit);
+        frame->Append(unit);
     }
     for (const Slot& slot : slots_)
     {
@@ -330,7 +330,7 @@ void kv::HumanInterface::Represent(Representation* representation)
         unit.pixel_x = 32 * slot.position.first;
         unit.pixel_y = 32 * slot.position.second;
         unit.view = slot.view;
-        representation->AddToNewFrame(unit);
+        frame->Append(unit);
         if (slot.item.IsValid())
         {
             FrameData::InterfaceUnit unit;
@@ -338,7 +338,7 @@ void kv::HumanInterface::Represent(Representation* representation)
             unit.pixel_x = 32 * slot.position.first;
             unit.pixel_y = 32 * slot.position.second;
             unit.view = *(slot.item->GetView());
-            representation->AddToNewFrame(unit);
+            frame->Append(unit);
         }
     }
 }
