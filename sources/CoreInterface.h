@@ -172,8 +172,8 @@ class CoreInterface
 public:
     struct ObjectMetadata
     {
-        QString sprite;
-        QString state;
+        QString name;
+        ViewInfo default_view;
     };
 
     virtual ~CoreInterface() { }
