@@ -184,7 +184,8 @@ public:
     virtual WorldPtr CreateWorldFromMapgen(const QByteArray& data) = 0;
 
     // <object name, metadata>
-    virtual const QMap<QString, ObjectMetadata>& GetObjectsMetadata() const = 0;
+    using ObjectsMetadata = QMap<QString, ObjectMetadata>;
+    virtual const ObjectsMetadata& GetObjectsMetadata() const = 0;
 };
 
 CoreInterface& GetCoreInstance();

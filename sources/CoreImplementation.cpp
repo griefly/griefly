@@ -1,5 +1,35 @@
 #include "CoreInterface.h"
 
+#include "AutogenMetadata.h"
+#include "core/objects/MaterialObject.h"
+
+namespace
+{
+
+kv::CoreInterface::ObjectsMetadata GenerateMetadata()
+{
+    kv::CoreInterface::ObjectsMetadata retval;
+
+    for (auto it : (*GetItemsCreators()))
+    {
+        kv::Object* object = it.second();
+        kv::MaterialObject* material = CastTo<kv::MaterialObject>(object);
+        if (!material)
+        {
+            qDebug() << QString("Type '%1' is not material object!").arg(it.first);
+            continue;
+        }
+
+        kv::CoreInterface::ObjectMetadata metadata;
+        metadata.name = it.first;
+        metadata.default_view = *(material->GetView());
+
+        retval.insert(metadata.name, metadata);
+    }
+}
+
+}
+
 namespace kv
 {
 
@@ -18,11 +48,10 @@ public:
     }
 
     // <object name, metadata>
-    virtual const QMap<QString, ObjectMetadata>& GetObjectsMetadata() const override
+    virtual const ObjectsMetadata& GetObjectsMetadata() const override
     {
-        // TODO
-        static const QMap<QString, ObjectMetadata> remove_me = {};
-        return remove_me;
+        static const ObjectsMetadata metadata = GenerateMetadata();
+        return metadata;
     }
 };
 
