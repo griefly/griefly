@@ -147,7 +147,7 @@ message(STATUS ${CLIENT_VERSION})
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(BITS_VERSION 64)
-else(CMAKE_SIZEOF_VOID_P EQUAL 4)
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
     set(BITS_VERSION 32)
 else()
     message(FATAL_ERROR "Unsupported compiler bits version!")
