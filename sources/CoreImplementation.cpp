@@ -12,8 +12,8 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
 
     for (auto it : (*GetItemsCreators()))
     {
-        kv::Object* object = it.second();
-        kv::MaterialObject* material = CastTo<kv::MaterialObject>(object);
+        std::unique_ptr<kv::Object> object(it.second());
+        kv::MaterialObject* material = CastTo<kv::MaterialObject>(object.get());
         if (!material)
         {
             qDebug() << QString("Type '%1' is not material object!").arg(it.first);
