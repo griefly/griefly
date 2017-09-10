@@ -26,6 +26,8 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
 
         retval.insert(metadata.name, metadata);
     }
+
+    return retval;
 }
 
 }

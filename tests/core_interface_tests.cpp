@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "core/objects/test/PressureIndicator.h"
+
 TEST(CoreInterface, FrameDataAndNestedStructsConstructors)
 {
     kv::FrameData::Entity entity;
@@ -172,4 +174,24 @@ TEST(CoreInterface, GrowingFrame)
     ChatExpectEq(message, frame.messages[0]);
     ASSERT_EQ(frame.texts.size(), 1);
     TextExpectEq(text, frame.texts[0]);
+}
+
+TEST(CoreInterface, ObjectsMetadata)
+{
+    kv::CoreInterface::ObjectsMetadata metadata
+        = kv::GetCoreInstance().GetObjectsMetadata();
+
+    EXPECT_FALSE(metadata.isEmpty());
+
+    for (auto it = metadata.begin(); it != metadata.end(); ++it)
+    {
+        EXPECT_EQ(it.key(), it.value().name);
+    }
+
+    // TODO (?): create special object
+    ASSERT_TRUE(metadata.contains(kv::PressureIndicator::GetTypeStatic()));
+
+    ViewInfo view = metadata[kv::PressureIndicator::GetTypeStatic()].default_view;
+    EXPECT_EQ(view.GetBaseFrameset().GetSprite(), "icons/numbers.dmi");
+    EXPECT_EQ(view.GetBaseFrameset().GetState(), "empty");
 }
