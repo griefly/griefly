@@ -6,6 +6,6 @@ namespace kv
 {
 
 // __gcov_fflush + abort
-void Abort(const QString& message);
+[[noreturn]] void Abort(const QString& message);
 
 }

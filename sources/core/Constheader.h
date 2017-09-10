@@ -14,6 +14,12 @@
 #include "FastSerializer.h"
 #include "Hashes.h"
 
+#ifdef Q_CC_GNU
+#define KV_UNREACHABLE __builtin_unreachable();
+#else
+#define KV_UNREACHABLE
+#endif // Q_CC_GNU
+
 const int SIZE_H_SQ = 12; // visible size const
 const int SIZE_W_SQ = 12;
 
@@ -222,4 +228,5 @@ inline Dir RevertDir(Dir dir)
     case Dir::NORTHWEST:
         return Dir::SOUTHEAST;
     }
+    KV_UNREACHABLE
 }

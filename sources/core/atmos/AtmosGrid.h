@@ -119,6 +119,7 @@ namespace atmos
             case Dir::WEST:
                 return At(x - 1, y);
             }
+            KV_UNREACHABLE
         }
 
         inline Cell& At(int x, int y)

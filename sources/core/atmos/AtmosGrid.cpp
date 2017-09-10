@@ -81,6 +81,7 @@ inline AtmosGrid::Cell& GetNearInGroup(AtmosGrid::Cell* current, Dir dir)
     case Dir::WEST:
         return *(current - atmos::CELL_GROUP_SIZE);
     }
+    KV_UNREACHABLE
 }
 
 namespace

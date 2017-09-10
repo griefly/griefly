@@ -182,7 +182,7 @@ endif()
 
 set(CMAKE_CXX_STANDARD 11)
 if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "-Wold-style-cast ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-Werror -Wold-style-cast -Wreturn-type ${CMAKE_CXX_FLAGS}")
 endif()
 
 #SET(CMAKE_EXE_LINKER_FLAGS "/DEBUG")
