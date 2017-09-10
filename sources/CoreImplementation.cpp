@@ -35,6 +35,34 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
 namespace kv
 {
 
+class WorldImplementation : public WorldInterface
+{
+public:
+    virtual void SaveWorld(QByteArray* data) const override
+    {
+        // TODO
+        Q_UNUSED(data)
+    }
+
+    // TODO: Look into #360 properly
+    virtual void ProcessNextTick(const QVector<Message>& messages) override
+    {
+        // TODO
+        Q_UNUSED(messages)
+    }
+
+    virtual void Represent(GrowingFrame* frame) const override
+    {
+        // TODO
+        Q_UNUSED(frame)
+    }
+    virtual quint32 Hash() const override
+    {
+        // TODO
+        return 0;
+    }
+};
+
 class CoreImplementation : public CoreInterface
 {
 public:
