@@ -1,3 +1,4 @@
+#include "CoreImplementation.h"
 #include "CoreInterface.h"
 
 #include "AutogenMetadata.h"
@@ -35,55 +36,46 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
 namespace kv
 {
 
-class WorldImplementation : public WorldInterface
+void WorldImplementation::SaveWorld(QByteArray* data) const
 {
-public:
-    virtual void SaveWorld(QByteArray* data) const override
-    {
-        // TODO
-        Q_UNUSED(data)
-    }
+    // TODO
+    Q_UNUSED(data)
+}
 
-    // TODO: Look into #360 properly
-    virtual void ProcessNextTick(const QVector<Message>& messages) override
-    {
-        // TODO
-        Q_UNUSED(messages)
-    }
-
-    virtual void Represent(GrowingFrame* frame) const override
-    {
-        // TODO
-        Q_UNUSED(frame)
-    }
-    virtual quint32 Hash() const override
-    {
-        // TODO
-        return 0;
-    }
-};
-
-class CoreImplementation : public CoreInterface
+// TODO: Look into #360 properly
+void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
 {
-public:
-    virtual WorldPtr CreateWorldFromSave(const QByteArray& data) override
-    {
-        // TODO
-        return nullptr;
-    }
-    virtual WorldPtr CreateWorldFromMapgen(const QByteArray& data)
-    {
-        // TODO
-        return nullptr;
-    }
+    // TODO
+    Q_UNUSED(messages)
+}
 
-    // <object name, metadata>
-    virtual const ObjectsMetadata& GetObjectsMetadata() const override
-    {
-        static const ObjectsMetadata metadata = GenerateMetadata();
-        return metadata;
-    }
-};
+void WorldImplementation::Represent(GrowingFrame* frame) const
+{
+    // TODO
+    Q_UNUSED(frame)
+}
+quint32 WorldImplementation::Hash() const
+{
+    // TODO
+    return 0;
+}
+
+CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data)
+{
+    // TODO
+    return nullptr;
+}
+CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QByteArray& data)
+{
+    // TODO
+    return nullptr;
+}
+
+const CoreImplementation::ObjectsMetadata& CoreImplementation::GetObjectsMetadata() const
+{
+    static const ObjectsMetadata metadata = GenerateMetadata();
+    return metadata;
+}
 
 CoreInterface& GetCoreInstance()
 {
