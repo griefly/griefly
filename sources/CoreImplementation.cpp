@@ -2,7 +2,10 @@
 #include "CoreInterface.h"
 
 #include "AutogenMetadata.h"
+
 #include "core/objects/MaterialObject.h"
+#include "core/objects/GlobalObjectsHolder.h"
+#include "core/Map.h"
 
 namespace
 {
@@ -69,6 +72,89 @@ CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QBy
 {
     // TODO
     return nullptr;
+}
+
+AtmosInterface& WorldImplementation::GetAtmosphere()
+{
+    return *atmos_;
+}
+
+MapInterface& WorldImplementation::GetMap()
+{
+    return *(global_objects_->map);
+}
+
+const MapInterface& WorldImplementation::GetMap() const
+{
+    return *(global_objects_->map);
+}
+
+ObjectFactoryInterface& WorldImplementation::GetFactory()
+{
+    return *factory_;
+}
+
+Names& WorldImplementation::GetNames()
+{
+    return *names_;
+}
+
+ChatFrameInfo& WorldImplementation::GetChatFrameInfo()
+{
+    return chat_frame_info_;
+}
+
+void WorldImplementation::MakeTiles(int size_x, int size_y, int size_z)
+{
+    // TODO
+}
+
+IdPtr<Mob> WorldImplementation::GetMob()
+{
+    // TODO
+    return 0;
+}
+
+void WorldImplementation::SetMob(quint32 new_mob)
+{
+    // TODO
+}
+
+IdPtr<GlobalObjectsHolder> WorldImplementation::GetGlobals() const
+{
+    return global_objects_;
+}
+
+void WorldImplementation::SetGlobals(quint32 globals)
+{
+    // TODO
+}
+
+void WorldImplementation::SetPlayerId(quint32 net_id, quint32 real_id)
+{
+    // TODO
+}
+
+quint32 WorldImplementation::GetPlayerId(quint32 net_id) const
+{
+    // TODO
+    return 0;
+}
+
+quint32 WorldImplementation::GetNetId(quint32 real_id) const
+{
+    // TODO
+    return 0;
+}
+
+void WorldImplementation::AddSound(const QString& name, Position position)
+{
+    // TODO
+}
+
+void WorldImplementation::PlayMusic(const QString& name, int volume, quint32 mob)
+{
+    // TODO
 }
 
 const CoreImplementation::ObjectsMetadata& CoreImplementation::GetObjectsMetadata() const
