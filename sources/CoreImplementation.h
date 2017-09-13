@@ -10,6 +10,8 @@ namespace kv
 class WorldImplementation : public WorldInterface, public GameInterface
 {
 public:
+    WorldImplementation();
+    ~WorldImplementation();
     // World interface
 
     // TODO: Look into #360 properly
@@ -44,12 +46,13 @@ public:
     virtual void AddSound(const QString& name, kv::Position position) override;
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
 private:
-    AtmosInterface* atmos_;
-    ObjectFactoryInterface* factory_;
+    std::unique_ptr<AtmosInterface> atmos_;
+    std::unique_ptr<ObjectFactoryInterface> factory_;
+    std::unique_ptr<Names> names_;
+
     kv::ChatFrameInfo chat_frame_info_;
 
     IdPtr<kv::GlobalObjectsHolder> global_objects_;
-    Names* names_;
 };
 
 class CoreImplementation : public CoreInterface

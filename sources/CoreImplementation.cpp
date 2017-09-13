@@ -7,6 +7,10 @@
 #include "core/objects/GlobalObjectsHolder.h"
 #include "core/Map.h"
 
+#include "core/atmos/Atmos.h"
+#include "core/ObjectFactory.h"
+#include "core/Names.h"
+
 namespace
 {
 
@@ -39,6 +43,19 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
 namespace kv
 {
 
+WorldImplementation::WorldImplementation()
+    : atmos_(new Atmosphere),
+      factory_(new ObjectFactory(this)),
+      names_(new Names(this))
+{
+    // Nothing
+}
+
+WorldImplementation::~WorldImplementation()
+{
+    // Nothing
+}
+
 void WorldImplementation::SaveWorld(QByteArray* data) const
 {
     // TODO
@@ -61,17 +78,6 @@ quint32 WorldImplementation::Hash() const
 {
     // TODO
     return 0;
-}
-
-CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data)
-{
-    // TODO
-    return nullptr;
-}
-CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QByteArray& data)
-{
-    // TODO
-    return nullptr;
 }
 
 AtmosInterface& WorldImplementation::GetAtmosphere()
@@ -155,6 +161,17 @@ void WorldImplementation::AddSound(const QString& name, Position position)
 void WorldImplementation::PlayMusic(const QString& name, int volume, quint32 mob)
 {
     // TODO
+}
+
+CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data)
+{
+    // TODO
+    return nullptr;
+}
+CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QByteArray& data)
+{
+    // TODO
+    return nullptr;
 }
 
 const CoreImplementation::ObjectsMetadata& CoreImplementation::GetObjectsMetadata() const
