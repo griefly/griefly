@@ -157,7 +157,7 @@ public:
 
     virtual ~WorldInterface() { }
 
-    virtual void SaveWorld(QByteArray* data) const = 0;
+    virtual void SaveWorld(FastSerializer* data) const = 0;
 
     // TODO: Look into #360 properly
     virtual void ProcessNextTick(const QVector<Message>& messages) = 0;

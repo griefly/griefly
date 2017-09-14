@@ -46,7 +46,8 @@ namespace kv
 WorldImplementation::WorldImplementation()
     : atmos_(new Atmosphere),
       factory_(new ObjectFactory(this)),
-      names_(new Names(this))
+      names_(new Names(this)),
+      loader_saver_(this)
 {
     // Nothing
 }
@@ -56,10 +57,9 @@ WorldImplementation::~WorldImplementation()
     // Nothing
 }
 
-void WorldImplementation::SaveWorld(QByteArray* data) const
+void WorldImplementation::SaveWorld(FastSerializer* data) const
 {
-    // TODO
-    Q_UNUSED(data)
+    loader_saver_.Save(*data);
 }
 
 // TODO: Look into #360 properly

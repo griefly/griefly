@@ -2,7 +2,9 @@
 
 #include "CoreInterface.h"
 #include "Interfaces.h"
+
 #include "core/ChatFrameInfo.h"
+#include "core/WorldLoaderSaver.h"
 
 namespace kv
 {
@@ -21,7 +23,7 @@ public:
 
     virtual quint32 Hash() const override;
 
-    virtual void SaveWorld(QByteArray* data) const override;
+    virtual void SaveWorld(FastSerializer* data) const override;
 
     // Game interface
     virtual AtmosInterface& GetAtmosphere() override;
@@ -49,6 +51,8 @@ private:
     std::unique_ptr<AtmosInterface> atmos_;
     std::unique_ptr<ObjectFactoryInterface> factory_;
     std::unique_ptr<Names> names_;
+
+    WorldLoaderSaver loader_saver_;
 
     kv::ChatFrameInfo chat_frame_info_;
 
