@@ -18,6 +18,9 @@
 
 #include "AutogenMetadata.h"
 
+namespace kv
+{
+
 WorldLoaderSaver::WorldLoaderSaver(GameInterface* game)
     : game_(game)
 {
@@ -194,4 +197,6 @@ void WorldLoaderSaver::LoadMapHeader(kv::FastDeserializer& deserializer)
     game_->SetGlobals(globals);
 
     factory.GetIdTable().resize(id + 1);
+}
+
 }

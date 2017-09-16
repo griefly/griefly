@@ -3,6 +3,9 @@
 #include "Interfaces.h"
 #include "FastSerializer.h"
 
+namespace kv
+{
+
 class WorldLoaderSaver
 {
 public:
@@ -18,3 +21,5 @@ private:
 
     GameInterface* game_;
 };
+
+}

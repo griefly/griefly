@@ -121,7 +121,7 @@ private:
     ObjectFactoryInterface* factory_;
 
     Names* names_;
-    WorldLoaderSaver* world_loader_saver_;
+    kv::WorldLoaderSaver* world_loader_saver_;
 
     kv::ChatFrameInfo chat_frame_info_;
 
