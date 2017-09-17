@@ -358,6 +358,7 @@ void Game::ProcessInputMessages()
         }
         if (msg.type == MessageType::NEW_CLIENT)
         {
+            // TODO: why it is not in the broadcasted messages?
             QJsonObject obj = Network2::ParseJson(msg);
 
             QJsonValue new_id_v = obj["id"];

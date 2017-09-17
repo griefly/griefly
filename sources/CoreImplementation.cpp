@@ -117,13 +117,12 @@ void WorldImplementation::MakeTiles(int size_x, int size_y, int size_z)
 
 IdPtr<Mob> WorldImplementation::GetMob()
 {
-    // TODO
-    return 0;
+    return current_mob_;
 }
 
 void WorldImplementation::SetMob(quint32 new_mob)
 {
-    // TODO
+    current_mob_ = new_mob;
 }
 
 IdPtr<GlobalObjectsHolder> WorldImplementation::GetGlobals() const
@@ -163,7 +162,7 @@ void WorldImplementation::PlayMusic(const QString& name, int volume, quint32 mob
     // TODO
 }
 
-CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data)
+CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data, quint32 mob_id)
 {
     // TODO
     return nullptr;

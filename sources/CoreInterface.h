@@ -180,7 +180,7 @@ public:
 
     using WorldPtr = std::shared_ptr<WorldInterface>;
 
-    virtual WorldPtr CreateWorldFromSave(const QByteArray& data) = 0;
+    virtual WorldPtr CreateWorldFromSave(const QByteArray& data, quint32 mob_id) = 0;
     virtual WorldPtr CreateWorldFromMapgen(const QByteArray& data) = 0;
 
     // <object name, metadata>

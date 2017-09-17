@@ -57,12 +57,14 @@ private:
     kv::ChatFrameInfo chat_frame_info_;
 
     IdPtr<kv::GlobalObjectsHolder> global_objects_;
+
+    IdPtr<kv::Mob> current_mob_;
 };
 
 class CoreImplementation : public CoreInterface
 {
 public:
-    virtual WorldPtr CreateWorldFromSave(const QByteArray& data) override;
+    virtual WorldPtr CreateWorldFromSave(const QByteArray& data, quint32 mob_id) override;
     virtual WorldPtr CreateWorldFromMapgen(const QByteArray& data) override;
 
     virtual const ObjectsMetadata& GetObjectsMetadata() const override;
