@@ -72,6 +72,9 @@ void ObjectFactory::UpdateProcessingItems()
 
 void ObjectFactory::ForeachProcess()
 {
+    // TODO: possible unsync or hash miscalculation issue -
+    // something can be added or removed from process list in the same tick after
+    // ForeachProcess()
     UpdateProcessingItems();
 
     const int game_tick = game_->GetGlobals()->game_tick;
@@ -95,6 +98,8 @@ void ObjectFactory::ForeachProcess()
             process_table_[i]->Process();
         }
     }
+
+    ClearProcessing();
 }
 
 kv::Object* ObjectFactory::NewVoidObject(const QString& type)
@@ -238,7 +243,7 @@ void ObjectFactory::ProcessDeletion()
     ids_to_delete_.clear();
 }
 
-unsigned int ObjectFactory::Hash()
+quint32 ObjectFactory::Hash() const
 {
     unsigned int h = 0;
     quint32 table_size = objects_table_.size();
@@ -249,8 +254,6 @@ unsigned int ObjectFactory::Hash()
             h += objects_table_[i].object->HashMembers();
         }
     }
-
-    ClearProcessing();
 
     int i = 1;
     for (auto p = process_table_.begin(); p != process_table_.end(); ++p)

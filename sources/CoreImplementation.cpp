@@ -76,8 +76,7 @@ void WorldImplementation::Represent(GrowingFrame* frame) const
 }
 quint32 WorldImplementation::Hash() const
 {
-    // TODO
-    return 0;
+    return factory_->Hash();
 }
 
 AtmosInterface& WorldImplementation::GetAtmosphere()

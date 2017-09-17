@@ -42,7 +42,7 @@ class MockIObjectFactory : public ObjectFactoryInterface
 public:
     MOCK_METHOD0(GetIdTable, QVector<ObjectInfo>&());
     MOCK_METHOD0(ForeachProcess, void());
-    MOCK_METHOD0(Hash, unsigned int());
+    MOCK_CONST_METHOD0(Hash, quint32());
     MOCK_METHOD0(BeginWorldCreation, void());
     MOCK_METHOD0(FinishWorldCreation, void());
     MOCK_METHOD0(MarkWorldAsCreated, void());

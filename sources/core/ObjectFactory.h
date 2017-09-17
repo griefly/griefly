@@ -15,7 +15,7 @@ public:
 
     virtual void ForeachProcess() override;
 
-    virtual unsigned int Hash() override;
+    virtual quint32 Hash() const override;
 
     virtual void BeginWorldCreation() override;
     virtual void FinishWorldCreation() override;

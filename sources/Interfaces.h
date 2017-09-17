@@ -71,7 +71,7 @@ public:
 
     virtual void ForeachProcess() = 0;
 
-    virtual unsigned int Hash() = 0;
+    virtual quint32 Hash() const = 0;
 
     virtual void BeginWorldCreation() = 0;
     virtual void FinishWorldCreation() = 0;
