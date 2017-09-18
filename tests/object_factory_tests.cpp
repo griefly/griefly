@@ -219,12 +219,13 @@ TEST(ObjectFactory, Process)
         EXPECT_EQ(test_object->process_, 4);
 
         EXPECT_CALL(game, GetFactory())
-            .WillOnce(ReturnRef(factory));
+            .WillRepeatedly(ReturnRef(factory));
         test_object->SetFreq(1);
         factory.GetIdTable()[1].object = nullptr;
         factory.ForeachProcess();
         EXPECT_EQ(test_object->process_, 4);
         factory.GetIdTable()[1].object = object;
+        test_object->SetFreq(1);
 
         quint32 id2 = factory.CreateImpl(TestObject::GetTypeStatic());
         ASSERT_EQ(id2, 3);
@@ -345,7 +346,7 @@ TEST(ObjectFactory, Hash)
     EXPECT_EQ(factory.Hash(), 8);
 
     test_object->SetFreq(0);
-    EXPECT_EQ(factory.Hash(), 5);
+    EXPECT_EQ(factory.Hash(), 7);
 
     EXPECT_CALL(game, GetFactory())
         .WillOnce(ReturnRef(factory));
@@ -355,7 +356,7 @@ TEST(ObjectFactory, Hash)
 
     factory.DeleteLater(test_object->GetId());
     factory.ProcessDeletion();
-    EXPECT_EQ(factory.Hash(), 2);
+    EXPECT_EQ(factory.Hash(), 4);
 }
 
 TEST(ObjectFactory, Hearer)
