@@ -30,8 +30,6 @@ public:
     Game(Representation* representation);
     ~Game();
 
-    virtual void MakeTiles(int size_x, int size_y, int size_z) override;
-
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
     virtual void AddSound(const QString& name, kv::Position position) override;
 

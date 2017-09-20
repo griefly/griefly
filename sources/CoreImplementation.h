@@ -33,8 +33,6 @@ public:
     virtual Names& GetNames() override;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() override;
 
-    virtual void MakeTiles(int size_x, int size_y, int size_z) override;
-
     virtual IdPtr<kv::Mob> GetMob() override;
     virtual void SetMob(quint32 new_mob) override;
 

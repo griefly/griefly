@@ -109,11 +109,6 @@ ChatFrameInfo& WorldImplementation::GetChatFrameInfo()
     return chat_frame_info_;
 }
 
-void WorldImplementation::MakeTiles(int size_x, int size_y, int size_z)
-{
-    // TODO
-}
-
 IdPtr<Mob> WorldImplementation::GetMob()
 {
     return current_mob_;

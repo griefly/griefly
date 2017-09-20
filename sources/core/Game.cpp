@@ -101,23 +101,6 @@ void Game::InitGlobalObjects()
     qDebug() << "Successfull initialization!";
 }
 
-void Game::MakeTiles(int new_map_x, int new_map_y, int new_map_z)
-{
-    GetMap().Resize(new_map_x, new_map_y, new_map_z);
-    for (int x = 0; x < GetMap().GetWidth(); x++)
-    {
-        for (int y = 0; y < GetMap().GetHeight(); y++)
-        {
-            for (int z = 0; z < GetMap().GetDepth(); z++)
-            {
-                IdPtr<CubeTile> tile = GetFactory().CreateImpl(CubeTile::GetTypeStatic());
-                tile->SetPos({x, y, z});
-                GetMap().At(x, y, z) = tile;
-            }
-        }
-    }
-}
-
 void Game::Process()
 {
     QElapsedTimer fps_timer;

@@ -106,15 +106,31 @@ void WorldLoaderSaver::LoadFromMapGen(const QString& name)
 
     factory.BeginWorldCreation();
 
-    int x;
-    int y;
-    int z;
+    int map_x;
+    int map_y;
+    int map_z;
 
-    ss >> x;
-    ss >> y;
-    ss >> z;
+    ss >> map_x;
+    ss >> map_y;
+    ss >> map_z;
 
-    game_->MakeTiles(x, y, z);
+    auto& map = game_->GetMap();
+
+    // Making tiles
+    map.Resize(map_x, map_y, map_z);
+    for (int x = 0; x < map.GetWidth(); x++)
+    {
+        for (int y = 0; y < map.GetHeight(); y++)
+        {
+            for (int z = 0; z < map.GetDepth(); z++)
+            {
+                IdPtr<CubeTile> tile = game_->GetFactory().CreateImpl(CubeTile::GetTypeStatic());
+                tile->SetPos({x, y, z});
+                map.At(x, y, z) = tile;
+            }
+        }
+    }
+
     game_->GetAtmosphere().LoadGrid(&game_->GetMap());
 
     qDebug() << "Begin loading cycle";
