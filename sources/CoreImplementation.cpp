@@ -126,23 +126,35 @@ IdPtr<GlobalObjectsHolder> WorldImplementation::GetGlobals() const
 
 void WorldImplementation::SetGlobals(quint32 globals)
 {
-    // TODO
+    global_objects_ = globals;
 }
 
 void WorldImplementation::SetPlayerId(quint32 net_id, quint32 real_id)
 {
-    // TODO
+    global_objects_->players_table[net_id] = real_id;
 }
 
 quint32 WorldImplementation::GetPlayerId(quint32 net_id) const
 {
-    // TODO
+    auto& players_table = global_objects_->players_table;
+    auto it = players_table.find(net_id);
+    if (it != players_table.end())
+    {
+        return it.value();
+    }
     return 0;
 }
 
 quint32 WorldImplementation::GetNetId(quint32 real_id) const
 {
-    // TODO
+    auto& players_table = global_objects_->players_table;
+    for (auto it = players_table.begin(); it != players_table.end(); ++it)
+    {
+        if (it.value() == real_id)
+        {
+            return it.key();
+        }
+    }
     return 0;
 }
 
