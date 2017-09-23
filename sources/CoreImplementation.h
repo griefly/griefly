@@ -57,6 +57,8 @@ private:
     IdPtr<kv::GlobalObjectsHolder> global_objects_;
 
     IdPtr<kv::Mob> current_mob_;
+
+    QVector<QPair<kv::Position, QString>> sounds_for_frame_;
 };
 
 class CoreImplementation : public CoreInterface

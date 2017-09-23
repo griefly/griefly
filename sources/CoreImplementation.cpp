@@ -136,8 +136,8 @@ void WorldImplementation::SetPlayerId(quint32 net_id, quint32 real_id)
 
 quint32 WorldImplementation::GetPlayerId(quint32 net_id) const
 {
-    auto& players_table = global_objects_->players_table;
-    auto it = players_table.find(net_id);
+    const auto& players_table = global_objects_->players_table;
+    const auto it = players_table.find(net_id);
     if (it != players_table.end())
     {
         return it.value();
@@ -147,7 +147,7 @@ quint32 WorldImplementation::GetPlayerId(quint32 net_id) const
 
 quint32 WorldImplementation::GetNetId(quint32 real_id) const
 {
-    auto& players_table = global_objects_->players_table;
+    const auto& players_table = global_objects_->players_table;
     for (auto it = players_table.begin(); it != players_table.end(); ++it)
     {
         if (it.value() == real_id)
@@ -160,12 +160,14 @@ quint32 WorldImplementation::GetNetId(quint32 real_id) const
 
 void WorldImplementation::AddSound(const QString& name, Position position)
 {
-    // TODO
+    sounds_for_frame_.append({position, name});
 }
 
 void WorldImplementation::PlayMusic(const QString& name, int volume, quint32 mob)
 {
-    // TODO
+    qDebug() << "Music playing:" << mob << name << volume;
+    auto& musics_for_mobs = global_objects_->musics_for_mobs;
+    musics_for_mobs[mob] = {name, volume};
 }
 
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data, quint32 mob_id)
