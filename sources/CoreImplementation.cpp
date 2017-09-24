@@ -70,9 +70,12 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
     Q_UNUSED(messages)
 }
 
-void WorldImplementation::Represent(GrowingFrame* frame) const
+void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 {
-    AppendSystemTexts();
+    // TODO: implement multiple frames
+    GrowingFrame* frame = frames[0].second;
+
+    AppendSystemTexts(frame);
 
     points_.clear();
     GetMob()->CalculateVisible(&points_);
@@ -82,27 +85,27 @@ void WorldImplementation::Represent(GrowingFrame* frame) const
 
     GetAtmosphere().Represent(frame);
 
-    AppendSoundsToFrame(points_);
+    AppendSoundsToFrame(frame, points_);
     // FIXME: that should be const one
     // GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));
-    AppendChatMessages();
+    AppendChatMessages(frame);
 
     // TODO: reset all shifts
     frame->SetCamera(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
 }
 
-void WorldImplementation::AppendSystemTexts() const
+void WorldImplementation::AppendSystemTexts(GrowingFrame* frame) const
 {
     // TODO
 }
 
-void WorldImplementation::AppendSoundsToFrame(const VisiblePoints& points) const
+void WorldImplementation::AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points) const
 {
     // TODO
     Q_UNUSED(points)
 }
 
-void WorldImplementation::AppendChatMessages() const
+void WorldImplementation::AppendChatMessages(GrowingFrame* frame) const
 {
     // TODO
 }

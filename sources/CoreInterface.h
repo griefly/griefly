@@ -162,7 +162,8 @@ public:
     // TODO: Look into #360 properly
     virtual void ProcessNextTick(const QVector<Message>& messages) = 0;
 
-    virtual void Represent(GrowingFrame* frame) const = 0;
+    using PlayerAndFrame = std::pair<quint32, GrowingFrame*>;
+    virtual void Represent(const QVector<PlayerAndFrame>& frames) const = 0;
     virtual quint32 Hash() const = 0;
 
 };

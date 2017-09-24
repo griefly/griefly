@@ -19,7 +19,7 @@ public:
     // TODO: Look into #360 properly
     virtual void ProcessNextTick(const QVector<Message>& messages) override;
 
-    virtual void Represent(GrowingFrame* frame) const override;
+    virtual void Represent(const QVector<PlayerAndFrame>& frames) const override;
 
     virtual quint32 Hash() const override;
 
@@ -48,9 +48,9 @@ public:
     virtual void AddSound(const QString& name, kv::Position position) override;
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
 private:
-    void AppendSystemTexts() const;
-    void AppendSoundsToFrame(const VisiblePoints& points) const;
-    void AppendChatMessages() const;
+    void AppendSystemTexts(GrowingFrame* frame) const;
+    void AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points) const;
+    void AppendChatMessages(GrowingFrame* frame) const;
 
     std::unique_ptr<AtmosInterface> atmos_;
     std::unique_ptr<ObjectFactoryInterface> factory_;
