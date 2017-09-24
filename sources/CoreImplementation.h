@@ -27,13 +27,15 @@ public:
 
     // Game interface
     virtual AtmosInterface& GetAtmosphere() override;
+    virtual const AtmosInterface& GetAtmosphere() const override;
     virtual MapInterface& GetMap() override;
     virtual const MapInterface& GetMap() const override;
     virtual ObjectFactoryInterface& GetFactory() override;
     virtual Names& GetNames() override;
-    virtual kv::ChatFrameInfo& GetChatFrameInfo() override;
+    virtual ChatFrameInfo& GetChatFrameInfo() override;
+    virtual const ChatFrameInfo& GetChatFrameInfo() const override;
 
-    virtual IdPtr<kv::Mob> GetMob() override;
+    virtual IdPtr<kv::Mob> GetMob() const override;
     virtual void SetMob(quint32 new_mob) override;
 
     virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const override;
@@ -46,6 +48,10 @@ public:
     virtual void AddSound(const QString& name, kv::Position position) override;
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
 private:
+    void AppendSystemTexts() const;
+    void AppendSoundsToFrame(const VisiblePoints& points) const;
+    void AppendChatMessages() const;
+
     std::unique_ptr<AtmosInterface> atmos_;
     std::unique_ptr<ObjectFactoryInterface> factory_;
     std::unique_ptr<Names> names_;
@@ -59,6 +65,9 @@ private:
     IdPtr<kv::Mob> current_mob_;
 
     QVector<QPair<kv::Position, QString>> sounds_for_frame_;
+
+    // Cache stuff, so mutable one
+    mutable VisiblePoints points_;
 };
 
 class CoreImplementation : public CoreInterface

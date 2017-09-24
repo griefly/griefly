@@ -34,13 +34,15 @@ public:
     virtual void AddSound(const QString& name, kv::Position position) override;
 
     virtual AtmosInterface& GetAtmosphere() override;
+    virtual const AtmosInterface& GetAtmosphere() const override;
     virtual MapInterface& GetMap() override;
     virtual const MapInterface& GetMap() const override;
     virtual ObjectFactoryInterface& GetFactory() override;
     virtual Names& GetNames() override;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() override;
+    virtual const kv::ChatFrameInfo& GetChatFrameInfo() const override;
 
-    virtual IdPtr<kv::Mob> GetMob() override;
+    virtual IdPtr<kv::Mob> GetMob() const override;
     virtual void SetMob(quint32 new_mob) override;
 
     virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const;

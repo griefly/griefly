@@ -97,13 +97,15 @@ public:
     virtual ~GameInterface() { }
 
     virtual AtmosInterface& GetAtmosphere() = 0;
+    virtual const AtmosInterface& GetAtmosphere() const = 0;
     virtual MapInterface& GetMap() = 0;
     virtual const MapInterface& GetMap() const = 0;
     virtual ObjectFactoryInterface& GetFactory() = 0;
     virtual Names& GetNames() = 0;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() = 0;
+    virtual const kv::ChatFrameInfo& GetChatFrameInfo() const = 0;
 
-    virtual IdPtr<kv::Mob> GetMob() = 0;
+    virtual IdPtr<kv::Mob> GetMob() const = 0;
     virtual void SetMob(quint32 new_mob) = 0;
 
     virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const = 0;

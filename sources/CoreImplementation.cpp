@@ -5,6 +5,7 @@
 
 #include "core/objects/MaterialObject.h"
 #include "core/objects/GlobalObjectsHolder.h"
+#include "core/objects/mobs/Mob.h"
 #include "core/Map.h"
 
 #include "core/atmos/Atmos.h"
@@ -71,15 +72,52 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
 
 void WorldImplementation::Represent(GrowingFrame* frame) const
 {
-    // TODO
-    Q_UNUSED(frame)
+    AppendSystemTexts();
+
+    points_.clear();
+    GetMob()->CalculateVisible(&points_);
+
+    GetMap().Represent(frame, points_);
+    GetMob()->GenerateInterfaceForFrame(frame);
+
+    GetAtmosphere().Represent(frame);
+
+    AppendSoundsToFrame(points_);
+    // FIXME: that should be const one
+    // GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));
+    AppendChatMessages();
+
+    // TODO: reset all shifts
+    frame->SetCamera(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
 }
+
+void WorldImplementation::AppendSystemTexts() const
+{
+    // TODO
+}
+
+void WorldImplementation::AppendSoundsToFrame(const VisiblePoints& points) const
+{
+    // TODO
+    Q_UNUSED(points)
+}
+
+void WorldImplementation::AppendChatMessages() const
+{
+    // TODO
+}
+
 quint32 WorldImplementation::Hash() const
 {
     return factory_->Hash();
 }
 
 AtmosInterface& WorldImplementation::GetAtmosphere()
+{
+    return *atmos_;
+}
+
+const AtmosInterface& WorldImplementation::GetAtmosphere() const
 {
     return *atmos_;
 }
@@ -109,7 +147,12 @@ ChatFrameInfo& WorldImplementation::GetChatFrameInfo()
     return chat_frame_info_;
 }
 
-IdPtr<Mob> WorldImplementation::GetMob()
+const ChatFrameInfo& WorldImplementation::GetChatFrameInfo() const
+{
+    return chat_frame_info_;
+}
+
+IdPtr<Mob> WorldImplementation::GetMob() const
 {
     return current_mob_;
 }

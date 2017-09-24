@@ -631,6 +631,11 @@ AtmosInterface& Game::GetAtmosphere()
     return *atmos_;
 }
 
+const AtmosInterface& Game::GetAtmosphere() const
+{
+    return *atmos_;
+}
+
 MapInterface& Game::GetMap()
 {
     return *(global_objects_->map);
@@ -656,7 +661,12 @@ ChatFrameInfo& Game::GetChatFrameInfo()
     return chat_frame_info_;
 }
 
-IdPtr<Mob> Game::GetMob()
+const ChatFrameInfo& Game::GetChatFrameInfo() const
+{
+    return chat_frame_info_;
+}
+
+IdPtr<Mob> Game::GetMob() const
 {
     return current_mob_;
 }

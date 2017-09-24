@@ -60,13 +60,15 @@ class MockIGame : public GameInterface
 {
 public:
     MOCK_METHOD0(GetAtmosphere, AtmosInterface&());
+    MOCK_CONST_METHOD0(GetAtmosphere, const AtmosInterface&());
     MOCK_METHOD0(GetMap, MapInterface&());
     MOCK_CONST_METHOD0(GetMap, const MapInterface&());
     MOCK_METHOD0(GetFactory, ObjectFactoryInterface&());
     MOCK_METHOD0(GetNames, Names&());
     MOCK_METHOD0(GetChatFrameInfo, kv::ChatFrameInfo&());
+    MOCK_CONST_METHOD0(GetChatFrameInfo, const kv::ChatFrameInfo&());
     MOCK_METHOD1(SetUnsyncGenerator, void(quint32 generator));
-    MOCK_METHOD0(GetMob, IdPtr<kv::Mob>());
+    MOCK_CONST_METHOD0(GetMob, IdPtr<kv::Mob>());
     MOCK_METHOD1(SetMob, void(quint32 new_mob));
     MOCK_CONST_METHOD0(GetGlobals, IdPtr<kv::GlobalObjectsHolder>());
     MOCK_METHOD1(SetGlobals, void(quint32 globals));
