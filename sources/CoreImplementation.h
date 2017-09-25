@@ -49,8 +49,8 @@ public:
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
 private:
     void AppendSystemTexts(GrowingFrame* frame) const;
-    void AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points) const;
-    void AppendChatMessages(GrowingFrame* frame) const;
+    void AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const;
+    void AppendChatMessages(GrowingFrame* frame, quint32 net_id) const;
 
     std::unique_ptr<AtmosInterface> atmos_;
     std::unique_ptr<ObjectFactoryInterface> factory_;

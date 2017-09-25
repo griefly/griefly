@@ -85,10 +85,10 @@ void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 
     GetAtmosphere().Represent(frame);
 
-    AppendSoundsToFrame(frame, points_);
+    AppendSoundsToFrame(frame, points_, GetMob().Id());
     // FIXME: that should be const one
     // GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));
-    AppendChatMessages(frame);
+    AppendChatMessages(frame, GetMob().Id());
 
     // TODO: reset all shifts
     frame->SetCamera(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
@@ -99,15 +99,42 @@ void WorldImplementation::AppendSystemTexts(GrowingFrame* frame) const
     // TODO
 }
 
-void WorldImplementation::AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points) const
+void WorldImplementation::AppendSoundsToFrame(
+    GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const
 {
-    // TODO
-    Q_UNUSED(points)
+    // TODO: Sounds for frame may be hash table or some sorted vector
+    // now scalability is quite bad
+    for (auto it : qAsConst(sounds_for_frame_))
+    {
+        if (std::find(points.begin(), points.end(), it.first) != points.end())
+        {
+            frame->Append(FrameData::Sound{it.second});
+        }
+    }
+    // TODO: this should be done somewhere!
+    // sounds_for_frame_.clear();
+
+    auto& musics_for_mobs = global_objects_->musics_for_mobs;
+
+    auto music = musics_for_mobs.find(net_id);
+    if (music != musics_for_mobs.end())
+    {
+        FrameData::Music frame_music;
+        frame_music.name = music->first;
+        frame_music.volume = music->second;
+        frame->SetMusic(frame_music);
+    }
 }
 
-void WorldImplementation::AppendChatMessages(GrowingFrame* frame) const
+void WorldImplementation::AppendChatMessages(GrowingFrame* frame, quint32 net_id) const
 {
-    // TODO
+    for (const auto& personal : chat_frame_info_.GetPersonalTexts(net_id))
+    {
+        frame->Append(FrameData::ChatMessage{personal});
+    }
+    // TODO (?): it should be done in the start of the new tick
+    // with all other non-const ex-represent stuff
+    // chat_frame_info_.Reset();
 }
 
 quint32 WorldImplementation::Hash() const
