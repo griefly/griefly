@@ -48,6 +48,8 @@ public:
     virtual void AddSound(const QString& name, kv::Position position) override;
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
 private:
+    void RemoveStaleRepresentation();
+
     void AppendSystemTexts(GrowingFrame* frame) const;
     void AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const;
     void AppendChatMessages(GrowingFrame* frame, quint32 net_id) const;
@@ -65,9 +67,6 @@ private:
     IdPtr<kv::Mob> current_mob_;
 
     QVector<QPair<kv::Position, QString>> sounds_for_frame_;
-
-    // Cache stuff, so mutable one
-    mutable VisiblePoints points_;
 };
 
 class CoreImplementation : public CoreInterface

@@ -66,6 +66,8 @@ void WorldImplementation::SaveWorld(FastSerializer* data) const
 // TODO: Look into #360 properly
 void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
 {
+    RemoveStaleRepresentation();
+
     // TODO
     Q_UNUSED(messages)
 }
@@ -77,15 +79,15 @@ void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 
     AppendSystemTexts(frame);
 
-    points_.clear();
-    GetMob()->CalculateVisible(&points_);
+    VisiblePoints points;
+    GetMob()->CalculateVisible(&points);
 
-    GetMap().Represent(frame, points_);
+    GetMap().Represent(frame, points);
     GetMob()->GenerateInterfaceForFrame(frame);
 
     GetAtmosphere().Represent(frame);
 
-    AppendSoundsToFrame(frame, points_, GetMob().Id());
+    AppendSoundsToFrame(frame, points, GetMob().Id());
     // FIXME: that should be const one
     // GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));
     AppendChatMessages(frame, GetMob().Id());
@@ -111,8 +113,6 @@ void WorldImplementation::AppendSoundsToFrame(
             frame->Append(FrameData::Sound{it.second});
         }
     }
-    // TODO: this should be done somewhere!
-    // sounds_for_frame_.clear();
 
     auto& musics_for_mobs = global_objects_->musics_for_mobs;
 
@@ -132,9 +132,6 @@ void WorldImplementation::AppendChatMessages(GrowingFrame* frame, quint32 net_id
     {
         frame->Append(FrameData::ChatMessage{personal});
     }
-    // TODO (?): it should be done in the start of the new tick
-    // with all other non-const ex-represent stuff
-    // chat_frame_info_.Reset();
 }
 
 quint32 WorldImplementation::Hash() const
@@ -241,6 +238,12 @@ void WorldImplementation::PlayMusic(const QString& name, int volume, quint32 mob
     qDebug() << "Music playing:" << mob << name << volume;
     auto& musics_for_mobs = global_objects_->musics_for_mobs;
     musics_for_mobs[mob] = {name, volume};
+}
+
+void WorldImplementation::RemoveStaleRepresentation()
+{
+    sounds_for_frame_.clear();
+    chat_frame_info_.Reset();
 }
 
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data, quint32 mob_id)
