@@ -24,6 +24,11 @@ void ChatFrameInfo::PostHear(const Phrase& phrase, const Position& place)
     hear_[place].append(phrase);
 }
 
+const QHash<Position, QVector<QString>>& ChatFrameInfo::GetVisible() const
+{
+    return visible_;
+}
+
 const QVector<QString>& ChatFrameInfo::GetPersonalTexts(const quint32 net_id) const
 {
     const auto it = personal_.find(net_id);

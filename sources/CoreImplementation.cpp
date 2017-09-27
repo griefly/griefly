@@ -88,9 +88,7 @@ void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
     GetAtmosphere().Represent(frame);
 
     AppendSoundsToFrame(frame, points, GetMob().Id());
-    // FIXME: that should be const one
-    // GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));
-    AppendChatMessages(frame, GetMob().Id());
+    AppendChatMessages(frame, points, GetMob().Id());
 
     // TODO: reset all shifts
     frame->SetCamera(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
@@ -126,8 +124,18 @@ void WorldImplementation::AppendSoundsToFrame(
     }
 }
 
-void WorldImplementation::AppendChatMessages(GrowingFrame* frame, quint32 net_id) const
+void WorldImplementation::AppendChatMessages(
+    GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const
 {
+    auto& visible = GetChatFrameInfo().GetVisible();
+    for (const auto& point : points)
+    {
+        for (const auto& text : visible[point])
+        {
+            frame->Append(FrameData::ChatMessage{text});
+        }
+    }
+
     for (const auto& personal : chat_frame_info_.GetPersonalTexts(net_id))
     {
         frame->Append(FrameData::ChatMessage{personal});

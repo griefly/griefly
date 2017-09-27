@@ -23,6 +23,7 @@ public:
     const QVector<QString>& GetPersonalTexts(quint32 net_id) const;
 
     void AddFromVisibleToPersonal(const QVector<Position>& points, quint32 net_id);
+    const QHash<Position, QVector<QString>>& GetVisible() const;
 
     void ApplyHear(Hearer* hearer);
 private:

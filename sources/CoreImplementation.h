@@ -52,7 +52,7 @@ private:
 
     void AppendSystemTexts(GrowingFrame* frame) const;
     void AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const;
-    void AppendChatMessages(GrowingFrame* frame, quint32 net_id) const;
+    void AppendChatMessages(GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const;
 
     std::unique_ptr<AtmosInterface> atmos_;
     std::unique_ptr<ObjectFactoryInterface> factory_;
