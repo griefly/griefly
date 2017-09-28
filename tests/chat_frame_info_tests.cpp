@@ -76,9 +76,30 @@ TEST(ChatFrameInfo, PostVisible)
     info.PostVisible("test4", {1, 100, 3});
     info.PostVisible("test5", {3, 3, 10});
 
-    qDebug() << "Post visible end";
-
     CheckInfoEmpty(info);
+
+    {
+        const auto& visible = info.GetVisible();
+        auto it = visible.find({3, 3, 3});
+        ASSERT_TRUE(it != visible.end());
+        ASSERT_EQ(it.value().size(), 3);
+        EXPECT_EQ(it.value()[0], "test");
+        EXPECT_EQ(it.value()[1], "test2");
+        EXPECT_EQ(it.value()[2], "test3");
+
+        it = visible.find({2, 100, 3});
+        ASSERT_TRUE(it == visible.end());
+
+        it = visible.find({1, 100, 3});
+        ASSERT_TRUE(it != visible.end());
+        ASSERT_EQ(it.value().size(), 1);
+        EXPECT_EQ(it.value()[0], "test4");
+
+        it = visible.find({3, 3, 10});
+        ASSERT_TRUE(it != visible.end());
+        ASSERT_EQ(it.value().size(), 1);
+        EXPECT_EQ(it.value()[0], "test5");
+    }
 
     info.AddFromVisibleToPersonal({{1, 100, 3}}, 10);
     EXPECT_EQ(info.GetPersonalTexts(10).size(), 1);
