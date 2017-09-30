@@ -74,24 +74,35 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
 
 void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 {
-    // TODO: implement multiple frames
-    GrowingFrame* frame = frames[0].second;
+    for (PlayerAndFrame player_and_frame : frames)
+    {
+        const quint32 player_net_id = player_and_frame.first;
+        GrowingFrame* frame = player_and_frame.second;
 
-    AppendSystemTexts(frame);
+        AppendSystemTexts(frame);
 
-    VisiblePoints points;
-    GetMob()->CalculateVisible(&points);
+        VisiblePoints points;
+        GetMob()->CalculateVisible(&points);
 
-    GetMap().Represent(frame, points);
-    GetMob()->GenerateInterfaceForFrame(frame);
+        GetMap().Represent(frame, points);
 
-    GetAtmosphere().Represent(frame);
+        if (IdPtr<Mob> mob = GetPlayerId(player_net_id))
+        {
+            mob->GenerateInterfaceForFrame(frame);
+        }
+        else
+        {
+            qDebug() << "Oops! No mob for such net id!" << player_net_id;
+        }
 
-    AppendSoundsToFrame(frame, points, GetMob().Id());
-    AppendChatMessages(frame, points, GetMob().Id());
+        GetAtmosphere().Represent(frame);
 
-    // TODO: reset all shifts
-    frame->SetCamera(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
+        AppendSoundsToFrame(frame, points, player_net_id);
+        AppendChatMessages(frame, points, player_net_id);
+
+        // TODO: reset all shifts
+        frame->SetCamera(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
+    }
 }
 
 void WorldImplementation::AppendSystemTexts(GrowingFrame* frame) const
