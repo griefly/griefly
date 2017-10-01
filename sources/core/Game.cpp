@@ -256,9 +256,29 @@ void Game::InitWorld(int id, QString map_name)
             kv::Abort("No mapgen param!");
         }
 
-        QString mapgen_name = GetParamsHolder().GetParam<QString>("mapgen_name");
+        const QString mapgen_name = GetParamsHolder().GetParam<QString>("mapgen_name");
         if (QFileInfo::exists(mapgen_name))
         {
+            QFile file(mapgen_name);
+            if (!file.open(QIODevice::ReadOnly))
+            {
+                kv::Abort(QString("Error open: %1").arg(mapgen_name));
+            }
+
+            QByteArray raw_data;
+            while (file.bytesAvailable())
+            {
+                QByteArray local = file.readLine();
+                if (local.size() < 1)
+                {
+                    break;
+                }
+                local = local.left(local.size() - 1);
+                raw_data.append(local);
+            }
+            raw_data = QByteArray::fromHex(raw_data);
+            kv::FastDeserializer deserializer(raw_data.data(), raw_data.size());
+
             qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
             global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
@@ -269,7 +289,7 @@ void Game::InitWorld(int id, QString map_name)
             quint32 seed = static_cast<quint32>(qrand());
             global_objects_->random->SetParams(seed, 0);
 
-            world_loader_saver_->LoadFromMapGen(GetParamsHolder().GetParam<QString>("mapgen_name"));
+            world_loader_saver_->LoadFromMapGen(deserializer);
 
             global_objects_->lobby = GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
 

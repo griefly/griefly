@@ -80,30 +80,6 @@ void WorldLoaderSaver::Load(kv::FastDeserializer& deserializer, quint32 real_thi
     game_->GetAtmosphere().LoadGrid(&game_->GetMap());
 }
 
-void WorldLoaderSaver::LoadFromMapGen(const QString& name)
-{
-    QFile file(name);
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        kv::Abort(QString("Error open: %1").arg(name));
-    }
-
-    QByteArray raw_data;
-    while (file.bytesAvailable())
-    {
-        QByteArray local = file.readLine();
-        if (local.size() < 1)
-        {
-            break;
-        }
-        local = local.left(local.size() - 1);
-        raw_data.append(local);
-    }
-    raw_data = QByteArray::fromHex(raw_data);
-    kv::FastDeserializer deserializer(raw_data.data(), raw_data.size());
-    LoadFromMapGen(deserializer);
-}
-
 void WorldLoaderSaver::LoadFromMapGen(FastDeserializer& deserializer)
 {
     ObjectFactoryInterface& factory = game_->GetFactory();
