@@ -74,7 +74,7 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
 
 void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 {
-    for (PlayerAndFrame player_and_frame : frames)
+    for (const PlayerAndFrame player_and_frame : frames)
     {
         const quint32 player_net_id = player_and_frame.first;
         GrowingFrame* frame = player_and_frame.second;
@@ -268,6 +268,7 @@ void WorldImplementation::RemoveStaleRepresentation()
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data, quint32 mob_id)
 {
     // TODO
+
     return nullptr;
 }
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QByteArray& data)
