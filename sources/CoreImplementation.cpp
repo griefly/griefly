@@ -107,7 +107,12 @@ void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 
 void WorldImplementation::AppendSystemTexts(GrowingFrame* frame) const
 {
-    // TODO
+    auto append = [frame](QString tab, QString text, auto value)
+    {
+        frame->Append(FrameData::TextEntry{tab, text.arg(value)});
+    };
+
+    append("Main", "Game tick: %1", GetGlobals()->game_tick);
 }
 
 void WorldImplementation::AppendSoundsToFrame(
