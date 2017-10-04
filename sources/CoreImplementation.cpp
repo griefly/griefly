@@ -48,7 +48,14 @@ WorldImplementation::WorldImplementation()
     : atmos_(new Atmosphere),
       factory_(new ObjectFactory(this)),
       names_(new Names(this)),
-      loader_saver_(this)
+      loader_saver_(this),
+      process_messages_ns_(0),
+      foreach_process_ns_(0),
+      force_process_ns_(0),
+      atmos_process_ns_(0),
+      deletion_process_ns_(0),
+      update_visibility_ns_(0),
+      frame_generation_ns_(0)
 {
     // Nothing
 }
@@ -111,8 +118,20 @@ void WorldImplementation::AppendSystemTexts(GrowingFrame* frame) const
     {
         frame->Append(FrameData::TextEntry{tab, text.arg(value)});
     };
+    auto append_ns = [&append](QString text, qint64 ns)
+    {
+        append("Performance", text, (ns * 1.0) / 1000000.0);
+    };
 
     append("Main", "Game tick: %1", GetGlobals()->game_tick);
+
+    append_ns("Process messages: %1 ms", process_messages_ns_);
+    append_ns("Process objects: %1 ms", foreach_process_ns_);
+    append_ns("Process force movement: %1 ms", force_process_ns_);
+    append_ns("Process atmos: %1 ms", atmos_process_ns_);
+    append_ns("Process deletion: %1 ms", deletion_process_ns_);
+    append_ns("Update visibility: %1 ms", update_visibility_ns_);
+    append_ns("Frame generation: %1 ms", frame_generation_ns_);
 }
 
 void WorldImplementation::AppendSoundsToFrame(

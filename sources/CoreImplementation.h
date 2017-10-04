@@ -67,6 +67,15 @@ private:
     IdPtr<kv::Mob> current_mob_;
 
     QVector<QPair<kv::Position, QString>> sounds_for_frame_;
+
+    // Perfomance
+    qint64 process_messages_ns_;
+    qint64 foreach_process_ns_;
+    qint64 force_process_ns_;
+    qint64 atmos_process_ns_;
+    qint64 deletion_process_ns_;
+    qint64 update_visibility_ns_;
+    qint64 frame_generation_ns_;
 };
 
 class CoreImplementation : public CoreInterface
