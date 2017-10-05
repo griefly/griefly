@@ -41,6 +41,7 @@ class MockIObjectFactory : public ObjectFactoryInterface
 {
 public:
     MOCK_METHOD0(GetIdTable, QVector<ObjectInfo>&());
+    MOCK_CONST_METHOD0(GetIdTable, const QVector<ObjectInfo>&());
     MOCK_METHOD0(ForeachProcess, void());
     MOCK_CONST_METHOD0(Hash, quint32());
     MOCK_METHOD0(BeginWorldCreation, void());
@@ -52,7 +53,7 @@ public:
     MOCK_METHOD0(ProcessDeletion, void());
     MOCK_METHOD1(AddProcessingItem, void(quint32 item));
     MOCK_METHOD0(Clear, void());
-    MOCK_METHOD0(GetId, int());
+    MOCK_CONST_METHOD0(GetId, int());
     MOCK_METHOD1(SetId, void(int id));
 };
 
@@ -64,6 +65,7 @@ public:
     MOCK_METHOD0(GetMap, MapInterface&());
     MOCK_CONST_METHOD0(GetMap, const MapInterface&());
     MOCK_METHOD0(GetFactory, ObjectFactoryInterface&());
+    MOCK_CONST_METHOD0(GetFactory, const ObjectFactoryInterface&());
     MOCK_METHOD0(GetNames, Names&());
     MOCK_METHOD0(GetChatFrameInfo, kv::ChatFrameInfo&());
     MOCK_CONST_METHOD0(GetChatFrameInfo, const kv::ChatFrameInfo&());

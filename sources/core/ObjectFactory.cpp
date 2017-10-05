@@ -40,6 +40,11 @@ QVector<ObjectInfo>& ObjectFactory::GetIdTable()
     return objects_table_;
 }
 
+const QVector<ObjectInfo>& ObjectFactory::GetIdTable() const
+{
+    return objects_table_;
+}
+
 void ObjectFactory::UpdateProcessingItems()
 {   
     if (!add_to_process_.size())

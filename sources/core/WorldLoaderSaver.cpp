@@ -21,17 +21,16 @@
 namespace kv
 {
 
-WorldLoaderSaver::WorldLoaderSaver(GameInterface* game)
-    : game_(game)
+WorldLoaderSaver::WorldLoaderSaver()
 {
     // Nothing
 }
 
-void WorldLoaderSaver::Save(kv::FastSerializer& serializer) const
+void WorldLoaderSaver::Save(const GameInterface* game, kv::FastSerializer& serializer) const
 {
-    SaveMapHeader(serializer);
+    SaveMapHeader(game, serializer);
 
-    auto& objects_table = game_->GetFactory().GetIdTable();
+    auto& objects_table = game->GetFactory().GetIdTable();
 
     auto it = objects_table.begin();
     ++it;
@@ -47,13 +46,13 @@ void WorldLoaderSaver::Save(kv::FastSerializer& serializer) const
     serializer.WriteType(kv::END_TYPE);
 }
 
-void WorldLoaderSaver::Load(kv::FastDeserializer& deserializer, quint32 real_this_mob)
+void WorldLoaderSaver::Load(GameInterface* game, kv::FastDeserializer& deserializer, quint32 real_this_mob)
 {
-    ObjectFactoryInterface& factory = game_->GetFactory();
+    ObjectFactoryInterface& factory = game->GetFactory();
 
     factory.Clear();
 
-    LoadMapHeader(deserializer);
+    LoadMapHeader(game, deserializer);
     while (!deserializer.IsEnd())
     {
         QString type;
@@ -72,17 +71,17 @@ void WorldLoaderSaver::Load(kv::FastDeserializer& deserializer, quint32 real_thi
         object->Load(deserializer);
     }
 
-    IdPtr<kv::Mob> player = game_->GetPlayerId(real_this_mob);
-    game_->SetMob(player.Id());
+    IdPtr<kv::Mob> player = game->GetPlayerId(real_this_mob);
+    game->SetMob(player.Id());
     qDebug() << "Player id:" << player.Id();
     factory.MarkWorldAsCreated();
 
-    game_->GetAtmosphere().LoadGrid(&game_->GetMap());
+    game->GetAtmosphere().LoadGrid(&game->GetMap());
 }
 
-void WorldLoaderSaver::LoadFromMapGen(FastDeserializer& deserializer)
+void WorldLoaderSaver::LoadFromMapGen(GameInterface* game, FastDeserializer& deserializer)
 {
-    ObjectFactoryInterface& factory = game_->GetFactory();
+    ObjectFactoryInterface& factory = game->GetFactory();
     factory.BeginWorldCreation();
 
     int map_x;
@@ -93,7 +92,7 @@ void WorldLoaderSaver::LoadFromMapGen(FastDeserializer& deserializer)
     deserializer >> map_y;
     deserializer >> map_z;
 
-    auto& map = game_->GetMap();
+    auto& map = game->GetMap();
 
     // Making tiles
     map.Resize(map_x, map_y, map_z);
@@ -103,14 +102,14 @@ void WorldLoaderSaver::LoadFromMapGen(FastDeserializer& deserializer)
         {
             for (int z = 0; z < map.GetDepth(); z++)
             {
-                IdPtr<CubeTile> tile = game_->GetFactory().CreateImpl(CubeTile::GetTypeStatic());
+                IdPtr<CubeTile> tile = game->GetFactory().CreateImpl(CubeTile::GetTypeStatic());
                 tile->SetPos({x, y, z});
                 map.At(x, y, z) = tile;
             }
         }
     }
 
-    game_->GetAtmosphere().LoadGrid(&game_->GetMap());
+    game->GetAtmosphere().LoadGrid(&game->GetMap());
 
     qDebug() << "Begin loading cycle";
     while (!deserializer.IsEnd())
@@ -127,6 +126,7 @@ void WorldLoaderSaver::LoadFromMapGen(FastDeserializer& deserializer)
         deserializer >> z;
 
         IdPtr<kv::MaterialObject> i = factory.CreateImpl(item_type);
+
         if (!i.IsValid())
         {
             kv::Abort(QString("Unable to cast: %1").arg(item_type));
@@ -147,10 +147,11 @@ void WorldLoaderSaver::LoadFromMapGen(FastDeserializer& deserializer)
             kv::FastDeserializer local(variable_data.data(), variable_data.size());
 
             auto& setters_for_type = GetSettersForTypes();
+
             setters_for_type[item_type][it.key()](i.operator->(), local);
         }
 
-        auto& tile = game_->GetMap().At(x, y, z);
+        auto& tile = game->GetMap().At(x, y, z);
         if (IdPtr<kv::Turf> turf = i)
         {
             if (tile->GetTurf())
@@ -166,21 +167,21 @@ void WorldLoaderSaver::LoadFromMapGen(FastDeserializer& deserializer)
     }
 
     factory.FinishWorldCreation();
-    game_->GetMap().FillTilesAtmosHolders();
+    game->GetMap().FillTilesAtmosHolders();
 }
 
-void WorldLoaderSaver::SaveMapHeader(kv::FastSerializer& serializer) const
+void WorldLoaderSaver::SaveMapHeader(const GameInterface* game, kv::FastSerializer& serializer) const
 {
-    ObjectFactoryInterface& factory = game_->GetFactory();
+    const ObjectFactoryInterface& factory = game->GetFactory();
 
     serializer << factory.GetId();
 
-    serializer << game_->GetGlobals();
+    serializer << game->GetGlobals();
 }
 
-void WorldLoaderSaver::LoadMapHeader(kv::FastDeserializer& deserializer)
+void WorldLoaderSaver::LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer)
 {
-    ObjectFactoryInterface& factory = game_->GetFactory();
+    ObjectFactoryInterface& factory = game->GetFactory();
 
     int id;
     deserializer >> id;
@@ -189,7 +190,7 @@ void WorldLoaderSaver::LoadMapHeader(kv::FastDeserializer& deserializer)
 
     quint32 globals;
     deserializer >> globals;
-    game_->SetGlobals(globals);
+    game->SetGlobals(globals);
 
     factory.GetIdTable().resize(id + 1);
 }

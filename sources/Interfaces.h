@@ -68,6 +68,7 @@ public:
     virtual ~ObjectFactoryInterface() { }
 
     virtual QVector<ObjectInfo>& GetIdTable() = 0;
+    virtual const QVector<ObjectInfo>& GetIdTable() const = 0;
 
     virtual void ForeachProcess() = 0;
 
@@ -87,7 +88,7 @@ public:
 
     virtual void Clear() = 0;
 
-    virtual int GetId() = 0;
+    virtual int GetId() const = 0;
     virtual void SetId(int id) = 0;
 };
 
@@ -101,6 +102,7 @@ public:
     virtual MapInterface& GetMap() = 0;
     virtual const MapInterface& GetMap() const = 0;
     virtual ObjectFactoryInterface& GetFactory() = 0;
+    virtual const ObjectFactoryInterface& GetFactory() const = 0;
     virtual Names& GetNames() = 0;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() = 0;
     virtual const kv::ChatFrameInfo& GetChatFrameInfo() const = 0;

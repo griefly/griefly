@@ -31,6 +31,7 @@ public:
     virtual MapInterface& GetMap() override;
     virtual const MapInterface& GetMap() const override;
     virtual ObjectFactoryInterface& GetFactory() override;
+    virtual const ObjectFactoryInterface& GetFactory() const override;
     virtual Names& GetNames() override;
     virtual ChatFrameInfo& GetChatFrameInfo() override;
     virtual const ChatFrameInfo& GetChatFrameInfo() const override;
@@ -57,8 +58,6 @@ private:
     std::unique_ptr<AtmosInterface> atmos_;
     std::unique_ptr<ObjectFactoryInterface> factory_;
     std::unique_ptr<Names> names_;
-
-    WorldLoaderSaver loader_saver_;
 
     kv::ChatFrameInfo chat_frame_info_;
 

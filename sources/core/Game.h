@@ -38,6 +38,7 @@ public:
     virtual MapInterface& GetMap() override;
     virtual const MapInterface& GetMap() const override;
     virtual ObjectFactoryInterface& GetFactory() override;
+    virtual const ObjectFactoryInterface& GetFactory() const;
     virtual Names& GetNames() override;
     virtual kv::ChatFrameInfo& GetChatFrameInfo() override;
     virtual const kv::ChatFrameInfo& GetChatFrameInfo() const override;

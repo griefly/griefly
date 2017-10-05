@@ -96,7 +96,8 @@ void Game::InitGlobalObjects()
     atmos_ = new Atmosphere;
     factory_ = new ObjectFactory(this);
     names_ = new Names(this);
-    world_loader_saver_ = new WorldLoaderSaver(this);
+    // TODO: remove this
+    world_loader_saver_ = new WorldLoaderSaver;
 
     qDebug() << "Successfull initialization!";
 }
@@ -289,7 +290,7 @@ void Game::InitWorld(int id, QString map_name)
             quint32 seed = static_cast<quint32>(qrand());
             global_objects_->random->SetParams(seed, 0);
 
-            world_loader_saver_->LoadFromMapGen(deserializer);
+            world_loader_saver_->LoadFromMapGen(this, deserializer);
 
             global_objects_->lobby = GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
 
@@ -335,7 +336,7 @@ void Game::InitWorld(int id, QString map_name)
 
         FastDeserializer deserializer(map_data.data(), map_data.size());
 
-        world_loader_saver_->Load(deserializer, id);
+        world_loader_saver_->Load(this, deserializer, id);
 
         qDebug() << "Map is loaded, " << load_timer.elapsed() << " ms";
     }
@@ -403,7 +404,7 @@ void Game::ProcessInputMessages()
                 qDebug() << "Map will be generated";
 
                 serializer_.ResetIndex();
-                world_loader_saver_->Save(serializer_);
+                world_loader_saver_->Save(this, serializer_);
                 data = QByteArray(serializer_.GetData(), serializer_.GetIndex());
 
                 AddLastMessages(&data);
@@ -667,6 +668,11 @@ const MapInterface& Game::GetMap() const
 }
 
 ObjectFactoryInterface& Game::GetFactory()
+{
+    return *factory_;
+}
+
+const ObjectFactoryInterface& Game::GetFactory() const
 {
     return *factory_;
 }

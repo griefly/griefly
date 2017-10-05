@@ -12,6 +12,7 @@ public:
     virtual ~ObjectFactory();
 
     virtual QVector<ObjectInfo>& GetIdTable() override;
+    virtual const QVector<ObjectInfo>& GetIdTable() const override;
 
     virtual void ForeachProcess() override;
 
@@ -30,7 +31,7 @@ public:
     virtual void AddProcessingItem(quint32 item) override;
     virtual void Clear() override;
 
-    virtual int GetId() override { return id_; }
+    virtual int GetId() const override { return id_; }
     virtual void SetId(int id) override { id_ = id; }
 private:
     void ClearProcessing();

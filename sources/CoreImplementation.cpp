@@ -48,7 +48,6 @@ WorldImplementation::WorldImplementation()
     : atmos_(new Atmosphere),
       factory_(new ObjectFactory(this)),
       names_(new Names(this)),
-      loader_saver_(this),
       process_messages_ns_(0),
       foreach_process_ns_(0),
       force_process_ns_(0),
@@ -67,7 +66,8 @@ WorldImplementation::~WorldImplementation()
 
 void WorldImplementation::SaveWorld(FastSerializer* data) const
 {
-    loader_saver_.Save(*data);
+    WorldLoaderSaver loader_saver;
+    loader_saver.Save(this, *data);
 }
 
 // TODO: Look into #360 properly
@@ -207,6 +207,11 @@ ObjectFactoryInterface& WorldImplementation::GetFactory()
     return *factory_;
 }
 
+const ObjectFactoryInterface& WorldImplementation::GetFactory() const
+{
+    return *factory_;
+}
+
 Names& WorldImplementation::GetNames()
 {
     return *names_;
@@ -291,14 +296,22 @@ void WorldImplementation::RemoveStaleRepresentation()
 
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data, quint32 mob_id)
 {
-    // TODO
-
-    return nullptr;
+    auto world = std::make_shared<WorldImplementation>();
+    WorldLoaderSaver loader_saver;
+    FastDeserializer deserializer(data.data(), data.size());
+    loader_saver.Load(world.get(), deserializer, mob_id);
+    return world;
 }
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QByteArray& data)
 {
-    // TODO
-    return nullptr;
+    auto world = std::make_shared<WorldImplementation>();
+    WorldLoaderSaver loader_saver;
+    FastDeserializer deserializer(data.data(), data.size());
+    loader_saver.LoadFromMapGen(world.get(), deserializer);
+
+    // TODO: various default world objects, like GlobalObjects object or Map object
+
+    return world;
 }
 
 const CoreImplementation::ObjectsMetadata& CoreImplementation::GetObjectsMetadata() const
