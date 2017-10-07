@@ -11,13 +11,13 @@ class WorldLoaderSaver
 public:
     WorldLoaderSaver();
 
-    void Save(const GameInterface* game, kv::FastSerializer& serializer) const;
+    void static Save(const GameInterface* game, kv::FastSerializer& serializer);
     // TODO: 'real_this_mob' should be removed from here
-    void Load(GameInterface* game, kv::FastDeserializer& deserializer, quint32 real_this_mob);
-    void LoadFromMapGen(GameInterface* game, FastDeserializer& deserializer);
+    void static Load(GameInterface* game, kv::FastDeserializer& deserializer, quint32 real_this_mob);
+    void static LoadFromMapGen(GameInterface* game, FastDeserializer& deserializer);
 private:
-    void SaveMapHeader(const GameInterface* game, kv::FastSerializer& serializer) const;
-    void LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer);
+    void static SaveMapHeader(const GameInterface* game, kv::FastSerializer& serializer);
+    void static LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer);
 };
 
 }

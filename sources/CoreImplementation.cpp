@@ -66,8 +66,7 @@ WorldImplementation::~WorldImplementation()
 
 void WorldImplementation::SaveWorld(FastSerializer* data) const
 {
-    WorldLoaderSaver loader_saver;
-    loader_saver.Save(this, *data);
+    WorldLoaderSaver::Save(this, *data);
 }
 
 // TODO: Look into #360 properly
@@ -297,17 +296,15 @@ void WorldImplementation::RemoveStaleRepresentation()
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data, quint32 mob_id)
 {
     auto world = std::make_shared<WorldImplementation>();
-    WorldLoaderSaver loader_saver;
     FastDeserializer deserializer(data.data(), data.size());
-    loader_saver.Load(world.get(), deserializer, mob_id);
+    WorldLoaderSaver::Load(world.get(), deserializer, mob_id);
     return world;
 }
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QByteArray& data)
 {
     auto world = std::make_shared<WorldImplementation>();
-    WorldLoaderSaver loader_saver;
     FastDeserializer deserializer(data.data(), data.size());
-    loader_saver.LoadFromMapGen(world.get(), deserializer);
+    WorldLoaderSaver::LoadFromMapGen(world.get(), deserializer);
 
     // TODO: various default world objects, like GlobalObjects object or Map object
 

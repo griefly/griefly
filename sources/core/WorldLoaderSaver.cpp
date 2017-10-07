@@ -26,7 +26,7 @@ WorldLoaderSaver::WorldLoaderSaver()
     // Nothing
 }
 
-void WorldLoaderSaver::Save(const GameInterface* game, kv::FastSerializer& serializer) const
+void WorldLoaderSaver::Save(const GameInterface* game, kv::FastSerializer& serializer)
 {
     SaveMapHeader(game, serializer);
 
@@ -170,7 +170,7 @@ void WorldLoaderSaver::LoadFromMapGen(GameInterface* game, FastDeserializer& des
     game->GetMap().FillTilesAtmosHolders();
 }
 
-void WorldLoaderSaver::SaveMapHeader(const GameInterface* game, kv::FastSerializer& serializer) const
+void WorldLoaderSaver::SaveMapHeader(const GameInterface* game, kv::FastSerializer& serializer)
 {
     const ObjectFactoryInterface& factory = game->GetFactory();
 
