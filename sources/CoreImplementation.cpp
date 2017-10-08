@@ -6,7 +6,16 @@
 #include "core/objects/MaterialObject.h"
 #include "core/objects/GlobalObjectsHolder.h"
 #include "core/objects/mobs/Mob.h"
+#include "core/objects/mobs/LoginMob.h"
 #include "core/Map.h"
+
+#include "core/objects/test/UnsyncGenerator.h"
+#include "core/objects/GlobalObjectsHolder.h"
+
+#include "core/SynchronizedRandom.h"
+#include "core/objects/PhysicsEngine.h"
+#include "core/objects/Lobby.h"
+#include "core/objects/SpawnPoints.h"
 
 #include "core/atmos/Atmos.h"
 #include "core/ObjectFactory.h"
@@ -287,6 +296,47 @@ void WorldImplementation::PlayMusic(const QString& name, int volume, quint32 mob
     musics_for_mobs[mob] = {name, volume};
 }
 
+void WorldImplementation::PrepareToMapgen()
+{
+    qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
+
+    global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
+    global_objects_->map = GetFactory().CreateImpl(kv::Map::GetTypeStatic());
+    global_objects_->random = GetFactory().CreateImpl(kv::SynchronizedRandom::GetTypeStatic());
+    global_objects_->physics_engine_ = GetFactory().CreateImpl(kv::PhysicsEngine::GetTypeStatic());
+
+    quint32 seed = static_cast<quint32>(qrand());
+    global_objects_->random->SetParams(seed, 0);
+}
+
+void WorldImplementation::AfterMapgen(quint32 id)
+{
+    global_objects_->lobby = GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
+
+    // TODO: params passing to WorldImplementation
+    /*if (GetParamsHolder().GetParamBool("-unsync_generation"))
+    {
+        global_objects_->unsync_generator
+            = GetFactory().CreateImpl(UnsyncGenerator::GetTypeStatic());
+    }*/
+
+    for (auto it = GetFactory().GetIdTable().begin();
+              it != GetFactory().GetIdTable().end();
+            ++it)
+    {
+        if (it->object && (it->object->GetTypeIndex() == SpawnPoint::GetTypeIndexStatic()))
+        {
+            global_objects_->lobby->AddSpawnPoint(it->object->GetId());
+        }
+    }
+
+    IdPtr<LoginMob> newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
+
+    SetPlayerId(id, newmob.Id());
+    SetMob(newmob.Id());
+    newmob->MindEnter();
+}
+
 void WorldImplementation::RemoveStaleRepresentation()
 {
     sounds_for_frame_.clear();
@@ -303,10 +353,14 @@ CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByte
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QByteArray& data)
 {
     auto world = std::make_shared<WorldImplementation>();
+
+    world->PrepareToMapgen();
+
     FastDeserializer deserializer(data.data(), data.size());
     WorldLoaderSaver::LoadFromMapGen(world.get(), deserializer);
 
-    // TODO: various default world objects, like GlobalObjects object or Map object
+    // TODO: id?
+    world->AfterMapgen(0);
 
     return world;
 }
