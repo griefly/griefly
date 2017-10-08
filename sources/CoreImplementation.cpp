@@ -343,14 +343,17 @@ void WorldImplementation::RemoveStaleRepresentation()
     chat_frame_info_.Reset();
 }
 
-CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(const QByteArray& data, quint32 mob_id)
+CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(
+    const QByteArray& data, const quint32 mob_id)
 {
     auto world = std::make_shared<WorldImplementation>();
     FastDeserializer deserializer(data.data(), data.size());
     WorldLoaderSaver::Load(world.get(), deserializer, mob_id);
     return world;
 }
-CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QByteArray& data)
+
+CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(
+    const QByteArray& data, const quint32 mob_id)
 {
     auto world = std::make_shared<WorldImplementation>();
 
@@ -359,8 +362,7 @@ CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(const QBy
     FastDeserializer deserializer(data.data(), data.size());
     WorldLoaderSaver::LoadFromMapGen(world.get(), deserializer);
 
-    // TODO: id?
-    world->AfterMapgen(0);
+    world->AfterMapgen(mob_id);
 
     return world;
 }
