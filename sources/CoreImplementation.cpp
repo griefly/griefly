@@ -284,12 +284,12 @@ quint32 WorldImplementation::GetNetId(quint32 real_id) const
     return 0;
 }
 
-void WorldImplementation::AddSound(const QString& name, Position position)
+void WorldImplementation::AddSound(const QString& name, const Position position)
 {
     sounds_for_frame_.append({position, name});
 }
 
-void WorldImplementation::PlayMusic(const QString& name, int volume, quint32 mob)
+void WorldImplementation::PlayMusic(const QString& name, const int volume, const quint32 mob)
 {
     qDebug() << "Music playing:" << mob << name << volume;
     auto& musics_for_mobs = global_objects_->musics_for_mobs;
@@ -309,16 +309,15 @@ void WorldImplementation::PrepareToMapgen()
     global_objects_->random->SetParams(seed, 0);
 }
 
-void WorldImplementation::AfterMapgen(quint32 id)
+void WorldImplementation::AfterMapgen(const quint32 id, const bool unsync_generation)
 {
     global_objects_->lobby = GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
 
-    // TODO: params passing to WorldImplementation
-    /*if (GetParamsHolder().GetParamBool("-unsync_generation"))
+    if (unsync_generation)
     {
         global_objects_->unsync_generator
             = GetFactory().CreateImpl(UnsyncGenerator::GetTypeStatic());
-    }*/
+    }
 
     for (auto it = GetFactory().GetIdTable().begin();
               it != GetFactory().GetIdTable().end();
@@ -353,7 +352,7 @@ CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(
 }
 
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(
-    const QByteArray& data, const quint32 mob_id)
+    const QByteArray& data, const quint32 mob_id, const Config& config)
 {
     auto world = std::make_shared<WorldImplementation>();
 
@@ -362,7 +361,7 @@ CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(
     FastDeserializer deserializer(data.data(), data.size());
     WorldLoaderSaver::LoadFromMapGen(world.get(), deserializer);
 
-    world->AfterMapgen(mob_id);
+    world->AfterMapgen(mob_id, config.unsync_generation);
 
     return world;
 }

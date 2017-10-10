@@ -176,13 +176,19 @@ public:
         QString name;
         ViewInfo default_view;
     };
+    struct Config
+    {
+        bool unsync_generation;
+    };
 
     virtual ~CoreInterface() { }
 
     using WorldPtr = std::shared_ptr<WorldInterface>;
 
-    virtual WorldPtr CreateWorldFromSave(const QByteArray& data, quint32 mob_id) = 0;
-    virtual WorldPtr CreateWorldFromMapgen(const QByteArray& data, quint32 mob_id) = 0;
+    virtual WorldPtr CreateWorldFromSave(
+        const QByteArray& data, quint32 mob_id) = 0;
+    virtual WorldPtr CreateWorldFromMapgen(
+        const QByteArray& data, quint32 mob_id, const Config& config) = 0;
 
     // <object name, metadata>
     using ObjectsMetadata = QMap<QString, ObjectMetadata>;

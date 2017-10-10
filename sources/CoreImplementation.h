@@ -50,7 +50,7 @@ public:
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
 
     void PrepareToMapgen();
-    void AfterMapgen(quint32 id);
+    void AfterMapgen(quint32 id, bool unsync_generation);
 private:
     void RemoveStaleRepresentation();
 
@@ -83,8 +83,10 @@ private:
 class CoreImplementation : public CoreInterface
 {
 public:
-    virtual WorldPtr CreateWorldFromSave(const QByteArray& data, quint32 mob_id) override;
-    virtual WorldPtr CreateWorldFromMapgen(const QByteArray& data, quint32 mob_id) override;
+    virtual WorldPtr CreateWorldFromSave(
+        const QByteArray& data, quint32 mob_id) override;
+    virtual WorldPtr CreateWorldFromMapgen(
+        const QByteArray& data, quint32 mob_id, const Config& config) override;
 
     virtual const ObjectsMetadata& GetObjectsMetadata() const override;
 };
