@@ -83,8 +83,42 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
 {
     RemoveStaleRepresentation();
 
+    ProcessInputMessages(messages);
+
     // TODO
     Q_UNUSED(messages)
+}
+
+void WorldImplementation::RemoveStaleRepresentation()
+{
+    sounds_for_frame_.clear();
+    chat_frame_info_.Reset();
+}
+
+void WorldImplementation::ProcessInputMessages(const QVector<Message>& messages)
+{
+    for (const Message& message : qAsConst(messages))
+    {
+        if (message.type == MessageType::NEW_CLIENT)
+        {
+            const int new_id = message.data.value("id").toInt();
+
+            const quint32 player_id = GetPlayerId(new_id);
+            if (player_id != 0)
+            {
+                qDebug() << "Client under net_id" << player_id << "already exists";
+                continue;
+            }
+
+            IdPtr<LoginMob> mob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
+            SetPlayerId(player_id,mob.Id());
+            mob->MindEnter();
+
+            qDebug() << "New client: " << player_id << mob.Id();
+            continue;
+        }
+        // TODO: more processing
+    }
 }
 
 void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
@@ -334,12 +368,6 @@ void WorldImplementation::AfterMapgen(const quint32 id, const bool unsync_genera
     SetPlayerId(id, newmob.Id());
     SetMob(newmob.Id());
     newmob->MindEnter();
-}
-
-void WorldImplementation::RemoveStaleRepresentation()
-{
-    sounds_for_frame_.clear();
-    chat_frame_info_.Reset();
 }
 
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(

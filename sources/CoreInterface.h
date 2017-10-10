@@ -149,9 +149,9 @@ private:
 class WorldInterface
 {
 public:
-    class Message
+    struct Message
     {
-        qint32 id;
+        qint32 type;
         QJsonObject data;
     };
 

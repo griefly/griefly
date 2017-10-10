@@ -53,6 +53,7 @@ public:
     void AfterMapgen(quint32 id, bool unsync_generation);
 private:
     void RemoveStaleRepresentation();
+    void ProcessInputMessages(const QVector<Message>& messages);
 
     void AppendSystemTexts(GrowingFrame* frame) const;
     void AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const;
