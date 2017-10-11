@@ -54,6 +54,9 @@ public:
 private:
     void RemoveStaleRepresentation();
     void ProcessInputMessages(const QVector<Message>& messages);
+    void ProcessInputMessage(const Message& message);
+
+    void PostOoc(const QString& who, const QString& text);
 
     void AppendSystemTexts(GrowingFrame* frame) const;
     void AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const;

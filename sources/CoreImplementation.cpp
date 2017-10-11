@@ -99,25 +99,54 @@ void WorldImplementation::ProcessInputMessages(const QVector<Message>& messages)
 {
     for (const Message& message : qAsConst(messages))
     {
-        if (message.type == MessageType::NEW_CLIENT)
+        ProcessInputMessage(message);
+    }
+}
+
+void WorldImplementation::ProcessInputMessage(const Message& message)
+{
+    if (message.type == MessageType::NEW_CLIENT)
+    {
+        const int new_id = message.data.value("id").toInt();
+
+        const quint32 player_id = GetPlayerId(new_id);
+        if (player_id != 0)
         {
-            const int new_id = message.data.value("id").toInt();
-
-            const quint32 player_id = GetPlayerId(new_id);
-            if (player_id != 0)
-            {
-                qDebug() << "Client under net_id" << player_id << "already exists";
-                continue;
-            }
-
-            IdPtr<LoginMob> mob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
-            SetPlayerId(player_id,mob.Id());
-            mob->MindEnter();
-
-            qDebug() << "New client: " << player_id << mob.Id();
-            continue;
+            qDebug() << "Client under net_id" << player_id << "already exists";
+            return;
         }
-        // TODO: more processing
+
+        IdPtr<LoginMob> mob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
+        SetPlayerId(player_id,mob.Id());
+        mob->MindEnter();
+
+        qDebug() << "New client: " << player_id << mob.Id();
+        return;
+    }
+    if (message.type == MessageType::OOC_MESSAGE)
+    {
+        const QString login = message.data["login"].toString();
+        const QString text = message.data["text"].toString();
+        PostOoc(login, text);
+        return;
+    }
+    // TODO: more processing
+}
+
+void WorldImplementation::PostOoc(const QString& who, const QString& text)
+{
+    const QString escaped_who = who.toHtmlEscaped();
+    const QString escaped_text = text.toHtmlEscaped();
+
+    const QString post_text
+        = QString("<font color=\"blue\"><b>%1</b>: <span>%2</span></font>")
+            .arg(escaped_who)
+            .arg(escaped_text);
+
+    const auto& players = GetGlobals()->players_table;
+    for (auto it = players.begin(); it != players.end(); ++it)
+    {
+        GetChatFrameInfo().PostPersonal(post_text, it.key());
     }
 }
 
