@@ -130,6 +130,30 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
         PostOoc(login, text);
         return;
     }
+
+    if (   message.type == MessageType::ORDINARY
+        || message.type == MessageType::MOUSE_CLICK
+        || message.type == MessageType::MESSAGE)
+    {
+        const int net_id = message.data["id"].toInt();
+        const quint32 game_id = GetPlayerId(net_id);
+        if (game_id == 0)
+        {
+            qDebug() << "Game id is 0";
+        }
+
+        IdPtr<Mob> game_object = game_id;
+        if (game_object.IsValid())
+        {
+            // TODO: processing to proper message
+            // game_object->ProcessMessage(*it);
+        }
+        else
+        {
+            kv::Abort(QString("Game object is not valid: %1").arg(net_id));
+        }
+    }
+
     // TODO: more processing
 }
 
