@@ -103,11 +103,18 @@ void WorldImplementation::ProcessInputMessages(const QVector<Message>& messages)
     }
 }
 
+namespace key
+{
+    const QString ID("id");
+    const QString LOGIN("login");
+    const QString TEXT("text");
+}
+
 void WorldImplementation::ProcessInputMessage(const Message& message)
 {
     if (message.type == MessageType::NEW_CLIENT)
     {
-        const int new_id = message.data.value("id").toInt();
+        const int new_id = message.data.value(key::ID).toInt();
 
         const quint32 player_id = GetPlayerId(new_id);
         if (player_id != 0)
@@ -125,8 +132,8 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
     }
     if (message.type == MessageType::OOC_MESSAGE)
     {
-        const QString login = message.data["login"].toString();
-        const QString text = message.data["text"].toString();
+        const QString login = message.data[key::LOGIN].toString();
+        const QString text = message.data[key::TEXT].toString();
         PostOoc(login, text);
         return;
     }
@@ -135,7 +142,7 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
         || message.type == MessageType::MOUSE_CLICK
         || message.type == MessageType::MESSAGE)
     {
-        const int net_id = message.data["id"].toInt();
+        const int net_id = message.data[key::ID].toInt();
         const quint32 game_id = GetPlayerId(net_id);
         if (game_id == 0)
         {
@@ -153,8 +160,6 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
             kv::Abort(QString("Game object is not valid: %1").arg(net_id));
         }
     }
-
-    // TODO: more processing
 }
 
 void WorldImplementation::PostOoc(const QString& who, const QString& text)
