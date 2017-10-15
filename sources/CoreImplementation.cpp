@@ -85,8 +85,24 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
 
     ProcessInputMessages(messages);
 
-    // TODO
-    Q_UNUSED(messages)
+    GetFactory().ForeachProcess();
+
+    const int ATMOS_OFTEN = 1;
+    const int ATMOS_MOVE_OFTEN = 1;
+    const int game_tick = GetGlobals()->game_tick;
+    if (ATMOS_OFTEN == 1 || (game_tick % ATMOS_OFTEN == 1))
+    {
+        GetAtmosphere().Process(game_tick);
+    }
+    if (ATMOS_MOVE_OFTEN == 1 || (game_tick % ATMOS_MOVE_OFTEN == 1))
+    {
+        GetAtmosphere().ProcessMove(game_tick);
+    }
+
+    // TODO:
+    // ProcessHearers();
+
+    GetFactory().ProcessDeletion();
 }
 
 void WorldImplementation::RemoveStaleRepresentation()

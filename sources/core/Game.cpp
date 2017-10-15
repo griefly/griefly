@@ -144,10 +144,6 @@ void Game::Process()
             foreach_process_ns_ /= 2;
 
             // TODO: some way to measure processing calculation
-            // timer.start();
-            // PhysicsEngine::Get().Process();
-            // force_process_ns_ += timer.nsecsElapsed();
-            // force_process_ns_ /= 2;
 
             timer.start();
 
