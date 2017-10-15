@@ -130,42 +130,40 @@ bool Human::TryMove(Dir direct)
     return false;
 }
 
-void Human::ProcessMessage(const Message &msg)
+void Human::ProcessMessage(const WorldInterface::Message& message)
 {
-    QJsonObject obj = Network2::ParseJson(msg);
-
-    if (   msg.type == MessageType::ORDINARY
+    if (   message.type == MessageType::ORDINARY
         && !lying_
         && friction::CombinedFriction(GetTurf()))
     {
         if (qAbs(force_.x) + qAbs(force_.y) + qAbs(force_.z) < 4)
         {
-            if (Network2::IsKey(obj, Input::MOVE_UP))
+            if (Network2::IsKey(message.data, Input::MOVE_UP))
             {
                 ApplyForce(DirToVDir(Dir::NORTH));
                 return;
             }
-            else if (Network2::IsKey(obj, Input::MOVE_DOWN))
+            else if (Network2::IsKey(message.data, Input::MOVE_DOWN))
             {
                 ApplyForce(DirToVDir(Dir::SOUTH));
                 return;
             }
-            else if (Network2::IsKey(obj, Input::MOVE_LEFT))
+            else if (Network2::IsKey(message.data, Input::MOVE_LEFT))
             {
                 ApplyForce(DirToVDir(Dir::WEST));
                 return;
             }
-            else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
+            else if (Network2::IsKey(message.data, Input::MOVE_RIGHT))
             {
                 ApplyForce(DirToVDir(Dir::EAST));
                 return;
             }
         }
     }
-    if (msg.type == MessageType::MESSAGE)
+    if (message.type == MessageType::MESSAGE)
     {
-        QString text = obj["text"].toString();
-        QString prefixes[] = {"me ", "me", "* ", "*"};
+        QString text = message.data["text"].toString();
+        const QString prefixes[] = {"me ", "me", "* ", "*"};
         bool found = false;
         for (auto& str : prefixes)
         {
@@ -190,7 +188,7 @@ void Human::ProcessMessage(const Message &msg)
             GetGame().GetChatFrameInfo().PostHear(phrase, GetPosition());
         }
     }
-    else if (msg.type == MessageType::MOUSE_CLICK)
+    else if (message.type == MessageType::MOUSE_CLICK)
     {
         // TODO: shorter cd when shooting with weapons
         const int ATTACK_CD = 6;
@@ -200,13 +198,13 @@ void Human::ProcessMessage(const Message &msg)
         }
         attack_cooldown_ = GetGameTick();
 
-        IdPtr<MaterialObject> object = Network2::ExtractObjId(obj);
+        IdPtr<MaterialObject> object = Network2::ExtractObjId(message.data);
         if (!object.IsValid())
         {
             return;
         }
 
-        QString action = Network2::ExtractAction(obj);
+        QString action = Network2::ExtractAction(message.data);
         if (action == Click::LEFT_SHIFT)
         {
             if (IdPtr<Human> human = object)
@@ -294,7 +292,7 @@ void Human::ProcessMessage(const Message &msg)
     else
     {
         // TODO
-        interface_->HandleClick(obj["key"].toString());
+        interface_->HandleClick(message.data["key"].toString());
     }
 
 }

@@ -28,28 +28,26 @@ void Mob::Delete()
     MaterialObject::Delete();
 }
 
-void Mob::ProcessMessage(const Message &msg)
+void Mob::ProcessMessage(const WorldInterface::Message& message)
 {
-    if (msg.type != MessageType::ORDINARY)
+    if (message.type != MessageType::ORDINARY)
     {
         return;
     }
 
-    QJsonObject obj = Network2::ParseJson(msg);
-
-    if (Network2::IsKey(obj, Input::MOVE_UP))
+    if (Network2::IsKey(message.data, Input::MOVE_UP))
     {
         TryMove(Dir::NORTH);
     }
-    else if (Network2::IsKey(obj, Input::MOVE_DOWN))
+    else if (Network2::IsKey(message.data, Input::MOVE_DOWN))
     {
         TryMove(Dir::SOUTH);
     }
-    else if (Network2::IsKey(obj, Input::MOVE_LEFT))
+    else if (Network2::IsKey(message.data, Input::MOVE_LEFT))
     {
         TryMove(Dir::WEST);
     }
-    else if (Network2::IsKey(obj, Input::MOVE_RIGHT))
+    else if (Network2::IsKey(message.data, Input::MOVE_RIGHT))
     {
         TryMove(Dir::EAST);
     }

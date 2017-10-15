@@ -87,9 +87,9 @@ void Ghost::CalculateVisible(VisiblePoints* visible_list) const
     }
 }
 
-void Ghost::ProcessMessage(const Message& msg)
+void Ghost::ProcessMessage(const WorldInterface::Message& message)
 {
-    Mob::ProcessMessage(msg);
+    Mob::ProcessMessage(message);
 }
 
 void Ghost::GenerateInterfaceForFrame(GrowingFrame* frame)

@@ -21,7 +21,7 @@ public:
     virtual void MindEnter() { }
     virtual void MindExit() { }
     virtual void GenerateInterfaceForFrame(GrowingFrame* representation);
-    virtual void ProcessMessage(const Message& msg);
+    virtual void ProcessMessage(const WorldInterface::Message& message);
 
     void MoveMindTo(IdPtr<Mob> other);
     bool IsMinded() const;

@@ -152,8 +152,7 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
         IdPtr<Mob> game_object = game_id;
         if (game_object.IsValid())
         {
-            // TODO: processing to proper message
-            // game_object->ProcessMessage(*it);
+            game_object->ProcessMessage(message);
         }
         else
         {

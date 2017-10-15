@@ -789,7 +789,7 @@ void Game::ProcessBroadcastedMessages()
 
          if (game_object.IsValid())
          {
-             game_object->ProcessMessage(*it);
+             game_object->ProcessMessage({it->type, obj});
          }
          else
          {
