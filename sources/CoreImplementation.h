@@ -62,6 +62,8 @@ private:
     void AppendSoundsToFrame(GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const;
     void AppendChatMessages(GrowingFrame* frame, const VisiblePoints& points, quint32 net_id) const;
 
+    void ProcessHearers();
+
     std::unique_ptr<AtmosInterface> atmos_;
     std::unique_ptr<ObjectFactoryInterface> factory_;
     std::unique_ptr<Names> names_;

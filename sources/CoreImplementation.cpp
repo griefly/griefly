@@ -83,6 +83,9 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
 {
     RemoveStaleRepresentation();
 
+    // Next tick
+    GetGlobals()->game_tick += 1;
+
     ProcessInputMessages(messages);
 
     GetFactory().ForeachProcess();
@@ -99,10 +102,30 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
         GetAtmosphere().ProcessMove(game_tick);
     }
 
-    // TODO:
-    // ProcessHearers();
+    ProcessHearers();
 
     GetFactory().ProcessDeletion();
+}
+
+void WorldImplementation::ProcessHearers()
+{
+    QVector<IdPtr<Object>>& hearers = global_objects_->hearers;
+    QVector<IdPtr<Object>> deleted_hearers;
+
+    for (const IdPtr<Object>& hearer : qAsConst(hearers))
+    {
+        if (!hearer.IsValid())
+        {
+            deleted_hearers.append(hearer);
+            continue;
+        }
+        chat_frame_info_.ApplyHear(hearer->ToHearer());
+    }
+
+    for (const IdPtr<Object>& deleted : qAsConst(deleted_hearers))
+    {
+        hearers.erase(std::find(hearers.begin(), hearers.end(), deleted));
+    }
 }
 
 void WorldImplementation::RemoveStaleRepresentation()
