@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 
-#include "core/Game.h"
+#include "CoreImplementation.h"
 #include "core/ObjectFactory.h"
 #include "core/objects/GlobalObjectsHolder.h"
 
-TEST(Game, PlayersIds)
+TEST(WorldImplementation, PlayersIds)
 {
     // TODO: Representation
-    Game game(nullptr);
+    kv::WorldImplementation game;
 
     ObjectFactory factory(&game);
     game.SetGlobals(factory.CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic()));

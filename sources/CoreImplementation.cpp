@@ -144,9 +144,11 @@ void WorldImplementation::ProcessInputMessages(const QVector<Message>& messages)
 
 namespace key
 {
-    const QString ID("id");
-    const QString LOGIN("login");
-    const QString TEXT("text");
+
+const QString ID("id");
+const QString LOGIN("login");
+const QString TEXT("text");
+
 }
 
 void WorldImplementation::ProcessInputMessage(const Message& message)
