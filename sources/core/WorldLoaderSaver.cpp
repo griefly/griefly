@@ -20,13 +20,10 @@
 
 namespace kv
 {
-
-WorldLoaderSaver::WorldLoaderSaver()
+namespace world
 {
-    // Nothing
-}
 
-void WorldLoaderSaver::Save(const GameInterface* game, kv::FastSerializer& serializer)
+void Save(const GameInterface* game, kv::FastSerializer& serializer)
 {
     SaveMapHeader(game, serializer);
 
@@ -46,7 +43,7 @@ void WorldLoaderSaver::Save(const GameInterface* game, kv::FastSerializer& seria
     serializer.WriteType(kv::END_TYPE);
 }
 
-void WorldLoaderSaver::Load(GameInterface* game, kv::FastDeserializer& deserializer, quint32 real_this_mob)
+void Load(GameInterface* game, kv::FastDeserializer& deserializer, quint32 real_this_mob)
 {
     ObjectFactoryInterface& factory = game->GetFactory();
 
@@ -79,7 +76,7 @@ void WorldLoaderSaver::Load(GameInterface* game, kv::FastDeserializer& deseriali
     game->GetAtmosphere().LoadGrid(&game->GetMap());
 }
 
-void WorldLoaderSaver::LoadFromMapGen(GameInterface* game, FastDeserializer& deserializer)
+void LoadFromMapGen(GameInterface* game, FastDeserializer& deserializer)
 {
     ObjectFactoryInterface& factory = game->GetFactory();
     factory.BeginWorldCreation();
@@ -170,7 +167,7 @@ void WorldLoaderSaver::LoadFromMapGen(GameInterface* game, FastDeserializer& des
     game->GetMap().FillTilesAtmosHolders();
 }
 
-void WorldLoaderSaver::SaveMapHeader(const GameInterface* game, kv::FastSerializer& serializer)
+void SaveMapHeader(const GameInterface* game, kv::FastSerializer& serializer)
 {
     const ObjectFactoryInterface& factory = game->GetFactory();
 
@@ -179,7 +176,7 @@ void WorldLoaderSaver::SaveMapHeader(const GameInterface* game, kv::FastSerializ
     serializer << game->GetGlobals();
 }
 
-void WorldLoaderSaver::LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer)
+void LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer)
 {
     ObjectFactoryInterface& factory = game->GetFactory();
 
@@ -195,4 +192,5 @@ void WorldLoaderSaver::LoadMapHeader(GameInterface* game, kv::FastDeserializer& 
     factory.GetIdTable().resize(id + 1);
 }
 
+}
 }

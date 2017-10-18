@@ -75,7 +75,7 @@ WorldImplementation::~WorldImplementation()
 
 void WorldImplementation::SaveWorld(FastSerializer* data) const
 {
-    WorldLoaderSaver::Save(this, *data);
+    world::Save(this, *data);
 }
 
 // TODO: Look into #360 properly
@@ -473,7 +473,7 @@ CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(
 {
     auto world = std::make_shared<WorldImplementation>();
     FastDeserializer deserializer(data.data(), data.size());
-    WorldLoaderSaver::Load(world.get(), deserializer, mob_id);
+    world::Load(world.get(), deserializer, mob_id);
     return world;
 }
 
@@ -485,7 +485,7 @@ CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(
     world->PrepareToMapgen();
 
     FastDeserializer deserializer(data.data(), data.size());
-    WorldLoaderSaver::LoadFromMapGen(world.get(), deserializer);
+    world::LoadFromMapGen(world.get(), deserializer);
 
     world->AfterMapgen(mob_id, config.unsync_generation);
 
