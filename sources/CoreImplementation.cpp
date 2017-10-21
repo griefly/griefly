@@ -73,20 +73,12 @@ WorldImplementation::~WorldImplementation()
     // Nothing
 }
 
-void WorldImplementation::SaveWorld(FastSerializer* data) const
-{
-    world::Save(this, *data);
-}
-
-// TODO: Look into #360 properly
-void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
+void WorldImplementation::StartTick()
 {
     RemoveStaleRepresentation();
 
     // Next tick
     GetGlobals()->game_tick += 1;
-
-    ProcessInputMessages(messages);
 
     GetFactory().ForeachProcess();
 
@@ -101,9 +93,16 @@ void WorldImplementation::ProcessNextTick(const QVector<Message>& messages)
     {
         GetAtmosphere().ProcessMove(game_tick);
     }
+}
 
+void WorldImplementation::ProcessMessage(const Message& message)
+{
+    ProcessInputMessage(message);
+}
+
+void WorldImplementation::FinishTick()
+{
     ProcessHearers();
-
     GetFactory().ProcessDeletion();
 }
 
@@ -132,14 +131,6 @@ void WorldImplementation::RemoveStaleRepresentation()
 {
     sounds_for_frame_.clear();
     chat_frame_info_.Reset();
-}
-
-void WorldImplementation::ProcessInputMessages(const QVector<Message>& messages)
-{
-    for (const Message& message : qAsConst(messages))
-    {
-        ProcessInputMessage(message);
-    }
 }
 
 namespace key
@@ -200,6 +191,7 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
             kv::Abort(QString("Game object is not valid: %1").arg(net_id));
         }
     }
+    // TODO: warning unknown message
 }
 
 void WorldImplementation::PostOoc(const QString& who, const QString& text)
@@ -320,6 +312,11 @@ void WorldImplementation::AppendChatMessages(
 quint32 WorldImplementation::Hash() const
 {
     return factory_->Hash();
+}
+
+void WorldImplementation::SaveWorld(FastSerializer* data) const
+{
+    world::Save(this, *data);
 }
 
 AtmosInterface& WorldImplementation::GetAtmosphere()

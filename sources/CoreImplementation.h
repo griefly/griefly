@@ -17,7 +17,9 @@ public:
     // World interface
 
     // TODO: Look into #360 properly
-    virtual void ProcessNextTick(const QVector<Message>& messages) override;
+    virtual void StartTick() override;
+    virtual void ProcessMessage(const Message& messages) override;
+    virtual void FinishTick() override;
 
     virtual void Represent(const QVector<PlayerAndFrame>& frames) const override;
 
@@ -53,7 +55,6 @@ public:
     void AfterMapgen(quint32 id, bool unsync_generation);
 private:
     void RemoveStaleRepresentation();
-    void ProcessInputMessages(const QVector<Message>& messages);
     void ProcessInputMessage(const Message& message);
 
     void PostOoc(const QString& who, const QString& text);
