@@ -372,7 +372,7 @@ void Game::ProcessInputMessages()
 
 void Game::GenerateFrame()
 {
-    // AppendSystemTexts();
+    AppendSystemTexts();
 
     kv::GrowingFrame frame = representation_->GetGrowingFrame();
     world_->Represent({{mob_, &frame}});
@@ -394,9 +394,6 @@ void Game::AppendSystemTexts()
     }
     frame.Append(
         FrameData::TextEntry{"Main", QString("Average CPU load: %1%").arg(sum / cpu_loads_.size())});
-    // TODO: game tick is needed
-    // frame.Append(
-    //    FrameData::TextEntry{"Main", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
     frame.Append(
         FrameData::TextEntry{"Main", QString("Players: %1").arg(current_connections_)});
     frame.Append(
@@ -411,31 +408,6 @@ void Game::AppendSystemTexts()
         FrameData::TextEntry{
             "Performance",
             QString("Process objects: %1 ms").arg((foreach_process_ns_ * 1.0) / 1000000.0)});
-
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Process force movement: %1 ms").arg((force_process_ns_ * 1.0) / 1000000.0)});
-
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Process atmos: %1 ms").arg((atmos_process_ns_ * 1.0) / 1000000.0)});
-
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Process deletion: %1 ms").arg((deletion_process_ns_ * 1.0) / 1000000.0)});
-
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Update visibility: %1 ms").arg((update_visibility_ns_ * 1.0) / 1000000.0)});
-
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Frame generation: %1 ms").arg((frame_generation_ns_ * 1.0) / 1000000.0)});
 }
 
 void Game::process()
