@@ -19,8 +19,9 @@
 #include <QElapsedTimer>
 
 #include "Interfaces.h"
+#include "CoreInterface.h"
 
-class Game : public QObject, public GameInterface
+class Game : public QObject
 {
     Q_OBJECT
 public:
@@ -29,29 +30,6 @@ public:
 
     Game(Representation* representation);
     ~Game();
-
-    virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
-    virtual void AddSound(const QString& name, kv::Position position) override;
-
-    virtual AtmosInterface& GetAtmosphere() override;
-    virtual const AtmosInterface& GetAtmosphere() const override;
-    virtual MapInterface& GetMap() override;
-    virtual const MapInterface& GetMap() const override;
-    virtual ObjectFactoryInterface& GetFactory() override;
-    virtual const ObjectFactoryInterface& GetFactory() const;
-    virtual Names& GetNames() override;
-    virtual kv::ChatFrameInfo& GetChatFrameInfo() override;
-    virtual const kv::ChatFrameInfo& GetChatFrameInfo() const override;
-
-    virtual IdPtr<kv::Mob> GetMob() const override;
-    virtual void SetMob(quint32 new_mob) override;
-
-    virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const;
-    virtual void SetGlobals(quint32 globals);
-
-    virtual void SetPlayerId(quint32 net_id, quint32 real_id) override;
-    virtual quint32 GetPlayerId(quint32 net_id) const override;
-    virtual quint32 GetNetId(quint32 real_id) const override;
 public slots:
     void process();
     void endProcess();
@@ -62,23 +40,17 @@ signals:
 private:
     void GenerateFrame();
     void AppendSystemTexts();
-    void AppendSoundsToFrame(const VisiblePoints& points);
-    void AppendChatMessages();
-
     void ProcessInputMessages();
-    void InitGlobalObjects();
     void Process();
-    void ProcessHearers();
 
     void AddLastMessages(QByteArray* data);
     void AddMessageToMessageLog(Message message);
 
     void AddBuildInfo(QByteArray* data);
 
-    void PostOoc(const QString& who, const QString& text);
-
     kv::FastSerializer serializer_;
 
+    std::vector<Message> messages_to_process_;
     std::vector<Message> messages_log_;
     int log_pos_;
 
@@ -88,13 +60,6 @@ private:
 
     std::vector<float> cpu_loads_;
     int cpu_loads_id_;
-
-    QString last_touch_;
-
-    std::vector<Message> messages_to_process_;
-    void ProcessBroadcastedMessages();
-    void CheckMessagesOrderCorrectness();
-    //bool hash_
 
     QString ping_id_;
     QElapsedTimer ping_send_time_;
@@ -118,18 +83,8 @@ private:
 
     QThread thread_;
 
-    AtmosInterface* atmos_;
-    ObjectFactoryInterface* factory_;
-
-    Names* names_;
-
-    kv::ChatFrameInfo chat_frame_info_;
-
-    IdPtr<kv::GlobalObjectsHolder> global_objects_;
-
-    IdPtr<kv::Mob> current_mob_;
-    QVector<QPair<kv::Position, QString>> sounds_for_frame_;
-    VisiblePoints points_;
+    int mob_;
+    kv::CoreInterface::WorldPtr world_;
 
     Representation* representation_;
 };

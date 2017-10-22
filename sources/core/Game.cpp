@@ -78,26 +78,11 @@ Game::Game(Representation* representation)
 
     moveToThread(&thread_);
     connect(&thread_, &QThread::started, this, &Game::process);
-
-    factory_ = nullptr;
-    names_= nullptr;
 }
 
 Game::~Game()
 {
-    delete factory_;
-    delete names_;
-}
-
-void Game::InitGlobalObjects()
-{
-    qDebug() << "Game global object initialization";
-
-    atmos_ = new Atmosphere;
-    factory_ = new ObjectFactory(this);
-    names_ = new Names(this);
-
-    qDebug() << "Successfull initialization!";
+    // Nothing
 }
 
 void Game::Process()
@@ -124,6 +109,7 @@ void Game::Process()
         {
             break;
         }
+
         ProcessInputMessages();
 
         const int ATMOS_OFTEN = 1;
@@ -133,41 +119,15 @@ void Game::Process()
         {
             QElapsedTimer timer;
 
-            timer.start();
-            ProcessBroadcastedMessages();
-            process_messages_ns_ += timer.nsecsElapsed();
-            process_messages_ns_ /= 2;
-
-            timer.start();
-            GetFactory().ForeachProcess();
-            foreach_process_ns_ += timer.nsecsElapsed();
-            foreach_process_ns_ /= 2;
-
-            // TODO: some way to measure processing calculation
-
-            timer.start();
-
-            const int game_tick = GetGlobals()->game_tick;
-
-            if (ATMOS_OFTEN == 1 || (game_tick % ATMOS_OFTEN == 1))
+            world_->StartTick();
+            for (const Message &message : messages_to_process_)
             {
-                GetAtmosphere().Process(game_tick);
+                const QJsonObject object = Network2::ParseJson(message);
+                world_->ProcessMessage({message.type, object});
             }
-            if (ATMOS_MOVE_OFTEN == 1 || (game_tick % ATMOS_MOVE_OFTEN == 1))
-            {
-                GetAtmosphere().ProcessMove(game_tick);
-            }
-            atmos_process_ns_ += timer.nsecsElapsed();
-            atmos_process_ns_ /= 2;
+            messages_to_process_.clear();
+            world_->FinishTick();
 
-            ProcessHearers();
-
-            timer.start();
-            GetFactory().ProcessDeletion();
-            deletion_process_ns_ += timer.nsecsElapsed();
-            deletion_process_ns_ /= 2;
-
-            timer.start();
             GenerateFrame();
             frame_generation_ns_ += timer.nsecsElapsed();
             frame_generation_ns_ /= 2;
@@ -200,27 +160,6 @@ void Game::Process()
     thread_.exit();
 }
 
-void Game::ProcessHearers()
-{
-    QVector<IdPtr<Object>>& hearers = global_objects_->hearers;
-    QVector<IdPtr<Object>> deleted_hearers;
-
-    for (const IdPtr<Object>& hearer : qAsConst(hearers))
-    {
-        if (!hearer.IsValid())
-        {
-            deleted_hearers.append(hearer);
-            continue;
-        }
-        chat_frame_info_.ApplyHear(hearer->ToHearer());
-    }
-
-    for (const IdPtr<Object>& deleted : qAsConst(deleted_hearers))
-    {
-        hearers.erase(std::find(hearers.begin(), hearers.end(), deleted));
-    }
-}
-
 const QString ON_LOGIN_MESSAGE =
         "Welcome to Griefly! It is yet another space station remake, so if you are here then you probably"
         " already know how to play."
@@ -236,12 +175,11 @@ void Game::WaitForExit()
 QVector<ObjectInfo>* id_ptr_id_table = nullptr;
 
 void Game::InitWorld(int id, QString map_name)
-{   
+{
     InitSettersForTypes();
+    mob_ = id;
 
     qDebug() << "Begin init world";
-
-    InitGlobalObjects();
 
     qDebug() << "Begin choose map";
     if (map_name == "no_map")
@@ -272,43 +210,12 @@ void Game::InitWorld(int id, QString map_name)
                 raw_data.append(local);
             }
             raw_data = QByteArray::fromHex(raw_data);
-            kv::FastDeserializer deserializer(raw_data.data(), raw_data.size());
+            // kv::FastDeserializer deserializer(raw_data.data(), raw_data.size());
 
             qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
-            global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
-            global_objects_->map = GetFactory().CreateImpl(kv::Map::GetTypeStatic());
-            global_objects_->random = GetFactory().CreateImpl(kv::SynchronizedRandom::GetTypeStatic());
-            global_objects_->physics_engine_ = GetFactory().CreateImpl(kv::PhysicsEngine::GetTypeStatic());
-
-            quint32 seed = static_cast<quint32>(qrand());
-            global_objects_->random->SetParams(seed, 0);
-
-            world::LoadFromMapGen(this, deserializer);
-
-            global_objects_->lobby = GetFactory().CreateImpl(kv::Lobby::GetTypeStatic());
-
-            if (GetParamsHolder().GetParamBool("-unsync_generation"))
-            {
-                global_objects_->unsync_generator
-                    = GetFactory().CreateImpl(UnsyncGenerator::GetTypeStatic());
-            }
-
-            for (auto it = GetFactory().GetIdTable().begin();
-                      it != GetFactory().GetIdTable().end();
-                    ++it)
-            {
-                if (it->object && (it->object->GetTypeIndex() == SpawnPoint::GetTypeIndexStatic()))
-                {
-                    global_objects_->lobby->AddSpawnPoint(it->object->GetId());
-                }
-            }
-
-            IdPtr<LoginMob> newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
-
-            SetPlayerId(id, newmob.Id());
-            SetMob(newmob.Id());
-            newmob->MindEnter();
+            // TODO: config
+            world_ = kv::GetCoreInstance().CreateWorldFromMapgen(raw_data, id, {true});
         }
         else
         {
@@ -328,9 +235,11 @@ void Game::InitWorld(int id, QString map_name)
             kv::Abort("An empty map received");
         }
 
-        FastDeserializer deserializer(map_data.data(), map_data.size());
+        // FastDeserializer deserializer(map_data.data(), map_data.size());
 
-        world::Load(this, deserializer, id);
+        world_ = kv::GetCoreInstance().CreateWorldFromSave(map_data, id);
+
+        //world::Load(this, deserializer, id);
 
         qDebug() << "Map is loaded, " << load_timer.elapsed() << " ms";
     }
@@ -351,35 +260,10 @@ void Game::ProcessInputMessages()
         if (msg.type == MessageType::NEW_TICK)
         {
             process_in_ = true;
-            GetGlobals()->game_tick += 1;
             break;
-        }
-        if (msg.type == MessageType::NEW_CLIENT)
-        {
-            // TODO: why it is not in the broadcasted messages?
-            QJsonObject obj = Network2::ParseJson(msg);
-
-            QJsonValue new_id_v = obj["id"];
-            int new_id = new_id_v.toVariant().toInt();
-
-            quint32 game_id = GetPlayerId(new_id);
-
-            if (game_id != 0)
-            {
-                qDebug() << "game_id " << game_id << " already exists";
-                continue;
-            }
-
-            IdPtr<LoginMob> newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
-            SetPlayerId(new_id, newmob.Id());
-            newmob->MindEnter();
-
-            qDebug() << "New client " << newmob.Id();
-            continue;
         }
         if (msg.type == MessageType::MAP_UPLOAD)
         {
-            CheckMessagesOrderCorrectness();
             QElapsedTimer timer;
             timer.start();
             QJsonObject obj = Network2::ParseJson(msg);
@@ -389,23 +273,19 @@ void Game::ProcessInputMessages()
             int tick = tick_v.toVariant().toInt();
 
             qDebug() << "Map upload to " << map_url << ", tick " << tick;
-            qDebug() << "Current game tick: " << GetGlobals()->game_tick;
 
             QByteArray data;
 
-            if (tick == GetGlobals()->game_tick)
-            {
-                qDebug() << "Map will be generated";
+            qDebug() << "Map will be generated";
 
-                serializer_.ResetIndex();
-                world::Save(this, serializer_);
-                data = QByteArray(serializer_.GetData(), serializer_.GetIndex());
+            serializer_.ResetIndex();
+            world_->SaveWorld(&serializer_);
+            data = QByteArray(serializer_.GetData(), serializer_.GetIndex());
 
-                AddLastMessages(&data);
-                AddBuildInfo(&data);
+            AddLastMessages(&data);
+            AddBuildInfo(&data);
 
-                qDebug() << " " << data.length();
-            }
+            qDebug() << " " << data.length();
 
             emit sendMap(map_url, data);
             qDebug() << "It took " << timer.elapsed() << "ms to send the map";
@@ -414,28 +294,18 @@ void Game::ProcessInputMessages()
 
         if (msg.type == MessageType::REQUEST_HASH)
         {
-            CheckMessagesOrderCorrectness();
-            //qDebug() << "Hash: " << msg.json;
-            QJsonObject obj = Network2::ParseJson(msg);
-
-            QJsonValue tick_v = obj["tick"];
-            int tick = tick_v.toVariant().toInt();
-
-            if (tick != GetGlobals()->game_tick)
-            {
-                kv::Abort(QString("Tick mismatch! %1 %2").arg(tick).arg(GetGlobals()->game_tick));
-            }
-            unsigned int hash = GetFactory().Hash();
+            quint32 hash = world_->Hash();
 
             Message msg;
 
             msg.type = MessageType::HASH_MESSAGE;
-            msg.json.append(
+            // TODO: game tick is neeeded
+            /*msg.json.append(
                       "{\"hash\":"
                     + QString::number(hash)
                     + ",\"tick\":"
                     + QString::number(GetGlobals()->game_tick)
-                    + "}");
+                    + "}");*/
 
             Network2::GetInstance().SendMsg(msg);
 
@@ -464,14 +334,6 @@ void Game::ProcessInputMessages()
             current_connections_ = amount_v.toVariant().toInt();
             continue;
         }
-        if (msg.type == MessageType::OOC_MESSAGE)
-        {
-            QJsonObject obj = Network2::ParseJson(msg);
-            QString login = obj["login"].toString();
-            QString text = obj["text"].toString();
-            PostOoc(login, text);
-            continue;
-        }
 
         if (msg.type == MessageType::CLIENT_IS_OUT_OF_SYNC)
         {
@@ -495,7 +357,9 @@ void Game::ProcessInputMessages()
         }  
         if (   msg.type == MessageType::ORDINARY
             || msg.type == MessageType::MOUSE_CLICK
-            || msg.type == MessageType::MESSAGE)
+            || msg.type == MessageType::MESSAGE
+            || msg.type == MessageType::NEW_CLIENT
+            || msg.type == MessageType::OOC_MESSAGE)
         {
             messages_to_process_.push_back(msg);
             continue;
@@ -508,24 +372,10 @@ void Game::ProcessInputMessages()
 
 void Game::GenerateFrame()
 {
-    AppendSystemTexts();
-
-    points_.clear();
-    GetMob()->CalculateVisible(&points_);
+    // AppendSystemTexts();
 
     kv::GrowingFrame frame = representation_->GetGrowingFrame();
-
-    GetMap().Represent(&frame, points_);
-    GetMob()->GenerateInterfaceForFrame(&frame);
-
-    GetAtmosphere().Represent(&frame);
-
-    AppendSoundsToFrame(points_);
-    GetChatFrameInfo().AddFromVisibleToPersonal(points_, GetNetId(GetMob().Id()));
-    AppendChatMessages();
-
-    // TODO: reset all shifts
-    frame.SetCamera(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
+    world_->Represent({{mob_, &frame}});
 
     representation_->Swap();
 }
@@ -544,8 +394,9 @@ void Game::AppendSystemTexts()
     }
     frame.Append(
         FrameData::TextEntry{"Main", QString("Average CPU load: %1%").arg(sum / cpu_loads_.size())});
-    frame.Append(
-        FrameData::TextEntry{"Main", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
+    // TODO: game tick is needed
+    // frame.Append(
+    //    FrameData::TextEntry{"Main", QString("Game tick: %1").arg(GetGlobals()->game_tick)});
     frame.Append(
         FrameData::TextEntry{"Main", QString("Players: %1").arg(current_connections_)});
     frame.Append(
@@ -587,125 +438,6 @@ void Game::AppendSystemTexts()
             QString("Frame generation: %1 ms").arg((frame_generation_ns_ * 1.0) / 1000000.0)});
 }
 
-void Game::AppendSoundsToFrame(const VisiblePoints& points)
-{
-    kv::GrowingFrame frame = representation_->GetGrowingFrame();
-
-    // TODO: Sounds for frame may be hash table or some sorted vector
-    // now scalability is quite bad
-    for (auto it : qAsConst(sounds_for_frame_))
-    {
-        if (std::find(points.begin(), points.end(), it.first) != points.end())
-        {
-            frame.Append(FrameData::Sound{it.second});
-        }
-    }
-    sounds_for_frame_.clear();
-
-    quint32 net_id = GetNetId(GetMob().Id());
-
-    auto& musics_for_mobs = global_objects_->musics_for_mobs;
-
-    auto music = musics_for_mobs.find(net_id);
-    if (music != musics_for_mobs.end())
-    {
-        FrameData::Music frame_music;
-        frame_music.name = music->first;
-        frame_music.volume = music->second;
-        frame.SetMusic(frame_music);
-    }
-}
-
-void Game::AppendChatMessages()
-{
-    kv::GrowingFrame frame = representation_->GetGrowingFrame();
-
-    quint32 net_id = GetNetId(GetMob().Id());
-
-    for (const auto& personal : chat_frame_info_.GetPersonalTexts(net_id))
-    {
-        frame.Append(FrameData::ChatMessage{personal});
-    }
-    chat_frame_info_.Reset();
-}
-
-void Game::PlayMusic(const QString& name, int volume, quint32 mob)
-{
-    qDebug() << "Music playing:" << mob << name << volume;
-    auto& musics_for_mobs = global_objects_->musics_for_mobs;
-    musics_for_mobs[mob] = {name, volume};
-}
-
-void Game::AddSound(const QString& name, Position position)
-{
-    sounds_for_frame_.append({position, name});
-}
-
-AtmosInterface& Game::GetAtmosphere()
-{
-    return *atmos_;
-}
-
-const AtmosInterface& Game::GetAtmosphere() const
-{
-    return *atmos_;
-}
-
-MapInterface& Game::GetMap()
-{
-    return *(global_objects_->map);
-}
-
-const MapInterface& Game::GetMap() const
-{
-    return *(global_objects_->map);
-}
-
-ObjectFactoryInterface& Game::GetFactory()
-{
-    return *factory_;
-}
-
-const ObjectFactoryInterface& Game::GetFactory() const
-{
-    return *factory_;
-}
-
-Names& Game::GetNames()
-{
-    return *names_;
-}
-
-ChatFrameInfo& Game::GetChatFrameInfo()
-{
-    return chat_frame_info_;
-}
-
-const ChatFrameInfo& Game::GetChatFrameInfo() const
-{
-    return chat_frame_info_;
-}
-
-IdPtr<Mob> Game::GetMob() const
-{
-    return current_mob_;
-}
-
-void Game::SetMob(quint32 new_mob)
-{
-    current_mob_ = new_mob;
-}
-
-IdPtr<GlobalObjectsHolder> Game::GetGlobals() const
-{
-    return global_objects_;
-}
-
-void Game::SetGlobals(quint32 globals)
-{
-    global_objects_ = globals;
-}
-
 void Game::process()
 {
     Process();
@@ -719,10 +451,10 @@ void Game::endProcess()
 
 void Game::generateUnsync()
 {
-    if (global_objects_->unsync_generator.IsValid())
+    /*if (global_objects_->unsync_generator.IsValid())
     {
         global_objects_->unsync_generator->PerformUnsync();
-    }
+    }*/
 }
 
 void Game::AddLastMessages(QByteArray* data)
@@ -748,84 +480,4 @@ void Game::AddBuildInfo(QByteArray* data)
     QString system_info("Build info: %1, Qt: %2");
     system_info = system_info.arg(GetBuildInfo()).arg(GetQtVersion());
     data->append(system_info);
-}
-
-void Game::PostOoc(const QString& who, const QString& text)
-{
-    QString escaped_who = who.toHtmlEscaped();
-    QString escaped_text = text.toHtmlEscaped();
-
-    const QString post_text
-        = QString("<font color=\"blue\"><b>%1</b>: <span>%2</span></font>")
-                .arg(escaped_who).arg(escaped_text);
-
-    const auto& players = GetGlobals()->players_table;
-    for (auto it = players.begin(); it != players.end(); ++it)
-    {
-        GetChatFrameInfo().PostPersonal(post_text, it.key());
-    }
-}
-
-void Game::ProcessBroadcastedMessages()
-{
-    for (auto it = messages_to_process_.begin();
-              it != messages_to_process_.end();
-            ++it)
-    {
-         QJsonObject obj = Network2::ParseJson(*it);
-         QJsonValue v = obj["id"];
-         int net_id = v.toVariant().toInt();
-         quint32 game_id = GetPlayerId(net_id);
-         if (game_id == 0)
-         {
-             qDebug() << "Game id is 0";
-         }
-         IdPtr<Mob> game_object = game_id;
-
-         if (game_object.IsValid())
-         {
-             game_object->ProcessMessage({it->type, obj});
-         }
-         else
-         {
-             kv::Abort(QString("Game object is not valid: %1").arg(net_id));
-         }
-    }
-    messages_to_process_.clear();
-}
-
-void Game::CheckMessagesOrderCorrectness()
-{
-    if (!messages_to_process_.empty())
-    {
-        kv::Abort("CheckMessagesOrderCorrectness fail");
-    }
-}
-
-void Game::SetPlayerId(quint32 net_id, quint32 real_id)
-{
-    global_objects_->players_table[net_id] = real_id;
-}
-quint32 Game::GetPlayerId(quint32 net_id) const
-{
-    auto& players_table = global_objects_->players_table;
-    auto it = players_table.find(net_id);
-    if (it != players_table.end())
-    {
-        return it.value();
-    }
-    return 0;
-}
-
-quint32 Game::GetNetId(quint32 real_id) const
-{
-    auto& players_table = global_objects_->players_table;
-    for (auto it = players_table.begin(); it != players_table.end(); ++it)
-    {
-        if (it.value() == real_id)
-        {
-            return it.key();
-        }
-    }
-    return 0;
 }
