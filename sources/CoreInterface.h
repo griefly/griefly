@@ -166,6 +166,7 @@ public:
 
     using PlayerAndFrame = std::pair<quint32, GrowingFrame*>;
     virtual void Represent(const QVector<PlayerAndFrame>& frames) const = 0;
+    virtual qint32 GetGameTick() const = 0;
     virtual quint32 Hash() const = 0;
 
 };

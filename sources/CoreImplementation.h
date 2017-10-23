@@ -23,6 +23,7 @@ public:
 
     virtual void Represent(const QVector<PlayerAndFrame>& frames) const override;
 
+    virtual qint32 GetGameTick() const override;
     virtual quint32 Hash() const override;
 
     virtual void SaveWorld(FastSerializer* data) const override;

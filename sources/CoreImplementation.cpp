@@ -244,6 +244,11 @@ void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
     }
 }
 
+qint32 WorldImplementation::GetGameTick() const
+{
+    return GetGlobals()->game_tick;
+}
+
 void WorldImplementation::AppendSystemTexts(GrowingFrame* frame) const
 {
     auto append = [frame](QString tab, QString text, auto value)
