@@ -148,18 +148,21 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
     {
         const int new_id = message.data.value(key::ID).toInt();
 
-        const quint32 player_id = GetPlayerId(new_id);
-        if (player_id != 0)
         {
-            qDebug() << "Client under net_id" << player_id << "already exists";
-            return;
+            // Some sanity check
+            const quint32 player_id = GetPlayerId(new_id);
+            if (player_id != 0)
+            {
+                qDebug() << "Client under net_id" << player_id << "already exists";
+                return;
+            }
         }
 
         IdPtr<LoginMob> mob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
-        SetPlayerId(player_id,mob.Id());
+        SetPlayerId(new_id, mob.Id());
         mob->MindEnter();
 
-        qDebug() << "New client: " << player_id << mob.Id();
+        qDebug() << "New client: " << new_id << mob.Id();
         return;
     }
     if (message.type == MessageType::OOC_MESSAGE)

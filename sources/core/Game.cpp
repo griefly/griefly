@@ -294,18 +294,18 @@ void Game::ProcessInputMessages()
 
         if (msg.type == MessageType::REQUEST_HASH)
         {
-            quint32 hash = world_->Hash();
+            const quint32 hash = world_->Hash();
+            const qint32 game_tick = world_->GetGameTick();
 
             Message msg;
 
             msg.type = MessageType::HASH_MESSAGE;
-            // TODO: game tick is neeeded
-            /*msg.json.append(
+            msg.json.append(
                       "{\"hash\":"
                     + QString::number(hash)
                     + ",\"tick\":"
-                    + QString::number(GetGlobals()->game_tick)
-                    + "}");*/
+                    + QString::number(game_tick)
+                    + "}");
 
             Network2::GetInstance().SendMsg(msg);
 
