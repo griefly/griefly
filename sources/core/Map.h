@@ -35,7 +35,6 @@ public:
 
     virtual void Represent(GrowingFrame* frame, const VisiblePoints& points) const override;
 
-    virtual bool IsTileVisible(quint32 tile_id) override;
     virtual bool IsTransparent(int posx, int posy, int posz = 0) const override;
 
     virtual void CalculateLos(VisiblePoints* retval, int posx, int posy, int posz = 0) const override;

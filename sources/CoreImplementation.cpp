@@ -153,7 +153,7 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
             const quint32 player_id = GetPlayerId(new_id);
             if (player_id != 0)
             {
-                qDebug() << "Client under net_id" << player_id << "already exists";
+                qDebug() << "Client under net_id" << new_id << "already exists";
                 return;
             }
         }

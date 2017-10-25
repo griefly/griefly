@@ -123,12 +123,6 @@ bool Map::IsTransparent(int posx, int posy, int posz) const
     return At(posx, posy, posz)->IsTransparent();
 }
 
-bool Map::IsTileVisible(quint32 tile_id)
-{
-    // TODO: remove this function
-    return true;
-}
-
 void Map::CalculateLos(VisiblePoints* retval, int posx, int posy, int posz) const
 {
     los_calculator_.Calculate(this, retval, posx, posy, posz);

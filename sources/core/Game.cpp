@@ -179,8 +179,6 @@ void Game::InitWorld(int id, QString map_name)
     InitSettersForTypes();
     mob_ = id;
 
-    qDebug() << "Begin init world";
-
     qDebug() << "Begin choose map";
     if (map_name == "no_map")
     {
@@ -210,8 +208,6 @@ void Game::InitWorld(int id, QString map_name)
                 raw_data.append(local);
             }
             raw_data = QByteArray::fromHex(raw_data);
-            // kv::FastDeserializer deserializer(raw_data.data(), raw_data.size());
-
             qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
             // TODO: config
@@ -235,11 +231,7 @@ void Game::InitWorld(int id, QString map_name)
             kv::Abort("An empty map received");
         }
 
-        // FastDeserializer deserializer(map_data.data(), map_data.size());
-
         world_ = kv::GetCoreInstance().CreateWorldFromSave(map_data, id);
-
-        //world::Load(this, deserializer, id);
 
         qDebug() << "Map is loaded, " << load_timer.elapsed() << " ms";
     }
