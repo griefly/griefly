@@ -102,6 +102,7 @@ void WorldImplementation::ProcessMessage(const Message& message)
 
 void WorldImplementation::FinishTick()
 {
+    GetGlobals()->physics_engine_->ProcessPhysics();
     ProcessHearers();
     GetFactory().ProcessDeletion();
 }

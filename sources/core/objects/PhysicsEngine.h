@@ -21,7 +21,7 @@ public:
     PhysicsEngine();
     void AfterWorldCreation() override;
 
-    void Process();
+    void ProcessPhysics();
 
     void Add(IdPtr<Movable> movable);
 private:

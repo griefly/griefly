@@ -12,8 +12,6 @@ PhysicsEngine::PhysicsEngine()
 void PhysicsEngine::AfterWorldCreation()
 {
     Object::AfterWorldCreation();
-
-    SetFreq(1);
 }
 
 void PhysicsEngine::Add(IdPtr<Movable> movable)
@@ -21,7 +19,7 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
     to_add_.push_back(movable);
 }
 
-void PhysicsEngine::Process()
+void PhysicsEngine::ProcessPhysics()
 {
     const int CLEAR_TICK = 10;
 
