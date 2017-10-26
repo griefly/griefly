@@ -415,10 +415,7 @@ void Game::endProcess()
 
 void Game::generateUnsync()
 {
-    /*if (global_objects_->unsync_generator.IsValid())
-    {
-        global_objects_->unsync_generator->PerformUnsync();
-    }*/
+    world_->PerformUnsync();
 }
 
 void Game::AddLastMessages(QByteArray* data)

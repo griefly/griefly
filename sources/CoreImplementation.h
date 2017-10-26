@@ -52,6 +52,8 @@ public:
     virtual void AddSound(const QString& name, kv::Position position) override;
     virtual void PlayMusic(const QString& name, int volume, quint32 mob) override;
 
+    virtual void PerformUnsync() override;
+
     void PrepareToMapgen();
     void AfterMapgen(quint32 id, bool unsync_generation);
 private:

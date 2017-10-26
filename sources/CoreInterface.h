@@ -169,6 +169,8 @@ public:
     virtual qint32 GetGameTick() const = 0;
     virtual quint32 Hash() const = 0;
 
+    virtual void PerformUnsync() = 0;
+
 };
 
 class CoreInterface

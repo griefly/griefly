@@ -422,6 +422,14 @@ quint32 WorldImplementation::GetNetId(quint32 real_id) const
     return 0;
 }
 
+void WorldImplementation::PerformUnsync()
+{
+    if (global_objects_->unsync_generator.IsValid())
+    {
+        global_objects_->unsync_generator->PerformUnsync();
+    }
+}
+
 void WorldImplementation::AddSound(const QString& name, const Position position)
 {
     sounds_for_frame_.append({position, name});
