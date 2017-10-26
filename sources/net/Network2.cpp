@@ -412,10 +412,10 @@ void SocketHandler::errorSocket(QAbstractSocket::SocketError error)
     state_ = NetworkState::NOT_CONNECTED;
     network_->thread_.exit(-1);
     emit connectionEnd(
-              "Socket error: "
-            + QString::number(error)
-            + ", reason: "
-            + possible_error_reason_);
+        QString("Socket error: '%1' (%2), reason: %3")
+            .arg(socket_.errorString())
+            .arg(error)
+            .arg(possible_error_reason_));
 }
 
 void SocketHandler::handleFirstMessage(Message m)
