@@ -11,7 +11,7 @@
 #include <QString>
 #include <QDebug>
 
-#include "FastSerializer.h"
+#include "core_headers/FastSerializer.h"
 #include "Hashes.h"
 
 #ifdef Q_CC_GNU

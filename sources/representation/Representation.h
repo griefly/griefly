@@ -14,7 +14,7 @@
 #include "Sound.h"
 #include "core/Constheader.h"
 
-#include "CoreInterface.h"
+#include "core_headers/CoreInterface.h"
 
 class Representation : public QObject
 {

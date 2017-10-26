@@ -1,5 +1,5 @@
 #include "CoreImplementation.h"
-#include "CoreInterface.h"
+#include "core_headers/CoreInterface.h"
 
 #include "AutogenMetadata.h"
 

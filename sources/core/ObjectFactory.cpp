@@ -1,6 +1,6 @@
 #include "ObjectFactory.h"
 
-#include "KvAbort.h"
+#include "core_headers/KvAbort.h"
 
 #include "objects/Object.h"
 #include "objects/MaterialObject.h"

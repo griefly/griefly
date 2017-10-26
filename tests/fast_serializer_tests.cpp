@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "FastSerializer.h"
+#include "core_headers/FastSerializer.h"
 
 #include <QFile>
 

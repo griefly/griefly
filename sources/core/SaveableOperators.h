@@ -4,7 +4,7 @@
 #include <QVector>
 
 #include "Hashes.h"
-#include "FastSerializer.h"
+#include "core_headers/FastSerializer.h"
 
 namespace kv
 {

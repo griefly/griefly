@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CoreInterface.h"
+#include "core_headers/CoreInterface.h"
 #include "Interfaces.h"
 
 #include "core/ChatFrameInfo.h"

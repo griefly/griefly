@@ -1,4 +1,4 @@
-#include "CoreInterface.h"
+#include "core_headers/CoreInterface.h"
 
 #include <gtest/gtest.h>
 

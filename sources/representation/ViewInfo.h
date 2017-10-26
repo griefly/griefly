@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include "FastSerializer.h"
+#include "core_headers/FastSerializer.h"
 
 #include "core/Hashes.h"
 

@@ -4,7 +4,7 @@
 
 #include "net/Network2.h"
 
-#include "CoreInterface.h"
+#include "core_headers/CoreInterface.h"
 
 namespace kv
 {

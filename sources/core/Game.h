@@ -19,7 +19,7 @@
 #include <QElapsedTimer>
 
 #include "Interfaces.h"
-#include "CoreInterface.h"
+#include "core_headers/CoreInterface.h"
 
 class Game : public QObject
 {

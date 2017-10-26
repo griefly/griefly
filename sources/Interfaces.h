@@ -4,7 +4,7 @@
 
 #include "core/Constheader.h"
 #include "core/Idptr.h"
-#include "CoreInterface.h"
+#include "core_headers/CoreInterface.h"
 
 #include <QString>
 

@@ -3,7 +3,7 @@
 #include <QDebug>
 
 #include "AtmosConstants.h"
-#include "KvAbort.h"
+#include "core_headers/KvAbort.h"
 #include "Interfaces.h"
 
 namespace atmos

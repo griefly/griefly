@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Interfaces.h"
-#include "FastSerializer.h"
+#include "core_headers/FastSerializer.h"
 
 namespace kv
 {
