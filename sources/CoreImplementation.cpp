@@ -166,17 +166,16 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
         qDebug() << "New client: " << new_id << mob.Id();
         return;
     }
-    if (message.type == MessageType::OOC_MESSAGE)
+    else if (message.type == MessageType::OOC_MESSAGE)
     {
         const QString login = message.data[key::LOGIN].toString();
         const QString text = message.data[key::TEXT].toString();
         PostOoc(login, text);
         return;
     }
-
-    if (   message.type == MessageType::ORDINARY
-        || message.type == MessageType::MOUSE_CLICK
-        || message.type == MessageType::MESSAGE)
+    else if (   message.type == MessageType::ORDINARY
+             || message.type == MessageType::MOUSE_CLICK
+             || message.type == MessageType::MESSAGE)
     {
         const int net_id = message.data[key::ID].toInt();
         const quint32 game_id = GetPlayerId(net_id);
@@ -194,8 +193,10 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
         {
             kv::Abort(QString("Game object is not valid: %1").arg(net_id));
         }
+        return;
     }
-    // TODO: warning unknown message
+
+    qDebug() << "ProcessInputMessage: Unknown message type:" << message.type;
 }
 
 void WorldImplementation::PostOoc(const QString& who, const QString& text)
@@ -451,7 +452,7 @@ void WorldImplementation::PrepareToMapgen()
     global_objects_->random = GetFactory().CreateImpl(kv::SynchronizedRandom::GetTypeStatic());
     global_objects_->physics_engine_ = GetFactory().CreateImpl(kv::PhysicsEngine::GetTypeStatic());
 
-    quint32 seed = static_cast<quint32>(qrand());
+    const quint32 seed = static_cast<quint32>(qrand());
     global_objects_->random->SetParams(seed, 0);
 }
 
@@ -465,13 +466,11 @@ void WorldImplementation::AfterMapgen(const quint32 id, const bool unsync_genera
             = GetFactory().CreateImpl(UnsyncGenerator::GetTypeStatic());
     }
 
-    for (auto it = GetFactory().GetIdTable().begin();
-              it != GetFactory().GetIdTable().end();
-            ++it)
+    for (ObjectInfo info : GetFactory().GetIdTable())
     {
-        if (it->object && (it->object->GetTypeIndex() == SpawnPoint::GetTypeIndexStatic()))
+        if (info.object && (info.object->GetTypeIndex() == SpawnPoint::GetTypeIndexStatic()))
         {
-            global_objects_->lobby->AddSpawnPoint(it->object->GetId());
+            global_objects_->lobby->AddSpawnPoint(info.object->GetId());
         }
     }
 
