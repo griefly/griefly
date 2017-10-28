@@ -401,7 +401,7 @@ void MainForm::on_command_line_edit_returnPressed()
         qDebug() << "Restart round message will be sended to the server...";
         kv::Message message;
         message.type = kv::message_type::RESTART_ROUND;
-        Network2::GetInstance().SendMsg(message);
+        Network2::GetInstance().Send(message);
         return;
     }
     if (text.startsWith("/next_tick"))
@@ -425,7 +425,7 @@ void MainForm::on_command_line_edit_returnPressed()
         message.type = kv::message_type::NEXT_TICK;
         for (int i = 0; i < count; ++i)
         {
-            Network2::GetInstance().SendMsg(message);
+            Network2::GetInstance().Send(message);
         }
         return;
     }
@@ -451,7 +451,7 @@ void MainForm::on_command_line_edit_returnPressed()
 
     message.data = object;
 
-    Network2::GetInstance().SendMsg(message);
+    Network2::GetInstance().Send(message);
 }
 
 void MainForm::on_splitter_splitterMoved(int, int)

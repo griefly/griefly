@@ -322,7 +322,7 @@ void Representation::Click(int x, int y)
         }
 
         kv::Message msg = Network2::MakeClickMessage(id_to_send, message);
-        Network2::GetInstance().SendMsg(msg);
+        Network2::GetInstance().Send(msg);
     }
 }
 

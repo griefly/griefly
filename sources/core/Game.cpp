@@ -293,7 +293,7 @@ void Game::ProcessInputMessages()
             msg.type = message_type::HASH_MESSAGE;
             msg.data = {{"hash", static_cast<double>(hash)}, {"tick", game_tick}};
 
-            Network2::GetInstance().SendMsg(msg);
+            Network2::GetInstance().Send(msg);
 
             continue;
         }

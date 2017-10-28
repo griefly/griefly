@@ -30,20 +30,21 @@ public:
 public slots:
     void process();
 
-    void tryConnect(QString host, int port, QString login, QString password);
+    void tryConnect(
+        const QString& host, int port, const QString& login, const QString& password);
     void socketConnected();
 
-    void sendMessage(kv::Message message);
+    void sendMessage(const kv::Message& message);
     void disconnectSocket();
     void errorSocket(QAbstractSocket::SocketError error);
-    void handleFirstMessage(kv::Message message);
+    void handleFirstMessage(const kv::Message& message);
     void handleNewData();
 signals:
-    void firstMessage(kv::Message message);
-    void connectionEnd(QString reason);
+    void firstMessage(const kv::Message& message);
+    void connectionEnd(const QString& reason);
     void readyToStart(int your_id, QString map);
 private:
-    void HandleSuccessConnection(kv::Message m);
+    void HandleSuccessConnection(const kv::Message& message);
 
     QTcpSocket socket_;
 
@@ -92,39 +93,41 @@ public:
     static quint32 ExtractObjId(const QJsonObject& json);
     static QString ExtractAction(const QJsonObject& json);
 
-    static kv::Message MakeClickMessage(int object_id, QString click_type);
+    static kv::Message MakeClickMessage(int object_id, const QString& click_type);
 
     static Network2& GetInstance();
 
-    bool IsGood();
+    bool IsGood() const;
 
-    void TryConnect(QString host, int port, QString login, QString password);
+    void TryConnect(
+        const QString& host, int port, const QString& login, const QString& password);
 
-    void SendMsg(kv::Message message);
-    void SendOrdinaryMessage(QString text);
-    void SendPing(QString ping_id);
+    void Send(const kv::Message& message);
+    void SendOrdinaryMessage(const QString& text);
+    void SendPing(const QString& ping_id);
 
     void Disconnect();
 
-    bool IsMessageAvailable();
-    void WaitForMessageAvailable();
+    bool IsMessageAvailable() const;
+    void WaitForMessageAvailable() const;
     kv::Message PopMessage();
 
-    QByteArray GetMapData();
+    QByteArray GetMapData() const;
 public slots:
-    void sendMap(QString url, QByteArray data);
-    void onConnectionEnd(QString reason);
+    void sendMap(const QString& url, const QByteArray& data);
+    void onConnectionEnd(const QString& reason);
 signals:
     void mapSendingStarted();
     void mapSendingFinished();
-    void connectRequested(QString host, int port, QString login, QString password);
-    void sendMessage(kv::Message message);
+    void connectRequested(
+        const QString& host, int port, const QString& login, const QString& password);
+    void sendMessage(const kv::Message& message);
     void disconnectRequested();
-    void connectionSuccess(int your_id, QString map);
-    void connectionFailed(QString reason);
+    void connectionSuccess(int your_id, const QString& map);
+    void connectionFailed(const QString& reason);
 private slots:
     void mapDownloaded(QNetworkReply* reply);
-    void downloadMap(int your_id, QString map);
+    void downloadMap(int your_id, const QString& map);
 private:
     bool is_good_;
 
@@ -133,10 +136,10 @@ private:
     int your_id_;
     QString map_url_;
 
-    void PushMessage(kv::Message message);
+    void PushMessage(const kv::Message& message);
 
-    QMutex queue_mutex_;
-    QWaitCondition queue_wait_;
+    mutable QMutex queue_mutex_;
+    mutable QWaitCondition queue_wait_;
 
     QQueue<kv::Message> received_messages_;
 
