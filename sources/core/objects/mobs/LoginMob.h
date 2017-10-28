@@ -18,7 +18,7 @@ public:
     virtual void MindExit() override;
     virtual void MindEnter() override;
     virtual void GenerateInterfaceForFrame(GrowingFrame* representation) override;
-    virtual void ProcessMessage(const WorldInterface::Message& message) override;
+    virtual void ProcessMessage(const Message& message) override;
 
     virtual Position GetPosition() const override
     {

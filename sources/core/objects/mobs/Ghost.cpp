@@ -87,7 +87,7 @@ void Ghost::CalculateVisible(VisiblePoints* visible_list) const
     }
 }
 
-void Ghost::ProcessMessage(const WorldInterface::Message& message)
+void Ghost::ProcessMessage(const Message& message)
 {
     Mob::ProcessMessage(message);
 }

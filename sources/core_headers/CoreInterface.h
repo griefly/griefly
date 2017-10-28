@@ -11,6 +11,8 @@
 #include "representation/ViewInfo.h"
 #include "core/Constheader.h"
 
+#include "Messages.h"
+
 namespace kv
 {
 
@@ -149,12 +151,6 @@ private:
 class WorldInterface
 {
 public:
-    struct Message
-    {
-        qint32 type;
-        QJsonObject data;
-    };
-
     virtual ~WorldInterface() { }
 
     virtual void SaveWorld(FastSerializer* data) const = 0;

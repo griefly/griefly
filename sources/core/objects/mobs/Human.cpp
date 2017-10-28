@@ -130,7 +130,7 @@ bool Human::TryMove(Dir direct)
     return false;
 }
 
-void Human::ProcessMessage(const WorldInterface::Message& message)
+void Human::ProcessMessage(const Message& message)
 {
     if (   message.type == MessageType::ORDINARY
         && !lying_
