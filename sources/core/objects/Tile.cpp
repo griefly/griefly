@@ -149,7 +149,7 @@ bool CubeTile::CanTouch(IdPtr<MapObject> item, Dir first_dir, Dir second_dir) co
     auto tile = GetNeighbour(first_dir);
 
     if (   !CanPass(tile->GetPassable(RevertDir(first_dir)), passable::BIG_ITEM)
-        || !CanPass(tile->GetPassable(RevertDir(Dir::ALL)), passable::BIG_ITEM))
+        || !CanPass(tile->GetPassable(Dir::ALL), passable::BIG_ITEM))
     {
         return false;
     }

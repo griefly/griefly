@@ -14,11 +14,15 @@
 #include "core_headers/FastSerializer.h"
 #include "Hashes.h"
 
+#ifdef KV_NO_PARANOID
 #ifdef Q_CC_GNU
 #define KV_UNREACHABLE __builtin_unreachable();
 #else
 #define KV_UNREACHABLE
 #endif // Q_CC_GNU
+#else // KV_PARANOID
+#define KV_UNREACHABLE kv::Abort(QString("Unreachable: %1").arg(__func__));
+#endif // KV_PARANOID
 
 const int SIZE_H_SQ = 12; // visible size const
 const int SIZE_W_SQ = 12;
