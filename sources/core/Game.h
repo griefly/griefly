@@ -44,14 +44,14 @@ private:
     void Process();
 
     void AddLastMessages(QByteArray* data);
-    void AddMessageToMessageLog(Message message);
+    void AddMessageToMessageLog(kv::Message message);
 
     void AddBuildInfo(QByteArray* data);
 
     kv::FastSerializer serializer_;
 
-    std::vector<Message> messages_to_process_;
-    std::vector<Message> messages_log_;
+    std::vector<kv::Message> messages_to_process_;
+    std::vector<kv::Message> messages_log_;
     int log_pos_;
 
     bool is_end_process_;

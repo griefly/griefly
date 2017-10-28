@@ -4,7 +4,6 @@
 #include "core/Map.h"
 
 #include "net/MagicStrings.h"
-#include "net/NetworkMessagesTypes.h"
 
 using namespace kv;
 
@@ -30,7 +29,7 @@ void Mob::Delete()
 
 void Mob::ProcessMessage(const Message& message)
 {
-    if (message.type != MessageType::ORDINARY)
+    if (message.type != message_type::ORDINARY)
     {
         return;
     }

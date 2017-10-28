@@ -9,7 +9,6 @@
 #include "Map.h"
 #include "SynchronizedRandom.h"
 #include "net/MagicStrings.h"
-#include "net/NetworkMessagesTypes.h"
 #include "AutogenMetadata.h"
 
 #include "MapEditor.h"

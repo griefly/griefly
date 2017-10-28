@@ -321,7 +321,7 @@ void Representation::Click(int x, int y)
             message = Click::LEFT_R;
         }
 
-        Message msg = Network2::MakeClickMessage(id_to_send, message);
+        kv::Message msg = Network2::MakeClickMessage(id_to_send, message);
         Network2::GetInstance().SendMsg(msg);
     }
 }

@@ -13,14 +13,9 @@
 
 #include <QCoreApplication>
 
-#include "NetworkMessagesTypes.h"
 #include "Version.h"
 
-QJsonObject Network2::ParseJson(Message message)
-{
-    QJsonDocument doc = QJsonDocument::fromJson(message.json);
-    return doc.object();
-}
+using kv::Message;
 
 bool Network2::IsKey(const QJsonObject& json, const QString& key)
 {
@@ -49,15 +44,14 @@ Message Network2::MakeClickMessage(int object_id, QString click_type)
 {
     Message msg;
 
-    msg.type = MessageType::MOUSE_CLICK;
+    msg.type = kv::message_type::MOUSE_CLICK;
 
     QJsonObject obj;
     obj.insert("action", click_type);
-
     QJsonValue value(object_id);
     obj.insert("obj", value);
-    QJsonDocument doc(obj);
-    msg.json = doc.toJson(QJsonDocument::Compact);
+
+    msg.data = obj;
 
     return msg;
 }
@@ -126,8 +120,8 @@ void Network2::SendMsg(Message message)
 void Network2::SendOrdinaryMessage(QString text)
 {
     Message msg;
-    msg.type = MessageType::ORDINARY;
-    msg.json.append("{\"key\":\"" + text + "\"}");
+    msg.type = kv::message_type::ORDINARY;
+    msg.data.insert("key", text);
 
     SendMsg(msg);
 }
@@ -135,8 +129,8 @@ void Network2::SendOrdinaryMessage(QString text)
 void Network2::SendPing(QString ping_id)
 {
     Message msg;
-    msg.type = MessageType::PING;
-    msg.json.append("{\"ping_id\":\"" + ping_id + "\"}");
+    msg.type = kv::message_type::PING;
+    msg.data.insert("ping_id", ping_id);
 
     SendMsg(msg);
 }
@@ -315,10 +309,16 @@ bool SocketHandler::HandleBody()
     Message new_message;
     new_message.type = message_type_;
 
-    new_message.json.append(
+    QByteArray data;
+    data.append(
         &buffer_.constData()[buffer_pos_],
         message_size_);
     buffer_pos_ += message_size_;
+
+    // Dont check validation because server should always send correct json
+    // TODO: check anyway?
+    QJsonDocument document = QJsonDocument::fromJson(data);
+    new_message.data = document.object();
 
     if (is_first_message_)
     {
@@ -357,7 +357,7 @@ void SocketHandler::socketConnected()
     SendData("S132");
 
     Message login_message;
-    login_message.type = MessageType::INITAL_LOGIN_MESSAGE;
+    login_message.type = kv::message_type::INITAL_LOGIN_MESSAGE;
 
     QJsonObject obj;
     obj["login"] = login_;
@@ -369,11 +369,9 @@ void SocketHandler::socketConnected()
     bool is_guest = (login_ == "Guest");
     obj["guest"] = is_guest;
 
-    QJsonDocument doc(obj);
+    login_message.data = obj;
 
-    login_message.json = doc.toJson();
-
-    qDebug() << login_message.json;
+    qDebug() << login_message.data;
 
     sendMessage(login_message);
 
@@ -382,7 +380,8 @@ void SocketHandler::socketConnected()
 
 void SocketHandler::sendMessage(Message message)
 {
-    QByteArray& json = message.json;
+    QJsonDocument document(message.data);
+    QByteArray json = document.toJson(QJsonDocument::Compact);
 
     QByteArray data;
 
@@ -420,34 +419,36 @@ void SocketHandler::errorSocket(QAbstractSocket::SocketError error)
 
 void SocketHandler::handleFirstMessage(Message m)
 {
+    using namespace kv;
+
     switch (m.type)
     {
-    case MessageType::WRONG_GAME_VERSION:
+    case message_type::WRONG_GAME_VERSION:
         qDebug() << "Wrong game version";
-        qDebug() << m.json;
-        possible_error_reason_ = "Wrong game version: " + m.json;
+        qDebug() << m.data;
+        possible_error_reason_ = "Wrong game version: " + m.data["correct_game_version"].toString();
         break;
-    case MessageType::WRONG_AUTHENTICATION:
+    case message_type::WRONG_AUTHENTICATION:
         qDebug() << "Wrong authentication";
-        qDebug() << m.json;
+        qDebug() << m.data;
         possible_error_reason_ = "Wrong authentication";
         break;
-    case MessageType::SUCCESS_CONNECTION:
+    case message_type::SUCCESS_CONNECTION:
         qDebug() << "Success";
-        qDebug() << m.json;
+        qDebug() << m.data;
         HandleSuccessConnection(m);
         break;
-    case MessageType::MASTER_CLIENT_IS_NOT_CONNECTED:
+    case message_type::MASTER_CLIENT_IS_NOT_CONNECTED:
         qDebug() << "Master client is not connected";
         possible_error_reason_ = "Master client is not connected";
         break;
-    case MessageType::INTERNAL_SERVER_ERROR:
+    case message_type::INTERNAL_SERVER_ERROR:
         qDebug() << "The server experiences some internal troubles";
-        possible_error_reason_ = "The server experiences some internal troubles: " + m.json;
+        possible_error_reason_ = "The server experiences some internal troubles: " + m.data["message"].toString();
         break;
     default:
         qDebug() << "Unknown message type: " << m.type;
-        qDebug() << m.json;
+        qDebug() << m.data;
         possible_error_reason_ = "Unknown message type";
         break;
     }
@@ -455,14 +456,12 @@ void SocketHandler::handleFirstMessage(Message m)
 
 void SocketHandler::HandleSuccessConnection(Message message)
 {
-    QJsonObject obj = Network2::ParseJson(message);
+    qDebug() << message.data["map"];
+    qDebug() << message.data["your_id"];
 
-    qDebug() << obj["map"];
-    qDebug() << obj["your_id"];
+    map_ = message.data["map"].toString();
 
-    map_ = obj["map"].toString();
-
-    QJsonValue val = obj["your_id"];
+    QJsonValue val = message.data["your_id"];
     your_id_ = val.toVariant().toInt();
 
     emit readyToStart(your_id_, map_);

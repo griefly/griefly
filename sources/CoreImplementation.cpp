@@ -145,7 +145,7 @@ const QString TEXT("text");
 
 void WorldImplementation::ProcessInputMessage(const Message& message)
 {
-    if (message.type == MessageType::NEW_CLIENT)
+    if (message.type == message_type::NEW_CLIENT)
     {
         const int new_id = message.data.value(key::ID).toInt();
 
@@ -166,16 +166,16 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
         qDebug() << "New client: " << new_id << mob.Id();
         return;
     }
-    else if (message.type == MessageType::OOC_MESSAGE)
+    else if (message.type == message_type::OOC_MESSAGE)
     {
         const QString login = message.data[key::LOGIN].toString();
         const QString text = message.data[key::TEXT].toString();
         PostOoc(login, text);
         return;
     }
-    else if (   message.type == MessageType::ORDINARY
-             || message.type == MessageType::MOUSE_CLICK
-             || message.type == MessageType::MESSAGE)
+    else if (   message.type == message_type::ORDINARY
+             || message.type == message_type::MOUSE_CLICK
+             || message.type == message_type::MESSAGE)
     {
         const int net_id = message.data[key::ID].toInt();
         const quint32 game_id = GetPlayerId(net_id);

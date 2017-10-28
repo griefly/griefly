@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     // LCOV_EXCL_START
-    qRegisterMetaType<Message>();
+    qRegisterMetaType<kv::Message>();
 
     GetParamsHolder().ParseParams(argc, argv);
     QApplication app(argc, argv);
