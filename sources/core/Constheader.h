@@ -24,9 +24,6 @@
 #define KV_UNREACHABLE kv::Abort(QString("Unreachable: %1").arg(__func__));
 #endif // KV_PARANOID
 
-const int SIZE_H_SQ = 12; // visible size const
-const int SIZE_W_SQ = 12;
-
 enum class Dir : int
 {
     ALL = -1, // Basically, the center of something

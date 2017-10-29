@@ -2,7 +2,14 @@
 
 using kv::Position;
 
+namespace
+{
+
 const int RAY_MULTIPLIER = 2;
+const int SIZE_H_SQ = 12; // visible size const
+const int SIZE_W_SQ = 12;
+
+}
 
 int LosCalculator::PosToCorner(int pos)
 {

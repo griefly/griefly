@@ -72,6 +72,11 @@ void Ghost::CalculateVisible(VisiblePoints* visible_list) const
     visible_list->clear();
     Position p;
     p.z = GetPosition().z;
+
+    // TODO: proper viewport
+    const int SIZE_H_SQ = 12; // visible size const
+    const int SIZE_W_SQ = 12;
+
     int x_low_border = qMax(0, GetPosition().x - SIZE_H_SQ);
     int x_high_border = qMin(GetGame().GetMap().GetWidth(), GetPosition().x + SIZE_H_SQ);
     int y_low_border = qMax(0, GetPosition().y - SIZE_W_SQ);
