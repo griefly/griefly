@@ -54,6 +54,7 @@ private:
     std::vector<kv::Message> messages_log_;
     int log_pos_;
 
+    bool nodraw_;
     bool is_end_process_;
 
     float cpu_load_;

@@ -139,11 +139,6 @@ void MainForm::startGameLoop(int id, QString map)
     ui->widget->show();
     on_splitter_splitterMoved(0, 0);
 
-    if (GetParamsHolder().GetParamBool("-nodraw"))
-    {
-        NODRAW = true;
-    }
-
     if (GetParamsHolder().GetParamBool("-max_fps"))
     {
         fps_cap_ = GetParamsHolder().GetParam<int>("-max_fps");

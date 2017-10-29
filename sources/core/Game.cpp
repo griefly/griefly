@@ -40,7 +40,8 @@
 using namespace kv;
 
 Game::Game(Representation* representation)
-    : representation_(representation)
+    : representation_(representation),
+      nodraw_(false)
 {
     process_messages_ns_ = 0;
     foreach_process_ns_ = 0;
@@ -98,6 +99,8 @@ void Game::Process()
 
     int cpu_consumed_ms = 0;
 
+    nodraw_ = GetParamsHolder().GetParamBool("-nodraw");
+
     while (true)
     {
         Network2::GetInstance().WaitForMessageAvailable();
@@ -111,9 +114,6 @@ void Game::Process()
         }
 
         ProcessInputMessages();
-
-        const int ATMOS_OFTEN = 1;
-        const int ATMOS_MOVE_OFTEN = 1;
 
         if (process_in_)
         {
@@ -357,8 +357,11 @@ void Game::GenerateFrame()
 {
     AppendSystemTexts();
 
-    kv::GrowingFrame frame = representation_->GetGrowingFrame();
-    world_->Represent({{mob_, &frame}});
+    if (!nodraw_)
+    {
+        kv::GrowingFrame frame = representation_->GetGrowingFrame();
+        world_->Represent({{mob_, &frame}});
+    }
 
     representation_->Swap();
 }

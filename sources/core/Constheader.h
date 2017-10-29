@@ -27,8 +27,6 @@
 const int SIZE_H_SQ = 12; // visible size const
 const int SIZE_W_SQ = 12;
 
-extern bool NODRAW; // probably nodraw mode
-
 enum class Dir : int
 {
     ALL = -1, // Basically, the center of something

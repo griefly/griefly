@@ -212,28 +212,18 @@ void Representation::Process()
         autoplay_timer_.restart();
     }
 
-    if (!NODRAW)
-    {
-        MakeCurrentGLContext();
-        GetScreen().Clear();
+    MakeCurrentGLContext();
+    GetScreen().Clear();
 
-        Draw();
-        DrawInterface();
+    Draw();
+    DrawInterface();
 
-        const int PIXEL_MOVEMENT_SPEED = 16;
-        if (pixel_movement_tick_.elapsed() > PIXEL_MOVEMENT_SPEED)
-        {
-            PerformPixelMovement();
-            camera_.PerformPixelMovement();
-            pixel_movement_tick_.restart();
-        }
-    }
-    else
+    const int PIXEL_MOVEMENT_SPEED = 16;
+    if (pixel_movement_tick_.elapsed() > PIXEL_MOVEMENT_SPEED)
     {
-        const int SLEEP_MS = 50;
-        mutex_.unlock();
-        QThread::msleep(SLEEP_MS);
-        mutex_.lock();
+        PerformPixelMovement();
+        camera_.PerformPixelMovement();
+        pixel_movement_tick_.restart();
     }
 }
 
