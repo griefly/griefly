@@ -1,15 +1,6 @@
 #pragma once
 
-#include <map>
-#include <cstdio>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <algorithm>
-
-#include <qglobal.h>
 #include <QString>
-#include <QDebug>
 
 #include "core_headers/FastSerializer.h"
 #include "Hashes.h"
