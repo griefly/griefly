@@ -1,17 +1,13 @@
 #pragma once
 
-#include <cstring>
-
-#include <map>
-
+#include <QHash>
 #include <QString>
-
-#include "Idptr.h"
 
 namespace std
 {
     template<>
-    class hash<QString> {
+    class hash<QString>
+    {
     public:
         size_t operator()(const QString& value) const
         {

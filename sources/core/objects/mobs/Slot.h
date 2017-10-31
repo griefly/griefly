@@ -4,6 +4,7 @@
 
 #include "core/Hashes.h"
 #include "core/SaveableOperators.h"
+#include "core/Idptr.h"
 
 namespace kv
 {
