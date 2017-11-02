@@ -4,8 +4,7 @@
 #include <string>
 
 #include "core_headers/FastSerializer.h"
-
-#include "core/Hashes.h"
+#include "core_headers/Hashes.h"
 
 class ViewInfo;
 

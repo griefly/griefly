@@ -3,7 +3,7 @@
 #include <QMap>
 #include <QVector>
 
-#include "Hashes.h"
+#include "core_headers/Hashes.h"
 #include "core_headers/FastSerializer.h"
 
 namespace kv
