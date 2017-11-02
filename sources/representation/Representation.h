@@ -12,8 +12,8 @@
 #include <QElapsedTimer>
 
 #include "Sound.h"
-#include "core/Constheader.h"
 
+#include "core_headers/KvGlobals.h"
 #include "core_headers/CoreInterface.h"
 
 class Representation : public QObject

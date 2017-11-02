@@ -9,7 +9,7 @@
 
 #include <fstream>
 
-#include "core/Constheader.h"
+#include "core_headers/KvGlobals.h"
 #include "core/Helpers.h"
 
 MapEditor::EditorEntry::EditorEntry()

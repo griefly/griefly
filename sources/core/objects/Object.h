@@ -1,9 +1,9 @@
 #pragma once
 
 #include "core_headers/KvAbort.h"
+#include "core_headers/KvGlobals.h"
 
 #include "../FastIsType.h"
-#include "../Constheader.h"
 #include "../Idptr.h"
 #include "../Hashes.h"
 #include "../KvMacros.h"

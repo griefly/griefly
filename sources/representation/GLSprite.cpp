@@ -1,7 +1,8 @@
 #include <cassert>
 
+#include "core_headers/KvGlobals.h"
+
 #include "GLSprite.h"
-#include "core/Constheader.h"
 
 #include "core/objects/Object.h"
 

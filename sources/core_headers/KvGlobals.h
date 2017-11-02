@@ -3,7 +3,7 @@
 #include <QString>
 
 #include "core_headers/FastSerializer.h"
-#include "Hashes.h"
+#include "core/Hashes.h"
 
 #ifdef KV_NO_PARANOID
 #ifdef Q_CC_GNU

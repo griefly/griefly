@@ -8,7 +8,7 @@
 #include <map>
 #include <string>
 
-#include "core/Constheader.h"
+#include "core_headers/KvGlobals.h"
 
 class ParamsHolder
 {

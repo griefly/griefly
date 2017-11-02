@@ -9,7 +9,8 @@
 #include <QVector>
 
 #include "representation/ViewInfo.h"
-#include "core/Constheader.h"
+
+#include "core_headers/KvGlobals.h"
 
 #include "Messages.h"
 

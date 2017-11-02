@@ -1,9 +1,10 @@
 #include "AtmosHolder.h"
 
-#include "../Constheader.h"
+#include "core_headers/KvGlobals.h"
 
 namespace
 {
+    // TODO: Not reenterable! Remove this
     int loc_gases[atmos::GASES_NUM];
     int loc_energy;
 }

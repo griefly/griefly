@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include "Constheader.h"
+#include "core_headers/KvGlobals.h"
 #include "Map.h"
 
 #include "representation/Screen.h"

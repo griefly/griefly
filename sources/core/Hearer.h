@@ -2,7 +2,7 @@
 
 #include <QVector>
 
-#include "Constheader.h"
+#include "core_headers/KvGlobals.h"
 
 namespace kv
 {
