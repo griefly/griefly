@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core_headers/KvGlobals.h"
+#include "core/KvGlobals.h"
 #include "objects/Tile.h"
 #include "objects/Object.h"
 #include "atmos/Atmos.h"

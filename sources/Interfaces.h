@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "core_headers/KvGlobals.h"
+#include "core/KvGlobals.h"
 #include "core_headers/CoreInterface.h"
 
 #include "core/Idptr.h"

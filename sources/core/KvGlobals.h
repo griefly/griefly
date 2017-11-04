@@ -2,8 +2,9 @@
 
 #include <QString>
 
-#include "FastSerializer.h"
+#include "core_headers/FastSerializer.h"
 #include "core_headers/Hashes.h"
+#include "core_headers/Dir.h"
 
 #ifdef KV_NO_PARANOID
 #ifdef Q_CC_GNU
@@ -14,22 +15,6 @@
 #else // KV_PARANOID
 #define KV_UNREACHABLE kv::Abort(QString("Unreachable: %1").arg(__func__));
 #endif // KV_PARANOID
-
-enum class Dir : int
-{
-    ALL = -1, // Basically, the center of something
-    WEST = 0,
-    EAST = 1,
-    NORTH = 2,
-    SOUTH = 3,
-    UP = 4,
-    DOWN = 5,
-
-    SOUTHEAST = 6,
-    SOUTHWEST = 7,
-    NORTHEAST = 8,
-    NORTHWEST = 9,
-};
 
 inline kv::FastSerializer& operator<<(kv::FastSerializer& file, const Dir& dir)
 {

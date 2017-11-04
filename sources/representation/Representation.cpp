@@ -2,7 +2,7 @@
 
 #include <limits>
 
-#include "core_headers/KvGlobals.h"
+#include "core/KvGlobals.h"
 #include "core/Helpers.h"
 
 #include "Sound.h"

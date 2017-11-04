@@ -10,7 +10,7 @@
 
 #include "representation/ViewInfo.h"
 
-#include "KvGlobals.h"
+#include "Dir.h"
 #include "Messages.h"
 
 namespace kv
