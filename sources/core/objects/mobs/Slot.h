@@ -2,7 +2,7 @@
 
 #include "representation/ViewInfo.h"
 
-#include "core_headers/Hashes.h"
+#include "core/Hashes.h"
 
 #include "core/SaveableOperators.h"
 #include "core/Idptr.h"

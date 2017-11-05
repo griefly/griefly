@@ -8,7 +8,7 @@
 
 #include "FastIsType.h"
 #include "core_headers/KvAbort.h"
-#include "core_headers/FastSerializer.h"
+#include "core/FastSerializer.h"
 
 namespace kv
 {

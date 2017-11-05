@@ -4,7 +4,7 @@
 #include <QTextStream>
 #include <QFile>
 
-#include "core_headers/FastSerializer.h"
+#include "core/FastSerializer.h"
 
 inline QTextStream& qStdout()
 {

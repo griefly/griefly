@@ -3,8 +3,8 @@
 #include <vector>
 #include <string>
 
-#include "core_headers/FastSerializer.h"
-#include "core_headers/Hashes.h"
+#include "core/FastSerializer.h"
+#include "core/Hashes.h"
 
 class ViewInfo;
 
