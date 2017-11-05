@@ -26,7 +26,7 @@ public:
     virtual qint32 GetGameTick() const override;
     virtual quint32 Hash() const override;
 
-    virtual void SaveWorld(FastSerializer* data) const override;
+    virtual QByteArray SaveWorld() const override;
 
     // Game interface
     virtual AtmosInterface& GetAtmosphere() override;

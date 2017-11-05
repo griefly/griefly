@@ -153,7 +153,8 @@ class WorldInterface
 public:
     virtual ~WorldInterface() { }
 
-    virtual void SaveWorld(FastSerializer* data) const = 0;
+    // TODO: FastSerializer should be able to serialize right into QByteArray
+    virtual QByteArray SaveWorld() const = 0;
 
     // TODO: Look into #360 properly
     virtual void StartTick() = 0;
