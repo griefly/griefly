@@ -7,7 +7,7 @@
 #include <QTextStream>
 #include <QUuid>
 
-#include "core_headers/KvAbort.h"
+#include "core/KvAbort.h"
 
 namespace
 {

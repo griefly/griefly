@@ -27,14 +27,6 @@ TEST(CoreInterface, FrameDataAndNestedStructsConstructors)
     EXPECT_EQ(frame.camera_pos_y, 0);
 }
 
-TEST(CoreInterfaceDeathTest, GrowingFrameConstructor)
-{
-    EXPECT_DEATH(
-    {
-        kv::GrowingFrame frame(nullptr);
-    }, "nullptr");
-}
-
 namespace
 {
 
