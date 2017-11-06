@@ -36,20 +36,33 @@ public:
     // Check if framesets are same
     static bool IsSameFramesets(const ViewInfo& left, const ViewInfo& right);
 
+    class ConstFramesetInfo;
     class FramesetInfo
     {
+        friend class ViewInfo::ConstFramesetInfo;
     public:
-        static bool IsSameSprites(const FramesetInfo& left, const FramesetInfo& right)
+        FramesetInfo(kv::RawViewInfo::RawFramesetInfo* data)
+            : data_(data)
         {
-            return kv::IsSameSprites(*left.data_, *right.data_);
+            // Nothing
         }
-
-        FramesetInfo(kv::RawViewInfo::RawFramesetInfo* data);
-
-        void SetSprite(const QString& name);
-        void SetState(const QString& state);
-        void SetAngle(int angle);
-        void SetShift(int shift_x, int shift_y);
+        void SetSprite(const QString& name)
+        {
+            data_->sprite_name = name;
+        }
+        void SetState(const QString& name)
+        {
+            data_->state = name;
+        }
+        void SetAngle(int angle)
+        {
+            data_->angle = angle;
+        }
+        void SetShift(int shift_x, int shift_y)
+        {
+            data_->shift_x = shift_x;
+            data_->shift_y = shift_y;
+        }
 
         const QString& GetState() const { return data_->state; }
         const QString& GetSprite() const { return data_->sprite_name; }
@@ -62,15 +75,15 @@ public:
 
     class ConstFramesetInfo
     {
+        friend class ViewInfo;
     public:
-        static bool IsSameSprites(const ConstFramesetInfo& left, const ConstFramesetInfo& right)
-        {
-            return kv::IsSameSprites(*left.data_, *right.data_);
-        }
-
-        // TODO: constructor from FramesetInfo
         ConstFramesetInfo(const kv::RawViewInfo::RawFramesetInfo* data)
             : data_(data)
+        {
+            // Nothing
+        }
+        ConstFramesetInfo(const FramesetInfo& other)
+            : data_(other.data_)
         {
             // Nothing
         }
@@ -83,6 +96,11 @@ public:
     private:
         const kv::RawViewInfo::RawFramesetInfo* const data_;
     };
+
+    static bool IsSameSprites(const ConstFramesetInfo& left, const ConstFramesetInfo& right)
+    {
+        return kv::IsSameSprites(*left.data_, *right.data_);
+    }
 
     class FramesetInfoSet
     {

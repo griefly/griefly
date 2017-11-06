@@ -222,7 +222,7 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
     //qDebug() << "Not same framesets "
     //         << QString::fromStdString(view_info.GetBaseFrameset().GetSprite());
 
-    if (!ViewInfo::ConstFramesetInfo::IsSameSprites(
+    if (!ViewInfo::IsSameSprites(
             view_info.GetBaseFrameset(),
             info_.GetBaseFrameset()))
     {
@@ -236,7 +236,7 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
         unsigned int intermediate_size = std::min(info_.GetOverlays().Size(), new_overlays.Size());
         for (; counter < intermediate_size; ++counter)
         {
-            if (!ViewInfo::ConstFramesetInfo::IsSameSprites(
+            if (!ViewInfo::IsSameSprites(
                     new_overlays[counter],
                     info_.GetOverlays()[counter]))
             {
@@ -256,7 +256,7 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
         unsigned int intermediate_size = std::min(info_.GetUnderlays().Size(), new_underlays.Size());
         for (; counter < intermediate_size; ++counter)
         {
-            if (!ViewInfo::ConstFramesetInfo::IsSameSprites(
+            if (!ViewInfo::IsSameSprites(
                     new_underlays[counter],
                     info_.GetUnderlays()[counter]))
             {

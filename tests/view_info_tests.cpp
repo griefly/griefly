@@ -46,41 +46,41 @@ TEST(FramesetInfo, IsSameSprites)
 {
     kv::RawViewInfo::RawFramesetInfo raw_info1;
     ViewInfo::FramesetInfo frameset_info1(&raw_info1);
-    ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info1));
+    EXPECT_TRUE(ViewInfo::IsSameSprites(frameset_info1, frameset_info1));
 
     frameset_info1.SetSprite("sprite");
     frameset_info1.SetState("state");
     frameset_info1.SetAngle(42);
     frameset_info1.SetShift(420, 420);
-    ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info1));
+    EXPECT_TRUE(ViewInfo::IsSameSprites(frameset_info1, frameset_info1));
 
     kv::RawViewInfo::RawFramesetInfo raw_info2;
     ViewInfo::FramesetInfo frameset_info2(&raw_info2);
-    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+    EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 
     frameset_info2.SetSprite("sprite");
     frameset_info2.SetState("state");
     frameset_info2.SetAngle(42);
     frameset_info2.SetShift(420, 420);
-    ASSERT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));    
+    EXPECT_TRUE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 
     frameset_info2.SetSprite("sprite2");
-    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+    EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 
     frameset_info2.SetSprite("sprite");
     frameset_info2.SetState("state2");
-    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+    EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 
     frameset_info2.SetState("state");
     frameset_info2.SetAngle(43);
-    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+    EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 
     frameset_info2.SetAngle(42);
     frameset_info2.SetShift(1, 420);
-    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+    EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 
     frameset_info2.SetShift(420, 1);
-    ASSERT_FALSE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info1, frameset_info2));
+    EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 }
 
 // TODO: ConstFrameInfo tests

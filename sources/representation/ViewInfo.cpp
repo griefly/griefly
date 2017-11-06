@@ -98,33 +98,6 @@ bool kv::IsSameSprites(
     return true;
 }
 
-ViewInfo::FramesetInfo::FramesetInfo(kv::RawViewInfo::RawFramesetInfo* data)
-    : data_(data)
-{
-    // Nothing
-}
-
-void ViewInfo::FramesetInfo::SetAngle(int angle)
-{
-    data_->angle = angle;
-}
-
-void ViewInfo::FramesetInfo::SetShift(int shift_x, int shift_y)
-{
-    data_->shift_x = shift_x;
-    data_->shift_y = shift_y;
-}
-
-void ViewInfo::FramesetInfo::SetSprite(const QString& name)
-{
-    data_->sprite_name = name;
-}
-
-void ViewInfo::FramesetInfo::SetState(const QString& name)
-{
-    data_->state = name;
-}
-
 bool ViewInfo::IsSameFramesets(const ViewInfo& left, const ViewInfo& right)
 {
     if (left.data_.underlays.size() != right.data_.underlays.size())
@@ -146,21 +119,21 @@ bool ViewInfo::IsSameFramesets(const ViewInfo& left, const ViewInfo& right)
         return false;
     }
 
-    if (!IsSameSprites(left.data_.base_frameset, right.data_.base_frameset))
+    if (!kv::IsSameSprites(left.data_.base_frameset, right.data_.base_frameset))
     {
         return false;
     }
 
     for (int i = 0; i < left.data_.underlays.size(); ++i)
     {
-        if (!IsSameSprites(left.data_.underlays[i], right.data_.underlays[i]))
+        if (!kv::IsSameSprites(left.data_.underlays[i], right.data_.underlays[i]))
         {
             return false;
         }
     }
     for (int i = 0; i < left.data_.overlays.size(); ++i)
     {
-        if (!IsSameSprites(left.data_.overlays[i], right.data_.overlays[i]))
+        if (!kv::IsSameSprites(left.data_.overlays[i], right.data_.overlays[i]))
         {
             return false;
         }
