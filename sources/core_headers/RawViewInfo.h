@@ -10,19 +10,34 @@ struct RawViewInfo
 public:
     struct RawFramesetInfo
     {
-        QString sprite_name_;
-        int angle_;
-        QString state_;
-        int shift_x_;
-        int shift_y_;
+        RawFramesetInfo()
+            : angle(0),
+              shift_x(0),
+              shift_y(0)
+        {
+            // Nothing
+        }
+
+        QString sprite_name;
+        int angle;
+        QString state;
+        int shift_x;
+        int shift_y;
     };
 
-    QVector<RawFramesetInfo> overlays_;
-    QVector<RawFramesetInfo> underlays_;
+    RawViewInfo()
+        : angle(0),
+          transparency(0)
+    {
+        // Nothing
+    }
 
-    int angle_;
-    int transparency_;
-    RawFramesetInfo base_frameset_;
+    QVector<RawFramesetInfo> overlays;
+    QVector<RawFramesetInfo> underlays;
+
+    int angle;
+    int transparency;
+    RawFramesetInfo base_frameset;
 };
 
 }

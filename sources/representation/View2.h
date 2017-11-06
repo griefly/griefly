@@ -16,7 +16,7 @@ public:
     public:
         FramesetState();
 
-        void LoadFramesetInfo(const ViewInfo::FramesetInfo& frameset_info);
+        void LoadFramesetInfo(const ViewInfo::ConstFramesetInfo& frameset_info);
 
         const GLSprite* GetSprite() const { return sprite_; }
         const ImageMetadata::SpriteMetadata* GetMetadata() const { return metadata_; }

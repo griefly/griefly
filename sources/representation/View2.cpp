@@ -10,7 +10,7 @@ View2::FramesetState::FramesetState()
     last_frame_tick_.start();
 }
 
-void View2::FramesetState::LoadFramesetInfo(const ViewInfo::FramesetInfo& frameset_info)
+void View2::FramesetState::LoadFramesetInfo(const ViewInfo::ConstFramesetInfo& frameset_info)
 {
     Reset();
 
@@ -222,7 +222,7 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
     //qDebug() << "Not same framesets "
     //         << QString::fromStdString(view_info.GetBaseFrameset().GetSprite());
 
-    if (!ViewInfo::FramesetInfo::IsSameSprites(
+    if (!ViewInfo::ConstFramesetInfo::IsSameSprites(
             view_info.GetBaseFrameset(),
             info_.GetBaseFrameset()))
     {
@@ -231,19 +231,19 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
 
     {
         const auto& new_overlays = view_info.GetOverlays();
-        overlays_.resize(new_overlays.size());
+        overlays_.resize(new_overlays.Size());
         unsigned int counter = 0;
-        unsigned int intermediate_size = std::min(info_.GetOverlays().size(), new_overlays.size());
+        unsigned int intermediate_size = std::min(info_.GetOverlays().Size(), new_overlays.Size());
         for (; counter < intermediate_size; ++counter)
         {
-            if (!ViewInfo::FramesetInfo::IsSameSprites(
+            if (!ViewInfo::ConstFramesetInfo::IsSameSprites(
                     new_overlays[counter],
                     info_.GetOverlays()[counter]))
             {
                 overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
             }
         }
-        for (; counter < new_overlays.size(); ++counter)
+        for (; counter < new_overlays.Size(); ++counter)
         {
             overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
         }
@@ -251,19 +251,19 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
 
     {
         const auto& new_underlays = view_info.GetUnderlays();
-        underlays_.resize(new_underlays.size());
+        underlays_.resize(new_underlays.Size());
         unsigned int counter = 0;
-        unsigned int intermediate_size = std::min(info_.GetUnderlays().size(), new_underlays.size());
+        unsigned int intermediate_size = std::min(info_.GetUnderlays().Size(), new_underlays.Size());
         for (; counter < intermediate_size; ++counter)
         {
-            if (!ViewInfo::FramesetInfo::IsSameSprites(
+            if (!ViewInfo::ConstFramesetInfo::IsSameSprites(
                     new_underlays[counter],
                     info_.GetUnderlays()[counter]))
             {
                 underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
             }
         }
-        for (; counter < new_underlays.size(); ++counter)
+        for (; counter < new_underlays.Size(); ++counter)
         {
             underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
         }

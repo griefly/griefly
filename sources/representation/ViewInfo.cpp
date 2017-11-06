@@ -1,169 +1,166 @@
 #include "ViewInfo.h"
 
+kv::FastSerializer& operator<<(kv::FastSerializer& file, const kv::RawViewInfo::RawFramesetInfo& frameset_info)
+{
+    file << frameset_info.sprite_name;
+    file << frameset_info.state;
+    file << frameset_info.angle;
+    file << frameset_info.shift_x;
+    file << frameset_info.shift_y;
+    return file;
+}
+
+kv::FastDeserializer& operator>>(kv::FastDeserializer& file, kv::RawViewInfo::RawFramesetInfo& frameset_info)
+{
+    file >> frameset_info.sprite_name;
+    file >> frameset_info.state;
+    file >> frameset_info.angle;
+    file >> frameset_info.shift_x;
+    file >> frameset_info.shift_y;
+    return file;
+}
+
 kv::FastSerializer& operator<<(kv::FastSerializer& file, const ViewInfo& view_info)
 {
-    file << view_info.base_frameset_;
+    file << view_info.data_.base_frameset;
 
-    file << static_cast<quint32>(view_info.underlays_.size());
-    for (auto it = view_info.underlays_.begin(); it != view_info.underlays_.end(); ++it)
+    file << static_cast<quint32>(view_info.data_.underlays.size());
+    for (auto it = view_info.data_.underlays.begin(); it != view_info.data_.underlays.end(); ++it)
     {
         file << *it;
     }
 
-    file << static_cast<quint32>(view_info.overlays_.size());
-    for (auto it = view_info.overlays_.begin(); it != view_info.overlays_.end(); ++it)
+    file << static_cast<quint32>(view_info.data_.overlays.size());
+    for (auto it = view_info.data_.overlays.begin(); it != view_info.data_.overlays.end(); ++it)
     {
         file << *it;
     }
 
-    file << view_info.angle_;
-    file << view_info.transparency_;
+    file << view_info.data_.angle;
+    file << view_info.data_.transparency;
 
     return file;
 }
 kv::FastDeserializer& operator>>(kv::FastDeserializer& file, ViewInfo& view_info)
 {
-    file >> view_info.base_frameset_;
+    file >> view_info.data_.base_frameset;
 
     quint32 u_size;
     file >> u_size;
-    view_info.underlays_.resize(u_size);
+    view_info.data_.underlays.resize(u_size);
     for (quint32 i = 0; i < u_size; ++i)
     {
-        ViewInfo::FramesetInfo frameset;
+        kv::RawViewInfo::RawFramesetInfo frameset;
         file >> frameset;
-        view_info.underlays_[i] = frameset;
+        view_info.data_.underlays[i] = frameset;
     }
 
     quint32 o_size;
     file >> o_size;
-    view_info.overlays_.resize(o_size);
+    view_info.data_.overlays.resize(o_size);
     for (quint32 i = 0; i < o_size; ++i)
     {
-        ViewInfo::FramesetInfo frameset;
+        kv::RawViewInfo::RawFramesetInfo frameset;
         file >> frameset;
-        view_info.overlays_[i] = frameset;
+        view_info.data_.overlays[i] = frameset;
     }
 
-    file >> view_info.angle_;
-    file >> view_info.transparency_;
+    file >> view_info.data_.angle;
+    file >> view_info.data_.transparency;
 
     return file;
 }
 
-kv::FastSerializer& operator<<(kv::FastSerializer& file, const ViewInfo::FramesetInfo& frameset_info)
+bool kv::IsSameSprites(
+    const kv::RawViewInfo::RawFramesetInfo& left,
+    const kv::RawViewInfo::RawFramesetInfo& right)
 {
-    file << frameset_info.sprite_name_;
-    file << frameset_info.state_;
-    file << frameset_info.angle_;
-    file << frameset_info.shift_x_;
-    file << frameset_info.shift_y_;
-    return file;
-}
-
-kv::FastDeserializer& operator>>(kv::FastDeserializer& file, ViewInfo::FramesetInfo& frameset_info)
-{
-    file >> frameset_info.sprite_name_;
-    file >> frameset_info.state_;
-    file >> frameset_info.angle_;
-    file >> frameset_info.shift_x_;
-    file >> frameset_info.shift_y_;
-    return file;
-}
-
-bool ViewInfo::FramesetInfo::IsSameSprites(
-    const ViewInfo::FramesetInfo &left,
-    const ViewInfo::FramesetInfo &right)
-{
-    if (left.sprite_name_ != right.sprite_name_)
+    if (left.sprite_name != right.sprite_name)
     {
         return false;
     }
-    if (left.state_ != right.state_)
+    if (left.state != right.state)
     {
         return false;
     }
-    if (left.angle_ != right.angle_)
+    if (left.angle != right.angle)
     {
         return false;
     }
-    if (left.shift_x_ != right.shift_x_)
+    if (left.shift_x != right.shift_x)
     {
         return false;
     }
-    if (left.shift_y_ != right.shift_y_)
+    if (left.shift_y != right.shift_y)
     {
         return false;
     }
     return true;
 }
 
-ViewInfo::FramesetInfo::FramesetInfo()
+ViewInfo::FramesetInfo::FramesetInfo(kv::RawViewInfo::RawFramesetInfo* data)
+    : data_(data)
 {
-    sprite_name_ = "";
-    state_ = "";
-    angle_ = 0;
-    shift_x_ = 0;
-    shift_y_ = 0;
+    // Nothing
 }
 
 void ViewInfo::FramesetInfo::SetAngle(int angle)
 {
-    angle_ = angle;
+    data_->angle = angle;
 }
 
 void ViewInfo::FramesetInfo::SetShift(int shift_x, int shift_y)
 {
-    shift_x_ = shift_x;
-    shift_y_ = shift_y;
+    data_->shift_x = shift_x;
+    data_->shift_y = shift_y;
 }
 
 void ViewInfo::FramesetInfo::SetSprite(const QString& name)
 {
-    sprite_name_ = name;
+    data_->sprite_name = name;
 }
 
 void ViewInfo::FramesetInfo::SetState(const QString& name)
 {
-    state_ = name;
+    data_->state = name;
 }
 
-bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
+bool ViewInfo::IsSameFramesets(const ViewInfo& left, const ViewInfo& right)
 {
-    if (left.underlays_.size() != right.underlays_.size())
+    if (left.data_.underlays.size() != right.data_.underlays.size())
     {
         return false;
     }
-    if (left.overlays_.size() != right.overlays_.size())
-    {
-        return false;
-    }
-
-    if (left.angle_ != right.angle_)
+    if (left.data_.overlays.size() != right.data_.overlays.size())
     {
         return false;
     }
 
-    if (left.transparency_ != right.transparency_)
+    if (left.data_.angle != right.data_.angle)
     {
         return false;
     }
 
-    if (!FramesetInfo::IsSameSprites(left.base_frameset_, right.base_frameset_))
+    if (left.data_.transparency != right.data_.transparency)
     {
         return false;
     }
 
-    for (int i = 0; i < static_cast<int>(left.underlays_.size()); ++i)
+    if (!IsSameSprites(left.data_.base_frameset, right.data_.base_frameset))
     {
-        if (!FramesetInfo::IsSameSprites(left.underlays_[i], right.underlays_[i]))
+        return false;
+    }
+
+    for (int i = 0; i < left.data_.underlays.size(); ++i)
+    {
+        if (!IsSameSprites(left.data_.underlays[i], right.data_.underlays[i]))
         {
             return false;
         }
     }
-    for (int i = 0; i < static_cast<int>(left.overlays_.size()); ++i)
+    for (int i = 0; i < left.data_.overlays.size(); ++i)
     {
-        if (!FramesetInfo::IsSameSprites(left.overlays_[i], right.overlays_[i]))
+        if (!IsSameSprites(left.data_.overlays[i], right.data_.overlays[i]))
         {
             return false;
         }
@@ -173,46 +170,46 @@ bool ViewInfo::IsSameFramesets(const ViewInfo &left, const ViewInfo &right)
 
 ViewInfo::ViewInfo()
 {
-    angle_ = 0;
-    transparency_ = MAX_TRANSPARENCY;
+    data_.angle = 0;
+    data_.transparency = MAX_TRANSPARENCY;
 }
 
 void ViewInfo::SetAngle(int angle)
 {
-    angle_ = angle;
+    data_.angle = angle;
 }
 
 void ViewInfo::SetTransparency(int transparency)
 {
-    transparency_ = transparency;
+    data_.transparency = transparency;
 }
 
-ViewInfo::FramesetInfo& ViewInfo::AddOverlay(
+ViewInfo::FramesetInfo ViewInfo::AddOverlay(
     const QString& sprite,
     const QString& state)
 {
-    FramesetInfo frameset;
-    frameset.SetSprite(sprite);
-    frameset.SetState(state);
-    overlays_.push_back(frameset);
-    return overlays_.back();
+    kv::RawViewInfo::RawFramesetInfo frameset;
+    frameset.sprite_name = sprite;
+    frameset.state = state;
+    data_.overlays.push_back(frameset);
+    return ViewInfo::FramesetInfo(&data_.overlays.back());
 }
-ViewInfo::FramesetInfo& ViewInfo::AddUnderlay(
+ViewInfo::FramesetInfo ViewInfo::AddUnderlay(
     const QString& sprite,
     const QString& state)
 {
-    FramesetInfo frameset;
-    frameset.SetSprite(sprite);
-    frameset.SetState(state);
-    underlays_.push_back(frameset);
-    return underlays_.back();
+    kv::RawViewInfo::RawFramesetInfo frameset;
+    frameset.sprite_name = sprite;
+    frameset.state = state;
+    data_.underlays.push_back(frameset);
+    return ViewInfo::FramesetInfo(&data_.underlays.back());
 }
 
 void ViewInfo::RemoveOverlays()
 {
-    overlays_.clear();
+    data_.overlays.clear();
 }
 void ViewInfo::RemoveUnderlays()
 {
-    underlays_.clear();
+    data_.underlays.clear();
 }
