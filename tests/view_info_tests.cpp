@@ -2,44 +2,86 @@
 
 #include <gtest/gtest.h>
 
+TEST(ConstFramesetInfo, Getters)
+{
+    kv::RawViewInfo::RawFramesetInfo raw_info;
+
+    ViewInfo::ConstFramesetInfo frameset_info(&raw_info);
+    EXPECT_EQ(frameset_info.GetSprite(), "");
+    EXPECT_EQ(frameset_info.GetState(), "");
+    EXPECT_EQ(frameset_info.GetAngle(), 0);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
+
+    raw_info.sprite_name = "something";
+    EXPECT_EQ(frameset_info.GetSprite(), "something");
+    EXPECT_EQ(frameset_info.GetState(), "");
+    EXPECT_EQ(frameset_info.GetAngle(), 0);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
+
+    raw_info.state = "11112";
+    EXPECT_EQ(frameset_info.GetSprite(), "something");
+    EXPECT_EQ(frameset_info.GetState(), "11112");
+    EXPECT_EQ(frameset_info.GetAngle(), 0);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
+
+    raw_info.angle = 42;
+    EXPECT_EQ(frameset_info.GetSprite(), "something");
+    EXPECT_EQ(frameset_info.GetState(), "11112");
+    EXPECT_EQ(frameset_info.GetAngle(), 42);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
+
+    raw_info.shift_x = 11;
+    raw_info.shift_y = 22;
+    EXPECT_EQ(frameset_info.GetSprite(), "something");
+    EXPECT_EQ(frameset_info.GetState(), "11112");
+    EXPECT_EQ(frameset_info.GetAngle(), 42);
+    EXPECT_EQ(frameset_info.GetShiftX(), 11);
+    EXPECT_EQ(frameset_info.GetShiftY(), 22);
+}
+
+
 TEST(FramesetInfo, SettersAndGetters)
 {
     kv::RawViewInfo::RawFramesetInfo raw_info;
 
     ViewInfo::FramesetInfo frameset_info(&raw_info);
-    ASSERT_EQ(frameset_info.GetSprite(), "");
-    ASSERT_EQ(frameset_info.GetState(), "");
-    ASSERT_EQ(frameset_info.GetAngle(), 0);
-    ASSERT_EQ(frameset_info.GetShiftX(), 0);
-    ASSERT_EQ(frameset_info.GetShiftY(), 0);
+    EXPECT_EQ(frameset_info.GetSprite(), "");
+    EXPECT_EQ(frameset_info.GetState(), "");
+    EXPECT_EQ(frameset_info.GetAngle(), 0);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
 
     frameset_info.SetSprite("something");
-    ASSERT_EQ(frameset_info.GetSprite(), "something");
-    ASSERT_EQ(frameset_info.GetState(), "");
-    ASSERT_EQ(frameset_info.GetAngle(), 0);
-    ASSERT_EQ(frameset_info.GetShiftX(), 0);
-    ASSERT_EQ(frameset_info.GetShiftY(), 0);
+    EXPECT_EQ(frameset_info.GetSprite(), "something");
+    EXPECT_EQ(frameset_info.GetState(), "");
+    EXPECT_EQ(frameset_info.GetAngle(), 0);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
 
     frameset_info.SetState("11112");
-    ASSERT_EQ(frameset_info.GetSprite(), "something");
-    ASSERT_EQ(frameset_info.GetState(), "11112");
-    ASSERT_EQ(frameset_info.GetAngle(), 0);
-    ASSERT_EQ(frameset_info.GetShiftX(), 0);
-    ASSERT_EQ(frameset_info.GetShiftY(), 0);
+    EXPECT_EQ(frameset_info.GetSprite(), "something");
+    EXPECT_EQ(frameset_info.GetState(), "11112");
+    EXPECT_EQ(frameset_info.GetAngle(), 0);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
 
     frameset_info.SetAngle(42);
-    ASSERT_EQ(frameset_info.GetSprite(), "something");
-    ASSERT_EQ(frameset_info.GetState(), "11112");
-    ASSERT_EQ(frameset_info.GetAngle(), 42);
-    ASSERT_EQ(frameset_info.GetShiftX(), 0);
-    ASSERT_EQ(frameset_info.GetShiftY(), 0);
+    EXPECT_EQ(frameset_info.GetSprite(), "something");
+    EXPECT_EQ(frameset_info.GetState(), "11112");
+    EXPECT_EQ(frameset_info.GetAngle(), 42);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
 
     frameset_info.SetShift(11, 22);
-    ASSERT_EQ(frameset_info.GetSprite(), "something");
-    ASSERT_EQ(frameset_info.GetState(), "11112");
-    ASSERT_EQ(frameset_info.GetAngle(), 42);
-    ASSERT_EQ(frameset_info.GetShiftX(), 11);
-    ASSERT_EQ(frameset_info.GetShiftY(), 22);
+    EXPECT_EQ(frameset_info.GetSprite(), "something");
+    EXPECT_EQ(frameset_info.GetState(), "11112");
+    EXPECT_EQ(frameset_info.GetAngle(), 42);
+    EXPECT_EQ(frameset_info.GetShiftX(), 11);
+    EXPECT_EQ(frameset_info.GetShiftY(), 22);
 }
 
 TEST(FramesetInfo, IsSameSprites)
