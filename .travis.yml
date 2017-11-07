@@ -12,7 +12,7 @@ language: cpp
 compiler: gcc
 
 before_install:
-  - export CXX="g++-4.9"
+  - export CXX="g++-5"
   # work around https://github.com/travis-ci/travis-ci/issues/8363
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     pyenv global system 3.5;
@@ -24,7 +24,7 @@ install:
     sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
     sudo add-apt-repository -y ppa:beineri/opt-qt591-trusty;
     sudo apt-get update -qq;
-    sudo apt-get install -y g++-4.9;
+    sudo apt-get install -y g++-5;
     sudo apt-get install -y qt59base;
     sudo apt-get install -y qt59multimedia;
     sudo apt-get install -y lcov;
