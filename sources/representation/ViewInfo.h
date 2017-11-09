@@ -8,6 +8,26 @@
 
 #include "core_headers/RawViewInfo.h"
 
+inline kv::FastSerializer& operator<<(kv::FastSerializer& file, const kv::RawViewInfo::RawFramesetInfo& frameset_info)
+{
+    file << frameset_info.sprite_name;
+    file << frameset_info.state;
+    file << frameset_info.angle;
+    file << frameset_info.shift_x;
+    file << frameset_info.shift_y;
+    return file;
+}
+
+inline kv::FastDeserializer& operator>>(kv::FastDeserializer& file, kv::RawViewInfo::RawFramesetInfo& frameset_info)
+{
+    file >> frameset_info.sprite_name;
+    file >> frameset_info.state;
+    file >> frameset_info.angle;
+    file >> frameset_info.shift_x;
+    file >> frameset_info.shift_y;
+    return file;
+}
+
 class ViewInfo;
 
 kv::FastSerializer& operator<<(kv::FastSerializer& file, const ViewInfo& view_info);

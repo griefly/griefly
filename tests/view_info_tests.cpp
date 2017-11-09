@@ -169,42 +169,30 @@ TEST(FramesetInfo, IsSameSprites)
     EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 }
 
-// TODO: RawFramesetInfo
-/*TEST(FramesetInfo, StreamOperators)
+TEST(RawFramesetInfo, StreamOperators)
 {
-    kv::RawViewInfo::RawFramesetInfo raw_info;
-    ViewInfo::FramesetInfo frameset_info(&raw_info);
-    frameset_info.SetSprite("sprite 1");
-    frameset_info.SetState("state 2");
-    frameset_info.SetAngle(84);
-    frameset_info.SetShift(12, 13);
+    kv::RawViewInfo::RawFramesetInfo frameset_info;
+    frameset_info.sprite_name = "sprite 1";
+    frameset_info.state = "state 2";
+    frameset_info.angle = 84;
+    frameset_info.shift_x = 12;
+    frameset_info.shift_y = 13;
 
     kv::FastSerializer serialzier(1);
     serialzier << frameset_info;
 
     kv::FastDeserializer deserializer(serialzier.GetData(), serialzier.GetIndex());
 
-    kv::RawViewInfo::RawFramesetInfo raw_info2;
-    ViewInfo::FramesetInfo frameset_info2(&raw_info2);
+    kv::RawViewInfo::RawFramesetInfo frameset_info2;
     deserializer >> frameset_info2;
-    EXPECT_EQ(frameset_info2.GetSprite(), "sprite 1");
-    EXPECT_EQ(frameset_info2.GetState(), "state 2");
-    EXPECT_EQ(frameset_info2.GetAngle(), 84);
-    EXPECT_EQ(frameset_info2.GetShiftX(), 12);
-    EXPECT_EQ(frameset_info2.GetShiftY(), 13);
+    EXPECT_EQ(frameset_info2.sprite_name, "sprite 1");
+    EXPECT_EQ(frameset_info2.state, "state 2");
+    EXPECT_EQ(frameset_info2.angle, 84);
+    EXPECT_EQ(frameset_info2.shift_x, 12);
+    EXPECT_EQ(frameset_info2.shift_y, 13);
+}
 
-    {
-        kv::FastSerializer serializer(1);
-        serializer << frameset_info;
-        kv::FastDeserializer deserializer(serializer.GetData(), serializer.GetIndex());
-        kv::RawViewInfo::RawFramesetInfo raw_info3;
-        ViewInfo::FramesetInfo frameset_info3(&raw_info3);
-        deserializer >> frameset_info3;
-        EXPECT_TRUE(ViewInfo::FramesetInfo::IsSameSprites(frameset_info, frameset_info3));
-    }
-}*/
-
-TEST(FramesetInfo, Hash)
+TEST(RawFramesetInfo, Hash)
 {
     kv::RawViewInfo::RawFramesetInfo frameset_info;
     ASSERT_EQ(Hash(frameset_info), 2);
