@@ -43,6 +43,50 @@ TEST(ConstFramesetInfo, Getters)
     EXPECT_EQ(frameset_info.GetShiftY(), 22);
 }
 
+TEST(ConstFramesetInfo, FramesetInfoConstructor)
+{
+    kv::RawViewInfo::RawFramesetInfo raw_info;
+
+    ViewInfo::FramesetInfo frameset_info(&raw_info);
+    ViewInfo::ConstFramesetInfo const_frameset_info(frameset_info);
+
+    frameset_info.SetSprite("lion");
+    EXPECT_EQ(const_frameset_info.GetSprite(), "lion");
+
+    frameset_info.SetState("tiger");
+    EXPECT_EQ(const_frameset_info.GetState(), "tiger");
+
+    frameset_info.SetAngle(4);
+    EXPECT_EQ(const_frameset_info.GetAngle(), 4);
+
+    frameset_info.SetShift(-1, -2);
+    EXPECT_EQ(const_frameset_info.GetShiftX(), -1);
+    EXPECT_EQ(const_frameset_info.GetShiftY(), -2);
+}
+
+TEST(FramesetInfo, Constructor)
+{
+    kv::RawViewInfo::RawFramesetInfo raw_info;
+
+    ViewInfo::FramesetInfo frameset_info(&raw_info);
+    EXPECT_EQ(frameset_info.GetSprite(), "");
+    EXPECT_EQ(frameset_info.GetState(), "");
+    EXPECT_EQ(frameset_info.GetAngle(), 0);
+    EXPECT_EQ(frameset_info.GetShiftX(), 0);
+    EXPECT_EQ(frameset_info.GetShiftY(), 0);
+
+    raw_info.sprite_name = "test";
+    raw_info.state = "state";
+    raw_info.angle = 42;
+    raw_info.shift_x = 11;
+    raw_info.shift_y = -1;
+
+    EXPECT_EQ(frameset_info.GetSprite(), "test");
+    EXPECT_EQ(frameset_info.GetState(), "state");
+    EXPECT_EQ(frameset_info.GetAngle(), 42);
+    EXPECT_EQ(frameset_info.GetShiftX(), 11);
+    EXPECT_EQ(frameset_info.GetShiftY(), -1);
+}
 
 TEST(FramesetInfo, SettersAndGetters)
 {
@@ -125,7 +169,6 @@ TEST(FramesetInfo, IsSameSprites)
     EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
 }
 
-// TODO: ConstFrameInfo tests
 // TODO: RawFramesetInfo
 /*TEST(FramesetInfo, StreamOperators)
 {
