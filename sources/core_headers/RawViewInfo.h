@@ -1,5 +1,7 @@
 #pragma once
 
+#include <tuple>
+
 #include <QVector>
 
 const int MAX_TRANSPARENCY = 100000;
@@ -41,5 +43,23 @@ public:
     int transparency;
     RawFramesetInfo base_frameset;
 };
+
+inline bool operator==(
+    const RawViewInfo::RawFramesetInfo& left,
+    const RawViewInfo::RawFramesetInfo& right)
+{
+    return
+           std::tie(left.sprite_name, left.angle, left.state, left.shift_x, left.shift_y)
+        == std::tie(right.sprite_name, right.angle, right.state, right.shift_x, right.shift_y);
+}
+
+inline bool operator==(
+    const RawViewInfo& left,
+    const RawViewInfo& right)
+{
+    return
+           std::tie(left.overlays, left.underlays, left.angle, left.transparency, left.base_frameset)
+        == std::tie(right.overlays, right.underlays, right.angle, right.transparency, right.base_frameset);
+}
 
 }
