@@ -155,7 +155,7 @@ void Movable::Represent(GrowingFrame* frame)
     entity.pos_y = position.y;
 
     entity.vlevel = v_level;
-    entity.view = *GetView();
+    entity.view = GetView()->GetRawData();
     entity.dir = GetDir();
     frame->Append(entity);
 }

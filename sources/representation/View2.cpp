@@ -4,13 +4,88 @@
 #include <QColor>
 #include <cmath>
 
+namespace
+{
+
+bool IsSameSprites(
+    const kv::RawViewInfo::RawFramesetInfo& left,
+    const kv::RawViewInfo::RawFramesetInfo& right)
+{
+    if (left.sprite_name != right.sprite_name)
+    {
+        return false;
+    }
+    if (left.state != right.state)
+    {
+        return false;
+    }
+    if (left.angle != right.angle)
+    {
+        return false;
+    }
+    if (left.shift_x != right.shift_x)
+    {
+        return false;
+    }
+    if (left.shift_y != right.shift_y)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool IsSameFramesets(const kv::RawViewInfo& left, const kv::RawViewInfo& right)
+{
+    if (left.underlays.size() != right.underlays.size())
+    {
+        return false;
+    }
+    if (left.overlays.size() != right.overlays.size())
+    {
+        return false;
+    }
+
+    if (left.angle != right.angle)
+    {
+        return false;
+    }
+
+    if (left.transparency != right.transparency)
+    {
+        return false;
+    }
+
+    if (!IsSameSprites(left.base_frameset, right.base_frameset))
+    {
+        return false;
+    }
+
+    for (int i = 0; i < left.underlays.size(); ++i)
+    {
+        if (!IsSameSprites(left.underlays[i], right.underlays[i]))
+        {
+            return false;
+        }
+    }
+    for (int i = 0; i < left.overlays.size(); ++i)
+    {
+        if (!IsSameSprites(left.overlays[i], right.overlays[i]))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+}
+
 View2::FramesetState::FramesetState()
 {
     Reset();
     last_frame_tick_.start();
 }
 
-void View2::FramesetState::LoadFramesetInfo(const ViewInfo::ConstFramesetInfo& frameset_info)
+void View2::FramesetState::LoadFramesetInfo(const kv::RawViewInfo::RawFramesetInfo& frameset_info)
 {
     Reset();
 
@@ -18,7 +93,7 @@ void View2::FramesetState::LoadFramesetInfo(const ViewInfo::ConstFramesetInfo& f
     {
         return;
     }
-    sprite_ = GetSpriter().GetSprite(frameset_info.GetSprite());
+    sprite_ = GetSpriter().GetSprite(frameset_info.sprite_name);
     if (sprite_ == nullptr)
     {
         return;
@@ -27,14 +102,14 @@ void View2::FramesetState::LoadFramesetInfo(const ViewInfo::ConstFramesetInfo& f
     {
         return;
     }
-    if (!sprite_->GetMetadata().IsValidState(frameset_info.GetState()))
+    if (!sprite_->GetMetadata().IsValidState(frameset_info.state))
     {
         return;
     }
-    metadata_ = &sprite_->GetMetadata().GetSpriteMetadata(frameset_info.GetState());
+    metadata_ = &sprite_->GetMetadata().GetSpriteMetadata(frameset_info.state);
 }
 
-bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle)
+bool View2::FramesetState::IsTransp(int x, int y, int shift, int angle) const
 {
     if (!GetMetadata())
     {
@@ -158,19 +233,19 @@ View2::View2()
     pixel_y_ = 0;
 }
 
-bool View2::IsTransp(int x, int y, quint32 shift)
+bool View2::IsTransp(int x, int y, quint32 shift) const
 {
     //qDebug() << GetX() << "," << GetY();
     for (int i = overlays_.size() - 1; i >= 0; --i)
     {
-        int sum_angle = info_.GetAngle() + info_.GetOverlays()[i].GetAngle();
+        int sum_angle = info_.angle + info_.overlays[i].angle;
         if (!overlays_[i].IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
         }
     }
     {
-        int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
+        int sum_angle = info_.angle + info_.base_frameset.angle;
         if (!base_frameset_.IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
@@ -178,7 +253,7 @@ bool View2::IsTransp(int x, int y, quint32 shift)
     }
     for (int i = 0; i < static_cast<int>(underlays_.size()); ++i)
     {
-        int sum_angle = info_.GetAngle() + info_.GetUnderlays()[i].GetAngle();
+        int sum_angle = info_.angle + info_.underlays[i].angle;
         if (!underlays_[i].IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
@@ -189,32 +264,32 @@ bool View2::IsTransp(int x, int y, quint32 shift)
 
 void View2::Draw(int x_shift, int y_shift, quint32 shift)
 {
-    int transparency = info_.GetTransparency();
+    int transparency = info_.transparency;
     for (int i = underlays_.size() - 1; i >= 0; --i)
     {
-        const auto& underlay = info_.GetUnderlays()[i];
-        int sum_angle = info_.GetAngle() + underlay.GetAngle();
-        int sum_x = GetX() + x_shift + underlay.GetShiftX();
-        int sum_y = GetY() + y_shift + underlay.GetShiftY();
+        const auto& underlay = info_.underlays[i];
+        int sum_angle = info_.angle + underlay.angle;
+        int sum_x = GetX() + x_shift + underlay.shift_x;
+        int sum_y = GetY() + y_shift + underlay.shift_y;
         underlays_[i].Draw(shift, sum_x, sum_y, sum_angle, transparency);
     }
     {
-        int sum_angle = info_.GetAngle() + info_.GetBaseFrameset().GetAngle();
+        int sum_angle = info_.angle + info_.base_frameset.angle;
         base_frameset_.Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle, transparency);
     }
     for (int i = 0; i < static_cast<int>(overlays_.size()); ++i)
     {
-        const auto& overlay = info_.GetOverlays()[i];
-        int sum_angle = info_.GetAngle() + overlay.GetAngle();
-        int sum_x = GetX() + x_shift + overlay.GetShiftX();
-        int sum_y = GetY() + y_shift + overlay.GetShiftY();
+        const auto& overlay = info_.overlays[i];
+        int sum_angle = info_.angle + overlay.angle;
+        int sum_x = GetX() + x_shift + overlay.shift_x;
+        int sum_y = GetY() + y_shift + overlay.shift_y;
         overlays_[i].Draw(shift, sum_x, sum_y, sum_angle, transparency);
     }
 }
 
-void View2::LoadViewInfo(const ViewInfo& view_info)
+void View2::LoadViewInfo(const kv::RawViewInfo& view_info)
 {
-    if (ViewInfo::IsSameFramesets(view_info, info_))
+    if (IsSameFramesets(view_info, info_))
     {
         return;
     }
@@ -222,48 +297,48 @@ void View2::LoadViewInfo(const ViewInfo& view_info)
     //qDebug() << "Not same framesets "
     //         << QString::fromStdString(view_info.GetBaseFrameset().GetSprite());
 
-    if (!ViewInfo::IsSameSprites(
-            view_info.GetBaseFrameset(),
-            info_.GetBaseFrameset()))
+    if (!IsSameSprites(
+            view_info.base_frameset,
+            info_.base_frameset))
     {
-        base_frameset_.LoadFramesetInfo(view_info.GetBaseFrameset());
+        base_frameset_.LoadFramesetInfo(view_info.base_frameset);
     }
 
     {
-        const auto& new_overlays = view_info.GetOverlays();
-        overlays_.resize(new_overlays.Size());
+        const auto& new_overlays = view_info.overlays;
+        overlays_.resize(new_overlays.size());
         unsigned int counter = 0;
-        unsigned int intermediate_size = std::min(info_.GetOverlays().Size(), new_overlays.Size());
+        unsigned int intermediate_size = std::min(info_.overlays.size(), new_overlays.size());
         for (; counter < intermediate_size; ++counter)
         {
-            if (!ViewInfo::IsSameSprites(
+            if (!IsSameSprites(
                     new_overlays[counter],
-                    info_.GetOverlays()[counter]))
+                    info_.overlays[counter]))
             {
                 overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
             }
         }
-        for (; counter < new_overlays.Size(); ++counter)
+        for (; counter < new_overlays.size(); ++counter)
         {
             overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
         }
     }
 
     {
-        const auto& new_underlays = view_info.GetUnderlays();
-        underlays_.resize(new_underlays.Size());
+        const auto& new_underlays = view_info.underlays;
+        underlays_.resize(new_underlays.size());
         unsigned int counter = 0;
-        unsigned int intermediate_size = std::min(info_.GetUnderlays().Size(), new_underlays.Size());
+        unsigned int intermediate_size = std::min(info_.underlays.size(), new_underlays.size());
         for (; counter < intermediate_size; ++counter)
         {
-            if (!ViewInfo::IsSameSprites(
+            if (!IsSameSprites(
                     new_underlays[counter],
-                    info_.GetUnderlays()[counter]))
+                    info_.underlays[counter]))
             {
                 underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
             }
         }
-        for (; counter < new_underlays.Size(); ++counter)
+        for (; counter < new_underlays.size(); ++counter)
         {
             underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
         }

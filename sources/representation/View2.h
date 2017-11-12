@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "ViewInfo.h"
+#include "core_headers/RawViewInfo.h"
 #include "Metadata.h"
 #include "GLSprite.h"
 
@@ -16,12 +16,12 @@ public:
     public:
         FramesetState();
 
-        void LoadFramesetInfo(const ViewInfo::ConstFramesetInfo& frameset_info);
+        void LoadFramesetInfo(const kv::RawViewInfo::RawFramesetInfo& frameset_info);
 
         const GLSprite* GetSprite() const { return sprite_; }
         const ImageMetadata::SpriteMetadata* GetMetadata() const { return metadata_; }
 
-        bool IsTransp(int x, int y, int shift, int angle);
+        bool IsTransp(int x, int y, int shift, int angle) const;
         void Draw(quint32 shift, int x, int y, int angle = 0, int transparency = MAX_TRANSPARENCY);
     private:
         void Reset();
@@ -44,10 +44,10 @@ public:
     int GetX() const { return pixel_x_; }
     int GetY() const { return pixel_y_; }
 
-    bool IsTransp(int x, int y, quint32 shift);
+    bool IsTransp(int x, int y, quint32 shift) const;
     void Draw(int x_shift, int y_shift, quint32 shift);
 
-    void LoadViewInfo(const ViewInfo& view_info);
+    void LoadViewInfo(const kv::RawViewInfo& view_info);
 
     const FramesetState& GetBaseFrameset() const { return base_frameset_; }
 private:
@@ -58,5 +58,5 @@ private:
     int pixel_x_;
     int pixel_y_;
 
-    ViewInfo info_;
+    kv::RawViewInfo info_;
 };

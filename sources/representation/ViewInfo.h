@@ -35,17 +35,6 @@ kv::FastDeserializer& operator>>(kv::FastDeserializer& file, ViewInfo& view_info
 
 inline unsigned int Hash(const ViewInfo& view_info);
 
-const int MAX_TRANSPARENCY = 100000;
-
-namespace kv
-{
-
-bool IsSameSprites(
-    const kv::RawViewInfo::RawFramesetInfo& left,
-    const kv::RawViewInfo::RawFramesetInfo& right);
-
-}
-
 class ViewInfo
 {
     friend kv::FastSerializer& operator<<(kv::FastSerializer& file, const ViewInfo& view_info);
@@ -53,9 +42,6 @@ class ViewInfo
 
     friend unsigned int Hash(const ViewInfo& view_info);
 public:
-    // Check if framesets are same
-    static bool IsSameFramesets(const ViewInfo& left, const ViewInfo& right);
-
     class ConstFramesetInfo;
     class FramesetInfo
     {
@@ -117,11 +103,6 @@ public:
         const kv::RawViewInfo::RawFramesetInfo* const data_;
     };
 
-    static bool IsSameSprites(const ConstFramesetInfo& left, const ConstFramesetInfo& right)
-    {
-        return kv::IsSameSprites(*left.data_, *right.data_);
-    }
-
     class FramesetInfoSet
     {
         friend class ViewInfo;
@@ -157,6 +138,8 @@ public:
 
     FramesetInfoSet GetOverlays() const { return FramesetInfoSet(&data_.overlays); }
     FramesetInfoSet GetUnderlays() const { return FramesetInfoSet(&data_.underlays); }
+
+    const kv::RawViewInfo& GetRawData() const { return data_; }
 private:
     kv::RawViewInfo data_;
 };

@@ -52,7 +52,7 @@ void LoginMob::GenerateInterfaceForFrame(GrowingFrame* frame)
     unit.name = LOGIN_CLICK;
     unit.pixel_x = 0;
     unit.pixel_y = 0;
-    unit.view = login_view_;
+    unit.view = login_view_.GetRawData();
     frame->Append(unit);
 
     QString text;

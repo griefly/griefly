@@ -128,7 +128,8 @@ TEST(FramesetInfo, SettersAndGetters)
     EXPECT_EQ(frameset_info.GetShiftY(), 22);
 }
 
-TEST(FramesetInfo, IsSameSprites)
+// TODO: tests for representation?
+/*TEST(FramesetInfo, IsSameSprites)
 {
     kv::RawViewInfo::RawFramesetInfo raw_info1;
     ViewInfo::FramesetInfo frameset_info1(&raw_info1);
@@ -167,7 +168,7 @@ TEST(FramesetInfo, IsSameSprites)
 
     frameset_info2.SetShift(420, 1);
     EXPECT_FALSE(ViewInfo::IsSameSprites(frameset_info1, frameset_info2));
-}
+}*/
 
 TEST(RawFramesetInfo, StreamOperators)
 {
@@ -303,7 +304,8 @@ TEST(ViewInfo, OverlaysAndUnderlays)
     EXPECT_EQ(view_info.GetUnderlays().Size(), 0);
 }
 
-TEST(ViewInfo, IsSameFramesets)
+// TODO: tests for representation?
+/*TEST(ViewInfo, IsSameFramesets)
 {
     ViewInfo view_info;
     EXPECT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info));
@@ -379,7 +381,7 @@ TEST(ViewInfo, IsSameFramesets)
     view_info2.RemoveUnderlays();
     view_info2.AddUnderlay("2fkds;a", "2fdjsl;kjf");
     EXPECT_FALSE(ViewInfo::IsSameFramesets(view_info, view_info2));
-}
+}*/
 
 TEST(ViewInfo, StreamOperators)
 {
@@ -416,7 +418,8 @@ TEST(ViewInfo, StreamOperators)
     EXPECT_EQ(frameset_info2.GetSprite(), "tree");
     EXPECT_EQ(frameset_info2.GetState(), "weed");
 
-    EXPECT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info2));
+    // TODO: operator== for ViewInfo?
+    // EXPECT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info2));
 }
 
 TEST(ViewInfo, Hash)

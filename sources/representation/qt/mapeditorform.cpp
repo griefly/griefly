@@ -97,7 +97,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
         QVector<QPixmap> images;
 
         View2 view;
-        view.LoadViewInfo(*view_info);
+        view.LoadViewInfo(view_info->GetRawData());
 
         if (view.GetBaseFrameset().GetMetadata() == nullptr)
         {

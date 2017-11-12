@@ -40,7 +40,7 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
 
         kv::CoreInterface::ObjectMetadata metadata;
         metadata.name = it.first;
-        metadata.default_view = *(material->GetView());
+        metadata.default_view = material->GetView()->GetRawData();
 
         retval.insert(metadata.name, metadata);
     }

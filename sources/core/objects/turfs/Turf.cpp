@@ -34,11 +34,11 @@ void Turf::Represent(GrowingFrame* frame)
             entity.pos_x = GetPosition().x;
             entity.pos_y = GetPosition().y;
             entity.vlevel = 11;
-            entity.view.SetSprite("icons/plasma.dmi");
-            entity.view.SetState("plasma");
+            entity.view.base_frameset.sprite_name = "icons/plasma.dmi";
+            entity.view.base_frameset.state = "plasma";
             const double FULL_VISIBILITY_THRESHOLD = 100.0;
             const double visibility = (plasma * 1.0) * (MAX_TRANSPARENCY / FULL_VISIBILITY_THRESHOLD);
-            entity.view.SetTransparency(qMin(static_cast<int>(visibility), MAX_TRANSPARENCY));
+            entity.view.transparency = qMin(static_cast<int>(visibility), MAX_TRANSPARENCY);
             entity.dir = Dir::SOUTH;
             frame->Append(entity);
         }

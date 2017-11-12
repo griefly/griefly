@@ -8,8 +8,7 @@
 #include <QString>
 #include <QVector>
 
-#include "representation/ViewInfo.h"
-
+#include "RawViewInfo.h"
 #include "Dir.h"
 #include "Messages.h"
 
@@ -31,7 +30,7 @@ struct FrameData
             // Nothing
         }
 
-        ViewInfo view;
+        kv::RawViewInfo view;
         quint32 id;
         quint32 click_id;
         int pos_x;
@@ -50,7 +49,7 @@ struct FrameData
             // Nothing
         }
 
-        ViewInfo view;
+        kv::RawViewInfo view;
         QString name;
 
         int pixel_x;
@@ -173,7 +172,7 @@ public:
     struct ObjectMetadata
     {
         QString name;
-        ViewInfo default_view;
+        RawViewInfo default_view;
     };
     struct Config
     {

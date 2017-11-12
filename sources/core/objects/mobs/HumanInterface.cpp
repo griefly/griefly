@@ -320,7 +320,7 @@ void kv::HumanInterface::Represent(GrowingFrame* frame)
         unit.name = button.name;
         unit.pixel_x = 32 * button.position.first;
         unit.pixel_y = 32 * button.position.second;
-        unit.view = button.view;
+        unit.view = button.view.GetRawData();
         frame->Append(unit);
     }
     for (const Slot& slot : slots_)
@@ -329,7 +329,7 @@ void kv::HumanInterface::Represent(GrowingFrame* frame)
         unit.name = slot.name;
         unit.pixel_x = 32 * slot.position.first;
         unit.pixel_y = 32 * slot.position.second;
-        unit.view = slot.view;
+        unit.view = slot.view.GetRawData();
         frame->Append(unit);
         if (slot.item.IsValid())
         {
@@ -337,7 +337,7 @@ void kv::HumanInterface::Represent(GrowingFrame* frame)
             unit.name = slot.name;
             unit.pixel_x = 32 * slot.position.first;
             unit.pixel_y = 32 * slot.position.second;
-            unit.view = *(slot.item->GetView());
+            unit.view = slot.item->GetView()->GetRawData();
             frame->Append(unit);
         }
     }

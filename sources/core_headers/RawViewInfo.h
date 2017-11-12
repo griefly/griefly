@@ -2,6 +2,8 @@
 
 #include <QVector>
 
+const int MAX_TRANSPARENCY = 100000;
+
 namespace kv
 {
 

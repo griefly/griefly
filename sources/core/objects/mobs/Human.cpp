@@ -503,7 +503,7 @@ void Human::Represent(GrowingFrame* frame)
     ent.pos_x = GetPosition().x;
     ent.pos_y = GetPosition().y;
     ent.vlevel = v_level;
-    ent.view = *GetView();
+    ent.view = GetView()->GetRawData();
     if (!lying_)
     {
         ent.dir = GetDir();
