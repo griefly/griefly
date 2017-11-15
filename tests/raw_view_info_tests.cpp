@@ -33,3 +33,35 @@ TEST(RawFramesetInfo, OperatorEqual)
     info2.state = "long";
     EXPECT_EQ(info, info2);
 }
+
+TEST(RawViewInfo, OperatorEqual)
+{
+    kv::RawViewInfo info;
+    EXPECT_EQ(info, info);
+
+    info.angle = 3;
+    info.transparency = 15;
+    info.overlays.resize(2);
+    info.underlays.resize(3);
+    info.base_frameset.sprite_name = "testing";
+    EXPECT_EQ(info, info);
+
+    kv::RawViewInfo info2 = info;
+    EXPECT_EQ(info2, info);
+    info2.angle = 4;
+    EXPECT_NE(info2, info);
+    info2.angle = 3;
+    info2.transparency = 200;
+    EXPECT_NE(info2, info);
+    info2.transparency = 15;
+    info2.overlays.resize(4);
+    EXPECT_NE(info2, info);
+    info2.overlays.resize(2);
+    info.underlays.resize(4);
+    EXPECT_NE(info2, info);
+    info.underlays.resize(3);
+    info.base_frameset.angle = 3;
+    EXPECT_NE(info2, info);
+    info.base_frameset.angle = 0;
+    EXPECT_EQ(info2, info);
+}
