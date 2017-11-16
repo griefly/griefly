@@ -418,8 +418,7 @@ TEST(ViewInfo, StreamOperators)
     EXPECT_EQ(frameset_info2.GetSprite(), "tree");
     EXPECT_EQ(frameset_info2.GetState(), "weed");
 
-    // TODO: operator== for ViewInfo?
-    // EXPECT_TRUE(ViewInfo::IsSameFramesets(view_info, view_info2));
+    EXPECT_EQ(view_info.GetRawData(), view_info2.GetRawData());
 }
 
 TEST(ViewInfo, Hash)

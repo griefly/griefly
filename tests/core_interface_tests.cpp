@@ -32,8 +32,7 @@ namespace
 
 void EntityExpectEq(const kv::FrameData::Entity& left, const kv::FrameData::Entity& right)
 {
-    // TODO: operator==
-    // EXPECT_TRUE(ViewInfo::IsSameFramesets(left.view, right.view));
+    EXPECT_EQ(left.view, right.view);
     EXPECT_EQ(left.click_id, right.click_id);
     EXPECT_EQ(left.dir, right.dir);
     EXPECT_EQ(left.id, right.id);
@@ -44,8 +43,7 @@ void EntityExpectEq(const kv::FrameData::Entity& left, const kv::FrameData::Enti
 
 void UnitExpectEq(const kv::FrameData::InterfaceUnit& left, const kv::FrameData::InterfaceUnit& right)
 {
-    // TODO: operator==
-    // EXPECT_TRUE(ViewInfo::IsSameFramesets(left.view, right.view));
+    EXPECT_EQ(left.view, right.view);
     EXPECT_EQ(left.pixel_x, right.pixel_x);
     EXPECT_EQ(left.pixel_y, right.pixel_y);
     EXPECT_EQ(left.name, right.name);
