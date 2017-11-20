@@ -177,7 +177,7 @@ add_custom_command(
     COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${UTILS_DIR}/autogen.py
     DEPENDS metadata.json
 )
-add_custom_target(Metadata ALL DEPENDS AutogenMetadata.cpp)
+add_custom_target(Metadata ALL DEPENDS AutogenMetadata.cpp AutogenSerialization.cpp)
 
 list(APPEND SOURCES "${CMAKE_BINARY_DIR}/AutogenMetadata.cpp")
 list(APPEND SOURCES "${CMAKE_BINARY_DIR}/AutogenSerialization.cpp")
@@ -266,45 +266,13 @@ endif()
 ### End building launcher
 #####################################
 
+# Building qzipunpacker
+set(COREPATH "../../${SOURCE_DIR}/core/")
+add_subdirectory(utils/qzip_unpacker)
 
-
-#####################################
-### Building qzipunpacker
-###
-
-set(UNPACKER_DIR qzip_unpacker/)
-
-include_directories(UNPACKER_DIR)
-# Workaround for linux
-include_directories("qzip_unpacker")
-
-file(GLOB_RECURSE UNPACKER_SOURCES "${UNPACKER_DIR}*.cpp")
-list(APPEND UNPACKER_SOURCES "${SOURCE_DIR}/core/FastSerializer.h")
-list(APPEND UNPACKER_SOURCES "${SOURCE_DIR}/core/KvAbort.h")
-
-add_executable(Unpacker ${UNPACKER_SOURCES})
-
-# Add Qt5 lib
-qt5_use_modules(Unpacker Core)
-
-###
-### End building qzipunpacker
-#####################################
-
-
-
-#####################################
-### Building server
-###
-
+# Building server
 set(GOPATH ${CMAKE_CURRENT_SOURCE_DIR}/gopath)
 add_subdirectory(${GOPATH}/src/griefly-server)
-
-###
-### End building server
-#####################################
-
-
 
 #####################################
 ### Install rules
