@@ -9,6 +9,8 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 set(UTILS_DIR utils/)
 
+set(MINIMUM_QT_VERSION 5.8)
+
 include(ClangFormat)
 
 ##################################
@@ -28,7 +30,7 @@ message(STATUS "Git has been found, ${GIT_VERSION_STRING}")
 # Qt5 search
 #
 ###########################
-find_package(Qt5 5.8 COMPONENTS Core Network Widgets OpenGL Multimedia REQUIRED)
+find_package(Qt5 ${MINIMUM_QT_VERSION} COMPONENTS Core Network Widgets OpenGL Multimedia REQUIRED)
 
 message(STATUS "Qt5 has been found: ${Qt5_VERSION}")
 
@@ -235,36 +237,8 @@ endif()
 ##################################
 
 
-
-#####################################
-### Building launcher
-###
-
-set(LAUNCHER_DIR launcher/)
-
-include_directories(LAUNCHER_DIR)
-# Workaround for linux
-include_directories("launcher")
-
-file(GLOB_RECURSE LAUNCHER_SOURCES "${LAUNCHER_DIR}*.cpp")
-file(GLOB_RECURSE LAUNCHER_HEADERS "${LAUNCHER_DIR}*.h")
-file(GLOB_RECURSE LAUNCHER_FORMS "${LAUNCHER_DIR}*.ui")
-
-qt5_wrap_ui(LAUNCHER_FORMS_HEADERS ${LAUNCHER_FORMS})
-
-add_executable(Launcher WIN32 ${LAUNCHER_SOURCES} ${LAUNCHER_HEADERS} ${LAUNCHER_FORMS_HEADERS})
-
-# Add Qt5 lib
-qt5_use_modules(Launcher Core)
-qt5_use_modules(Launcher Widgets)
-
-if(WIN32)
-    target_link_libraries(Launcher Qt5::WinMain)
-endif()
-
-###
-### End building launcher
-#####################################
+# Building launcher
+add_subdirectory(launcher)
 
 # Building qzipunpacker
 set(COREPATH "../../${SOURCE_DIR}/core/")
@@ -278,7 +252,7 @@ add_subdirectory(${GOPATH}/src/griefly-server)
 ### Install rules
 ###
 
-install(TARGETS KVEngine Launcher
+install(TARGETS KVEngine
         DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${EXEC_DIR}/)
 
 install(FILES ${CMAKE_BINARY_DIR}/metadata.json

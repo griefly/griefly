@@ -1,6 +1,6 @@
 message(STATUS "Running qzip_unpacker CMakeLists.txt...")
 
-find_package(Qt5 5.8 COMPONENTS Core REQUIRED)
+find_package(Qt5 ${MINIMUM_QT_VERSION} COMPONENTS Core REQUIRED)
 
 file(GLOB_RECURSE UNPACKER_SOURCES "*.cpp")
 list(APPEND UNPACKER_SOURCES "${COREPATH}/FastSerializer.h")
