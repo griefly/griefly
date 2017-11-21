@@ -238,7 +238,7 @@ endif()
 
 
 # Building launcher
-add_subdirectory(launcher)
+add_subdirectory(utils/launcher)
 
 # Building qzipunpacker
 set(COREPATH "../../${SOURCE_DIR}/core/")
