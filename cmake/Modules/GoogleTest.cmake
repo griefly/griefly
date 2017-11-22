@@ -5,7 +5,7 @@ if(MSVC) # VS2012 doesn't support correctly the tuples yet
     add_definitions(/D _VARIADIC_MAX=10)
 endif()
 
-configure_file(tests/CMakeLists.txt
+configure_file(cmake/Modules/GoogleTestDownload.cmake
                googletest-download/CMakeLists.txt)
 if(CMAKE_BUILD_TYPE MATCHES DEBUG) # Build gtest in release if so.
     execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
