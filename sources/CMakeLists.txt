@@ -211,5 +211,5 @@ endif()
 install(TARGETS KVEngine
         DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
 
-install(FILES ${CMAKE_BINARY_DIR}/metadata.json
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/metadata.json
         DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
