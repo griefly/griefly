@@ -125,10 +125,6 @@ endif()
 set(SOURCE_DIR ./)
 set(TESTS_DIR tests/)
 
-# include_directories(SOURCE_DIR)
-# Workaround for linux
-include_directories(".")
-
 if(BUILD_TESTS)
     file(GLOB_RECURSE TESTS "${TESTS_DIR}*.cpp" "${TESTS_DIR}*.h")
 else()
@@ -168,8 +164,10 @@ qt5_use_modules(KVEngine Multimedia)
 
 # Add GTEST lib
 if(BUILD_TESTS)
-    include_directories("${gtest_SOURCE_DIR}/include"
-                        "${gmock_SOURCE_DIR}/include")
+    target_include_directories(
+        KVEngine PRIVATE
+        "${gtest_SOURCE_DIR}/include"
+        "${gmock_SOURCE_DIR}/include")
     target_link_libraries(KVEngine gtest)
     target_link_libraries(KVEngine gmock)
     if(MSVC)
