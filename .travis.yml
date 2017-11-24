@@ -13,9 +13,9 @@ compiler: gcc
 
 before_install:
   - export CXX="g++-4.9"
-  - source ~/virtualenv/python3.5/bin/activate
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     export CXX="g++-5";
+    source ~/virtualenv/python3.5/bin/activate;
     fi
   
 install:
@@ -40,6 +40,8 @@ install:
     eval "$(gimme 1.6)";
     brew install qt;
     brew install python3;
+    virtualenv venv -p python3;
+    source venv/bin/activate;
     brew info qt;
     export CMAKE_PREFIX_PATH=/opt/qt58/;
     export PATH="/usr/local/opt/qt/bin:$PATH";
