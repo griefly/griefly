@@ -13,10 +13,9 @@ compiler: gcc
 
 before_install:
   - export CXX="g++-4.9"
-  # work around https://github.com/travis-ci/travis-ci/issues/8363
+  - export PATH=$PYENV_ROOT/bin:$PATH
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     export CXX="g++-5";
-    pyenv global system 3.5;
     fi
   
 install:
