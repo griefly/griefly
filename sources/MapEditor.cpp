@@ -11,6 +11,8 @@
 
 #include "core/KvGlobals.h"
 #include "core/Helpers.h"
+#include "core/FastSerializer.h"
+#include "core/SaveableOperators.h"
 
 MapEditor::EditorEntry::EditorEntry()
 {

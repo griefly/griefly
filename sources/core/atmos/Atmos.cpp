@@ -4,8 +4,9 @@
 
 #include <algorithm>
 
-#include "../SynchronizedRandom.h"
-#include "../Helpers.h"
+#include "core/SynchronizedRandom.h"
+#include "core/Helpers.h"
+#include "core/objects/Tile.h"
 
 #include "AtmosGrid.h"
 

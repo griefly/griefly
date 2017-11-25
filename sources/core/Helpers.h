@@ -1,11 +1,6 @@
 #pragma once
 
-#include <cassert>
-
 #include "core/KvGlobals.h"
-#include "Map.h"
-
-#include "representation/Screen.h"
 
 namespace helpers
 {

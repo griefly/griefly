@@ -3,6 +3,7 @@
 #include "core/Helpers.h"
 #include "core/Game.h"
 
+#include "core/objects/Tile.h"
 #include "core/objects/movable/items/ElectricTools.h"
 
 using namespace kv;
