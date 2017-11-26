@@ -260,21 +260,18 @@ namespace key
     const QString WIDTH("width");
     const QString HEIGHT("height");
     const QString DEPTH("depth");
+    const QString OBJECTS("objects");
+
 }
 }
 
-void MapEditor::SaveMapgenJson(const QString& name) const
+QJsonObject MapEditor::SaveMapgenJson() const
 {
-    int size_x = editor_map_.size();
-    int size_y = editor_map_[0].size();
-    int size_z = editor_map_[0][0].size();
+    const int size_x = editor_map_.size();
+    const int size_y = editor_map_[0].size();
+    const int size_z = editor_map_[0][0].size();
 
-    QJsonObject data;
-
-    data.insert(key::WIDTH, size_x);
-    data.insert(key::HEIGHT, size_y);
-    data.insert(key::DEPTH, size_z);
-
+    QJsonObject objects;
     /*for (int z = 0; z < size_z; ++z)
     {
         for (int x = 0; x < size_x; ++x)
@@ -301,8 +298,13 @@ void MapEditor::SaveMapgenJson(const QString& name) const
             }
         }
     }*/
+    QJsonObject retval;
+    retval.insert(key::WIDTH, size_x);
+    retval.insert(key::HEIGHT, size_y);
+    retval.insert(key::DEPTH, size_z);
+    retval.insert(key::OBJECTS, objects);
 
-    // TODO:
+    return retval;
 }
 
 void MapEditor::LoadMapgen(const QString& name)
@@ -371,9 +373,9 @@ void MapEditor::LoadMapgen(const QString& name)
     }
 }
 
-void MapEditor::LoadMapgenJson(const QString& name)
+void MapEditor::LoadMapgenJson(const QJsonObject& data)
 {
-
+    // TODO:
 }
 
 void MapEditor::fix_borders(int *posx, int *posy)
