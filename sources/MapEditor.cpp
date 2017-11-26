@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QFileDialog>
+#include <QJsonObject>
 
 #include <fstream>
 
@@ -251,6 +252,59 @@ void MapEditor::SaveMapgen(const QString& name)
     file.write("\n");
 }
 
+namespace
+{
+namespace key
+{
+
+    const QString WIDTH("width");
+    const QString HEIGHT("height");
+    const QString DEPTH("depth");
+}
+}
+
+void MapEditor::SaveMapgenJson(const QString& name) const
+{
+    int size_x = editor_map_.size();
+    int size_y = editor_map_[0].size();
+    int size_z = editor_map_[0][0].size();
+
+    QJsonObject data;
+
+    data.insert(key::WIDTH, size_x);
+    data.insert(key::HEIGHT, size_y);
+    data.insert(key::DEPTH, size_z);
+
+    /*for (int z = 0; z < size_z; ++z)
+    {
+        for (int x = 0; x < size_x; ++x)
+        {
+            for (int y = 0; y < size_y; ++y)
+            {
+                if (editor_map_[x][y][z].turf.pixmap_item)
+                {
+                    data.WriteType(editor_map_[x][y][z].turf.item_type);
+                    data << x;
+                    data << y;
+                    data << z;
+                    data << editor_map_[x][y][z].turf.variables;
+                }
+                auto& il = editor_map_[x][y][z].items;
+                for (auto it = il.begin(); it != il.end(); ++it)
+                {
+                    data.WriteType(it->item_type);
+                    data << x;
+                    data << y;
+                    data << z;
+                    data << it->variables;
+                }
+            }
+        }
+    }*/
+
+    // TODO:
+}
+
 void MapEditor::LoadMapgen(const QString& name)
 {
     QFile file(name);
@@ -315,6 +369,11 @@ void MapEditor::LoadMapgen(const QString& name)
         data >> ee->variables;
         UpdateDirs(ee);
     }
+}
+
+void MapEditor::LoadMapgenJson(const QString& name)
+{
+
 }
 
 void MapEditor::fix_borders(int *posx, int *posy)

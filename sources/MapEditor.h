@@ -52,8 +52,10 @@ public:
     MapEditor(QGraphicsScene* scene);
 
     void SaveMapgen(const QString& name);
+    void SaveMapgenJson(const QString& name) const;
 
     void LoadMapgen(const QString& name);
+    void LoadMapgenJson(const QString& name);
 
     void fix_borders(int* posx, int* posy);
 
