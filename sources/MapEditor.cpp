@@ -263,6 +263,56 @@ namespace key
     const QString OBJECTS("objects");
 
 }
+
+QJsonValue ConvertSerializedToJson(const QByteArray& data)
+{
+    kv::FastDeserializer deserializer(data.data(), data.size());
+    const kv::FastSerializer::Type type = deserializer.GetNextType();
+    switch (type)
+    {
+    case kv::FastSerializer::BOOL_TYPE:
+    {
+        bool retval;
+        deserializer >> retval;
+        return retval;
+    }
+    case kv::FastSerializer::INT32_TYPE:
+    {
+        qint32 retval;
+        deserializer >> retval;
+        return retval;
+    }
+    case kv::FastSerializer::UINT32_TYPE:
+    {
+        quint32 retval;
+        deserializer >> retval;
+        return static_cast<double>(retval);
+    }
+    case kv::FastSerializer::STRING_TYPE:
+    {
+        QString retval;
+        deserializer >> retval;
+        return retval;
+    }
+    case kv::FastSerializer::BYTEARRAY_TYPE:
+    {
+        QByteArray retval;
+        deserializer >> retval;
+        return QString::fromLatin1(retval.toHex());
+    }
+    case kv::FastSerializer::TYPE_TYPE:
+    {
+        QString retval;
+        deserializer >> retval;
+        return retval;
+    }
+    default:
+        qDebug() << "Unknown type:" << type;
+        return QJsonValue();
+    }
+    KV_UNREACHABLE
+}
+
 }
 
 QJsonObject MapEditor::SaveMapgenJson() const
