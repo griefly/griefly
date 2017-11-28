@@ -7,6 +7,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QFileDialog>
 #include <QJsonObject>
+#include <QJsonArray>
 
 #include <fstream>
 
@@ -260,7 +261,7 @@ namespace key
     const QString WIDTH("width");
     const QString HEIGHT("height");
     const QString DEPTH("depth");
-    const QString OBJECTS("objects");
+    const QString TILES("tiles");
 
 }
 
@@ -321,38 +322,58 @@ QJsonObject MapEditor::SaveMapgenJson() const
     const int size_y = editor_map_[0].size();
     const int size_z = editor_map_[0][0].size();
 
-    QJsonObject objects;
-    /*for (int z = 0; z < size_z; ++z)
+    QJsonArray tiles;
+    for (int z = 0; z < size_z; ++z)
     {
         for (int x = 0; x < size_x; ++x)
         {
             for (int y = 0; y < size_y; ++y)
             {
+                const EditorTile tile = editor_map_[x][y][z];
+                QJsonObject tile_info;
+                tile_info.insert("x", x);
+                tile_info.insert("y", y);
+                tile_info.insert("z", z);
                 if (editor_map_[x][y][z].turf.pixmap_item)
                 {
-                    data.WriteType(editor_map_[x][y][z].turf.item_type);
-                    data << x;
-                    data << y;
-                    data << z;
-                    data << editor_map_[x][y][z].turf.variables;
+                    QJsonObject turf_info;
+                    turf_info.insert("type", tile.turf.item_type);
+                    QJsonArray variables;
+                    for (auto var = tile.turf.variables.begin(); var != tile.turf.variables.end(); ++var)
+                    {
+                        const QJsonValue value = ConvertSerializedToJson(var.value());
+                        variables.append(QJsonObject{{var.key(), value}});
+                    }
+                    turf_info.insert("variables", variables);
+                    tile_info.insert("turf", turf_info);
                 }
-                auto& il = editor_map_[x][y][z].items;
+
+                QJsonArray objects;
+
+                const auto& il = editor_map_[x][y][z].items;
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
-                    data.WriteType(it->item_type);
-                    data << x;
-                    data << y;
-                    data << z;
-                    data << it->variables;
+                    QJsonObject object_info;
+                    object_info.insert("type", it->item_type);
+                    QJsonArray variables;
+                    for (auto var = it->variables.begin(); var != tile.turf.variables.end(); ++var)
+                    {
+                        const QJsonValue value = ConvertSerializedToJson(var.value());
+                        variables.append(QJsonObject{{var.key(), value}});
+                    }
+                    object_info.insert("variables", variables);
                 }
+                tile_info.insert("objects", objects);
+
+                tiles.append(tile_info);
             }
         }
-    }*/
+    }
     QJsonObject retval;
     retval.insert(key::WIDTH, size_x);
     retval.insert(key::HEIGHT, size_y);
     retval.insert(key::DEPTH, size_z);
-    retval.insert(key::OBJECTS, objects);
+    retval.insert(key::TILES, tiles);
 
     return retval;
 }
