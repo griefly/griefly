@@ -348,6 +348,11 @@ QJsonObject MapEditor::SaveMapgenJson() const
                     QJsonArray variables;
                     for (auto var = tile.turf.variables.begin(); var != tile.turf.variables.end(); ++var)
                     {
+                        if (var.value().isEmpty())
+                        {
+                            continue;
+                        }
+
                         const QJsonValue value = ConvertSerializedToJson(var.value());
                         variables.append(QJsonObject{{var.key(), value}});
                     }
@@ -363,8 +368,12 @@ QJsonObject MapEditor::SaveMapgenJson() const
                     QJsonObject object_info;
                     object_info.insert(key::TYPE, it->item_type);
                     QJsonArray variables;
-                    for (auto var = it->variables.begin(); var != tile.turf.variables.end(); ++var)
+                    for (auto var = it->variables.begin(); var != it->variables.end(); ++var)
                     {
+                        if (var.value().isEmpty())
+                        {
+                            continue;
+                        }
                         const QJsonValue value = ConvertSerializedToJson(var.value());
                         variables.append(QJsonObject{{var.key(), value}});
                     }

@@ -73,6 +73,8 @@ private slots:
 
     void on_lineEditAsBool_returnPressed();
 
+    void on_saveMapJson_clicked();
+
 private:
     bool is_turf_selected_;
 

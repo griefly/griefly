@@ -190,6 +190,19 @@
          <string>Resize Map</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="saveMapJson">
+        <property name="geometry">
+         <rect>
+          <x>550</x>
+          <y>10</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save Json</string>
+        </property>
+       </widget>
       </widget>
      </item>
      <item>

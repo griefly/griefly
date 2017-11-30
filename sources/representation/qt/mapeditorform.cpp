@@ -17,6 +17,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QJsonDocument>
 
 #include "AutogenMetadata.h"
 
@@ -529,4 +530,35 @@ void MapEditorForm::on_resizeMap_clicked()
         return;
     }
     map_editor_->Resize(size_x, size_y, size_z);
+}
+
+void MapEditorForm::on_saveMapJson_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    dialog.setNameFilter(tr("Mapgen files (*.json)"));
+    QStringList file_names;
+    if (!dialog.exec())
+    {
+        return;
+    }
+
+    file_names = dialog.selectedFiles();
+
+    if (file_names.isEmpty())
+    {
+        return;
+    }
+
+    const QJsonObject object = map_editor_->SaveMapgenJson();
+
+    const QJsonDocument document(object);
+    const QByteArray data = document.toJson(QJsonDocument::Indented);
+
+    QFile file(file_names[0]);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
+    {
+        return;
+    }
+    file.write(data);
 }
