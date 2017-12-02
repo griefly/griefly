@@ -463,7 +463,42 @@ void MapEditor::LoadMapgen(const QString& name)
 
 void MapEditor::LoadMapgenJson(const QJsonObject& data)
 {
-    // TODO:
+    ClearMap();
+
+    int x = data.value(key::X).toInt();
+    int y = data.value(key::Y).toInt();
+    int z = data.value(key::Z).toInt();
+
+    Resize(x, y, z);
+
+    qDebug() << x << y << z;
+
+    /*while (!data.IsEnd())
+    {
+        QString item_type;
+        qint32 x;
+        qint32 y;
+        qint32 z;
+
+        data.ReadType(&item_type);
+
+        data >> x;
+        data >> y;
+        data >> z;
+
+        MapEditor::EditorEntry* ee;
+        if (turf_types_.find(item_type) != turf_types_.end())
+        {
+            ee = &SetTurf(item_type, x, y, z);
+        }
+        else
+        {
+            ee = &AddItem(item_type, x, y, z);
+        }
+
+        data >> ee->variables;
+        UpdateDirs(ee);
+    }*/
 }
 
 void MapEditor::fix_borders(int *posx, int *posy)
