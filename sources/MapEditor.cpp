@@ -471,30 +471,51 @@ void MapEditor::LoadMapgenJson(const QJsonObject& data)
     {
         const QJsonObject tile = value.toObject();
 
-        /*QString item_type;
-        qint32 x;
-        qint32 y;
-        qint32 z;
+        kv::Position position;
+        position.x = tile.value(key::X).toInt();
+        position.y = tile.value(key::Y).toInt();
+        position.z = tile.value(key::Z).toInt();
 
-        data.ReadType(&item_type);
+        CreateEntity(position, tile.value(key::TURF).toObject(), true);
 
-        data >> x;
-        data >> y;
-        data >> z;
-
-        MapEditor::EditorEntry* ee;
-        if (turf_types_.find(item_type) != turf_types_.end())
+        const QJsonArray objects = tile.value(key::OBJECTS).toArray();
+        for (const QJsonValue& object_value : objects)
         {
-            ee = &SetTurf(item_type, x, y, z);
+            CreateEntity(position, object_value.toObject(), false);
         }
-        else
-        {
-            ee = &AddItem(item_type, x, y, z);
-        }
-
-        data >> ee->variables;
-        UpdateDirs(ee);*/
     }
+}
+
+void MapEditor::CreateEntity(kv::Position position, const QJsonObject& info, bool is_turf)
+{
+    if (info.isEmpty())
+    {
+        return;
+    }
+
+    /*const QString item_type = tile.value(key::TYPE);
+    qint32 x;
+    qint32 y;
+    qint32 z;
+
+    data.ReadType(&item_type);
+
+    data >> x;
+    data >> y;
+    data >> z;
+
+    MapEditor::EditorEntry* ee;
+    if (turf_types_.find(item_type) != turf_types_.end())
+    {
+        ee = &SetTurf(item_type, x, y, z);
+    }
+    else
+    {
+        ee = &AddItem(item_type, x, y, z);
+    }
+
+    data >> ee->variables;
+    UpdateDirs(ee);*/
 }
 
 void MapEditor::fix_borders(int *posx, int *posy)
