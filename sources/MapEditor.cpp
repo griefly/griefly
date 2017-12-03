@@ -321,6 +321,25 @@ QJsonValue ConvertSerializedToJson(const QByteArray& data)
     KV_UNREACHABLE
 }
 
+QJsonObject EntryToJson(const MapEditor::EditorEntry& entry)
+{
+    QJsonObject object_info;
+    object_info.insert(key::TYPE, entry.item_type);
+    QJsonArray variables;
+    for (auto var = entry.variables.begin(); var != entry.variables.end(); ++var)
+    {
+        if (var.value().isEmpty())
+        {
+            continue;
+        }
+        const QJsonValue value = ConvertSerializedToJson(var.value());
+        variables.append(QJsonObject{{var.key(), value}});
+    }
+    object_info.insert(key::VARIABLES, variables);
+
+    return object_info;
+}
+
 }
 
 QJsonObject MapEditor::SaveMapgenJson() const
@@ -343,21 +362,7 @@ QJsonObject MapEditor::SaveMapgenJson() const
                 tile_info.insert(key::Z, z);
                 if (editor_map_[x][y][z].turf.pixmap_item)
                 {
-                    QJsonObject turf_info;
-                    turf_info.insert(key::TYPE, tile.turf.item_type);
-                    QJsonArray variables;
-                    for (auto var = tile.turf.variables.begin(); var != tile.turf.variables.end(); ++var)
-                    {
-                        if (var.value().isEmpty())
-                        {
-                            continue;
-                        }
-
-                        const QJsonValue value = ConvertSerializedToJson(var.value());
-                        variables.append(QJsonObject{{var.key(), value}});
-                    }
-                    turf_info.insert(key::VARIABLES, variables);
-                    tile_info.insert(key::TURF, turf_info);
+                    tile_info.insert(key::TURF, EntryToJson(tile.turf));
                 }
 
                 QJsonArray objects;
@@ -365,20 +370,7 @@ QJsonObject MapEditor::SaveMapgenJson() const
                 const auto& il = editor_map_[x][y][z].items;
                 for (auto it = il.begin(); it != il.end(); ++it)
                 {
-                    QJsonObject object_info;
-                    object_info.insert(key::TYPE, it->item_type);
-                    QJsonArray variables;
-                    for (auto var = it->variables.begin(); var != it->variables.end(); ++var)
-                    {
-                        if (var.value().isEmpty())
-                        {
-                            continue;
-                        }
-                        const QJsonValue value = ConvertSerializedToJson(var.value());
-                        variables.append(QJsonObject{{var.key(), value}});
-                    }
-                    object_info.insert(key::VARIABLES, variables);
-                    objects.append(object_info);
+                    objects.append(EntryToJson(*it));
                 }
                 tile_info.insert(key::OBJECTS, objects);
 
@@ -465,17 +457,21 @@ void MapEditor::LoadMapgenJson(const QJsonObject& data)
 {
     ClearMap();
 
-    int x = data.value(key::X).toInt();
-    int y = data.value(key::Y).toInt();
-    int z = data.value(key::Z).toInt();
+    const int width = data.value(key::WIDTH).toInt();
+    const int height = data.value(key::HEIGHT).toInt();
+    const int depth = data.value(key::DEPTH).toInt();
 
-    Resize(x, y, z);
+    Resize(width, height, depth);
 
-    qDebug() << x << y << z;
+    qDebug() << width << height << depth;
 
-    /*while (!data.IsEnd())
+    const QJsonArray& tiles = data.value(key::TILES).toArray();
+
+    for (const QJsonValue& value : tiles)
     {
-        QString item_type;
+        const QJsonObject tile = value.toObject();
+
+        /*QString item_type;
         qint32 x;
         qint32 y;
         qint32 z;
@@ -497,8 +493,8 @@ void MapEditor::LoadMapgenJson(const QJsonObject& data)
         }
 
         data >> ee->variables;
-        UpdateDirs(ee);
-    }*/
+        UpdateDirs(ee);*/
+    }
 }
 
 void MapEditor::fix_borders(int *posx, int *posy)
