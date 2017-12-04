@@ -321,11 +321,18 @@ QJsonValue ConvertSerializedToJson(const QByteArray& data)
     KV_UNREACHABLE
 }
 
+QByteArray ConvertJsonToSerialized(const QJsonValue& data)
+{
+    // TODO
+    Q_UNUSED(data)
+    return QByteArray();
+}
+
 QJsonObject EntryToJson(const MapEditor::EditorEntry& entry)
 {
     QJsonObject object_info;
     object_info.insert(key::TYPE, entry.item_type);
-    QJsonArray variables;
+    QJsonObject variables;
     for (auto var = entry.variables.begin(); var != entry.variables.end(); ++var)
     {
         if (var.value().isEmpty())
@@ -333,7 +340,7 @@ QJsonObject EntryToJson(const MapEditor::EditorEntry& entry)
             continue;
         }
         const QJsonValue value = ConvertSerializedToJson(var.value());
-        variables.append(QJsonObject{{var.key(), value}});
+        variables.insert(var.key(), value);
     }
     object_info.insert(key::VARIABLES, variables);
 
@@ -493,29 +500,25 @@ void MapEditor::CreateEntity(kv::Position position, const QJsonObject& info, boo
         return;
     }
 
-    /*const QString item_type = tile.value(key::TYPE);
-    qint32 x;
-    qint32 y;
-    qint32 z;
+    const QString item_type = info.value(key::TYPE).toString();
 
-    data.ReadType(&item_type);
-
-    data >> x;
-    data >> y;
-    data >> z;
-
-    MapEditor::EditorEntry* ee;
-    if (turf_types_.find(item_type) != turf_types_.end())
+    MapEditor::EditorEntry* entry;
+    if (is_turf)
     {
-        ee = &SetTurf(item_type, x, y, z);
+        entry = &SetTurf(item_type, position.x, position.y, position.z);
     }
     else
     {
-        ee = &AddItem(item_type, x, y, z);
+        entry = &AddItem(item_type, position.x, position.y, position.z);
     }
 
-    data >> ee->variables;
-    UpdateDirs(ee);*/
+    const QJsonObject variables = info.value(key::VARIABLES).toObject();
+
+    for (const QString& key : variables.keys())
+    {
+        entry->variables.insert(key, ConvertJsonToSerialized(variables.value(key)));
+    }
+    UpdateDirs(entry);
 }
 
 void MapEditor::fix_borders(int *posx, int *posy)
