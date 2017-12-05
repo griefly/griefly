@@ -323,8 +323,29 @@ QJsonValue ConvertSerializedToJson(const QByteArray& data)
 
 QByteArray ConvertJsonToSerialized(const QJsonValue& data)
 {
-    // TODO
-    Q_UNUSED(data)
+    kv::FastSerializer serializer(1024);
+
+    if (data.isNull())
+    {
+        return QByteArray();
+    }
+    else if (data.isDouble())
+    {
+        serializer << data.toInt();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (data.isString())
+    {
+        serializer << data.toString();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (data.isBool())
+    {
+        serializer << data.toBool();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+
+    qDebug() << "Unknown type:" << data;
     return QByteArray();
 }
 
