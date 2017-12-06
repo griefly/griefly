@@ -292,6 +292,8 @@ QJsonValue ConvertSerializedToJson(const QByteArray& data)
     }
     case kv::FastSerializer::UINT32_TYPE:
     {
+        qFatal("FIXME: UINT32_TYPE isn't implemented well yet");
+
         quint32 retval;
         deserializer >> retval;
         return static_cast<double>(retval);
@@ -304,12 +306,16 @@ QJsonValue ConvertSerializedToJson(const QByteArray& data)
     }
     case kv::FastSerializer::BYTEARRAY_TYPE:
     {
+        qFatal("FIXME: BYTEARRAY_TYPE isn't implemented well yet");
+
         QByteArray retval;
         deserializer >> retval;
         return QString::fromLatin1(retval.toHex());
     }
     case kv::FastSerializer::TYPE_TYPE:
     {
+        qFatal("FIXME: TYPE_TYPE isn't implemented well yet");
+
         QString retval;
         deserializer >> retval;
         return retval;
