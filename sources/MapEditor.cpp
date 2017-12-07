@@ -270,6 +270,15 @@ namespace key
     const QString Y("y");
     const QString Z("z");
 
+namespace type
+{
+    const QString BOOL("bool");
+    const QString INT32("int32");
+    const QString UINT32("uint32");
+    const QString STRING("string");
+    const QString BYTEARRAY("bytearray");
+    const QString TYPE("type");
+}
 }
 
 QJsonValue ConvertSerializedToJson(const QByteArray& data)
@@ -282,43 +291,38 @@ QJsonValue ConvertSerializedToJson(const QByteArray& data)
     {
         bool retval;
         deserializer >> retval;
-        return retval;
+        return QJsonObject{{key::type::BOOL, retval}};
     }
     case kv::FastSerializer::INT32_TYPE:
     {
         qint32 retval;
         deserializer >> retval;
-        return retval;
+        return QJsonObject{{key::type::INT32, retval}};
     }
     case kv::FastSerializer::UINT32_TYPE:
     {
-        qFatal("FIXME: UINT32_TYPE isn't implemented well yet");
-
         quint32 retval;
         deserializer >> retval;
-        return static_cast<double>(retval);
+        return QJsonObject{{key::type::UINT32, static_cast<double>(retval)}};
     }
     case kv::FastSerializer::STRING_TYPE:
     {
         QString retval;
         deserializer >> retval;
-        return retval;
+        return QJsonObject{{key::type::STRING, retval}};
     }
     case kv::FastSerializer::BYTEARRAY_TYPE:
     {
-        qFatal("FIXME: BYTEARRAY_TYPE isn't implemented well yet");
-
         QByteArray retval;
         deserializer >> retval;
-        return QString::fromLatin1(retval.toHex());
+        return QJsonObject{
+            {key::type::BYTEARRAY, QString::fromLatin1(retval.toHex())}};
     }
     case kv::FastSerializer::TYPE_TYPE:
     {
-        qFatal("FIXME: TYPE_TYPE isn't implemented well yet");
-
         QString retval;
         deserializer >> retval;
-        return retval;
+        return QJsonObject{{key::type::TYPE, retval}};
     }
     default:
         qDebug() << "Unknown type:" << type;
