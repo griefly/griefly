@@ -335,26 +335,45 @@ QByteArray ConvertJsonToSerialized(const QJsonValue& data)
 {
     kv::FastSerializer serializer(1024);
 
-    if (data.isNull())
+    const QJsonObject object = data.toObject();
+    const QStringList keys = object.keys();
+    if (keys.isEmpty())
     {
-        return QByteArray();
+        qFatal("ConvertJsonToSerialized: no keys!");
     }
-    else if (data.isDouble())
-    {
-        serializer << data.toInt();
-        return QByteArray(serializer.GetData(), serializer.GetIndex());
-    }
-    else if (data.isString())
-    {
-        serializer << data.toString();
-        return QByteArray(serializer.GetData(), serializer.GetIndex());
-    }
-    else if (data.isBool())
-    {
-        serializer << data.toBool();
-        return QByteArray(serializer.GetData(), serializer.GetIndex());
-    }
+    const QString type = keys.first();
+    const QJsonValue value = object.value(type);
 
+    if (type == key::type::BOOL)
+    {
+        serializer << value.toBool();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::INT32)
+    {
+        serializer << value.toInt();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::UINT32)
+    {
+        serializer << static_cast<quint32>(value.toDouble());
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::STRING)
+    {
+        serializer << value.toString();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::BYTEARRAY)
+    {
+        serializer << QByteArray::fromHex(value.toString().toLatin1());
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::TYPE)
+    {
+        serializer << value.toString();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
     qDebug() << "Unknown type:" << data;
     return QByteArray();
 }
