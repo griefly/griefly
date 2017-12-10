@@ -27,8 +27,7 @@ void Turf::Represent(GrowingFrame* frame)
         if (plasma > VISIBILITY_THRESHOLD)
         {
             FrameData::Entity entity;
-            // FIXME: entity.id = frame->GetUniqueIdForNewFrame(GetId(), 1);
-            entity.id = GetId();
+            entity.id = frame->GetUniqueIdForNewFrame(GetId(), 1);
 
             entity.click_id = 0;
             entity.pos_x = GetPosition().x;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <limits>
 
 #include <QByteArray>
 #include <QJsonObject>
@@ -140,6 +141,14 @@ public:
         frame_data_->camera_pos_x = posx;
         frame_data_->camera_pos_y = posy;
     }
+    quint32 GetUniqueIdForNewFrame(quint32 base_id, quint32 number)
+    {
+        // TODO: There should be better way to do it
+        const quint32 MAX_NUMBER = 32;
+        const quint32 MAX_BASE_ID = std::numeric_limits<quint32>::max() / MAX_NUMBER;
+        return base_id + MAX_BASE_ID * number;
+    }
+
 private:
     FrameData* frame_data_;
 };

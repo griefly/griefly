@@ -179,14 +179,6 @@ void Representation::HandleInput()
     QCoreApplication::processEvents(QEventLoop::AllEvents, 40);
 }
 
-quint32 Representation::GetUniqueIdForNewFrame(quint32 base_id, quint32 number)
-{
-    // TODO: There should be better way to do it
-    const quint32 MAX_NUMBER = 32;
-    const quint32 MAX_BASE_ID = std::numeric_limits<quint32>::max() / MAX_NUMBER;
-    return base_id + MAX_BASE_ID * number;
-}
-
 void Representation::Process()
 {
     SynchronizeViews();

@@ -45,8 +45,6 @@ public:
     void ResetKeysState();
     void HandleInput();
 
-    quint32 GetUniqueIdForNewFrame(quint32 base_id, quint32 number);
-
     SoundPlayer& GetSoundPlayer() { return player_; }
 signals:
     void chatMessage(const QString& html);
