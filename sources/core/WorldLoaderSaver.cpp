@@ -192,5 +192,10 @@ void LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer)
     factory.GetIdTable().resize(id + 1);
 }
 
+void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data)
+{
+
+}
+
 }
 }

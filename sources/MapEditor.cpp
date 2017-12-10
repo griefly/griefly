@@ -16,6 +16,8 @@
 #include "core/FastSerializer.h"
 #include "core/SaveableOperators.h"
 
+#include "core_headers/Mapgen.h"
+
 MapEditor::EditorEntry::EditorEntry()
 {
     pixmap_item = nullptr;
@@ -255,34 +257,11 @@ void MapEditor::SaveMapgen(const QString& name)
 
 namespace
 {
-namespace key
-{
-
-    const QString WIDTH("width");
-    const QString HEIGHT("height");
-    const QString DEPTH("depth");
-    const QString TILES("tiles");
-    const QString TYPE("type");
-    const QString VARIABLES("variables");
-    const QString OBJECTS("objects");
-    const QString TURF("turf");
-    const QString X("x");
-    const QString Y("y");
-    const QString Z("z");
-
-namespace type
-{
-    const QString BOOL("bool");
-    const QString INT32("int32");
-    const QString UINT32("uint32");
-    const QString STRING("string");
-    const QString BYTEARRAY("bytearray");
-    const QString TYPE("type");
-}
-}
 
 QJsonValue ConvertSerializedToJson(const QByteArray& data)
 {
+    using namespace mapgen;
+
     kv::FastDeserializer deserializer(data.data(), data.size());
     const kv::FastSerializer::Type type = deserializer.GetNextType();
     switch (type)
@@ -333,6 +312,8 @@ QJsonValue ConvertSerializedToJson(const QByteArray& data)
 
 QByteArray ConvertJsonToSerialized(const QJsonValue& data)
 {
+    using namespace mapgen;
+
     kv::FastSerializer serializer(1024);
 
     const QJsonObject object = data.toObject();
@@ -380,6 +361,8 @@ QByteArray ConvertJsonToSerialized(const QJsonValue& data)
 
 QJsonObject EntryToJson(const MapEditor::EditorEntry& entry)
 {
+    using namespace mapgen;
+
     QJsonObject object_info;
     object_info.insert(key::TYPE, entry.item_type);
     QJsonObject variables;
@@ -401,6 +384,8 @@ QJsonObject EntryToJson(const MapEditor::EditorEntry& entry)
 
 QJsonObject MapEditor::SaveMapgenJson() const
 {
+    using namespace mapgen;
+
     const int size_x = editor_map_.size();
     const int size_y = editor_map_[0].size();
     const int size_z = editor_map_[0][0].size();
@@ -512,6 +497,8 @@ void MapEditor::LoadMapgen(const QString& name)
 
 void MapEditor::LoadMapgenJson(const QJsonObject& data)
 {
+    using namespace mapgen;
+
     ClearMap();
 
     const int width = data.value(key::WIDTH).toInt();
@@ -545,6 +532,8 @@ void MapEditor::LoadMapgenJson(const QJsonObject& data)
 
 void MapEditor::CreateEntity(kv::Position position, const QJsonObject& info, bool is_turf)
 {
+    using namespace mapgen;
+
     if (info.isEmpty())
     {
         return;
