@@ -555,10 +555,44 @@ void MapEditorForm::on_saveMapJson_clicked()
     const QJsonDocument document(object);
     const QByteArray data = document.toJson(QJsonDocument::Indented);
 
-    QFile file(file_names[0]);
+    QFile file(file_names.first());
     if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
     {
         return;
     }
     file.write(data);
+}
+
+void MapEditorForm::on_loadMapJson_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    dialog.setNameFilter(tr("Mapgen files (*.json)"));
+    if (!dialog.exec())
+    {
+        return;
+    }
+
+    const QStringList file_names = dialog.selectedFiles();
+    if (file_names.isEmpty())
+    {
+        return;
+    }
+    const QString name = file_names.first();
+    QFile file(name);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Error open " << name;
+        return;
+    }
+    const QByteArray raw_data = file.readAll();
+    const QJsonDocument document = QJsonDocument::fromJson(raw_data);
+
+    if (document.isEmpty())
+    {
+        qDebug() << "Unable to parse file:" << name;
+        return;
+    }
+
+    map_editor_->LoadMapgenJson(document.object());
 }

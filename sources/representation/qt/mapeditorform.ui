@@ -203,6 +203,19 @@
          <string>Save Json</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="loadMapJson">
+        <property name="geometry">
+         <rect>
+          <x>550</x>
+          <y>40</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Load Json</string>
+        </property>
+       </widget>
       </widget>
      </item>
      <item>

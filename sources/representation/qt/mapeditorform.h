@@ -75,6 +75,8 @@ private slots:
 
     void on_saveMapJson_clicked();
 
+    void on_loadMapJson_clicked();
+
 private:
     bool is_turf_selected_;
 
