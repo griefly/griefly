@@ -26,7 +26,7 @@ Examples
 
 ### System type
 
-##### `[[0x00000031][0x00000001]]`
+`[[0x00000031][0x00000001]]`
 ```json
 [{"login" : "retard", "password" : "iamnotretard"}]
 ```
