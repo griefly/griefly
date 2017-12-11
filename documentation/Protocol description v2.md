@@ -93,7 +93,7 @@ Defined types
 #### NEXTTICK
 `(empty)`
 
-### Message server-client
+### Message server-client:
 
 ----------
 ### Error messages:
