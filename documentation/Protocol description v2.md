@@ -238,7 +238,7 @@ Protocol version, ***4*** bytes: `("S132")`
 `type: INITAL LOGIN MESSAGE`
 
     If `guest` is ***true*** then server should interpret this login as random not used login
-     with empty `("")` password, for example ***"Guest4242"***. 
+     with empty `("")` password, for example **"Guest4242"**. 
      Authentication will be always successful.
 
  3. **Server -> Client**  
