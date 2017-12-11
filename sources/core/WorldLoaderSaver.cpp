@@ -10,6 +10,8 @@
 #include "objects/Tile.h"
 #include "objects/mobs/Mob.h"
 
+#include "core_headers/Mapgen.h"
+
 #include "core/SaveableOperators.h"
 
 #include "SynchronizedRandom.h"
@@ -194,7 +196,33 @@ void LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer)
 
 void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data)
 {
+    ObjectFactoryInterface& factory = game->GetFactory();
+    factory.BeginWorldCreation();
 
+    // TODO: validate json
+
+    int map_x = data.value(mapgen::key::WIDTH).toInt();
+    int map_y = data.value(mapgen::key::HEIGHT).toInt();
+    int map_z = data.value(mapgen::key::DEPTH).toInt();
+
+    auto& map = game->GetMap();
+
+    // Making tiles
+    map.Resize(map_x, map_y, map_z);
+    for (int x = 0; x < map.GetWidth(); x++)
+    {
+        for (int y = 0; y < map.GetHeight(); y++)
+        {
+            for (int z = 0; z < map.GetDepth(); z++)
+            {
+                IdPtr<CubeTile> tile = game->GetFactory().CreateImpl(CubeTile::GetTypeStatic());
+                tile->SetPos({x, y, z});
+                map.At(x, y, z) = tile;
+            }
+        }
+    }
+
+    // TODO:
 }
 
 }

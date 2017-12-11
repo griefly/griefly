@@ -501,6 +501,8 @@ void MapEditor::LoadMapgenJson(const QJsonObject& data)
 
     ClearMap();
 
+    // TODO: validate json
+
     const int width = data.value(key::WIDTH).toInt();
     const int height = data.value(key::HEIGHT).toInt();
     const int depth = data.value(key::DEPTH).toInt();
