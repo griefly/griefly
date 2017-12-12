@@ -1,6 +1,7 @@
 #include "WorldLoaderSaver.h"
 
 #include <QFile>
+#include <QJsonArray>
 
 #include "Idptr.h"
 
@@ -201,9 +202,9 @@ void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data)
 
     // TODO: validate json
 
-    int map_x = data.value(mapgen::key::WIDTH).toInt();
-    int map_y = data.value(mapgen::key::HEIGHT).toInt();
-    int map_z = data.value(mapgen::key::DEPTH).toInt();
+    const int map_x = data.value(mapgen::key::WIDTH).toInt();
+    const int map_y = data.value(mapgen::key::HEIGHT).toInt();
+    const int map_z = data.value(mapgen::key::DEPTH).toInt();
 
     auto& map = game->GetMap();
 
@@ -222,7 +223,19 @@ void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data)
         }
     }
 
-    // TODO:
+    game->GetAtmosphere().LoadGrid(&game->GetMap());
+
+    const QJsonArray tiles = data.value(mapgen::key::TILES).toArray();
+
+    for (const QJsonValue& tile_value : tiles)
+    {
+        const QJsonObject tile = tile_value.toObject();
+
+        const QJsonObject turf = tile.value(mapgen::key::TURF).toObject();
+        const QJsonArray objects = tile.value(mapgen::key::OBJECTS).toArray();
+
+        // TODO:
+    }
 }
 
 }
