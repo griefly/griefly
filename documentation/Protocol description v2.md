@@ -67,7 +67,7 @@ Defined types
 ### Message client-server:
 
 ----------
-#### INITAL LOGIN MESSAGE
+#### *1: INITAL LOGIN MESSAGE*
 
 *Size:* < 512
 ```json
@@ -76,21 +76,21 @@ Defined types
 ----------
 
 
-#### EXIT_CLIENT
+#### *2: EXIT_CLIENT*
 `(empty)`
 
 ----------
-#### HASH MESSAGE
+#### *3: HASH MESSAGE*
 *Size:* < 512
 ```json
 {"hash":42,"tick":42}
 ```
 ----------
-#### RESTART ROUND
+#### *4: RESTART ROUND*
 `(empty)`
 
 ----------
-#### NEXTTICK
+#### *5: NEXTTICK*
 `(empty)`
 
 ### Message server-client:
