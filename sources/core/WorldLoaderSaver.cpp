@@ -195,6 +195,16 @@ void LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer)
     factory.GetIdTable().resize(id + 1);
 }
 
+namespace
+{
+
+void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position position, bool is_turf)
+{
+    ObjectFactoryInterface& factory = game->GetFactory();
+}
+
+}
+
 void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data)
 {
     ObjectFactoryInterface& factory = game->GetFactory();
@@ -231,11 +241,23 @@ void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data)
     {
         const QJsonObject tile = tile_value.toObject();
 
-        const QJsonObject turf = tile.value(mapgen::key::TURF).toObject();
-        const QJsonArray objects = tile.value(mapgen::key::OBJECTS).toArray();
+        const int x = tile.value(mapgen::key::X).toInt();
+        const int y = tile.value(mapgen::key::Y).toInt();
+        const int z = tile.value(mapgen::key::Z).toInt();
 
-        // TODO:
+        const QJsonObject turf = tile.value(mapgen::key::TURF).toObject();
+        LoadObject(game, turf, {x, y, z}, true);
+
+        const QJsonArray objects = tile.value(mapgen::key::OBJECTS).toArray();
+        for (const QJsonValue& object_value : objects)
+        {
+            const QJsonObject object = object_value.toObject();
+            LoadObject(game, object, {x, y, z}, false);
+        }
     }
+
+    factory.FinishWorldCreation();
+    game->GetMap().FillTilesAtmosHolders();
 }
 
 }
