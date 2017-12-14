@@ -14,6 +14,7 @@ compiler: gcc
 before_install:
   - export CXX="g++-4.9"
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    pyenv global system 3.6;
     export CXX="g++-5";
     fi
   
