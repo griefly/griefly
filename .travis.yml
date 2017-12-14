@@ -15,7 +15,6 @@ before_install:
   - export CXX="g++-4.9"
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     export CXX="g++-5";
-    source ~/virtualenv/python3.5/bin/activate;
     fi
   
 install:
