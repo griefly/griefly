@@ -53,6 +53,6 @@ script:
     -e TRAVIS_JOB_ID
     -e TRAVIS_PULL_REQUEST
     -e TRAVIS_BRANCH
-    -e COVERALLS_REPO_TOKEN
+    -e COVERALLS_TOKEN
     kremius/griefly-build /app/build-in-docker.sh;
     fi
