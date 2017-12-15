@@ -11,29 +11,16 @@ language: cpp
 
 compiler: gcc
 
+services:
+  - docker
+
 before_install:
   - export CXX="g++-4.9"
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    pyenv global system 3.6;
-    export CXX="g++-5";
+    docker pull kremius/griefly-build;
     fi
   
 install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    eval "$(gimme 1.6)";
-    sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
-    sudo add-apt-repository -y ppa:beineri/opt-qt593-trusty;
-    sudo apt-get update -qq;
-    sudo apt-get install -y g++-5;
-    sudo apt-get install -y qt59base;
-    sudo apt-get install -y qt59multimedia;
-    sudo apt-get install -y lcov;
-    sudo apt-get install -y mesa-common-dev;
-    sudo apt-get install -y libglu1-mesa-dev;
-    gem install coveralls-lcov;
-    sudo /opt/qt59/bin/qt59-env.sh;
-    export CMAKE_PREFIX_PATH=/opt/qt59/;
-    fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew update;
     brew install gimme;
@@ -52,28 +39,13 @@ install:
 before_script:
   - "export DISPLAY=:99.0"
   - if [[ "${TRAVIS_OS_NAME}" = "osx" ]]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8; echo ok )& fi
-  - if [[ "${TRAVIS_OS_NAME}" = "linux" ]]; then 
-    sh -e /etc/init.d/xvfb start;
-    fi
-  - sleep 3
   
 script:
-  - ./make.sh -DBUILD_TESTS=ON -DBUILD_COVER=ON -DCMAKE_BUILD_TYPE=Debug
-  - cd exec
-  - ./KVEngine --run-tests
-  
-after_success:
-    # /usr/* - filter out system code
-    # /opt/* - filter out qt files
-    # tests/* - remove tests from coverage
-    # /griefly/build/ - remove gtest and generated code from coverage
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    cd ${TRAVIS_BUILD_DIR};
-    lcov -c -d . -o coverage.info;
-    lcov --remove coverage.info '/usr/*' --output-file coverage.info;
-    lcov --remove coverage.info '/opt/*' --output-file coverage.info;
-    lcov --remove coverage.info 'tests/*' --output-file coverage.info;
-    lcov --remove coverage.info '/griefly/build/*' --output-file coverage.info;
-    lcov --list coverage.info;
-    coveralls-lcov --repo-token=${COVERALLS_TOKEN} coverage.info;
+  - if [[ "${TRAVIS_OS_NAME}" = "osx" ]]; then
+    ./make.sh -DBUILD_TESTS=ON -DBUILD_COVER=ON -DCMAKE_BUILD_TYPE=Debug;
+    cd exec;
+    ./KVEngine --run-tests;
+    fi
+  - if [[ "${TRAVIS_OS_NAME}" = "linux" ]]; then
+    docker run -v $TRAVIS_BUILD_DIR:/app -e COVERALLS_REPO_TOKEN="${COVERALLS_REPO_TOKEN}" kremius/griefly-build /app/build-in-docker.sh
     fi
