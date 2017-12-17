@@ -198,9 +198,119 @@ void LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer)
 namespace
 {
 
+QByteArray ConvertJsonToSerialized(const QJsonValue& data)
+{
+    using namespace mapgen;
+
+    kv::FastSerializer serializer(1024);
+
+    const QJsonObject object = data.toObject();
+    const QStringList keys = object.keys();
+    if (keys.isEmpty())
+    {
+        qFatal("ConvertJsonToSerialized: no keys!");
+    }
+    const QString type = keys.first();
+    const QJsonValue value = object.value(type);
+
+    if (type == key::type::BOOL)
+    {
+        serializer << value.toBool();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::INT32)
+    {
+        serializer << value.toInt();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::UINT32)
+    {
+        serializer << static_cast<quint32>(value.toDouble());
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::STRING)
+    {
+        serializer << value.toString();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::BYTEARRAY)
+    {
+        serializer << QByteArray::fromHex(value.toString().toLatin1());
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    else if (type == key::type::TYPE)
+    {
+        serializer << value.toString();
+        return QByteArray(serializer.GetData(), serializer.GetIndex());
+    }
+    qDebug() << "Unknown type:" << data;
+    return QByteArray();
+}
+
 void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position position, bool is_turf)
 {
     ObjectFactoryInterface& factory = game->GetFactory();
+
+    if (data.isEmpty())
+    {
+        qDebug() << "Json data is empty!";
+        return;
+    }
+
+    const QString object_type = data.value(mapgen::key::TYPE).toString();
+
+    IdPtr<kv::MaterialObject> object = factory.CreateImpl(object_type);
+    if (object.IsValid())
+    {
+        kv::Abort(QString("Unable to cast: %1").arg(object_type));
+    }
+
+    const auto& setters_for_types = GetSettersForTypes();
+    auto it = setters_for_types.find(object_type);
+    if (it == setters_for_types.end())
+    {
+        kv::Abort(QString("Unable to find setters for type: %1").arg(object_type));
+    }
+    const SettersForType& setters_for_type = it->second;
+    const QJsonObject variables = data.value(mapgen::key::VARIABLES).toObject();
+
+    for (const QString& key : variables.keys())
+    {
+        auto it = setters_for_type.find(key);
+        if (it == setters_for_type.end())
+        {
+            kv::Abort(
+                QString("Unable to find setter for type::variable: %1::%2")
+                    .arg(object_type)
+                    .arg(key));
+        }
+        const VariableSetter& setter = it->second;
+
+        const QByteArray serialized = ConvertJsonToSerialized(variables.value(key));
+        kv::FastDeserializer deserializer(serialized.data(), serialized.size());
+        setter(object.operator->(), deserializer);
+    }
+    auto& tile = game->GetMap().At(position.x, position.y, position.z);
+    if (is_turf)
+    {
+        if (IdPtr<kv::Turf> turf = object)
+        {
+            if (tile->GetTurf())
+            {
+                kv::Abort(
+                    QString("Double turf at %1, %2, %3").arg(position.x, position.y, position.z));
+            }
+            tile->SetTurf(turf);
+        }
+        else
+        {
+            kv::Abort(QString("Object is not turf: %1").arg(object_type));
+        }
+    }
+    else
+    {
+        tile->AddObject(object);
+    }
 }
 
 }
