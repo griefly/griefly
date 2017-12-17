@@ -492,15 +492,14 @@ CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(
     return world;
 }
 
-CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromMapgen(
-    const QByteArray& data, const quint32 mob_id, const Config& config)
+CoreInterface::WorldPtr CoreImplementation::CreateWorldFromJson(
+    const QJsonObject& data, quint32 mob_id, const CoreInterface::Config& config)
 {
     auto world = std::make_shared<WorldImplementation>();
 
     world->PrepareToMapgen();
 
-    FastDeserializer deserializer(data.data(), data.size());
-    world::LoadFromMapGen(world.get(), deserializer);
+    world::LoadFromJsonMapGen(world.get(), data);
 
     world->AfterMapgen(mob_id, config.unsync_generation);
 

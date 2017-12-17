@@ -195,22 +195,14 @@ void Game::InitWorld(int id, QString map_name)
                 kv::Abort(QString("Error open: %1").arg(mapgen_name));
             }
 
-            QByteArray raw_data;
-            while (file.bytesAvailable())
-            {
-                QByteArray local = file.readLine();
-                if (local.size() < 1)
-                {
-                    break;
-                }
-                local = local.left(local.size() - 1);
-                raw_data.append(local);
-            }
-            raw_data = QByteArray::fromHex(raw_data);
+            QByteArray raw_data = file.readAll();
+            //raw_data = QByteArray::fromHex(raw_data);
             qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
             // TODO: config
-            world_ = kv::GetCoreInstance().CreateWorldFromMapgen(raw_data, id, {true});
+            // world_ = kv::GetCoreInstance().CreateWorldFromMapgen(raw_data, id, {true});
+            const QJsonDocument document = QJsonDocument::fromJson(raw_data);
+            world_ = kv::GetCoreInstance().CreateWorldFromJson(document.object(), id, {true});
         }
         else
         {

@@ -95,8 +95,8 @@ class CoreImplementation : public CoreInterface
 public:
     virtual WorldPtr CreateWorldFromSave(
         const QByteArray& data, quint32 mob_id) override;
-    virtual WorldPtr CreateWorldFromMapgen(
-        const QByteArray& data, quint32 mob_id, const Config& config) override;
+    virtual WorldPtr CreateWorldFromJson(
+        const QJsonObject& data, quint32 mob_id, const Config& config) override;
 
     virtual const ObjectsMetadata& GetObjectsMetadata() const override;
 };

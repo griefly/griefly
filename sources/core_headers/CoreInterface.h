@@ -194,9 +194,8 @@ public:
 
     virtual WorldPtr CreateWorldFromSave(
         const QByteArray& data, quint32 mob_id) = 0;
-    virtual WorldPtr CreateWorldFromMapgen(
-        const QByteArray& data, quint32 mob_id, const Config& config) = 0;
-
+    virtual WorldPtr CreateWorldFromJson(
+        const QJsonObject& data, quint32 mob_id, const Config& config) = 0;
     // <object name, metadata>
     using ObjectsMetadata = QMap<QString, ObjectMetadata>;
     virtual const ObjectsMetadata& GetObjectsMetadata() const = 0;
