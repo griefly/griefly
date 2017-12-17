@@ -236,36 +236,6 @@ void MapEditorForm::on_newMap_clicked()
     map_editor_->Resize(size_x, size_y, size_z);
 }
 
-void MapEditorForm::on_saveMap_clicked()
-{
-    QFileDialog dialog(this);
-    dialog.setFileMode(QFileDialog::AnyFile);
-    dialog.setNameFilter(tr("Mapgen files (*.gen.txt)"));
-    QStringList file_names;
-    if (!dialog.exec())
-    {
-        return;
-    }
-
-    file_names = dialog.selectedFiles();
-    map_editor_->SaveMapgen(file_names[0]);
-}
-
-void MapEditorForm::on_loadMap_clicked()
-{
-    QFileDialog dialog(this);
-    dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(tr("Mapgen files (*.gen.txt)"));
-    QStringList file_names;
-    if (!dialog.exec())
-    {
-        return;
-    }
-
-    file_names = dialog.selectedFiles();
-    map_editor_->LoadMapgen(file_names[0]);
-}
-
 void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 {
     QString name;

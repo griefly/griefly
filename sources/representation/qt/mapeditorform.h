@@ -49,10 +49,6 @@ private slots:
 
     void on_newMap_clicked();
 
-    void on_saveMap_clicked();
-
-    void on_loadMap_clicked();
-
     void on_listWidgetTile_itemSelectionChanged();
 
 //    void on_listWidgetVariables_itemDoubleClicked(QListWidgetItem *item);

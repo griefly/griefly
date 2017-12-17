@@ -125,32 +125,6 @@
          <string>Remove Item</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="saveMap">
-        <property name="geometry">
-         <rect>
-          <x>470</x>
-          <y>10</y>
-          <width>75</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Save Map</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="loadMap">
-        <property name="geometry">
-         <rect>
-          <x>470</x>
-          <y>40</y>
-          <width>75</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Load Map</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="beginSelection">
         <property name="geometry">
          <rect>
@@ -193,7 +167,7 @@
        <widget class="QPushButton" name="saveMapJson">
         <property name="geometry">
          <rect>
-          <x>550</x>
+          <x>470</x>
           <y>10</y>
           <width>75</width>
           <height>23</height>
@@ -206,7 +180,7 @@
        <widget class="QPushButton" name="loadMapJson">
         <property name="geometry">
          <rect>
-          <x>550</x>
+          <x>470</x>
           <y>40</y>
           <width>75</width>
           <height>23</height>

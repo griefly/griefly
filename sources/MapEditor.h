@@ -53,10 +53,8 @@ public:
 
     MapEditor(QGraphicsScene* scene);
 
-    void SaveMapgen(const QString& name);
     QJsonObject SaveMapgenJson() const;
 
-    void LoadMapgen(const QString& name);
     void LoadMapgenJson(const QJsonObject& data);
     void CreateEntity(kv::Position position, const QJsonObject& info, bool is_turf);
 
