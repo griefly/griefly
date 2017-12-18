@@ -15,7 +15,7 @@
 
 #include "core/KvGlobals.h"
 
-using MapgenVariablesType = QMap<QString, QByteArray>;
+using MapgenVariablesType = QMap<QString, QJsonValue>;
 
 class MapEditor : public QObject
 {

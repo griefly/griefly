@@ -301,11 +301,11 @@ QJsonObject EntryToJson(const MapEditor::EditorEntry& entry)
     QJsonObject variables;
     for (auto var = entry.variables.begin(); var != entry.variables.end(); ++var)
     {
-        if (var.value().isEmpty())
+        if (var.value().isNull())
         {
             continue;
         }
-        const QJsonValue value = ConvertSerializedToJson(var.value());
+        const QJsonValue value = var.value();
         variables.insert(var.key(), value);
     }
     object_info.insert(key::VARIABLES, variables);
@@ -424,7 +424,7 @@ void MapEditor::CreateEntity(kv::Position position, const QJsonObject& info, boo
 
     for (const QString& key : variables.keys())
     {
-        entry->variables.insert(key, ConvertJsonToSerialized(variables.value(key)));
+        entry->variables.insert(key, variables.value(key));
     }
     UpdateDirs(entry);
 }
@@ -510,12 +510,10 @@ void MapEditor::AddItem(const QString &item_type)
 
 void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
 {
-    QByteArray& data = ee->variables["direction_"];
-    if (ee && data.size())
+    const QJsonValue& data = ee->variables["direction_"];
+    if (ee && !data.isNull())
     {
-        kv::FastDeserializer deserializer(data.data(), data.size());
-        Dir dir;
-        deserializer >> dir;
+        Dir dir = static_cast<Dir>(data.toInt());
         int byond_dir = helpers::DirToByond(dir);
 
         if (byond_dir < image_holder_[ee->item_type].size())
