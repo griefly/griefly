@@ -166,7 +166,6 @@ void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, i
 
     ui->listWidgetVariables->clear();
     ui->lineEditAsString->clear();
-    ui->lineEditRaw->clear();
 
     on_listWidgetTile_itemSelectionChanged();
 }
@@ -320,8 +319,6 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 
     qDebug() << variable_value;
 
-    ui->lineEditRaw->setText("Remove me");
-
     {
         QString parsed_value("PARSING_ERROR");
         if (variable_value.isString())
@@ -352,11 +349,6 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 
         ui->lineEditAsBool->setText(parsed_value);
     }
-}
-
-void MapEditorForm::on_lineEditRaw_returnPressed()
-{
-    // FIXME: REMOVE ME
 }
 
 void MapEditorForm::on_lineEditAsString_returnPressed()
