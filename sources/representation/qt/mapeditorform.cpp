@@ -313,41 +313,45 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 
     const QJsonObject& variable_object
         = ee->variables[ui->listWidgetVariables->currentItem()->text()].toObject();
-    // TODO: proper type handling
-    // const QString& type = variable_object.value(mapgen::key::TYPE).toString();
-    const QJsonValue& variable_value = *variable_object.begin();
+
+    if (variable_object.size() != 1)
+    {
+        qDebug() << "Bad variables:" << variable_object;
+        return;
+    }
+
+    const QString& type = variable_object.begin().key();
+    const QJsonValue& variable_value = variable_object.begin().value();
 
     qDebug() << variable_value;
 
+    if (type == mapgen::key::type::STRING)
     {
-        QString parsed_value("PARSING_ERROR");
-        if (variable_value.isString())
-        {
-            parsed_value = variable_value.toString();
-        }
+        ui->lineEditAsString->setText(variable_value.toString());
 
-        ui->lineEditAsString->setText(parsed_value);
+        ui->lineEditAsInt->setText("<Wrong type>");
+        ui->lineEditAsBool->setText("<Wrong type>");
     }
 
+    if (type == mapgen::key::type::INT32)
     {
-        QString parsed_value("PARSING_ERROR");
-        if (variable_value.isDouble())
-        {
-            const int value = static_cast<int>(variable_value.toDouble());
-            parsed_value = QString::number(value);
-        }
-
+        const int value = static_cast<int>(variable_value.toDouble());
+        const QString parsed_value = QString::number(value);
         ui->lineEditAsInt->setText(parsed_value);
+
+        ui->lineEditAsString->setText("<Wrong type>");
+        ui->lineEditAsBool->setText("<Wrong type>");
     }
+
+    if (type == mapgen::key::type::BOOL)
     {
-        QString parsed_value("PARSING_ERROR");
-        if (variable_value.isBool())
-        {
-            const bool value = variable_value.toBool();
-            parsed_value = value ? "1" : "0";
-        }
+        const bool value = variable_value.toBool();
+        const QString parsed_value = value ? "1" : "0";
 
         ui->lineEditAsBool->setText(parsed_value);
+
+        ui->lineEditAsString->setText("<Wrong type>");
+        ui->lineEditAsInt->setText("<Wrong type>");
     }
 }
 
