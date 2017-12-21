@@ -55,8 +55,6 @@ private slots:
 
     void on_listWidgetVariables_itemSelectionChanged();
 
-    void on_lineEditRaw_returnPressed();
-
     void on_lineEditAsString_returnPressed();
 
     void on_listWidgetTurf_clicked(const QModelIndex &index);
