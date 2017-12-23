@@ -409,7 +409,7 @@ void MapEditor::AddItem(const QString &item_type)
 
 void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
 {
-    const QJsonValue& data = ee->variables["direction_"];
+    const QJsonValue data = ee->variables["direction_"].toObject()[mapgen::key::type::INT32];
     if (ee && !data.isNull())
     {
         Dir dir = static_cast<Dir>(data.toInt());

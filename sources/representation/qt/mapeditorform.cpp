@@ -332,8 +332,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         ui->lineEditAsInt->setText("<Wrong type>");
         ui->lineEditAsBool->setText("<Wrong type>");
     }
-
-    if (type == mapgen::key::type::INT32)
+    else if (type == mapgen::key::type::INT32)
     {
         const int value = static_cast<int>(variable_value.toDouble());
         const QString parsed_value = QString::number(value);
@@ -342,8 +341,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         ui->lineEditAsString->setText("<Wrong type>");
         ui->lineEditAsBool->setText("<Wrong type>");
     }
-
-    if (type == mapgen::key::type::BOOL)
+    else if (type == mapgen::key::type::BOOL)
     {
         const bool value = variable_value.toBool();
         const QString parsed_value = value ? "1" : "0";
@@ -369,9 +367,9 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
     }
 
     const QString current_variable = ui->listWidgetVariables->currentItem()->text();
+    const QString variable_value = ui->lineEditAsString->text();
 
-    // TODO: proper variable format
-    ee->variables[current_variable] = current_variable;
+    ee->variables[current_variable] = QJsonObject{{mapgen::key::type::STRING, variable_value}};
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
@@ -401,8 +399,7 @@ void MapEditorForm::on_lineEditAsInt_returnPressed()
         return;
     }
 
-    // TODO: proper variable format
-    ee->variables[current_variable] = value;
+    ee->variables[current_variable] = QJsonObject{{mapgen::key::type::INT32, value}};
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
@@ -434,8 +431,7 @@ void MapEditorForm::on_lineEditAsBool_returnPressed()
         return;
     }
 
-    // TODO: proper variable format
-    ee->variables[current_variable] = value;
+    ee->variables[current_variable] = QJsonObject{{mapgen::key::type::BOOL, value}};;
 
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
