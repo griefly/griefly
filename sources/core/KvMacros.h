@@ -34,20 +34,20 @@ namespace internal
     virtual void Load(FastDeserializer& file) override;                    \
     virtual unsigned int HashMembers() override
 
-#define REGISTER_CLASS_AS(type_id)         \
-    virtual const QString& GetType() const \
-    {                                      \
-        return GetTypeStatic();            \
-    }                                      \
-    virtual int GetTypeIndex() const       \
-    {                                      \
-        return TYPE_INDEX;                 \
-    }                                      \
-    static int GetTypeIndexStatic()        \
-    {                                      \
-        return TYPE_INDEX;                 \
-    }                                      \
-    static const QString& GetTypeStatic(); \
+#define REGISTER_CLASS_AS(type_id)                  \
+    virtual const QString& GetType() const override \
+    {                                               \
+        return GetTypeStatic();                     \
+    }                                               \
+    virtual int GetTypeIndex() const override       \
+    {                                               \
+        return TYPE_INDEX;                          \
+    }                                               \
+    static int GetTypeIndexStatic()                 \
+    {                                               \
+        return TYPE_INDEX;                          \
+    }                                               \
+    static const QString& GetTypeStatic();          \
     static int TYPE_INDEX
 
 #define KV_SAVEABLE(name)                                                                   \
