@@ -71,40 +71,26 @@ MapEditorForm::MapEditorForm(QWidget *parent)
     SetSpriter(new SpriteHolder);
 
     qDebug() << "Start generate images for creators";
-    for (auto it = (*GetItemsCreators()).begin(); it != (*GetItemsCreators()).end(); ++it)
+    const auto& objects_metadata = kv::GetCoreInstance().GetObjectsMetadata();
+    for (const kv::CoreInterface::ObjectMetadata& metadata : objects_metadata)
     {
-        kv::Object* loc = it->second();
-        kv::MaterialObject* bloc = CastTo<kv::MaterialObject>(loc);
-        if (!bloc)
-        {
-            qDebug() << it->first;
-            continue;
-        }
-        bool is_turf = false;
-        if (CastTo<Turf>(loc))
-        {
-            is_turf = true;
-        }
+        const RawViewInfo& view_info = metadata.default_view;
 
-        ViewInfo* view_info = bloc->GetView();
-
-        qDebug() << view_info;
-
-        if (   view_info->GetBaseFrameset().GetSprite() == ""
-            || view_info->GetBaseFrameset().GetState() == "")
+        if (   view_info.base_frameset.sprite_name.isEmpty()
+            || view_info.base_frameset.state.isEmpty())
         {
-            qDebug() << "EMPTY frameset:" << it->first;
+            qDebug() << "EMPTY frameset:" << metadata.name;
             continue;
         }
 
         QVector<QPixmap> images;
 
         View2 view;
-        view.LoadViewInfo(view_info->GetRawData());
+        view.LoadViewInfo(view_info);
 
         if (view.GetBaseFrameset().GetMetadata() == nullptr)
         {
-            qDebug() << "EMPTY metadata:" << it->first;
+            qDebug() << "EMPTY metadata:" << metadata.name;
             continue;
         }
 
@@ -120,7 +106,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
 
             images.push_back(QPixmap::fromImage(img));
         }
-        map_editor_->AddItemType(it->first, images);
+        map_editor_->AddItemType(metadata.name, images);
 
         if (images.length() == 0)
         {
@@ -128,17 +114,17 @@ MapEditorForm::MapEditorForm(QWidget *parent)
         }
 
         QListWidgetItem* new_item
-            = new QListWidgetItem(QIcon(images[0]), bloc->GetType());
+            = new QListWidgetItem(QIcon(images[0]), metadata.name);
 
-        if (!is_turf)
+        if (!metadata.turf)
         {
-            types_.push_back(it->first);
+            types_.push_back(metadata.name);
             ui->listWidget->addItem(new_item);
         }
         else
         {
-            turf_types_.push_back(it->first);
-            map_editor_->AddTurfType(it->first);
+            turf_types_.push_back(metadata.name);
+            map_editor_->AddTurfType(metadata.name);
             ui->listWidgetTurf->addItem(new_item);
         }
     }
