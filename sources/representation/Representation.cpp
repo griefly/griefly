@@ -3,7 +3,6 @@
 #include <limits>
 
 #include "core/KvGlobals.h"
-#include "core/Helpers.h"
 
 #include "Sound.h"
 #include "net/Network2.h"
@@ -252,7 +251,7 @@ void Representation::Click(int x, int y)
         }
         if (it->vlevel >= MAX_LEVEL)
         {
-            int bdir = helpers::DirToByond(it->dir);
+            int bdir = kv::helpers::DirToByond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
                 //qDebug() << "Clicked " << it->id;
@@ -274,7 +273,7 @@ void Representation::Click(int x, int y)
             {
                 continue;
             }
-            int bdir = helpers::DirToByond(it->dir);
+            int bdir = kv::helpers::DirToByond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
                 id_to_send = it->click_id;
@@ -440,7 +439,7 @@ void Representation::Draw()
                 views_[it->id].view.Draw(
                     camera_.GetFullShiftX(),
                     camera_.GetFullShiftY(),
-                    helpers::DirToByond(it->dir));
+                    kv::helpers::DirToByond(it->dir));
             }
         }
     }
@@ -451,7 +450,7 @@ void Representation::Draw()
             views_[it->id].view.Draw(
                 camera_.GetFullShiftX(),
                 camera_.GetFullShiftY(),
-                helpers::DirToByond(it->dir));
+                kv::helpers::DirToByond(it->dir));
         }
     }
 }

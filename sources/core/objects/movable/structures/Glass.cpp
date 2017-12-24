@@ -1,7 +1,6 @@
 #include "Glass.h"
 
 #include "core/SynchronizedRandom.h"
-#include "core/Helpers.h"
 #include "core/objects/mobs/Mob.h"
 #include "Breakable.h"
 #include "core/objects/movable/items/Shard.h"

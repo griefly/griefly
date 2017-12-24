@@ -7,7 +7,6 @@
 #include "core/Game.h"
 #include "core/objects/Lobby.h"
 #include "net/MagicStrings.h"
-#include "core/Helpers.h"
 #include "representation/Representation.h"
 #include "core/objects/Professions.h"
 

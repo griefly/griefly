@@ -6,8 +6,6 @@
 #include "core/Game.h"
 #include "Tile.h"
 
-#include "core/Helpers.h"
-
 #include "representation/Representation.h"
 
 using namespace kv;

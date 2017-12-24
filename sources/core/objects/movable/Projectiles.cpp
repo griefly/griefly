@@ -1,5 +1,4 @@
 #include "Projectiles.h"
-#include "core/Helpers.h"
 
 using namespace kv;
 

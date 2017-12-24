@@ -1,13 +1,5 @@
 #include "Map.h"
 
-/*#include "objects/Object.h"
-#include "objects/Tile.h"
-#include "Game.h"
-#include "ObjectFactory.h"
-#include "Helpers.h"
-#include "AutogenMetadata.h"
-#include "representation/Representation.h"*/
-
 using namespace kv;
 
 void Map::FillTilesAtmosHolders()

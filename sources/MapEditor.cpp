@@ -9,13 +9,6 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include <fstream>
-
-#include "core/KvGlobals.h"
-#include "core/Helpers.h"
-#include "core/FastSerializer.h"
-#include "core/SaveableOperators.h"
-
 #include "core_headers/Mapgen.h"
 
 MapEditor::EditorEntry::EditorEntry()
@@ -413,7 +406,7 @@ void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
     if (ee && !data.isNull())
     {
         Dir dir = static_cast<Dir>(data.toInt());
-        int byond_dir = helpers::DirToByond(dir);
+        int byond_dir = kv::helpers::DirToByond(dir);
 
         if (byond_dir < image_holder_[ee->item_type].size())
         {

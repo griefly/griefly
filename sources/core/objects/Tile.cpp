@@ -1,6 +1,5 @@
 #include <cassert>
 
-#include "../Helpers.h"
 #include "../Map.h"
 #include "../Game.h"
 #include "MaterialObject.h"

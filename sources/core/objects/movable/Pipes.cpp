@@ -1,6 +1,5 @@
 #include "Pipes.h"
 
-#include "core/Helpers.h"
 #include "core/Game.h"
 
 #include "core/objects/Tile.h"

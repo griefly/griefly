@@ -7,7 +7,6 @@
 #include "net/MagicStrings.h"
 #include "core/atmos/AtmosHolder.h"
 #include "core/objects/Tile.h"
-#include "core/Helpers.h"
 #include "core/SynchronizedRandom.h"
 #include "Ghost.h"
 #include "core/objects/movable/items/Clothes.h"
