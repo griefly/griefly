@@ -26,6 +26,8 @@ namespace
 
 kv::CoreInterface::ObjectsMetadata GenerateMetadata()
 {
+    InitSettersForTypes();
+
     kv::CoreInterface::ObjectsMetadata retval;
 
     for (auto it : (*GetItemsCreators()))
@@ -46,6 +48,18 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
         if (CastTo<kv::Turf>(object.get()))
         {
             metadata.turf = true;
+        }
+
+        const auto variables_it = GetSettersForTypes().find(it.first);
+        if (variables_it == GetSettersForTypes().end())
+        {
+            kv::Abort(QString("Cannot find type '%1' in setters table!").arg(it.first));
+        }
+
+        const SettersForType& variables = variables_it->second;
+        for (auto variable = variables.begin(); variable != variables.end(); ++variable)
+        {
+            metadata.variables.append(variable->first);
         }
 
         retval.insert(metadata.name, metadata);

@@ -1,10 +1,8 @@
 #include "mapeditorform.h"
 #include "ui_mapeditorform.h"
 
-#include "core/ObjectFactory.h"
-#include "core/objects/turfs/Turf.h"
-
 #include "core_headers/Mapgen.h"
+#include "core_headers/CoreInterface.h"
 
 #include "representation/View2.h"
 #include "representation/SpriteHolder.h"
@@ -20,8 +18,6 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QJsonDocument>
-
-#include "AutogenMetadata.h"
 
 using namespace kv;
 
@@ -51,8 +47,6 @@ MapEditorForm::MapEditorForm(QWidget *parent)
     ui->setupUi(this);
 
     is_turf_selected_ = false;
-
-    InitSettersForTypes();
 
     scene_ = new GraphicsScene;
     map_editor_ = new MapEditor(scene_);
@@ -233,15 +227,21 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 
     ui->listWidgetVariables->clear();
 
-    QString item_type = GetCurrentEditorEntry()->item_type;
+    const QString item_type = GetCurrentEditorEntry()->item_type;
 
-    auto& variables = GetSettersForTypes()[item_type];
+    const kv::CoreInterface::ObjectsMetadata& objects_metadata = GetCoreInstance().GetObjectsMetadata();
+    auto it = objects_metadata.find(item_type);
+    if (it == objects_metadata.end())
+    {
+        return;
+    }
+    const auto& variables = it->variables;
 
     int counter = 0;
     for (auto it = variables.begin(); it != variables.end(); ++it, ++counter)
     {
-        ui->listWidgetVariables->addItem(it->first);
-        if (it->first == name)
+        ui->listWidgetVariables->addItem(*it);
+        if (*it == name)
         {
             ui->listWidgetVariables->setCurrentRow(counter);
         }

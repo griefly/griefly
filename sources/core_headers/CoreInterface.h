@@ -183,6 +183,7 @@ public:
         QString name;
         RawViewInfo default_view;
         bool turf;
+        QVector<QString> variables;
     };
     struct Config
     {

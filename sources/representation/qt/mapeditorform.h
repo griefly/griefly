@@ -8,7 +8,6 @@
 #include <vector>
 
 #include "MapEditor.h"
-#include "core/FastSerializer.h"
 
 namespace Ui {
 class MapEditorForm;
