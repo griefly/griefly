@@ -10,6 +10,7 @@
 #include <QJsonArray>
 
 #include "core_headers/Mapgen.h"
+#include "core_headers/Dir.h"
 
 MapEditor::EditorEntry::EditorEntry()
 {
@@ -276,22 +277,21 @@ void MapEditor::LoadMapgenJson(const QJsonObject& data)
     {
         const QJsonObject tile = value.toObject();
 
-        kv::Position position;
-        position.x = tile.value(key::X).toInt();
-        position.y = tile.value(key::Y).toInt();
-        position.z = tile.value(key::Z).toInt();
+        const int x = tile.value(key::X).toInt();
+        const int y = tile.value(key::Y).toInt();
+        const int z = tile.value(key::Z).toInt();
 
-        CreateEntity(position, tile.value(key::TURF).toObject(), true);
+        CreateEntity(x, y, z, tile.value(key::TURF).toObject(), true);
 
         const QJsonArray objects = tile.value(key::OBJECTS).toArray();
         for (const QJsonValue& object_value : objects)
         {
-            CreateEntity(position, object_value.toObject(), false);
+            CreateEntity(x, y, z, object_value.toObject(), false);
         }
     }
 }
 
-void MapEditor::CreateEntity(kv::Position position, const QJsonObject& info, bool is_turf)
+void MapEditor::CreateEntity(int x, int y, int z, const QJsonObject& info, bool is_turf)
 {
     using namespace mapgen;
 
@@ -305,11 +305,11 @@ void MapEditor::CreateEntity(kv::Position position, const QJsonObject& info, boo
     MapEditor::EditorEntry* entry;
     if (is_turf)
     {
-        entry = &SetTurf(item_type, position.x, position.y, position.z);
+        entry = &SetTurf(item_type, x, y, z);
     }
     else
     {
-        entry = &AddItem(item_type, position.x, position.y, position.z);
+        entry = &AddItem(item_type, x, y, z);
     }
 
     const QJsonObject variables = info.value(key::VARIABLES).toObject();

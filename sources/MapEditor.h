@@ -13,8 +13,6 @@
 #include <QKeyEvent>
 #include <QVector>
 
-#include "core/KvGlobals.h"
-
 using MapgenVariablesType = QMap<QString, QJsonValue>;
 
 class MapEditor : public QObject
@@ -56,7 +54,7 @@ public:
     QJsonObject SaveMapgenJson() const;
 
     void LoadMapgenJson(const QJsonObject& data);
-    void CreateEntity(kv::Position position, const QJsonObject& info, bool is_turf);
+    void CreateEntity(int x, int y, int z, const QJsonObject& info, bool is_turf);
 
     void fix_borders(int* posx, int* posy);
 
