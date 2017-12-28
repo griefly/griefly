@@ -2,13 +2,10 @@
 
 #include "core/Map.h"
 
-#include "net/MagicStrings.h"
+#include "client/net/MagicStrings.h"
 #include "core/ObjectFactory.h"
 #include "core/objects/Lobby.h"
 #include "LoginMob.h"
-#include "core/Game.h"
-
-#include "representation/Representation.h"
 
 #include "Human.h"
 

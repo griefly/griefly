@@ -6,7 +6,6 @@
 #include "core/objects/movable/items/Materials.h"
 #include "core/objects/movable/structures/Lattice.h"
 #include "core/ObjectFactory.h"
-#include "core/Game.h"
 
 using namespace kv;
 

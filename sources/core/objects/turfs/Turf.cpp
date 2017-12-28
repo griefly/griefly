@@ -2,7 +2,6 @@
 
 #include "core/objects/movable/structures/Lattice.h"
 #include "core/objects/Tile.h"
-#include "representation/Representation.h"
 
 using namespace kv;
 

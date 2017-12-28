@@ -3,10 +3,10 @@
 
 #include <QMap>
 
-#include "core/Map.h"
 #include "Params.h"
-#include "core/Game.h"
 #include "net/MagicStrings.h"
+
+#include "Game.h"
 
 #include "representation/Sound.h"
 
@@ -18,6 +18,7 @@
 
 #include "net/Network2.h"
 #include "core_headers/Messages.h"
+#include "core_headers/CoreInterface.h"
 
 #include <QDebug>
 #include <QString>
@@ -27,7 +28,8 @@
 #include <QTextBlock>
 #include <QMessageBox>
 
-#include "Version.h"
+// TODO: fix it
+#include "core/Version.h"
 
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),

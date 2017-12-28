@@ -17,8 +17,6 @@
 
 #include "SynchronizedRandom.h"
 
-#include "MapEditor.h"
-
 #include "AutogenMetadata.h"
 
 namespace kv

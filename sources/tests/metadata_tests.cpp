@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "representation/Metadata.h"
+// TODO: test in representation
+/*#include "representation/Metadata.h"
 
 using ::testing::internal::CaptureStderr;
 using ::testing::internal::GetCapturedStderr;
@@ -169,5 +170,4 @@ TEST(ImageMetadata, InitWithoutMetadata)
         ASSERT_EQ(sprite.frames_sequence.size(), 1);
         EXPECT_EQ(sprite.frames_sequence[0], 0);
     }
-}
-
+}*/

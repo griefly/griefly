@@ -1,7 +1,5 @@
 #pragma once
 
-#include "core/Game.h"
-
 #include "Item.h"
 #include "AmmunitionBoxes.h"
 

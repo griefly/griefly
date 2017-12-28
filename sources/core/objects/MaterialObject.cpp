@@ -3,10 +3,7 @@
 #include "MaterialObject.h"
 #include "core/Map.h"
 #include "mobs/Mob.h"
-#include "core/Game.h"
 #include "Tile.h"
-
-#include "representation/Representation.h"
 
 using namespace kv;
 

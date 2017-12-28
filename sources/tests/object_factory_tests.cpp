@@ -11,8 +11,9 @@
 #include "core/objects/mobs/Mob.h"
 #include "core/objects/test/TestObject.h"
 #include "core/objects/test/UnsyncGenerator.h"
+#include "core/objects/GlobalObjectsHolder.h"
 
-#include "core/Game.h"
+//#include "core/Game.h"
 
 using ::testing::ReturnRef;
 using ::testing::Return;

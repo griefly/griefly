@@ -2,8 +2,6 @@
 
 #include <QUuid>
 
-#include "../../Game.h"
-
 using namespace kv;
 
 UnsyncGenerator::UnsyncGenerator()

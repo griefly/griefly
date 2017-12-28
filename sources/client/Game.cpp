@@ -2,27 +2,27 @@
 
 #include "core/KvAbort.h"
 
-#include "Map.h"
+//#include "Map.h"
 
-#include "SynchronizedRandom.h"
-#include "ObjectFactory.h"
+//#include "SynchronizedRandom.h"
+//#include "ObjectFactory.h"
 #include "net/MagicStrings.h"
-#include "objects/Tile.h"
+//#include "objects/Tile.h"
 #include "Params.h"
 
-#include "objects/mobs/Mob.h"
-#include "Names.h"
-#include "objects/movable/Movable.h"
-#include "objects/mobs/Human.h"
-#include "objects/mobs/LoginMob.h"
-#include "objects/Lobby.h"
-#include "objects/PhysicsEngine.h"
-#include "objects/SpawnPoints.h"
-#include "objects/test/UnsyncGenerator.h"
+//#include "objects/mobs/Mob.h"
+//#include "Names.h"
+//#include "objects/movable/Movable.h"
+//#include "objects/mobs/Human.h"
+//#include "objects/mobs/LoginMob.h"
+//#include "objects/Lobby.h"
+//#include "objects/PhysicsEngine.h"
+//#include "objects/SpawnPoints.h"
+//#include "objects/test/UnsyncGenerator.h"
 
-#include "AutogenMetadata.h"
+//#include "AutogenMetadata.h"
 
-#include "Version.h"
+//#include "Version.h"
 
 #include "net/Network2.h"
 #include "representation/Representation.h"
@@ -171,11 +171,8 @@ void Game::WaitForExit()
     thread_.wait();
 }
 
-QVector<ObjectInfo>* id_ptr_id_table = nullptr;
-
 void Game::InitWorld(int id, QString map_name)
 {
-    InitSettersForTypes();
     mob_ = id;
 
     qDebug() << "Begin choose map";
@@ -422,7 +419,8 @@ void Game::AddMessageToMessageLog(::Message message)
 
 void Game::AddBuildInfo(QByteArray* data)
 {
-    QString system_info("Build info: %1, Qt: %2");
-    system_info = system_info.arg(GetBuildInfo()).arg(GetQtVersion());
-    data->append(system_info);
+    // TODO: fix this
+    //QString system_info("Build info: %1, Qt: %2");
+    //system_info = system_info.arg(GetBuildInfo()).arg(GetQtVersion());
+    //data->append(system_info);
 }

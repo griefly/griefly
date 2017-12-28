@@ -93,6 +93,8 @@ private:
 class CoreImplementation : public CoreInterface
 {
 public:
+    CoreImplementation();
+
     virtual WorldPtr CreateWorldFromSave(
         const QByteArray& data, quint32 mob_id) override;
     virtual WorldPtr CreateWorldFromJson(

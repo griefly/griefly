@@ -1,7 +1,6 @@
 #include "Structure.h"
 
 #include "core/objects/movable/items/Item.h"
-#include "representation/Sound.h"
 
 using namespace kv;
 

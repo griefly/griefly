@@ -13,38 +13,9 @@
 
 #include <QCoreApplication>
 
-#include "Version.h"
+#include "core/Version.h"
 
 using kv::Message;
-
-bool Network2::IsKey(const QJsonObject& json, const QString& key)
-{
-    if (json["key"] == key)
-    {
-        return true;
-    }
-    return false;
-}
-
-quint32 Network2::ExtractObjId(const QJsonObject &json)
-{
-    return json["obj"].toInt();
-}
-
-QString Network2::ExtractAction(const QJsonObject &json)
-{
-    return json["action"].toString();
-}
-
-Message Network2::MakeClickMessage(int object_id, const QString& click_type)
-{
-    Message message;
-
-    message.type = kv::message_type::MOUSE_CLICK;
-    message.data = {{"action", click_type}, {"obj", object_id}};
-
-    return message;
-}
 
 Network2& Network2::GetInstance()
 {

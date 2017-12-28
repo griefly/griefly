@@ -2,12 +2,11 @@
 
 #include "core/objects/mobs/Mob.h"
 
-#include "core/Game.h"
 #include "core/objects/PhysicsEngine.h"
 
 #include "core/objects/turfs/Turf.h"
 
-#include "representation/Representation.h"
+#include "core/objects/GlobalObjectsHolder.h"
 
 using namespace kv;
 

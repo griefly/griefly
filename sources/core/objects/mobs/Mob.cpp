@@ -1,9 +1,8 @@
 #include "Mob.h"
 
-#include "core/Game.h"
 #include "core/Map.h"
 
-#include "net/MagicStrings.h"
+#include "client/net/MagicStrings.h"
 
 using namespace kv;
 
@@ -34,19 +33,19 @@ void Mob::ProcessMessage(const Message& message)
         return;
     }
 
-    if (Network2::IsKey(message.data, Input::MOVE_UP))
+    if (IsKey(message.data, Input::MOVE_UP))
     {
         TryMove(Dir::NORTH);
     }
-    else if (Network2::IsKey(message.data, Input::MOVE_DOWN))
+    else if (IsKey(message.data, Input::MOVE_DOWN))
     {
         TryMove(Dir::SOUTH);
     }
-    else if (Network2::IsKey(message.data, Input::MOVE_LEFT))
+    else if (IsKey(message.data, Input::MOVE_LEFT))
     {
         TryMove(Dir::WEST);
     }
-    else if (Network2::IsKey(message.data, Input::MOVE_RIGHT))
+    else if (IsKey(message.data, Input::MOVE_RIGHT))
     {
         TryMove(Dir::EAST);
     }

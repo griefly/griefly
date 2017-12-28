@@ -1,7 +1,6 @@
 #include <cassert>
 
 #include "../Map.h"
-#include "../Game.h"
 #include "MaterialObject.h"
 #include "Tile.h"
 #include "movable/Movable.h"

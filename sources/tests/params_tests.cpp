@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "Params.h"
+// TODO: test in Representation
+/*#include "Params.h"
 
 using ::testing::internal::CaptureStderr;
 using ::testing::internal::GetCapturedStderr;
@@ -55,4 +56,4 @@ TEST(Params, Basics)
         delete[] argv[i];
     }
     delete[] argv;
-}
+}*/

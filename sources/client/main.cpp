@@ -16,9 +16,6 @@
 #include <gmock/gmock.h>
 #endif
 
-#include "core/FastIsType.h"
-#include "AutogenMetadata.h"
-
 #include "Log.h"
 
 int main(int argc, char *argv[])
@@ -34,8 +31,6 @@ int main(int argc, char *argv[])
         kv::InitializeLog();
     }
 
-    InitRealTypes();
-    InitCastTable();
     // LCOV_EXCL_STOP
 #ifdef _BUILD_TESTS
     if (app.arguments().contains("--run-tests"))

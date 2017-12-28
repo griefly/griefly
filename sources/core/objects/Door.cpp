@@ -1,7 +1,5 @@
 #include "Door.h"
 
-#include "representation/Sound.h"
-
 #include "movable/Movable.h"
 #include "mobs/Mob.h"
 #include "movable/items/Item.h"

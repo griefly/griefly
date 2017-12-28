@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "View2.h"
-#include "ViewInfo.h"
 
 #include <QMap>
 #include <QMutex>

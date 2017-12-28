@@ -9,8 +9,6 @@
 
 #include "AtmosGrid.h"
 
-#include "representation/Representation.h"
-
 using namespace kv;
 
 Atmosphere::Atmosphere()

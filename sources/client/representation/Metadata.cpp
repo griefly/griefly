@@ -5,8 +5,9 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 
+// TODO:
 #include "core/KvAbort.h"
-#include "JsonValidator.h"
+#include "core/JsonValidator.h"
 
 const ImageMetadata::SpriteMetadata& 
     ImageMetadata::GetSpriteMetadata(const QString& name) const

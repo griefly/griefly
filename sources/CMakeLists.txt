@@ -122,8 +122,9 @@ endif()
 ### Building client
 ###
 
-set(SOURCE_DIR ./)
+set(SOURCE_DIR core/)
 set(TESTS_DIR tests/)
+set(CLIENT_DIR client/)
 
 if(BUILD_TESTS)
     file(GLOB_RECURSE TESTS "${TESTS_DIR}*.cpp" "${TESTS_DIR}*.h")
@@ -133,7 +134,9 @@ endif()
 
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}*.cpp")
 file(GLOB_RECURSE HEADERS "${SOURCE_DIR}*.h")
-file(GLOB_RECURSE FORMS "${SOURCE_DIR}*.ui")
+
+file(GLOB_RECURSE FORMS "${CLIENT_DIR}*.ui")
+file(GLOB_RECURSE CLIENT_SOURCES "${CLIENT_DIR}*.cpp" "${CLIENT_DIR}*.h")
 
 # Metadata & source code generation
 add_custom_command(
@@ -151,21 +154,35 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenMetadata.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenSerialization.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/Version.cpp")
 
-qt5_wrap_ui(FORMS_HEADERS ${FORMS})
+add_library(KVEngine ${SOURCES} ${HEADERS} ${TESTS})
+target_include_directories(
+    KVEngine PRIVATE
+    ${SOURCE_DIR})
 
-add_executable(KVEngine WIN32 ${SOURCES} ${HEADERS} ${FORMS_HEADERS} ${TESTS})
+qt5_wrap_ui(FORMS_HEADERS ${FORMS})
+add_executable(KVClient WIN32 ${CLIENT_SOURCES} ${FORMS} ${FORMS_HEADERS})
+target_link_libraries(KVClient KVEngine)
+target_include_directories(
+    KVClient PRIVATE
+    ${CLIENT_DIR})
 
 # Add Qt5 lib
+qt5_use_modules(KVClient Core)
 qt5_use_modules(KVEngine Core)
-qt5_use_modules(KVEngine Network)
-qt5_use_modules(KVEngine Widgets)
-qt5_use_modules(KVEngine OpenGL)
-qt5_use_modules(KVEngine Multimedia)
+
+qt5_use_modules(KVClient Network)
+qt5_use_modules(KVClient Widgets)
+qt5_use_modules(KVClient OpenGL)
+qt5_use_modules(KVClient Multimedia)
 
 # Add GTEST lib
 if(BUILD_TESTS)
     target_include_directories(
         KVEngine PRIVATE
+        "${gtest_SOURCE_DIR}/include"
+        "${gmock_SOURCE_DIR}/include")
+    target_include_directories(
+        KVClient PRIVATE
         "${gtest_SOURCE_DIR}/include"
         "${gmock_SOURCE_DIR}/include")
     target_link_libraries(KVEngine gtest)

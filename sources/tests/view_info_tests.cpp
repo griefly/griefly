@@ -1,4 +1,4 @@
-#include "representation/ViewInfo.h"
+#include "ViewInfo.h"
 
 #include <gtest/gtest.h>
 

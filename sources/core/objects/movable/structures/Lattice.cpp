@@ -5,8 +5,6 @@
 #include "core/objects/turfs/Floor.h"
 
 #include "core/ObjectFactory.h"
-#include "core/Game.h"
-#include "representation/Sound.h"
 
 using namespace kv;
 

@@ -2,7 +2,6 @@
 
 #include "core/objects/movable/structures/Girder.h"
 #include "core/ObjectFactory.h"
-#include "core/Game.h"
 #include "core/objects/turfs/Floor.h"
 #include "core/objects/movable/structures/Grille.h"
 

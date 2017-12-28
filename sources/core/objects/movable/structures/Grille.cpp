@@ -2,10 +2,8 @@
 
 #include "core/objects/mobs/Mob.h"
 #include "core/objects/movable/items/Item.h"
-#include "representation/Sound.h"
 
 #include "core/ObjectFactory.h"
-#include "core/Game.h"
 #include "core/objects/movable/items/Materials.h"
 
 using namespace kv;

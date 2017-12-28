@@ -149,3 +149,4 @@ Saves
 /exec/atmos_test.gen
 /gopath/src/griefly-server/*.exe
 /exec/*.gen
+exec/libKVEngine.a

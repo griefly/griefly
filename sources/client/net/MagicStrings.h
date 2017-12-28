@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QString>
+#include <QJsonObject>
+
 namespace Net
 {
     const char* const NEXTTICK = "nexttick";
@@ -40,4 +43,22 @@ namespace Click
     const char* const LEFT_SHIFT = "lshclick";
     const char* const LEFT_CONTROL = "lctrlclick";
     const char* const LEFT_R = "lrclick";
+}
+
+inline bool IsKey(const QJsonObject& json, const QString& key)
+{
+    if (json["key"] == key)
+    {
+        return true;
+    }
+    return false;
+}
+
+inline quint32 ExtractObjId(const QJsonObject& json)
+{
+    return json["obj"].toInt();
+}
+inline QString ExtractAction(const QJsonObject& json)
+{
+    return json["action"].toString();
 }

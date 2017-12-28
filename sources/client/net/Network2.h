@@ -89,11 +89,32 @@ class Network2 : public QObject
 public:
     friend class SocketHandler;
 
-    static bool IsKey(const QJsonObject& json, const QString& key);
-    static quint32 ExtractObjId(const QJsonObject& json);
-    static QString ExtractAction(const QJsonObject& json);
+    static bool IsKey(const QJsonObject& json, const QString& key)
+    {
+        if (json["key"] == key)
+        {
+            return true;
+        }
+        return false;
+    }
+    static quint32 ExtractObjId(const QJsonObject& json)
+    {
+        return json["obj"].toInt();
+    }
+    static QString ExtractAction(const QJsonObject& json)
+    {
+        return json["action"].toString();
+    }
 
-    static kv::Message MakeClickMessage(int object_id, const QString& click_type);
+    static kv::Message MakeClickMessage(int object_id, const QString& click_type)
+    {
+        kv::Message message;
+
+        message.type = kv::message_type::MOUSE_CLICK;
+        message.data = {{"action", click_type}, {"obj", object_id}};
+
+        return message;
+    }
 
     static Network2& GetInstance();
 

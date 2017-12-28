@@ -1,8 +1,11 @@
 #include "Object.h"
 #include "../Map.h"
 #include "../ObjectFactory.h"
-#include "../Game.h"
-#include "representation/Representation.h"
+
+#include "core/objects/GlobalObjectsHolder.h"
+#include "core/SynchronizedRandom.h"
+#include "core/objects/mobs/Mob.h"
+#include "core/ChatFrameInfo.h"
 
 using namespace kv;
 

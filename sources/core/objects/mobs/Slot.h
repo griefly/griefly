@@ -1,6 +1,6 @@
 #pragma once
 
-#include "representation/ViewInfo.h"
+#include "ViewInfo.h"
 
 #include "core/Hashes.h"
 

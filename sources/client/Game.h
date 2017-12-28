@@ -2,15 +2,6 @@
 
 #include <list>
 
-#include "objects/mobs/Mob.h"
-#include "objects/test/UnsyncGenerator.h"
-#include "objects/GlobalObjectsHolder.h"
-
-#include "SynchronizedRandom.h"
-#include "Names.h"
-#include "WorldLoaderSaver.h"
-#include "ChatFrameInfo.h"
-
 #include <QApplication>
 #include <QKeyEvent>
 #include <QString>
@@ -18,8 +9,9 @@
 #include <QThread>
 #include <QElapsedTimer>
 
-#include "Interfaces.h"
 #include "core_headers/CoreInterface.h"
+
+#include "representation/Representation.h"
 
 class Game : public QObject
 {

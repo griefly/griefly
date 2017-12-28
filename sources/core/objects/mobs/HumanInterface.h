@@ -3,7 +3,7 @@
 #include <QVector>
 
 #include "core/objects/Object.h"
-#include "representation/ViewInfo.h"
+#include "ViewInfo.h"
 
 #include "Slot.h"
 #include "core/SaveableOperators.h"

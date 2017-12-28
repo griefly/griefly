@@ -3,8 +3,6 @@
 #include "core/objects/movable/items/Item.h"
 #include "core/objects/mobs/Human.h"
 
-#include "representation/Representation.h"
-
 namespace
 {
     // Buttons

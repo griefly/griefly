@@ -1,7 +1,9 @@
 #include "Names.h"
 
-#include "Game.h"
 #include "SynchronizedRandom.h"
+#include "objects/GlobalObjectsHolder.h"
+
+#include <QFile>
 
 void Names::LoadNames()
 {

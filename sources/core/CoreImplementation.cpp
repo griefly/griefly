@@ -1,4 +1,7 @@
 #include "CoreImplementation.h"
+
+#include <QDateTime>
+
 #include "core_headers/CoreInterface.h"
 
 #include "AutogenMetadata.h"
@@ -20,6 +23,8 @@
 #include "core/atmos/Atmos.h"
 #include "core/ObjectFactory.h"
 #include "core/Names.h"
+
+QVector<ObjectInfo>* id_ptr_id_table = nullptr;
 
 namespace
 {
@@ -501,6 +506,13 @@ void WorldImplementation::AfterMapgen(const quint32 id, const bool unsync_genera
     SetPlayerId(id, newmob.Id());
     SetMob(newmob.Id());
     newmob->MindEnter();
+}
+
+CoreImplementation::CoreImplementation()
+{
+    InitRealTypes();
+    InitCastTable();
+    InitSettersForTypes();
 }
 
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(

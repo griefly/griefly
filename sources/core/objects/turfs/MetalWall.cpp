@@ -5,10 +5,7 @@
 #include "Floor.h"
 #include "core/objects/movable/items/Materials.h"
 
-#include "representation/Sound.h"
-
 #include "core/ObjectFactory.h"
-#include "core/Game.h"
 
 using namespace kv;
 

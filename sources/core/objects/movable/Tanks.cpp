@@ -1,7 +1,6 @@
 #include "Tanks.h"
 
 #include "items/Weldingtool.h"
-#include "representation/Sound.h"
 
 using namespace kv;
 

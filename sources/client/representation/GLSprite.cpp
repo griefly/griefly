@@ -4,7 +4,7 @@
 
 #include "GLSprite.h"
 
-#include "core/objects/Object.h"
+//#include "core/objects/Object.h"
 
 #include "qt/qtopengl.h"
 

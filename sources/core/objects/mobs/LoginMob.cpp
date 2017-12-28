@@ -1,14 +1,12 @@
 #include "LoginMob.h"
 
-#include "representation/Sound.h"
 #include "Human.h"
 #include "core/ObjectFactory.h"
 #include "core/Map.h"
-#include "core/Game.h"
 #include "core/objects/Lobby.h"
-#include "net/MagicStrings.h"
-#include "representation/Representation.h"
+#include "client/net/MagicStrings.h"
 #include "core/objects/Professions.h"
+#include "core/objects/GlobalObjectsHolder.h"
 
 #include <QDebug>
 
@@ -87,7 +85,7 @@ const QString HUMAN_STATES[HUMAN_STATES_AMOUNT] =
 void LoginMob::ProcessMessage(const Message& message)
 {
     if (    message.type == message_type::ORDINARY
-         && Network2::IsKey(message.data, LOGIN_CLICK))
+         && IsKey(message.data, LOGIN_CLICK))
     {
         if (GetGame().GetGlobals()->lobby->GetSecondUntilStart() > 0)
         {

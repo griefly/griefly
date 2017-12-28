@@ -3,7 +3,7 @@
 #include <list>
 
 #include "MapObject.h"
-#include "representation/ViewInfo.h"
+#include "ViewInfo.h"
 
 namespace kv
 {
