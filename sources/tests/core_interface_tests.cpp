@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "core/objects/test/PressureIndicator.h"
+#include "core/objects/turfs/SpaceTurf.h"
 
 TEST(CoreInterface, FrameDataAndNestedStructsConstructors)
 {
@@ -183,7 +184,36 @@ TEST(CoreInterface, ObjectsMetadata)
     // TODO (?): create special object
     ASSERT_TRUE(metadata.contains(kv::PressureIndicator::GetTypeStatic()));
 
-    kv::RawViewInfo view = metadata[kv::PressureIndicator::GetTypeStatic()].default_view;
-    EXPECT_EQ(view.base_frameset.sprite_name, "icons/numbers.dmi");
-    EXPECT_EQ(view.base_frameset.state, "empty");
+    {
+        const auto& indicator_metadata = metadata[kv::PressureIndicator::GetTypeStatic()];
+
+        kv::RawViewInfo view = indicator_metadata.default_view;
+        EXPECT_EQ(view.base_frameset.sprite_name, "icons/numbers.dmi");
+        EXPECT_EQ(view.base_frameset.state, "empty");
+
+        EXPECT_FALSE(indicator_metadata.turf);
+        ASSERT_EQ(indicator_metadata.variables.size(), 11);
+
+        EXPECT_TRUE(indicator_metadata.variables.contains("transparent"));
+        EXPECT_TRUE(indicator_metadata.variables.contains("name"));
+        EXPECT_TRUE(indicator_metadata.variables.contains("view_"));
+        EXPECT_TRUE(indicator_metadata.variables.contains("owner_"));
+        EXPECT_FALSE(indicator_metadata.variables.contains("id_"));
+    }
+
+    {
+        const auto& space_metadata = metadata[kv::Space::GetTypeStatic()];
+        kv::RawViewInfo view = space_metadata.default_view;
+        EXPECT_EQ(view.base_frameset.sprite_name, "icons/space.dmi");
+
+        EXPECT_TRUE(space_metadata.turf);
+        ASSERT_EQ(space_metadata.variables.size(), 13);
+
+        EXPECT_TRUE(space_metadata.variables.contains("transparent"));
+        EXPECT_TRUE(space_metadata.variables.contains("name"));
+        EXPECT_TRUE(space_metadata.variables.contains("view_"));
+        EXPECT_TRUE(space_metadata.variables.contains("owner_"));
+        EXPECT_TRUE(space_metadata.variables.contains("atmos_state_"));
+        EXPECT_FALSE(space_metadata.variables.contains("id_"));
+    }
 }
