@@ -44,7 +44,7 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     ./make.sh -DBUILD_TESTS=ON -DBUILD_COVER=ON -DCMAKE_BUILD_TYPE=Debug;
     cd exec;
-    ./KVEngine --run-tests;
+    ./KVClient --run-tests;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     docker run -v $TRAVIS_BUILD_DIR:/app
