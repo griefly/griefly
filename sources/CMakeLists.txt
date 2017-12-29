@@ -223,7 +223,7 @@ endif()
 
 # Install rules
 
-install(TARGETS KVEngine
+install(TARGETS KVClient KVEngine
         DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/metadata.json
