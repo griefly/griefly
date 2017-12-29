@@ -11,7 +11,7 @@ cd /app/exec
 export DISPLAY=:99
 Xvfb $DISPLAY -ac -screen 0 1024x768x8 &
 sleep 3
-./KVClient --run-tests
+./KVEngineTests
 
 # Coverage
 cd /app

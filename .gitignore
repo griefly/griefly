@@ -150,3 +150,5 @@ Saves
 /gopath/src/griefly-server/*.exe
 /exec/*.gen
 exec/libKVEngine.a
+exec/KVClient
+exec/KVEngineTests

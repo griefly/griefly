@@ -37,6 +37,9 @@ TEST(ObjectFactoryDeathTest, CreateImplFailAdd)
     MockIGame game;
     ObjectFactory factory(&game);
 
+    // TODO: proper cast table initialization
+    InitCastTable();
+
     ASSERT_DEATH(
     {
         quint32 id = factory.CreateImpl(MapObject::GetTypeStatic());

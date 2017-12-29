@@ -154,9 +154,15 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenMetadata.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenSerialization.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/Version.cpp")
 
-add_library(KVEngine ${SOURCES} ${HEADERS} ${TESTS})
+add_library(KVEngine ${SOURCES} ${HEADERS})
 target_include_directories(
     KVEngine PRIVATE
+    ${SOURCE_DIR})
+
+add_executable(KVEngineTests WIN32 ${HEADERS} ${TESTS})
+target_link_libraries(KVEngineTests KVEngine)
+target_include_directories(
+    KVEngineTests PRIVATE
     ${SOURCE_DIR})
 
 qt5_wrap_ui(FORMS_HEADERS ${FORMS})
@@ -178,22 +184,23 @@ qt5_use_modules(KVClient Multimedia)
 # Add GTEST lib
 if(BUILD_TESTS)
     target_include_directories(
-        KVEngine PRIVATE
+        KVEngineTests PRIVATE
         "${gtest_SOURCE_DIR}/include"
         "${gmock_SOURCE_DIR}/include")
     target_include_directories(
-        KVClient PRIVATE
+        KVEngineTests PRIVATE
         "${gtest_SOURCE_DIR}/include"
         "${gmock_SOURCE_DIR}/include")
-    target_link_libraries(KVEngine gtest)
-    target_link_libraries(KVEngine gmock)
+    target_link_libraries(KVEngineTests gtest)
+    target_link_libraries(KVEngineTests gmock)
+    target_link_libraries(KVEngineTests gmock_main)
     if(MSVC)
-        set_target_properties(KVEngine PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:CONSOLE")
-        set_target_properties(KVEngine PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
+        set_target_properties(KVEngineTests PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:CONSOLE")
+        set_target_properties(KVEngineTests PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
     endif()
 else()
     if(MSVC)
-        target_link_libraries(KVEngine Qt5::WinMain)
+        target_link_libraries(KVEngineTests Qt5::WinMain)
     endif()
 endif()
 
@@ -223,7 +230,7 @@ endif()
 
 # Install rules
 
-install(TARGETS KVClient KVEngine
+install(TARGETS KVClient KVEngine KVEngineTests
         DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/metadata.json

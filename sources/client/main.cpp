@@ -11,10 +11,10 @@
 
 #include "Params.h"
 
-#ifdef _BUILD_TESTS
+/*#ifdef _BUILD_TESTS
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#endif
+#endif*/
 
 #include "Log.h"
 
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         kv::InitializeLog();
     }
 
-    // LCOV_EXCL_STOP
+/*    // LCOV_EXCL_STOP
 #ifdef _BUILD_TESTS
     if (app.arguments().contains("--run-tests"))
     {
@@ -40,13 +40,13 @@ int main(int argc, char *argv[])
         ::testing::FLAGS_gtest_death_test_style = "threadsafe";
         return RUN_ALL_TESTS();
     }
-#else
+#else*/
     if (app.arguments().contains("--run-tests"))
     {
         std::cout << "This build is without tests!";
         exit(-42);
     }
-#endif
+//#endif
     // LCOV_EXCL_START
     app.setStyle(QStyleFactory::create("fusion"));
 

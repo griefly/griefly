@@ -23,7 +23,7 @@ after_build:
 
 test_script:
   - cmd: cd %KVVERSION%
-  - cmd: KVClient.exe --run-tests
+  - cmd: KVEngineTests.exe
 
 artifacts:
   - path: '%KVVERSION%'
