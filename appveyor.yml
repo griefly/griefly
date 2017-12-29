@@ -15,7 +15,7 @@ build_script:
   - cmd: cmake --build . --target install --config Release -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
-  - cmd: '%QT5DIR%\msvc2015_64\bin\windeployqt.exe Exec/KVEngine.exe'
+  - cmd: '%QT5DIR%\msvc2015_64\bin\windeployqt.exe Exec/KVClient.exe'
   - cmd: for /f "tokens=* USEBACKQ" %%F in (`git describe --tags --abbrev^=4`) do set KVVERSION=%%F
   - cmd: set KVVERSION=Griefly-%KVVERSION%-win64
   - cmd: echo %KVVERSION%
@@ -23,7 +23,7 @@ after_build:
 
 test_script:
   - cmd: cd %KVVERSION%
-  - cmd: KVEngine.exe --run-tests
+  - cmd: KVClient.exe --run-tests
 
 artifacts:
   - path: '%KVVERSION%'
