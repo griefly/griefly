@@ -14,6 +14,8 @@ set(MINIMUM_QT_VERSION 5.8)
 
 include(ClangFormat)
 
+include(FilterOutList)
+
 # GTEST "search"
 if(BUILD_TESTS)
     include(GoogleTest)

@@ -122,20 +122,8 @@ endif()
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}*.cpp")
 file(GLOB_RECURSE HEADERS "${SOURCE_DIR}*.h")
 
-# TODO: function
-foreach(TMP_PATH ${SOURCES})
-    string(FIND ${TMP_PATH} ${TESTS_DIR} EXCLUDE_DIR_FOUND)
-    if(NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
-        list(REMOVE_ITEM SOURCES ${TMP_PATH})
-    endif()
-endforeach(TMP_PATH)
-
-foreach(TMP_PATH ${HEADERS})
-    string(FIND ${TMP_PATH} ${TESTS_DIR} EXCLUDE_DIR_FOUND)
-    if(NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
-        list(REMOVE_ITEM HEADERS ${TMP_PATH})
-    endif()
-endforeach(TMP_PATH)
+filter_out(SOURCES "${TESTS_DIR}")
+filter_out(HEADERS "${TESTS_DIR}")
 
 # Metadata & source code generation
 add_custom_command(
