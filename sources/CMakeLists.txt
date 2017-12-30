@@ -111,7 +111,7 @@ endif()
 ###
 
 set(SOURCE_DIR core/)
-set(TESTS_DIR tests/)
+set(TESTS_DIR core/tests/)
 
 if(BUILD_TESTS)
     file(GLOB_RECURSE TESTS "${TESTS_DIR}*.cpp" "${TESTS_DIR}*.h")
@@ -121,6 +121,21 @@ endif()
 
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}*.cpp")
 file(GLOB_RECURSE HEADERS "${SOURCE_DIR}*.h")
+
+# TODO: function
+foreach(TMP_PATH ${SOURCES})
+    string(FIND ${TMP_PATH} ${TESTS_DIR} EXCLUDE_DIR_FOUND)
+    if(NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
+        list(REMOVE_ITEM SOURCES ${TMP_PATH})
+    endif()
+endforeach(TMP_PATH)
+
+foreach(TMP_PATH ${HEADERS})
+    string(FIND ${TMP_PATH} ${TESTS_DIR} EXCLUDE_DIR_FOUND)
+    if(NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
+        list(REMOVE_ITEM HEADERS ${TMP_PATH})
+    endif()
+endforeach(TMP_PATH)
 
 # Metadata & source code generation
 add_custom_command(
