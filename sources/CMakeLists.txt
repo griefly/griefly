@@ -15,24 +15,12 @@ message(STATUS "Git has been found, ${GIT_VERSION_STRING}")
 # Qt5 search
 #
 ###########################
-find_package(Qt5 ${MINIMUM_QT_VERSION} COMPONENTS Core Network Widgets OpenGL Multimedia REQUIRED)
+find_package(Qt5 ${MINIMUM_QT_VERSION} COMPONENTS Core REQUIRED)
 
 message(STATUS "Qt5 has been found: ${Qt5_VERSION}")
 
 get_target_property(QtCore_location Qt5::Core LOCATION)
 message(STATUS "Core path: ${QtCore_location}")
-
-get_target_property(QtNetwork_location Qt5::Network LOCATION)
-message(STATUS "Network path: ${QtNetwork_location}")
-
-get_target_property(QtWidgets_location Qt5::Widgets LOCATION)
-message(STATUS "Widgets path: ${QtWidgets_location}")
-
-get_target_property(QtOpenGL_location Qt5::OpenGL LOCATION)
-message(STATUS "OpenGL path: ${QtOpenGL_location}")
-
-get_target_property(QtMultimedia_location Qt5::Multimedia LOCATION)
-message(STATUS "Multimedia path: ${QtMultimedia_location}")
 
 ###########################
 #
@@ -124,7 +112,6 @@ endif()
 
 set(SOURCE_DIR core/)
 set(TESTS_DIR tests/)
-set(CLIENT_DIR client/)
 
 if(BUILD_TESTS)
     file(GLOB_RECURSE TESTS "${TESTS_DIR}*.cpp" "${TESTS_DIR}*.h")
@@ -134,9 +121,6 @@ endif()
 
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}*.cpp")
 file(GLOB_RECURSE HEADERS "${SOURCE_DIR}*.h")
-
-file(GLOB_RECURSE FORMS "${CLIENT_DIR}*.ui")
-file(GLOB_RECURSE CLIENT_SOURCES "${CLIENT_DIR}*.cpp" "${CLIENT_DIR}*.h")
 
 # Metadata & source code generation
 add_custom_command(
@@ -165,21 +149,11 @@ target_include_directories(
     KVEngineTests PRIVATE
     ${SOURCE_DIR})
 
-qt5_wrap_ui(FORMS_HEADERS ${FORMS})
-add_executable(KVClient WIN32 ${CLIENT_SOURCES} ${FORMS} ${FORMS_HEADERS})
-target_link_libraries(KVClient KVEngine)
-target_include_directories(
-    KVClient PRIVATE
-    ${CLIENT_DIR})
+# Main game project
+add_subdirectory(client)
 
 # Add Qt5 lib
-qt5_use_modules(KVClient Core)
 qt5_use_modules(KVEngine Core)
-
-qt5_use_modules(KVClient Network)
-qt5_use_modules(KVClient Widgets)
-qt5_use_modules(KVClient OpenGL)
-qt5_use_modules(KVClient Multimedia)
 
 # Add GTEST lib
 if(BUILD_TESTS)
@@ -230,7 +204,7 @@ endif()
 
 # Install rules
 
-install(TARGETS KVClient KVEngine KVEngineTests
+install(TARGETS KVEngine KVEngineTests
         DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/metadata.json
