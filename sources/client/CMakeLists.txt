@@ -60,6 +60,13 @@ else()
     target_link_libraries(KVClient GL)
 endif()
 
+# Add coverage support
+if(BUILD_COVER)
+    if(CMAKE_COMPILER_IS_GNUCXX)
+        target_link_libraries(KVClient gcov)
+    endif()
+endif()
+
 install(TARGETS KVClient
         DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
 
