@@ -2,18 +2,18 @@
 
 #include "interfaces_mocks.h"
 
-#include "core/ObjectFactory.h"
+#include "ObjectFactory.h"
 
-#include "core/objects/Object.h"
-#include "core/objects/Tile.h"
-#include "core/objects/MaterialObject.h"
-#include "core/objects/turfs/Turf.h"
-#include "core/objects/mobs/Mob.h"
-#include "core/objects/test/TestObject.h"
-#include "core/objects/test/UnsyncGenerator.h"
-#include "core/objects/GlobalObjectsHolder.h"
+#include "objects/Object.h"
+#include "objects/Tile.h"
+#include "objects/MaterialObject.h"
+#include "objects/turfs/Turf.h"
+#include "objects/mobs/Mob.h"
+#include "objects/test/TestObject.h"
+#include "objects/test/UnsyncGenerator.h"
+#include "objects/GlobalObjectsHolder.h"
 
-//#include "core/Game.h"
+//#include "Game.h"
 
 using ::testing::ReturnRef;
 using ::testing::Return;

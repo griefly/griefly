@@ -2,7 +2,7 @@
 
 #include <limits>
 
-#include "core/KvGlobals.h"
+//#include "KvGlobals.h"
 
 #include "Sound.h"
 #include "net/Network2.h"

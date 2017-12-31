@@ -1,6 +1,6 @@
 #include "TestObject.h"
 
-#include "core/ChatFrameInfo.h"
+#include "ChatFrameInfo.h"
 
 // LCOV_EXCL_START
 using namespace kv;

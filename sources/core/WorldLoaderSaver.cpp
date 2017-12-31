@@ -13,7 +13,7 @@
 
 #include "core_headers/Mapgen.h"
 
-#include "core/SaveableOperators.h"
+#include "SaveableOperators.h"
 
 #include "SynchronizedRandom.h"
 

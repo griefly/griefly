@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "core/WorldLoaderSaver.h"
-#include "core/ObjectFactory.h"
-#include "core/objects/test/TestObject.h"
-#include "core/objects/GlobalObjectsHolder.h"
+#include "WorldLoaderSaver.h"
+#include "ObjectFactory.h"
+#include "objects/test/TestObject.h"
+#include "objects/GlobalObjectsHolder.h"
 
 #include "interfaces_mocks.h"
 

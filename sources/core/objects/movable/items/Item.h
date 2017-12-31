@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/objects/movable/Movable.h"
-#include "core/objects/mobs/Slot.h"
+#include "objects/movable/Movable.h"
+#include "objects/mobs/Slot.h"
 
 namespace kv
 {

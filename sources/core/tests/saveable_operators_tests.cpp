@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "core/Hashes.h"
-#include "core/SaveableOperators.h"
+#include "Hashes.h"
+#include "SaveableOperators.h"
 
 TEST(SaveableOperators, MapOperatorsEmpty)
 {

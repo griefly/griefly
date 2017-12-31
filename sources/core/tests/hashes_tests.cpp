@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "core/objects/Object.h"
-#include "core/Hashes.h"
+#include "objects/Object.h"
+#include "Hashes.h"
 
 using namespace kv;
 

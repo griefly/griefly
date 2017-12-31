@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "CoreImplementation.h"
-#include "core/ObjectFactory.h"
-#include "core/objects/GlobalObjectsHolder.h"
+#include "ObjectFactory.h"
+#include "objects/GlobalObjectsHolder.h"
 
 TEST(WorldImplementation, PlayersIds)
 {

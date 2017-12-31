@@ -2,8 +2,8 @@
 
 #include "Movable.h"
 
-#include "core/objects/Tile.h"
-#include "core/objects/movable/items/Item.h"
+#include "objects/Tile.h"
+#include "objects/movable/items/Item.h"
 
 namespace kv
 {

@@ -12,7 +12,7 @@
 
 #include "Sound.h"
 
-#include "core/KvGlobals.h"
+//#include "KvGlobals.h"
 #include "core_headers/CoreInterface.h"
 
 class Representation : public QObject

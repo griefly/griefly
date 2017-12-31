@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/objects/Object.h"
-#include "core/Hearer.h"
+#include "objects/Object.h"
+#include "Hearer.h"
 
 #include <functional>
 

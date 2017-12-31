@@ -1,6 +1,6 @@
 #include "ObjectFactory.h"
 
-#include "core/KvAbort.h"
+#include "KvAbort.h"
 
 #include "objects/Object.h"
 #include "objects/MaterialObject.h"
@@ -9,7 +9,7 @@
 #include "SynchronizedRandom.h"
 #include "AutogenMetadata.h"
 
-#include "core/objects/GlobalObjectsHolder.h"
+#include "objects/GlobalObjectsHolder.h"
 
 ObjectFactory::ObjectFactory(GameInterface* game)
 {

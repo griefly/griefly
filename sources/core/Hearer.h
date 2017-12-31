@@ -2,7 +2,7 @@
 
 #include <QVector>
 
-#include "core/KvGlobals.h"
+#include "KvGlobals.h"
 
 namespace kv
 {

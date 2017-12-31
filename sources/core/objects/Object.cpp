@@ -2,10 +2,10 @@
 #include "../Map.h"
 #include "../ObjectFactory.h"
 
-#include "core/objects/GlobalObjectsHolder.h"
-#include "core/SynchronizedRandom.h"
-#include "core/objects/mobs/Mob.h"
-#include "core/ChatFrameInfo.h"
+#include "objects/GlobalObjectsHolder.h"
+#include "SynchronizedRandom.h"
+#include "objects/mobs/Mob.h"
+#include "ChatFrameInfo.h"
 
 using namespace kv;
 

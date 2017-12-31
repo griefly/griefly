@@ -2,8 +2,8 @@
 
 #include "Movable.h"
 
-#include "core/atmos/AtmosHolder.h"
-#include "core/objects/movable/items/Item.h"
+#include "atmos/AtmosHolder.h"
+#include "objects/movable/items/Item.h"
 
 namespace kv
 {

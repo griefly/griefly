@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
-#include "core/Names.h"
+#include "Names.h"
 
-#include "core/SynchronizedRandom.h"
-#include "core/objects/GlobalObjectsHolder.h"
+#include "SynchronizedRandom.h"
+#include "objects/GlobalObjectsHolder.h"
 
-#include "core/ObjectFactory.h"
+#include "ObjectFactory.h"
 #include "interfaces_mocks.h"
 
 using ::testing::Return;

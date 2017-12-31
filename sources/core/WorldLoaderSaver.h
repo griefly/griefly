@@ -3,7 +3,7 @@
 #include <QJsonObject>
 
 #include "Interfaces.h"
-#include "core/FastSerializer.h"
+#include "FastSerializer.h"
 
 namespace kv
 {

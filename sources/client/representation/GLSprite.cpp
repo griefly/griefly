@@ -1,12 +1,14 @@
 #include <cassert>
 
-#include "core/KvGlobals.h"
+//#include "KvGlobals.h"
 
 #include "GLSprite.h"
 
-//#include "core/objects/Object.h"
+//#include "objects/Object.h"
 
 #include "qt/qtopengl.h"
+
+#include <QDebug>
 
 GLSprite::GLSprite(const QString& name)
 {
@@ -30,13 +32,13 @@ void GLSprite::InitMetadataAndFrames(const QString& path)
     QImage image;
     if (!image.load(path))
     {
-        kv::Abort(QString("Image load error: : %1").arg(path));
+        qFatal("%s", QString("Image load error: : %1").arg(path).toLatin1().data());
     }
 
     metadata_.Init(path, image.width(), image.height());
     if (!metadata_.Valid())
     {
-        kv::Abort(QString("Invalid metadata, aborting: %1").arg(path));
+        qFatal("%s", QString("Invalid metadata, aborting: %1").arg(path).toLatin1().data());
     }
 
     frames_w_ = image.width() / metadata_.GetW();

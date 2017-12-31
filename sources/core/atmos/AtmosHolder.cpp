@@ -1,6 +1,6 @@
 #include "AtmosHolder.h"
 
-#include "core/KvGlobals.h"
+#include "KvGlobals.h"
 
 namespace
 {

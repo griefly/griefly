@@ -1,12 +1,12 @@
 ﻿#include "Movable.h"
 
-#include "core/objects/mobs/Mob.h"
+#include "objects/mobs/Mob.h"
 
-#include "core/objects/PhysicsEngine.h"
+#include "objects/PhysicsEngine.h"
 
-#include "core/objects/turfs/Turf.h"
+#include "objects/turfs/Turf.h"
 
-#include "core/objects/GlobalObjectsHolder.h"
+#include "objects/GlobalObjectsHolder.h"
 
 using namespace kv;
 

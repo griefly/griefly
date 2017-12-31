@@ -1,5 +1,5 @@
 #include "Gun.h"
-#include "core/objects/Tile.h"
+#include "objects/Tile.h"
 
 using namespace kv;
 

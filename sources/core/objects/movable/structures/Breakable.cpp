@@ -1,8 +1,8 @@
 #include "Breakable.h"
 
-#include "core/objects/mobs/Mob.h"
-#include "core/objects/movable/Projectiles.h"
-#include "core/objects/movable/items/Item.h"
+#include "objects/mobs/Mob.h"
+#include "objects/movable/Projectiles.h"
+#include "objects/movable/items/Item.h"
 
 using namespace kv;
 

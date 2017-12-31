@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-#include "core/objects/Object.h"
+#include "objects/Object.h"
 
 using ItemCreator = kv::Object*(*)();
 using VoidItemCreator = kv::Object*(*)();

@@ -1,11 +1,11 @@
-#include "core/objects/mobs/HumanInterface.h"
+#include "objects/mobs/HumanInterface.h"
 
 #include <gtest/gtest.h>
 
-#include "core/ObjectFactory.h"
+#include "ObjectFactory.h"
 #include "interfaces_mocks.h"
 
-#include "core/objects/movable/items/Item.h"
+#include "objects/movable/items/Item.h"
 
 namespace
 {

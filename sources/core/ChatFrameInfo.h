@@ -3,7 +3,7 @@
 #include <QString>
 #include <QHash>
 
-#include "core/KvGlobals.h"
+#include "KvGlobals.h"
 
 #include "Hearer.h"
 

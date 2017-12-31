@@ -2,10 +2,10 @@
 
 #include <QVector>
 
-#include "core/Idptr.h"
+#include "Idptr.h"
 #include "Object.h"
 
-#include "core/SaveableOperators.h"
+#include "SaveableOperators.h"
 
 namespace kv
 {

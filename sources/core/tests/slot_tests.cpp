@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/objects/mobs/Slot.h"
+#include "objects/mobs/Slot.h"
 
 using namespace kv;
 

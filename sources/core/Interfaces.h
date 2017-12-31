@@ -2,10 +2,10 @@
 
 #include <list>
 
-#include "core/KvGlobals.h"
+#include "KvGlobals.h"
 #include "core_headers/CoreInterface.h"
 
-#include "core/Idptr.h"
+#include "Idptr.h"
 
 #include <QString>
 

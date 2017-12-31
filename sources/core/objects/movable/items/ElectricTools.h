@@ -2,7 +2,7 @@
 
 #include "Item.h"
 
-#include "core/atmos/AtmosHolder.h"
+#include "atmos/AtmosHolder.h"
 
 namespace kv
 {

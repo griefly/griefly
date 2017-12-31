@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Movable.h"
-#include "core/objects/mobs/Human.h"
-#include "core/SaveableOperators.h"
+#include "objects/mobs/Human.h"
+#include "SaveableOperators.h"
 
 namespace kv
 {

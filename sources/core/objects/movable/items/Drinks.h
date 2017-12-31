@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Item.h"
-#include "core/objects/mobs/Human.h"
+#include "objects/mobs/Human.h"
 
 namespace kv
 {

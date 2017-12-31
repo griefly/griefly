@@ -1,4 +1,4 @@
-#include "core/ChatFrameInfo.h"
+#include "ChatFrameInfo.h"
 
 #include <gtest/gtest.h>
 

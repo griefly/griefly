@@ -1,10 +1,10 @@
 #include "Lattice.h"
 
-#include "core/objects/movable/items/FloorTile.h"
-#include "core/objects/turfs/Turf.h"
-#include "core/objects/turfs/Floor.h"
+#include "objects/movable/items/FloorTile.h"
+#include "objects/turfs/Turf.h"
+#include "objects/turfs/Floor.h"
 
-#include "core/ObjectFactory.h"
+#include "ObjectFactory.h"
 
 using namespace kv;
 

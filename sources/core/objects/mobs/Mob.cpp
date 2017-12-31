@@ -1,6 +1,6 @@
 #include "Mob.h"
 
-#include "core/Map.h"
+#include "Map.h"
 
 #include "client/net/MagicStrings.h"
 

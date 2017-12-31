@@ -1,27 +1,27 @@
 #include "Human.h"
 
-#include "core/ObjectFactory.h"
-#include "core/Names.h"
-#include "core/objects/movable/items/Shard.h"
+#include "ObjectFactory.h"
+#include "Names.h"
+#include "objects/movable/items/Shard.h"
 
 // TODO: remove this
 #include "client/net/MagicStrings.h"
 
-#include "core/atmos/AtmosHolder.h"
-#include "core/objects/Tile.h"
-#include "core/SynchronizedRandom.h"
+#include "atmos/AtmosHolder.h"
+#include "objects/Tile.h"
+#include "SynchronizedRandom.h"
 #include "Ghost.h"
-#include "core/objects/movable/items/Clothes.h"
-#include "core/objects/turfs/Floor.h"
-#include "core/objects/Lobby.h"
-#include "core/objects/movable/items/Gun.h"
-#include "core/objects/movable/items/Weapons.h"
-#include "core/objects/movable/items/ElectricTools.h"
-#include "core/objects/turfs/SpaceTurf.h"
-#include "core/objects/movable/items/Drinks.h"
-#include "core/objects/movable/items/MedbayTools.h"
+#include "objects/movable/items/Clothes.h"
+#include "objects/turfs/Floor.h"
+#include "objects/Lobby.h"
+#include "objects/movable/items/Gun.h"
+#include "objects/movable/items/Weapons.h"
+#include "objects/movable/items/ElectricTools.h"
+#include "objects/turfs/SpaceTurf.h"
+#include "objects/movable/items/Drinks.h"
+#include "objects/movable/items/MedbayTools.h"
 
-#include "core/ChatFrameInfo.h"
+#include "ChatFrameInfo.h"
 
 using namespace kv;
 

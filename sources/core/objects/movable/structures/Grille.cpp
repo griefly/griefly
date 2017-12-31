@@ -1,10 +1,10 @@
 #include "Grille.h"
 
-#include "core/objects/mobs/Mob.h"
-#include "core/objects/movable/items/Item.h"
+#include "objects/mobs/Mob.h"
+#include "objects/movable/items/Item.h"
 
-#include "core/ObjectFactory.h"
-#include "core/objects/movable/items/Materials.h"
+#include "ObjectFactory.h"
+#include "objects/movable/items/Materials.h"
 
 using namespace kv;
 

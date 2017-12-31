@@ -1,7 +1,7 @@
 #include <cassert>
 
 #include "MaterialObject.h"
-#include "core/Map.h"
+#include "Map.h"
 #include "mobs/Mob.h"
 #include "Tile.h"
 

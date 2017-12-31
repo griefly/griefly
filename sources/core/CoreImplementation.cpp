@@ -6,23 +6,23 @@
 
 #include "AutogenMetadata.h"
 
-#include "core/objects/MaterialObject.h"
-#include "core/objects/GlobalObjectsHolder.h"
-#include "core/objects/mobs/Mob.h"
-#include "core/objects/mobs/LoginMob.h"
-#include "core/Map.h"
+#include "objects/MaterialObject.h"
+#include "objects/GlobalObjectsHolder.h"
+#include "objects/mobs/Mob.h"
+#include "objects/mobs/LoginMob.h"
+#include "Map.h"
 
-#include "core/objects/test/UnsyncGenerator.h"
-#include "core/objects/GlobalObjectsHolder.h"
+#include "objects/test/UnsyncGenerator.h"
+#include "objects/GlobalObjectsHolder.h"
 
-#include "core/SynchronizedRandom.h"
-#include "core/objects/PhysicsEngine.h"
-#include "core/objects/Lobby.h"
-#include "core/objects/SpawnPoints.h"
+#include "SynchronizedRandom.h"
+#include "objects/PhysicsEngine.h"
+#include "objects/Lobby.h"
+#include "objects/SpawnPoints.h"
 
-#include "core/atmos/Atmos.h"
-#include "core/ObjectFactory.h"
-#include "core/Names.h"
+#include "atmos/Atmos.h"
+#include "ObjectFactory.h"
+#include "Names.h"
 
 QVector<ObjectInfo>* id_ptr_id_table = nullptr;
 

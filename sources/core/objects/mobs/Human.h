@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Mob.h"
-#include "core/Hearer.h"
+#include "Hearer.h"
 
 #include "HumanInterface.h"
 

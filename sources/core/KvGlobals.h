@@ -2,8 +2,8 @@
 
 #include <QString>
 
-#include "core/FastSerializer.h"
-#include "core/Hashes.h"
+#include "FastSerializer.h"
+#include "Hashes.h"
 #include "core_headers/Dir.h"
 
 #ifdef KV_NO_PARANOID

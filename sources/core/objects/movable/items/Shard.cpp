@@ -1,6 +1,6 @@
 #include "Shard.h"
 
-#include "core/SynchronizedRandom.h"
+#include "SynchronizedRandom.h"
 
 using namespace kv;
 

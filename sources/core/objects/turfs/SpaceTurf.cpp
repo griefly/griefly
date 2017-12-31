@@ -1,11 +1,11 @@
 #include "SpaceTurf.h"
 
-#include "core/SynchronizedRandom.h"
+#include "SynchronizedRandom.h"
 
-#include "core/objects/movable/items/Item.h"
-#include "core/objects/movable/items/Materials.h"
-#include "core/objects/movable/structures/Lattice.h"
-#include "core/ObjectFactory.h"
+#include "objects/movable/items/Item.h"
+#include "objects/movable/items/Materials.h"
+#include "objects/movable/structures/Lattice.h"
+#include "ObjectFactory.h"
 
 using namespace kv;
 

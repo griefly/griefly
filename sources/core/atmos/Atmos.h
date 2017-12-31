@@ -3,7 +3,7 @@
 #include <array>
 #include <vector>
 
-#include "core/KvGlobals.h"
+#include "KvGlobals.h"
 
 #include "AtmosHolder.h"
 #include "Interfaces.h"

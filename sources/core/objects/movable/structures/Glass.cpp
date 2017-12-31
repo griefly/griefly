@@ -1,9 +1,9 @@
 #include "Glass.h"
 
-#include "core/SynchronizedRandom.h"
-#include "core/objects/mobs/Mob.h"
+#include "SynchronizedRandom.h"
+#include "objects/mobs/Mob.h"
 #include "Breakable.h"
-#include "core/objects/movable/items/Shard.h"
+#include "objects/movable/items/Shard.h"
 
 using namespace kv;
 

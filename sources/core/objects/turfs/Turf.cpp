@@ -1,7 +1,7 @@
 #include "Turf.h"
 
-#include "core/objects/movable/structures/Lattice.h"
-#include "core/objects/Tile.h"
+#include "objects/movable/structures/Lattice.h"
+#include "objects/Tile.h"
 
 using namespace kv;
 

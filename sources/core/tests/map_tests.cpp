@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "core/Map.h"
+#include "Map.h"
 
 #include "interfaces_mocks.h"
 

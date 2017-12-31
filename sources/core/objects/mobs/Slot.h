@@ -2,10 +2,10 @@
 
 #include "ViewInfo.h"
 
-#include "core/Hashes.h"
+#include "Hashes.h"
 
-#include "core/SaveableOperators.h"
-#include "core/Idptr.h"
+#include "SaveableOperators.h"
+#include "Idptr.h"
 
 namespace kv
 {

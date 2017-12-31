@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/objects/MaterialObject.h"
-#include "core/atmos/AtmosHolder.h"
+#include "objects/MaterialObject.h"
+#include "atmos/AtmosHolder.h"
 
 namespace friction
 {

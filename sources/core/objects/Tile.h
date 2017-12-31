@@ -5,8 +5,8 @@
 #include "turfs/Turf.h"
 #include "MapObject.h"
 #include "MaterialObject.h"
-#include "core/atmos/AtmosHolder.h"
-#include "core/SaveableOperators.h"
+#include "atmos/AtmosHolder.h"
+#include "SaveableOperators.h"
 
 namespace kv
 {

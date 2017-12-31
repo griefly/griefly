@@ -1,6 +1,6 @@
 #include "Structure.h"
 
-#include "core/objects/movable/items/Item.h"
+#include "objects/movable/items/Item.h"
 
 using namespace kv;
 

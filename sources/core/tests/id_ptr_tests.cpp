@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "core/Idptr.h"
+#include "Idptr.h"
 
-#include "core/objects/Object.h"
-#include "core/objects/test/UnsyncGenerator.h"
+#include "objects/Object.h"
+#include "objects/test/UnsyncGenerator.h"
 
 class TempTable
 {

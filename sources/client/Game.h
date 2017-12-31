@@ -40,8 +40,6 @@ private:
 
     void AddBuildInfo(QByteArray* data);
 
-    kv::FastSerializer serializer_;
-
     std::vector<kv::Message> messages_to_process_;
     std::vector<kv::Message> messages_log_;
     int log_pos_;

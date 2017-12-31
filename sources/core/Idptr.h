@@ -7,8 +7,8 @@
 #include <QDebug>
 
 #include "FastIsType.h"
-#include "core/KvAbort.h"
-#include "core/FastSerializer.h"
+#include "KvAbort.h"
+#include "FastSerializer.h"
 
 namespace kv
 {

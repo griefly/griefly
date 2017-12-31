@@ -6,9 +6,9 @@
 
 #include "Interfaces.h"
 
-#include "core/SynchronizedRandom.h"
-#include "core/Names.h"
-#include "core/ChatFrameInfo.h"
+#include "SynchronizedRandom.h"
+#include "Names.h"
+#include "ChatFrameInfo.h"
 
 class MockIAtmosphere : public AtmosInterface
 {

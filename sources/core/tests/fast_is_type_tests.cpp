@@ -2,11 +2,11 @@
 
 #include "AutogenMetadata.h"
 
-#include "core/FastIsType.h"
+#include "FastIsType.h"
 
-#include "core/objects/Object.h"
-#include "core/objects/test/UnsyncGenerator.h"
-#include "core/objects/MapObject.h"
+#include "objects/Object.h"
+#include "objects/test/UnsyncGenerator.h"
+#include "objects/MapObject.h"
 
 using namespace kv;
 

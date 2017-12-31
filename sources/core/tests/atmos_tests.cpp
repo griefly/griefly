@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/atmos/Atmos.h"
+#include "atmos/Atmos.h"
 #include "interfaces_mocks.h"
 
 using ::testing::ReturnRef;

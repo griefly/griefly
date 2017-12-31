@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "core/KvAbort.h"
+#include "KvAbort.h"
 
 static_assert(
     sizeof(int) == 4,

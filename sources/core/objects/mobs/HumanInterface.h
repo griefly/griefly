@@ -2,11 +2,11 @@
 
 #include <QVector>
 
-#include "core/objects/Object.h"
+#include "objects/Object.h"
 #include "ViewInfo.h"
 
 #include "Slot.h"
-#include "core/SaveableOperators.h"
+#include "SaveableOperators.h"
 
 namespace kv
 {

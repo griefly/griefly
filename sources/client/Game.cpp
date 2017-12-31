@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include "core/KvAbort.h"
+//#include "KvAbort.h"
 
 //#include "Map.h"
 
@@ -180,7 +180,7 @@ void Game::InitWorld(int id, QString map_name)
     {
         if (!GetParamsHolder().GetParamBool("mapgen_name"))
         {
-            kv::Abort("No mapgen param!");
+            qFatal("No mapgen param!");
         }
 
         const QString mapgen_name = GetParamsHolder().GetParam<QString>("mapgen_name");
@@ -189,7 +189,7 @@ void Game::InitWorld(int id, QString map_name)
             QFile file(mapgen_name);
             if (!file.open(QIODevice::ReadOnly))
             {
-                kv::Abort(QString("Error open: %1").arg(mapgen_name));
+                qFatal("%s", QString("Error open: %1").arg(mapgen_name).toLatin1().data());
             }
 
             QByteArray raw_data = file.readAll();
@@ -203,7 +203,7 @@ void Game::InitWorld(int id, QString map_name)
         }
         else
         {
-            kv::Abort(QString("Mapgen file does not exist: %1").arg(mapgen_name));
+            qFatal("%s", QString("Mapgen file does not exist: %1").arg(mapgen_name).toLatin1().data());
         }
     }
     else
@@ -216,7 +216,7 @@ void Game::InitWorld(int id, QString map_name)
 
         if (map_data.length() == 0)
         {
-            kv::Abort("An empty map received");
+            qFatal("An empty map received");
         }
 
         world_ = kv::GetCoreInstance().CreateWorldFromSave(map_data, id);

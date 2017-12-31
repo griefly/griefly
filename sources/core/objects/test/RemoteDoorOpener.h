@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/objects/movable/items/Item.h"
-#include "core/objects/Door.h"
+#include "objects/movable/items/Item.h"
+#include "objects/Door.h"
 
 namespace kv
 {

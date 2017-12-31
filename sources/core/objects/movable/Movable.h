@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/objects/MaterialObject.h"
+#include "objects/MaterialObject.h"
 
 namespace kv
 {

@@ -1,12 +1,12 @@
 #include "LoginMob.h"
 
 #include "Human.h"
-#include "core/ObjectFactory.h"
-#include "core/Map.h"
-#include "core/objects/Lobby.h"
+#include "ObjectFactory.h"
+#include "Map.h"
+#include "objects/Lobby.h"
 #include "client/net/MagicStrings.h"
-#include "core/objects/Professions.h"
-#include "core/objects/GlobalObjectsHolder.h"
+#include "objects/Professions.h"
+#include "objects/GlobalObjectsHolder.h"
 
 #include <QDebug>
 

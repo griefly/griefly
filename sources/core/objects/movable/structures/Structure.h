@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/objects/movable/Movable.h"
+#include "objects/movable/Movable.h"
 
 namespace kv
 {

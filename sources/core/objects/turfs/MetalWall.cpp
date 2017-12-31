@@ -1,11 +1,11 @@
 #include "MetalWall.h"
 
-#include "core/objects/movable/items/Weldingtool.h"
-#include "core/objects/movable/structures/Girder.h"
+#include "objects/movable/items/Weldingtool.h"
+#include "objects/movable/structures/Girder.h"
 #include "Floor.h"
-#include "core/objects/movable/items/Materials.h"
+#include "objects/movable/items/Materials.h"
 
-#include "core/ObjectFactory.h"
+#include "ObjectFactory.h"
 
 using namespace kv;
 

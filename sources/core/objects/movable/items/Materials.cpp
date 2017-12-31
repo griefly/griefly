@@ -1,9 +1,9 @@
 #include "Materials.h"
 
-#include "core/objects/movable/structures/Girder.h"
-#include "core/ObjectFactory.h"
-#include "core/objects/turfs/Floor.h"
-#include "core/objects/movable/structures/Grille.h"
+#include "objects/movable/structures/Girder.h"
+#include "ObjectFactory.h"
+#include "objects/turfs/Floor.h"
+#include "objects/movable/structures/Grille.h"
 
 using namespace kv;
 

@@ -1,8 +1,8 @@
 #include "GasTank.h"
 
-#include "core/objects/Tile.h"
+#include "objects/Tile.h"
 
-#include "core/objects/movable/items/ElectricTools.h"
+#include "objects/movable/items/ElectricTools.h"
 
 using namespace kv;
 
