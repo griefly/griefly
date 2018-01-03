@@ -72,6 +72,7 @@ endif()
 
 set(SOURCE_DIR "./")
 set(TESTS_DIR "tests/")
+set(CORE_HEADERS_DIR "../core_headers/")
 
 if(BUILD_TESTS)
     file(GLOB_RECURSE TESTS "${TESTS_DIR}*.cpp" "${TESTS_DIR}*.h")
@@ -81,9 +82,11 @@ endif()
 
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}*.cpp")
 file(GLOB_RECURSE HEADERS "${SOURCE_DIR}*.h")
+file(GLOB_RECURSE CORE_HEADERS "${CORE_HEADERS_DIR}*.h")
 
 filter_out(SOURCES "${TESTS_DIR}")
 filter_out(HEADERS "${TESTS_DIR}")
+filter_out(CORE_HEADERS "${TESTS_DIR}")
 
 # Metadata & source code generation
 add_custom_command(
@@ -101,7 +104,7 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenMetadata.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenSerialization.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/Version.cpp")
 
-add_library(KVEngine ${SOURCES} ${HEADERS})
+add_library(KVEngine ${SOURCES} ${HEADERS} ${CORE_HEADERS})
 target_include_directories(
     KVEngine PRIVATE
     "..")
