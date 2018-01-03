@@ -24,6 +24,8 @@
 #include "ObjectFactory.h"
 #include "Names.h"
 
+#include "Version.h"
+
 QVector<ObjectInfo>* id_ptr_id_table = nullptr;
 
 namespace
@@ -542,6 +544,24 @@ const CoreImplementation::ObjectsMetadata& CoreImplementation::GetObjectsMetadat
 {
     static const ObjectsMetadata metadata = GenerateMetadata();
     return metadata;
+}
+
+const QString& CoreImplementation::GetGameVersion() const
+{
+    const static QString retval = ::GetGameVersion();
+    return retval;
+}
+
+const QString& CoreImplementation::GetBuildInfo() const
+{
+    const static QString retval = ::GetBuildInfo();
+    return retval;
+}
+
+const QString& CoreImplementation::GetQtVersion() const
+{
+    const static QString retval = ::GetQtVersion();
+    return retval;
 }
 
 CoreInterface& GetCoreInstance()

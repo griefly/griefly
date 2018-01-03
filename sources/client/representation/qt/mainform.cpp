@@ -28,9 +28,6 @@
 #include <QTextBlock>
 #include <QMessageBox>
 
-// TODO: fix it
-//#include "Version.h"
-
 MainForm::MainForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainForm),
@@ -43,7 +40,7 @@ MainForm::MainForm(QWidget *parent) :
     left_column_ = 512;
     right_column_ = 256;
 
-    setWindowTitle("Griefly " + QString("FIX ME!"/*GetGameVersion()*/));
+    setWindowTitle(QString("Griefly %1").arg(kv::GetCoreInstance().GetGameVersion()));
 
     // Without GL widget looks weird
     ui->widget->hide();

@@ -201,6 +201,9 @@ public:
     // <object name, metadata>
     using ObjectsMetadata = QMap<QString, ObjectMetadata>;
     virtual const ObjectsMetadata& GetObjectsMetadata() const = 0;
+    virtual const QString& GetGameVersion() const = 0;
+    virtual const QString& GetBuildInfo() const = 0;
+    virtual const QString& GetQtVersion() const = 0;
 };
 
 CoreInterface& GetCoreInstance();

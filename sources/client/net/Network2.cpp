@@ -13,8 +13,7 @@
 
 #include <QCoreApplication>
 
-// TODO:
-#include "core/Version.h"
+#include "core_headers/CoreInterface.h"
 
 using kv::Message;
 
@@ -324,8 +323,7 @@ void SocketHandler::socketConnected()
     object["login"] = login_;
     object["password"] = password_;
 
-    // It is compile time macro with version (/D or -D)
-    object["game_version"] = QString(GetGameVersion());
+    object["game_version"] = QString(kv::GetCoreInstance().GetGameVersion());
 
     const bool is_guest = (login_ == "Guest");
     object["guest"] = is_guest;

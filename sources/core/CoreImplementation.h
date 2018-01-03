@@ -101,6 +101,10 @@ public:
         const QJsonObject& data, quint32 mob_id, const Config& config) override;
 
     virtual const ObjectsMetadata& GetObjectsMetadata() const override;
+
+    virtual const QString& GetGameVersion() const override;
+    virtual const QString& GetBuildInfo() const override;
+    virtual const QString& GetQtVersion() const override;
 };
 
 }

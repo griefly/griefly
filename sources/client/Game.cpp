@@ -1,29 +1,7 @@
 #include "Game.h"
 
-//#include "KvAbort.h"
-
-//#include "Map.h"
-
-//#include "SynchronizedRandom.h"
-//#include "ObjectFactory.h"
 #include "net/MagicStrings.h"
-//#include "objects/Tile.h"
 #include "Params.h"
-
-//#include "objects/mobs/Mob.h"
-//#include "Names.h"
-//#include "objects/movable/Movable.h"
-//#include "objects/mobs/Human.h"
-//#include "objects/mobs/LoginMob.h"
-//#include "objects/Lobby.h"
-//#include "objects/PhysicsEngine.h"
-//#include "objects/SpawnPoints.h"
-//#include "objects/test/UnsyncGenerator.h"
-
-//#include "AutogenMetadata.h"
-
-//#include "Version.h"
-
 #include "net/Network2.h"
 #include "representation/Representation.h"
 
@@ -419,8 +397,9 @@ void Game::AddMessageToMessageLog(::Message message)
 
 void Game::AddBuildInfo(QByteArray* data)
 {
-    // TODO: fix this
-    //QString system_info("Build info: %1, Qt: %2");
-    //system_info = system_info.arg(GetBuildInfo()).arg(GetQtVersion());
-    //data->append(system_info);
+    QString system_info("Build info: %1, Qt: %2");
+    system_info = system_info
+        .arg(kv::GetCoreInstance().GetBuildInfo())
+        .arg(kv::GetCoreInstance().GetQtVersion());
+    data->append(system_info);
 }
