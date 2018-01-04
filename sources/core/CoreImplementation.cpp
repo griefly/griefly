@@ -548,19 +548,19 @@ const CoreImplementation::ObjectsMetadata& CoreImplementation::GetObjectsMetadat
 
 const QString& CoreImplementation::GetGameVersion() const
 {
-    const static QString retval = ::GetGameVersion();
+    const static QString retval = kv::GetGameVersion();
     return retval;
 }
 
 const QString& CoreImplementation::GetBuildInfo() const
 {
-    const static QString retval = ::GetBuildInfo();
+    const static QString retval = kv::GetBuildInfo();
     return retval;
 }
 
 const QString& CoreImplementation::GetQtVersion() const
 {
-    const static QString retval = ::GetQtVersion();
+    const static QString retval = kv::GetQtVersion();
     return retval;
 }
 
