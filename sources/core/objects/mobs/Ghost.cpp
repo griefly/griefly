@@ -2,7 +2,6 @@
 
 #include "Map.h"
 
-#include "client/net/MagicStrings.h"
 #include "ObjectFactory.h"
 #include "objects/Lobby.h"
 #include "LoginMob.h"

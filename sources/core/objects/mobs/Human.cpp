@@ -4,8 +4,7 @@
 #include "Names.h"
 #include "objects/movable/items/Shard.h"
 
-// TODO: remove this
-#include "client/net/MagicStrings.h"
+#include "core_headers/NetworkMessages.h"
 
 #include "atmos/AtmosHolder.h"
 #include "objects/Tile.h"

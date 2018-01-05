@@ -2,7 +2,7 @@
 
 #include "Map.h"
 
-#include "client/net/MagicStrings.h"
+#include "core_headers/NetworkMessages.h"
 
 using namespace kv;
 

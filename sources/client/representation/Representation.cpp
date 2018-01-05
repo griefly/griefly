@@ -2,11 +2,12 @@
 
 #include <limits>
 
-//#include "KvGlobals.h"
-
 #include "Sound.h"
 #include "net/Network2.h"
 #include "net/MagicStrings.h"
+
+#include "core_headers/NetworkMessages.h"
+
 #include "Params.h"
 
 #include "SpriteHolder.h"

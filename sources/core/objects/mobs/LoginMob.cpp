@@ -4,9 +4,10 @@
 #include "ObjectFactory.h"
 #include "Map.h"
 #include "objects/Lobby.h"
-#include "client/net/MagicStrings.h"
 #include "objects/Professions.h"
 #include "objects/GlobalObjectsHolder.h"
+
+#include "core_headers/NetworkMessages.h"
 
 #include <QDebug>
 
