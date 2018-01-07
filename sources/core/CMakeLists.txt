@@ -104,7 +104,7 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenMetadata.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenSerialization.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/Version.cpp")
 
-add_library(KVEngine ${SOURCES} ${HEADERS} ${CORE_HEADERS})
+add_library(KVEngine SHARED ${SOURCES} ${HEADERS} ${CORE_HEADERS})
 target_include_directories(
     KVEngine PRIVATE
     "..")
