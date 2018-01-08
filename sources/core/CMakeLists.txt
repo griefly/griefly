@@ -168,7 +168,7 @@ endif()
 # Install rules
 
 install(TARGETS KVEngine KVEngineTests
-        DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
+        DESTINATION "${KV_INSTALL_PATH}")
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/metadata.json
-        DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
+        DESTINATION "${KV_INSTALL_PATH}")

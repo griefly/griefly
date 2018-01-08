@@ -10,13 +10,15 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(UTILS_DIR utils/)
 set(EXEC_DIR exec/)
 
+set(KV_INSTALL_PATH "${CMAKE_SOURCE_DIR}/${EXEC_DIR}")
+
 set(MINIMUM_QT_VERSION 5.8)
 
 include(ClangFormat)
 
 include(FilterOutList)
 
-set(CMAKE_INSTALL_RPATH "${CMAKE_SOURCE_DIR}/${EXEC_DIR}")
+set(CMAKE_INSTALL_RPATH "${KV_INSTALL_PATH}")
 
 # GTEST "search"
 if(BUILD_TESTS)

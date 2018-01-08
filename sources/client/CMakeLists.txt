@@ -68,5 +68,5 @@ if(BUILD_COVER)
 endif()
 
 install(TARGETS KVClient
-        DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
+        DESTINATION "${KV_INSTALL_PATH}")
 

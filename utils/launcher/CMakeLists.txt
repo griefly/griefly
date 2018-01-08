@@ -17,4 +17,4 @@ if(WIN32)
 endif()
 
 install(TARGETS Launcher
-        DESTINATION ${CMAKE_SOURCE_DIR}/${EXEC_DIR}/)
+        DESTINATION "${KV_INSTALL_PATH}")
