@@ -16,6 +16,8 @@ include(ClangFormat)
 
 include(FilterOutList)
 
+set(CMAKE_INSTALL_RPATH "${CMAKE_SOURCE_DIR}/${EXEC_DIR}")
+
 # GTEST "search"
 if(BUILD_TESTS)
     include(GoogleTest)
