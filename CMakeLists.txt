@@ -7,6 +7,9 @@ option(BUILD_COVER "Generate test coverage" OFF)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
+# To avoid mark __dllexport/__dllimport all symbols
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+
 set(UTILS_DIR utils/)
 set(EXEC_DIR exec/)
 
