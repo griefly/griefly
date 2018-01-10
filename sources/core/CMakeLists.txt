@@ -105,6 +105,11 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/AutogenSerialization.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/Version.cpp")
 
 add_library(KVEngine SHARED ${SOURCES} ${HEADERS} ${CORE_HEADERS})
+
+# Windows
+include(GenerateExportHeader)
+generate_export_header(KVEngine)
+
 target_include_directories(
     KVEngine PRIVATE
     "..")
