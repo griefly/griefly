@@ -3,6 +3,8 @@
 #include <QVector>
 #include <QBitArray>
 
+#include <kvengine_export.h>
+
 #if defined(__linux__) || defined(__APPLE__)
 #define __forceinline __attribute__((always_inline)) inline
 #endif
@@ -12,7 +14,7 @@ namespace kv
     class Object;
 }
 
-extern QVector<QBitArray>* cast_table;
+extern KVENGINE_EXPORT QVector<QBitArray>* cast_table;
 
 __forceinline bool FastIsType(int typeto, int typefrom)
 {
