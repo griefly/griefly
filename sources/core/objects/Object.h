@@ -10,6 +10,8 @@
 
 #include "Interfaces.h"
 
+#include <kvengine_export.h>
+
 void InitSettersForTypes();
 
 namespace kv
@@ -59,7 +61,7 @@ public:
         return GetTypeStatic();
     }
     static const QString& GetTypeStatic();
-    static int TYPE_INDEX;
+    static KVENGINE_EXPORT int TYPE_INDEX;
     virtual int GetTypeIndex() const
     {
         return TYPE_INDEX;
