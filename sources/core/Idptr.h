@@ -6,6 +6,8 @@
 
 #include <QDebug>
 
+#include <kvengine_export.h>
+
 #include "FastIsType.h"
 #include "KvAbort.h"
 #include "FastSerializer.h"
@@ -25,7 +27,7 @@ struct ObjectInfo
     kv::Object* object;
 };
 
-extern QVector<ObjectInfo>* id_ptr_id_table;
+extern KVENGINE_EXPORT QVector<ObjectInfo>* id_ptr_id_table;
 
 struct IdPtrBase
 {

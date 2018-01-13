@@ -1,5 +1,7 @@
 #pragma once
 
+#include <kvengine_export.h>
+
 namespace kv
 {
 namespace internal
@@ -48,7 +50,7 @@ namespace internal
         return TYPE_INDEX;                          \
     }                                               \
     static const QString& GetTypeStatic();          \
-    static int TYPE_INDEX
+    static KVENGINE_EXPORT int TYPE_INDEX
 
 #define KV_SAVEABLE(name)                                                                   \
     name;                                                                                   \
