@@ -18,7 +18,7 @@ class Game : public QObject
     Q_OBJECT
 public:
     void WaitForExit();
-    void InitWorld(int id, QString map_name);
+    void InitWorld(quint32 id, QString map_name, const kv::CoreInterface::Config& config);
 
     Game(Representation* representation);
     ~Game();
@@ -74,7 +74,7 @@ private:
 
     QThread thread_;
 
-    int mob_;
+    quint32 mob_;
     kv::CoreInterface::WorldPtr world_;
 
     Representation* representation_;

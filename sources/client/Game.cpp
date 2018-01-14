@@ -149,7 +149,7 @@ void Game::WaitForExit()
     thread_.wait();
 }
 
-void Game::InitWorld(int id, QString map_name)
+void Game::InitWorld(quint32 id, QString map_name, const kv::CoreInterface::Config& config)
 {
     mob_ = id;
 
@@ -158,31 +158,21 @@ void Game::InitWorld(int id, QString map_name)
     {
         if (!GetParamsHolder().GetParamBool("mapgen_name"))
         {
-            qFatal("No mapgen param!");
+            qFatal("No mapgen param in the command line params!");
         }
 
         const QString mapgen_name = GetParamsHolder().GetParam<QString>("mapgen_name");
-        if (QFileInfo::exists(mapgen_name))
+        QFile file(mapgen_name);
+        if (!file.open(QIODevice::ReadOnly))
         {
-            QFile file(mapgen_name);
-            if (!file.open(QIODevice::ReadOnly))
-            {
-                qFatal("%s", QString("Error open: %1").arg(mapgen_name).toLatin1().data());
-            }
-
-            QByteArray raw_data = file.readAll();
-            //raw_data = QByteArray::fromHex(raw_data);
-            qsrand(QDateTime::currentDateTime().toMSecsSinceEpoch());
-
-            // TODO: config
-            // world_ = kv::GetCoreInstance().CreateWorldFromMapgen(raw_data, id, {true});
-            const QJsonDocument document = QJsonDocument::fromJson(raw_data);
-            world_ = kv::GetCoreInstance().CreateWorldFromJson(document.object(), id, {true});
+            qFatal("%s", QString("Error open: %1").arg(mapgen_name).toLatin1().data());
         }
-        else
-        {
-            qFatal("%s", QString("Mapgen file does not exist: %1").arg(mapgen_name).toLatin1().data());
-        }
+
+        const QByteArray raw_data = file.readAll();
+        qsrand(static_cast<quint32>(QDateTime::currentDateTime().toMSecsSinceEpoch()));
+
+        const QJsonDocument document = QJsonDocument::fromJson(raw_data);
+        world_ = kv::GetCoreInstance().CreateWorldFromJson(document.object(), id, config);
     }
     else
     {
@@ -190,8 +180,7 @@ void Game::InitWorld(int id, QString map_name)
         QElapsedTimer load_timer;
         load_timer.start();
 
-        QByteArray map_data = Network2::GetInstance().GetMapData();
-
+        const QByteArray map_data = Network2::GetInstance().GetMapData();
         if (map_data.length() == 0)
         {
             qFatal("An empty map received");
@@ -203,7 +192,6 @@ void Game::InitWorld(int id, QString map_name)
     }
 
     emit insertHtmlIntoChat(ON_LOGIN_MESSAGE);
-
     thread_.start();
 }
 

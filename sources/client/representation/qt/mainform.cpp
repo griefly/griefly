@@ -166,7 +166,7 @@ void MainForm::startGameLoop(int id, QString map)
             &Network2::GetInstance(), &Network2::sendMap);
     connect(representation_, &Representation::chatMessage, this, &MainForm::insertHtmlIntoChat);
 
-    game->InitWorld(id, map);
+    game->InitWorld(static_cast<quint32>(id), map, {true});
 
     connect(this, &MainForm::closing, game, &Game::endProcess);
     connect(this, &MainForm::generateUnsync, game, &Game::generateUnsync);
