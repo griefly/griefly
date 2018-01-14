@@ -252,19 +252,17 @@ void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 
         AppendSystemTexts(frame);
 
-        VisiblePoints points;
-        GetMob()->CalculateVisible(&points);
-
-        GetMap().Represent(frame, points);
-
-        if (IdPtr<Mob> mob = GetPlayerId(player_net_id))
-        {
-            mob->GenerateInterfaceForFrame(frame);
-        }
-        else
+        IdPtr<Mob> mob = GetPlayerId(player_net_id);
+        if (!mob.IsValid())
         {
             qDebug() << "Oops! No mob for such net id!" << player_net_id;
+            continue;
         }
+
+        VisiblePoints points;
+        mob->CalculateVisible(&points);
+        GetMap().Represent(frame, points);
+        mob->GenerateInterfaceForFrame(frame);
 
         GetAtmosphere().Represent(frame);
 
@@ -272,7 +270,7 @@ void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
         AppendChatMessages(frame, points, player_net_id);
 
         // TODO: reset all shifts
-        frame->SetCamera(GetMob()->GetPosition().x, GetMob()->GetPosition().y);
+        frame->SetCamera(mob->GetPosition().x, mob->GetPosition().y);
     }
 }
 
