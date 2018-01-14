@@ -301,7 +301,6 @@ void Game::ProcessInputMessages()
         }
 
         qDebug() << "Unhandled message, type: " << msg.type << ", json: " << msg.data;
-        // TODO: other stuff
     }
 }
 

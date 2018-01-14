@@ -64,7 +64,7 @@ void QtOpenGL::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-void QtOpenGL::focusOutEvent(QFocusEvent *event)
+void QtOpenGL::focusOutEvent(QFocusEvent* /*event*/)
 {
     emit focusLost();
 }
@@ -74,7 +74,7 @@ void QtOpenGL::initializeGL()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glOrtho(0, AREA_SIZE_W, AREA_SIZE_H, 0, 0, 1); // TODO: check
+    glOrtho(0, AREA_SIZE_W, AREA_SIZE_H, 0, 0, 1);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

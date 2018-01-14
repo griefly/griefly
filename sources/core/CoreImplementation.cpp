@@ -245,7 +245,7 @@ void WorldImplementation::PostOoc(const QString& who, const QString& text)
 
 void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 {
-    for (const PlayerAndFrame player_and_frame : frames)
+    for (const PlayerAndFrame& player_and_frame : frames)
     {
         const quint32 player_net_id = player_and_frame.first;
         GrowingFrame* frame = player_and_frame.second;
