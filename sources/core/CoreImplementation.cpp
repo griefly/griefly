@@ -401,16 +401,6 @@ const ChatFrameInfo& WorldImplementation::GetChatFrameInfo() const
     return chat_frame_info_;
 }
 
-IdPtr<Mob> WorldImplementation::GetMob() const
-{
-    return current_mob_;
-}
-
-void WorldImplementation::SetMob(quint32 new_mob)
-{
-    current_mob_ = new_mob;
-}
-
 IdPtr<GlobalObjectsHolder> WorldImplementation::GetGlobals() const
 {
     return global_objects_;
@@ -504,7 +494,6 @@ void WorldImplementation::AfterMapgen(const quint32 id, const bool unsync_genera
     IdPtr<LoginMob> newmob = GetFactory().CreateImpl(LoginMob::GetTypeStatic());
 
     SetPlayerId(id, newmob.Id());
-    SetMob(newmob.Id());
     newmob->MindEnter();
 }
 

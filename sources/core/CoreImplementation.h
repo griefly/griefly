@@ -39,9 +39,6 @@ public:
     virtual ChatFrameInfo& GetChatFrameInfo() override;
     virtual const ChatFrameInfo& GetChatFrameInfo() const override;
 
-    virtual IdPtr<kv::Mob> GetMob() const override;
-    virtual void SetMob(quint32 new_mob) override;
-
     virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const override;
     virtual void SetGlobals(quint32 globals) override;
 

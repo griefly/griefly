@@ -45,7 +45,6 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
         EXPECT_CALL(game, SetGlobals(99));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
-        EXPECT_CALL(game, SetMob(0));
 
         EXPECT_CALL(game, GetAtmosphere())
             .WillRepeatedly(ReturnRef(atmos));
@@ -106,7 +105,6 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         EXPECT_CALL(game, SetGlobals(globals_id));
         EXPECT_CALL(game, GetMap())
             .WillRepeatedly(ReturnRef(map));
-        EXPECT_CALL(game, SetMob(0));
 
         EXPECT_CALL(game, GetAtmosphere())
             .WillRepeatedly(ReturnRef(atmos));

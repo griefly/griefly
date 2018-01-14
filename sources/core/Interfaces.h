@@ -107,9 +107,6 @@ public:
     virtual kv::ChatFrameInfo& GetChatFrameInfo() = 0;
     virtual const kv::ChatFrameInfo& GetChatFrameInfo() const = 0;
 
-    virtual IdPtr<kv::Mob> GetMob() const = 0;
-    virtual void SetMob(quint32 new_mob) = 0;
-
     virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const = 0;
     virtual void SetGlobals(quint32 globals) = 0;
 

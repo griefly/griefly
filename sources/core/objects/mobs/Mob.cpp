@@ -62,10 +62,6 @@ void Mob::MoveMindTo(IdPtr<Mob> other)
     MindExit();
 
     GetGame().SetPlayerId(net_id, other.Id());
-    if (GetId() == GetGame().GetMob().Id())
-    {
-        GetGame().SetMob(other.Id());
-    }
 
     other->MindEnter();
 }

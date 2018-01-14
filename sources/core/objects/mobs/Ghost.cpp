@@ -34,25 +34,8 @@ void Ghost::AfterWorldCreation()
 
 bool Ghost::IsMobGhost()
 {
-    static quint32 mob_id = 0;
-    static bool draw = true;
-    if (!GetGame().GetMob())
-    {
-        return false;
-    }
-    if (mob_id != GetGame().GetMob().Id())
-    {
-        if (IdPtr<Ghost> g = GetGame().GetMob())
-        {
-            draw = true;
-        }
-        else
-        {
-            draw = false;
-        }
-        mob_id = GetGame().GetMob().Id();
-    }
-    return draw;
+    // TODO: proper implementation
+    return true;
 }
 
 void Ghost::Represent(GrowingFrame* frame)

@@ -69,8 +69,6 @@ public:
     MOCK_METHOD0(GetChatFrameInfo, kv::ChatFrameInfo&());
     MOCK_CONST_METHOD0(GetChatFrameInfo, const kv::ChatFrameInfo&());
     MOCK_METHOD1(SetUnsyncGenerator, void(quint32 generator));
-    MOCK_CONST_METHOD0(GetMob, IdPtr<kv::Mob>());
-    MOCK_METHOD1(SetMob, void(quint32 new_mob));
     MOCK_CONST_METHOD0(GetGlobals, IdPtr<kv::GlobalObjectsHolder>());
     MOCK_METHOD1(SetGlobals, void(quint32 globals));
     MOCK_METHOD3(PlayMusic, void(const QString& name, int volume, quint32 mob));

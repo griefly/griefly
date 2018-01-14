@@ -70,7 +70,6 @@ void Load(GameInterface* game, kv::FastDeserializer& deserializer, quint32 real_
     }
 
     IdPtr<kv::Mob> player = game->GetPlayerId(real_this_mob);
-    game->SetMob(player.Id());
     qDebug() << "Player id:" << player.Id();
     factory.MarkWorldAsCreated();
 
