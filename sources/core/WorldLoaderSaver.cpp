@@ -44,7 +44,7 @@ void Save(const GameInterface* game, kv::FastSerializer& serializer)
     serializer.WriteType(kv::END_TYPE);
 }
 
-void Load(GameInterface* game, kv::FastDeserializer& deserializer, quint32 real_this_mob)
+void Load(GameInterface* game, kv::FastDeserializer& deserializer)
 {
     ObjectFactoryInterface& factory = game->GetFactory();
 
@@ -68,9 +68,6 @@ void Load(GameInterface* game, kv::FastDeserializer& deserializer, quint32 real_
         kv::Object* object = factory.CreateVoid(type, id_loc);
         object->Load(deserializer);
     }
-
-    IdPtr<kv::Mob> player = game->GetPlayerId(real_this_mob);
-    qDebug() << "Player id:" << player.Id();
     factory.MarkWorldAsCreated();
 
     game->GetAtmosphere().LoadGrid(&game->GetMap());

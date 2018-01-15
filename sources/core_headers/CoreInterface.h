@@ -195,7 +195,8 @@ public:
     using WorldPtr = std::shared_ptr<WorldInterface>;
 
     virtual WorldPtr CreateWorldFromSave(
-        const QByteArray& data, quint32 mob_id) = 0;
+        const QByteArray& data) = 0;
+    // `mob_id` is needed because we need to fill the player ids table
     virtual WorldPtr CreateWorldFromJson(
         const QJsonObject& data, quint32 mob_id, const Config& config) = 0;
     // <object name, metadata>

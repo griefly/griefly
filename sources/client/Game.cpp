@@ -186,7 +186,7 @@ void Game::InitWorld(quint32 id, QString map_name, const kv::CoreInterface::Conf
             qFatal("An empty map received");
         }
 
-        world_ = kv::GetCoreInstance().CreateWorldFromSave(map_data, id);
+        world_ = kv::GetCoreInstance().CreateWorldFromSave(map_data);
 
         qDebug() << "Map is loaded, " << load_timer.elapsed() << " ms";
     }

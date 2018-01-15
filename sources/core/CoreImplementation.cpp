@@ -505,11 +505,11 @@ CoreImplementation::CoreImplementation()
 }
 
 CoreImplementation::WorldPtr CoreImplementation::CreateWorldFromSave(
-    const QByteArray& data, const quint32 mob_id)
+    const QByteArray& data)
 {
     auto world = std::make_shared<WorldImplementation>();
     FastDeserializer deserializer(data.data(), data.size());
-    world::Load(world.get(), deserializer, mob_id);
+    world::Load(world.get(), deserializer);
     return world;
 }
 

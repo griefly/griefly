@@ -56,7 +56,7 @@ TEST(WorldLoaderSaver, SaveAndLoadNoObjects)
         EXPECT_CALL(Const(game), GetFactory())
             .WillRepeatedly(ReturnRef(factory));
 
-        world::Load(&game, deserializer, 0);
+        world::Load(&game, deserializer);
 
         EXPECT_EQ(factory.Hash(), hash);
     }
@@ -111,7 +111,7 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         EXPECT_CALL(atmos, LoadGrid(&map))
             .Times(1);
 
-        world::Load(&game, deserializer, 0);
+        world::Load(&game, deserializer);
 
         {
             ASSERT_GE(factory.GetIdTable().size(), 2);
