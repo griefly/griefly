@@ -18,15 +18,11 @@
 using namespace kv;
 
 Game::Game(Representation* representation)
-    : representation_(representation),
-      nodraw_(false)
+    : nodraw_(false),
+      representation_(representation)
 {
     process_messages_ns_ = 0;
     foreach_process_ns_ = 0;
-    force_process_ns_ = 0;
-    atmos_process_ns_ = 0;
-    deletion_process_ns_ = 0;
-    update_visibility_ns_ = 0;
     frame_generation_ns_ = 0;
 
     auto_player_ = false;
@@ -91,7 +87,10 @@ void Game::Process()
             break;
         }
 
+        QElapsedTimer input_message_timer;
+        input_message_timer.start();
         ProcessInputMessages();
+        process_messages_ns_ = input_message_timer.nsecsElapsed();
 
         if (process_in_)
         {
@@ -339,7 +338,7 @@ void Game::AppendSystemTexts()
     frame.Append(
         FrameData::TextEntry{
             "Performance",
-            QString("Process messages: %1 ms").arg((process_messages_ns_ * 1.0) / 1000000.0)});
+            QString("Process input messages: %1 ms").arg((process_messages_ns_ * 1.0) / 1000000.0)});
 
     frame.Append(
         FrameData::TextEntry{
