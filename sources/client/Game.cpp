@@ -22,7 +22,7 @@ Game::Game(Representation* representation)
       representation_(representation)
 {
     process_messages_ns_ = 0;
-    foreach_process_ns_ = 0;
+    tick_process_ns_ = 0;
     frame_generation_ns_ = 0;
 
     auto_player_ = false;
@@ -96,6 +96,7 @@ void Game::Process()
         {
             QElapsedTimer timer;
 
+            timer.start();
             world_->StartTick();
             for (const Message& message : messages_to_process_)
             {
@@ -103,10 +104,11 @@ void Game::Process()
             }
             messages_to_process_.clear();
             world_->FinishTick();
+            tick_process_ns_ = timer.nsecsElapsed();
 
+            timer.start();
             GenerateFrame();
-            frame_generation_ns_ += timer.nsecsElapsed();
-            frame_generation_ns_ /= 2;
+            frame_generation_ns_ = timer.nsecsElapsed();
         }
 
         cpu_consumed_ms += cpu_timer.elapsed();
@@ -335,15 +337,22 @@ void Game::AppendSystemTexts()
     frame.Append(
         FrameData::TextEntry{"Main", QString("Ping: %1 ms").arg(current_ping_)});
 
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Process input messages: %1 ms").arg((process_messages_ns_ * 1.0) / 1000000.0)});
+    auto ns_to_s = [](qint64 ns) { return ns / 1000000.0; };
 
     frame.Append(
         FrameData::TextEntry{
             "Performance",
-            QString("Process objects: %1 ms").arg((foreach_process_ns_ * 1.0) / 1000000.0)});
+            QString("Process input messages: %1 ms").arg(ns_to_s(process_messages_ns_))});
+
+    frame.Append(
+        FrameData::TextEntry{
+            "Performance",
+            QString("Tick processing: %1 ms").arg(ns_to_s(tick_process_ns_))});
+
+    frame.Append(
+        FrameData::TextEntry{
+            "Performance",
+            QString("Frame generation: %1 ms").arg(ns_to_s(frame_generation_ns_))});
 }
 
 void Game::process()

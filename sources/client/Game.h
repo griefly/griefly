@@ -65,7 +65,7 @@ private:
 
     // Perfomance
     qint64 process_messages_ns_;
-    qint64 foreach_process_ns_;
+    qint64 tick_process_ns_;
     qint64 frame_generation_ns_;
 
     QThread thread_;
