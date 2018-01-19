@@ -25,6 +25,10 @@ Game::Game(Representation* representation)
     tick_process_ns_ = 0;
     frame_generation_ns_ = 0;
 
+    start_tick_process_ns_ = 0;
+    world_messages_process_ns_ = 0;
+    finish_tick_process_ns_ = 0;
+
     auto_player_ = false;
     cpu_load_ = 0.0f;
 
@@ -95,15 +99,26 @@ void Game::Process()
         if (process_in_)
         {
             QElapsedTimer timer;
+            QElapsedTimer inner_timer;
 
             timer.start();
+
+            inner_timer.start();
             world_->StartTick();
+            start_tick_process_ns_ = inner_timer.nsecsElapsed();
+
+            inner_timer.start();
             for (const Message& message : messages_to_process_)
             {
                 world_->ProcessMessage(message);
             }
             messages_to_process_.clear();
+            world_messages_process_ns_ = inner_timer.nsecsElapsed();
+
+            inner_timer.start();
             world_->FinishTick();
+            finish_tick_process_ns_ = inner_timer.nsecsElapsed();
+
             tick_process_ns_ = timer.nsecsElapsed();
 
             timer.start();
@@ -337,22 +352,19 @@ void Game::AppendSystemTexts()
     frame.Append(
         FrameData::TextEntry{"Main", QString("Ping: %1 ms").arg(current_ping_)});
 
-    auto ns_to_s = [](qint64 ns) { return ns / 1000000.0; };
+    auto append_to_frame = [&, this](const QString &text, qint64 ns)
+    {
+        auto ns_to_s = [](qint64 ns) { return ns / 1000000.0; };
+        frame.Append(
+            FrameData::TextEntry{"Performance", text.arg(ns_to_s(ns))});
+    };
 
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Process input messages: %1 ms").arg(ns_to_s(process_messages_ns_))});
-
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Tick processing: %1 ms").arg(ns_to_s(tick_process_ns_))});
-
-    frame.Append(
-        FrameData::TextEntry{
-            "Performance",
-            QString("Frame generation: %1 ms").arg(ns_to_s(frame_generation_ns_))});
+    append_to_frame("Process input messages: %1 ms", process_messages_ns_);
+    append_to_frame("Tick processing: %1 ms", tick_process_ns_);
+    append_to_frame("Frame generation: %1 ms", frame_generation_ns_);
+    append_to_frame("Start tick: %1 ms", start_tick_process_ns_);
+    append_to_frame("World messages: %1 ms", world_messages_process_ns_);
+    append_to_frame("Finish tick: %1 ms", finish_tick_process_ns_);
 }
 
 void Game::process()

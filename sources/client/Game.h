@@ -68,6 +68,10 @@ private:
     qint64 tick_process_ns_;
     qint64 frame_generation_ns_;
 
+    qint64 start_tick_process_ns_;
+    qint64 world_messages_process_ns_;
+    qint64 finish_tick_process_ns_;
+
     QThread thread_;
 
     quint32 mob_;
