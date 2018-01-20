@@ -80,7 +80,7 @@ private:
     // Perfomance
     qint64 process_messages_ns_;
     qint64 foreach_process_ns_;
-    qint64 force_process_ns_;
+    qint64 physics_process_ns_;
     qint64 atmos_process_ns_;
     qint64 deletion_process_ns_;
     qint64 update_visibility_ns_;

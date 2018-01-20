@@ -1,6 +1,7 @@
 #include "CoreImplementation.h"
 
 #include <QDateTime>
+#include <QElapsedTimer>
 
 #include "core_headers/CoreInterface.h"
 
@@ -86,7 +87,7 @@ WorldImplementation::WorldImplementation()
       names_(new Names(this)),
       process_messages_ns_(0),
       foreach_process_ns_(0),
-      force_process_ns_(0),
+      physics_process_ns_(0),
       atmos_process_ns_(0),
       deletion_process_ns_(0),
       update_visibility_ns_(0),
@@ -107,19 +108,17 @@ void WorldImplementation::StartTick()
     // Next tick
     GetGlobals()->game_tick += 1;
 
-    GetFactory().ForeachProcess();
+    QElapsedTimer timer;
 
-    const int ATMOS_OFTEN = 1;
-    const int ATMOS_MOVE_OFTEN = 1;
+    timer.start();
+    GetFactory().ForeachProcess();
+    foreach_process_ns_ = timer.nsecsElapsed();
+
+    timer.start();
     const int game_tick = GetGlobals()->game_tick;
-    if (ATMOS_OFTEN == 1 || (game_tick % ATMOS_OFTEN == 1))
-    {
-        GetAtmosphere().Process(game_tick);
-    }
-    if (ATMOS_MOVE_OFTEN == 1 || (game_tick % ATMOS_MOVE_OFTEN == 1))
-    {
-        GetAtmosphere().ProcessMove(game_tick);
-    }
+    GetAtmosphere().Process(game_tick);
+    GetAtmosphere().ProcessMove(game_tick);
+    atmos_process_ns_ = timer.nsecsElapsed();
 }
 
 void WorldImplementation::ProcessMessage(const Message& message)
@@ -129,9 +128,17 @@ void WorldImplementation::ProcessMessage(const Message& message)
 
 void WorldImplementation::FinishTick()
 {
+    QElapsedTimer timer;
+
+    timer.start();
     GetGlobals()->physics_engine_->ProcessPhysics();
+    physics_process_ns_ = timer.nsecsElapsed();
+
     ProcessHearers();
+
+    timer.start();
     GetFactory().ProcessDeletion();
+    deletion_process_ns_ = timer.nsecsElapsed();
 }
 
 void WorldImplementation::ProcessHearers()
@@ -292,13 +299,10 @@ void WorldImplementation::AppendSystemTexts(GrowingFrame* frame) const
 
     append("Main", "Game tick: %1", GetGlobals()->game_tick);
 
-    append_ns("Process messages: %1 ms", process_messages_ns_);
     append_ns("Process objects: %1 ms", foreach_process_ns_);
-    append_ns("Process force movement: %1 ms", force_process_ns_);
+    append_ns("Process physics movement: %1 ms", physics_process_ns_);
     append_ns("Process atmos: %1 ms", atmos_process_ns_);
     append_ns("Process deletion: %1 ms", deletion_process_ns_);
-    append_ns("Update visibility: %1 ms", update_visibility_ns_);
-    append_ns("Frame generation: %1 ms", frame_generation_ns_);
 }
 
 void WorldImplementation::AppendSoundsToFrame(

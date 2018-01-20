@@ -352,7 +352,7 @@ void Game::AppendSystemTexts()
     frame.Append(
         FrameData::TextEntry{"Main", QString("Ping: %1 ms").arg(current_ping_)});
 
-    auto append_to_frame = [&, this](const QString &text, qint64 ns)
+    auto append_to_frame = [&](const QString &text, qint64 ns)
     {
         auto ns_to_s = [](qint64 ns) { return ns / 1000000.0; };
         frame.Append(
