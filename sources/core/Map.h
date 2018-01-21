@@ -33,7 +33,7 @@ public:
     virtual void Resize(int new_x, int new_y, int new_z) override;
     virtual void FillTilesAtmosHolders() override;
 
-    virtual void Represent(GrowingFrame* frame, const VisiblePoints& points) const override;
+    virtual void Represent(GrowingFrame* frame, const VisiblePoints& points, IdPtr<Mob> mob) const override;
 
     virtual bool IsTransparent(int posx, int posy, int posz = 0) const override;
 

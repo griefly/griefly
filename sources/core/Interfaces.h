@@ -48,7 +48,7 @@ public:
     virtual int GetHeight() const = 0;
     virtual int GetDepth() const = 0;
 
-    virtual void Represent(kv::GrowingFrame* frame, const VisiblePoints& points) const = 0;
+    virtual void Represent(kv::GrowingFrame* frame, const VisiblePoints& points, IdPtr<kv::Mob> mob) const = 0;
 
     virtual void Resize(int new_map_x, int new_map_y, int new_map_z) = 0;
 

@@ -268,7 +268,7 @@ void WorldImplementation::Represent(const QVector<PlayerAndFrame>& frames) const
 
         VisiblePoints points;
         mob->CalculateVisible(&points);
-        GetMap().Represent(frame, points);
+        GetMap().Represent(frame, points, mob);
         mob->GenerateInterfaceForFrame(frame);
 
         GetAtmosphere().Represent(frame);

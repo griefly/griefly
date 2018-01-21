@@ -24,7 +24,7 @@ void Map::FillTilesAtmosHolders()
     }
 }
 
-void Map::Represent(GrowingFrame* frame, const VisiblePoints& points) const
+void Map::Represent(GrowingFrame* frame, const VisiblePoints& points, IdPtr<kv::Mob> mob) const
 {
     for (const Position& point : points)
     {
