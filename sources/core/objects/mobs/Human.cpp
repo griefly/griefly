@@ -494,7 +494,7 @@ void Human::AttackBy(IdPtr<Item> item)
     }
 }
 
-void Human::Represent(GrowingFrame* frame)
+void Human::Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob)
 {
     FrameData::Entity ent;
     ent.id = GetId();

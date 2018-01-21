@@ -38,11 +38,11 @@ bool Ghost::IsMobGhost()
     return true;
 }
 
-void Ghost::Represent(GrowingFrame* frame)
+void Ghost::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
 {
     if (IsMobGhost())
     {
-        Mob::Represent(frame);
+        Mob::Represent(frame, mob);
     }
 }
 

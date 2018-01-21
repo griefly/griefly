@@ -47,7 +47,7 @@ public:
 
     virtual void AttackBy(IdPtr<Item> item) override;
 
-    virtual void Represent(GrowingFrame* frame) override;
+    virtual void Represent(GrowingFrame* frame, IdPtr<Mob> mob) override;
 
     virtual bool TryMove(Dir direct) override;
 

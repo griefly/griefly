@@ -16,7 +16,7 @@ void Turf::Delete()
     MaterialObject::Delete();
 }
 
-void Turf::Represent(GrowingFrame* frame)
+void Turf::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
 {
     if (IdPtr<CubeTile> tile = GetOwner())
     {
@@ -41,7 +41,7 @@ void Turf::Represent(GrowingFrame* frame)
             frame->Append(entity);
         }
     }
-    MaterialObject::Represent(frame);
+    MaterialObject::Represent(frame, mob);
 }
 
 int friction::CombinedFriction(IdPtr<Turf> turf)

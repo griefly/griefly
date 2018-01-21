@@ -67,7 +67,7 @@ public:
     }
     
     virtual void Delete() override;
-    virtual void Represent(GrowingFrame* frame) override;
+    virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) override;
     void SetSprite(const QString& sprite);
     void SetState(const QString& name);
     ViewInfo* GetView() { return &view_; }

@@ -12,7 +12,7 @@ public:
     REGISTER_CLASS_AS(Ghost);
     Ghost();
     virtual void AfterWorldCreation() override;
-    virtual void Represent(GrowingFrame* frame) override;
+    virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) override;
     virtual void CalculateVisible(VisiblePoints* visible_list) const override;
     virtual void ProcessMessage(const Message& message) override;
 
