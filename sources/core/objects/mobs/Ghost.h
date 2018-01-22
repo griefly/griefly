@@ -24,7 +24,6 @@ public:
     virtual void Process() override;
 private:
     int KV_SAVEABLE(seconds_until_respawn_);
-    bool IsMobGhost();
 };
 END_DECLARE(Ghost);
 

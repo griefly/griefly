@@ -32,15 +32,9 @@ void Ghost::AfterWorldCreation()
     SetFreq(10);
 }
 
-bool Ghost::IsMobGhost()
-{
-    // TODO: proper implementation
-    return true;
-}
-
 void Ghost::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
 {
-    if (IsMobGhost())
+    if (IdPtr<Ghost> ghost = mob)
     {
         Mob::Represent(frame, mob);
     }
