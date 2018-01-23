@@ -219,6 +219,22 @@ void View2::FramesetState::Draw(quint32 shift, int x, int y, int angle, int tran
     }
 }
 
+void View2::FramesetState::RandomizeImageState()
+{
+    if (!GetMetadata())
+    {
+        return;
+    }
+
+    if (   (GetMetadata()->loop != -1)
+        && (GetMetadata()->loop != 0))
+    {
+        return;
+    }
+
+    image_state_ = qrand() % GetMetadata()->frames_sequence.size();
+}
+
 void View2::FramesetState::Reset()
 {
     sprite_ = nullptr;
@@ -345,4 +361,17 @@ void View2::LoadViewInfo(const kv::RawViewInfo& view_info)
     }
 
     info_ = view_info;
+}
+
+void View2::RandomizeImageState()
+{
+    for (FramesetState& state : underlays_)
+    {
+        state.RandomizeImageState();
+    }
+    base_frameset_.RandomizeImageState();
+    for (FramesetState& state : overlays_)
+    {
+        state.RandomizeImageState();
+    }
 }

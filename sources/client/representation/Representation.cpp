@@ -336,6 +336,7 @@ void Representation::SynchronizeViews()
         {
             view_with_frame_id.view.SetX(it->pos_x * 32);
             view_with_frame_id.view.SetY(it->pos_y * 32);
+            view_with_frame_id.view.RandomizeImageState();
         }
         view_with_frame_id.frame_id = current_frame_id_ + 1;
     }
