@@ -23,7 +23,7 @@ public:
 
         bool IsTransp(int x, int y, int shift, int angle) const;
         void Draw(quint32 shift, int x, int y, int angle = 0, int transparency = MAX_TRANSPARENCY);
-        void RandomizeImageState();
+        void RandomizeImageStateIfLooped();
     private:
         void Reset();
 
@@ -45,14 +45,14 @@ public:
     int GetX() const { return pixel_x_; }
     int GetY() const { return pixel_y_; }
 
-    bool IsTransp(int x, int y, quint32 shift) const;
+    bool IsTransp(int x, int y, qint32 shift) const;
     void Draw(int x_shift, int y_shift, quint32 shift);
 
     void LoadViewInfo(const kv::RawViewInfo& view_info);
 
     const FramesetState& GetBaseFrameset() const { return base_frameset_; }
 
-    void RandomizeImageState();
+    void RandomizeImageStateIfLooped();
 private:
     FramesetState base_frameset_;
     std::vector<FramesetState> underlays_;

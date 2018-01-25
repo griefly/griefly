@@ -90,7 +90,7 @@ private:
     };
 
     std::unordered_map<quint32, ViewWithFrameId> views_;
-    std::vector<View2> interface_views_;
+    QVector<View2> interface_views_;
 
     class Camera
     {

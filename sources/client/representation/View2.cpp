@@ -219,7 +219,7 @@ void View2::FramesetState::Draw(quint32 shift, int x, int y, int angle, int tran
     }
 }
 
-void View2::FramesetState::RandomizeImageState()
+void View2::FramesetState::RandomizeImageStateIfLooped()
 {
     if (!GetMetadata())
     {
@@ -249,7 +249,7 @@ View2::View2()
     pixel_y_ = 0;
 }
 
-bool View2::IsTransp(int x, int y, quint32 shift) const
+bool View2::IsTransp(int x, int y, qint32 shift) const
 {
     //qDebug() << GetX() << "," << GetY();
     for (int i = overlays_.size() - 1; i >= 0; --i)
@@ -309,10 +309,6 @@ void View2::LoadViewInfo(const kv::RawViewInfo& view_info)
     {
         return;
     }
-
-    //qDebug() << "Not same framesets "
-    //         << QString::fromStdString(view_info.GetBaseFrameset().GetSprite());
-
     if (!IsSameSprites(
             view_info.base_frameset,
             info_.base_frameset))
@@ -363,15 +359,15 @@ void View2::LoadViewInfo(const kv::RawViewInfo& view_info)
     info_ = view_info;
 }
 
-void View2::RandomizeImageState()
+void View2::RandomizeImageStateIfLooped()
 {
     for (FramesetState& state : underlays_)
     {
-        state.RandomizeImageState();
+        state.RandomizeImageStateIfLooped();
     }
-    base_frameset_.RandomizeImageState();
+    base_frameset_.RandomizeImageStateIfLooped();
     for (FramesetState& state : overlays_)
     {
-        state.RandomizeImageState();
+        state.RandomizeImageStateIfLooped();
     }
 }
