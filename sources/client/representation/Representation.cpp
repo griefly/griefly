@@ -255,8 +255,7 @@ void Representation::Click(int x, int y)
             int bdir = kv::helpers::DirToByond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                //qDebug() << "Clicked " << it->id;
-                id_to_send = it->click_id;
+                id_to_send = static_cast<qint32>(it->click_id);
                 break;
             }
         }
@@ -277,7 +276,7 @@ void Representation::Click(int x, int y)
             int bdir = kv::helpers::DirToByond(it->dir);
             if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
             {
-                id_to_send = it->click_id;
+                id_to_send = static_cast<qint32>(it->click_id);
                 break;
             }
         }
@@ -438,10 +437,11 @@ void Representation::Draw()
         {
             if (it->vlevel == vlevel)
             {
+                const int bdir = kv::helpers::DirToByond(it->dir);
                 views_[it->id].view.Draw(
                     camera_.GetFullShiftX(),
                     camera_.GetFullShiftY(),
-                    kv::helpers::DirToByond(it->dir));
+                    static_cast<quint32>(bdir));
             }
         }
     }
@@ -449,19 +449,21 @@ void Representation::Draw()
     {
         if (it->vlevel >= MAX_LEVEL)
         {
+            const int bdir = kv::helpers::DirToByond(it->dir);
             views_[it->id].view.Draw(
                 camera_.GetFullShiftX(),
                 camera_.GetFullShiftY(),
-                kv::helpers::DirToByond(it->dir));
+                static_cast<quint32>(bdir));
         }
     }
 }
 
 void Representation::DrawInterface()
 {
-    for (int i = 0; i < static_cast<int>(interface_views_.size()); ++i)
+    for (int i = 0; i < interface_views_.size(); ++i)
     {
-        interface_views_[i].Draw(0, 0, current_frame_.units[i].shift);
+        interface_views_[i].Draw(
+            0, 0, static_cast<quint32>(current_frame_.units[i].shift));
     }
 }
 
