@@ -42,7 +42,7 @@ public:
         int loop;
         int hotspot[3];
 
-        quint32 first_frame_pos;
+        qint32 first_frame_pos;
     };
     bool Valid() const
     {

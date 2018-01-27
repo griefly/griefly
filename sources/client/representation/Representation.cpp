@@ -186,7 +186,7 @@ void Representation::Process()
     const int AUTOPLAY_INTERVAL = 10;
     if (autoplay_ && (autoplay_timer_.elapsed() > AUTOPLAY_INTERVAL))
     {
-        int loops = autoplay_timer_.elapsed() / AUTOPLAY_INTERVAL;
+        int loops = static_cast<int>(autoplay_timer_.elapsed()) / AUTOPLAY_INTERVAL;
         for (int i = 0; i < loops; ++i)
         {
             int w = GetGLWidget()->width();
@@ -222,17 +222,15 @@ void Representation::Process()
 void Representation::Click(int x, int y)
 {
     GetScreen().NormalizePixels(&x, &y);
-    int s_x = x - camera_.GetFullShiftX();
-    int s_y = y - camera_.GetFullShiftY();
-    //qDebug() << "S_X: " << s_x << ", S_Y: " <<  s_y;
-    //qDebug() << "X: " << x << ", Y: " <<  y;
+    const int shift_x = x - camera_.GetFullShiftX();
+    const int shift_y = y - camera_.GetFullShiftY();
 
     auto& units = current_frame_.units;
 
 
     for (int i = 0; i < units.size(); ++i)
     {
-        int bdir = units[i].shift;
+        const int bdir = units[i].shift;
         if (!interface_views_[i].IsTransp(x, y, bdir))
         {
             Network2::GetInstance().SendOrdinaryMessage(units[i].name);
@@ -253,7 +251,7 @@ void Representation::Click(int x, int y)
         if (it->vlevel >= MAX_LEVEL)
         {
             int bdir = kv::helpers::DirToByond(it->dir);
-            if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
+            if (!views_[it->id].view.IsTransp(shift_x, shift_y, bdir))
             {
                 id_to_send = static_cast<qint32>(it->click_id);
                 break;
@@ -274,7 +272,7 @@ void Representation::Click(int x, int y)
                 continue;
             }
             int bdir = kv::helpers::DirToByond(it->dir);
-            if (!views_[it->id].view.IsTransp(s_x, s_y, bdir))
+            if (!views_[it->id].view.IsTransp(shift_x, shift_y, bdir))
             {
                 id_to_send = static_cast<qint32>(it->click_id);
                 break;

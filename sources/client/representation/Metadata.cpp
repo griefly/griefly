@@ -202,18 +202,18 @@ void ImageMetadata::MakeSequence()
 
         for (int loop_i = 0; loop_i < local_loop; ++loop_i)
         {
-            for (quint32 i = 0; i < metadata.size(); ++i)
+            for (qint32 i = 0; i < metadata.size(); ++i)
             {
                 sequence.push_back(i);
             }
             if (it->rewind)
             {
-                int from = metadata.size() - 2;
+                qint32 from = metadata.size() - 2;
                 if (from < 0)
                 {
                     from = 0;
                 }
-                for (quint32 i = from; i > 0; --i)
+                for (qint32 i = from; i > 0; --i)
                 {
                     sequence.push_back(i);
                 }
