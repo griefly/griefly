@@ -35,6 +35,7 @@ public:
     MapObject() { owner_ = 0; }
     virtual void ForEach(std::function<void(IdPtr<MapObject>)> callback)
     {
+        Q_UNUSED(callback)
         return;
     }
     // 0 - passable
@@ -43,6 +44,7 @@ public:
     //
     virtual PassableLevel GetPassable(Dir direct) const
     {
+        Q_UNUSED(direct)
         return passable::EMPTY;
     }
     virtual bool IsTransparent() const
@@ -61,7 +63,7 @@ public:
 
     virtual void AttackBy(IdPtr<Item> item);
 
-    virtual void ApplyForce(Vector force) {}
+    virtual void ApplyForce(Vector force) { Q_UNUSED(force) }
 
     virtual bool CanTouch(IdPtr<MapObject> object) const
     {
@@ -89,6 +91,7 @@ public:
     // False failed
     virtual bool RemoveObject(IdPtr<MapObject> object)
     {
+        Q_UNUSED(object)
         return false;
     }
     // If id equal with object id, dir fail or something else (operation unsupported)
@@ -128,14 +131,22 @@ public:
     {
         return owner_->GetPosition();
     }
-    virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) { }
+    virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob)
+    {
+        Q_UNUSED(frame)
+        Q_UNUSED(mob)
+    }
     virtual void UpdatePassable() { }
     virtual IdPtr<Turf> GetTurf();
     virtual void SetTurf(IdPtr<Turf> turf);
     IdPtr<MapObject> GetRoot();
     void PlaySoundIfVisible(const QString& name);
 protected:
-    virtual quint32 GetItemImpl(unsigned int hash) { return 0; }
+    virtual quint32 GetItemImpl(unsigned int hash)
+    {
+        Q_UNUSED(hash)
+        return 0;
+    }
 private:
     IdPtr<MapObject> KV_SAVEABLE(owner_);
 };
