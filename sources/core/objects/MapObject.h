@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "Object.h"
+#include "atmos/AtmosHolder.h"
 
 namespace kv
 {
@@ -112,6 +113,8 @@ public:
 
     virtual void Bump(IdPtr<Movable> item);
     virtual void BumpByGas(Dir dir, bool inside = false);
+
+    virtual atmos::AtmosHolder* GetAtmosHolder() { return nullptr; }
 
     template<class T>
     IdPtr<T> GetItem()

@@ -53,7 +53,7 @@ public:
         UpdatePassable();
     }
     virtual void UpdatePassable() override;
-    atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
+    virtual atmos::AtmosHolder* GetAtmosHolder() override { return &atmos_holder_; }
 
     using InsideType = QVector<IdPtr<MaterialObject>>;
     InsideType& GetInsideList() { return inside_list_; }

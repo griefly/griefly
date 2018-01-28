@@ -19,7 +19,7 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Process() override;
 
-    atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
+    virtual atmos::AtmosHolder* GetAtmosHolder() override { return &atmos_holder_; }
 private:
     void Open();
     void Close();

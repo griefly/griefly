@@ -19,7 +19,7 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) { return false; }
     virtual bool CanTransferGas(Dir dir) const { return false; }
-    atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; }
+    virtual atmos::AtmosHolder* GetAtmosHolder() override { return &atmos_holder_; }
 protected:
     void ConnectHelper(IdPtr<PipeBase>& connection, Dir dir);
     void ProcessHelper(IdPtr<PipeBase>& connection, Dir dir);
