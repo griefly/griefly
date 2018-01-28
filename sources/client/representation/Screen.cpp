@@ -5,7 +5,7 @@
 #include "Params.h"
 #include "qt/qtopengl.h"
 
-Screen::Screen(unsigned int x, unsigned int y, bool fullscreen)
+Screen::Screen(int x, int y)
 {
     fail_ = true;
     ResetScreen(x, y);
@@ -73,7 +73,13 @@ int Screen::GetHeight()
     return GetGLWidget()->height();
 }
 
+namespace
+{
+
 Screen* screen = nullptr;
+
+}
+
 void SetScreen(Screen* scr)
 {
     screen = scr;

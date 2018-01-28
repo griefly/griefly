@@ -8,7 +8,7 @@ const int AREA_SIZE_H = 512;
 class Screen
 {
 public:
-    Screen(unsigned int x, unsigned int y, bool fullscreen = false);
+    Screen(int x, int y);
     void Draw(const GLSprite* sprite,
               int x, int y, int image_w_, int image_h_,
               float angle = 0.0f, float transparency = 1.0f);

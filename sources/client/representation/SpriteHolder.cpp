@@ -11,7 +11,13 @@ SpriteHolder::SpriteHolder()
 {
 };
 
+namespace
+{
+
 SpriteHolder* aspr_ = nullptr;
+
+}
+
 SpriteHolder& GetSpriter()
 {
     return *aspr_;

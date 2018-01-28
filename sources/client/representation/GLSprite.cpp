@@ -1,10 +1,4 @@
-#include <cassert>
-
-//#include "KvGlobals.h"
-
 #include "GLSprite.h"
-
-//#include "objects/Object.h"
 
 #include "qt/qtopengl.h"
 
@@ -21,7 +15,7 @@ GLSprite::GLSprite(const QString& name)
 GLSprite::~GLSprite()
 {
     MakeCurrentGLContext();
-    for (quint32 i = 0; i < gl_sprites_.size(); ++i)
+    for (qint32 i = 0; i < gl_sprites_.size(); ++i)
     {
         glDeleteTextures(gl_sprites_[i].size(), &gl_sprites_[i][0]);
     }
@@ -115,12 +109,12 @@ void GLSprite::InitTextures()
     fail_ = false;
 }
 
-unsigned int GLSprite::FrameW() const
+int GLSprite::FrameW() const
 {
     return frames_w_;
 }
 
-unsigned int GLSprite::FrameH() const
+int GLSprite::FrameH() const
 {
     return frames_h_;
 }
@@ -135,7 +129,7 @@ int GLSprite::H() const
     return metadata_.GetH();
 }
 
-const std::vector<GLuint>& GLSprite::operator[](quint32 num) const
+const QVector<GLuint>& GLSprite::operator[](qint32 num) const
 {
     return gl_sprites_[num];
 }

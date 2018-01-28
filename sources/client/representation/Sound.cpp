@@ -37,7 +37,7 @@ void SoundPlayer::PlaySound(const QString& name, float volume)
         sound_cache.append(ptr);
     }
 
-    ptr->setVolume(volume / 100.0f);
+    ptr->setVolume(static_cast<double>(volume) / 100.0);
     ptr->play();
 }
 

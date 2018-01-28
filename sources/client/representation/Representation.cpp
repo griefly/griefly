@@ -351,8 +351,7 @@ void Representation::SynchronizeViews()
         GetSoundPlayer().PlaySound(it->name);
     }
 
-    Music music = current_frame_.music;
-
+    const Music music = current_frame_.music;
     if (old_music.name != music.name)
     {
         if (music.name != "")
@@ -380,7 +379,10 @@ void Representation::SynchronizeViews()
     is_updated_ = false;
 }
 
-int get_pixel_speed_for_distance(int distance)
+namespace
+{
+
+int GetPixelSpeedForDistance(int distance)
 {
     int sign = 0;
     if (distance > 0)
@@ -391,7 +393,6 @@ int get_pixel_speed_for_distance(int distance)
     {
         sign = -1;
     }
-
     if (sign == 0)
     {
         return 0;
@@ -400,6 +401,8 @@ int get_pixel_speed_for_distance(int distance)
     distance = std::abs(distance);
 
     return sign * (((distance - 1) / 8) + 1);
+}
+
 }
 
 void Representation::PerformPixelMovement()
@@ -415,13 +418,13 @@ void Representation::PerformPixelMovement()
         if (old_x != pixel_x)
         {
             int diff_x = pixel_x - old_x;
-            diff_x = get_pixel_speed_for_distance(diff_x);
+            diff_x = GetPixelSpeedForDistance(diff_x);
             view_with_frame_id.view.SetX(old_x + diff_x);
         }
         if (old_y != pixel_y)
         {
             int diff_y = pixel_y - old_y;
-            diff_y = get_pixel_speed_for_distance(diff_y);
+            diff_y = GetPixelSpeedForDistance(diff_y);
             view_with_frame_id.view.SetY(old_y + diff_y);
         }
     }
@@ -486,12 +489,12 @@ void Representation::Camera::PerformPixelMovement()
 {
     if (pixel_shift_x_ != 0)
     {
-        int diff_x = get_pixel_speed_for_distance(pixel_shift_x_);
+        const int diff_x = GetPixelSpeedForDistance(pixel_shift_x_);
         pixel_shift_x_ -= diff_x;
     }
     if (pixel_shift_y_ != 0)
     {
-        int diff_y = get_pixel_speed_for_distance(pixel_shift_y_);
+        const int diff_y = GetPixelSpeedForDistance(pixel_shift_y_);
         pixel_shift_y_ -= diff_y;
     }
 }
