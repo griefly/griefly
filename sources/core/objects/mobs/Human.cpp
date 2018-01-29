@@ -351,11 +351,17 @@ void Human::Live()
         return;
     }
 
-    if (IdPtr<CubeTile> t = GetOwner())
+    // TODO: consider to have always valid owners
+    if (!GetOwner().IsValid())
     {
-        const unsigned int oxygen = t->GetAtmosHolder()->GetGase(atmos::OXYGEN);
-        const int temperature = t->GetAtmosHolder()->GetTemperature();
-        const int pressure = t->GetAtmosHolder()->GetPressure();
+        return;
+    }
+
+    if (atmos::AtmosHolder* holder = GetOwner()->GetAtmosHolder())
+    {
+        const int oxygen = holder->GetGase(atmos::OXYGEN);
+        const int temperature = holder->GetTemperature();
+        const int pressure = holder->GetPressure();
 
         interface_->UpdateEnvironment(temperature, pressure, oxygen);
 
@@ -368,8 +374,8 @@ void Human::Live()
         }
         if (oxygen > 0)
         {
-            t->GetAtmosHolder()->RemoveGase(atmos::OXYGEN, 1);
-            t->GetAtmosHolder()->AddGase(atmos::CO2, 1);
+            holder->RemoveGase(atmos::OXYGEN, 1);
+            holder->AddGase(atmos::CO2, 1);
             Regeneration();
         }
         else if (CalculateHealth() >= -1 * HUMAN_MAX_HEALTH)

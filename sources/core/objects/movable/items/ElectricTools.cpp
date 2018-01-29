@@ -45,9 +45,12 @@ void AtmosTool::AttackBy(IdPtr<Item> item)
 {
     if (item.Id() == GetId())
     {
-        if (IdPtr<CubeTile> tile = GetOwner()->GetOwner())
+        if (IdPtr<MapObject> super_owner = GetOwner()->GetOwner())
         {
-            PostHtmlFor(GetHtmlInfo(*tile->GetAtmosHolder()), GetOwner());
+            if (atmos::AtmosHolder* holder = super_owner->GetAtmosHolder())
+            {
+                PostHtmlFor(GetHtmlInfo(*holder), GetOwner());
+            }
         }
     }
 }

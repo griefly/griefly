@@ -271,9 +271,15 @@ void Vent::AfterWorldCreation()
 void Vent::Process()
 {
     ProcessHelper(tail_, GetDir());
-    if (IdPtr<CubeTile> cube = GetOwner())
+
+    // TODO: consider to remove such checks
+    if (!GetOwner().IsValid())
     {
-        cube->GetAtmosHolder()->Connect(GetAtmosHolder());
+        return;
+    }
+    if (atmos::AtmosHolder* holder = GetOwner()->GetAtmosHolder())
+    {
+        holder->Connect(GetAtmosHolder());
     }
 }
 
