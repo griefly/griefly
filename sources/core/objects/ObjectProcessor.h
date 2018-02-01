@@ -4,12 +4,13 @@
 
 #include <QVector>
 
+#include "Interfaces.h"
 #include "SaveableOperators.h"
 
 namespace kv
 {
 
-class ObjectProcessor : public Object
+class ObjectProcessor : public Object, public ObjectProcessorInterface
 {
 public:
     DECLARE_SAVEABLE(ObjectProcessor, Object);
@@ -17,8 +18,8 @@ public:
 
     ObjectProcessor();
 
-    void Add(IdPtr<Object> object);
-    void RunProcess();
+    void Add(quint32 object) override;
+    void RunProcess() override;
 private:
     QVector<IdPtr<Object>> KV_SAVEABLE(objects_);
 };

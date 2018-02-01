@@ -92,6 +92,15 @@ public:
     virtual void SetId(int id) = 0;
 };
 
+class ObjectProcessorInterface
+{
+public:
+    virtual ~ObjectProcessorInterface() { }
+
+    virtual void Add(quint32 object) = 0;
+    virtual void RunProcess() = 0;
+};
+
 class GameInterface
 {
 public:

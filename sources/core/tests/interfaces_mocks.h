@@ -57,6 +57,13 @@ public:
     MOCK_METHOD1(SetId, void(int id));
 };
 
+class MockObjectProcessor : public ObjectProcessorInterface
+{
+public:
+    MOCK_METHOD1(Add, void(quint32 id));
+    MOCK_METHOD0(RunProcess, void());
+};
+
 class MockIGame : public GameInterface
 {
 public:

@@ -7,7 +7,7 @@ ObjectProcessor::ObjectProcessor()
     // Nothing
 }
 
-void ObjectProcessor::Add(IdPtr<Object> object)
+void ObjectProcessor::Add(quint32 object)
 {
     // TODO: better way to check it
     if (objects_.contains(object))
