@@ -9,11 +9,13 @@ ObjectProcessor::ObjectProcessor()
 
 void ObjectProcessor::Add(quint32 object)
 {
-    // TODO: better way to check it
-    if (objects_.contains(object))
+    const auto it = objects_places_.find(object);
+    if (it != objects_places_.end())
     {
         return;
     }
+
+    objects_places_[object] = objects_.size();
     objects_.append(object);
 }
 
@@ -34,5 +36,13 @@ void ObjectProcessor::RunProcess()
         {
             object->Process();
         }
+    }
+}
+
+void ObjectProcessor::LoadObjectsPlaces()
+{
+    for (int i = 0; i < objects_.size(); ++i)
+    {
+        objects_places_[objects_[i].Id()] = i;
     }
 }

@@ -2,6 +2,8 @@
 
 #include "Object.h"
 
+#include <unordered_map>
+
 #include <QVector>
 
 #include "Interfaces.h"
@@ -22,6 +24,10 @@ public:
     void RunProcess() override;
 private:
     QVector<IdPtr<Object>> KV_SAVEABLE(objects_);
+
+    std::unordered_map<quint32, int> objects_places_;
+    void LoadObjectsPlaces();
+    KV_ON_LOAD_CALL(LoadObjectsPlaces);
 };
 END_DECLARE(ObjectProcessor);
 
