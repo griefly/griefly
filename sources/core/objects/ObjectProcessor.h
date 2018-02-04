@@ -2,7 +2,7 @@
 
 #include "Object.h"
 
-#include <unordered_map>
+#include <unordered_set>
 
 #include <QVector>
 
@@ -25,7 +25,7 @@ public:
 private:
     QVector<IdPtr<Object>> KV_SAVEABLE(objects_);
 
-    std::unordered_map<quint32, int> objects_places_;
+    std::unordered_set<quint32> objects_lookup_;
     void LoadObjectsPlaces();
     KV_ON_LOAD_CALL(LoadObjectsPlaces);
 };
