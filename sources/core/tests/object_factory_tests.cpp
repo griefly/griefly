@@ -13,8 +13,6 @@
 #include "objects/test/UnsyncGenerator.h"
 #include "objects/GlobalObjectsHolder.h"
 
-//#include "Game.h"
-
 using ::testing::ReturnRef;
 using ::testing::Return;
 
