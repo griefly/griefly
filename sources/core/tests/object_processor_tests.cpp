@@ -15,40 +15,44 @@ using namespace kv;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
-TEST(ObjectProcessor, Constructor)
+class ObjectProcessorTest : public ::testing::Test
 {
-    // TODO: proper cast table initialization
-    InitCastTable();
+public:
+    ObjectProcessorTest()
+        : factory_(&game_)
+    {
+        // TODO: proper cast table initialization
+        InitCastTable();
 
-    MockIGame game;
-    ObjectFactory factory(&game);
-    factory.FinishWorldCreation();
+        factory_.FinishWorldCreation();
 
-    IdPtr<ObjectProcessor> processor = factory.CreateImpl(ObjectProcessor::GetTypeStatic());
-    EXPECT_EQ(processor->HashMembers(), 1);
+        globals_ = factory_.CreateImpl(GlobalObjectsHolder::GetTypeStatic());
+        globals_->game_tick = 1;
+
+        EXPECT_CALL(game_, GetGlobals())
+            .WillRepeatedly(Return(globals_));
+
+        EXPECT_CALL(game_, GetFactory())
+            .WillRepeatedly(ReturnRef(factory_));
+    }
+protected:
+    MockIGame game_;
+    ObjectFactory factory_;
+    IdPtr<GlobalObjectsHolder> globals_;
+};
+
+TEST_F(ObjectProcessorTest, Constructor)
+{
+    IdPtr<ObjectProcessor> processor
+        = factory_.CreateImpl(ObjectProcessor::GetTypeStatic());
+    EXPECT_EQ(processor->HashMembers(), 2);
 }
 
-TEST(ObjectProcessor, SimpleProcess)
+TEST_F(ObjectProcessorTest, SimpleProcess)
 {
-    // TODO: proper cast table initialization
-    InitCastTable();
+    IdPtr<ObjectProcessor> processor = factory_.CreateImpl(ObjectProcessor::GetTypeStatic());
 
-    MockIGame game;
-    ObjectFactory factory(&game);
-    factory.FinishWorldCreation();
-
-    IdPtr<GlobalObjectsHolder> globals = factory.CreateImpl(GlobalObjectsHolder::GetTypeStatic());
-    globals->game_tick = 1;
-
-    EXPECT_CALL(game, GetGlobals())
-        .WillRepeatedly(Return(globals));
-
-    EXPECT_CALL(game, GetFactory())
-        .WillRepeatedly(ReturnRef(factory));
-
-    IdPtr<ObjectProcessor> processor = factory.CreateImpl(ObjectProcessor::GetTypeStatic());
-
-    IdPtr<TestObject> object = factory.CreateImpl(TestObject::GetTypeStatic());
+    IdPtr<TestObject> object = factory_.CreateImpl(TestObject::GetTypeStatic());
     int value1 = 0;
     object->SetProcessCallback([&value1]() { ++value1; });
     object->SetFreq(1);
