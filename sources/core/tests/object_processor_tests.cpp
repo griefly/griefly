@@ -73,17 +73,29 @@ TEST_F(ObjectProcessorTest, SimpleProcess)
 
     object->SetFreq(0);
     processor->RunProcess();
+    EXPECT_EQ(value1, 2);
     EXPECT_EQ(processor->HashMembers(), 2);
+
+    object->SetFreq(1);
+    processor->Add(object.Id());
+    processor->RunProcess();
+    EXPECT_EQ(value1, 3);
+
+    factory_.DeleteLater(object.Id());
+    processor->RunProcess();
+    EXPECT_EQ(value1, 3);
 }
 
-TEST_F(ObjectProcessorTest, AddDuringProcess)
+TEST_F(ObjectProcessorTest, AddAndRemoveDuringProcess)
 {
     IdPtr<ObjectProcessor> processor = factory_.CreateImpl(ObjectProcessor::GetTypeStatic());
 
     IdPtr<TestObject> object1 = factory_.CreateImpl(TestObject::GetTypeStatic());
     IdPtr<TestObject> object2 = factory_.CreateImpl(TestObject::GetTypeStatic());
+    IdPtr<TestObject> object3 = factory_.CreateImpl(TestObject::GetTypeStatic());
     int value1 = 0;
     int value2 = 0;
+    int value3 = 0;
     object1->SetProcessCallback(
     [&]()
     {
@@ -98,16 +110,51 @@ TEST_F(ObjectProcessorTest, AddDuringProcess)
     {
         ++value2;
     });
+    object3->SetProcessCallback(
+    [&]()
+    {
+        ++value3;
+    });
 
     processor->RunProcess();
     EXPECT_EQ(value1, 1);
     EXPECT_EQ(value2, 0);
+    EXPECT_EQ(value3, 0);
 
     processor->RunProcess();
     EXPECT_EQ(value1, 2);
     EXPECT_EQ(value2, 1);
+    EXPECT_EQ(value3, 0);
 
     processor->RunProcess();
     EXPECT_EQ(value1, 3);
     EXPECT_EQ(value2, 2);
+    EXPECT_EQ(value3, 0);
+
+    object3->SetFreq(1);
+    processor->Add(object3.Id());
+
+    processor->RunProcess();
+    EXPECT_EQ(value1, 4);
+    EXPECT_EQ(value2, 3);
+    EXPECT_EQ(value3, 1);
+
+    object2->SetProcessCallback(
+    [&]()
+    {
+        ++value2;
+        object1->SetFreq(0);
+        object2->SetFreq(0);
+        object3->SetFreq(0);
+    });
+
+    processor->RunProcess();
+    EXPECT_EQ(value1, 5);
+    EXPECT_EQ(value2, 4);
+    EXPECT_EQ(value3, 1);
+
+    processor->RunProcess();
+    EXPECT_EQ(value1, 5);
+    EXPECT_EQ(value2, 4);
+    EXPECT_EQ(value3, 1);
 }
