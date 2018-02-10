@@ -114,17 +114,17 @@ target_include_directories(
     KVEngine PRIVATE
     "..")
 
-add_executable(KVEngineTests WIN32 ${HEADERS} ${TESTS})
-target_link_libraries(KVEngineTests KVEngine)
-target_include_directories(
-    KVEngineTests PRIVATE
-    "..")
-
 # Add Qt5 lib
 qt5_use_modules(KVEngine Core)
 
-# Add GTEST lib
+# Add tests target
 if(BUILD_TESTS)
+    add_executable(KVEngineTests WIN32 ${HEADERS} ${TESTS})
+    target_link_libraries(KVEngineTests KVEngine)
+    target_include_directories(
+        KVEngineTests PRIVATE
+        "..")
+
     target_include_directories(
         KVEngineTests PRIVATE
         "${gtest_SOURCE_DIR}/include"
@@ -172,8 +172,13 @@ endif()
 
 # Install rules
 
-install(TARGETS KVEngine KVEngineTests
+install(TARGETS KVEngine
         DESTINATION "${KV_INSTALL_PATH}")
+
+if(BUILD_TESTS)
+    install(TARGETS KVEngineTests
+            DESTINATION "${KV_INSTALL_PATH}")
+endif()
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/metadata.json
         DESTINATION "${KV_INSTALL_PATH}")
