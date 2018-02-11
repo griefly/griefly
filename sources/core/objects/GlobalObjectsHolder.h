@@ -10,6 +10,7 @@ class Map;
 class SynchronizedRandom;
 class Lobby;
 class PhysicsEngine;
+class ObjectProcessor;
 
 class GlobalObjectsHolder : public Object
 {
@@ -24,7 +25,8 @@ public:
     IdPtr<Map> KV_SAVEABLE(map);
     IdPtr<SynchronizedRandom> KV_SAVEABLE(random);
     IdPtr<Lobby> KV_SAVEABLE(lobby);
-    IdPtr<PhysicsEngine> KV_SAVEABLE(physics_engine_);
+    IdPtr<PhysicsEngine> KV_SAVEABLE(physics_engine);
+    IdPtr<ObjectProcessor> KV_SAVEABLE(processor);
 
     QMap<quint32, QPair<QString, int>> KV_SAVEABLE(musics_for_mobs);
     QMap<quint32, quint32> KV_SAVEABLE(players_table);

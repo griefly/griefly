@@ -20,6 +20,7 @@
 #include "objects/PhysicsEngine.h"
 #include "objects/Lobby.h"
 #include "objects/SpawnPoints.h"
+#include "objects/ObjectProcessor.h"
 
 #include "atmos/Atmos.h"
 #include "ObjectFactory.h"
@@ -131,7 +132,7 @@ void WorldImplementation::FinishTick()
     QElapsedTimer timer;
 
     timer.start();
-    GetGlobals()->physics_engine_->ProcessPhysics();
+    GetGlobals()->physics_engine->ProcessPhysics();
     physics_process_ns_ = timer.nsecsElapsed();
 
     ProcessHearers();
@@ -405,6 +406,11 @@ const ChatFrameInfo& WorldImplementation::GetChatFrameInfo() const
     return chat_frame_info_;
 }
 
+ObjectProcessorInterface& WorldImplementation::GetProcessor()
+{
+    return *global_objects_->processor;
+}
+
 IdPtr<GlobalObjectsHolder> WorldImplementation::GetGlobals() const
 {
     return global_objects_;
@@ -471,7 +477,8 @@ void WorldImplementation::PrepareToMapgen()
     global_objects_ = GetFactory().CreateImpl(kv::GlobalObjectsHolder::GetTypeStatic());
     global_objects_->map = GetFactory().CreateImpl(kv::Map::GetTypeStatic());
     global_objects_->random = GetFactory().CreateImpl(kv::SynchronizedRandom::GetTypeStatic());
-    global_objects_->physics_engine_ = GetFactory().CreateImpl(kv::PhysicsEngine::GetTypeStatic());
+    global_objects_->physics_engine = GetFactory().CreateImpl(kv::PhysicsEngine::GetTypeStatic());
+    global_objects_->processor = GetFactory().CreateImpl(kv::ObjectProcessor::GetTypeStatic());
 
     const quint32 seed = static_cast<quint32>(qrand());
     global_objects_->random->SetParams(seed, 0);

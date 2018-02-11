@@ -67,7 +67,7 @@ void Movable::ApplyForce(Vector force)
     }
     if (!IsNonZero(force_))
     {
-        GetGame().GetGlobals()->physics_engine_->Add(GetId());
+        GetGame().GetGlobals()->physics_engine->Add(GetId());
     }
 
     force_.x += force.x;

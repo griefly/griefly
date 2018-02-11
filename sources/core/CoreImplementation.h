@@ -39,6 +39,8 @@ public:
     virtual ChatFrameInfo& GetChatFrameInfo() override;
     virtual const ChatFrameInfo& GetChatFrameInfo() const override;
 
+    virtual ObjectProcessorInterface& GetProcessor() override;
+
     virtual IdPtr<kv::GlobalObjectsHolder> GetGlobals() const override;
     virtual void SetGlobals(quint32 globals) override;
 
