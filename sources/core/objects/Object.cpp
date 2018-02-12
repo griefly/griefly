@@ -58,7 +58,7 @@ void Object::SetFreq(int freq)
 
     if (how_often_ != 0)
     {
-        GetGame().GetFactory().AddProcessingItem(GetId());
+        GetGame().GetProcessor().Add(GetId());
     }
 }
 

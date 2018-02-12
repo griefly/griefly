@@ -112,7 +112,7 @@ void WorldImplementation::StartTick()
     QElapsedTimer timer;
 
     timer.start();
-    GetFactory().ForeachProcess();
+    global_objects_->processor->RunProcess();
     foreach_process_ns_ = timer.nsecsElapsed();
 
     timer.start();
