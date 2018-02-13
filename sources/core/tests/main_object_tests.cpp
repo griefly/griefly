@@ -63,10 +63,10 @@ TEST(MainObject, Save)
     }
     {
         MockIGame game;
-        MockIObjectFactory factory;
-        EXPECT_CALL(game, GetFactory())
-            .WillRepeatedly(ReturnRef(factory));
-        EXPECT_CALL(factory, AddProcessingItem(42))
+        MockObjectProcessor processor;
+        EXPECT_CALL(game, GetProcessor())
+            .WillRepeatedly(ReturnRef(processor));
+        EXPECT_CALL(processor, Add(42))
             .WillOnce(Return());
 
         Object object;
@@ -134,16 +134,16 @@ TEST(MainObject, SettersAndGettersAndCreateImpl)
     }
     {
         MockIGame game;
-        MockIObjectFactory factory;
-        EXPECT_CALL(game, GetFactory())
-            .WillRepeatedly(ReturnRef(factory));
+        MockObjectProcessor processor;
+        EXPECT_CALL(game, GetProcessor())
+            .WillRepeatedly(ReturnRef(processor));
 
         Object object;
         kv::internal::GetObjectId(&object) = 43;
         kv::internal::GetObjectGame(&object) = &game;
         ASSERT_EQ(object.GetFreq(), 0);
 
-        EXPECT_CALL(factory, AddProcessingItem(43));
+        EXPECT_CALL(processor, Add(43));
         object.SetFreq(46);
         ASSERT_EQ(object.GetFreq(), 46);
     }

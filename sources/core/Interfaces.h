@@ -70,8 +70,6 @@ public:
     virtual QVector<ObjectInfo>& GetIdTable() = 0;
     virtual const QVector<ObjectInfo>& GetIdTable() const = 0;
 
-    virtual void ForeachProcess() = 0;
-
     virtual quint32 Hash() const = 0;
 
     virtual void BeginWorldCreation() = 0;
@@ -83,8 +81,6 @@ public:
 
     virtual void DeleteLater(quint32 id) = 0;
     virtual void ProcessDeletion() = 0;
-
-    virtual void AddProcessingItem(quint32 item) = 0;
 
     virtual void Clear() = 0;
 

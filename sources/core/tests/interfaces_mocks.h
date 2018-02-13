@@ -42,7 +42,6 @@ class MockIObjectFactory : public ObjectFactoryInterface
 public:
     MOCK_METHOD0(GetIdTable, QVector<ObjectInfo>&());
     MOCK_CONST_METHOD0(GetIdTable, const QVector<ObjectInfo>&());
-    MOCK_METHOD0(ForeachProcess, void());
     MOCK_CONST_METHOD0(Hash, quint32());
     MOCK_METHOD0(BeginWorldCreation, void());
     MOCK_METHOD0(FinishWorldCreation, void());
@@ -51,7 +50,6 @@ public:
     MOCK_METHOD2(CreateVoid, kv::Object*(const QString& hash, quint32 id_new));
     MOCK_METHOD1(DeleteLater, void(quint32 id));
     MOCK_METHOD0(ProcessDeletion, void());
-    MOCK_METHOD1(AddProcessingItem, void(quint32 item));
     MOCK_METHOD0(Clear, void());
     MOCK_CONST_METHOD0(GetId, int());
     MOCK_METHOD1(SetId, void(int id));

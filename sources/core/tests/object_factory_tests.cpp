@@ -166,116 +166,6 @@ TEST(ObjectFactory, AfterWorldCreation)
     }
 }
 
-TEST(ObjectFactory, Process)
-{
-    MockIGame game;
-    ObjectFactory factory(&game);
-    factory.FinishWorldCreation();
-
-    {
-        quint32 id = factory.CreateImpl(TestObject::GetTypeStatic());
-        ASSERT_EQ(id, 1);
-        ASSERT_GT(factory.GetIdTable().size(), 2);
-        kv::Object* object = factory.GetIdTable()[1].object;
-        ASSERT_EQ(object->GetType(), TestObject::GetTypeStatic());
-
-        TestObject* test_object = static_cast<TestObject*>(object);
-        EXPECT_EQ(test_object->process_, 0);
-
-        IdPtr<GlobalObjectsHolder> globals = factory.CreateImpl(GlobalObjectsHolder::GetTypeStatic());
-        globals->game_tick = 1;
-
-        EXPECT_CALL(game, GetGlobals())
-            .WillRepeatedly(Return(globals));
-
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 0);
-
-        EXPECT_CALL(game, GetFactory())
-            .WillOnce(ReturnRef(factory));
-        test_object->SetFreq(1);
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 1);
-
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 2);
-
-        EXPECT_CALL(game, GetFactory())
-            .WillOnce(ReturnRef(factory));
-        test_object->SetFreq(10);
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 2);
-
-        globals->game_tick = 100;
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 3);
-
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 4);
-
-        test_object->SetFreq(0);
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 4);
-
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 4);
-
-        EXPECT_CALL(game, GetFactory())
-            .WillRepeatedly(ReturnRef(factory));
-        test_object->SetFreq(1);
-        factory.GetIdTable()[1].object = nullptr;
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object->process_, 4);
-        factory.GetIdTable()[1].object = object;
-        test_object->SetFreq(1);
-
-        quint32 id2 = factory.CreateImpl(TestObject::GetTypeStatic());
-        ASSERT_EQ(id2, 3);
-        ASSERT_GT(factory.GetIdTable().size(), 4);
-        kv::Object* object2 = factory.GetIdTable()[3].object;
-        ASSERT_EQ(object2->GetType(), TestObject::GetTypeStatic());
-
-        TestObject* test_object2 = static_cast<TestObject*>(object2);
-        EXPECT_EQ(test_object2->process_, 0);
-
-        test_object->SetProcessCallback(
-        [&object2]()
-        {
-            object2->SetFreq(0);
-        });
-        EXPECT_CALL(game, GetFactory())
-            .WillOnce(ReturnRef(factory));
-        object2->SetFreq(1);
-
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object2->process_, 0);
-
-        test_object->SetProcessCallback(
-        [&factory]()
-        {
-            factory.GetIdTable()[3].object = nullptr;
-        });
-        EXPECT_CALL(game, GetFactory())
-            .WillOnce(ReturnRef(factory));
-        object2->SetFreq(1);
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object2->process_, 0);
-        factory.GetIdTable()[3].object = object2;
-
-        object->SetFreq(0);
-        EXPECT_CALL(game, GetFactory())
-            .WillRepeatedly(ReturnRef(factory));
-        object2->SetFreq(1);
-        object2->SetFreq(0);
-        object2->SetFreq(1);
-        object2->SetFreq(1);
-        object2->SetFreq(20);
-        object2->SetFreq(0);
-        factory.ForeachProcess();
-        EXPECT_EQ(test_object2->process_, 0);
-    }
-}
-
 TEST(ObjectFactory, DeleteLater)
 {
     MockIGame game;
@@ -339,26 +229,11 @@ TEST(ObjectFactory, Hash)
 
         test_object = static_cast<TestObject*>(object);
     }
-    EXPECT_CALL(game, GetFactory())
-        .WillOnce(ReturnRef(factory));
-    test_object->SetFreq(1);
-    EXPECT_EQ(factory.Hash(), 5);
-
-    factory.ForeachProcess();
-    EXPECT_EQ(factory.Hash(), 8);
-
-    test_object->SetFreq(0);
-    EXPECT_EQ(factory.Hash(), 7);
-
-    EXPECT_CALL(game, GetFactory())
-        .WillOnce(ReturnRef(factory));
-    test_object->SetFreq(1);
-    factory.ForeachProcess();
-    EXPECT_EQ(factory.Hash(), 9);
+    EXPECT_EQ(factory.Hash(), 4);
 
     factory.DeleteLater(test_object->GetId());
     factory.ProcessDeletion();
-    EXPECT_EQ(factory.Hash(), 4);
+    EXPECT_EQ(factory.Hash(), 2);
 }
 
 TEST(ObjectFactory, Hearer)

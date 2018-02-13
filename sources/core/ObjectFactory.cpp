@@ -42,68 +42,6 @@ const QVector<ObjectInfo>& ObjectFactory::GetIdTable() const
     return objects_table_;
 }
 
-void ObjectFactory::UpdateProcessingItems()
-{   
-    if (!add_to_process_.size())
-    {
-        return;
-    }
-    for (auto it = add_to_process_.begin(); it != add_to_process_.end(); ++it)
-    {
-        if (!(*it).IsValid())
-        {
-            continue;
-        }
-        if ((*it)->GetFreq() == 0)
-        {
-            continue;
-        }
-        auto to_add = std::find(process_table_.begin(), process_table_.end(), *it);
-        if (to_add == process_table_.end())
-        {
-            process_table_.push_back(*it);
-        }
-    }
-    std::sort(process_table_.begin(), process_table_.end(),
-    [](IdPtr<kv::Object> item1, IdPtr<kv::Object> item2)
-    {
-        return item1.Id() < item2.Id();
-    });
-    add_to_process_.clear();
-}
-
-void ObjectFactory::ForeachProcess()
-{
-    // TODO: possible unsync or hash miscalculation issue -
-    // something can be added or removed from process list in the same tick after
-    // ForeachProcess()
-    UpdateProcessingItems();
-
-    const int game_tick = game_->GetGlobals()->game_tick;
-
-    const int CLEAR_TICK = 10;
-    if (game_tick % CLEAR_TICK == 1)
-    {
-        ClearProcessing();
-    }
-
-    quint32 table_size = process_table_.size();
-    for (quint32 i = 0; i < table_size; ++i)
-    {
-        if (!(   process_table_[i].IsValid()
-              && process_table_[i]->GetFreq()))
-        {
-            continue;
-        }
-        else if ((game_tick % process_table_[i]->GetFreq()) == 0)
-        {
-            process_table_[i]->Process();
-        }
-    }
-
-    ClearProcessing();
-}
-
 kv::Object* ObjectFactory::NewVoidObject(const QString& type)
 {
     auto creator = GetItemsCreators()->find(type);
@@ -140,9 +78,6 @@ void ObjectFactory::Clear()
     }
 
     ids_to_delete_.clear();
-    process_table_.clear();
-    add_to_process_.clear();
-    add_to_process_.clear();
 
     id_ = 1;
 }
@@ -248,45 +183,15 @@ void ObjectFactory::ProcessDeletion()
 quint32 ObjectFactory::Hash() const
 {
     unsigned int h = 0;
-    quint32 table_size = objects_table_.size();
-    for (quint32 i = 1; i < table_size; ++i)
+    int table_size = objects_table_.size();
+    for (int i = 1; i < table_size; ++i)
     {
         if (objects_table_[i].object != nullptr)
         {
+            // TODO (?): i to hash
             h += objects_table_[i].object->HashMembers();
         }
     }
 
-    int i = 1;
-    for (auto p = process_table_.begin(); p != process_table_.end(); ++p)
-    {
-        h += p->Id() * i;
-        i++;
-    }
-
     return h;
-}
-
-void ObjectFactory::AddProcessingItem(quint32 item)
-{
-    add_to_process_.push_back(item);
-}
-
-void ObjectFactory::ClearProcessing()
-{
-    std::vector<IdPtr<kv::Object>> remove_from_process;
-    quint32 table_size = process_table_.size();
-    for (quint32 i = 0; i < table_size; ++i)
-    {
-        if (!(   process_table_[i].IsValid()
-              && process_table_[i]->GetFreq()))
-        {
-            remove_from_process.push_back(process_table_[i]);
-        }
-    }
-
-    for (auto it = remove_from_process.begin(); it != remove_from_process.end(); ++it)
-    {
-        process_table_.erase(std::find(process_table_.begin(), process_table_.end(), *it));
-    }
 }
