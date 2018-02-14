@@ -52,10 +52,12 @@ TEST_F(ObjectProcessorTest, SimpleProcess)
 {
     IdPtr<ObjectProcessor> processor = factory_.CreateImpl(ObjectProcessor::GetTypeStatic());
 
+    EXPECT_CALL(game_, GetProcessor())
+        .WillRepeatedly(ReturnRef(*processor));
+
     IdPtr<TestObject> object = factory_.CreateImpl(TestObject::GetTypeStatic());
     int value1 = 0;
     object->SetProcessCallback([&value1]() { ++value1; });
-    object->SetFreq(1);
     processor->RunProcess();
     EXPECT_EQ(value1, 0);
 
@@ -65,6 +67,7 @@ TEST_F(ObjectProcessorTest, SimpleProcess)
     processor->Add(object.Id());
     EXPECT_EQ(processor->HashMembers(), 5);
 
+    object->SetFreq(1);
     processor->RunProcess();
     EXPECT_EQ(value1, 1);
     processor->RunProcess();
@@ -89,6 +92,9 @@ TEST_F(ObjectProcessorTest, SimpleProcess)
 TEST_F(ObjectProcessorTest, AddAndRemoveDuringProcess)
 {
     IdPtr<ObjectProcessor> processor = factory_.CreateImpl(ObjectProcessor::GetTypeStatic());
+
+    EXPECT_CALL(game_, GetProcessor())
+        .WillRepeatedly(ReturnRef(*processor));
 
     IdPtr<TestObject> object1 = factory_.CreateImpl(TestObject::GetTypeStatic());
     IdPtr<TestObject> object2 = factory_.CreateImpl(TestObject::GetTypeStatic());
