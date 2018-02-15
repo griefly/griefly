@@ -19,6 +19,12 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
     to_add_.push_back(movable);
 }
 
+Dir PhysicsEngine::ProcessForceTick(Vector* force, int* iteration, int friction)
+{
+    // TODO: Bresenham algo here
+    return Dir::NORTH;
+}
+
 void PhysicsEngine::ProcessPhysics()
 {
     const int CLEAR_TICK = 10;
