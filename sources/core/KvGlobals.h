@@ -43,10 +43,22 @@ struct Vector
     Vector() : Vector(0, 0, 0) { }
     Vector(int new_x, int new_y, int new_z)
         : x(new_x), y(new_y), z(new_z) { }
+    Vector& operator+=(const Vector& other)
+    {
+        x += other.x;
+        y += other.y;
+        z += other.z;
+        return *this;
+    }
     int x;
     int y;
     int z;
 };
+
+inline Vector operator+(const Vector& left, const Vector& right)
+{
+    return Vector(left.x + right.x, left.y + right.y, left.z + right.z);
+}
 
 inline FastDeserializer& operator>>(FastDeserializer& file, Vector& vdir)
 {
