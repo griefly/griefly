@@ -40,7 +40,7 @@ before_script:
   
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    ./make.sh -DBUILD_TESTS=ON -DBUILD_COVER=ON -DCMAKE_BUILD_TYPE=Debug;
+    ./make.sh -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug;
     cd exec;
     ./KVEngineTests;
     fi
