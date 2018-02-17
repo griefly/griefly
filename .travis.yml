@@ -23,7 +23,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew update;
     brew install gimme;
-    eval "$(gimme 1.6)";
+    eval "$(gimme 1.9)";
     brew install qt;
     brew install python3;
     virtualenv venv -p python3;
