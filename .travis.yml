@@ -15,7 +15,6 @@ services:
   - docker
 
 before_install:
-  - export CXX="g++-4.9"
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     docker pull kremius/griefly-build;
     fi
