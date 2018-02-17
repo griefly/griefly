@@ -19,6 +19,7 @@ Movable::Movable()
     force_.x = 0;
     force_.y = 0;
     force_.z = 0;
+    force_progress_ = 0;
 }
 
 bool Movable::TryMove(Dir direct)
@@ -44,19 +45,15 @@ bool Movable::TryMove(Dir direct)
 
 void Movable::ProcessForce()
 {
-    Dir step = VDirToDir(force_);
-
-    TryMove(step);
-
     if (!IsNonZero(force_))
     {
         return;
     }
 
-    Vector vstep = DirToVDir(step);
-    force_.x -= (vstep.x * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
-    force_.y -= (vstep.y * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
-    force_.z -= (vstep.z * friction::CombinedFriction(GetTurf())) / friction::BASE_FRICTION;
+    const Dir step = PhysicsEngine::ProcessForceTick(
+        &force_, &force_progress_, friction::CombinedFriction(GetTurf()), 1);
+
+    TryMove(step);
 }
 
 void Movable::ApplyForce(Vector force)

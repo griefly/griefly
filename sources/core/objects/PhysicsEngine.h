@@ -24,10 +24,10 @@ public:
     void ProcessPhysics();
 
     void Add(IdPtr<Movable> movable);
-private:
+
     static Dir ProcessForceTick(Vector* force, int* progress, int friction, int mass);
     static void ApplyForce(Vector* force, int* progress, const Vector& addition);
-
+private:
     void Clear();
 
     QVector<IdPtr<Movable>> KV_SAVEABLE(under_force_);

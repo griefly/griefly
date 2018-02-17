@@ -50,6 +50,20 @@ struct Vector
         z += other.z;
         return *this;
     }
+    Vector& operator*=(int integer)
+    {
+        x *= integer;
+        y *= integer;
+        z *= integer;
+        return *this;
+    }
+    Vector& operator-=(const Vector& other)
+    {
+        Vector temp = other;
+        temp *= -1;
+        operator+=(temp);
+        return *this;
+    }
     int x;
     int y;
     int z;
@@ -58,6 +72,25 @@ struct Vector
 inline Vector operator+(const Vector& left, const Vector& right)
 {
     return Vector(left.x + right.x, left.y + right.y, left.z + right.z);
+}
+
+inline Vector operator*(const Vector& left, const int& right)
+{
+    Vector retval = left;
+    retval *= right;
+    return retval;
+}
+
+inline Vector operator*(const int& left, const Vector& right)
+{
+    return right * left;
+}
+
+inline Vector operator-(const Vector& left, const Vector& right)
+{
+    Vector temp = right;
+    temp *= -1;
+    return left + temp;
 }
 
 inline FastDeserializer& operator>>(FastDeserializer& file, Vector& vdir)

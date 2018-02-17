@@ -21,13 +21,22 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
 
 Dir PhysicsEngine::ProcessForceTick(Vector* force, int* progress, int friction, int mass)
 {
-    // TODO: Bresenham algo here
-    return Dir::NORTH;
+    // TODO: a-la Bresenham algo here
+    Q_UNUSED(progress)
+    Q_UNUSED(mass)
+    const Dir retval = VDirToDir(*force);
+    if (friction)
+    {
+        *force -= DirToVDir(retval);
+    }
+    return retval;
 }
 
 void PhysicsEngine::ApplyForce(Vector* force, int* progress, const Vector& addition)
 {
     // TODO: a-la Bresenham algo here
+    Q_UNUSED(progress)
+    *force += addition;
 }
 
 void PhysicsEngine::ProcessPhysics()
