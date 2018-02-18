@@ -176,6 +176,11 @@ inline bool IsNonZero(const kv::Vector& vdir)
            || vdir.z;
 }
 
+inline bool IsZero(const kv::Vector& vector)
+{
+    return !IsNonZero(vector);
+}
+
 const kv::Vector VD_LEFT(-1, 0, 0); // west
 const kv::Vector VD_RIGHT(1, 0, 0); // east
 const kv::Vector VD_UP(0, -1, 0); // north
