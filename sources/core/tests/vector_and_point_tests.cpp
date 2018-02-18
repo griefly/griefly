@@ -116,3 +116,23 @@ TEST(Vector, OperatorMinusEq)
     EXPECT_EQ(vector.y, -3);
     EXPECT_EQ(vector.z, -19);
 }
+
+TEST(Vector, OperatorDivideEq)
+{
+    Vector vector(2, 6, -10);
+
+    vector /= 2;
+    EXPECT_EQ(vector.x, 1);
+    EXPECT_EQ(vector.y, 3);
+    EXPECT_EQ(vector.z, -5);
+
+    vector /= 3;
+    EXPECT_EQ(vector.x, 0);
+    EXPECT_EQ(vector.y, 1);
+    EXPECT_EQ(vector.z, -1);
+
+    vector /= -1;
+    EXPECT_EQ(vector.x, 0);
+    EXPECT_EQ(vector.y, -1);
+    EXPECT_EQ(vector.z, 1);
+}

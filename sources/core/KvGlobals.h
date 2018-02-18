@@ -57,6 +57,13 @@ struct Vector
         z *= integer;
         return *this;
     }
+    Vector& operator/=(int integer)
+    {
+        x /= integer;
+        y /= integer;
+        z /= integer;
+        return *this;
+    }
     Vector& operator-=(const Vector& other)
     {
         Vector temp = other;

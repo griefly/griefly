@@ -34,8 +34,11 @@ Dir PhysicsEngine::ProcessForceTick(Vector* force, int* progress, int friction, 
 
 void PhysicsEngine::ApplyForce(Vector* force, int* progress, const Vector& addition)
 {
-    // TODO: a-la Bresenham algo here
-    Q_UNUSED(progress)
+    const qint32 square = (force->x * force->x) + (force->y * force->y) + (force->z * force->z);
+
+    *force *= (square - *progress);
+    *force /= square;
+
     *force += addition;
 }
 
