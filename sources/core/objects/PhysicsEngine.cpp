@@ -36,10 +36,12 @@ void PhysicsEngine::ApplyForce(Vector* force, int* progress, const Vector& addit
 {
     const qint32 square = (force->x * force->x) + (force->y * force->y) + (force->z * force->z);
 
-    *force *= (square - *progress);
-    *force /= square;
+    *force *= (square * PROGRESS_MULTIPLIER - *progress);
+    *force /= square * PROGRESS_MULTIPLIER;
 
     *force += addition;
+
+    *progress = 0;
 }
 
 void PhysicsEngine::ProcessPhysics()

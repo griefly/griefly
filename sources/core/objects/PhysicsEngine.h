@@ -25,6 +25,7 @@ public:
 
     void Add(IdPtr<Movable> movable);
 
+    static const int PROGRESS_MULTIPLIER = 64;
     static Dir ProcessForceTick(Vector* force, int* progress, int friction, int mass);
     static void ApplyForce(Vector* force, int* progress, const Vector& addition);
 private:
