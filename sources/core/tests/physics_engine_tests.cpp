@@ -14,16 +14,16 @@ TEST(PhysicsEngine, ApplyForce)
     EXPECT_EQ(force.z, 0);
     EXPECT_EQ(progress, 0);
 
-    PhysicsEngine::ApplyForce(&force, &progress, {8, 9, 0});
-    EXPECT_EQ(force.x, 10);
-    EXPECT_EQ(force.y, 10);
+    PhysicsEngine::ApplyForce(&force, &progress, {98, 99, 0});
+    EXPECT_EQ(force.x, 100);
+    EXPECT_EQ(force.y, 100);
     EXPECT_EQ(force.z, 0);
     EXPECT_EQ(progress, 0);
 
-    progress = 50 * PhysicsEngine::PROGRESS_MULTIPLIER;
+    progress = 5000;
     PhysicsEngine::ApplyForce(&force, &progress, {1, 1, 1});
-    EXPECT_EQ(force.x, 8);
-    EXPECT_EQ(force.y, 8);
+    EXPECT_EQ(force.x, 76);
+    EXPECT_EQ(force.y, 76);
     EXPECT_EQ(force.z, 1);
     EXPECT_EQ(progress, 0);
 }

@@ -36,8 +36,8 @@ void PhysicsEngine::ApplyForce(Vector* force, int* progress, const Vector& addit
 {
     const qint32 square = (force->x * force->x) + (force->y * force->y) + (force->z * force->z);
 
-    *force *= (square * PROGRESS_MULTIPLIER - *progress);
-    *force /= square * PROGRESS_MULTIPLIER;
+    *force *= (square - *progress);
+    *force /= square;
 
     *force += addition;
 
@@ -46,8 +46,6 @@ void PhysicsEngine::ApplyForce(Vector* force, int* progress, const Vector& addit
 
 void PhysicsEngine::ProcessPhysics()
 {
-    const int CLEAR_TICK = 10;
-
     // TODO: better clearing algorithm #443
     Clear();
 
