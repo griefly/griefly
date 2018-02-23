@@ -233,6 +233,44 @@ TEST(FastSerializer, WriteType)
     }
 }
 
+TEST(FastSerializer, WriteInt64)
+{
+    FastSerializer serializer;
+
+    {
+        qint64 value = 0;
+        serializer << value;
+        ASSERT_EQ(serializer.GetIndex(), 9);
+        EXPECT_EQ(serializer.GetData()[0], '\x07');
+        for (int i = 1; i < 9; ++i)
+        {
+            EXPECT_EQ(serializer.GetData()[i], '\x00');
+        }
+    }
+    {
+        qint64 value = 1;
+        serializer << value;
+        ASSERT_EQ(serializer.GetIndex(), 18);
+        EXPECT_EQ(serializer.GetData()[9], '\x07');
+        EXPECT_EQ(serializer.GetData()[10], '\x01');
+        for (int i = 11; i < 18; ++i)
+        {
+            EXPECT_EQ(serializer.GetData()[i], '\x00');
+        }
+    }
+    {
+        qint64 value = static_cast<qint64>(0xFFFFFFFFFFFFFFFF);
+        serializer << value;
+        ASSERT_EQ(serializer.GetIndex(), 27);
+        EXPECT_EQ(serializer.GetData()[18], '\x07');
+        for (int i = 19; i < 27; ++i)
+        {
+            EXPECT_EQ(serializer.GetData()[i], '\xFF');
+        }
+    }
+}
+
+
 TEST(FastSerializer, WriteByteArray)
 {
     FastSerializer serializer;
