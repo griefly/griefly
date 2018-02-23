@@ -46,6 +46,7 @@ public:
     static const Type STRING_TYPE = 4;
     static const Type BYTEARRAY_TYPE = 5;
     static const Type TYPE_TYPE = 6;
+    static const Type INT64_TYPE = 7;
 
     static const int DEFAULT_SIZE = 32 * 1024 * 1024;
     FastSerializer(int size = DEFAULT_SIZE)
@@ -144,6 +145,21 @@ private:
         }
 
         index_ += value.size();
+    }
+    void Write(qint64 value)
+    {
+        const int TYPE_SIZE = sizeof(value);
+
+        Preallocate(TYPE_SIZE + 1);
+
+        data_[index_ + 0] = INT64_TYPE;
+
+        for (int i = 0; i < TYPE_SIZE; ++i)
+        {
+            data_[index_ + i + 1] = (value >> (i * 8)) & 0xFF;
+        }
+
+        index_ += (TYPE_SIZE + 1);
     }
     // Removed
     void Write(const char* value);
@@ -325,7 +341,25 @@ private:
 
         index_ += size;
     }
+    void Read(qint64* value)
+    {
+        const int TYPE_SIZE = sizeof(value);
 
+        EnsureType(FastSerializer::INT64_TYPE);
+        EnsureSize(TYPE_SIZE);
+
+        *value = 0;
+
+        quint64 helper;
+
+        for (int i = 0; i < TYPE_SIZE; ++i)
+        {
+            helper = static_cast<unsigned char>(data_[index_ + i]);
+            *value |= helper << (i * 8);
+        }
+
+        index_ += TYPE_SIZE;
+    }
     void EnsureSize(int size)
     {
         if ((size + index_) > size_)

@@ -41,7 +41,7 @@ namespace kv
 struct Vector
 {
     Vector() : Vector(0, 0, 0) { }
-    Vector(int new_x, int new_y, int new_z)
+    Vector(qint64 new_x, qint64 new_y, qint64 new_z)
         : x(new_x), y(new_y), z(new_z) { }
     Vector& operator+=(const Vector& other)
     {
@@ -71,9 +71,9 @@ struct Vector
         operator+=(temp);
         return *this;
     }
-    int x;
-    int y;
-    int z;
+    qint64 x;
+    qint64 y;
+    qint64 z;
 };
 
 inline Vector operator+(const Vector& left, const Vector& right)
