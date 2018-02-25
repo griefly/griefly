@@ -608,6 +608,47 @@ TEST(FastDeserializer, ReadByteArray)
     ASSERT_TRUE(deserializer.IsEnd());
 }
 
+TEST(FastDeserializer, ReadInt64)
+{
+    const char* const DATA =
+        "\x07\x00\x00\x00\x00\x00\x00\x00\x00"
+        "\x07\x01\x00\x00\x00\x00\x00\x00\x00"
+        "\x07\xFF\x00\x00\x00\x00\x00\x00\x00"
+        "\x07\x47\xA3\x0B\x7A\x00\x00\x10\x00"
+        "\x07\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"
+        "\x07\xFF\x1F\xFF\xFF\xFF\xFF\xFF\xFF";
+    const int DATA_SIZE = 54;
+
+    FastDeserializer deserializer(DATA, DATA_SIZE);
+    qint64 value;
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer >> value;
+    EXPECT_EQ(value, 0);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer >> value;
+    EXPECT_EQ(value, 1);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer >> value;
+    EXPECT_EQ(value, 255);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer >> value;
+    EXPECT_EQ(value, 4503601674953543);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer >> value;
+    EXPECT_EQ(value, -1);
+
+    ASSERT_FALSE(deserializer.IsEnd());
+    deserializer >> value;
+    EXPECT_EQ(value, -57345);
+
+    ASSERT_TRUE(deserializer.IsEnd());
+}
+
 TEST(FastSerializeDeserialize, VariousValues)
 {
     {
