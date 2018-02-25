@@ -72,7 +72,7 @@ void InitRealTypes()
 
     for class_data in metadata["classes"]:
         index = str(metadata["classes"].index(class_data) + 1)
-        file_content += "\t{class_data}::TYPE_INDEX = {index};\n".format(class_data=class_data["class"], index=index)
+        file_content += "    {class_data}::TYPE_INDEX = {index};\n".format(class_data=class_data["class"], index=index)
 
     file_content += """}
 
@@ -98,7 +98,7 @@ void InitSettersForTypes()
         class_data_loc = class_data
         while class_data_loc:
             for variable in class_data_loc["variables"]:
-                file_content += "\tGetSettersForTypes()[{}::GetTypeStatic()][\"{}\"] = &{}::_Z_KV_SETTERS{};\n" \
+                file_content += "    GetSettersForTypes()[{}::GetTypeStatic()][\"{}\"] = &{}::_Z_KV_SETTERS{};\n" \
                     .format(class_data["class"], variable, class_data_loc["class"], variable)
             class_data_loc = get_class_data(metadata, class_data_loc["base_class"])
     file_content += "}\n"
@@ -152,8 +152,8 @@ unsigned int {}::HashMembers()
     retval += {}::HashMembers();\n""".format(class_data["class"], class_data["base_class"])
 
         for variable in class_data["variables"]:
-            file_content += "\tretval += Hash({});\n".format(variable)
-        file_content += "\treturn retval;\n}\n"
+            file_content += "    retval += Hash({});\n".format(variable)
+        file_content += "    return retval;\n}\n"
     return file_content
 
 
