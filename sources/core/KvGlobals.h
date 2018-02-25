@@ -50,14 +50,14 @@ struct Vector
         z += other.z;
         return *this;
     }
-    Vector& operator*=(int integer)
+    Vector& operator*=(qint64 integer)
     {
         x *= integer;
         y *= integer;
         z *= integer;
         return *this;
     }
-    Vector& operator/=(int integer)
+    Vector& operator/=(qint64 integer)
     {
         x /= integer;
         y /= integer;
@@ -81,14 +81,14 @@ inline Vector operator+(const Vector& left, const Vector& right)
     return Vector(left.x + right.x, left.y + right.y, left.z + right.z);
 }
 
-inline Vector operator*(const Vector& left, const int& right)
+inline Vector operator*(const Vector& left, const qint64& right)
 {
     Vector retval = left;
     retval *= right;
     return retval;
 }
 
-inline Vector operator*(const int& left, const Vector& right)
+inline Vector operator*(const qint64& left, const Vector& right)
 {
     return right * left;
 }

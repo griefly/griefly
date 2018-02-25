@@ -19,7 +19,7 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
     to_add_.push_back(movable);
 }
 
-Dir PhysicsEngine::ProcessForceTick(Vector* force, int* progress, int friction, int mass)
+Dir PhysicsEngine::ProcessForceTick(Vector* force, qint64* progress, int friction, int mass)
 {
     // TODO: a-la Bresenham algo here
     Q_UNUSED(progress)
@@ -32,12 +32,15 @@ Dir PhysicsEngine::ProcessForceTick(Vector* force, int* progress, int friction, 
     return retval;
 }
 
-void PhysicsEngine::ApplyForce(Vector* force, int* progress, const Vector& addition)
+void PhysicsEngine::ApplyForce(Vector* force, qint64* progress, const Vector& addition)
 {
-    const qint32 square = (force->x * force->x) + (force->y * force->y) + (force->z * force->z);
+    const qint64 square = (force->x * force->x) + (force->y * force->y) + (force->z * force->z);
 
-    *force *= (square - *progress);
-    *force /= square;
+    if (square)
+    {
+        *force *= (square - *progress);
+        *force /= square;
+    }
 
     *force += addition;
 

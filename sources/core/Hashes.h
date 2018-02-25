@@ -47,4 +47,9 @@ inline unsigned int Hash(int value)
     return static_cast<unsigned int>(value);
 }
 
+inline unsigned int Hash(qint64 value)
+{
+    return static_cast<quint32>(value) + static_cast<quint32>(value >> 32);
+}
+
 }
