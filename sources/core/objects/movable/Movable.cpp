@@ -163,11 +163,11 @@ void Movable::Bump(IdPtr<Movable> item)
 {
     if (IdPtr<Mob> mob = item)
     {
-        ApplyForce(DirToVDir(mob->GetDir()));
+        ApplyForce(DirToVDir(mob->GetDir()) * PhysicsEngine::FORCE_UNIT);
     }
 }
 
 void Movable::BumpByGas(Dir dir, bool inside)
 {
-    ApplyForce(DirToVDir(dir));
+    ApplyForce(DirToVDir(dir) * PhysicsEngine::FORCE_UNIT);
 }

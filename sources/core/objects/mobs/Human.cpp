@@ -139,22 +139,22 @@ void Human::ProcessMessage(const Message& message)
         {
             if (IsKey(message.data, Input::MOVE_UP))
             {
-                ApplyForce(DirToVDir(Dir::NORTH));
+                ApplyForce(DirToVDir(Dir::NORTH) * PhysicsEngine::FORCE_UNIT);
                 return;
             }
             else if (IsKey(message.data, Input::MOVE_DOWN))
             {
-                ApplyForce(DirToVDir(Dir::SOUTH));
+                ApplyForce(DirToVDir(Dir::SOUTH) * PhysicsEngine::FORCE_UNIT);
                 return;
             }
             else if (IsKey(message.data, Input::MOVE_LEFT))
             {
-                ApplyForce(DirToVDir(Dir::WEST));
+                ApplyForce(DirToVDir(Dir::WEST) * PhysicsEngine::FORCE_UNIT);
                 return;
             }
             else if (IsKey(message.data, Input::MOVE_RIGHT))
             {
-                ApplyForce(DirToVDir(Dir::EAST));
+                ApplyForce(DirToVDir(Dir::EAST) * PhysicsEngine::FORCE_UNIT);
                 return;
             }
         }

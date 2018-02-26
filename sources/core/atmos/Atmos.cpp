@@ -8,6 +8,7 @@
 #include "objects/Tile.h"
 
 #include "AtmosGrid.h"
+#include "objects/PhysicsEngine.h"
 
 using namespace kv;
 
@@ -78,6 +79,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
         }
         if (IsNonZero(force))
         {
+            force *= PhysicsEngine::FORCE_UNIT;
             auto tile = map_->At(x, y, z);
             if (tile->GetInsideList().size())
             {
