@@ -52,6 +52,10 @@ void Movable::ProcessForce()
 
     const Dir step = PhysicsEngine::ProcessForceTick(
         &force_, &force_progress_, friction::CombinedFriction(GetTurf()), 1);
+    if (step == Dir::ALL)
+    {
+        return;
+    }
 
     TryMove(step);
 }

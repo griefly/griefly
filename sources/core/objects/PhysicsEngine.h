@@ -18,6 +18,8 @@ public:
     DECLARE_SAVEABLE(PhysicsEngine, Object);
     REGISTER_CLASS_AS(PhysicsEngine);
 
+    static const int FORCE_UNIT = 100;
+
     PhysicsEngine();
     void AfterWorldCreation() override;
 

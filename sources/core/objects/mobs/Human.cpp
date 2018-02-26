@@ -19,6 +19,7 @@
 #include "objects/turfs/SpaceTurf.h"
 #include "objects/movable/items/Drinks.h"
 #include "objects/movable/items/MedbayTools.h"
+#include "objects/PhysicsEngine.h"
 
 #include "ChatFrameInfo.h"
 
@@ -134,7 +135,7 @@ void Human::ProcessMessage(const Message& message)
         && !lying_
         && friction::CombinedFriction(GetTurf()))
     {
-        if (qAbs(force_.x) + qAbs(force_.y) + qAbs(force_.z) < 4)
+        if (qAbs(force_.x) + qAbs(force_.y) + qAbs(force_.z) < (4 * PhysicsEngine::FORCE_UNIT))
         {
             if (IsKey(message.data, Input::MOVE_UP))
             {
