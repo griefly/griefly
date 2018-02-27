@@ -25,27 +25,28 @@ Dir PhysicsEngine::ProcessForceTick(Vector* force, qint64* progress, int frictio
     Q_UNUSED(progress)
     Q_UNUSED(mass)
     const Dir retval = VDirToDir(*force);
-    if (friction)
+    if (friction == 0)
     {
-        // TODO: proper helper
-        if ((retval == Dir::NORTH) || (retval == Dir::SOUTH))
-        {
-            if (std::abs(force->y) < FORCE_UNIT)
-            {
-                return Dir::ALL;
-            }
-        }
-        else
-        {
-            if (std::abs(force->x) < FORCE_UNIT)
-            {
-                return Dir::ALL;
-            }
-        }
-        Vector temp = DirToVDir(retval);
-        temp *= FORCE_UNIT;
-        *force -= temp;
+        return retval;
     }
+    // TODO: proper helper
+    if ((retval == Dir::NORTH) || (retval == Dir::SOUTH))
+    {
+        if (std::abs(force->y) < FORCE_UNIT)
+        {
+            return Dir::ALL;
+        }
+    }
+    else
+    {
+        if (std::abs(force->x) < FORCE_UNIT)
+        {
+            return Dir::ALL;
+        }
+    }
+    Vector temp = DirToVDir(retval);
+    temp *= FORCE_UNIT;
+    *force -= temp;
     return retval;
 }
 
