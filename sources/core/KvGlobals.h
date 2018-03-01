@@ -40,8 +40,10 @@ namespace kv
 
 struct Vector
 {
+    using InnerType = qint64;
+
     Vector() : Vector(0, 0, 0) { }
-    Vector(qint64 new_x, qint64 new_y, qint64 new_z)
+    Vector(InnerType new_x, InnerType new_y, InnerType new_z)
         : x(new_x), y(new_y), z(new_z) { }
     Vector& operator+=(const Vector& other)
     {
@@ -50,14 +52,14 @@ struct Vector
         z += other.z;
         return *this;
     }
-    Vector& operator*=(qint64 integer)
+    Vector& operator*=(InnerType integer)
     {
         x *= integer;
         y *= integer;
         z *= integer;
         return *this;
     }
-    Vector& operator/=(qint64 integer)
+    Vector& operator/=(InnerType integer)
     {
         x /= integer;
         y /= integer;
@@ -71,9 +73,9 @@ struct Vector
         operator+=(temp);
         return *this;
     }
-    qint64 x;
-    qint64 y;
-    qint64 z;
+    InnerType x;
+    InnerType y;
+    InnerType z;
 };
 
 inline Vector operator+(const Vector& left, const Vector& right)
@@ -81,14 +83,14 @@ inline Vector operator+(const Vector& left, const Vector& right)
     return Vector(left.x + right.x, left.y + right.y, left.z + right.z);
 }
 
-inline Vector operator*(const Vector& left, const qint64& right)
+inline Vector operator*(const Vector& left, const Vector::InnerType& right)
 {
     Vector retval = left;
     retval *= right;
     return retval;
 }
 
-inline Vector operator*(const qint64& left, const Vector& right)
+inline Vector operator*(const Vector::InnerType& left, const Vector& right)
 {
     return right * left;
 }
