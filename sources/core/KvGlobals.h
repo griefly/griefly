@@ -40,7 +40,7 @@ namespace kv
 
 struct Vector
 {
-    using InnerType = qint64;
+    using InnerType = qint32;
 
     Vector() : Vector(0, 0, 0) { }
     Vector(InnerType new_x, InnerType new_y, InnerType new_z)

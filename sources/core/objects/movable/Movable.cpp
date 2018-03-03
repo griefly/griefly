@@ -16,10 +16,9 @@ Movable::Movable()
     tick_speed_ = 1;
     direction_ = Dir::SOUTH;
     anchored_ = false;
-    force_.x = 0;
-    force_.y = 0;
-    force_.z = 0;
+    force_ = {0, 0, 0};
     force_progress_ = 0;
+    max_force_progress_ = 0;
 }
 
 bool Movable::TryMove(Dir direct)
@@ -51,7 +50,7 @@ void Movable::ProcessForce()
     }
 
     const Dir step = PhysicsEngine::ProcessForceTick(
-        &force_, &force_progress_, friction::CombinedFriction(GetTurf()), 1);
+        &force_, &force_progress_, max_force_progress_, friction::CombinedFriction(GetTurf()), 1);
     if (step == Dir::ALL)
     {
         return;
@@ -71,7 +70,7 @@ void Movable::ApplyForce(Vector force)
         GetGame().GetGlobals()->physics_engine->Add(GetId());
     }
 
-    PhysicsEngine::ApplyForce(&force_, &force_progress_, force);
+    PhysicsEngine::ApplyForce(&force_, &force_progress_, &max_force_progress_, force);
 }
 
 bool Movable::CheckMoveTime()
