@@ -53,17 +53,14 @@ Dir PhysicsEngine::ProcessForceTick(Vector* force, qint32* progress, qint32* err
 
 void PhysicsEngine::ApplyForce(Vector* force, qint32* progress, qint32* error, const Vector& addition)
 {
-    *force += addition;
-
     const qint32 x = std::max(1, std::abs(force->x));
     const qint32 y = std::max(1, std::abs(force->y));
 
-    const qint32 ratio = std::max(x, y) / std::min(x, y);
+    const qint32 bigger_side = *progress;
+    const qint32 lesser_side = (*progress * std::min(x, y)) / std::max(x, y);
 
-    if (ratio < *progress)
-    {
-        *progress = *progress % ratio;
-    }
+    //TODO: finish it
+    *force += addition;
 }
 
 void PhysicsEngine::ProcessPhysics()
