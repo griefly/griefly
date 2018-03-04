@@ -19,12 +19,12 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
     to_add_.push_back(movable);
 }
 
-Dir PhysicsEngine::ProcessForceTick(Vector* force, qint32* progress, int max_progress, int friction, int mass)
+Dir PhysicsEngine::ProcessForceTick(Vector* force, qint32* progress, qint32* error, int friction, int mass)
 {
     // TODO: a-la Bresenham algo here
     Q_UNUSED(mass)
     Q_UNUSED(progress)
-    Q_UNUSED(max_progress)
+    Q_UNUSED(error)
     const Dir retval = VDirToDir(*force);
     if (friction == 0)
     {
@@ -51,7 +51,7 @@ Dir PhysicsEngine::ProcessForceTick(Vector* force, qint32* progress, int max_pro
     return retval;
 }
 
-void PhysicsEngine::ApplyForce(Vector* force, qint32* progress, qint32* max_progress, const Vector& addition)
+void PhysicsEngine::ApplyForce(Vector* force, qint32* progress, qint32* error, const Vector& addition)
 {
     *force += addition;
 
