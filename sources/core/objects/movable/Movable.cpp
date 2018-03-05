@@ -17,7 +17,8 @@ Movable::Movable()
     direction_ = Dir::SOUTH;
     anchored_ = false;
     force_ = {0, 0, 0};
-    force_progress_ = 0;
+    main_force_direction_ = Dir::SOUTH;
+    secondary_force_direction_ = Dir::SOUTH;
     force_error_ = 0;
 }
 
@@ -50,7 +51,12 @@ void Movable::ProcessForce()
     }
 
     const Dir step = PhysicsEngine::ProcessForceTick(
-        &force_, &force_progress_, &force_error_, friction::CombinedFriction(GetTurf()), 1);
+        &force_,
+        main_force_direction_,
+        secondary_force_direction_,
+        &force_error_,
+        friction::CombinedFriction(GetTurf()),
+        1);
     if (step == Dir::ALL)
     {
         return;
@@ -70,7 +76,12 @@ void Movable::ApplyForce(Vector force)
         GetGame().GetGlobals()->physics_engine->Add(GetId());
     }
 
-    PhysicsEngine::ApplyForce(&force_, &force_progress_, &force_error_, force);
+    PhysicsEngine::ApplyForce(
+        &force_,
+        &main_force_direction_,
+        &secondary_force_direction_,
+        &force_error_,
+        force);
 }
 
 bool Movable::CheckMoveTime()

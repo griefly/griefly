@@ -29,8 +29,8 @@ public:
 
     // TODO: base force vector value for movement on 1 tile should more than 1.
     // So force vectors values should be scaled up
-    static Dir ProcessForceTick(Vector* force, qint32* progress, qint32* error, int friction, int mass);
-    static void ApplyForce(Vector* force, qint32* progress, qint32* error, const Vector& addition);
+    static Dir ProcessForceTick(Vector* force, Dir main, Dir secondary, qint32* error, int friction, int mass);
+    static void ApplyForce(Vector* force, Dir* main, Dir* secondary, qint32* error, const Vector& addition);
 private:
     void Clear();
 

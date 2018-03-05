@@ -29,7 +29,8 @@ public:
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 public:
     Vector KV_SAVEABLE(force_);
-    qint32 KV_SAVEABLE(force_progress_);
+    Dir KV_SAVEABLE(main_force_direction_);
+    Dir KV_SAVEABLE(secondary_force_direction_);
     qint32 KV_SAVEABLE(force_error_);
     bool KV_SAVEABLE(anchored_);
     int KV_SAVEABLE(last_move_);
