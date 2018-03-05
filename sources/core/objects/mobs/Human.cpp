@@ -135,26 +135,26 @@ void Human::ProcessMessage(const Message& message)
         && !lying_
         && friction::CombinedFriction(GetTurf()))
     {
-        if (qAbs(force_.x) + qAbs(force_.y) + qAbs(force_.z) < (4 * PhysicsEngine::FORCE_UNIT))
+        if (qAbs(force_.x) + qAbs(force_.y) + qAbs(force_.z) < (4 * FORCE_UNIT))
         {
             if (IsKey(message.data, Input::MOVE_UP))
             {
-                ApplyForce(DirToVDir(Dir::NORTH) * PhysicsEngine::FORCE_UNIT);
+                ApplyForce(DirToVDir(Dir::NORTH) * FORCE_UNIT);
                 return;
             }
             else if (IsKey(message.data, Input::MOVE_DOWN))
             {
-                ApplyForce(DirToVDir(Dir::SOUTH) * PhysicsEngine::FORCE_UNIT);
+                ApplyForce(DirToVDir(Dir::SOUTH) * FORCE_UNIT);
                 return;
             }
             else if (IsKey(message.data, Input::MOVE_LEFT))
             {
-                ApplyForce(DirToVDir(Dir::WEST) * PhysicsEngine::FORCE_UNIT);
+                ApplyForce(DirToVDir(Dir::WEST) * FORCE_UNIT);
                 return;
             }
             else if (IsKey(message.data, Input::MOVE_RIGHT))
             {
-                ApplyForce(DirToVDir(Dir::EAST) * PhysicsEngine::FORCE_UNIT);
+                ApplyForce(DirToVDir(Dir::EAST) * FORCE_UNIT);
                 return;
             }
         }
