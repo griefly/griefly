@@ -20,6 +20,7 @@ Movable::Movable()
     main_force_direction_ = Dir::SOUTH;
     secondary_force_direction_ = Dir::SOUTH;
     force_error_ = 0;
+    force_error_per_main_ = 0;
 }
 
 bool Movable::TryMove(Dir direct)
@@ -55,6 +56,7 @@ void Movable::ProcessForce()
         main_force_direction_,
         secondary_force_direction_,
         &force_error_,
+        force_error_per_main_,
         friction::CombinedFriction(GetTurf()),
         1);
     if (step == Dir::ALL)
@@ -81,6 +83,7 @@ void Movable::ApplyForce(Vector force)
         &main_force_direction_,
         &secondary_force_direction_,
         &force_error_,
+        &force_error_per_main_,
         force);
 }
 

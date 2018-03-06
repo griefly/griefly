@@ -19,7 +19,16 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
     to_add_.push_back(movable);
 }
 
-Dir PhysicsEngine::ProcessForceTick(Vector* force, Dir main, Dir secondary, qint32* error, int friction, int mass)
+namespace
+{
+
+const qint32 ERROR_SCALE = 2048;
+
+}
+
+Dir PhysicsEngine::ProcessForceTick(
+    Vector* force, Dir main, Dir secondary, qint32* error,
+    qint32 error_per_main, int friction, int mass)
 {
     // TODO: a-la Bresenham algo here
     Q_UNUSED(mass)
@@ -51,7 +60,9 @@ Dir PhysicsEngine::ProcessForceTick(Vector* force, Dir main, Dir secondary, qint
     return retval;
 }
 
-void PhysicsEngine::ApplyForce(Vector* force, Dir* main, Dir* secondary, qint32* error, const Vector& addition)
+void PhysicsEngine::ApplyForce(
+    Vector* force, Dir* main, Dir* secondary, qint32* error,
+    qint32* error_per_main, const Vector& addition)
 {
     *force += addition;
 
@@ -69,6 +80,10 @@ void PhysicsEngine::ApplyForce(Vector* force, Dir* main, Dir* secondary, qint32*
     {
         *error = 0;
     }
+
+    const int x = std::abs(force->x);
+    const int y = std::abs(force->y);
+    *error_per_main = (std::min(x, y) * ERROR_SCALE) / std::max(x, y);
 }
 
 void PhysicsEngine::ProcessPhysics()

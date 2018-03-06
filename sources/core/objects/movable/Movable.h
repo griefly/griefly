@@ -32,6 +32,7 @@ public:
     Dir KV_SAVEABLE(main_force_direction_);
     Dir KV_SAVEABLE(secondary_force_direction_);
     qint32 KV_SAVEABLE(force_error_);
+    qint32 KV_SAVEABLE(force_error_per_main_);
     bool KV_SAVEABLE(anchored_);
     int KV_SAVEABLE(last_move_);
     int KV_SAVEABLE(tick_speed_);
