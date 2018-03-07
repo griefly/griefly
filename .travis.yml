@@ -26,9 +26,8 @@ install:
     eval "$(gimme 1.9)";
     brew install qt;
     brew install python3;
-    virtualenv venv -p python3;
-    source venv/bin/activate;
     brew info qt;
+    brew info python3;
     export PATH="/usr/local/opt/qt/bin:$PATH";
     export LDFLAGS="-L/usr/local/opt/qt/lib";
     export CPPFLAGS="-I/usr/local/opt/qt/include";
