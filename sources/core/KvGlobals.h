@@ -199,13 +199,33 @@ const kv::Vector VD_ZDOWN(0, 0, -1);
 
 namespace helpers
 {
-    const kv::Vector DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
+
+const kv::Vector DirToVDir[6] = {VD_LEFT, VD_RIGHT, VD_UP, VD_DOWN, VD_ZUP, VD_ZDOWN};
+
 }
 inline kv::Vector DirToVDir(Dir dir)
 {
     // TODO: switch
     int index = static_cast<int>(dir);
     return helpers::DirToVDir[index];
+}
+
+inline kv::Vector::InnerType ProjectionToDir(
+    const kv::Vector& vector, Dir dir)
+{
+    switch (dir)
+    {
+    case Dir::WEST:
+        return -1 * vector.x;
+    case Dir::EAST:
+        return vector.x;
+    case Dir::NORTH:
+        return -1 * vector.y;
+    case Dir::SOUTH:
+        return vector.y;
+    default:
+        return 0;
+    }
 }
 
 inline Dir VDirToDir(const kv::Vector& vdir)
@@ -241,6 +261,8 @@ inline Dir RevertDir(Dir dir)
 {
     switch (dir)
     {
+    case Dir::ALL:
+        return Dir::ALL;
     case Dir::NORTH:
         return Dir::SOUTH;
     case Dir::SOUTH:

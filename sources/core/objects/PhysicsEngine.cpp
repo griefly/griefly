@@ -30,30 +30,39 @@ Dir PhysicsEngine::ProcessForceTick(
     Vector* force, Dir main, Dir secondary, qint32* error,
     qint32 error_per_main, int friction, int mass)
 {
-    // TODO: a-la Bresenham algo here
+    // TODO: use mass
     Q_UNUSED(mass)
-    Q_UNUSED(main)
-    Q_UNUSED(error)
-    const Dir retval = VDirToDir(*force);
+
+    Dir retval = main;
+    Dir other = secondary;
+    if (*error >= ERROR_SCALE / 2)
+    {
+        std::swap(retval, other);
+        *error -= ERROR_SCALE;
+    }
+    else
+    {
+        *error += error_per_main;
+    }
+
+    if (ProjectionToDir(*force, retval) < FORCE_UNIT)
+    {
+        if (ProjectionToDir(*force, other) >= FORCE_UNIT)
+        {
+            std::swap(retval, other);
+        }
+        else
+        {
+            *error = 0;
+            return Dir::ALL;
+        }
+    }
+
     if (friction == 0)
     {
         return retval;
     }
-    // TODO: proper helper
-    if ((retval == Dir::NORTH) || (retval == Dir::SOUTH))
-    {
-        if (std::abs(force->y) < FORCE_UNIT)
-        {
-            return Dir::ALL;
-        }
-    }
-    else
-    {
-        if (std::abs(force->x) < FORCE_UNIT)
-        {
-            return Dir::ALL;
-        }
-    }
+
     Vector temp = DirToVDir(retval);
     temp *= FORCE_UNIT;
     *force -= temp;
@@ -83,7 +92,7 @@ void PhysicsEngine::ApplyForce(
 
     const int x = std::abs(force->x);
     const int y = std::abs(force->y);
-    *error_per_main = (std::min(x, y) * ERROR_SCALE) / std::max(x, y);
+    *error_per_main = (std::min(x, y) * ERROR_SCALE) / std::max(1, std::max(x, y));
 }
 
 void PhysicsEngine::ProcessPhysics()
