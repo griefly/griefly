@@ -19,9 +19,9 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
     to_add_.push_back(movable);
 }
 
-Dir PhysicsEngine::ProcessForceTick(
-    Vector* force, Dir main, Dir secondary, qint32* error,
-    qint32 error_per_main, int friction, int mass)
+std::pair<Dir, Vector> PhysicsEngine::ProcessForceTick(
+    const Vector& force, Dir main, Dir secondary,
+    qint32* error, qint32 error_per_main, int mass)
 {
     // TODO: use mass
     Q_UNUSED(mass)
@@ -38,28 +38,22 @@ Dir PhysicsEngine::ProcessForceTick(
         *error += error_per_main;
     }
 
-    if (ProjectionToDir(*force, retval) < FORCE_UNIT)
+    if (ProjectionToDir(force, retval) < FORCE_UNIT)
     {
         *error = 0;
-        if (ProjectionToDir(*force, other) >= FORCE_UNIT)
+        if (ProjectionToDir(force, other) >= FORCE_UNIT)
         {
             std::swap(retval, other);
         }
         else
         {
-            return Dir::ALL;
+            return {Dir::ALL, {0, 0, 0}};
         }
-    }
-
-    if (friction == 0)
-    {
-        return retval;
     }
 
     Vector temp = DirToVDir(retval);
     temp *= FORCE_UNIT;
-    *force -= temp;
-    return retval;
+    return {retval, temp};
 }
 
 void PhysicsEngine::ApplyForce(

@@ -81,9 +81,10 @@ TEST(PhysicsEngine, ProcessForceTick)
     qint32 error_per_main = ERROR_SCALE / 2;
 
     {
-        const Dir retval = PhysicsEngine::ProcessForceTick(
-            &force, main, secondary, &error, error_per_main, 1, 1);
-        EXPECT_EQ(retval, Dir::SOUTH);
+        const auto retval = PhysicsEngine::ProcessForceTick(
+            force, main, secondary, &error, error_per_main, 1);
+        EXPECT_EQ(retval.first, Dir::SOUTH);
+        force -= retval.second;
     }
     EXPECT_EQ(force.x, FORCE_UNIT);
     EXPECT_EQ(force.y, FORCE_UNIT);
@@ -91,9 +92,10 @@ TEST(PhysicsEngine, ProcessForceTick)
     EXPECT_EQ(error, ERROR_SCALE / 2);
 
     {
-        const Dir retval = PhysicsEngine::ProcessForceTick(
-            &force, main, secondary, &error, error_per_main, 1, 1);
-        EXPECT_EQ(retval, Dir::EAST);
+        const auto retval = PhysicsEngine::ProcessForceTick(
+            force, main, secondary, &error, error_per_main, 1);
+        EXPECT_EQ(retval.first, Dir::EAST);
+        force -= retval.second;
     }
     EXPECT_EQ(force.x, 0);
     EXPECT_EQ(force.y, FORCE_UNIT);
@@ -101,9 +103,10 @@ TEST(PhysicsEngine, ProcessForceTick)
     EXPECT_EQ(error, -1 * (ERROR_SCALE / 2));
 
     {
-        const Dir retval = PhysicsEngine::ProcessForceTick(
-            &force, main, secondary, &error, error_per_main, 1, 1);
-        EXPECT_EQ(retval, Dir::SOUTH);
+        const auto retval = PhysicsEngine::ProcessForceTick(
+            force, main, secondary, &error, error_per_main, 1);
+        EXPECT_EQ(retval.first, Dir::SOUTH);
+        force -= retval.second;
     }
     EXPECT_EQ(force.x, 0);
     EXPECT_EQ(force.y, 0);
@@ -111,9 +114,10 @@ TEST(PhysicsEngine, ProcessForceTick)
     EXPECT_EQ(error, 0);
 
     {
-        const Dir retval = PhysicsEngine::ProcessForceTick(
-            &force, main, secondary, &error, error_per_main, 1, 1);
-        EXPECT_EQ(retval, Dir::ALL);
+        const auto retval = PhysicsEngine::ProcessForceTick(
+            force, main, secondary, &error, error_per_main, 1);
+        EXPECT_EQ(retval.first, Dir::ALL);
+        force -= retval.second;
     }
     EXPECT_EQ(force.x, 0);
     EXPECT_EQ(force.y, 0);
@@ -122,51 +126,13 @@ TEST(PhysicsEngine, ProcessForceTick)
 
     force.x = FORCE_UNIT;
     {
-        const Dir retval = PhysicsEngine::ProcessForceTick(
-            &force, main, secondary, &error, error_per_main, 1, 1);
-        EXPECT_EQ(retval, Dir::EAST);
+        const auto retval = PhysicsEngine::ProcessForceTick(
+            force, main, secondary, &error, error_per_main, 1);
+        EXPECT_EQ(retval.first, Dir::EAST);
+        force -= retval.second;
     }
     EXPECT_EQ(force.x, 0);
     EXPECT_EQ(force.y, 0);
-    EXPECT_EQ(force.z, 0);
-    EXPECT_EQ(error, 0);
-}
-
-TEST(PhysicsEngine, ProcessForceTickZeroFriction)
-{
-    Vector force(-2 * FORCE_UNIT, -1 * FORCE_UNIT, 0);
-    Dir main = Dir::WEST;
-    Dir secondary = Dir::NORTH;
-    qint32 error = 0;
-    qint32 error_per_main = ERROR_SCALE / 2;
-
-    {
-        const Dir retval = PhysicsEngine::ProcessForceTick(
-            &force, main, secondary, &error, error_per_main, 0, 1);
-        EXPECT_EQ(retval, Dir::WEST);
-    }
-    EXPECT_EQ(force.x, -2 * FORCE_UNIT);
-    EXPECT_EQ(force.y, -1 * FORCE_UNIT);
-    EXPECT_EQ(force.z, 0);
-    EXPECT_EQ(error, ERROR_SCALE / 2);
-
-    {
-        const Dir retval = PhysicsEngine::ProcessForceTick(
-            &force, main, secondary, &error, error_per_main, 0, 1);
-        EXPECT_EQ(retval, Dir::NORTH);
-    }
-    EXPECT_EQ(force.x, -2 * FORCE_UNIT);
-    EXPECT_EQ(force.y, -1 * FORCE_UNIT);
-    EXPECT_EQ(force.z, 0);
-    EXPECT_EQ(error, -1 * (ERROR_SCALE / 2));
-
-    {
-        const Dir retval = PhysicsEngine::ProcessForceTick(
-            &force, main, secondary, &error, error_per_main, 0, 1);
-        EXPECT_EQ(retval, Dir::WEST);
-    }
-    EXPECT_EQ(force.x, -2 * FORCE_UNIT);
-    EXPECT_EQ(force.y, -1 * FORCE_UNIT);
     EXPECT_EQ(force.z, 0);
     EXPECT_EQ(error, 0);
 }

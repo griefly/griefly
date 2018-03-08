@@ -51,20 +51,24 @@ void Movable::ProcessForce()
         return;
     }
 
-    const Dir step = PhysicsEngine::ProcessForceTick(
-        &force_,
+    const std::pair<Dir, Vector> step = PhysicsEngine::ProcessForceTick(
+        force_,
         main_force_direction_,
         secondary_force_direction_,
         &force_error_,
         force_error_per_main_,
-        friction::CombinedFriction(GetTurf()),
         1);
-    if (step == Dir::ALL)
+    if (step.first == Dir::ALL)
     {
         return;
     }
 
-    TryMove(step);
+    TryMove(step.first);
+
+    if (friction::CombinedFriction(GetTurf()))
+    {
+        force_ -= step.second;
+    }
 }
 
 void Movable::ApplyForce(Vector force)
