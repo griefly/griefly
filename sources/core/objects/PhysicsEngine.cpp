@@ -19,13 +19,6 @@ void PhysicsEngine::Add(IdPtr<Movable> movable)
     to_add_.push_back(movable);
 }
 
-namespace
-{
-
-const qint32 ERROR_SCALE = 2048;
-
-}
-
 Dir PhysicsEngine::ProcessForceTick(
     Vector* force, Dir main, Dir secondary, qint32* error,
     qint32 error_per_main, int friction, int mass)

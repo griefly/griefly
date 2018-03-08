@@ -11,6 +11,7 @@ namespace kv
 {
 
 const int FORCE_UNIT = 100;
+const qint32 ERROR_SCALE = 2048;
 
 class Movable;
 
