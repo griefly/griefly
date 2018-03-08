@@ -99,7 +99,7 @@ void PhysicsEngine::ProcessPhysics()
         {
             continue;
         }
-        if (!IsNonZero((*movable)->force_))
+        if (!IsNonZero((*movable)->GetForce()))
         {
             continue;
         }
@@ -123,7 +123,7 @@ void PhysicsEngine::ProcessPhysics()
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
         if (   !(*movable)
-            || !IsNonZero((*movable)->force_))
+            || !IsNonZero((*movable)->GetForce()))
         {
             continue;
         }
@@ -137,7 +137,7 @@ void PhysicsEngine::Clear()
     for (auto movable = under_force_.begin(); movable != under_force_.end(); ++movable)
     {
         if (   !(*movable)
-            || !IsNonZero((*movable)->force_))
+            || !IsNonZero((*movable)->GetForce()))
         {
             to_remove.push_back(*movable);
         }

@@ -27,6 +27,8 @@ public:
     virtual void Represent(GrowingFrame* frame, IdPtr<Mob> mob) override;
     virtual void Bump(IdPtr<Movable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
+
+    const Vector& GetForce() const { return force_; }
 public:
     bool KV_SAVEABLE(anchored_);
     int KV_SAVEABLE(last_move_);
