@@ -40,13 +40,13 @@ Dir PhysicsEngine::ProcessForceTick(
 
     if (ProjectionToDir(*force, retval) < FORCE_UNIT)
     {
+        *error = 0;
         if (ProjectionToDir(*force, other) >= FORCE_UNIT)
         {
             std::swap(retval, other);
         }
         else
         {
-            *error = 0;
             return Dir::ALL;
         }
     }
