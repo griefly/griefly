@@ -63,7 +63,12 @@ void Movable::ProcessForce()
         return;
     }
 
-    TryMove(step.first);
+    if (!TryMove(step.first))
+    {
+        force_error_ = 0;
+        force_ = {0, 0, 0};
+        return;
+    }
 
     if (friction::CombinedFriction(GetTurf()))
     {
@@ -111,9 +116,7 @@ bool Movable::CheckPassable()
     if (!CanPass(owner->GetPassable(GetDir()), passable_level))
     {
         owner->Bump(GetId());
-        force_.x = 0;
-        force_.y = 0;
-        force_.z = 0;
+        force_ = {0, 0, 0};
         if (loc != passable::FULL)
         {
             SetPassable(GetDir(), loc);
