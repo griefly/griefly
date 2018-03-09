@@ -163,7 +163,8 @@ namespace atmos
         }
         file << atmos_holder.data_ptr_->energy;
         file << atmos_holder.data_ptr_->pressure;
-        file << atmos_holder.data_ptr_->volume;
+        const qint32 volume = atmos_holder.data_ptr_->volume;
+        file << volume;
         file << atmos_holder.data_ptr_->temperature;
 
         return file;
@@ -177,7 +178,9 @@ namespace atmos
         }
         file >> atmos_holder.data_ptr_->energy;
         file >> atmos_holder.data_ptr_->pressure;
-        file >> atmos_holder.data_ptr_->volume;
+        qint32 volume;
+        file >> volume;
+        atmos_holder.data_ptr_->volume = static_cast<qint16>(volume);
         file >> atmos_holder.data_ptr_->temperature;
 
         return file;

@@ -34,6 +34,7 @@ namespace atmos
             data_.pressure = 0;
             data_.temperature = 0;
             data_.volume = 1;
+            data_.fire = false;
             data_ptr_ = &data_;
         }
         void Connect(AtmosHolder* guest,
@@ -75,6 +76,7 @@ namespace atmos
         retval += atmos_holder.data_ptr_->pressure;
         retval += atmos_holder.data_ptr_->volume;
         retval += atmos_holder.data_ptr_->temperature;
+        retval += atmos_holder.data_ptr_->fire;
         return retval;
     }
 

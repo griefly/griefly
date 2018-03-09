@@ -44,8 +44,9 @@ namespace atmos
         int gases[GASES_NUM];
         int energy;
         int pressure;
-        int volume;
+        qint16 volume;
         int temperature;
+        bool fire;
     };
 
     inline void UpdateMacroParams(AtmosData* data)
