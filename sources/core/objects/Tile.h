@@ -28,7 +28,7 @@ public:
     virtual bool CanTouch(IdPtr<MapObject> item) const override;
     virtual bool Contains(IdPtr<MapObject> item) const override;
 
-    virtual void Bump(IdPtr<Movable> item) override;
+    virtual void Bump(const Vector& force, IdPtr<Movable> item) override;
     virtual void BumpByGas(Dir dir, bool inside = false) override;
 
     void SetPos(Position position)

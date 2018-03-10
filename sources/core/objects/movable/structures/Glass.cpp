@@ -34,7 +34,7 @@ void FlatGlass::AfterWorldCreation()
     SetPassable(GetDir(), passable::EMPTY);
 }
 
-void FlatGlass::Bump(IdPtr<Movable> item)
+void FlatGlass::Bump(const Vector& vector, IdPtr<Movable> item)
 {
     if (IdPtr<Mob> mob = item)
     {
@@ -46,11 +46,12 @@ void FlatGlass::Bump(IdPtr<Movable> item)
             }
 
             Rotate(item->GetDir());
+            return;
         }
-        Movable::Bump(item);
+        Movable::Bump(vector, item);
         return;
     }
-    Breakable::Bump(item);
+    Breakable::Bump(vector, item);
 }
 
 bool FlatGlass::Rotate(Dir dir)

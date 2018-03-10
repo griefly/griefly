@@ -43,7 +43,7 @@ public:
 
     void AddLayingTimer(int value);
   
-    virtual void Bump(IdPtr<Movable> item) override;
+    virtual void Bump(const Vector& force, IdPtr<Movable> item) override;
 
     virtual void AttackBy(IdPtr<Item> item) override;
 

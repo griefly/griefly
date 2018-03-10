@@ -25,14 +25,14 @@ void Breakable::AttackBy(IdPtr<Item> item)
     Hit(item->damage);
 }
 
-void Breakable::Bump(IdPtr<Movable> item)
+void Breakable::Bump(const Vector& vector, IdPtr<Movable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
         Hit(projectile->GetDamage());
         return;
     }
-    Movable::Bump(item);
+    Movable::Bump(vector, item);
 }
 
 void Breakable::SetHitPoints(int number)

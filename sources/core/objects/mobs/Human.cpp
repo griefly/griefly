@@ -534,7 +534,7 @@ void Human::CalculateVisible(QVector<Position>* visible_list) const
     }
 }
 
-void Human::Bump(IdPtr<Movable> item)
+void Human::Bump(const Vector& force, IdPtr<Movable> item)
 {
     if (IdPtr<Projectile> projectile = item)
     {
@@ -546,7 +546,7 @@ void Human::Bump(IdPtr<Movable> item)
         // TODO (?): sound
         return;
     }
-    Movable::Bump(item);
+    Movable::Bump(force, item);
 }
 
 void Human::RotationAction(IdPtr<MapObject> item)

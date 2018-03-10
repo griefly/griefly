@@ -51,7 +51,7 @@ bool Projectile::CheckHumanTile()
     auto tile = GetOwner();
     if (IdPtr<Human> human = tile->GetItem<Human>())
     {
-        human->Bump(GetId());
+        human->Bump(DirToVDir(GetDir()), GetId());
         Delete();
         return true;
     }

@@ -16,7 +16,7 @@ public:
     Closet();
 
     virtual void AttackBy(IdPtr<Item> item) override;
-    virtual void Bump(IdPtr<Movable> item) override;
+    virtual void Bump(const Vector& force, IdPtr<Movable> item) override;
 
     virtual bool Contains(IdPtr<MapObject> item) const override;
     virtual bool CanTouch(IdPtr<MapObject> item) const override;

@@ -60,7 +60,7 @@ void Closet::AttackBy(IdPtr<Item> item)
     }
 }
 
-void Closet::Bump(IdPtr<Movable> item)
+void Closet::Bump(const Vector& force, IdPtr<Movable> item)
 {
     if (Contains(item))
     {
@@ -70,7 +70,7 @@ void Closet::Bump(IdPtr<Movable> item)
         }
         return;
     }
-    Movable::Bump(item);
+    Movable::Bump(force, item);
 }
 
 IdPtr<MapObject> Closet::GetNeighbour(Dir direct) const

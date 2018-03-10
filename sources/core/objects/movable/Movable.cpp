@@ -115,7 +115,7 @@ bool Movable::CheckPassable()
     auto owner = GetOwner();
     if (!CanPass(owner->GetPassable(GetDir()), passable_level))
     {
-        owner->Bump(GetId());
+        owner->Bump(force_, GetId());
         force_ = {0, 0, 0};
         if (loc != passable::FULL)
         {
@@ -132,10 +132,8 @@ bool Movable::CheckPassable()
     if (   !CanPass(neighbour->GetPassable(Dir::ALL), passable_level)
         || !CanPass(neighbour->GetPassable(RevertDir(GetDir())), passable_level))
     {
-        neighbour->Bump(GetId());
-        force_.x = 0;
-        force_.y = 0;
-        force_.z = 0;
+        neighbour->Bump(force_, GetId());
+        force_ = {0, 0, 0};
         return false;
     }
     
@@ -179,11 +177,11 @@ void Movable::Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob)
     frame->Append(entity);
 }
 
-void Movable::Bump(IdPtr<Movable> item)
+void Movable::Bump(const Vector& force, IdPtr<Movable> item)
 {
     if (IdPtr<Mob> mob = item)
     {
-        ApplyForce(DirToVDir(mob->GetDir()) * FORCE_UNIT);
+        ApplyForce(force);
     }
 }
 

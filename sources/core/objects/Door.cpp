@@ -83,7 +83,7 @@ void Door::Process()
     }
 }
 
-void Door::Bump(IdPtr<Movable> item)
+void Door::Bump(const Vector& vector, IdPtr<Movable> item)
 {
     if (IdPtr<Mob> mob = item)
     {
@@ -270,7 +270,7 @@ void GlassDoor::Process()
     }
 }
 
-void GlassDoor::Bump(IdPtr<Movable> item)
+void GlassDoor::Bump(const Vector& vector, IdPtr<Movable> item)
 {
     if (IdPtr<Mob> mob = item)
     {

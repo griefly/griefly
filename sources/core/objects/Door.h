@@ -21,7 +21,7 @@ public:
     virtual void Open();
     virtual void Close();
     virtual void Process() override;
-    virtual void Bump(IdPtr<Movable> item) override;
+    virtual void Bump(const Vector& vector, IdPtr<Movable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
     bool IsState(State state) const { return state == door_state_; }
     void Weld();
@@ -87,9 +87,9 @@ public:
     virtual void Open();
     virtual void Close();
     virtual void Process() override;
-    virtual void Bump(IdPtr<Movable> item) override;
+    virtual void Bump(const Vector& vector, IdPtr<Movable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
-    bool IsState(STATE state) const { return state == door_state_; };
+    bool IsState(STATE state) const { return state == door_state_; }
 private:
     int KV_SAVEABLE(door_state_);
     quint32 KV_SAVEABLE(last_tick_);

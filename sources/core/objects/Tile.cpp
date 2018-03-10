@@ -204,36 +204,42 @@ bool CubeTile::Contains(IdPtr<MapObject> item) const
     return false;
 }
 
-void CubeTile::Bump(IdPtr<Movable> item)
+void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
 {
     if (GetTurf())
     {
-        GetTurf()->Bump(item);
+        GetTurf()->Bump(force, item);
     }
 
     if (item->GetOwner().Id() == GetId())
     {
         for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        {
             if (!CanPass((*it)->GetPassable(item->GetDir()), item->passable_level))
             {
-                (*it)->Bump(item);
+                (*it)->Bump(force, item);
                 return;
             }
+        }
         return;
     }
 
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    {
         if (!CanPass((*it)->GetPassable(RevertDir(item->GetDir())), item->passable_level))
         {
-            (*it)->Bump(item);
+            (*it)->Bump(force, item);
             return;
         }
+    }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    {
         if (!CanPass((*it)->GetPassable(Dir::ALL), item->passable_level))
         {
-            (*it)->Bump(item);
+            (*it)->Bump(force, item);
             return;
         }
+    }
 }
 
 void CubeTile::BumpByGas(Dir dir, bool inside)

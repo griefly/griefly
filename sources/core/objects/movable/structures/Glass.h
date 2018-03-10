@@ -14,7 +14,7 @@ public:
 
     virtual void AfterWorldCreation() override;
 
-    virtual void Bump(IdPtr<Movable> item) override;
+    virtual void Bump(const Vector& vector, IdPtr<Movable> item) override;
     virtual bool Rotate(Dir dir) override;
     virtual void Break() override;
     virtual void PlayOnHitSound() override;
