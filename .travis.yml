@@ -39,7 +39,7 @@ before_script:
   
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    ./make.sh -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug;
+    ./make.sh -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug -DPYTHON_EXECUTABLE:FILEPATH=/usr/local/bin/python3;
     cd exec;
     ./KVEngineTests;
     fi
