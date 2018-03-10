@@ -14,6 +14,11 @@ Weldingtool::Weldingtool()
 
 void Weldingtool::Process()
 {
+    if (atmos::AtmosHolder* holder = GetRoot()->GetAtmosHolder())
+    {
+        holder->Ignite();
+    }
+
     --fuel_;
     if (fuel_ <= 0)
     {
@@ -26,18 +31,26 @@ int Weldingtool::AddFuel(int amount)
 {
     fuel_ += amount;
     if (fuel_ < 0)
+    {
         fuel_ = 0;
+    }
     if (fuel_ > 50)
+    {
         fuel_ = 50;
+    }
     return fuel_;
 }
 
 void Weldingtool::TurnOn()
 {
     if (Working())
+    {
         return;
+    }
     if (fuel_ <= 0)
+    {
         return;
+    }
 
     on_ = true;
     SetState("welder1");
@@ -47,7 +60,9 @@ void Weldingtool::TurnOn()
 void Weldingtool::TurnOff()
 {
     if (!Working())
+    {
         return;
+    }
     
     on_ = false;
     SetState("welder");
@@ -57,7 +72,11 @@ void Weldingtool::TurnOff()
 void Weldingtool::AttackBy(IdPtr<Item> item)
 {
     if (Working())
+    {
         TurnOff();
+    }
     else
+    {
         TurnOn();
+    }
 }

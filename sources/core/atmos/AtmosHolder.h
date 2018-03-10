@@ -53,6 +53,7 @@ namespace atmos
 
         void Truncate();
 
+        void Ignite();
         void UpdateMacroParams();
         void SetAtmosData(AtmosData* data)
         {

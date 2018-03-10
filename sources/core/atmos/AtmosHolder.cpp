@@ -147,6 +147,11 @@ namespace atmos
         UpdateMacroParams();
     }
 
+    void AtmosHolder::Ignite()
+    {
+        data_ptr_->fire = true;
+    }
+
     void AddDefaultValues(AtmosHolder *holder)
     {
         holder->AddGase(NYTROGEN, 750);

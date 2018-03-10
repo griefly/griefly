@@ -241,6 +241,7 @@ void AtmosGrid::Finalize()
             cell.data.energy /= 5;
         }
 
+        ProccesBurning(&cell.data);
         UpdateMacroParams(&cell.data);
     }
 }

@@ -75,8 +75,8 @@ namespace atmos
         data->gases[PLASMA] -= burn;
         data->gases[CO2] += burn;
 
-        const int ENERGY_MULTIPLIER = 2;
-        data->energy = burn * ENERGY_MULTIPLIER;
+        const int ENERGY_MULTIPLIER = 4;
+        data->energy += burn * ENERGY_MULTIPLIER;
     }
 
     inline void UpdateMacroParams(AtmosData* data)
