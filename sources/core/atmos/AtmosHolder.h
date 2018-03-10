@@ -54,6 +54,8 @@ namespace atmos
         void Truncate();
 
         void Ignite();
+        bool IsBurning() const { return data_ptr_->fire; }
+
         void UpdateMacroParams();
         void SetAtmosData(AtmosData* data)
         {

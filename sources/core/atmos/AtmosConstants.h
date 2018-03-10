@@ -39,6 +39,8 @@ namespace atmos
 
     const int ENERGY_CONST = 100;
 
+    const int O2_MULTIPLIER = 2;
+
     struct AtmosData
     {
         int gases[GASES_NUM];
@@ -58,8 +60,6 @@ namespace atmos
         const int oxygen = data->gases[OXYGEN];
         const int plasma = data->gases[PLASMA];
 
-        const int O2_MULTIPLIER = 2;
-
         const int max_burn = std::min(oxygen / O2_MULTIPLIER, plasma);
 
         if (max_burn == 0)
@@ -67,8 +67,8 @@ namespace atmos
             data->fire = false;
             return;
         }
-        const int MIN_MAX_BURN = 20;
-        const int BURN_SCALE = 4;
+        const int MIN_MAX_BURN = 1;
+        const int BURN_SCALE = 32;
         const int burn = std::min(max_burn, std::max(MIN_MAX_BURN, max_burn / BURN_SCALE));
 
         data->gases[OXYGEN] -= burn * O2_MULTIPLIER;

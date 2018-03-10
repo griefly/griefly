@@ -21,9 +21,52 @@ void Turf::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
     if (IdPtr<CubeTile> tile = GetOwner())
     {
         atmos::AtmosHolder* holder = tile->GetAtmosHolder();
-        int plasma = holder->GetGase(atmos::PLASMA);
+        const int plasma = holder->GetGase(atmos::PLASMA);
+        const int oxygen = holder->GetGase(atmos::OXYGEN);
         const int VISIBILITY_THRESHOLD = 5;
-        if (plasma > VISIBILITY_THRESHOLD)
+        if (holder->IsBurning() && plasma && oxygen)
+        {
+            const int intensity = std::min(plasma, oxygen / atmos::O2_MULTIPLIER);
+
+            FrameData::Entity entity;
+            entity.id = frame->GetUniqueIdForNewFrame(GetId(), 2);
+
+            entity.click_id = 0;
+            entity.pos_x = GetPosition().x;
+            entity.pos_y = GetPosition().y;
+            entity.vlevel = 3;
+            entity.view.base_frameset.sprite_name = "icons/fire.dmi";
+            if (intensity > 100)
+            {
+                entity.view.base_frameset.state = "3";
+            }
+            else if (intensity > 50)
+            {
+                entity.view.base_frameset.state = "2";
+            }
+            else
+            {
+                entity.view.base_frameset.state = "1";
+            }
+            entity.view.transparency = MAX_TRANSPARENCY;
+            switch (GetId() % 4)
+            {
+            case 0:
+                entity.dir = Dir::SOUTH;
+                break;
+            case 1:
+                entity.dir = Dir::NORTH;
+                break;
+            case 2:
+                entity.dir = Dir::WEST;
+                break;
+            case 3:
+                entity.dir = Dir::EAST;
+                break;
+            }
+            frame->Append(entity);
+        }
+        else if (plasma > VISIBILITY_THRESHOLD)
         {
             FrameData::Entity entity;
             entity.id = frame->GetUniqueIdForNewFrame(GetId(), 1);
