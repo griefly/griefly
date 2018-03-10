@@ -20,6 +20,8 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
     }
     int energy_sum = 0;
 
+    bool fire = false;
+
     for (int dir = 0; dir < atmos::DIRS_SIZE + 1; ++dir)
     {
         if (AtmosGrid::Cell* nearby = near_cells[dir])
@@ -29,9 +31,12 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
                 gases_sums[i] += nearby->data.gases[i];
             }
             energy_sum += nearby->data.energy;
+            fire = fire || nearby->data.fire;
             ++near_size;
         }
     }
+
+    fire = fire && gases_sums[PLASMA] && gases_sums[OXYGEN];
 
     int gases_average[GASES_NUM];
     int gases_remains[GASES_NUM];
@@ -58,6 +63,7 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
                 nearby.data.gases[i] = gases_average[i];
             }
             nearby.data.energy = energy_average;
+            nearby.data.fire = fire;
         }
     }
 
@@ -66,6 +72,7 @@ inline void ProcessFiveCells(AtmosGrid::Cell* near_cells[])
         center.data.gases[i] = gases_average[i] + gases_remains[i];
     }
     center.data.energy = energy_average + energy_remains;
+    center.data.fire = fire;
 }
 
 inline AtmosGrid::Cell& GetNearInGroup(AtmosGrid::Cell* current, Dir dir)
