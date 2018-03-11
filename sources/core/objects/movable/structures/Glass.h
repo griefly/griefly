@@ -14,6 +14,8 @@ public:
 
     virtual void AfterWorldCreation() override;
 
+    virtual void ApplyForce(Vector force) override;
+
     virtual void Bump(const Vector& vector, IdPtr<Movable> item) override;
     virtual bool Rotate(Dir dir) override;
     virtual void Break() override;
