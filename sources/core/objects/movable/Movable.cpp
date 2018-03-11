@@ -185,7 +185,7 @@ void Movable::Bump(const Vector& force, IdPtr<Movable> item)
     }
 }
 
-void Movable::BumpByGas(Dir dir, bool inside)
+void Movable::BumpByGas(const Vector& force, bool inside)
 {
-    ApplyForce(DirToVDir(dir) * FORCE_UNIT);
+    ApplyForce(force);
 }

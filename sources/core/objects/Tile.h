@@ -29,7 +29,7 @@ public:
     virtual bool Contains(IdPtr<MapObject> item) const override;
 
     virtual void Bump(const Vector& force, IdPtr<Movable> item) override;
-    virtual void BumpByGas(Dir dir, bool inside = false) override;
+    virtual void BumpByGas(const Vector& force, bool inside = false) override;
 
     void SetPos(Position position)
     {

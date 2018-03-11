@@ -242,34 +242,42 @@ void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
     }
 }
 
-void CubeTile::BumpByGas(Dir dir, bool inside)
+void CubeTile::BumpByGas(const Vector& force, bool inside)
 {
     if (GetTurf())
-        GetTurf()->BumpByGas(dir);
+    {
+        GetTurf()->BumpByGas(force);
+    }
 
     if (inside)
     {
         for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-            if (!CanPass((*it)->GetPassable(dir), passable::AIR))
+        {
+            if (!CanPass((*it)->GetPassable(VDirToDir(force)), passable::AIR))
             {
-                (*it)->BumpByGas(dir);
+                (*it)->BumpByGas(force);
                 return;
             }
+        }
         return;
     }
 
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
-        if (!CanPass((*it)->GetPassable(RevertDir(dir)), passable::AIR))
+    {
+        if (!CanPass((*it)->GetPassable(RevertDir(VDirToDir(force))), passable::AIR))
         {
-            (*it)->BumpByGas(dir);
+            (*it)->BumpByGas(force);
             return;
         }
+    }
     for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    {
         if (!CanPass((*it)->GetPassable(Dir::ALL), passable::AIR))
         {
-            (*it)->BumpByGas(dir);
+            (*it)->BumpByGas(force);
             return;
         }
+    }
 }
 
 bool CubeTile::AddObject(IdPtr<MapObject> item_raw)

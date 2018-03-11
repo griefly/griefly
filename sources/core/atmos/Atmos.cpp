@@ -118,6 +118,8 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
         return;
     }
 
+    const int PRESSURE_PER_FORCE = 1500;
+
     auto tile = map_->At(x, y, z);
     for (int dir = 0; dir < atmos::DIRS_SIZE; ++dir)
     {
@@ -127,8 +129,10 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
         {
             if (!cell.IsPassable(atmos::DIRS[dir]))
             {
-                Dir bump_dir = atmos::INDEXES_TO_DIRS[dir];
-                tile->BumpByGas(bump_dir, true);
+                const Dir bump_dir = atmos::INDEXES_TO_DIRS[dir];
+                int force = (cell.data.pressure - nearby.data.pressure) / PRESSURE_PER_FORCE;
+                force = std::max(1, force) * FORCE_UNIT;
+                tile->BumpByGas(force * DirToVDir(bump_dir), true);
                 continue;
             }
         }
@@ -139,9 +143,11 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
             {
                 if (!cell.IsPassable(atmos::DIRS[dir]))
                 {
-                    int revert_dir = atmos::REVERT_DIRS_INDEXES[dir];
-                    Dir bump_dir = atmos::INDEXES_TO_DIRS[revert_dir];
-                    tile->BumpByGas(bump_dir, true);
+                    const int revert_dir = atmos::REVERT_DIRS_INDEXES[dir];
+                    const Dir bump_dir = atmos::INDEXES_TO_DIRS[revert_dir];
+                    int force = (cell.data.pressure - nearby.data.pressure) / PRESSURE_PER_FORCE;
+                    force = std::max(1, force) * FORCE_UNIT;
+                    tile->BumpByGas(force * DirToVDir(bump_dir), false);
                     continue;
                 }
             }

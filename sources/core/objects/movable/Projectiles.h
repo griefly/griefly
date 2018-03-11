@@ -17,7 +17,7 @@ public:
 
     void MakeMovementPattern(Vector target, Dir facing);
     virtual void Process() override;
-    virtual void BumpByGas(Dir dir, bool inside = false) override {}
+    virtual void BumpByGas(const Vector& vector, bool inside = false) override { }
     virtual void AfterWorldCreation() override;
     virtual void ProcessForce() override {}
     void MakeMovementLoops(int d1_number, int d2_number, Dir d1, Dir d2);

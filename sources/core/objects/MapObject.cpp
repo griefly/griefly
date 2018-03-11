@@ -44,7 +44,7 @@ void MapObject::Bump(const Vector& force, IdPtr<Movable> item)
    // nothing
 }
 
-void MapObject::BumpByGas(Dir dir, bool inside)
+void MapObject::BumpByGas(const Vector& force, bool inside)
 {
    // nothing
 }

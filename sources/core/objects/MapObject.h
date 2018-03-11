@@ -112,7 +112,7 @@ public:
     }
 
     virtual void Bump(const Vector& force, IdPtr<Movable> item);
-    virtual void BumpByGas(Dir dir, bool inside = false);
+    virtual void BumpByGas(const Vector& force, bool inside = false);
 
     virtual atmos::AtmosHolder* GetAtmosHolder() { return nullptr; }
 

@@ -26,7 +26,7 @@ public:
 
     virtual void Represent(GrowingFrame* frame, IdPtr<Mob> mob) override;
     virtual void Bump(const Vector& force, IdPtr<Movable> item) override;
-    virtual void BumpByGas(Dir dir, bool inside = false) override;
+    virtual void BumpByGas(const Vector& force, bool inside = false) override;
 
     const Vector& GetForce() const { return force_; }
 public:
