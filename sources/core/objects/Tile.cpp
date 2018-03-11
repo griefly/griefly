@@ -194,9 +194,9 @@ void CubeTile::MoveToDir(Dir dir, Position* position) const
 
 bool CubeTile::Contains(IdPtr<MapObject> item) const
 {
-    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    for (auto& object : inside_list_)
     {
-        if (it->Id() == item.Id())
+        if (object.Id() == item.Id())
         {
             return true;
         }
@@ -213,30 +213,30 @@ void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
 
     if (item->GetOwner().Id() == GetId())
     {
-        for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        for (auto& object : inside_list_)
         {
-            if (!CanPass((*it)->GetPassable(item->GetDir()), item->passable_level))
+            if (!CanPass(object->GetPassable(item->GetDir()), item->passable_level))
             {
-                (*it)->Bump(force, item);
+                object->Bump(force, item);
                 return;
             }
         }
         return;
     }
 
-    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    for (auto& object : inside_list_)
     {
-        if (!CanPass((*it)->GetPassable(RevertDir(item->GetDir())), item->passable_level))
+        if (!CanPass(object->GetPassable(RevertDir(item->GetDir())), item->passable_level))
         {
-            (*it)->Bump(force, item);
+            object->Bump(force, item);
             return;
         }
     }
-    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    for (auto& object : inside_list_)
     {
-        if (!CanPass((*it)->GetPassable(Dir::ALL), item->passable_level))
+        if (!CanPass(object->GetPassable(Dir::ALL), item->passable_level))
         {
-            (*it)->Bump(force, item);
+            object->Bump(force, item);
             return;
         }
     }
@@ -251,30 +251,30 @@ void CubeTile::BumpByGas(const Vector& force, bool inside)
 
     if (inside)
     {
-        for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+        for (auto& object : inside_list_)
         {
-            if (!CanPass((*it)->GetPassable(VDirToDir(force)), passable::AIR))
+            if (!CanPass(object->GetPassable(VDirToDir(force)), passable::AIR))
             {
-                (*it)->BumpByGas(force);
+                object->BumpByGas(force);
                 return;
             }
         }
         return;
     }
 
-    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    for (auto& object : inside_list_)
     {
-        if (!CanPass((*it)->GetPassable(RevertDir(VDirToDir(force))), passable::AIR))
+        if (!CanPass(object->GetPassable(RevertDir(VDirToDir(force))), passable::AIR))
         {
-            (*it)->BumpByGas(force);
+            object->BumpByGas(force);
             return;
         }
     }
-    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    for (auto& object : inside_list_)
     {
-        if (!CanPass((*it)->GetPassable(Dir::ALL), passable::AIR))
+        if (!CanPass(object->GetPassable(Dir::ALL), passable::AIR))
         {
-            (*it)->BumpByGas(force);
+            object->BumpByGas(force);
             return;
         }
     }
@@ -394,9 +394,9 @@ bool CubeTile::IsTransparent() const
     {
         return false;
     }
-    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    for (auto& object : inside_list_)
     {
-        if (!(*it)->IsTransparent())
+        if (!object->IsTransparent())
         {
             return false;
         }
