@@ -16,6 +16,8 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     void SetOpen(bool o);
 
+    virtual void ApplyFire(int intensity) override;
+
     bool KV_SAVEABLE(bloody);
 protected:
     bool KV_SAVEABLE(open_);

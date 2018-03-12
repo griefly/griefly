@@ -77,6 +77,12 @@ void Floor::SetOpen(bool o)
     //qDebug() << "End setopen";
 }
 
+void Floor::ApplyFire(int intensity)
+{
+    Q_UNUSED(intensity);
+    // TODO:
+}
+
 Plating::Plating()
 {
     open_ = true;
