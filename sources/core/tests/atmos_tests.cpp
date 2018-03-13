@@ -32,7 +32,7 @@ TEST_F(AtmosDeathTest, ProcessMoveWithoutLoadGrid)
 {
     ASSERT_DEATH(
     {
-        atmos.ProcessMove(0);
+        atmos.ProcessConsequences(0);
     }, "Grid is not loaded");
 }
 

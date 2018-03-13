@@ -20,7 +20,7 @@ public:
     Atmosphere();
 
     virtual void Process(qint32 game_tick) override;
-    virtual void ProcessMove(qint32 game_tick) override;
+    virtual void ProcessConsequences(qint32 game_tick) override;
 
     virtual void Represent(kv::GrowingFrame* frame) const;
 
@@ -37,6 +37,7 @@ private:
     qint64 movement_processing_ns_;
 
     void ProcessTileMove(int x, int y, int z, qint32 game_tick);
+    void ProcessTileFire(int x, int y, int z, qint32 game_tick);
 
     int x_size_;
     int y_size_;

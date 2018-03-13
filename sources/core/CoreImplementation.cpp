@@ -118,7 +118,7 @@ void WorldImplementation::StartTick()
     timer.start();
     const int game_tick = GetGlobals()->game_tick;
     GetAtmosphere().Process(game_tick);
-    GetAtmosphere().ProcessMove(game_tick);
+    GetAtmosphere().ProcessConsequences(game_tick);
     atmos_process_ns_ = timer.nsecsElapsed();
 }
 

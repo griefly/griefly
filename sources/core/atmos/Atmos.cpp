@@ -155,7 +155,12 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
     }
 }
 
-void Atmosphere::ProcessMove(qint32 game_tick)
+void Atmosphere::ProcessTileFire(int x, int y, int z, qint32 game_tick)
+{
+    // TODO
+}
+
+void Atmosphere::ProcessConsequences(qint32 game_tick)
 {
     AssertGrid();
 
@@ -169,11 +174,12 @@ void Atmosphere::ProcessMove(qint32 game_tick)
             for (int y = 0; y < y_size_; ++y)
             {
                 ProcessTileMove(x, y, z, game_tick);
+                ProcessTileFire(x, y, z, game_tick);
             }
         }
     }
     movement_processing_ns_
-            = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
+        = (movement_processing_ns_ + timer.nsecsElapsed()) / 2;
 }
 
 void Atmosphere::Represent(GrowingFrame* frame) const

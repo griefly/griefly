@@ -28,7 +28,7 @@ public:
     virtual ~AtmosInterface() { }
 
     virtual void Process(qint32 game_tick) = 0;
-    virtual void ProcessMove(qint32 game_tick) = 0;
+    virtual void ProcessConsequences(qint32 game_tick) = 0;
 
     virtual void Represent(kv::GrowingFrame* frame) const = 0;
 
