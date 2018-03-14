@@ -157,7 +157,19 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
 
 void Atmosphere::ProcessTileFire(int x, int y, int z, qint32 game_tick)
 {
-    // TODO
+    if ((y / 8) != (game_tick / 8))
+    {
+        return;
+    }
+
+    atmos::AtmosGrid::Cell& cell = grid_->At(x, y);
+
+    if (!cell.data.fire)
+    {
+        return;
+    }
+    // TODO: fire intensity
+    map_->At(x, y, z)->ApplyFire(1);
 }
 
 void Atmosphere::ProcessConsequences(qint32 game_tick)

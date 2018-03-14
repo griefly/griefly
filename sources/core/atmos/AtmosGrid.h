@@ -80,9 +80,9 @@ namespace atmos
         AtmosGrid(int width, int height)
             : width_(width),
               height_(height),
-              length_(width_ * height_),
               group_height_(height / atmos::CELL_GROUP_SIZE),
-              group_width_(width / atmos::CELL_GROUP_SIZE)
+              group_width_(width / atmos::CELL_GROUP_SIZE),
+              length_(width_ * height_)
         {
             if (width_ < 2)
             {
