@@ -157,7 +157,8 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
 
 void Atmosphere::ProcessTileFire(int x, int y, int z, qint32 game_tick)
 {
-    if ((y / 8) != (game_tick / 8))
+    const int PARTS_AMOUNT = 8;
+    if ((y / PARTS_AMOUNT) != (game_tick / PARTS_AMOUNT))
     {
         return;
     }
