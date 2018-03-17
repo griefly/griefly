@@ -55,6 +55,8 @@ public:
     virtual void UpdatePassable() override;
     virtual atmos::AtmosHolder* GetAtmosHolder() override { return &atmos_holder_; }
 
+    virtual void ApplyFire(int intensity) override;
+
     using InsideType = QVector<IdPtr<MaterialObject>>;
     InsideType& GetInsideList() { return inside_list_; }
 

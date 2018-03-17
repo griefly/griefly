@@ -80,7 +80,27 @@ void Floor::SetOpen(bool o)
 void Floor::ApplyFire(int intensity)
 {
     Q_UNUSED(intensity);
-    // TODO:
+
+    if (GenerateRandom() % 4)
+    {
+        return;
+    }
+
+    if (open_)
+    {
+        SetState("panelscorched");
+    }
+    else
+    {
+        if (GenerateRandom() % 2)
+        {
+            SetState("floorscorched1");
+        }
+        else
+        {
+            SetState("floorscorched2");
+        }
+    }
 }
 
 Plating::Plating()

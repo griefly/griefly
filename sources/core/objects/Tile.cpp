@@ -388,6 +388,15 @@ void CubeTile::UpdatePassable()
     UpdateAtmosPassable();
 }
 
+void CubeTile::ApplyFire(int intensity)
+{
+    // TODO: register some objects?
+    if (auto turf = GetTurf())
+    {
+        turf->ApplyFire(intensity);
+    }
+}
+
 bool CubeTile::IsTransparent() const
 {
     if (turf_.IsValid() && !turf_->IsTransparent())
