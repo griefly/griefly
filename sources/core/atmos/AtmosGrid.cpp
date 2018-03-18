@@ -182,7 +182,7 @@ void AtmosGrid::ProcessGroups(qint32 game_tick)
 
 void AtmosGrid::ProcessGroupsBorders(qint32 game_tick)
 {
-    for (int group_x = 1; group_x < group_width_ - 1; ++group_x)
+    for (int group_x = 1; group_x < group_width_; ++group_x)
     {
         int end_x = group_x * atmos::CELL_GROUP_SIZE;
         int start_x = end_x - 1;
@@ -202,7 +202,7 @@ void AtmosGrid::ProcessGroupsBorders(qint32 game_tick)
             }
         }
     }
-    for (int group_y = 1; group_y < group_height_ - 1; ++group_y)
+    for (int group_y = 1; group_y < group_height_; ++group_y)
     {
         int end_y = group_y * atmos::CELL_GROUP_SIZE;
         int start_y = end_y - 1;
