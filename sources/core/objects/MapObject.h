@@ -147,9 +147,9 @@ public:
     IdPtr<MapObject> GetRoot();
     void PlaySoundIfVisible(const QString& name);
 protected:
-    virtual quint32 GetItemImpl(unsigned int hash)
+    virtual quint32 GetItemImpl(int type_index)
     {
-        Q_UNUSED(hash)
+        Q_UNUSED(type_index)
         return 0;
     }
 private:

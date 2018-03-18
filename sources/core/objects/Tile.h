@@ -62,7 +62,7 @@ public:
 
     void UpdateAtmosPassable();
 protected:
-    virtual quint32 GetItemImpl(unsigned int hash) override;
+    virtual quint32 GetItemImpl(int type_index) override;
 private:
     bool CanTouch(IdPtr<MapObject> item, Dir dir) const;
     bool CanTouch(IdPtr<MapObject> item, Dir first_dir, Dir second_dir) const;

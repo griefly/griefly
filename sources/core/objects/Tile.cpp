@@ -413,11 +413,11 @@ bool CubeTile::IsTransparent() const
     return true;
 }
 
-quint32 CubeTile::GetItemImpl(unsigned int hash)
+quint32 CubeTile::GetItemImpl(int type_index)
 {
     for (auto it = inside_list_.rbegin(); it != inside_list_.rend(); ++it)
     {
-        if (FastIsType(hash, (*it)->GetTypeIndex()))
+        if (FastIsType(type_index, (*it)->GetTypeIndex()))
         {
             return it->Id();
         }
