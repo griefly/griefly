@@ -57,8 +57,8 @@ public:
 
     virtual void ApplyFire(int intensity) override;
 
-    using InsideType = QVector<IdPtr<MaterialObject>>;
-    InsideType& GetInsideList() { return inside_list_; }
+    using ContentType = QVector<IdPtr<MaterialObject>>;
+    ContentType& GetContent() { return content_; }
 
     void UpdateAtmosPassable();
 protected:
@@ -75,7 +75,7 @@ private:
 
     Position KV_SAVEABLE(position_);
 
-    InsideType KV_SAVEABLE(inside_list_);
+    ContentType KV_SAVEABLE(content_);
 
     PassableLevel KV_SAVEABLE(sum_passable_all_);
     PassableLevel KV_SAVEABLE(sum_passable_up_);

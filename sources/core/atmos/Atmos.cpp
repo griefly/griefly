@@ -81,15 +81,15 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
         {
             force *= FORCE_UNIT;
             auto tile = map_->At(x, y, z);
-            if (tile->GetInsideList().size())
+            if (tile->GetContent().size())
             {
-                auto i = tile->GetInsideList().rbegin();
-                while (   (i != tile->GetInsideList().rend())
+                auto i = tile->GetContent().rbegin();
+                while (   (i != tile->GetContent().rend())
                        && ((*i)->passable_level == passable::EMPTY))
                 {
                     ++i;
                 }
-                if (i != tile->GetInsideList().rend())
+                if (i != tile->GetContent().rend())
                 {
                     (*i)->ApplyForce(force);
                 }

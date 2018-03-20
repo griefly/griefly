@@ -194,7 +194,7 @@ void CubeTile::MoveToDir(Dir dir, Position* position) const
 
 bool CubeTile::Contains(IdPtr<MapObject> item) const
 {
-    for (auto& object : inside_list_)
+    for (auto& object : content_)
     {
         if (object.Id() == item.Id())
         {
@@ -213,7 +213,7 @@ void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
 
     if (item->GetOwner().Id() == GetId())
     {
-        for (auto& object : inside_list_)
+        for (auto& object : content_)
         {
             if (!CanPass(object->GetPassable(item->GetDir()), item->passable_level))
             {
@@ -224,7 +224,7 @@ void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
         return;
     }
 
-    for (auto& object : inside_list_)
+    for (auto& object : content_)
     {
         if (!CanPass(object->GetPassable(RevertDir(item->GetDir())), item->passable_level))
         {
@@ -232,7 +232,7 @@ void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
             return;
         }
     }
-    for (auto& object : inside_list_)
+    for (auto& object : content_)
     {
         if (!CanPass(object->GetPassable(Dir::ALL), item->passable_level))
         {
@@ -251,7 +251,7 @@ void CubeTile::BumpByGas(const Vector& force, bool inside)
 
     if (inside)
     {
-        for (auto& object : inside_list_)
+        for (auto& object : content_)
         {
             if (!CanPass(object->GetPassable(VDirToDir(force)), passable::AIR))
             {
@@ -262,7 +262,7 @@ void CubeTile::BumpByGas(const Vector& force, bool inside)
         return;
     }
 
-    for (auto& object : inside_list_)
+    for (auto& object : content_)
     {
         if (!CanPass(object->GetPassable(RevertDir(VDirToDir(force))), passable::AIR))
         {
@@ -270,7 +270,7 @@ void CubeTile::BumpByGas(const Vector& force, bool inside)
             return;
         }
     }
-    for (auto& object : inside_list_)
+    for (auto& object : content_)
     {
         if (!CanPass(object->GetPassable(Dir::ALL), passable::AIR))
         {
@@ -288,7 +288,7 @@ bool CubeTile::AddObject(IdPtr<MapObject> item_raw)
         return false;
     }
 
-    inside_list_.push_back(item);
+    content_.push_back(item);
     item->SetOwner(GetId());
 
     sum_passable_all_ = std::min(sum_passable_all_, item->GetPassable(Dir::ALL));
@@ -314,12 +314,12 @@ bool CubeTile::RemoveObject(IdPtr<MapObject> item_raw)
         return true;
     }
 
-    auto itr = inside_list_.begin();
-    while(itr != inside_list_.end())
+    auto itr = content_.begin();
+    while(itr != content_.end())
     {
         if (itr->Id() == item->GetId())
         {
-            inside_list_.erase(itr);
+            content_.erase(itr);
             UpdatePassable();
             return true;
         }
@@ -376,7 +376,7 @@ void CubeTile::UpdatePassable()
         sum_passable_left_ = std::min(sum_passable_left_, turf_->GetPassable(Dir::WEST));
         sum_passable_right_ = std::min(sum_passable_right_, turf_->GetPassable(Dir::EAST));
     }
-    for (auto it = inside_list_.begin(); it != inside_list_.end(); ++it)
+    for (auto it = content_.begin(); it != content_.end(); ++it)
     {
         sum_passable_all_ = std::min(sum_passable_all_, (*it)->GetPassable(Dir::ALL));
         sum_passable_up_ = std::min(sum_passable_up_, (*it)->GetPassable(Dir::NORTH));
@@ -403,7 +403,7 @@ bool CubeTile::IsTransparent() const
     {
         return false;
     }
-    for (auto& object : inside_list_)
+    for (auto& object : content_)
     {
         if (!object->IsTransparent())
         {
@@ -415,7 +415,7 @@ bool CubeTile::IsTransparent() const
 
 quint32 CubeTile::GetItemImpl(int type_index)
 {
-    for (auto it = inside_list_.rbegin(); it != inside_list_.rend(); ++it)
+    for (auto it = content_.rbegin(); it != content_.rend(); ++it)
     {
         if (FastIsType(type_index, (*it)->GetTypeIndex()))
         {
@@ -427,7 +427,7 @@ quint32 CubeTile::GetItemImpl(int type_index)
 
 void CubeTile::ForEach(std::function<void(IdPtr<MapObject>)> callback)
 {
-    InsideType copy_vector = inside_list_;
+    ContentType copy_vector = content_;
 
     // TODO: possible bug when callback invalidate some of vector object
     // ForEach callback may expect that all objects will be valid
@@ -465,7 +465,7 @@ void CubeTile::UpdateAtmosPassable()
     {
         flags |= atmos::SPACE_TILE;
     }
-    if (inside_list_.empty())
+    if (content_.empty())
     {
         flags |= atmos::NO_OBJECTS;
     }

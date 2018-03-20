@@ -29,7 +29,7 @@ void Map::Represent(GrowingFrame* frame, const VisiblePoints& points, IdPtr<kv::
     for (const Position& point : points)
     {
         const auto& tile = At(point.x, point.y, point.z);
-        const auto& objects = tile->GetInsideList();
+        const auto& objects = tile->GetContent();
 
         for (const auto& object : objects)
         {
