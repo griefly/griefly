@@ -390,7 +390,6 @@ void CubeTile::UpdatePassable()
 
 void CubeTile::ApplyFire(int intensity)
 {
-    // TODO: register some objects?
     if (auto turf = GetTurf())
     {
         turf->ApplyFire(intensity);
@@ -429,11 +428,13 @@ void CubeTile::ForEach(std::function<void(IdPtr<MapObject>)> callback)
 {
     ContentType copy_vector = content_;
 
-    // TODO: possible bug when callback invalidate some of vector object
-    // ForEach callback may expect that all objects will be valid
-    for (auto it = copy_vector.begin(); it != copy_vector.end(); ++it)
+    // TODO: #446 should be applied here
+    for (auto& object : copy_vector)
     {
-        callback(*it);
+        if (object.IsValid())
+        {
+            callback(object);
+        }
     }
 }
 
