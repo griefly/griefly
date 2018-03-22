@@ -394,6 +394,10 @@ void CubeTile::ApplyFire(int intensity)
     {
         turf->ApplyFire(intensity);
     }
+    ForEach([intensity](IdPtr<MaterialObject> object)
+    {
+        object->ApplyFire(intensity);
+    });
 }
 
 bool CubeTile::IsTransparent() const
