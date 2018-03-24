@@ -27,7 +27,7 @@ GasTank::GasTank()
     SetSprite("icons/atmos.dmi");
     SetState("blue");
 
-    open_ = false;
+    state_ = State::CLOSED;
     atmos_holder_.AddGase(atmos::OXYGEN, O2_TANK_AMOUNT);
     atmos_holder_.AddEnergy(O2_TANK_ENERGY);
 }
@@ -40,18 +40,23 @@ void GasTank::AfterWorldCreation()
 
 void GasTank::AttackBy(IdPtr<Item> item)
 {
+    if (item)
+    {
+        return;
+    }
+
     if (IdPtr<AtmosTool> tool = item)
     {
         PostHtmlFor(AtmosTool::GetHtmlInfo(atmos_holder_), tool->GetOwner());
         return;
     }
 
-    if (item)
+    if (state_ == State::BROKEN)
     {
         return;
     }
 
-    if (open_)
+    if (state_ == State::OPEN)
     {
         Close();
     }
@@ -66,14 +71,14 @@ void GasTank::Open()
 {
     PostVisible(name + " is open", GetPosition());
 
-    open_ = true;
+    state_ = State::OPEN;
 }
 
 void GasTank::Close()
 {
     PostVisible(name + " is closed", GetPosition());
 
-    open_ = false;
+    state_ = State::CLOSED;
 }
 
 namespace
@@ -92,7 +97,7 @@ void GasTank::Process()
     const int overlay_id = std::min(std::max((pressure * OVERLAYS_SIZE) / BASE_PRESSURE, 0), OVERLAYS_SIZE - 1);
     GetView()->AddOverlay("icons/atmos.dmi", OVERLAYS_STATES[overlay_id]);
 
-    if (!open_)
+    if (state_ == State::CLOSED)
     {
         return;
     }
