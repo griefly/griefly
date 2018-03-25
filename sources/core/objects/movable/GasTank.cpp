@@ -81,6 +81,19 @@ void GasTank::Close()
     state_ = State::CLOSED;
 }
 
+void GasTank::Break()
+{
+    if (state_ == State::BROKEN)
+    {
+        return;
+    }
+
+    PostVisible(name + " breaks apart!", GetPosition());
+    SetState(GetView()->GetBaseFrameset().GetState() + "-1");
+
+    state_ = State::BROKEN;
+}
+
 namespace
 {
 
@@ -104,6 +117,18 @@ void GasTank::Process()
     if (IdPtr<CubeTile> tile = GetOwner())
     {
         atmos_holder_.Connect(tile->GetAtmosHolder());
+    }
+}
+
+void GasTank::ApplyFire(int intensity)
+{
+    if (state_ == State::BROKEN)
+    {
+        return;
+    }
+    if ((GenerateRandom() % 8) == 0)
+    {
+        Break();
     }
 }
 

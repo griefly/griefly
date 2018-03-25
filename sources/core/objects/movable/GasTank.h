@@ -20,10 +20,13 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     virtual void Process() override;
 
+    virtual void ApplyFire(int intensity) override;
+
     virtual atmos::AtmosHolder* GetAtmosHolder() override { return &atmos_holder_; }
 private:
     void Open();
     void Close();
+    void Break();
 
     enum State
     {
