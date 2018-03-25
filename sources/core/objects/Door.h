@@ -79,9 +79,12 @@ public:
 
     virtual void AfterWorldCreation() override;
 
-    enum STATE
+    enum State
     {
-        OPEN, CLOSED, OPENING, CLOSING  
+        OPEN,
+        CLOSED,
+        OPENING,
+        CLOSING
     };
 
     virtual void Open();
@@ -89,7 +92,7 @@ public:
     virtual void Process() override;
     virtual void Bump(const Vector& vector, IdPtr<Movable> item) override;
     virtual void AttackBy(IdPtr<Item> item) override;
-    bool IsState(STATE state) const { return state == door_state_; }
+    bool IsState(State state) const { return state == door_state_; }
 private:
     int KV_SAVEABLE(door_state_);
     quint32 KV_SAVEABLE(last_tick_);

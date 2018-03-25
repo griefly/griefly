@@ -25,33 +25,14 @@ private:
     void Open();
     void Close();
 
-    enum class State : qint32
+    enum State
     {
         OPEN,
         CLOSED,
         BROKEN
     };
 
-    friend unsigned int Hash(const GasTank::State& state)
-    {
-        return static_cast<quint32>(state);
-    }
-
-    friend kv::FastDeserializer& operator>>(kv::FastDeserializer& file, GasTank::State& state)
-    {
-        qint32 temp;
-        file >> temp;
-        state = static_cast<GasTank::State>(temp);
-        return file;
-    }
-
-    friend kv::FastSerializer& operator<<(kv::FastSerializer& file, const GasTank::State& state)
-    {
-        file << static_cast<qint32>(state);
-        return file;
-    }
-
-    State KV_SAVEABLE(state_);
+    qint32 KV_SAVEABLE(state_);
     atmos::AtmosHolder KV_SAVEABLE(atmos_holder_);
 };
 END_DECLARE(GasTank);
