@@ -27,7 +27,7 @@ public:
     void Weld();
 private:
     int KV_SAVEABLE(door_state_);
-    quint32 KV_SAVEABLE(last_tick_);
+    qint32 KV_SAVEABLE(last_tick_);
 };
 END_DECLARE(Door);
 
@@ -95,7 +95,7 @@ public:
     bool IsState(State state) const { return state == door_state_; }
 private:
     int KV_SAVEABLE(door_state_);
-    quint32 KV_SAVEABLE(last_tick_);
+    qint32 KV_SAVEABLE(last_tick_);
 
     QString KV_SAVEABLE(door_prefix_);
 };

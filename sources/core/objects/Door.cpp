@@ -35,6 +35,7 @@ void Door::Open()
     door_state_ = OPENING;
     last_tick_ = GetGameTick();
     SetFreq(1);
+    v_level = 10;
 }
 
 void Door::Close()
@@ -48,6 +49,7 @@ void Door::Close()
     SetPassable(Dir::ALL, passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = GetGameTick();
+    v_level = 10;
 }
 
 void Door::Process()
@@ -60,6 +62,7 @@ void Door::Process()
             SetPassable(Dir::ALL, passable::FULL);
             last_tick_ = GetGameTick();
             SetState("door_open");
+            v_level = 4;
         }
         return;
     }
