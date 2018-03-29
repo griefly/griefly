@@ -1,16 +1,26 @@
 import argparse
+import json
 
-def rename_variable(mapgen, oldname, newname):
+def import_mapgen(filename):
+    with open(filename, "r") as json_file:
+        raw_json = json_file.read()
+
+    mapgen = json.JSONDecoder().decode(raw_json)
+    return mapgen
+
+def rename_variable(filename, oldname, newname):
+    mapgen = import_mapgen(filename)
     return;
 
-def remove_variable(mapgen, name):
+def remove_variable(filename, name):
+    mapgen = import_mapgen(filename)
     return;
 
 def main():
     args_parser = argparse.ArgumentParser(description="Fix mapgen file after objects variables changes.")
-    args_parser.add_argument("-m", "--mapgen", help="path to mapgen.", required=True, nargs=1)
+    args_parser.add_argument("-m", "--mapgen", help="path to mapgen.", required=True)
     args_parser.add_argument("-n", "--rename", help="rename variable.", nargs=2, metavar=("OLDNAME", "NEWNAME"))
-    args_parser.add_argument("-r", "--remove", help="remove variable.", nargs=1)
+    args_parser.add_argument("-r", "--remove", help="remove variable.")
 
     args = args_parser.parse_args()
 
