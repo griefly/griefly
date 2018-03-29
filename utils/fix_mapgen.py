@@ -8,12 +8,23 @@ def import_mapgen(filename):
     mapgen = json.JSONDecoder().decode(raw_json)
     return mapgen
 
+def export_mapgen(mapgen, filename):
+    raw_json = json.JSONEncoder(indent=4, sort_keys=True).encode(mapgen)
+
+    with open(filename, "w") as json_file:
+        json_file.write(raw_json)
+
 def rename_variable(filename, oldname, newname):
     mapgen = import_mapgen(filename)
     return;
 
 def remove_variable(filename, name):
     mapgen = import_mapgen(filename)
+    for tile in mapgen["tiles"]:
+        for object in tile["objects"]:
+            object["variables"].pop(name, None)
+        tile["turf"]["variables"].pop(name, None)
+    export_mapgen(mapgen, filename)
     return;
 
 def main():
