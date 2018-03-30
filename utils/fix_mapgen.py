@@ -16,6 +16,15 @@ def export_mapgen(mapgen, filename):
 
 def rename_variable(filename, oldname, newname):
     mapgen = import_mapgen(filename)
+    for tile in mapgen["tiles"]:
+        for object in tile["objects"]:
+            value = object["variables"].pop(oldname, None)
+            if value:
+                object["variables"][newname] = value
+        value = tile["turf"]["variables"].pop(oldname, None)
+        if value:
+            tile["turf"]["variables"][newname] = value
+    export_mapgen(mapgen, filename)
     return;
 
 def remove_variable(filename, name):
