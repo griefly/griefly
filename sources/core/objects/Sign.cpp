@@ -4,7 +4,7 @@ using namespace kv;
 
 WallSign::WallSign()
 {
-    transparent = true;
+    SetTransparency(true);
     SetPassable(Dir::ALL, passable::FULL);
     v_level = 6;
 

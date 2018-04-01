@@ -10,7 +10,7 @@ using namespace kv;
 
 FlatGlass::FlatGlass()
 {
-    transparent = true;
+    SetTransparency(true);
 
     tick_speed_ = 5;
     SetHitPoints(20);

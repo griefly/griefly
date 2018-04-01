@@ -4,7 +4,7 @@ using namespace kv;
 
 Computer::Computer()
 {
-    transparent = true;
+    SetTransparency(true);
     SetPassable(Dir::ALL, passable::AIR);
 
     SetSprite("icons/computer.dmi");

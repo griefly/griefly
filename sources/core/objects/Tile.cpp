@@ -400,15 +400,15 @@ void CubeTile::ApplyFire(int intensity)
     });
 }
 
-bool CubeTile::IsTransparent() const
+bool CubeTile::Istransparent() const
 {
-    if (turf_.IsValid() && !turf_->IsTransparent())
+    if (turf_.IsValid() && !turf_->Istransparent())
     {
         return false;
     }
     for (auto& object : content_)
     {
-        if (!object->IsTransparent())
+        if (!object->Istransparent())
         {
             return false;
         }

@@ -11,7 +11,7 @@ using namespace kv;
 
 Door::Door()
 {
-    transparent = true;
+    SetTransparency(true);
     SetPassable(Dir::ALL, passable::EMPTY);
 
     v_level = 10;
@@ -155,7 +155,7 @@ SecurityDoor::SecurityDoor()
 NontransparentDoor::NontransparentDoor()
 {
     SetSprite("icons/Doorsec.dmi");
-    transparent = false;
+    SetTransparency(false);
 }
 
 void NontransparentDoor::Open()
@@ -164,7 +164,7 @@ void NontransparentDoor::Open()
     {
         return;
     }
-    transparent = true;
+    SetTransparency(true);
     Door::Open();
 }
 
@@ -174,7 +174,7 @@ void NontransparentDoor::Close()
     {
         return;
     }
-    transparent = false;
+    SetTransparency(false);
     Door::Close();
 }
 
@@ -190,7 +190,7 @@ MaintenanceDoor::MaintenanceDoor()
 
 GlassDoor::GlassDoor()
 {
-    transparent = true;
+    SetTransparency(true);
 
     v_level = 10;
 

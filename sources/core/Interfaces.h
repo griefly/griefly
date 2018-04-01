@@ -59,7 +59,7 @@ public:
     virtual void FillTilesAtmosHolders() = 0;
     virtual void CalculateLos(VisiblePoints* retval, int posx, int posy, int posz = 0) const = 0;
 
-    virtual bool IsTransparent(int posx, int posy, int posz = 0) const = 0;
+    virtual bool Istransparent(int posx, int posy, int posz = 0) const = 0;
 };
 
 class ObjectFactoryInterface

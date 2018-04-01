@@ -14,7 +14,7 @@ Space::Space()
     SetAtmosState(atmos::SPACE);
 
     SetPassable(Dir::ALL, passable::FULL);
-    transparent = true;
+    SetTransparency(true);
     
     SetFriction(0);
 

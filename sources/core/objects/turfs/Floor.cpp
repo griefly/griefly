@@ -10,7 +10,7 @@ using namespace kv;
 
 Floor::Floor()
 {
-    transparent = true;
+    SetTransparency(true);
     SetPassable(Dir::ALL, passable::FULL);
 
     SetSprite("icons/floors.dmi");

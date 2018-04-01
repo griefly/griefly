@@ -34,7 +34,7 @@ public:
     MOCK_METHOD3(At, SqType&(int x, int y, int z));
     MOCK_METHOD0(FillTilesAtmosHolders, void());
     MOCK_CONST_METHOD4(CalculateLos, void(VisiblePoints*, int, int, int));
-    MOCK_CONST_METHOD3(IsTransparent, bool(int, int, int));
+    MOCK_CONST_METHOD3(Istransparent, bool(int, int, int));
 };
 
 class MockIObjectFactory : public ObjectFactoryInterface

@@ -61,9 +61,10 @@ public:
         }
     }
 
-    virtual bool IsTransparent() const override
+    void SetTransparency(bool transparent) { transparent_ = transparent; }
+    virtual bool Istransparent() const override
     {
-        return transparent;
+        return transparent_;
     }
     
     virtual void Delete() override;
@@ -81,14 +82,13 @@ public:
 
     PassableLevel KV_SAVEABLE(passable_level);
 
-    bool KV_SAVEABLE(transparent);
-
     const QString& GetName() const { return name_; }
     void SetName(const QString& name) { name_ = name; }
 protected:
     ViewInfo KV_SAVEABLE(view_);
 private:
     QString KV_SAVEABLE(name_);
+    bool KV_SAVEABLE(transparent_);
 };
 END_DECLARE(MaterialObject);
 

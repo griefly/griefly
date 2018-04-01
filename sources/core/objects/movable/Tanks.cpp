@@ -10,7 +10,7 @@ FuelTank::FuelTank()
 
     v_level = 6;
 
-    transparent = true;
+    SetTransparency(true);
 
     SetSprite("icons/objects.dmi");
     SetState("weldtank");
@@ -33,7 +33,7 @@ WaterTank::WaterTank()
 
     v_level = 6;
 
-    transparent = true;
+    SetTransparency(true);
 
     SetSprite("icons/objects.dmi");
     SetState("watertank");

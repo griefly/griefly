@@ -23,7 +23,7 @@ public:
     IdPtr<CubeTile> GetNeighbourImpl(Dir direct) const;
     virtual void ForEach(std::function<void(IdPtr<MapObject>)> callback) override;
     virtual PassableLevel GetPassable(Dir direct) const override;
-    virtual bool IsTransparent() const override;
+    virtual bool Istransparent() const override;
 
     virtual bool CanTouch(IdPtr<MapObject> item) const override;
     virtual bool Contains(IdPtr<MapObject> item) const override;

@@ -17,7 +17,7 @@ private:
 
     bool CheckCorner(kv::Position p) const;
     bool CheckBorders(int x, int y, int z) const;
-    bool IsTransparent(kv::Position p) const;
+    bool Istransparent(kv::Position p) const;
     bool BresenX(kv::Position source, kv::Position target) const;
     bool BresenY(kv::Position source, kv::Position target) const;
     bool RayTrace(kv::Position source, kv::Position target) const;

@@ -10,7 +10,7 @@ using namespace kv;
 
 Grille::Grille()
 {
-    transparent = true;
+    SetTransparency(true);
     SetPassable(Dir::ALL, passable::AIR);
 
     tick_speed_ = 5;

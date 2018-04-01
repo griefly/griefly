@@ -11,7 +11,7 @@ using namespace kv;
 
 MetalWall::MetalWall()
 {
-    transparent = false;
+    SetTransparency(false);
     SetPassable(Dir::ALL, passable::EMPTY);
 
     v_level = 2;
@@ -39,7 +39,7 @@ void MetalWall::AttackBy(IdPtr<Item> item)
 
 ReinforcedWall::ReinforcedWall()
 {
-    transparent = false;
+    SetTransparency(false);
     SetPassable(Dir::ALL, passable::EMPTY);
 
     v_level = 2;

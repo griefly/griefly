@@ -48,7 +48,7 @@ public:
         Q_UNUSED(direct)
         return passable::EMPTY;
     }
-    virtual bool IsTransparent() const
+    virtual bool Istransparent() const
     {
         return true;
     }

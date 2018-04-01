@@ -26,11 +26,11 @@ bool Laser::CheckPassable()
         }
     }
     auto tile = GetOwner();
-    if (tile->IsTransparent())
+    if (tile->Istransparent())
     {
         auto nearby = tile->GetNeighbour(GetDir());
         // Check for map borders
-        if ((nearby != tile) && nearby->IsTransparent())
+        if ((nearby != tile) && nearby->Istransparent())
         {
             return true;
         }

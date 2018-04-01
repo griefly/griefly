@@ -69,10 +69,10 @@ Position LosCalculator::CornerPointToPoint(Position p)
     return retval;
 }
 
-bool LosCalculator::IsTransparent(Position p) const
+bool LosCalculator::Istransparent(Position p) const
 {
     Position tilePoint = CornerPointToPoint(p);
-    return map_->IsTransparent(tilePoint.x, tilePoint.y, tilePoint.z);
+    return map_->Istransparent(tilePoint.x, tilePoint.y, tilePoint.z);
 }
 
 bool LosCalculator::BresenX(Position source, Position target) const
@@ -91,7 +91,7 @@ bool LosCalculator::BresenX(Position source, Position target) const
             // if both of them are not transparent then corner is not transparent
             Position left_neighbour(x + incrstep, y, source.z);
             Position right_neighbour(x, y + deltastep, source.z);
-            if (!IsTransparent(left_neighbour) && !IsTransparent(right_neighbour))
+            if (!Istransparent(left_neighbour) && !Istransparent(right_neighbour))
             {
                 return false;
             }
@@ -102,7 +102,7 @@ bool LosCalculator::BresenX(Position source, Position target) const
             // must be transparent
             Position left_neighbour(x - incrstep, y, source.z);
             Position right_neighbour(x + incrstep, y, source.z);
-            if (!IsTransparent(left_neighbour) || !IsTransparent(right_neighbour))
+            if (!Istransparent(left_neighbour) || !Istransparent(right_neighbour))
             {
                 return false;
             }
@@ -112,7 +112,7 @@ bool LosCalculator::BresenX(Position source, Position target) const
             // second case of edge handling
             Position left_neighbour(x, y - deltastep, source.z);
             Position right_neighbour(x, y + deltastep, source.z);
-            if (!IsTransparent(left_neighbour) || !IsTransparent(right_neighbour))
+            if (!Istransparent(left_neighbour) || !Istransparent(right_neighbour))
             {
                 return false;
             }
@@ -120,7 +120,7 @@ bool LosCalculator::BresenX(Position source, Position target) const
         else
         {
             Position new_point(x, y, source.z);
-            if (!IsTransparent(new_point))
+            if (!Istransparent(new_point))
             {
                 return false;
             }
@@ -153,7 +153,7 @@ bool LosCalculator::BresenY(Position source, Position target) const
             // if both of them are not transparent then corner is not transparent
             Position left_neighbour(x + deltastep, y, source.z);
             Position right_neighbour(x, y + incrstep, source.z);
-            if (!IsTransparent(left_neighbour) && !IsTransparent(right_neighbour))
+            if (!Istransparent(left_neighbour) && !Istransparent(right_neighbour))
             {
                 return false;
             }
@@ -164,7 +164,7 @@ bool LosCalculator::BresenY(Position source, Position target) const
             // must be transparent
             Position left_neighbour(x - deltastep, y, source.z);
             Position right_neighbour(x + deltastep, y, source.z);
-            if (!IsTransparent(left_neighbour) || !IsTransparent(right_neighbour))
+            if (!Istransparent(left_neighbour) || !Istransparent(right_neighbour))
             {
                 return false;
             }
@@ -174,7 +174,7 @@ bool LosCalculator::BresenY(Position source, Position target) const
             // second case of edge handling
             Position left_neighbour(x, y - incrstep, source.z);
             Position right_neighbour(x, y + incrstep, source.z);
-            if (!IsTransparent(left_neighbour) || !IsTransparent(right_neighbour))
+            if (!Istransparent(left_neighbour) || !Istransparent(right_neighbour))
             {
                 return false;
             }
@@ -183,7 +183,7 @@ bool LosCalculator::BresenY(Position source, Position target) const
         {
             Position new_point(x, y, source.z);
 
-            if (!IsTransparent(new_point))
+            if (!Istransparent(new_point))
             {
                 return false;
             }

@@ -110,9 +110,9 @@ int Map::GetDepth() const
     return squares_[0][0].size();
 }
 
-bool Map::IsTransparent(int posx, int posy, int posz) const
+bool Map::Istransparent(int posx, int posy, int posz) const
 {
-    return At(posx, posy, posz)->IsTransparent();
+    return At(posx, posy, posz)->Istransparent();
 }
 
 void Map::CalculateLos(VisiblePoints* retval, int posx, int posy, int posz) const

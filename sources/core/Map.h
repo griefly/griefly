@@ -35,7 +35,7 @@ public:
 
     virtual void Represent(GrowingFrame* frame, const VisiblePoints& points, IdPtr<Mob> mob) const override;
 
-    virtual bool IsTransparent(int posx, int posy, int posz = 0) const override;
+    virtual bool Istransparent(int posx, int posy, int posz = 0) const override;
 
     virtual void CalculateLos(VisiblePoints* retval, int posx, int posy, int posz = 0) const override;
 private:
