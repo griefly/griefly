@@ -194,7 +194,7 @@ TEST(CoreInterface, ObjectsMetadata)
         EXPECT_FALSE(indicator_metadata.turf);
         ASSERT_EQ(indicator_metadata.variables.size(), 11);
 
-        EXPECT_TRUE(indicator_metadata.variables.contains("transparent"));
+        EXPECT_TRUE(indicator_metadata.variables.contains("transparent_"));
         EXPECT_TRUE(indicator_metadata.variables.contains("name_"));
         EXPECT_TRUE(indicator_metadata.variables.contains("view_"));
         EXPECT_TRUE(indicator_metadata.variables.contains("owner_"));
@@ -209,7 +209,7 @@ TEST(CoreInterface, ObjectsMetadata)
         EXPECT_TRUE(space_metadata.turf);
         ASSERT_EQ(space_metadata.variables.size(), 13);
 
-        EXPECT_TRUE(space_metadata.variables.contains("transparent"));
+        EXPECT_TRUE(space_metadata.variables.contains("transparent_"));
         EXPECT_TRUE(space_metadata.variables.contains("name_"));
         EXPECT_TRUE(space_metadata.variables.contains("view_"));
         EXPECT_TRUE(space_metadata.variables.contains("owner_"));
