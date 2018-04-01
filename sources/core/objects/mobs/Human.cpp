@@ -50,7 +50,7 @@ Human::Human()
     SetPassable(Dir::ALL, passable::BIG_ITEM);
     v_level = 9;
     attack_cooldown_ = 0;
-    name = "Morgan James";
+    SetName("Morgan James");
     passable_level = passable::BIG_CREATURE;
 
     lay_timer_ = 0;
@@ -74,7 +74,7 @@ void Human::AfterWorldCreation()
 
     UpdateOverlays();
 
-    name = GetGame().GetNames().GetMaleName();
+    SetName(GetGame().GetNames().GetMaleName());
 }
 
 void Human::MindEnter()
@@ -179,7 +179,7 @@ void Human::ProcessMessage(const Message& message)
         if (!found)
         {
             Phrase phrase;
-            phrase.from = name.toHtmlEscaped();
+            phrase.from = GetName().toHtmlEscaped();
             phrase.text = text.toHtmlEscaped();
             if (!phrase.text.isEmpty())
             {
@@ -210,12 +210,12 @@ void Human::ProcessMessage(const Message& message)
             if (IdPtr<Human> human = object)
             {
                 PostVisible(
-                    name + " looks at " + human->name,
+                    GetName() + " looks at " + human->GetName(),
                     GetPosition());
                 return;
             }
             PostVisible(
-                name + " looks at the " + object->name,
+                GetName() + " looks at the " + object->GetName(),
                 GetPosition());
             return;
         }
@@ -326,14 +326,14 @@ void Human::SetLaying(bool value)
     lying_ = value;
     if (lying_)
     {
-        PostVisible(name + " is lying now", GetPosition());
+        PostVisible(GetName() + " is lying now", GetPosition());
         view_.SetAngle(90);
         SetPassable(Dir::ALL, passable::FULL);
         v_level = 8;
     }
     else
     {
-        PostVisible(name + " is standing now!", GetPosition());
+        PostVisible(GetName() + " is standing now!", GetPosition());
         view_.SetAngle(0);
         SetPassable(Dir::ALL, passable::BIG_ITEM);
         v_level = 9;
@@ -438,7 +438,7 @@ void Human::OnDeath()
     if (IsMinded())
     {
         auto ghost = Create<Ghost>(Ghost::GetTypeStatic(), GetOwner());
-        ghost->name = name;
+        ghost->SetName(GetName());
 
         MoveMindTo(ghost);
     }
@@ -473,7 +473,7 @@ void Human::AttackBy(IdPtr<Item> item)
         {
             PostVisible(
                 QString("<font color=\"red\">%1 is attacked by %2 with %3</font>")
-                    .arg(name).arg(item_owner->name).arg(item->name),
+                    .arg(GetName()).arg(item_owner->GetName()).arg(item->GetName()),
                 GetPosition());
         }
 
@@ -490,7 +490,7 @@ void Human::AttackBy(IdPtr<Item> item)
         {
             SetLaying(true);
             AddLayingTimer(100);
-            PostVisible(name + " has been knocked out!", GetPosition());
+            PostVisible(GetName() + " has been knocked out!", GetPosition());
         }
 
         damaged = true;
@@ -541,7 +541,7 @@ void Human::Bump(const Vector& force, IdPtr<Movable> item)
         ApplyBruteDamage(projectile->GetDamage() * 100);
         ApplyBurnDamage(projectile->GetBurnDamage() * 100);
         PostVisible(
-            name + " got hit by a " + projectile->name + "!", GetPosition());
+            GetName() + " got hit by a " + projectile->GetName() + "!", GetPosition());
 
         // TODO (?): sound
         return;
@@ -612,7 +612,7 @@ void Human::TryClownBootsHonk()
 void Human::MakeEmote(const QString& emote)
 {
     GetGame().GetChatFrameInfo().PostVisible(
-        QString("<b>%1</b> %2").arg(name.toHtmlEscaped()).arg(emote.toHtmlEscaped()),
+        QString("<b>%1</b> %2").arg(GetName().toHtmlEscaped()).arg(emote.toHtmlEscaped()),
         GetPosition());
 }
 

@@ -8,7 +8,7 @@ Closet::Closet()
 {
     v_level = 4;
 
-    name = "Closet";
+    SetName("Closet");
 
     open_ = false;
 
@@ -178,7 +178,7 @@ SecurityLocker::SecurityLocker()
     locked_ = true;
     SetState("secure1");
 
-    name = "Security locker";
+    SetName("Security locker");
 }
 
 void SecurityLocker::AttackBy(IdPtr<Item> item)

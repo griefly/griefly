@@ -22,7 +22,7 @@ using namespace kv;
 
 LoginMob::LoginMob()
 {
-    name = "LobbyPlayer";
+    SetName("LobbyPlayer");
 
     login_view_.SetSprite("icons/login_screen.jpg");
 }
@@ -31,7 +31,7 @@ void LoginMob::AfterWorldCreation()
 {
     Mob::AfterWorldCreation();
 
-    name = QString("LobbyPlayer%1").arg(GetId());
+    SetName(QString("LobbyPlayer%1").arg(GetId()));
 }
 
 void LoginMob::MindExit()

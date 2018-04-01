@@ -20,7 +20,7 @@ Space::Space()
 
     SetSprite("icons/space.dmi");
     SetState("10");
-    name = "Space";
+    SetName("Space");
 }
 
 void Space::AfterWorldCreation()

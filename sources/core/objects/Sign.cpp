@@ -11,7 +11,7 @@ WallSign::WallSign()
     SetSprite("icons/decals.dmi");
     SetState("bluecross2"); 
 
-    name = "Sign";
+    SetName("Sign");
 
     sign_type_ = "bluecross2";
 }

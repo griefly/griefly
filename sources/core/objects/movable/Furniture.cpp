@@ -10,7 +10,7 @@ Bed::Bed()
     SetSprite("icons/objects.dmi");
     SetState("bed");
 
-    name = "Bed";
+    SetName("Bed");
 }
 
 Chair::Chair()
@@ -22,7 +22,7 @@ Chair::Chair()
     SetSprite("icons/objects.dmi");
     SetState("chair");
 
-    name = "Chair";
+    SetName("Chair");
 }
 
 void Chair::AfterWorldCreation()
@@ -44,5 +44,5 @@ Stool::Stool()
     SetSprite("icons/objects.dmi");
     SetState("stool");
 
-    name = "Stool";
+    SetName("Stool");
 }

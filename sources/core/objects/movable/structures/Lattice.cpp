@@ -16,7 +16,7 @@ Lattice::Lattice()
     v_level = 1;
     anchored_ = true;
 
-    name = "Lattice";
+    SetName("Lattice");
 }
 
 void Lattice::AttackBy(IdPtr<Item> item)

@@ -18,7 +18,7 @@ namespace
 
 GasTank::GasTank()
 {
-    name = "Oxygen tank";
+    SetName("Oxygen tank");
 
     v_level = 5;
 
@@ -69,14 +69,14 @@ void GasTank::AttackBy(IdPtr<Item> item)
 
 void GasTank::Open()
 {
-    PostVisible(name + " is open", GetPosition());
+    PostVisible(GetName() + " is open", GetPosition());
 
     state_ = State::OPEN;
 }
 
 void GasTank::Close()
 {
-    PostVisible(name + " is closed", GetPosition());
+    PostVisible(GetName() + " is closed", GetPosition());
 
     state_ = State::CLOSED;
 }
@@ -88,7 +88,7 @@ void GasTank::Break()
         return;
     }
 
-    PostVisible(name + " breaks apart!", GetPosition());
+    PostVisible(GetName() + " breaks apart!", GetPosition());
     SetState(GetView()->GetBaseFrameset().GetState() + "-1");
 
     state_ = State::BROKEN;
@@ -134,7 +134,7 @@ void GasTank::ApplyFire(int intensity)
 
 MagicGasTank::MagicGasTank()
 {
-    name = "Magic tank";
+    SetName("Magic tank");
 }
 
 void MagicGasTank::AfterWorldCreation()
@@ -159,7 +159,7 @@ void MagicGasTank::Process()
 
 PlasmaGasTank::PlasmaGasTank()
 {
-    name = "Plasma tank";
+    SetName("Plasma tank");
     SetState("orange");
 
     GetAtmosHolder()->RemoveGase(atmos::OXYGEN, O2_TANK_AMOUNT);

@@ -82,9 +82,13 @@ public:
     PassableLevel KV_SAVEABLE(passable_level);
 
     bool KV_SAVEABLE(transparent);
-    QString KV_SAVEABLE(name);
+
+    const QString& GetName() const { return name_; }
+    void SetName(const QString& name) { name_ = name; }
 protected:
     ViewInfo KV_SAVEABLE(view_);
+private:
+    QString KV_SAVEABLE(name_);
 };
 END_DECLARE(MaterialObject);
 

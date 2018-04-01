@@ -8,7 +8,7 @@ Shard::Shard()
 {
     SetSprite("icons/shards.dmi");
     SetState("medium");
-    name = "Shard";
+    SetName("Shard");
 }
 
 void Shard::AfterWorldCreation()
@@ -28,5 +28,4 @@ void Shard::AfterWorldCreation()
         st = "small";
     }
     SetState(st);
-    name = "Shard";
 }

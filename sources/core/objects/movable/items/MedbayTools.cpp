@@ -6,7 +6,7 @@ HealthAnalyzer::HealthAnalyzer()
 {
     SetSprite("icons/device.dmi");
     SetState("health");
-    name = "Health Analyzer";
+    SetName("Health Analyzer");
 }
 
 void HealthAnalyzer::Scan(IdPtr<Human> target)
@@ -20,7 +20,7 @@ void HealthAnalyzer::Scan(IdPtr<Human> target)
     // Just one big string should be made
 
     PostHtmlFor(
-        QString("<b>Analyzing results for %1:</b>").arg(target->name.toHtmlEscaped()),
+        QString("<b>Analyzing results for %1:</b>").arg(target->GetName().toHtmlEscaped()),
         GetOwner());
     PostHtmlFor("Overall status:", GetOwner());
 
@@ -76,12 +76,12 @@ Ointment::Ointment()
 {
     SetState("ointment");
     burn_heal_ = 1000;
-    name = "Ointment";
+    SetName("Ointment");
 }
 
 BruisePack::BruisePack()
 {
     SetState("brutepack");
     brute_heal_ = 1000;
-    name = "bruise pack";
+    SetName("Bruise pack");
 }

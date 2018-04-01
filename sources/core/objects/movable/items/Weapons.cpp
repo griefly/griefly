@@ -7,7 +7,7 @@ LaserGun::LaserGun()
 {
     SetState("energykill100");
 
-    name = "Laser Gun";
+    SetName("Laser Gun");
     
     ammunition_ = 20;
     max_ammunition_ = 20;
@@ -31,7 +31,7 @@ Revolver::Revolver()
 {
     SetState("revolver");
 
-    name = "Revolver";
+    SetName("Revolver");
     
     ammunition_ = 6;
     max_ammunition_ = 6;

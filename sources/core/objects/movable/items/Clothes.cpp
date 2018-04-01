@@ -4,7 +4,7 @@ using namespace kv;
 
 Cloth::Cloth()
 {
-    name = "SimpleCloth";
+    SetName("SimpleCloth");
 }
 
 Armor::Armor()
@@ -14,7 +14,7 @@ Armor::Armor()
 
     type = SlotType::SUIT;
 
-    name = "Armor";
+    SetName("Armor");
 }
 
 Helmet::Helmet()
@@ -24,7 +24,7 @@ Helmet::Helmet()
 
     type = SlotType::HEAD;
 
-    name = "Armor";
+    SetName("Armor");
 }
 
 Tophat::Tophat()
@@ -34,7 +34,7 @@ Tophat::Tophat()
 
     type = SlotType::HEAD;
 
-    name = "Tophat";
+    SetName("Tophat");
 }
 
 EngineUniform::EngineUniform()
@@ -44,7 +44,7 @@ EngineUniform::EngineUniform()
 
     type = SlotType::UNIFORM;
 
-    name = "Engine uniform";
+    SetName("Engine uniform");
 }
 
 RedUniform::RedUniform()
@@ -54,7 +54,7 @@ RedUniform::RedUniform()
 
     type = SlotType::UNIFORM;
 
-    name = "Red uniform";
+    SetName("Red uniform");
 }
 
 JanitorUniform::JanitorUniform()
@@ -64,7 +64,7 @@ JanitorUniform::JanitorUniform()
 
     type = SlotType::UNIFORM;
 
-    name = "Janitor uniform";
+    SetName("Janitor uniform");
 }
 
 ClownUniform::ClownUniform()
@@ -74,7 +74,7 @@ ClownUniform::ClownUniform()
 
     type = SlotType::UNIFORM;
 
-    name = "Clown uniform";
+    SetName("Clown uniform");
 }
 
 BarmanUniform::BarmanUniform()
@@ -84,7 +84,7 @@ BarmanUniform::BarmanUniform()
 
     type = SlotType::UNIFORM;
 
-    name = "Barman uniform";
+    SetName("Barman uniform");
 }
 
 OrangeBoots::OrangeBoots()
@@ -94,7 +94,7 @@ OrangeBoots::OrangeBoots()
 
     type = SlotType::FEET;
 
-    name = "Orange boots";
+    SetName("Orange boots");
 }
 
 BlackBoots::BlackBoots()
@@ -104,7 +104,7 @@ BlackBoots::BlackBoots()
 
     type = SlotType::FEET;
 
-    name = "Black boots";
+    SetName("Black boots");
 }
 
 ClownBoots::ClownBoots()
@@ -114,7 +114,7 @@ ClownBoots::ClownBoots()
 
     type = SlotType::FEET;
 
-    name = "Clown boots";
+    SetName("Clown boots");
 }
 
 MedicalUniform::MedicalUniform()
@@ -124,7 +124,7 @@ MedicalUniform::MedicalUniform()
 
     type = SlotType::UNIFORM;
 
-    name = "Medical uniform";
+    SetName("Medical uniform");
 }
 
 WhiteShoes::WhiteShoes()
@@ -134,5 +134,5 @@ WhiteShoes::WhiteShoes()
 
     type = SlotType::FEET;
 
-    name = "White shoes";
+    SetName("White shoes");
 }

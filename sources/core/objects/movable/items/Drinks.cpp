@@ -4,7 +4,7 @@ using namespace kv;
 
 Drinks::Drinks()
 {
-    name = "BaseDrink";
+    SetName("BaseDrink");
     SetSprite("icons/drinks.dmi");
     full_ = false;
 }
@@ -16,35 +16,35 @@ void Drinks::Drink(IdPtr<Human> consumer, IdPtr<Human> feeder)
         full_ = true;
         if (consumer == feeder)
         {
-            PostHtmlFor(QString("You swallow a gulp of %1.").arg(name), consumer);
+            PostHtmlFor(QString("You swallow a gulp of %1.").arg(GetName()), consumer);
         }
         else
         {
             PostVisible(
                 QString("%1 attempts to feed the contents of %2 to %3.")
-                    .arg(feeder->name).arg(name).arg(consumer->name),
+                    .arg(feeder->GetName()).arg(GetName()).arg(consumer->GetName()),
                 consumer->GetPosition());
         }
         PlaySoundIfVisible("drink.wav");
         return;
     }
-    PostHtmlFor(QString("%1 is empty.").arg(name), consumer);
+    PostHtmlFor(QString("%1 is empty.").arg(GetName()), consumer);
 }
 
 Vodka::Vodka()
 {
-    name = "Vodka";
+    SetName("Vodka");
     SetState("vodkabottle");
 }
 
 Beer::Beer()
 {
-    name = "Beer";
+    SetName("Beer");
     SetState("beer");
 }
 
 Tea::Tea()
 {
-    name = "Tea";
+    SetName("Tea");
     SetState("tea");
 }

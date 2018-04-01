@@ -7,7 +7,7 @@ AmmunitionBox::AmmunitionBox()
     SetSprite("icons/ammo.dmi");
     SetState("357");
 
-    name = "Revolver Ammunition",
+    SetName("Revolver Ammunition"),
 
     bullets_ = 50;
 }

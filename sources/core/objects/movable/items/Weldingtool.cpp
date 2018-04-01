@@ -6,7 +6,7 @@ Weldingtool::Weldingtool()
 {
     SetState("welder");
 
-    name = "Weldingtool";
+    SetName("Weldingtool");
 
     on_ = false;
     fuel_ = 250;

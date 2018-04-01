@@ -5,5 +5,5 @@ using namespace kv;
 FloorTile::FloorTile()
 {
     SetState("tile");
-    name = "Floor tile";
+    SetName("Floor tile");
 }

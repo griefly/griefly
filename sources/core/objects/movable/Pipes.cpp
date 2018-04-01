@@ -13,7 +13,7 @@ PipeBase::PipeBase()
     SetSprite("icons/pipes.dmi");
     //SetState("intact");
 
-    name = "Please do not create me";
+    SetName("Please do not create me");
 
     AddDefaultValues(&atmos_holder_);
 }
@@ -72,7 +72,7 @@ Pipe::Pipe()
 {
     SetState("intact");
 
-    name = "Pipe";
+    SetName("Pipe");
 }
 
 bool Pipe::Connect(Dir dir, IdPtr<PipeBase> pipe)
@@ -142,7 +142,7 @@ void Pipe::GetTailAndHead(Dir dir, Dir* head, Dir* tail)
 Manifold::Manifold()
 {
     SetState("manifold");
-    name = "Manifold";
+    SetName("Manifold");
 }
 
 bool Manifold::Connect(Dir dir, IdPtr<PipeBase> pipe)
@@ -242,7 +242,7 @@ Vent::Vent()
 
     v_level = 3;
 
-    name = "Vent";
+    SetName("Vent");
 }
 
 bool Vent::Connect(Dir dir, IdPtr<PipeBase> pipe)
@@ -339,7 +339,7 @@ Connector::Connector()
     SetState("connector");
     v_level = 3;
 
-    name = "Connector";
+    SetName("Connector");
 }
 
 void Connector::ConnectToGasTank(IdPtr<GasTank> tank)

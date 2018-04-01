@@ -21,7 +21,7 @@ Ghost::Ghost()
 
     passable_level = passable::EMPTY;
 
-    name = "Ghost";
+    SetName("Ghost");
 
     seconds_until_respawn_ = 15;
 }

@@ -12,5 +12,5 @@ Computer::Computer()
 
     v_level = 3;
 
-    name = "Computer";
+    SetName("Computer");
 }

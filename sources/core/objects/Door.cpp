@@ -21,7 +21,7 @@ Door::Door()
     SetSprite("icons/Doorglass.dmi");
     SetState("door_closed");
 
-    name = "Door";
+    SetName("Door");
 }
 
 void Door::Open()
@@ -203,7 +203,7 @@ GlassDoor::GlassDoor()
     SetSprite("icons/windoor.dmi");
     SetState(door_prefix_);
 
-    name = "Glass door";
+    SetName("Glass door");
 }
 
 void GlassDoor::AfterWorldCreation()

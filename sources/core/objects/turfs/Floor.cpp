@@ -16,7 +16,7 @@ Floor::Floor()
     SetSprite("icons/floors.dmi");
     SetState("floor");
 
-    name = "Floor";
+    SetName("Floor");
 
     floor_type_ = "floor";
     open_ = false;

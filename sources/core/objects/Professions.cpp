@@ -17,7 +17,7 @@ void professions::ToSecurityOfficer(IdPtr<Human> human)
 
     // Red boots hack
     hud->GetItem(slot::FEET)->SetState("red");
-    hud->GetItem(slot::FEET)->name = "Red boots";
+    hud->GetItem(slot::FEET)->SetName("Red boots");
 
     human->UpdateOverlays();
 }
@@ -42,7 +42,7 @@ void professions::ToAssistant(IdPtr<Human> human)
 
     // Grey uniform hack
     hud->GetItem(slot::UNIFORM)->SetState("grey");
-    hud->GetItem(slot::UNIFORM)->name = "Grey uniform";
+    hud->GetItem(slot::UNIFORM)->SetName("Grey uniform");
 
     human->UpdateOverlays();
 }

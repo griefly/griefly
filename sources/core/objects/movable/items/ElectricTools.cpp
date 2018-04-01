@@ -10,7 +10,7 @@ AtmosTool::AtmosTool()
 {
     SetSprite("icons/device.dmi");
     SetState("atmos");
-    name = "Atmos tool";
+    SetName("Atmos tool");
 }
 
 QString AtmosTool::GetHtmlInfo(const atmos::AtmosHolder& holder)
@@ -57,5 +57,5 @@ void AtmosTool::AttackBy(IdPtr<Item> item)
 
 RemoteAtmosTool::RemoteAtmosTool()
 {
-    name = "Remote atmos tool";
+    SetName("Remote atmos tool");
 }

@@ -21,7 +21,7 @@ Grille::Grille()
     SetSprite("icons/structures.dmi");
     SetState("grille");
 
-    name = "Grille";
+    SetName("Grille");
 
     cutted_ = false;
 }

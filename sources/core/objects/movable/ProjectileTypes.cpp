@@ -6,14 +6,14 @@ Bullet::Bullet()
 {
     damage_ = 20;
     SetState("bullet");
-    name = "Bullet";
+    SetName("Bullet");
 }
 
 Laser::Laser()
 {
     burn_damage_ = 10;
     SetState("laser");
-    name = "Laser";
+    SetName("Laser");
 }
 
 bool Laser::CheckPassable()

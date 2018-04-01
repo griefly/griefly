@@ -6,7 +6,7 @@ using namespace kv;
 
 FuelTank::FuelTank()
 {
-    name = "Fueltank";
+    SetName("Fueltank");
 
     v_level = 6;
 
@@ -29,7 +29,7 @@ void FuelTank::AttackBy(IdPtr<Item> item)
 
 WaterTank::WaterTank()
 {
-    name = "Watertank";
+    SetName("Watertank");
 
     v_level = 6;
 

@@ -19,7 +19,7 @@ MetalWall::MetalWall()
     SetSprite("icons/walls.dmi");
     SetState("metal0");
 
-    name = "Metal wall";
+    SetName("Metal wall");
 }
 
 void MetalWall::AttackBy(IdPtr<Item> item)
@@ -47,5 +47,5 @@ ReinforcedWall::ReinforcedWall()
     SetSprite("icons/walls.dmi");
     SetState("r_wall");
 
-    name = "Reinforced wall";
+    SetName("Reinforced wall");
 }

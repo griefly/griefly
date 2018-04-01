@@ -11,7 +11,7 @@ Rod::Rod()
 {
     SetState("rods");
 
-    name = "Rods";
+    SetName("Rods");
 }
 
 void Rod::AttackBy(IdPtr<Item> item)
@@ -27,7 +27,7 @@ Metal::Metal()
 {
     SetState("sheet-metal");
 
-    name = "Metal";
+    SetName("Metal");
 }
 
 void Metal::AttackBy(IdPtr<Item> item)

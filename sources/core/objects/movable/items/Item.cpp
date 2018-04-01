@@ -20,7 +20,7 @@ Screwdriver::Screwdriver()
 {
     damage = 5;
     SetState("screwdriver");
-    name = "Screwdriver";
+    SetName("Screwdriver");
 }
 
 void Screwdriver::AfterWorldCreation()
@@ -37,7 +37,7 @@ Wirecutters::Wirecutters()
 
     damage = 10;
 
-    name = "Wirecutters";
+    SetName("Wirecutters");
 }
 
 Crowbar::Crowbar()
@@ -46,7 +46,7 @@ Crowbar::Crowbar()
 
     damage = 15;
 
-    name = "Crowbar";
+    SetName("Crowbar");
 }
 
 Wrench::Wrench()
@@ -55,7 +55,7 @@ Wrench::Wrench()
 
     damage = 5;
 
-    name = "Wrench";
+    SetName("Wrench");
 }
 BulletCasing::BulletCasing()
 {
@@ -64,5 +64,5 @@ BulletCasing::BulletCasing()
 
     damage = 0;
 
-    name = "Bullet Casing";
+    SetName("Bullet Casing");
 }

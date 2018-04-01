@@ -20,7 +20,7 @@ FlatGlass::FlatGlass()
     SetSprite("icons/structures.dmi");
     SetState("window");
     
-    name = "Window";
+    SetName("Window");
 }
 
 void FlatGlass::AfterWorldCreation()
@@ -103,6 +103,6 @@ void FlatGlass::AttackBy(IdPtr<Item> item)
 ReinforcedFlatGlass::ReinforcedFlatGlass()
 {
     SetState("rwindow");
-    name = "Reinforced window";
+    SetName("Reinforced window");
     SetHitPoints(100);
 }

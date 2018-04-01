@@ -15,7 +15,7 @@ Girder::Girder()
     SetPassable(Dir::ALL, passable::AIR);
 
     anchored_ = true;
-    name = "Girder";
+    SetName("Girder");
 }
 
 void Girder::AttackBy(IdPtr<Item> item)

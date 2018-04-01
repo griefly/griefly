@@ -6,7 +6,7 @@ RemoteDoorOpener::RemoteDoorOpener()
 {
     SetSprite("icons/device.dmi");
     SetState("multitool_red");
-    name = "Atmos tool";
+    SetName("Atmos tool");
 
     door_ = 0;
 }
