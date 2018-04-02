@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "objects/test/PressureIndicator.h"
-#include "objects/turfs/SpaceTurf.h"
+#include "objects/turfs/Space.h"
 
 TEST(CoreInterface, FrameDataAndNestedStructsConstructors)
 {

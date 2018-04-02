@@ -16,7 +16,7 @@
 #include "objects/movable/items/Gun.h"
 #include "objects/movable/items/Weapons.h"
 #include "objects/movable/items/ElectricTools.h"
-#include "objects/turfs/SpaceTurf.h"
+#include "objects/turfs/Space.h"
 #include "objects/movable/items/Drinks.h"
 #include "objects/movable/items/MedbayTools.h"
 #include "objects/PhysicsEngine.h"
