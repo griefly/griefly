@@ -109,11 +109,11 @@ void Door::Weld()
     {
         SetState("door_closed");
         door_state_ = CLOSED;
-        GetView()->RemoveOverlays();
+        GetView().RemoveOverlays();
     }
     else
     {
-        GetView()->AddOverlay("icons/Doorglass.dmi", "welded");
+        GetView().AddOverlay("icons/Doorglass.dmi", "welded");
         door_state_ = WELDED;
     }
     PlaySoundIfVisible("Welder.wav");

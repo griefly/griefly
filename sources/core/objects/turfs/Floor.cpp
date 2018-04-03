@@ -73,7 +73,7 @@ void Floor::SetOpen(bool o)
             vent->SetHidden(true);
         }
     }
-    GetView()->RemoveOverlays();
+    GetView().RemoveOverlays();
     //qDebug() << "End setopen";
 }
 

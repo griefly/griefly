@@ -45,7 +45,7 @@ void PressureIndicator::SetNumber(int number)
     int first_digit = number / 10;
     int second_digit = number % 10;
 
-    view_.RemoveOverlays();
-    view_.AddOverlay(SPRITE, NUMBERS[first_digit]).SetShift(-7, 0);
-    view_.AddOverlay(SPRITE, NUMBERS[second_digit]).SetShift(7, 0);
+    GetView().RemoveOverlays();
+    GetView().AddOverlay(SPRITE, NUMBERS[first_digit]).SetShift(-7, 0);
+    GetView().AddOverlay(SPRITE, NUMBERS[second_digit]).SetShift(7, 0);
 }

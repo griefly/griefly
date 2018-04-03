@@ -9,12 +9,12 @@ using namespace kv;
 
 void MaterialObject::SetSprite(const QString& sprite)
 {
-    view_.SetSprite(sprite);
+    GetView().SetSprite(sprite);
 }
 
 void MaterialObject::SetState(const QString& name)
 {
-    view_.SetState(name);
+    GetView().SetState(name);
 }
 
 void MaterialObject::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
@@ -25,7 +25,7 @@ void MaterialObject::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
     ent.pos_x = GetPosition().x;
     ent.pos_y = GetPosition().y;
     ent.vlevel = v_level;
-    ent.view = GetView()->GetRawData();
+    ent.view = GetView().GetRawData();
     ent.dir = Dir::SOUTH;
     frame->Append(ent);
 }

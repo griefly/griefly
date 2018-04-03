@@ -335,7 +335,7 @@ void kv::HumanInterface::Represent(GrowingFrame* frame)
             unit.name = slot.name;
             unit.pixel_x = 32 * slot.position.first;
             unit.pixel_y = 32 * slot.position.second;
-            unit.view = slot.item->GetView()->GetRawData();
+            unit.view = slot.item->GetView().GetRawData();
             frame->Append(unit);
         }
     }
@@ -359,7 +359,7 @@ void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
     {
         if (slot.item.IsValid())
         {
-            const QString state_name = slot.item->GetView()->GetBaseFrameset().GetState();
+            const QString state_name = slot.item->GetView().GetBaseFrameset().GetState();
             view_info->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
         }
     }

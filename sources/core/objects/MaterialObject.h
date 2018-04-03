@@ -71,7 +71,7 @@ public:
     virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) override;
     void SetSprite(const QString& sprite);
     void SetState(const QString& name);
-    ViewInfo* GetView() { return &view_; }
+    ViewInfo& GetView() { return view_; }
 public:
     int KV_SAVEABLE(v_level);
     PassableLevel KV_SAVEABLE(passable_down);
@@ -84,9 +84,8 @@ public:
 
     const QString& GetName() const { return name_; }
     void SetName(const QString& name) { name_ = name; }
-protected:
-    ViewInfo KV_SAVEABLE(view_);
 private:
+    ViewInfo KV_SAVEABLE(view_);
     QString KV_SAVEABLE(name_);
     bool KV_SAVEABLE(transparent_);
 };

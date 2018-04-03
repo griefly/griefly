@@ -89,7 +89,7 @@ void GasTank::Break()
     }
 
     PostVisible(GetName() + " breaks apart!", GetPosition());
-    SetState(GetView()->GetBaseFrameset().GetState() + "-1");
+    SetState(GetView().GetBaseFrameset().GetState() + "-1");
 
     state_ = State::BROKEN;
 }
@@ -104,11 +104,11 @@ const QString OVERLAYS_STATES[OVERLAYS_SIZE] = {"can-o0", "can-o1", "can-o2", "c
 
 void GasTank::Process()
 {
-    GetView()->RemoveOverlays();
+    GetView().RemoveOverlays();
 
     const int pressure = GetAtmosHolder()->GetPressure();
     const int overlay_id = std::min(std::max((pressure * OVERLAYS_SIZE) / BASE_PRESSURE, 0), OVERLAYS_SIZE - 1);
-    GetView()->AddOverlay("icons/atmos.dmi", OVERLAYS_STATES[overlay_id]);
+    GetView().AddOverlay("icons/atmos.dmi", OVERLAYS_STATES[overlay_id]);
 
     if (state_ == State::CLOSED)
     {

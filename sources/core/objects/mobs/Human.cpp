@@ -299,8 +299,8 @@ void Human::ProcessMessage(const Message& message)
 
 void Human::UpdateOverlays()
 {
-    view_.RemoveOverlays();
-    interface_->AddOverlays(&view_);
+    GetView().RemoveOverlays();
+    interface_->AddOverlays(&GetView());
 }
 
 void Human::Process()
@@ -327,14 +327,14 @@ void Human::SetLaying(bool value)
     if (lying_)
     {
         PostVisible(GetName() + " is lying now", GetPosition());
-        view_.SetAngle(90);
+        GetView().SetAngle(90);
         SetPassable(Dir::ALL, passable::FULL);
         v_level = 8;
     }
     else
     {
         PostVisible(GetName() + " is standing now!", GetPosition());
-        view_.SetAngle(0);
+        GetView().SetAngle(0);
         SetPassable(Dir::ALL, passable::BIG_ITEM);
         v_level = 9;
     }
@@ -510,7 +510,7 @@ void Human::Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob)
     ent.pos_x = GetPosition().x;
     ent.pos_y = GetPosition().y;
     ent.vlevel = v_level;
-    ent.view = GetView()->GetRawData();
+    ent.view = GetView().GetRawData();
     if (!lying_)
     {
         ent.dir = GetDir();
@@ -651,7 +651,7 @@ void Human::ApplyBruteDamage(int damage)
         {
             if (!floor->bloody)
             {
-                floor->GetView()->AddOverlay(
+                floor->GetView().AddOverlay(
                     "icons/blood.dmi",
                     QString("floor%1").arg(blood_value));
                 floor->bloody = true;

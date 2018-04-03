@@ -51,7 +51,7 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
 
         kv::CoreInterface::ObjectMetadata metadata;
         metadata.name = it.first;
-        metadata.default_view = material->GetView()->GetRawData();
+        metadata.default_view = material->GetView().GetRawData();
         metadata.turf = false;
 
         if (CastTo<kv::Turf>(object.get()))
