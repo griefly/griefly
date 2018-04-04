@@ -80,11 +80,14 @@ public:
     PassableLevel KV_SAVEABLE(passable_right);
     PassableLevel KV_SAVEABLE(passable_all);
 
-    PassableLevel KV_SAVEABLE(passable_level);
+    PassableLevel GetPassableLevel() const { return passable_level_; }
+    void SetPassableLevel(PassableLevel passable_level) { passable_level_ = passable_level; }
 
     const QString& GetName() const { return name_; }
     void SetName(const QString& name) { name_ = name; }
 private:
+    PassableLevel KV_SAVEABLE(passable_level_);
+
     ViewInfo KV_SAVEABLE(view_);
     QString KV_SAVEABLE(name_);
     bool KV_SAVEABLE(transparent_);

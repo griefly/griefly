@@ -215,7 +215,7 @@ void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
     {
         for (auto& object : content_)
         {
-            if (!CanPass(object->GetPassable(item->GetDir()), item->passable_level))
+            if (!CanPass(object->GetPassable(item->GetDir()), item->GetPassableLevel()))
             {
                 object->Bump(force, item);
                 return;
@@ -226,7 +226,7 @@ void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
 
     for (auto& object : content_)
     {
-        if (!CanPass(object->GetPassable(RevertDir(item->GetDir())), item->passable_level))
+        if (!CanPass(object->GetPassable(RevertDir(item->GetDir())), item->GetPassableLevel()))
         {
             object->Bump(force, item);
             return;
@@ -234,7 +234,7 @@ void CubeTile::Bump(const Vector& force, IdPtr<Movable> item)
     }
     for (auto& object : content_)
     {
-        if (!CanPass(object->GetPassable(Dir::ALL), item->passable_level))
+        if (!CanPass(object->GetPassable(Dir::ALL), item->GetPassableLevel()))
         {
             object->Bump(force, item);
             return;

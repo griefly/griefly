@@ -11,7 +11,7 @@ Projectile::Projectile()
     v_level = 6;
     current_step_ = 0;
     tick_speed_ = 1;
-    passable_level = passable::SMALL_ITEM;
+    SetPassableLevel(passable::SMALL_ITEM);
     harmless_ = true;
 }
 

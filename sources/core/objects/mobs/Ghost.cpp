@@ -19,7 +19,7 @@ Ghost::Ghost()
     SetSprite("icons/mob.dmi");
     SetState("ghost_grey");
 
-    passable_level = passable::EMPTY;
+    SetPassableLevel(passable::EMPTY);
 
     SetName("Ghost");
 

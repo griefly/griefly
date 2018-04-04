@@ -85,7 +85,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
             {
                 auto i = tile->GetContent().rbegin();
                 while (   (i != tile->GetContent().rend())
-                       && ((*i)->passable_level == passable::EMPTY))
+                       && ((*i)->GetPassableLevel() == passable::EMPTY))
                 {
                     ++i;
                 }

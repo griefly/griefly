@@ -113,7 +113,7 @@ bool Movable::CheckPassable()
         SetPassable(GetDir(), passable::FULL);
     }
     auto owner = GetOwner();
-    if (!CanPass(owner->GetPassable(GetDir()), passable_level))
+    if (!CanPass(owner->GetPassable(GetDir()), GetPassableLevel()))
     {
         owner->Bump(force_, GetId());
         force_ = {0, 0, 0};
@@ -129,8 +129,8 @@ bool Movable::CheckPassable()
     }
 
     auto neighbour = owner->GetNeighbour(GetDir());
-    if (   !CanPass(neighbour->GetPassable(Dir::ALL), passable_level)
-        || !CanPass(neighbour->GetPassable(RevertDir(GetDir())), passable_level))
+    if (   !CanPass(neighbour->GetPassable(Dir::ALL), GetPassableLevel())
+        || !CanPass(neighbour->GetPassable(RevertDir(GetDir())), GetPassableLevel()))
     {
         neighbour->Bump(force_, GetId());
         force_ = {0, 0, 0};

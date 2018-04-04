@@ -51,7 +51,7 @@ Human::Human()
     v_level = 9;
     attack_cooldown_ = 0;
     SetName("Morgan James");
-    passable_level = passable::BIG_CREATURE;
+    SetPassableLevel(passable::BIG_CREATURE);
 
     lay_timer_ = 0;
 
