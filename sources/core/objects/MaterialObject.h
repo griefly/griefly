@@ -20,15 +20,15 @@ public:
         switch (direct)
         {
         case Dir::NORTH:
-            return passable_up;
+            return passable_up_;
         case Dir::SOUTH:
-            return passable_down;
+            return passable_down_;
         case Dir::WEST:
-            return passable_left;
+            return passable_left_;
         case Dir::EAST:
-            return passable_right;
+            return passable_right_;
         case Dir::ALL:
-            return passable_all;
+            return passable_all_;
         default:
             break;
         }
@@ -40,19 +40,21 @@ public:
         switch (direct)
         {
         case Dir::NORTH:
-            passable_up = p;
+            passable_up_ = p;
             break;
         case Dir::SOUTH:
-            passable_down = p;
+            passable_down_ = p;
             break;
         case Dir::WEST:
-            passable_left = p;
+            passable_left_ = p;
             break;
         case Dir::EAST:
-            passable_right = p;
+            passable_right_ = p;
             break;
         case Dir::ALL:
-            passable_all = p;
+            passable_all_ = p;
+            break;
+        default:
             break;
         }
         if (IdPtr<MapObject> owner = GetOwner())
@@ -74,11 +76,6 @@ public:
     ViewInfo& GetView() { return view_; }
 public:
     int KV_SAVEABLE(v_level);
-    PassableLevel KV_SAVEABLE(passable_down);
-    PassableLevel KV_SAVEABLE(passable_up);
-    PassableLevel KV_SAVEABLE(passable_left);
-    PassableLevel KV_SAVEABLE(passable_right);
-    PassableLevel KV_SAVEABLE(passable_all);
 
     PassableLevel GetPassableLevel() const { return passable_level_; }
     void SetPassableLevel(PassableLevel passable_level) { passable_level_ = passable_level; }
@@ -86,6 +83,12 @@ public:
     const QString& GetName() const { return name_; }
     void SetName(const QString& name) { name_ = name; }
 private:
+    PassableLevel KV_SAVEABLE(passable_down_);
+    PassableLevel KV_SAVEABLE(passable_up_);
+    PassableLevel KV_SAVEABLE(passable_left_);
+    PassableLevel KV_SAVEABLE(passable_right_);
+    PassableLevel KV_SAVEABLE(passable_all_);
+
     PassableLevel KV_SAVEABLE(passable_level_);
 
     ViewInfo KV_SAVEABLE(view_);
