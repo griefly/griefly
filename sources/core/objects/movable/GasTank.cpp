@@ -20,7 +20,7 @@ GasTank::GasTank()
 {
     SetName("Oxygen tank");
 
-    v_level = 5;
+    SetVisibleLevel(5);
 
     SetPassable(Dir::ALL, passable::AIR);
 

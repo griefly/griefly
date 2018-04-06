@@ -48,7 +48,7 @@ Human::Human()
     SetSprite("icons/human.dmi");
     SetState("african1_m_s");
     SetPassable(Dir::ALL, passable::BIG_ITEM);
-    v_level = 9;
+    SetVisibleLevel(9);
     attack_cooldown_ = 0;
     SetName("Morgan James");
     SetPassableLevel(passable::BIG_CREATURE);
@@ -329,14 +329,14 @@ void Human::SetLaying(bool value)
         PostVisible(GetName() + " is lying now", GetPosition());
         GetView().SetAngle(90);
         SetPassable(Dir::ALL, passable::FULL);
-        v_level = 8;
+        SetVisibleLevel(8);
     }
     else
     {
         PostVisible(GetName() + " is standing now!", GetPosition());
         GetView().SetAngle(0);
         SetPassable(Dir::ALL, passable::BIG_ITEM);
-        v_level = 9;
+        SetVisibleLevel(9);
     }
     interface_->UpdateLaying(lying_);
 }
@@ -509,7 +509,7 @@ void Human::Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob)
     ent.click_id = GetId();
     ent.pos_x = GetPosition().x;
     ent.pos_y = GetPosition().y;
-    ent.vlevel = v_level;
+    ent.vlevel = GetVisibleLevel();
     ent.view = GetView().GetRawData();
     if (!lying_)
     {

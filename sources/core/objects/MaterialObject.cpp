@@ -24,7 +24,7 @@ void MaterialObject::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
     ent.click_id = GetId();
     ent.pos_x = GetPosition().x;
     ent.pos_y = GetPosition().y;
-    ent.vlevel = v_level;
+    ent.vlevel = GetVisibleLevel();
     ent.view = GetView().GetRawData();
     ent.dir = Dir::SOUTH;
     frame->Append(ent);
@@ -37,7 +37,8 @@ void MaterialObject::Delete()
 
 MaterialObject::MaterialObject()
 {
-    v_level = 0;
+    SetVisibleLevel(0);
+
     passable_all_ = passable::FULL;
     passable_up_ = passable::FULL;
     passable_down_ = passable::FULL;

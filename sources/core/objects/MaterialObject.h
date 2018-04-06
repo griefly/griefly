@@ -71,11 +71,13 @@ public:
     
     virtual void Delete() override;
     virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) override;
+
+    int GetVisibleLevel() const { return v_level_; }
+    void SetVisibleLevel(int v_level) { v_level_ = v_level; }
+
     void SetSprite(const QString& sprite);
     void SetState(const QString& name);
     ViewInfo& GetView() { return view_; }
-public:
-    int KV_SAVEABLE(v_level);
 
     PassableLevel GetPassableLevel() const { return passable_level_; }
     void SetPassableLevel(PassableLevel passable_level) { passable_level_ = passable_level; }
@@ -83,6 +85,8 @@ public:
     const QString& GetName() const { return name_; }
     void SetName(const QString& name) { name_ = name; }
 private:
+    int KV_SAVEABLE(v_level_);
+
     PassableLevel KV_SAVEABLE(passable_down_);
     PassableLevel KV_SAVEABLE(passable_up_);
     PassableLevel KV_SAVEABLE(passable_left_);

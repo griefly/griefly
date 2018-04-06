@@ -16,7 +16,7 @@ Grille::Grille()
     tick_speed_ = 5;
     SetHitPoints(15);
 
-    v_level = 8;
+    SetVisibleLevel(8);
 
     SetSprite("icons/structures.dmi");
     SetState("grille");

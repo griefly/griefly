@@ -6,7 +6,7 @@ using namespace kv;
 
 PressureIndicator::PressureIndicator()
 {
-    v_level = 11;
+    SetVisibleLevel(11);
     SetName("Pressure indicator");
     SetSprite("icons/numbers.dmi");
     SetState("empty");

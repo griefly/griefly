@@ -14,7 +14,7 @@ Ghost::Ghost()
 {
     tick_speed_ = 1;
 
-    v_level = 11;
+    SetVisibleLevel(11);
 
     SetSprite("icons/mob.dmi");
     SetState("ghost_grey");

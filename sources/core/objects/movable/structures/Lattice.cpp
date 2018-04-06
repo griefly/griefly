@@ -13,7 +13,7 @@ Lattice::Lattice()
     SetSprite("icons/structures.dmi");
     SetState("latticefull");
 
-    v_level = 1;
+    SetVisibleLevel(1);
     anchored_ = true;
 
     SetName("Lattice");

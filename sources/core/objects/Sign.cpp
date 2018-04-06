@@ -6,7 +6,7 @@ WallSign::WallSign()
 {
     SetTransparency(true);
     SetPassable(Dir::ALL, passable::FULL);
-    v_level = 6;
+    SetVisibleLevel(6);
 
     SetSprite("icons/decals.dmi");
     SetState("bluecross2"); 

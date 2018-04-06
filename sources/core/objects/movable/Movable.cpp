@@ -171,7 +171,7 @@ void Movable::Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob)
     entity.pos_x = position.x;
     entity.pos_y = position.y;
 
-    entity.vlevel = v_level;
+    entity.vlevel = GetVisibleLevel();
     entity.view = GetView().GetRawData();
     entity.dir = GetDir();
     frame->Append(entity);

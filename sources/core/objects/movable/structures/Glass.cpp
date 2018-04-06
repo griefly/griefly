@@ -15,7 +15,7 @@ FlatGlass::FlatGlass()
     tick_speed_ = 5;
     SetHitPoints(20);
 
-    v_level = 9;
+    SetVisibleLevel(9);
 
     SetSprite("icons/structures.dmi");
     SetState("window");

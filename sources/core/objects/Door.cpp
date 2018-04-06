@@ -14,7 +14,7 @@ Door::Door()
     SetTransparency(true);
     SetPassable(Dir::ALL, passable::EMPTY);
 
-    v_level = 10;
+    SetVisibleLevel(10);
 
     door_state_ = CLOSED;
 
@@ -35,7 +35,7 @@ void Door::Open()
     door_state_ = OPENING;
     last_tick_ = GetGameTick();
     SetFreq(1);
-    v_level = 10;
+    SetVisibleLevel(10);
 }
 
 void Door::Close()
@@ -49,7 +49,7 @@ void Door::Close()
     SetPassable(Dir::ALL, passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = GetGameTick();
-    v_level = 10;
+    SetVisibleLevel(10);
 }
 
 void Door::Process()
@@ -62,7 +62,7 @@ void Door::Process()
             SetPassable(Dir::ALL, passable::FULL);
             last_tick_ = GetGameTick();
             SetState("door_open");
-            v_level = 4;
+            SetVisibleLevel(4);
         }
         return;
     }
@@ -192,7 +192,7 @@ GlassDoor::GlassDoor()
 {
     SetTransparency(true);
 
-    v_level = 10;
+    SetVisibleLevel(10);
 
     door_prefix_ = "left";
 

@@ -8,7 +8,7 @@ FuelTank::FuelTank()
 {
     SetName("Fueltank");
 
-    v_level = 6;
+    SetVisibleLevel(6);
 
     SetTransparency(true);
 
@@ -31,7 +31,7 @@ WaterTank::WaterTank()
 {
     SetName("Watertank");
 
-    v_level = 6;
+    SetVisibleLevel(6);
 
     SetTransparency(true);
 
