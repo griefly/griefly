@@ -161,7 +161,7 @@ bool Movable::MainMove()
     return true;
 }
 
-void Movable::Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob)
+void Movable::Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) const
 {
     FrameData::Entity entity;
     entity.id = GetId();

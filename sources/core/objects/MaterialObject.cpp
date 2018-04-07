@@ -17,7 +17,7 @@ void MaterialObject::SetState(const QString& name)
     GetView().SetState(name);
 }
 
-void MaterialObject::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
+void MaterialObject::Represent(GrowingFrame* frame, IdPtr<Mob> mob) const
 { 
     FrameData::Entity ent;
     ent.id = GetId();

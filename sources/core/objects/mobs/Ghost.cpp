@@ -32,7 +32,7 @@ void Ghost::AfterWorldCreation()
     SetFreq(10);
 }
 
-void Ghost::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
+void Ghost::Represent(GrowingFrame* frame, IdPtr<Mob> mob) const
 {
     if (IdPtr<Ghost> ghost = mob)
     {

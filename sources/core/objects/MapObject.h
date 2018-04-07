@@ -136,7 +136,7 @@ public:
     {
         return owner_->GetPosition();
     }
-    virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob)
+    virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) const
     {
         Q_UNUSED(frame)
         Q_UNUSED(mob)

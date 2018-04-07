@@ -16,7 +16,7 @@ void Turf::Delete()
     MaterialObject::Delete();
 }
 
-void Turf::Represent(GrowingFrame* frame, IdPtr<Mob> mob)
+void Turf::Represent(GrowingFrame* frame, IdPtr<Mob> mob) const
 {
     if (IdPtr<CubeTile> tile = GetOwner())
     {

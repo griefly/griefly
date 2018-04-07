@@ -22,7 +22,7 @@ public:
     int GetFriction() const { return friction_; }
     void SetFriction(int friction) { friction_ = friction; }
 
-    virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) override;
+    virtual void Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) const override;
 
     atmos::AtmosState GetAtmosState() const { return atmos_state_; }
     void SetAtmosState(atmos::AtmosState atmos_state) { atmos_state_ = atmos_state; }

@@ -24,7 +24,7 @@ public:
 
     virtual void Delete() override { MaterialObject::Delete(); }
 
-    virtual void Represent(GrowingFrame* frame, IdPtr<Mob> mob) override;
+    virtual void Represent(GrowingFrame* frame, IdPtr<Mob> mob) const override;
     virtual void Bump(const Vector& force, IdPtr<Movable> item) override;
     virtual void BumpByGas(const Vector& force, bool inside = false) override;
 
