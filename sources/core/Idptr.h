@@ -123,7 +123,7 @@ public:
         return *this;
     }
 
-    T& operator*() const
+    T& operator*()
     {
         if (id_ == 0)
         {
@@ -136,7 +136,25 @@ public:
         return *static_cast<T*>(casted_);
     }
 
-    T* operator->() const
+    const T& operator*() const
+    {
+        if (id_ == 0)
+        {
+            kv::Abort("Unable to dereference IdPtr with 0 id");
+        }
+        if (casted_ == nullptr)
+        {
+            Update();
+        }
+        return *static_cast<T*>(casted_);
+    }
+
+    T* operator->()
+    {
+        return &operator*();
+    }
+
+    const T* operator->() const
     {
         return &operator*();
     }

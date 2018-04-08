@@ -6,7 +6,7 @@
 
 using namespace kv;
 
-IdPtr<Turf> MapObject::GetTurf()
+IdPtr<Turf> MapObject::GetTurf() const
 {
     auto owner = GetOwner();
     if (owner.IsValid())

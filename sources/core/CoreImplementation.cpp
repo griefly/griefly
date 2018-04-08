@@ -147,7 +147,7 @@ void WorldImplementation::ProcessHearers()
     QVector<IdPtr<Object>>& hearers = global_objects_->hearers;
     QVector<IdPtr<Object>> deleted_hearers;
 
-    for (const IdPtr<Object>& hearer : qAsConst(hearers))
+    for (IdPtr<Object>& hearer : hearers)
     {
         if (!hearer.IsValid())
         {

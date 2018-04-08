@@ -142,7 +142,7 @@ public:
         Q_UNUSED(mob)
     }
     virtual void UpdatePassable() { }
-    virtual IdPtr<Turf> GetTurf();
+    virtual IdPtr<Turf> GetTurf() const;
     virtual void SetTurf(IdPtr<Turf> turf);
     IdPtr<MapObject> GetRoot();
     void PlaySoundIfVisible(const QString& name);

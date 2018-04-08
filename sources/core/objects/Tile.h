@@ -39,7 +39,7 @@ public:
     {
         return position_;
     }
-    virtual IdPtr<Turf> GetTurf()  override
+    virtual IdPtr<Turf> GetTurf() const override
     {
         return turf_;
     }
@@ -59,6 +59,7 @@ public:
 
     using ContentType = QVector<IdPtr<MaterialObject>>;
     ContentType& GetContent() { return content_; }
+    const ContentType& GetContent() const { return content_; }
 
     void UpdateAtmosPassable();
 protected:
