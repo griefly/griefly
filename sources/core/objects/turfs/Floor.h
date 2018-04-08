@@ -14,14 +14,18 @@ public:
     virtual void AfterWorldCreation() override;
 
     virtual void AttackBy(IdPtr<Item> item) override;
-    void SetOpen(bool o);
+    void SetOpen(bool open);
 
     virtual void ApplyFire(int intensity) override;
 
-    bool KV_SAVEABLE(bloody);
+    bool IsBloody() const { return bloody_; }
+    void SetBloody(bool bloody) { bloody_ = bloody; }
+
 protected:
     bool KV_SAVEABLE(open_);
     QString KV_SAVEABLE(floor_type_);
+
+    bool KV_SAVEABLE(bloody_);
 };
 END_DECLARE(Floor);
 

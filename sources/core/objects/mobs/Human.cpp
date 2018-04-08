@@ -649,12 +649,12 @@ void Human::ApplyBruteDamage(int damage)
 
         if (IdPtr<Floor> floor = GetTurf())
         {
-            if (!floor->bloody)
+            if (!floor->IsBloody())
             {
                 floor->GetView().AddOverlay(
                     "icons/blood.dmi",
                     QString("floor%1").arg(blood_value));
-                floor->bloody = true;
+                floor->SetBloody(true);
             }
         }
     }

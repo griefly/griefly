@@ -19,8 +19,9 @@ Floor::Floor()
     SetName("Floor");
 
     floor_type_ = "floor";
-    open_ = false;
-    bloody = false;
+
+    SetOpen(false);
+    SetBloody(false);
 }
 
 void Floor::AfterWorldCreation()
@@ -51,10 +52,10 @@ void Floor::AttackBy(IdPtr<Item> item)
     }
 }
 
-void Floor::SetOpen(bool o)
+void Floor::SetOpen(bool open)
 {
     //qDebug() << "Start set open " << owner->GetId();
-    open_ = o;
+    open_ = open;
     if (open_)
     {
         SetState("plating");
