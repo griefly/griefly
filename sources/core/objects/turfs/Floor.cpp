@@ -20,7 +20,7 @@ Floor::Floor()
 
     floor_type_ = "floor";
 
-    SetOpen(false);
+    open_ = false;
     SetBloody(false);
 }
 

@@ -42,6 +42,7 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
     for (auto it : (*GetItemsCreators()))
     {
         std::unique_ptr<kv::Object> object(it.second());
+
         kv::MaterialObject* material = CastTo<kv::MaterialObject>(object.get());
         if (!material)
         {
