@@ -44,7 +44,7 @@ void Human::Hear(const Phrase& phrase)
 
 Human::Human()
 {
-    tick_speed_ = 1;
+    SetTickSpeed(1);
     SetSprite("icons/human.dmi");
     SetState("african1_m_s");
     SetPassable(Dir::ALL, passable::BIG_ITEM);
@@ -553,7 +553,7 @@ void Human::RotationAction(IdPtr<MapObject> item)
 {
     if (IdPtr<Movable> movable = item)
     {
-        if (!movable->anchored_)
+        if (!movable->IsAnchored())
         {
             if (IdPtr<Projectile> projectile = movable)
             {

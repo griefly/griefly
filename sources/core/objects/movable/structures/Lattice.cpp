@@ -14,7 +14,7 @@ Lattice::Lattice()
     SetState("latticefull");
 
     SetVisibleLevel(1);
-    anchored_ = true;
+    SetAnchored(true);
 
     SetName("Lattice");
 }

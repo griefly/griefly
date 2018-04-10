@@ -12,7 +12,7 @@ using namespace kv;
 
 Ghost::Ghost()
 {
-    tick_speed_ = 1;
+    SetTickSpeed(1);
 
     SetVisibleLevel(11);
 

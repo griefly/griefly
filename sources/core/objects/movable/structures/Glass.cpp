@@ -12,7 +12,7 @@ FlatGlass::FlatGlass()
 {
     SetTransparency(true);
 
-    tick_speed_ = 5;
+    SetTickSpeed(5);
     SetHitPoints(20);
 
     SetVisibleLevel(9);
@@ -53,7 +53,7 @@ void FlatGlass::Bump(const Vector& vector, IdPtr<Movable> item)
     {
         if (item->GetDir() != GetDir())
         {
-            if (!CanPass(GetOwner()->GetPassable(Dir::ALL), GetPassableLevel()) || anchored_)
+            if (!CanPass(GetOwner()->GetPassable(Dir::ALL), GetPassableLevel()) || IsAnchored())
             {
                 return;
             }

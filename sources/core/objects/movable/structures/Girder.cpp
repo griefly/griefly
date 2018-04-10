@@ -14,7 +14,7 @@ Girder::Girder()
 
     SetPassable(Dir::ALL, passable::AIR);
 
-    anchored_ = true;
+    SetAnchored(true);
     SetName("Girder");
 }
 

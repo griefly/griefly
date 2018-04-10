@@ -29,11 +29,17 @@ public:
     virtual void BumpByGas(const Vector& force, bool inside = false) override;
 
     const Vector& GetForce() const { return force_; }
-public:
-    bool KV_SAVEABLE(anchored_);
-    int KV_SAVEABLE(last_move_);
-    int KV_SAVEABLE(tick_speed_);
+
+    bool IsAnchored() const { return anchored_; }
+    void SetAnchored(bool anchored) { anchored_ = anchored; }
+
+    qint32 GetTickSpeed() const { return tick_speed_; }
+    void SetTickSpeed(qint32 tick_speed) { tick_speed_ = tick_speed; }
+
 private:
+    bool KV_SAVEABLE(anchored_);
+    qint32 KV_SAVEABLE(last_move_);
+    qint32 KV_SAVEABLE(tick_speed_);
     Dir KV_SAVEABLE(direction_);
 
     Vector KV_SAVEABLE(force_);

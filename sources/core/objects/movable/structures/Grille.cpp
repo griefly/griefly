@@ -13,7 +13,7 @@ Grille::Grille()
     SetTransparency(true);
     SetPassable(Dir::ALL, passable::AIR);
 
-    tick_speed_ = 5;
+    SetTickSpeed(5);
     SetHitPoints(15);
 
     SetVisibleLevel(8);

@@ -10,7 +10,8 @@ Projectile::Projectile()
     SetSprite("icons/projectiles.dmi");
     SetVisibleLevel(6);
     current_step_ = 0;
-    tick_speed_ = 1;
+
+    SetTickSpeed(1);
     SetPassableLevel(passable::SMALL_ITEM);
     harmless_ = true;
 }

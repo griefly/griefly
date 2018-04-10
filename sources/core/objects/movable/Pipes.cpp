@@ -7,7 +7,7 @@ using namespace kv;
 
 PipeBase::PipeBase()
 {
-    anchored_ = true;
+    SetAnchored(true);
     SetVisibleLevel(1);
 
     SetSprite("icons/pipes.dmi");
@@ -375,7 +375,7 @@ void Connector::AfterWorldCreation()
     if (auto tank = GetOwner()->GetItem<GasTank>())
     {
         ConnectToGasTank(tank);
-        tank->anchored_ = true;
+        tank->SetAnchored(true);
     }
 }
 

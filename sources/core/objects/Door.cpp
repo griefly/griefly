@@ -196,7 +196,7 @@ GlassDoor::GlassDoor()
 
     door_prefix_ = "left";
 
-    anchored_ = true;
+    SetAnchored(true);
 
     door_state_ = CLOSED;
 

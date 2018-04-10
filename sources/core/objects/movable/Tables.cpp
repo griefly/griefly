@@ -7,7 +7,7 @@ using namespace kv;
 
 Table::Table()
 {
-    anchored_ = true;
+    SetAnchored(true);
     SetVisibleLevel(4);
     SetPassable(Dir::ALL, passable::SMALL_CREATURE);
     SetSprite(""); 

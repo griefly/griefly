@@ -4,7 +4,7 @@ using namespace kv;
 
 Bed::Bed()
 {
-    anchored_ = true;
+    SetAnchored(true);
     SetVisibleLevel(3);
 
     SetSprite("icons/objects.dmi");
@@ -15,7 +15,7 @@ Bed::Bed()
 
 Chair::Chair()
 {
-    anchored_ = true;
+    SetAnchored(true);
 
     SetVisibleLevel(3);
 
@@ -37,7 +37,7 @@ void Chair::AfterWorldCreation()
 
 Stool::Stool()
 {
-    anchored_ = true;
+    SetAnchored(true);
 
     SetVisibleLevel(3);
 
