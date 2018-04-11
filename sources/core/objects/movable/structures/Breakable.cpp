@@ -22,7 +22,7 @@ void Breakable::AttackBy(IdPtr<Item> item)
         Structure::AttackBy(item);
         return;
     }
-    Hit(item->damage);
+    Hit(item->GetDamage());
 }
 
 void Breakable::Bump(const Vector& vector, IdPtr<Movable> item)

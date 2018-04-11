@@ -13,7 +13,12 @@ public:
     REGISTER_CLASS_AS(Item);
     Item();
     SlotType KV_SAVEABLE(type);
-    int KV_SAVEABLE(damage);
+
+    qint32 GetDamage() const { return damage_; }
+    void SetDamage(qint32 damage) { damage_ = damage; }
+
+private:
+    qint32 KV_SAVEABLE(damage_);
 };
 END_DECLARE(Item);
 

@@ -10,7 +10,7 @@ Item::Item()
 
     type = SlotType::DEFAULT;
 
-    damage = 0;
+    SetDamage(0);
 
     SetVisibleLevel(5);
     SetSprite("icons/items.dmi");
@@ -18,7 +18,7 @@ Item::Item()
 
 Screwdriver::Screwdriver()
 {
-    damage = 5;
+    SetDamage(5);
     SetState("screwdriver");
     SetName("Screwdriver");
 }
@@ -35,7 +35,7 @@ Wirecutters::Wirecutters()
 {
     SetState("cutters");
 
-    damage = 10;
+    SetDamage(10);
 
     SetName("Wirecutters");
 }
@@ -44,7 +44,7 @@ Crowbar::Crowbar()
 {
     SetState("crowbar");
 
-    damage = 15;
+    SetDamage(15);
 
     SetName("Crowbar");
 }
@@ -53,7 +53,7 @@ Wrench::Wrench()
 {
     SetState("wrench");
 
-    damage = 5;
+    SetDamage(5);
 
     SetName("Wrench");
 }
@@ -62,7 +62,7 @@ BulletCasing::BulletCasing()
     SetSprite("icons/ammo.dmi");
     SetState("s-casing");
 
-    damage = 0;
+    SetDamage(0);
 
     SetName("Bullet Casing");
 }

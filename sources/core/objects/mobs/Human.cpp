@@ -464,9 +464,9 @@ void Human::AttackBy(IdPtr<Item> item)
         return;
     }
     bool damaged = false;
-    if (item.IsValid() && (item->damage > 0))
+    if (item.IsValid() && (item->GetDamage() > 0))
     {
-        ApplyBruteDamage(item->damage * 100);
+        ApplyBruteDamage(item->GetDamage() * 100);
         QString sound = QString("genhit%1.wav").arg(GenerateRandom() % 3 + 1);
         PlaySoundIfVisible(sound);
         if (IdPtr<MaterialObject> item_owner = item->GetOwner())
