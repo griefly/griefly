@@ -463,7 +463,6 @@ void Human::AttackBy(IdPtr<Item> item)
         medicine->Heal(GetId());
         return;
     }
-    bool damaged = false;
     if (item.IsValid() && (item->GetDamage() > 0))
     {
         ApplyBruteDamage(item->GetDamage() * 100);
@@ -476,8 +475,6 @@ void Human::AttackBy(IdPtr<Item> item)
                     .arg(GetName()).arg(item_owner->GetName()).arg(item->GetName()),
                 GetPosition());
         }
-
-        damaged = true;
     }
     else if (!item.IsValid())
     {
@@ -492,13 +489,6 @@ void Human::AttackBy(IdPtr<Item> item)
             AddLayingTimer(100);
             PostVisible(GetName() + " has been knocked out!", GetPosition());
         }
-
-        damaged = true;
-    }
-
-    if (!damaged)
-    {
-        return;
     }
 }
 
