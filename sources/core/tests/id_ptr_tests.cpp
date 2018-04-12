@@ -39,6 +39,12 @@ TEST(IdPtrDeathTest, Death)
         IdPtr<kv::Object> ptr;
         ptr.operator*();
     }, "Unable to dereference");
+
+    ASSERT_DEATH(
+    {
+        const IdPtr<kv::Object> ptr;
+        ptr.operator*();
+    }, "Unable to dereference");
 }
 
 class IdPtrTest : public ::testing::Test
@@ -96,16 +102,30 @@ TEST_F(IdPtrTest, Dereference)
     kv::Object object;
     (*id_ptr_id_table)[42].object = &object;
 
-    IdPtr<kv::Object> ptr;
-    ptr = 10;
-    ASSERT_EQ(ptr.operator->(), nullptr);
+    {
+        IdPtr<kv::Object> ptr;
+        ptr = 10;
+        ASSERT_EQ(ptr.operator->(), nullptr);
 
-    ptr = 42;
-    ASSERT_EQ(ptr.operator->(), &object);
-    // Cache
-    ASSERT_EQ(ptr.operator->(), &object);
+        ptr = 42;
+        ASSERT_EQ(ptr.operator->(), &object);
+        // Cache
+        ASSERT_EQ(ptr.operator->(), &object);
 
-    ASSERT_EQ(ptr.operator->(), ptr.operator->());
+        ASSERT_EQ(ptr.operator->(), ptr.operator->());
+    }
+    {
+        IdPtr<kv::Object> ptr;
+        ptr = 10;
+        ASSERT_EQ(qAsConst(ptr).operator->(), nullptr);
+
+        ptr = 42;
+        ASSERT_EQ(qAsConst(ptr).operator->(), &object);
+        // Cache
+        ASSERT_EQ(qAsConst(ptr).operator->(), &object);
+
+        ASSERT_EQ(qAsConst(ptr).operator->(), ptr.operator->());
+    }
 }
 
 TEST_F(IdPtrTest, Validating)
@@ -145,10 +165,3 @@ TEST_F(IdPtrTest, SaveAndLoad)
     deserializer >> ptr2;
     EXPECT_TRUE(ptr2 == ptr);
 }
-
-
-
-
-
-
-
