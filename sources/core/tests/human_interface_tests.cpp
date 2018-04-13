@@ -81,7 +81,7 @@ TEST_F(HumanInterfaceTest, PickDropItem)
 
         if (slot_index != SLOT_TYPES.size())
         {
-            item->type = SLOT_TYPES[slot_index];
+            item->SetItemType(SLOT_TYPES[slot_index]);
         }
 
         EXPECT_TRUE(interface->PickItem(item));
@@ -121,10 +121,10 @@ TEST_F(HumanInterfaceTest, InsertRemoveGetItem)
         for (const QString& slot : appropriate_slots)
         {
             IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
-            item->type = slot_type;
+            item->SetItemType(slot_type);
 
             IdPtr<kv::Item> second_item = factory.CreateImpl(kv::Item::GetTypeStatic());
-            second_item->type = slot_type;
+            second_item->SetItemType(slot_type);
 
             EXPECT_FALSE(interface->GetItem(slot).IsValid());
             EXPECT_FALSE(interface->InsertItem(slot, 0));
@@ -143,7 +143,7 @@ TEST_F(HumanInterfaceTest, InsertRemoveGetItem)
         for (const QString& slot : inappropriate_slots)
         {
             IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
-            item->type = slot_type;
+            item->SetItemType(slot_type);
 
             EXPECT_FALSE(interface->GetItem(slot).IsValid());
             EXPECT_FALSE(interface->InsertItem(slot, 0));
@@ -178,7 +178,7 @@ TEST_F(HumanInterfaceTest, RemoveItemByItem)
     for (const auto& type_and_slot : TYPE_AND_SLOT_LIST)
     {
         IdPtr<kv::Item> item = factory.CreateImpl(kv::Item::GetTypeStatic());
-        item->type = type_and_slot.first;
+        item->SetItemType(type_and_slot.first);
 
         ASSERT_TRUE(interface->InsertItem(type_and_slot.second, item));
         ASSERT_EQ(interface->GetItem(type_and_slot.second), item);

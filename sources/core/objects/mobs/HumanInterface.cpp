@@ -301,7 +301,7 @@ bool kv::HumanInterface::InsertItem(Slot* slot, IdPtr<Item> item)
     {
         return false;
     }
-    if (!IsTypeMatch(*slot, item->type))
+    if (!IsTypeMatch(*slot, item->GetItemType()))
     {
         return false;
     }
@@ -450,7 +450,7 @@ void kv::HumanInterface::ApplyActiveHandOnSlot(Slot* slot)
     Slot& active_hand = GetActiveHand();
     if (active_hand.item.IsValid() && !slot->item.IsValid())
     {
-        if (!IsTypeMatch(*slot, active_hand.item->type))
+        if (!IsTypeMatch(*slot, active_hand.item->GetItemType()))
         {
             return;
         }
@@ -459,7 +459,7 @@ void kv::HumanInterface::ApplyActiveHandOnSlot(Slot* slot)
     }
     else if (!active_hand.item.IsValid() && slot->item.IsValid())
     {
-        if (!IsTypeMatch(active_hand, slot->item->type))
+        if (!IsTypeMatch(active_hand, slot->item->GetItemType()))
         {
             return;
         }

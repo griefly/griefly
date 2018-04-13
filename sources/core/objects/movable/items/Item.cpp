@@ -8,7 +8,7 @@ Item::Item()
 {
     SetPassableLevel(passable::SMALL_ITEM);
 
-    type = SlotType::DEFAULT;
+    SetItemType(SlotType::DEFAULT);
 
     SetDamage(0);
 

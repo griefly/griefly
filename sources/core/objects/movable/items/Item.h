@@ -12,12 +12,14 @@ public:
     DECLARE_SAVEABLE(Item, Movable);
     REGISTER_CLASS_AS(Item);
     Item();
-    SlotType KV_SAVEABLE(type);
+
+    SlotType GetItemType() const { return type_; }
+    void SetItemType(SlotType type) { type_ = type; }
 
     qint32 GetDamage() const { return damage_; }
     void SetDamage(qint32 damage) { damage_ = damage; }
-
 private:
+    SlotType KV_SAVEABLE(type_);
     qint32 KV_SAVEABLE(damage_);
 };
 END_DECLARE(Item);
