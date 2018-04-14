@@ -17,9 +17,11 @@ public:
     void UpdateSprite(quint32 ignored_table);
     virtual void AfterWorldCreation() override;
 protected:
-    QString KV_SAVEABLE(material_);
+    QString GetMaterial() const { return material_; }
+    void SetMaterial(QString material) { material_ = material; }
 private:
     static int CheckTable(IdPtr<MapObject> container, quint32 ignored_table);
+    QString KV_SAVEABLE(material_);
 }
 END_DECLARE(Table);
 

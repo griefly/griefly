@@ -11,8 +11,8 @@ Table::Table()
     SetVisibleLevel(4);
     SetPassable(Dir::ALL, passable::SMALL_CREATURE);
     SetSprite(""); 
-    material_ = "";
-    SetState(material_ + "_table_d0");
+    SetMaterial("");
+    SetState(GetMaterial() + "_table_d0");
 }
 
 void Table::AfterWorldCreation()
@@ -78,7 +78,7 @@ void Table::UpdateSprite(quint32 ignored_table)
     int downleft = CheckTable(GetNeighbour(Dir::WEST)->GetNeighbour(Dir::SOUTH), ignored_table);
     if (up + down + left + right == 4)
     {
-        SetState(material_ + "_table_d4");
+        SetState(GetMaterial() + "_table_d4");
     }
     else if (up + down + left + right == 3)
     {
@@ -86,22 +86,22 @@ void Table::UpdateSprite(quint32 ignored_table)
         {
             if (upleft && downleft)
             {
-                SetState(material_ + "_table_d3");
+                SetState(GetMaterial() + "_table_d3");
                 Rotate(Dir::WEST);    
             }
             else if (!upleft && downleft)
             {
-                SetState(material_ + "_table_d3_c_m_l");
+                SetState(GetMaterial() + "_table_d3_c_m_l");
                 Rotate(Dir::EAST);
             }
             else if (upleft && !downleft)
             {
-                SetState(material_ + "_table_d3_c_m_l");
+                SetState(GetMaterial() + "_table_d3_c_m_l");
                 Rotate(Dir::WEST);
             }
             else
             {
-                SetState(material_ + "_table_d3_f");
+                SetState(GetMaterial() + "_table_d3_f");
                 Rotate(Dir::WEST);
             }
         }
@@ -109,22 +109,22 @@ void Table::UpdateSprite(quint32 ignored_table)
         {
             if (upright && downright)
             {
-                SetState(material_ + "_table_d3");
+                SetState(GetMaterial() + "_table_d3");
                 Rotate(Dir::EAST);
             }
             else if (!upright && downright)
             {
-                SetState(material_ + "_table_d3_c_m_r");
+                SetState(GetMaterial() + "_table_d3_c_m_r");
                 Rotate(Dir::EAST);
             }
             else if (upright && !downright)
             {
-                SetState(material_ + "_table_d3_c_m_r");
+                SetState(GetMaterial() + "_table_d3_c_m_r");
                 Rotate(Dir::WEST);
             }
             else
             {
-                SetState(material_ + "_table_d3_f");
+                SetState(GetMaterial() + "_table_d3_f");
                 Rotate(Dir::EAST);
             }
         }
@@ -132,22 +132,22 @@ void Table::UpdateSprite(quint32 ignored_table)
         {
             if (upleft && upright)
             {
-                SetState(material_ + "_table_d3");
+                SetState(GetMaterial() + "_table_d3");
                 Rotate(Dir::NORTH);
             }
             else if (!upleft && upright)
             {
-                SetState(material_ + "_table_d3_c_m_l");
+                SetState(GetMaterial() + "_table_d3_c_m_l");
                 Rotate(Dir::NORTH);
             }
             else if (upleft && !upright)
             {
-                SetState(material_ + "_table_d3_c_m_l");
+                SetState(GetMaterial() + "_table_d3_c_m_l");
                 Rotate(Dir::SOUTH);
             }
             else
             {
-                SetState(material_ + "_table_d3_f");
+                SetState(GetMaterial() + "_table_d3_f");
                 Rotate(Dir::NORTH);
             }
         }
@@ -155,22 +155,22 @@ void Table::UpdateSprite(quint32 ignored_table)
         {
             if (downleft && downright)
             {
-                SetState(material_ + "_table_d3");
+                SetState(GetMaterial() + "_table_d3");
                 Rotate(Dir::SOUTH);
             }
             else if (!downleft && downright)
             {
-                SetState(material_ + "_table_d3_c_m_r");
+                SetState(GetMaterial() + "_table_d3_c_m_r");
                 Rotate(Dir::NORTH);
             }
             else if (downleft && !downleft)
             {
-                SetState(material_ + "_table_d3_c_m_r");
+                SetState(GetMaterial() + "_table_d3_c_m_r");
                 Rotate(Dir::SOUTH);
             }
             else
             {
-                SetState(material_ + "_table_d3_f");
+                SetState(GetMaterial() + "_table_d3_f");
                 Rotate(Dir::SOUTH);
             }
         }
@@ -179,19 +179,19 @@ void Table::UpdateSprite(quint32 ignored_table)
     {
         if (up + down == 2)
         {
-            SetState(material_ + "_table_d2");
+            SetState(GetMaterial() + "_table_d2");
             Rotate(Dir::NORTH);
         }
         else if (up + left == 2)
         {
             if (upleft)
             {
-                SetState(material_ + "_table_d2_c_r");
+                SetState(GetMaterial() + "_table_d2_c_r");
                 Rotate(Dir::WEST);
             }
             else
             {
-                SetState(material_ + "_table_d2_c_f");
+                SetState(GetMaterial() + "_table_d2_c_f");
                 Rotate(Dir::WEST);
             }
         }
@@ -199,12 +199,12 @@ void Table::UpdateSprite(quint32 ignored_table)
         {
             if (upright)
             {
-                SetState(material_ + "_table_d2_c_r");
+                SetState(GetMaterial() + "_table_d2_c_r");
                 Rotate(Dir::EAST);
             }
             else
             {
-                SetState(material_ + "_table_d2_c_f");
+                SetState(GetMaterial() + "_table_d2_c_f");
                 Rotate(Dir::EAST);
             }
         }
@@ -212,12 +212,12 @@ void Table::UpdateSprite(quint32 ignored_table)
         {
             if (downleft)
             {
-                SetState(material_ + "_table_d2_c_r");
+                SetState(GetMaterial() + "_table_d2_c_r");
                 Rotate(Dir::NORTH);
             }
             else
             {
-                SetState(material_ + "_table_d2_c_f");
+                SetState(GetMaterial() + "_table_d2_c_f");
                 Rotate(Dir::NORTH);
             }
         }
@@ -225,24 +225,24 @@ void Table::UpdateSprite(quint32 ignored_table)
         {
             if (downright)
             {
-                SetState(material_ + "_table_d2_c_r");
+                SetState(GetMaterial() + "_table_d2_c_r");
                 Rotate(Dir::SOUTH);
             }
             else
             {
-                SetState(material_ + "_table_d2_c_f");
+                SetState(GetMaterial() + "_table_d2_c_f");
                 Rotate(Dir::SOUTH);
             }
         }
         else if (right + left == 2)
         {
-            SetState(material_ + "_table_d2");
+            SetState(GetMaterial() + "_table_d2");
             Rotate(Dir::WEST);
         }
     }
     else if (up + down + left + right == 1)
     {
-        SetState(material_ + "_table_d1");
+        SetState(GetMaterial() + "_table_d1");
         if (up == 1)
         {
             Rotate(Dir::NORTH);
@@ -262,7 +262,7 @@ void Table::UpdateSprite(quint32 ignored_table)
     }
     else if (up + down + left + right == 0)
     {
-        SetState(material_ + "_table_d0");
+        SetState(GetMaterial() + "_table_d0");
     }
 }
 void Table::AttackBy(IdPtr<Item> item)
@@ -294,6 +294,6 @@ int Table::CheckTable(IdPtr<MapObject> container, quint32 ignored_table)
 MetalTable::MetalTable()
 {
     SetSprite("icons/metaltables.dmi"); 
-    material_ = "metal";
-    SetState(material_ + "_table_d0");
+    SetMaterial("metal");
+    SetState(GetMaterial() + "_table_d0");
 }
