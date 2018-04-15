@@ -4,14 +4,14 @@ using namespace kv;
 
 Bullet::Bullet()
 {
-    damage_ = 20;
+    SetDamage(20);
     SetState("bullet");
     SetName("Bullet");
 }
 
 Laser::Laser()
 {
-    burn_damage_ = 10;
+    SetBurnDamage(10);
     SetState("laser");
     SetName("Laser");
 }

@@ -209,13 +209,3 @@ void Projectile::AfterWorldCreation()
     Movable::AfterWorldCreation();
     SetFreq(1);
 }
-
-int Projectile::GetDamage()
-{
-    return damage_;
-}
-
-int Projectile::GetBurnDamage()
-{
-    return burn_damage_;
-}
