@@ -40,8 +40,8 @@ public:
 class MockIObjectFactory : public ObjectFactoryInterface
 {
 public:
-    MOCK_METHOD0(GetIdTable, QVector<ObjectInfo>&());
-    MOCK_CONST_METHOD0(GetIdTable, const QVector<ObjectInfo>&());
+    MOCK_METHOD0(GetIdTable, std::vector<ObjectInfo>&());
+    MOCK_CONST_METHOD0(GetIdTable, const std::vector<ObjectInfo>&());
     MOCK_CONST_METHOD0(Hash, quint32());
     MOCK_METHOD0(BeginWorldCreation, void());
     MOCK_METHOD0(FinishWorldCreation, void());

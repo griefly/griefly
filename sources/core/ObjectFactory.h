@@ -11,8 +11,8 @@ public:
     ObjectFactory(GameInterface* game);
     virtual ~ObjectFactory();
 
-    virtual QVector<ObjectInfo>& GetIdTable() override;
-    virtual const QVector<ObjectInfo>& GetIdTable() const override;
+    virtual std::vector<ObjectInfo>& GetIdTable() override;
+    virtual const std::vector<ObjectInfo>& GetIdTable() const override;
 
     virtual quint32 Hash() const override;
 
@@ -42,7 +42,7 @@ private:
 
     QVector<kv::Object*> ids_to_delete_;
 
-    QVector<ObjectInfo> objects_table_;
+    std::vector<ObjectInfo> objects_table_;
 
     quint32 id_;
 };

@@ -32,12 +32,12 @@ ObjectFactory::~ObjectFactory()
     }
 }
 
-QVector<ObjectInfo>& ObjectFactory::GetIdTable()
+std::vector<ObjectInfo>& ObjectFactory::GetIdTable()
 {
     return objects_table_;
 }
 
-const QVector<ObjectInfo>& ObjectFactory::GetIdTable() const
+const std::vector<ObjectInfo>& ObjectFactory::GetIdTable() const
 {
     return objects_table_;
 }

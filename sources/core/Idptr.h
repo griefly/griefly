@@ -27,7 +27,7 @@ struct ObjectInfo
     kv::Object* object;
 };
 
-extern KVENGINE_EXPORT QVector<ObjectInfo>* id_ptr_id_table;
+extern KVENGINE_EXPORT std::vector<ObjectInfo>* id_ptr_id_table;
 
 struct IdPtrBase
 {

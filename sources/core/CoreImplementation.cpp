@@ -28,7 +28,7 @@
 
 #include "Version.h"
 
-QVector<ObjectInfo>* id_ptr_id_table = nullptr;
+std::vector<ObjectInfo>* id_ptr_id_table = nullptr;
 
 namespace
 {

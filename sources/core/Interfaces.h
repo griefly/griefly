@@ -67,8 +67,8 @@ class ObjectFactoryInterface
 public:
     virtual ~ObjectFactoryInterface() { }
 
-    virtual QVector<ObjectInfo>& GetIdTable() = 0;
-    virtual const QVector<ObjectInfo>& GetIdTable() const = 0;
+    virtual std::vector<ObjectInfo>& GetIdTable() = 0;
+    virtual const std::vector<ObjectInfo>& GetIdTable() const = 0;
 
     virtual quint32 Hash() const = 0;
 

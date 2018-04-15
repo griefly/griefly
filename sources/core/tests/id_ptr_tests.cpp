@@ -20,8 +20,8 @@ public:
     }
 
 private:
-    QVector<ObjectInfo> table_;
-    QVector<ObjectInfo>* old_table_;
+    std::vector<ObjectInfo> table_;
+    std::vector<ObjectInfo>* old_table_;
 };
 
 TEST(IdPtrDeathTest, Death)
