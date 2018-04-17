@@ -35,9 +35,9 @@ void Breakable::Bump(const Vector& vector, IdPtr<Movable> item)
     Movable::Bump(vector, item);
 }
 
-void Breakable::SetHitPoints(int number)
+void Breakable::SetHitPoints(int hit_points)
 {
-    hit_points_ = number;
+    hit_points_ = hit_points;
 }
 
 void Breakable::Hit(int damage)

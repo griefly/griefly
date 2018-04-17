@@ -15,7 +15,7 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     void TurnOn();
     void TurnOff();
-    bool Working() const { return on_; }
+    bool IsWorking() const { return on_; }
     int AddFuel(int amount);
 private:
     int KV_SAVEABLE(fuel_);

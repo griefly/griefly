@@ -123,7 +123,7 @@ void Door::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<Weldingtool> welding_tool = item)
     {
-        if ((IsState(CLOSED) || IsState(WELDED)) && welding_tool->Working())
+        if ((IsState(CLOSED) || IsState(WELDED)) && welding_tool->IsWorking())
         {
             Weld();
         }

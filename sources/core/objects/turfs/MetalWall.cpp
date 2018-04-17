@@ -26,7 +26,7 @@ void MetalWall::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<Weldingtool> wtool = item)
     {
-        if (wtool->Working())
+        if (wtool->IsWorking())
         {
             PlaySoundIfVisible("Welder.wav");
             Create<MaterialObject>(Girder::GetTypeStatic(), GetOwner());

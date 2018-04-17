@@ -16,7 +16,7 @@ public:
     virtual void Bump(const Vector& vector, IdPtr<Movable> item) override;
     virtual void Break() { }
     virtual void PlayOnHitSound() { }
-    void SetHitPoints(int number);
+    void SetHitPoints(int hit_points);
     void Hit(int damage);
 private:
     int KV_SAVEABLE(hit_points_);

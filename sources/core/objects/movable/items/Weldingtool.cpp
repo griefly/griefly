@@ -43,7 +43,7 @@ int Weldingtool::AddFuel(int amount)
 
 void Weldingtool::TurnOn()
 {
-    if (Working())
+    if (IsWorking())
     {
         return;
     }
@@ -59,7 +59,7 @@ void Weldingtool::TurnOn()
 
 void Weldingtool::TurnOff()
 {
-    if (!Working())
+    if (!IsWorking())
     {
         return;
     }
@@ -71,7 +71,7 @@ void Weldingtool::TurnOff()
 
 void Weldingtool::AttackBy(IdPtr<Item> item)
 {
-    if (Working())
+    if (IsWorking())
     {
         TurnOff();
     }

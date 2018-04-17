@@ -17,8 +17,8 @@ public:
     REGISTER_CLASS_AS(PipeBase);
     PipeBase();
     virtual void AttackBy(IdPtr<Item> item) override;
-    virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) { return false; }
-    virtual bool CanTransferGas(Dir dir) const { return false; }
+    virtual bool Connect(Dir /*dir*/, IdPtr<PipeBase> /*pipe*/) { return false; }
+    virtual bool CanTransferGas(Dir /*dir*/) const { return false; }
     virtual atmos::AtmosHolder* GetAtmosHolder() override { return &atmos_holder_; }
 protected:
     void ConnectHelper(IdPtr<PipeBase>& connection, Dir dir);
@@ -35,7 +35,7 @@ public:
     Pipe();
     virtual bool Connect(Dir dir, IdPtr<PipeBase> pipe) override;
     virtual void AfterWorldCreation() override;
-    virtual bool CanTransferGas(Dir dir) const override { return true; }
+    virtual bool CanTransferGas(Dir /*dir*/) const override { return true; }
     virtual void Process() override;
 protected:
     static void GetTailAndHead(Dir dir, Dir* head, Dir* tail);
