@@ -9,12 +9,20 @@
 
 using namespace kv;
 
+namespace
+{
+
+const int CLOSED_DOOR = visible_level::STANDING_MOB + 1;
+const int OPEN_DOOR = visible_level::ITEM - 1;
+
+}
+
 Door::Door()
 {
     SetTransparency(true);
     SetPassable(Dir::ALL, passable::EMPTY);
 
-    SetVisibleLevel(10);
+    SetVisibleLevel(OPEN_DOOR);
 
     door_state_ = CLOSED;
 
@@ -35,7 +43,7 @@ void Door::Open()
     door_state_ = OPENING;
     last_tick_ = GetGameTick();
     SetFreq(1);
-    SetVisibleLevel(10);
+    SetVisibleLevel(CLOSED_DOOR);
 }
 
 void Door::Close()
@@ -49,7 +57,7 @@ void Door::Close()
     SetPassable(Dir::ALL, passable::EMPTY);
     door_state_ = CLOSING;
     last_tick_ = GetGameTick();
-    SetVisibleLevel(10);
+    SetVisibleLevel(CLOSED_DOOR);
 }
 
 void Door::Process()
@@ -62,7 +70,7 @@ void Door::Process()
             SetPassable(Dir::ALL, passable::FULL);
             last_tick_ = GetGameTick();
             SetState("door_open");
-            SetVisibleLevel(4);
+            SetVisibleLevel(OPEN_DOOR);
         }
         return;
     }
@@ -192,7 +200,7 @@ GlassDoor::GlassDoor()
 {
     SetTransparency(true);
 
-    SetVisibleLevel(10);
+    SetVisibleLevel(CLOSED_DOOR);
 
     door_prefix_ = "left";
 

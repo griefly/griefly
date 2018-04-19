@@ -10,7 +10,7 @@ Computer::Computer()
     SetSprite("icons/computer.dmi");
     SetState("securityb");
 
-    SetVisibleLevel(3);
+    SetVisibleLevel(visible_level::STRUCTURE);
 
     SetName("Computer");
 }

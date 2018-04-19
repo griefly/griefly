@@ -5,6 +5,8 @@
 #include "MapObject.h"
 #include "ViewInfo.h"
 
+#include "VisibleLevels.h"
+
 namespace kv
 {
 
