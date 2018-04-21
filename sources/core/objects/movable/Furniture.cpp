@@ -5,7 +5,7 @@ using namespace kv;
 Bed::Bed()
 {
     SetAnchored(true);
-    SetVisibleLevel(3);
+    SetVisibleLevel(visible_level::STRUCTURE);
 
     SetSprite("icons/objects.dmi");
     SetState("bed");
@@ -17,7 +17,7 @@ Chair::Chair()
 {
     SetAnchored(true);
 
-    SetVisibleLevel(3);
+    SetVisibleLevel(visible_level::STRUCTURE);
 
     SetSprite("icons/objects.dmi");
     SetState("chair");
@@ -31,7 +31,7 @@ void Chair::AfterWorldCreation()
 
     if (GetDir() == Dir::NORTH)
     {
-        SetVisibleLevel(10);
+        SetVisibleLevel(visible_level::STANDING_MOB + 1);
     }
 }
 
@@ -39,7 +39,7 @@ Stool::Stool()
 {
     SetAnchored(true);
 
-    SetVisibleLevel(3);
+    SetVisibleLevel(visible_level::STRUCTURE);
 
     SetSprite("icons/objects.dmi");
     SetState("stool");

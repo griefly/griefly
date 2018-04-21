@@ -37,7 +37,7 @@ void MaterialObject::Delete()
 
 MaterialObject::MaterialObject()
 {
-    SetVisibleLevel(0);
+    SetVisibleLevel(visible_level::LOW_TURF);
 
     passable_all_ = passable::FULL;
     passable_up_ = passable::FULL;

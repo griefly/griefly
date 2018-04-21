@@ -4,6 +4,7 @@ namespace visible_level
 {
 
 const int LOW_TURF = 0;
+const int MIDDLE_TURF = 1;
 const int HIGH_TURF = 2;
 
 const int STRUCTURE = 3;

@@ -8,7 +8,7 @@ Projectile::Projectile()
     damage_ = 0;
     burn_damage_ = 0;
     SetSprite("icons/projectiles.dmi");
-    SetVisibleLevel(6);
+    SetVisibleLevel(visible_level::ITEM + 1);
     current_step_ = 0;
 
     SetTickSpeed(1);

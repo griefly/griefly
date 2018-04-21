@@ -8,7 +8,7 @@ using namespace kv;
 PipeBase::PipeBase()
 {
     SetAnchored(true);
-    SetVisibleLevel(1);
+    SetVisibleLevel(visible_level::MIDDLE_TURF);
 
     SetSprite("icons/pipes.dmi");
     //SetState("intact");
@@ -240,7 +240,7 @@ Vent::Vent()
 
     SetHidden(false);
 
-    SetVisibleLevel(3);
+    SetVisibleLevel(visible_level::STRUCTURE);
 
     SetName("Vent");
 }
@@ -337,7 +337,7 @@ void Valve::AttackBy(IdPtr<Item> item)
 Connector::Connector()
 {
     SetState("connector");
-    SetVisibleLevel(3);
+    SetVisibleLevel(visible_level::STRUCTURE);
 
     SetName("Connector");
 }

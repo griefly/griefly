@@ -6,7 +6,7 @@ using namespace kv;
 
 Closet::Closet()
 {
-    SetVisibleLevel(4);
+    SetVisibleLevel(visible_level::ITEM - 1);
 
     SetName("Closet");
 
