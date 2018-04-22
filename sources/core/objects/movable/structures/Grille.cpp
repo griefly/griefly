@@ -16,7 +16,7 @@ Grille::Grille()
     SetTickSpeed(5);
     SetHitPoints(15);
 
-    SetVisibleLevel(8);
+    SetVisibleLevel(visible_level::LAYING_MOB);
 
     SetSprite("icons/structures.dmi");
     SetState("grille");

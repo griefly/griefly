@@ -8,7 +8,7 @@ FuelTank::FuelTank()
 {
     SetName("Fueltank");
 
-    SetVisibleLevel(6);
+    SetVisibleLevel(visible_level::ITEM + 1);
 
     SetTransparency(true);
 
@@ -31,7 +31,7 @@ WaterTank::WaterTank()
 {
     SetName("Watertank");
 
-    SetVisibleLevel(6);
+    SetVisibleLevel(visible_level::ITEM + 1);
 
     SetTransparency(true);
 
@@ -41,7 +41,7 @@ WaterTank::WaterTank()
     SetPassable(Dir::ALL, passable::AIR);
 }
 
-void WaterTank::AttackBy(IdPtr<Item> item)
+void WaterTank::AttackBy(IdPtr<Item> /*item*/)
 {
 
 }

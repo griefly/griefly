@@ -14,7 +14,7 @@ MetalWall::MetalWall()
     SetTransparency(false);
     SetPassable(Dir::ALL, passable::EMPTY);
 
-    SetVisibleLevel(2);
+    SetVisibleLevel(visible_level::HIGH_TURF);
 
     SetSprite("icons/walls.dmi");
     SetState("metal0");
@@ -42,7 +42,7 @@ ReinforcedWall::ReinforcedWall()
     SetTransparency(false);
     SetPassable(Dir::ALL, passable::EMPTY);
 
-    SetVisibleLevel(2);
+    SetVisibleLevel(visible_level::HIGH_TURF);
 
     SetSprite("icons/walls.dmi");
     SetState("r_wall");

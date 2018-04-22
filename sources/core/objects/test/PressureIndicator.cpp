@@ -6,7 +6,7 @@ using namespace kv;
 
 PressureIndicator::PressureIndicator()
 {
-    SetVisibleLevel(11);
+    SetVisibleLevel(visible_level::STANDING_MOB + 1);
     SetName("Pressure indicator");
     SetSprite("icons/numbers.dmi");
     SetState("empty");

@@ -15,7 +15,7 @@ FlatGlass::FlatGlass()
     SetTickSpeed(5);
     SetHitPoints(20);
 
-    SetVisibleLevel(9);
+    SetVisibleLevel(visible_level::STANDING_MOB);
 
     SetSprite("icons/structures.dmi");
     SetState("window");

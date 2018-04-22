@@ -12,7 +12,7 @@ Item::Item()
 
     SetDamage(0);
 
-    SetVisibleLevel(5);
+    SetVisibleLevel(visible_level::ITEM);
     SetSprite("icons/items.dmi");
 }
 

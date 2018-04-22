@@ -59,7 +59,7 @@ void Floor::SetOpen(bool open)
     if (open_)
     {
         SetState("plating");
-        SetVisibleLevel(0);
+        SetVisibleLevel(visible_level::LOW_TURF);
         if (auto vent = GetOwner()->GetItem<Vent>())
         {
             vent->SetHidden(false);
@@ -68,14 +68,13 @@ void Floor::SetOpen(bool open)
     else
     {
         SetState(floor_type_);
-        SetVisibleLevel(2);
+        SetVisibleLevel(visible_level::HIGH_TURF);
         if (auto vent = GetOwner()->GetItem<Vent>())
         {
             vent->SetHidden(true);
         }
     }
     GetView().RemoveOverlays();
-    //qDebug() << "End setopen";
 }
 
 void Floor::ApplyFire(int intensity)

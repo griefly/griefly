@@ -13,7 +13,7 @@ Lattice::Lattice()
     SetSprite("icons/structures.dmi");
     SetState("latticefull");
 
-    SetVisibleLevel(1);
+    SetVisibleLevel(visible_level::MIDDLE_TURF);
     SetAnchored(true);
 
     SetName("Lattice");
