@@ -29,9 +29,9 @@ void MetalWall::AttackBy(IdPtr<Item> item)
         if (wtool->IsWorking())
         {
             PlaySoundIfVisible("Welder.wav");
-            Create<MaterialObject>(Girder::GetTypeStatic(), GetOwner());
-            Create<MaterialObject>(Metal::GetTypeStatic(), GetOwner());
-            Create<Turf>(Plating::GetTypeStatic(), GetOwner());
+            Create<Girder>(GetOwner());
+            Create<Metal>(GetOwner());
+            Create<Plating>(GetOwner());
             Delete();
         }
     }

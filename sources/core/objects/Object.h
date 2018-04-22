@@ -102,6 +102,11 @@ public:
         }
         return retval;
     }
+    template<typename T>
+    IdPtr<T> Create(IdPtr<MapObject> owner = 0)
+    {
+        return Create(T::GetTypeStatic(), owner);
+    }
 private:
     quint32 CreateImpl(const QString& type, quint32 owner = 0);
 
