@@ -93,7 +93,7 @@ void Ghost::Process()
     {
         if (IsMinded())
         {
-            auto login_mob = Create<Mob>(LoginMob::GetTypeStatic(), 0);
+            auto login_mob = Create<LoginMob>();
             MoveMindTo(login_mob);
             Delete();
         }

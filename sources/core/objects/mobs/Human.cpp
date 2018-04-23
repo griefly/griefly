@@ -69,7 +69,7 @@ void Human::AfterWorldCreation()
 {
     Mob::AfterWorldCreation();
 
-    interface_ = Create<HumanInterface>(HumanInterface::GetTypeStatic());
+    interface_ = Create<HumanInterface>();
     interface_->SetOwner(GetId());
 
     UpdateOverlays();
@@ -437,7 +437,7 @@ void Human::OnDeath()
 {
     if (IsMinded())
     {
-        auto ghost = Create<Ghost>(Ghost::GetTypeStatic(), GetOwner());
+        auto ghost = Create<Ghost>(GetOwner());
         ghost->SetName(GetName());
 
         MoveMindTo(ghost);

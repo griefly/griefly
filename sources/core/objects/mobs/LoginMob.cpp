@@ -97,7 +97,7 @@ void LoginMob::ProcessMessage(const Message& message)
         {
             return;
         }
-        IdPtr<Human> human = Create<Human>(Human::GetTypeStatic());
+        IdPtr<Human> human = Create<Human>();
 
         QString human_state = HUMAN_STATES[GenerateRandom() % HUMAN_STATES_AMOUNT];
         human->SetState(human_state);
