@@ -169,7 +169,7 @@ void Human::ProcessMessage(const Message& message)
         {
             if (text.startsWith(str))
             {
-                quint32 length = str.length();
+                qint32 length = str.length();
                 text.replace(0, length, "");
                 MakeEmote(text);
                 found = true;
@@ -369,10 +369,22 @@ void Human::Live()
 
         const int BURNING_THRESHOLD = 3;
         const int MIN_BURN_DAMAGE = 1;
-        if (qAbs(REGULAR_TEMPERATURE - temperature) > BURNING_THRESHOLD)
+        if (std::abs(REGULAR_TEMPERATURE - temperature) > BURNING_THRESHOLD)
         {
-            int damage = qMax(MIN_BURN_DAMAGE,qAbs(REGULAR_TEMPERATURE - temperature));
+            const int damage = std::max(MIN_BURN_DAMAGE, std::abs(REGULAR_TEMPERATURE - temperature));
             ApplyBurnDamage(damage);
+            if ((GetGameTick() % 13) == 0)
+            {
+                if (   (temperature > REGULAR_TEMPERATURE)
+                    && (pressure > ZERO_TEMPERATURE_PRESSURE_BORDER))
+                {
+                    PostHtmlFor("<font color=\"#FF1200\">It is too hot here!</font>", GetId());
+                }
+                else
+                {
+                    PostHtmlFor("<font color=\"#0022FF\">It is too cold here!</font>", GetId());
+                }
+            }
         }
         if (oxygen > 0)
         {

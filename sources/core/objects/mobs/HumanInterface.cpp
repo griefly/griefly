@@ -378,9 +378,6 @@ void kv::HumanInterface::UpdateEnvironment(
     int state = qMax(-4, (temperature - REGULAR_TEMPERATURE) / 6);
     state = qMin(4, state);
 
-    // When amount of atmos moles is too small
-    // temperature starts behave a little bit weird
-    const int ZERO_TEMPERATURE_PRESSURE_BORDER = 1000;
     if (pressure < ZERO_TEMPERATURE_PRESSURE_BORDER)
     {
         state = -4;

@@ -26,6 +26,10 @@ const QString FEET = "feet";
 
 }
 
+// When amount of atmos moles is too small
+// temperature starts behave a little bit weird
+const int ZERO_TEMPERATURE_PRESSURE_BORDER = 1000;
+
 class HumanInterface : public Object
 {
 public:
