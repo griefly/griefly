@@ -16,6 +16,11 @@ Item::Item()
     SetSprite("icons/items.dmi");
 }
 
+void Item::Attack(IdPtr<MapObject> /*object*/)
+{
+    // Nothing
+}
+
 Screwdriver::Screwdriver()
 {
     SetDamage(5);

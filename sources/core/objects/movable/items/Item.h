@@ -13,6 +13,8 @@ public:
     REGISTER_CLASS_AS(Item);
     Item();
 
+    virtual void Attack(IdPtr<MapObject> object);
+
     SlotType GetItemType() const { return type_; }
     void SetItemType(SlotType type) { type_ = type; }
 
