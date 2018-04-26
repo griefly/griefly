@@ -265,7 +265,7 @@ void Human::ProcessMessage(const Message& message)
                 {
                     if (GetLying() == false)
                     {
-                        object->AttackBy(interface_->GetItemInActiveHand());
+                        PerformAttack(object, interface_->GetItemInActiveHand());
                     }
                 }
                 
