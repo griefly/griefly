@@ -10,6 +10,9 @@ namespace kv
 class Turf;
 class Movable;
 class Item;
+class MapObject;
+
+void PerformAttack(IdPtr<MapObject> target, IdPtr<Item> item);
 
 using PassableLevel = int;
 namespace passable
