@@ -45,12 +45,6 @@ void GasTank::AttackBy(IdPtr<Item> item)
         return;
     }
 
-    if (IdPtr<AtmosTool> tool = item)
-    {
-        PostHtmlFor(AtmosTool::GetHtmlInfo(atmos_holder_), tool->GetOwner());
-        return;
-    }
-
     if (state_ == State::BROKEN)
     {
         return;

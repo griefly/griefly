@@ -55,6 +55,16 @@ void AtmosTool::AttackBy(IdPtr<Item> item)
     }
 }
 
+bool AtmosTool::Attack(IdPtr<MapObject> object)
+{
+    if (atmos::AtmosHolder* holder = object->GetAtmosHolder())
+    {
+        PostHtmlFor(AtmosTool::GetHtmlInfo(*holder), GetOwner());
+        return false;
+    }
+    return true;
+}
+
 RemoteAtmosTool::RemoteAtmosTool()
 {
     SetName("Remote atmos tool");

@@ -18,13 +18,9 @@ PipeBase::PipeBase()
     AddDefaultValues(&atmos_holder_);
 }
 
-void PipeBase::AttackBy(IdPtr<Item> item)
+void PipeBase::AttackBy(IdPtr<Item> /*item*/)
 {
-    if (IdPtr<AtmosTool> tool = item)
-    {
-        PostHtmlFor(AtmosTool::GetHtmlInfo(atmos_holder_), tool->GetOwner());
-        return;
-    }
+    // TODO: wrench?
 }
 
 void PipeBase::ConnectHelper(IdPtr<PipeBase>& connection, Dir dir)

@@ -17,6 +17,7 @@ public:
     static QString GetHtmlInfo(const atmos::AtmosHolder& holder);
 
     virtual void AttackBy(IdPtr<Item> item) override;
+    virtual bool Attack(IdPtr<MapObject> object) override;
 };
 END_DECLARE(AtmosTool)
 
