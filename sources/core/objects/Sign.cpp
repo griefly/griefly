@@ -21,7 +21,3 @@ void WallSign::AfterWorldCreation()
     MaterialObject::AfterWorldCreation();
     SetState(sign_type_);
 }
-
-void WallSign::AttackBy(IdPtr<Item> item)
-{
-}

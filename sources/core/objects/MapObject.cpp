@@ -10,7 +10,10 @@ void kv::PerformAttack(IdPtr<MapObject> target, IdPtr<Item> item)
 {
     if (item.IsValid())
     {
-        item->Attack(target);
+        if (!item->Attack(target))
+        {
+            return;
+        }
     }
     // 'item' or 'target' can be invalidated in the Attack method
     if (item.IsValid() && target.IsValid())

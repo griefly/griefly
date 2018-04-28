@@ -12,8 +12,6 @@ public:
     REGISTER_CLASS_AS(WallSign);
     WallSign();
     virtual void AfterWorldCreation() override;
-
-    virtual void AttackBy(IdPtr<Item> item) override;
 protected:
     QString KV_SAVEABLE(sign_type_);
 };

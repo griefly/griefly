@@ -16,9 +16,9 @@ Item::Item()
     SetSprite("icons/items.dmi");
 }
 
-void Item::Attack(IdPtr<MapObject> /*object*/)
+bool Item::Attack(IdPtr<MapObject> /*object*/)
 {
-    // Nothing
+    return true;
 }
 
 Screwdriver::Screwdriver()
