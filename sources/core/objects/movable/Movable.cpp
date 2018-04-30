@@ -76,7 +76,7 @@ void Movable::ProcessForce()
     }
 }
 
-void Movable::ApplyForce(Vector force)
+void Movable::ApplyForce(const Vector& force, ForceSource /*source*/)
 {
     if (IsZero(force))
     {

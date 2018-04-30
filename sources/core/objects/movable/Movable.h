@@ -20,7 +20,8 @@ public:
     Dir GetDir() const { return direction_; }
 
     virtual void ProcessForce();
-    virtual void ApplyForce(Vector force) override;
+
+    virtual void ApplyForce(const Vector& force, ForceSource source = ForceSource::UNKNOWN) override;
 
     virtual void Delete() override { MaterialObject::Delete(); }
 

@@ -68,7 +68,7 @@ void Mob::MoveMindTo(IdPtr<Mob> other)
 
 bool Mob::IsMinded() const
 {
-    quint32 net_id = GetGame().GetNetId(GetId());
+    const quint32 net_id = GetGame().GetNetId(GetId());
     if (net_id == 0)
     {
         return false;

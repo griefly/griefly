@@ -35,7 +35,7 @@ void FlatGlass::AfterWorldCreation()
     SetPassable(GetDir(), passable::EMPTY);
 }
 
-void FlatGlass::ApplyForce(Vector force)
+void FlatGlass::ApplyForce(const Vector& force, ForceSource source)
 {
     const int max = std::max(std::max(force.x, force.y), force.z);
     const int BORDERLINE = 30 * FORCE_UNIT;
@@ -44,7 +44,7 @@ void FlatGlass::ApplyForce(Vector force)
         Break();
         return;
     }
-    Breakable::ApplyForce(force);
+    Breakable::ApplyForce(force, source);
 }
 
 void FlatGlass::Bump(const Vector& vector, IdPtr<Movable> item)

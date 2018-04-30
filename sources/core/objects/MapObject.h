@@ -67,7 +67,17 @@ public:
 
     virtual void AttackBy(IdPtr<Item> item);
 
-    virtual void ApplyForce(Vector force) { Q_UNUSED(force) }
+    // TODO: IdPtr instead?
+    enum class ForceSource
+    {
+        UNKNOWN,
+        GAS
+    };
+    virtual void ApplyForce(const Vector& force, ForceSource source = ForceSource::UNKNOWN)
+    {
+        Q_UNUSED(force)
+        Q_UNUSED(source)
+    }
 
     virtual bool CanTouch(IdPtr<MapObject> object) const
     {
