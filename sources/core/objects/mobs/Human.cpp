@@ -346,6 +346,20 @@ void Human::AddLayingTimer(int value)
     lay_timer_ += value;
 }
 
+void Human::ApplyForce(const Vector& force, ForceSource source)
+{
+    if (source == ForceSource::GAS)
+    {
+        if (IsMinded() && ((GetGameTick() % 5) == 0))
+        {
+            GetGame().GetChatFrameInfo().PostPersonal(
+                "You've been pused by a rush of air!",
+                GetGame().GetNetId(GetId()));
+        }
+    }
+    Mob::ApplyForce(force, source);
+}
+
 void Human::Live()
 {
     if (dead_)

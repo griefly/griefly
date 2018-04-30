@@ -43,6 +43,8 @@ public:
 
     void AddLayingTimer(int value);
   
+    virtual void ApplyForce(const Vector& force, ForceSource source = ForceSource::UNKNOWN) override;
+
     virtual void Bump(const Vector& force, IdPtr<Movable> item) override;
 
     virtual void AttackBy(IdPtr<Item> item) override;

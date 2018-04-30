@@ -91,7 +91,7 @@ void Atmosphere::ProcessTileMove(int x, int y, int z, qint32 game_tick)
                 }
                 if (i != tile->GetContent().rend())
                 {
-                    (*i)->ApplyForce(force);
+                    (*i)->ApplyForce(force, kv::MapObject::ForceSource::GAS);
                 }
             }
         }
