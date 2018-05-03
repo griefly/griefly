@@ -4,6 +4,7 @@
 #include "Hearer.h"
 
 #include "HumanInterface.h"
+#include "objects/movable/items/Limbs.h"
 
 const int HUMAN_MAX_HEALTH = 10000;
 const int REGULAR_TEMPERATURE = 40;
@@ -91,6 +92,9 @@ protected:
 private:
     void TryClownBootsHonk();
     void MakeEmote(const QString& emote);
+
+    // TODO: limbs?
+    IdPtr<Hand> KV_SAVEABLE(hand_);
 };
 END_DECLARE(Human);
 

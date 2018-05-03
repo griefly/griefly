@@ -14,4 +14,13 @@ public:
 };
 END_DECLARE(Limb)
 
+class Hand : public Limb
+{
+public:
+    DECLARE_SAVEABLE(Hand, Limb);
+    REGISTER_CLASS_AS(Hand);
+    Hand();
+};
+END_DECLARE(Hand)
+
 }

@@ -72,6 +72,8 @@ void Human::AfterWorldCreation()
     interface_ = Create<HumanInterface>();
     interface_->SetOwner(GetId());
 
+    hand_ = Create<Hand>(GetId());
+
     UpdateOverlays();
 
     SetName(GetGame().GetNames().GetMaleName());
