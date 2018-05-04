@@ -72,7 +72,9 @@ void Human::AfterWorldCreation()
     interface_ = Create<HumanInterface>();
     interface_->SetOwner(GetId());
 
-    hand_ = Create<Hand>(GetId());
+    // TODO: hand can be deleted, so #290
+    hand_ = Create<Hand>();
+    hand_->SetOwner(GetId());
 
     UpdateOverlays();
 
@@ -260,7 +262,7 @@ void Human::ProcessMessage(const Message& message)
                     else
                     {
                         interface_->DropItem();
-                        object->AttackBy(0);
+                        object->AttackBy(hand_);
                     }
                 }
                 else
@@ -491,6 +493,23 @@ void Human::AttackBy(IdPtr<Item> item)
         medicine->Heal(GetId());
         return;
     }
+
+    if (IdPtr<Hand> hand = item)
+    {
+        ApplyBruteDamage(hand->GetDamage() * 100);
+
+        unsigned int punch_value = (GenerateRandom() % 4) + 1;
+        PlaySoundIfVisible(QString("punch%1.wav").arg(punch_value));
+
+        if (GenerateRandom() % 5 == 0)
+        {
+            SetLaying(true);
+            AddLayingTimer(100);
+            PostVisible(GetName() + " has been knocked out!", GetPosition());
+        }
+        return;
+    }
+
     if (item.IsValid() && (item->GetDamage() > 0))
     {
         ApplyBruteDamage(item->GetDamage() * 100);
@@ -502,20 +521,6 @@ void Human::AttackBy(IdPtr<Item> item)
                 QString("<font color=\"red\">%1 is attacked by %2 with %3</font>")
                     .arg(GetName()).arg(item_owner->GetName()).arg(item->GetName()),
                 GetPosition());
-        }
-    }
-    else if (!item.IsValid())
-    {
-        ApplyBruteDamage(100);
-
-        unsigned int punch_value = (GenerateRandom() % 4) + 1;
-        PlaySoundIfVisible(QString("punch%1.wav").arg(punch_value));
-
-        if (GenerateRandom() % 5 == 0)
-        {
-            SetLaying(true);
-            AddLayingTimer(100);
-            PostVisible(GetName() + " has been knocked out!", GetPosition());
         }
     }
 }
