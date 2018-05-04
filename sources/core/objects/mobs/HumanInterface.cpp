@@ -183,7 +183,7 @@ kv::HumanInterface::HumanInterface()
 
 void kv::HumanInterface::SetOwner(IdPtr<Human> human)
 {
-    owner_ = human;
+    human_owner_ = human;
 }
 
 void kv::HumanInterface::HandleClick(const QString& name)
@@ -193,19 +193,19 @@ void kv::HumanInterface::HandleClick(const QString& name)
         if (slot.name == name)
         {
             ApplyActiveHandOnSlot(&slot);
-            owner_->UpdateOverlays();
+            human_owner_->UpdateOverlays();
             return;
         }
     }
     if (name == STOP_PULL)
     {
-        owner_->StopPull();
+        human_owner_->StopPull();
     }
     else if (name == DROP)
     {
         if (IdPtr<Item> item = GetItemInActiveHand())
         {
-            if (owner_->GetOwner()->AddObject(item))
+            if (human_owner_->GetOwner()->AddObject(item))
             {
                 DropItem();
             }
@@ -217,19 +217,19 @@ void kv::HumanInterface::HandleClick(const QString& name)
     }
     else if (name == LAY)
     {
-        bool laying = owner_->GetLying();
+        bool laying = human_owner_->GetLying();
         if (laying)
         {
-            owner_->SetLaying(false);
+            human_owner_->SetLaying(false);
         }
         else
         {
-            owner_->AddLayingTimer(50);
-            owner_->SetLaying(true);
+            human_owner_->AddLayingTimer(50);
+            human_owner_->SetLaying(true);
         }
     }
 
-    owner_->UpdateOverlays();
+    human_owner_->UpdateOverlays();
 }
 
 bool kv::HumanInterface::PickItem(IdPtr<Item> item)
@@ -306,7 +306,7 @@ bool kv::HumanInterface::InsertItem(Slot* slot, IdPtr<Item> item)
         return false;
     }
     slot->item = item;
-    item->SetOwner(owner_);
+    item->SetOwner(human_owner_);
     return true;
 }
 

@@ -72,8 +72,7 @@ private:
 
     Button& GetButton(const QString& button_name);
 
-    // TODO: rename 'owner_', because there is already field with the same name
-    IdPtr<Human> KV_SAVEABLE(owner_);
+    IdPtr<Human> KV_SAVEABLE(human_owner_);
     QVector<Slot> KV_SAVEABLE(slots_);
     bool KV_SAVEABLE(active_hand_);
 
