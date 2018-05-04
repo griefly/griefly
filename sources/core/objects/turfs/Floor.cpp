@@ -32,7 +32,7 @@ void Floor::AfterWorldCreation()
 
 void Floor::AttackBy(IdPtr<Item> item)
 {
-    if (IdPtr<Crowbar> c = item)
+    if (IdPtr<Crowbar> crowbar = item)
     {
         if (!open_)
         {
@@ -41,12 +41,12 @@ void Floor::AttackBy(IdPtr<Item> item)
             PlaySoundIfVisible("Crowbar.wav");
         }
     }
-    else if (IdPtr<FloorTile> ftile = item)
+    else if (IdPtr<FloorTile> tile = item)
     {
         if (open_)
         {
             SetOpen(false);
-            ftile->Delete();
+            tile->Delete();
             PlaySoundIfVisible("Deconstruct.wav");
         }
     }

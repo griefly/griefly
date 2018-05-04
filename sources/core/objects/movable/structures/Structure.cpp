@@ -6,7 +6,7 @@ using namespace kv;
 
 void Structure::AttackBy(IdPtr<Item> item)
 {
-    if (IdPtr<Screwdriver> scr = item)
+    if (IdPtr<Screwdriver> driver = item)
     {
         SetAnchored(!IsAnchored());
         PlaySoundIfVisible("Screwdriver.wav");

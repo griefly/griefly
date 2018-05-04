@@ -5,6 +5,7 @@
 
 #include "ObjectFactory.h"
 #include "objects/movable/items/Materials.h"
+#include "objects/movable/items/Limbs.h"
 
 using namespace kv;
 
@@ -45,9 +46,9 @@ void Grille::AttackBy(IdPtr<Item> item)
         }
         return;
     }
-    if (!item.IsValid())
+    if (IdPtr<Hand> hand = item)
     {
-        Hit(2);
+        Hit(hand->GetDamage());
         return;
     }
     Breakable::AttackBy(item);

@@ -45,14 +45,12 @@ bool Closet::CanTouch(IdPtr<MapObject> item) const
 
 void Closet::AttackBy(IdPtr<Item> item)
 {
-    if (item)
-    {
-        return;
-    }
-
     if (open_)
     {
-        Close();
+        if (IdPtr<Hand> hand = item)
+        {
+            Close();
+        }
     }
     else
     {
@@ -183,20 +181,21 @@ SecurityLocker::SecurityLocker()
 
 void SecurityLocker::AttackBy(IdPtr<Item> item)
 {
-    if (item.IsValid())
+    if (!open_)
     {
-        if (!open_)
+        if (locked_)
         {
-            if (locked_)
-            {
-                Unlock();
-            }
-            else
-            {
-                Lock();
-            }
-            return;
+            Unlock();
         }
+        else if (IdPtr<Hand> hand = item)
+        {
+            // Nothing
+        }
+        else
+        {
+            Lock();
+        }
+        return;
     }
     Closet::AttackBy(item);
 }

@@ -2,9 +2,11 @@
 
 #include "SynchronizedRandom.h"
 #include "objects/mobs/Mob.h"
+#include "objects/mobs/Human.h"
 #include "Breakable.h"
 #include "objects/movable/items/Shard.h"
 #include "objects/PhysicsEngine.h"
+#include "objects/movable/items/Limbs.h"
 
 using namespace kv;
 
@@ -90,10 +92,13 @@ void FlatGlass::PlayOnHitSound()
 
 void FlatGlass::AttackBy(IdPtr<Item> item)
 {
-    if (!item.IsValid())
+    if (IdPtr<Hand> hand = item)
     {
-/*      GetGame().GetChat().PostSimpleText(
-        name + " knocks on window. " +, GetRoot().Id());*/
+        if (IdPtr<Human> human = item->GetOwner())
+        {
+            PostVisible(
+                QString("%1 knocks on window.").arg(human->GetName()), GetPosition());
+        }
         PlaySoundIfVisible("Glasshit.wav");
         return;
     }

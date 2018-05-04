@@ -3,6 +3,7 @@
 #include "objects/Tile.h"
 
 #include "objects/movable/items/ElectricTools.h"
+#include "objects/movable/items/Limbs.h"
 
 using namespace kv;
 
@@ -40,7 +41,8 @@ void GasTank::AfterWorldCreation()
 
 void GasTank::AttackBy(IdPtr<Item> item)
 {
-    if (item)
+    IdPtr<Hand> hand = item;
+    if (!hand.IsValid())
     {
         return;
     }

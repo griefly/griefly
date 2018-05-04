@@ -13,7 +13,7 @@ Breakable::Breakable()
 
 void Breakable::AttackBy(IdPtr<Item> item)
 {   
-    if (!item.IsValid())
+    if (IdPtr<Hand> hand = item)
     {
         return;
     }

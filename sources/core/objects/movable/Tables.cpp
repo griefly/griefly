@@ -267,14 +267,17 @@ void Table::UpdateSprite(quint32 ignored_table)
 }
 void Table::AttackBy(IdPtr<Item> item)
 {
-    if (item.IsValid())
+    if (IdPtr<Hand> hand = item)
     {
-        if (IdPtr<Human> human = item->GetOwner())
-        {
-            GetOwner()->AddObject(item);
-            human->GetHumanInterface()->DropItem();
-            human->UpdateOverlays();
-        }
+        return;
+    }
+
+    // TODO: move to Attack
+    if (IdPtr<Human> human = item->GetOwner())
+    {
+        GetOwner()->AddObject(item);
+        human->GetHumanInterface()->DropItem();
+        human->UpdateOverlays();
     }
 }
 int Table::CheckTable(IdPtr<MapObject> container, quint32 ignored_table)
