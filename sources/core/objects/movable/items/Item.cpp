@@ -2,6 +2,9 @@
 
 #include "SynchronizedRandom.h"
 
+#include "objects/movable/Tables.h"
+#include "objects/mobs/Human.h"
+
 using namespace kv;
 
 Item::Item()
@@ -16,8 +19,19 @@ Item::Item()
     SetSprite("icons/items.dmi");
 }
 
-bool Item::Attack(IdPtr<MapObject> /*object*/)
+bool Item::Attack(IdPtr<MapObject> object)
 {
+    if (IdPtr<Table> table = object)
+    {
+        // TODO: remove when RemoveItem will be implemented properly in Human
+        if (IdPtr<Human> human = GetOwner())
+        {
+            table->GetOwner()->AddObject(GetId());
+            human->GetHumanInterface()->DropItem();
+            human->UpdateOverlays();
+            return false;
+        }
+    }
     return true;
 }
 
