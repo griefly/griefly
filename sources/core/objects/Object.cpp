@@ -46,10 +46,6 @@ void Object::SetFreq(int freq)
     kv::Assert(game_, "SetFreq is called in constructor");
 
     how_often_ = freq;
-
-    // TODO: Why is it here?
-    kv::Assert(GetId(), "GetId() is zero");
-
     if (how_often_ != 0)
     {
         GetGame().GetProcessor().Add(GetId());
