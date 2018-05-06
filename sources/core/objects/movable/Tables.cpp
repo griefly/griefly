@@ -269,6 +269,7 @@ void Table::AttackBy(IdPtr<Item> /*item*/)
 {
     // TODO: wrench
 }
+
 int Table::CheckTable(IdPtr<MapObject> container, quint32 ignored_table)
 {
     IdPtr<Table> table = container->GetItem<Table>();

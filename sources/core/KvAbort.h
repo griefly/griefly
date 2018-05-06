@@ -20,4 +20,12 @@ extern "C" void __gcov_flush();
     abort();
 }
 
+inline void Assert(bool condition, const QString& message)
+{
+    if (!condition)
+    {
+        Abort(message);
+    }
+}
+
 }
