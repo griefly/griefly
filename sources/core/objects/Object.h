@@ -96,10 +96,7 @@ public:
     IdPtr<T> Create(const QString& type, IdPtr<MapObject> owner = 0)
     {
         IdPtr<T> retval = CreateImpl(type, owner.Id());
-        if (!retval.IsValid())
-        {
-            kv::Abort(QString("Unable to cast object: %1").arg(type));
-        }
+        kv::Assert(retval.IsValid(), QString("Unable to cast object: %1").arg(type));
         return retval;
     }
     template<typename T>

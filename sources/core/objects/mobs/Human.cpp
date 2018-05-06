@@ -254,8 +254,7 @@ void Human::ProcessMessage(const Message& message)
                     {
                         if (!object_owner->RemoveObject(object))
                         {
-                            kv::Abort("Unable to RemoveItem from GetOwner() during"
-                                    " the pick phase!");
+                            kv::Abort("Unable to RemoveItem from GetOwner() during the pick phase!");
                         }
                         object->SetOwner(GetId());
                     }

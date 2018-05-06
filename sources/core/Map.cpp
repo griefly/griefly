@@ -37,12 +37,10 @@ void Map::Represent(GrowingFrame* frame, const VisiblePoints& points, IdPtr<kv::
         }
 
         const auto turf = tile->GetTurf();
-        if (!turf.IsValid())
-        {
-            kv::Abort(
-                QString("Invalid turf in Map::Represent(GrowingFrame* frame) at (%1, %2, %3), but turf always should be valid!")
-                    .arg(point.x).arg(point.y).arg(point.z));
-        }
+        kv::Assert(
+            turf.IsValid(),
+            QString("Invalid turf in Map::Represent(GrowingFrame* frame) at (%1, %2, %3), but turf always should be valid!")
+                .arg(point.x).arg(point.y).arg(point.z));
         turf->Represent(frame, mob);
     }
 }

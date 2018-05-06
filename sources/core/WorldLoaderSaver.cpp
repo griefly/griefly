@@ -163,10 +163,7 @@ void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position posit
     const QString object_type = data.value(mapgen::key::TYPE).toString();
 
     IdPtr<kv::MaterialObject> object = factory.CreateImpl(object_type);
-    if (!object.IsValid())
-    {
-        kv::Abort(QString("Unable to cast: %1").arg(object_type));
-    }
+    kv::Assert(object.IsValid(), QString("Unable to cast: %1").arg(object_type));
 
     const auto& setters_for_types = GetSettersForTypes();
     auto it = setters_for_types.find(object_type);

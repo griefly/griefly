@@ -229,10 +229,7 @@ public:
     }
     FastSerializer::Type GetNextType() const
     {
-        if (IsEnd())
-        {
-            kv::Abort("Cannot determine the next type because the end has been reached!");
-        }
+        kv::Assert(!IsEnd(), "Cannot determine the next type because the end has been reached!");
         return data_[index_];
     }
 private:

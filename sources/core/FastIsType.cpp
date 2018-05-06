@@ -30,10 +30,7 @@ public:
             QByteArray json_raw = json_file.readAll();
             parsed_json_ = QJsonDocument::fromJson(json_raw);
             classes_data_ = parsed_json_.object().value("classes").toArray();
-            if (classes_data_.isEmpty())
-            {
-                kv::Abort("'metadata.json' is corrupted!");
-            }
+            kv::Assert(!classes_data_.isEmpty(), "'metadata.json' is corrupted: 'classes' array is empty");
 
             InitTable();
             inited = true;

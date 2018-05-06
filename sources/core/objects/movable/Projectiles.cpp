@@ -61,10 +61,8 @@ bool Projectile::CheckHumanTile()
 
 bool Projectile::ProcessMovement()
 {
-    if (movement_.size() == 0)
-    {
-        kv::Abort("Trajectory for the projectile is empty, critical error!");
-    }
+    kv::Assert(movement_.size(), "Trajectory for the projectile is empty, critical error!");
+
     Dir step = movement_[current_step_];
     Rotate(step);
     if(!CheckPassable())

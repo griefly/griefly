@@ -242,8 +242,5 @@ void Atmosphere::LoadGrid(MapInterface* map)
 
 void Atmosphere::AssertGrid()
 {
-    if (!map_)
-    {
-        kv::Abort("Atmosphere: Grid is not loaded!");
-    }
+    kv::Assert(map_, "Atmosphere: Grid is not loaded!");
 }

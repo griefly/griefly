@@ -129,10 +129,7 @@ void Closet::Delete()
     QVector<IdPtr<Movable>> copy = content_;
     for (auto it = copy.begin(); it != copy.end(); ++it)
     {
-        if (!it->IsValid())
-        {
-            kv::Abort("Closet contains invalid id_ptr_on");
-        }
+        kv::Assert(it->IsValid(), "Closet contains invalid id_ptr_on");
         (*it)->Delete();
     }
     Movable::Delete();

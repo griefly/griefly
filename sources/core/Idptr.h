@@ -125,10 +125,7 @@ public:
 
     T& operator*()
     {
-        if (id_ == 0)
-        {
-            kv::Abort("Unable to dereference IdPtr with 0 id");
-        }
+        kv::Assert(id_, "Unable to dereference IdPtr with 0 id");
         if (casted_ == nullptr)
         {
             Update();
@@ -138,10 +135,7 @@ public:
 
     const T& operator*() const
     {
-        if (id_ == 0)
-        {
-            kv::Abort("Unable to dereference IdPtr with 0 id");
-        }
+        kv::Assert(id_, "Unable to dereference IdPtr with 0 id");
         if (casted_ == nullptr)
         {
             Update();

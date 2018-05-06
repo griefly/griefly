@@ -221,14 +221,8 @@ void WorldImplementation::ProcessInputMessage(const Message& message)
         }
 
         IdPtr<Mob> game_object = game_id;
-        if (game_object.IsValid())
-        {
-            game_object->ProcessMessage(message);
-        }
-        else
-        {
-            kv::Abort(QString("Game object is not valid: %1").arg(net_id));
-        }
+        kv::Assert(game_object.IsValid(), QString("Game object is not valid: %1").arg(net_id));
+        game_object->ProcessMessage(message);
         return;
     }
 
