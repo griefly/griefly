@@ -102,15 +102,6 @@ TEST(MainObjectDeathTest, Deaths)
             object.SetFreq(0);
         }, "SetFreq is called in constructor");
     }
-    {
-        Object object;
-        MockIGame game;
-        kv::internal::GetObjectGame(&object) = &game;
-        ASSERT_DEATH(
-        {
-            object.SetFreq(0);
-        }, "GetId\\(\\) is zero");
-    }
 }
 
 TEST(MainObject, SettersAndGettersAndCreateImpl)
