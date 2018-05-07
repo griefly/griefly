@@ -41,9 +41,9 @@ def generate_autogen_metadata() -> str:
     file_content += """
 using namespace kv;
 
-std::unordered_map<QString, SettersForType>& GetSettersForTypes()
+std::unordered_map<QString, VariablesForType>& GetVariablesForTypes()
 {
-    static std::unordered_map<QString, SettersForType> map;
+    static std::unordered_map<QString, VariablesForType> map;
     return map;
 }
 
@@ -98,7 +98,7 @@ void InitSettersForTypes()
         class_data_loc = class_data
         while class_data_loc:
             for variable in class_data_loc["variables"]:
-                file_content += "    GetSettersForTypes()[{}::GetTypeStatic()][\"{}\"] = &{}::_Z_KV_SETTERS{};\n" \
+                file_content += "    GetVariablesForTypes()[{}::GetTypeStatic()][\"{}\"].setter = &{}::_Z_KV_SETTERS{};\n" \
                     .format(class_data["class"], variable, class_data_loc["class"], variable)
             class_data_loc = get_class_data(metadata, class_data_loc["base_class"])
     file_content += "}\n"

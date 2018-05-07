@@ -165,13 +165,13 @@ void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position posit
     IdPtr<kv::MaterialObject> object = factory.CreateImpl(object_type);
     kv::Assert(object.IsValid(), QString("Unable to cast: %1").arg(object_type));
 
-    const auto& setters_for_types = GetSettersForTypes();
+    const auto& setters_for_types = GetVariablesForTypes();
     auto it = setters_for_types.find(object_type);
     if (it == setters_for_types.end())
     {
         kv::Abort(QString("Unable to find setters for type: %1").arg(object_type));
     }
-    const SettersForType& setters_for_type = it->second;
+    const VariablesForType& setters_for_type = it->second;
     const QJsonObject variables = data.value(mapgen::key::VARIABLES).toObject();
 
     for (const QString& key : variables.keys())
@@ -184,7 +184,7 @@ void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position posit
                     .arg(object_type)
                     .arg(key));
         }
-        const VariableSetter& setter = it->second;
+        const VariableSetter& setter = it->second.setter;
 
         const QByteArray serialized = ConvertJsonToSerialized(variables.value(key));
         kv::FastDeserializer deserializer(serialized.data(), serialized.size());

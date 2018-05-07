@@ -60,13 +60,13 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
             metadata.turf = true;
         }
 
-        const auto variables_it = GetSettersForTypes().find(it.first);
-        if (variables_it == GetSettersForTypes().end())
+        const auto variables_it = GetVariablesForTypes().find(it.first);
+        if (variables_it == GetVariablesForTypes().end())
         {
             kv::Abort(QString("Cannot find type '%1' in setters table!").arg(it.first));
         }
 
-        const SettersForType& variables = variables_it->second;
+        const VariablesForType& variables = variables_it->second;
         for (auto variable = variables.begin(); variable != variables.end(); ++variable)
         {
             metadata.variables.append(variable->first);
