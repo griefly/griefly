@@ -6,7 +6,10 @@ namespace kv
 {
 
 template<class T>
-QString GetTypeName() = delete;
+QString GetTypeName()
+{
+    return QStringLiteral("unknown");
+};
 
 template<>
 QString GetTypeName<bool>()

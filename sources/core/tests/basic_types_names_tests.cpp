@@ -20,6 +20,7 @@ public:
 
 TEST(BasicTypesNames, Basics)
 {
+    EXPECT_EQ(kv::GetTypeName<Foo>(), "unknown");
     EXPECT_EQ(kv::GetTypeName<decltype(Foo::variable1)>(), "bool");
     EXPECT_EQ(kv::GetTypeName<decltype(Foo::variable2)>(), "int32");
     EXPECT_EQ(kv::GetTypeName<decltype(Foo::variable3)>(), "uint32");
