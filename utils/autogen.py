@@ -34,6 +34,7 @@ def write_to_file(content: str, file: str) -> None:
 def generate_autogen_metadata() -> str:
     file_content = "#include \"AutogenMetadata.h\"\n"
     file_content += "#include \"core/Idptr.h\"\n\n"
+    file_content += "#include \"BasicTypesNames.h\"\n\n"
 
     for header in header_list:
         file_content += "#include \"{}\"\n".format(header)
@@ -99,6 +100,8 @@ void InitSettersForTypes()
         while class_data_loc:
             for variable in class_data_loc["variables"]:
                 file_content += "    GetVariablesForTypes()[{}::GetTypeStatic()][\"{}\"].setter = &{}::_Z_KV_SETTERS{};\n" \
+                    .format(class_data["class"], variable, class_data_loc["class"], variable)
+                file_content += "    GetVariablesForTypes()[{}::GetTypeStatic()][\"{}\"].type = kv::GetTypeName<decltype({}::{})>();\n" \
                     .format(class_data["class"], variable, class_data_loc["class"], variable)
             class_data_loc = get_class_data(metadata, class_data_loc["base_class"])
     file_content += "}\n"

@@ -16,6 +16,7 @@ using VariableSetter = void(*)(kv::Object* ptr, kv::FastDeserializer& str);
 struct VariableInfo
 {
     VariableSetter setter;
+    QString type;
 };
 
 using VariablesForType = std::unordered_map<QString, VariableInfo>;
