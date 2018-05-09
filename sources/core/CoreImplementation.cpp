@@ -69,7 +69,7 @@ kv::CoreInterface::ObjectsMetadata GenerateMetadata()
         const VariablesForType& variables = variables_it->second;
         for (auto variable = variables.begin(); variable != variables.end(); ++variable)
         {
-            metadata.variables.append(variable->first);
+            metadata.variables.append({variable->first, variable->second.type});
         }
 
         retval.insert(metadata.name, metadata);

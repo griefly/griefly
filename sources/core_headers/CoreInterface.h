@@ -183,7 +183,17 @@ public:
         QString name;
         RawViewInfo default_view;
         bool turf;
-        QVector<QString> variables;
+
+        struct VariableInfo
+        {
+            bool operator==(const VariableInfo& other) const
+            {
+                return std::tie(name, type) == std::tie(other.name, other.type);
+            }
+            QString name;
+            QString type;
+        };
+        QVector<VariableInfo> variables;
     };
     struct Config
     {

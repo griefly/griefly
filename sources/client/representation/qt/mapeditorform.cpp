@@ -240,8 +240,8 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     int counter = 0;
     for (auto it = variables.begin(); it != variables.end(); ++it, ++counter)
     {
-        ui->listWidgetVariables->addItem(*it);
-        if (*it == name)
+        ui->listWidgetVariables->addItem(it->name);
+        if (it->name == name)
         {
             ui->listWidgetVariables->setCurrentRow(counter);
         }

@@ -194,11 +194,11 @@ TEST(CoreInterface, ObjectsMetadata)
         EXPECT_FALSE(indicator_metadata.turf);
         ASSERT_EQ(indicator_metadata.variables.size(), 11);
 
-        EXPECT_TRUE(indicator_metadata.variables.contains("transparent_"));
-        EXPECT_TRUE(indicator_metadata.variables.contains("name_"));
-        EXPECT_TRUE(indicator_metadata.variables.contains("view_"));
-        EXPECT_TRUE(indicator_metadata.variables.contains("owner_"));
-        EXPECT_FALSE(indicator_metadata.variables.contains("id_"));
+        EXPECT_TRUE(indicator_metadata.variables.contains({"transparent_", "bool"}));
+        EXPECT_TRUE(indicator_metadata.variables.contains({"name_", "string"}));
+        EXPECT_TRUE(indicator_metadata.variables.contains({"view_", "unknown"}));
+        EXPECT_TRUE(indicator_metadata.variables.contains({"owner_", "unknown"}));
+        EXPECT_FALSE(indicator_metadata.variables.contains({"id_", "uint32"}));
     }
 
     {
@@ -209,11 +209,11 @@ TEST(CoreInterface, ObjectsMetadata)
         EXPECT_TRUE(space_metadata.turf);
         ASSERT_EQ(space_metadata.variables.size(), 13);
 
-        EXPECT_TRUE(space_metadata.variables.contains("transparent_"));
-        EXPECT_TRUE(space_metadata.variables.contains("name_"));
-        EXPECT_TRUE(space_metadata.variables.contains("view_"));
-        EXPECT_TRUE(space_metadata.variables.contains("owner_"));
-        EXPECT_TRUE(space_metadata.variables.contains("atmos_state_"));
-        EXPECT_FALSE(space_metadata.variables.contains("id_"));
+        EXPECT_TRUE(space_metadata.variables.contains({"transparent_", "bool"}));
+        EXPECT_TRUE(space_metadata.variables.contains({"name_", "string"}));
+        EXPECT_TRUE(space_metadata.variables.contains({"view_", "unknown"}));
+        EXPECT_TRUE(space_metadata.variables.contains({"owner_", "unknown"}));
+        EXPECT_TRUE(space_metadata.variables.contains({"atmos_state_", "int32"}));
+        EXPECT_FALSE(space_metadata.variables.contains({"id_", "uint32"}));
     }
 }
