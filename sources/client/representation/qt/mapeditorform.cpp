@@ -297,6 +297,18 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         return;
     }
 
+    {
+        const kv::CoreInterface::ObjectsMetadata& objects_metadata = GetCoreInstance().GetObjectsMetadata();
+        auto it = objects_metadata.find(ee->item_type);
+        if (it == objects_metadata.end())
+        {
+            return;
+        }
+        const auto& variables = it->variables;
+        auto variable = variables[ui->listWidgetVariables->currentRow()];
+        ui->current_variable_type_label->setText(variable.type);
+    }
+
     const QJsonObject& variable_object
         = ee->variables[ui->listWidgetVariables->currentItem()->text()].toObject();
 
