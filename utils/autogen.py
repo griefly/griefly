@@ -51,7 +51,7 @@ std::unordered_map<QString, VariablesForType>& GetVariablesForTypes()
 int Object::TYPE_INDEX;
 const QString& Object::GetTypeStatic()
 {
-    static const QString type = "main";
+    static const QString type("main");
     return type;
 }
 """
@@ -61,7 +61,7 @@ const QString& Object::GetTypeStatic()
 int {data_class}::TYPE_INDEX;
 const QString& {data_class}::GetTypeStatic()
 {{
-    static const QString type = "{data_class}";
+    static const QString type("{data_class}");
     return type;
 }}\n""".format(data_class=class_data["class"])
 
@@ -96,13 +96,21 @@ void InitSettersForTypes()
 {
 """
     for class_data in metadata["classes"]:
+        if not class_data["variables"]:
+            continue
+        file_content += "    // {} variables names\n".format(class_data["class"])
+        for variable in class_data["variables"]:
+            file_content += "    const QString KV_variable_{}_{}(\"{}\");\n" \
+                .format(class_data["class"], variable, variable)
+        file_content += "\n"
+    for class_data in metadata["classes"]:
         class_data_loc = class_data
         while class_data_loc:
             for variable in class_data_loc["variables"]:
-                file_content += "    GetVariablesForTypes()[{}::GetTypeStatic()][\"{}\"].setter = &{}::_Z_KV_SETTERS{};\n" \
-                    .format(class_data["class"], variable, class_data_loc["class"], variable)
-                file_content += "    GetVariablesForTypes()[{}::GetTypeStatic()][\"{}\"].type = kv::GetTypeName<decltype({}::{})>();\n" \
-                    .format(class_data["class"], variable, class_data_loc["class"], variable)
+                file_content += "    GetVariablesForTypes()[{}::GetTypeStatic()][KV_variable_{}_{}].setter = &{}::_Z_KV_SETTERS{};\n" \
+                    .format(class_data["class"], class_data_loc["class"], variable, class_data_loc["class"], variable)
+                file_content += "    GetVariablesForTypes()[{}::GetTypeStatic()][KV_variable_{}_{}].type = kv::GetTypeName<decltype({}::{})>();\n" \
+                    .format(class_data["class"], class_data_loc["class"], variable, class_data_loc["class"], variable)
             class_data_loc = get_class_data(metadata, class_data_loc["base_class"])
     file_content += "}\n"
 
