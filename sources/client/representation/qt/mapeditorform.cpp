@@ -145,7 +145,8 @@ void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, i
     }
 
     ui->listWidgetVariables->clear();
-    ui->lineEditAsString->clear();
+    // TODO:
+    // ui->lineEditAsString->clear();
 
     on_listWidgetTile_itemSelectionChanged();
 }
@@ -306,7 +307,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         }
         const auto& variables = it->variables;
         auto variable = variables[ui->listWidgetVariables->currentRow()];
-        ui->current_variable_type_label->setText(variable.type);
+        ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable.type));
     }
 
     const QJsonObject& variable_object
@@ -323,7 +324,8 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 
     qDebug() << variable_value;
 
-    if (type == mapgen::key::type::STRING)
+    // TODO
+    /*if (type == mapgen::key::type::STRING)
     {
         ui->lineEditAsString->setText(variable_value.toString());
 
@@ -348,7 +350,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 
         ui->lineEditAsString->setText("<Wrong type>");
         ui->lineEditAsInt->setText("<Wrong type>");
-    }
+    }*/
 }
 
 void MapEditorForm::on_lineEditAsString_returnPressed()
@@ -364,13 +366,14 @@ void MapEditorForm::on_lineEditAsString_returnPressed()
         return;
     }
 
-    const QString current_variable = ui->listWidgetVariables->currentItem()->text();
+    // TODO: remove all function
+    /*const QString current_variable = ui->listWidgetVariables->currentItem()->text();
     const QString variable_value = ui->lineEditAsString->text();
 
     ee->variables[current_variable] = QJsonObject{{mapgen::key::type::STRING, variable_value}};
 
     on_listWidgetVariables_itemSelectionChanged();
-    UpdateVariablesColor(*ee);
+    UpdateVariablesColor(*ee);*/
 }
 
 void MapEditorForm::on_lineEditAsInt_returnPressed()
@@ -388,7 +391,8 @@ void MapEditorForm::on_lineEditAsInt_returnPressed()
 
     const QString current_variable = ui->listWidgetVariables->currentItem()->text();
 
-    const QString loc = ui->lineEditAsInt->text();
+    // TODO: remove whole function
+    /*const QString loc = ui->lineEditAsInt->text();
 
     bool ok = false;
     const int value = loc.toInt(&ok);
@@ -402,7 +406,7 @@ void MapEditorForm::on_lineEditAsInt_returnPressed()
     on_listWidgetVariables_itemSelectionChanged();
     UpdateVariablesColor(*ee);
 
-    map_editor_->UpdateDirs(ee);
+    map_editor_->UpdateDirs(ee);*/
 }
 
 void MapEditorForm::on_lineEditAsBool_returnPressed()
@@ -420,7 +424,8 @@ void MapEditorForm::on_lineEditAsBool_returnPressed()
 
     const QString current_variable = ui->listWidgetVariables->currentItem()->text();
 
-    const QString loc = ui->lineEditAsBool->text();
+    // TODO: remove whole function
+    /*const QString loc = ui->lineEditAsBool->text();
 
     bool ok = false;
     const bool value = !!loc.toInt(&ok);
@@ -432,7 +437,7 @@ void MapEditorForm::on_lineEditAsBool_returnPressed()
     ee->variables[current_variable] = QJsonObject{{mapgen::key::type::BOOL, value}};;
 
     on_listWidgetVariables_itemSelectionChanged();
-    UpdateVariablesColor(*ee);
+    UpdateVariablesColor(*ee);*/
 }
 
 void MapEditorForm::on_listWidgetTurf_clicked(const QModelIndex&)

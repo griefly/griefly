@@ -190,19 +190,6 @@
          <string>Load Json</string>
         </property>
        </widget>
-       <widget class="QLabel" name="current_variable_type_label">
-        <property name="geometry">
-         <rect>
-          <x>550</x>
-          <y>10</y>
-          <width>181</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Current type:</string>
-        </property>
-       </widget>
       </widget>
      </item>
      <item>
@@ -234,60 +221,25 @@
            </property>
            <widget class="QListWidget" name="listWidgetTile"/>
            <widget class="QListWidget" name="listWidgetVariables"/>
-           <widget class="QTabWidget" name="tabWidgetVariables">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>100</height>
-             </size>
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="currentIndex">
-             <number>0</number>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-            <widget class="QWidget" name="tabString">
-             <attribute name="title">
-              <string>As String</string>
-             </attribute>
-             <widget class="QLineEdit" name="lineEditAsString">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>113</width>
-                <height>20</height>
-               </rect>
-              </property>
-             </widget>
-            </widget>
-            <widget class="QWidget" name="tabInt">
-             <attribute name="title">
-              <string>As Int</string>
-             </attribute>
-             <widget class="QLineEdit" name="lineEditAsInt">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>113</width>
-                <height>20</height>
-               </rect>
-              </property>
-             </widget>
-            </widget>
-            <widget class="QWidget" name="tab">
-             <attribute name="title">
-              <string>As Bool</string>
-             </attribute>
-             <widget class="QLineEdit" name="lineEditAsBool">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>113</width>
-                <height>20</height>
-               </rect>
-              </property>
-             </widget>
+            <widget class="QLabel" name="current_variable_type_label">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>181</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Current type:</string>
+             </property>
             </widget>
            </widget>
           </widget>
