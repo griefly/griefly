@@ -298,6 +298,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         return;
     }
 
+    QString variable_type;
     {
         const kv::CoreInterface::ObjectsMetadata& objects_metadata = GetCoreInstance().GetObjectsMetadata();
         auto it = objects_metadata.find(ee->item_type);
@@ -308,49 +309,61 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         const auto& variables = it->variables;
         auto variable = variables[ui->listWidgetVariables->currentRow()];
         ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable.type));
+        variable_type = variable.type;
     }
 
     const QJsonObject& variable_object
         = ee->variables[ui->listWidgetVariables->currentItem()->text()].toObject();
 
-    if (variable_object.size() != 1)
+    ui->string_line_edit->hide();
+    ui->int32_spin_box->hide();
+    ui->bool_check_box->hide();
+    ui->unsupported_label->hide();
+
+    ui->set_value_push_button->setEnabled(true);
+    ui->unset_value_push_button->setEnabled(true);
+
+    QJsonValue variable_value;
+    if (variable_object.size() == 0)
     {
-        qDebug() << "Bad variables:" << variable_object;
-        return;
+        ui->unset_value_push_button->setEnabled(false);
+    }
+    else
+    {
+        const QString& type = variable_object.begin().key();
+        variable_value = variable_object.begin().value();
+
+        qDebug() << variable_value;
+
+        if (type != variable_type)
+        {
+            qDebug() << "Variable type mismatch: " << type << variable_type;
+            abort();
+        }
     }
 
-    const QString& type = variable_object.begin().key();
-    const QJsonValue& variable_value = variable_object.begin().value();
-
-    qDebug() << variable_value;
-
-    // TODO
-    /*if (type == mapgen::key::type::STRING)
+    if (variable_type == mapgen::key::type::STRING)
     {
-        ui->lineEditAsString->setText(variable_value.toString());
-
-        ui->lineEditAsInt->setText("<Wrong type>");
-        ui->lineEditAsBool->setText("<Wrong type>");
+        ui->string_line_edit->setText(variable_value.toString());
+        ui->string_line_edit->show();
     }
-    else if (type == mapgen::key::type::INT32)
+    else if (variable_type == mapgen::key::type::INT32)
     {
         const int value = static_cast<int>(variable_value.toDouble());
-        const QString parsed_value = QString::number(value);
-        ui->lineEditAsInt->setText(parsed_value);
-
-        ui->lineEditAsString->setText("<Wrong type>");
-        ui->lineEditAsBool->setText("<Wrong type>");
+        ui->int32_spin_box->setValue(value);
+        ui->int32_spin_box->show();
     }
-    else if (type == mapgen::key::type::BOOL)
+    else if (variable_type == mapgen::key::type::BOOL)
     {
         const bool value = variable_value.toBool();
-        const QString parsed_value = value ? "1" : "0";
-
-        ui->lineEditAsBool->setText(parsed_value);
-
-        ui->lineEditAsString->setText("<Wrong type>");
-        ui->lineEditAsInt->setText("<Wrong type>");
-    }*/
+        ui->bool_check_box->setChecked(value);
+        ui->bool_check_box->show();
+    }
+    else
+    {
+        ui->unsupported_label->show();
+        ui->set_value_push_button->setEnabled(false);
+    }
 }
 
 void MapEditorForm::on_lineEditAsString_returnPressed()
