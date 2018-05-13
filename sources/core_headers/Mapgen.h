@@ -24,9 +24,11 @@ namespace type
     const QString BOOL("bool");
     const QString INT32("int32");
     const QString UINT32("uint32");
+    const QString INT64("int64");
     const QString STRING("string");
     const QString BYTEARRAY("bytearray");
     const QString TYPE("type");
+    const QString UNKNOWN("unknown");
 }
 
 }
