@@ -9,6 +9,8 @@
 
 #include "MapEditor.h"
 
+#include "core_headers/CoreInterface.h"
+
 namespace Ui {
 class MapEditorForm;
 }
@@ -70,6 +72,8 @@ private slots:
 
     void on_loadMapJson_clicked();
 
+    void on_set_value_push_button_clicked();
+
 private:
     bool is_turf_selected_;
 
@@ -83,6 +87,8 @@ private:
     // Metainfo
     std::vector<QString> types_;
     std::vector<QString> turf_types_;
+
+    kv::CoreInterface::ObjectsMetadata objects_metadata_;
 
     Ui::MapEditorForm *ui;
 };

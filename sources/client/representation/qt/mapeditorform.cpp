@@ -65,8 +65,8 @@ MapEditorForm::MapEditorForm(QWidget *parent)
     SetSpriter(new SpriteHolder);
 
     qDebug() << "Start generate images for creators";
-    const auto& objects_metadata = kv::GetCoreInstance().GetObjectsMetadata();
-    for (const kv::CoreInterface::ObjectMetadata& metadata : objects_metadata)
+    objects_metadata_ = kv::GetCoreInstance().GetObjectsMetadata();
+    for (const kv::CoreInterface::ObjectMetadata& metadata : qAsConst(objects_metadata_))
     {
         const RawViewInfo& view_info = metadata.default_view;
 
@@ -230,7 +230,7 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 
     const QString item_type = GetCurrentEditorEntry()->item_type;
 
-    const kv::CoreInterface::ObjectsMetadata& objects_metadata = GetCoreInstance().GetObjectsMetadata();
+    const kv::CoreInterface::ObjectsMetadata& objects_metadata = objects_metadata_;
     auto it = objects_metadata.find(item_type);
     if (it == objects_metadata.end())
     {
@@ -300,7 +300,7 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 
     QString variable_type;
     {
-        const kv::CoreInterface::ObjectsMetadata& objects_metadata = GetCoreInstance().GetObjectsMetadata();
+        const kv::CoreInterface::ObjectsMetadata& objects_metadata = objects_metadata_;
         auto it = objects_metadata.find(ee->item_type);
         if (it == objects_metadata.end())
         {
@@ -548,4 +548,9 @@ void MapEditorForm::on_loadMapJson_clicked()
     }
 
     map_editor_->LoadMapgenJson(document.object());
+}
+
+void MapEditorForm::on_set_value_push_button_clicked()
+{
+
 }
