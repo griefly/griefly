@@ -275,6 +275,26 @@ MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
     return nullptr;
 }
 
+QString MapEditorForm::GetCurrentVariableType()
+{
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return QString();
+    }
+
+    const kv::CoreInterface::ObjectsMetadata& objects_metadata = objects_metadata_;
+    auto it = objects_metadata.find(ee->item_type);
+    if (it == objects_metadata.end())
+    {
+        return QString();
+    }
+    const auto& variables = it->variables;
+    auto variable = variables[ui->listWidgetVariables->currentRow()];
+    ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable.type));
+    return variable.type;
+}
+
 void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
 {
     for (int i = 0; i < ui->listWidgetVariables->count(); ++i)
@@ -298,18 +318,10 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         return;
     }
 
-    QString variable_type;
+    QString variable_type = GetCurrentVariableType();
+    if (variable_type.isEmpty())
     {
-        const kv::CoreInterface::ObjectsMetadata& objects_metadata = objects_metadata_;
-        auto it = objects_metadata.find(ee->item_type);
-        if (it == objects_metadata.end())
-        {
-            return;
-        }
-        const auto& variables = it->variables;
-        auto variable = variables[ui->listWidgetVariables->currentRow()];
-        ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable.type));
-        variable_type = variable.type;
+        return;
     }
 
     const QJsonObject& variable_object

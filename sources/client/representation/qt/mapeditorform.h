@@ -78,6 +78,7 @@ private:
     bool is_turf_selected_;
 
     MapEditor::EditorEntry* GetCurrentEditorEntry();
+    QString GetCurrentVariableType();
 
     void UpdateVariablesColor(MapEditor::EditorEntry& ee);
 
