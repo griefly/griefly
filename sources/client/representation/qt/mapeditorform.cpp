@@ -290,7 +290,13 @@ QString MapEditorForm::GetCurrentVariableType()
         return QString();
     }
     const auto& variables = it->variables;
-    auto variable = variables[ui->listWidgetVariables->currentRow()];
+    const int current_row = ui->listWidgetVariables->currentRow();
+    // TODO: is it possible?
+    if (current_row >= variables.size())
+    {
+        return QString();
+    }
+    auto variable = variables[current_row];
     ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable.type));
     return variable.type;
 }
@@ -564,5 +570,46 @@ void MapEditorForm::on_loadMapJson_clicked()
 
 void MapEditorForm::on_set_value_push_button_clicked()
 {
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
 
+    const QString type = GetCurrentVariableType();
+    if (type.isEmpty())
+    {
+        return;
+    }
+
+    const QString current_variable = ui->listWidgetVariables->currentItem()->text();
+
+    if (type == mapgen::key::type::STRING)
+    {
+        const QString variable_value = ui->string_line_edit->text();
+
+        ee->variables[current_variable] = QJsonObject{{mapgen::key::type::STRING, variable_value}};
+
+        on_listWidgetVariables_itemSelectionChanged();
+        UpdateVariablesColor(*ee);
+    }
+    else if (type == mapgen::key::type::INT32)
+    {
+        const int variable_value = ui->int32_spin_box->value();
+
+        ee->variables[current_variable] = QJsonObject{{mapgen::key::type::INT32, variable_value}};
+
+        on_listWidgetVariables_itemSelectionChanged();
+        UpdateVariablesColor(*ee);
+    }
+    else if (type == mapgen::key::type::BOOL)
+    {
+        const bool variable_value = ui->bool_check_box->isChecked();
+
+        ee->variables[current_variable] = QJsonObject{{mapgen::key::type::BOOL, variable_value}};
+
+        on_listWidgetVariables_itemSelectionChanged();
+        UpdateVariablesColor(*ee);
+    }
+    // TODO: other types
 }

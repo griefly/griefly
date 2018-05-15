@@ -253,18 +253,25 @@
               <string>Current type:</string>
              </property>
             </widget>
-            <widget class="QWidget" name="">
+            <widget class="QWidget" name="layoutWidget">
              <property name="geometry">
               <rect>
                <x>10</x>
                <y>30</y>
-               <width>366</width>
+               <width>408</width>
                <height>30</height>
               </rect>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
-               <widget class="QSpinBox" name="int32_spin_box"/>
+               <widget class="QSpinBox" name="int32_spin_box">
+                <property name="minimum">
+                 <number>-2147483647</number>
+                </property>
+                <property name="maximum">
+                 <number>2147483647</number>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QLineEdit" name="string_line_edit"/>
