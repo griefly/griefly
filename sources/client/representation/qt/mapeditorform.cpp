@@ -145,8 +145,8 @@ void MapEditorForm::newSelectionSetted(int first_x, int first_y, int second_x, i
     }
 
     ui->listWidgetVariables->clear();
-    // TODO:
-    // ui->lineEditAsString->clear();
+
+    ResetVariablesPanel();
 
     on_listWidgetTile_itemSelectionChanged();
 }
@@ -245,7 +245,13 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
         if (it->name == name)
         {
             ui->listWidgetVariables->setCurrentRow(counter);
+            break;
         }
+    }
+
+    if (counter == variables.size())
+    {
+        ResetVariablesPanel();
     }
 
     MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
@@ -301,6 +307,20 @@ QString MapEditorForm::GetCurrentVariableType()
     return variable.type;
 }
 
+void MapEditorForm::ResetVariablesPanel()
+{
+    ui->string_line_edit->hide();
+    ui->int32_spin_box->hide();
+    ui->bool_check_box->hide();
+    ui->unsupported_label->show();
+
+    ui->string_line_edit->clear();
+    ui->int32_spin_box->clear();
+    ui->bool_check_box->setChecked(false);
+
+    ui->frame->hide();
+}
+
 void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
 {
     for (int i = 0; i < ui->listWidgetVariables->count(); ++i)
@@ -332,6 +352,8 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
 
     const QJsonObject& variable_object
         = ee->variables[ui->listWidgetVariables->currentItem()->text()].toObject();
+
+    ui->frame->show();
 
     ui->string_line_edit->hide();
     ui->int32_spin_box->hide();

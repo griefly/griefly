@@ -80,6 +80,8 @@ private:
     MapEditor::EditorEntry* GetCurrentEditorEntry();
     QString GetCurrentVariableType();
 
+    void ResetVariablesPanel();
+
     void UpdateVariablesColor(MapEditor::EditorEntry& ee);
 
     GraphicsScene* scene_;
