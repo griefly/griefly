@@ -220,7 +220,14 @@
             <enum>Qt::Vertical</enum>
            </property>
            <widget class="QListWidget" name="listWidgetTile"/>
-           <widget class="QListWidget" name="listWidgetVariables"/>
+           <widget class="QListWidget" name="listWidgetVariables">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
            <widget class="QFrame" name="frame">
             <property name="minimumSize">
              <size>
@@ -230,7 +237,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>300</width>
+              <width>16777215</width>
               <height>80</height>
              </size>
             </property>

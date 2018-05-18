@@ -123,6 +123,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
         }
     }
     qDebug() << "End generating";
+    showMaximized();
 }
 
 MapEditorForm::~MapEditorForm()
