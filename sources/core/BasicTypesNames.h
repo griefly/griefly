@@ -7,49 +7,97 @@
 namespace kv
 {
 
-// TODO: better namespaces
+namespace impl
+{
+
+template<class T>
+struct TypeName
+{
+    static QString Get()
+    {
+        return mapgen::key::type::UNKNOWN;
+    }
+    TypeName() = delete;
+};
+
+} // namespace impl
 
 template<class T>
 QString GetTypeName()
 {
-    return mapgen::key::type::UNKNOWN;
+    return impl::TypeName<T>::Get();
+};
+
+namespace impl
+{
+
+template<>
+struct TypeName<bool>
+{
+    static QString Get()
+    {
+        return mapgen::key::type::BOOL;
+    }
+    TypeName() = delete;
 };
 
 template<>
-QString GetTypeName<bool>()
+struct TypeName<qint32>
 {
-    return mapgen::key::type::BOOL;
-}
+    static QString Get()
+    {
+        return mapgen::key::type::INT32;
+    }
+    TypeName() = delete;
+};
 
 template<>
-QString GetTypeName<qint32>()
+struct TypeName<quint32>
 {
-    return mapgen::key::type::INT32;
-}
+    static QString Get()
+    {
+        return mapgen::key::type::UINT32;
+    }
+    TypeName() = delete;
+};
 
 template<>
-QString GetTypeName<quint32>()
+struct TypeName<QString>
 {
-    return mapgen::key::type::UINT32;
-}
+    static QString Get()
+    {
+        return mapgen::key::type::STRING;
+    }
+    TypeName() = delete;
+};
 
 template<>
-QString GetTypeName<QString>()
+struct TypeName<QByteArray>
 {
-    return mapgen::key::type::STRING;
-}
+    static QString Get()
+    {
+        return mapgen::key::type::BYTEARRAY;
+    }
+    TypeName() = delete;
+};
 
 template<>
-QString GetTypeName<QByteArray>()
+struct TypeName<qint64>
 {
-    return mapgen::key::type::BYTEARRAY;
-}
+    static QString Get()
+    {
+        return mapgen::key::type::INT64;
+    }
+    TypeName() = delete;
+};
 
-template<>
-QString GetTypeName<qint64>()
+/*template<class T>
+std::enable_if<std::is_enum<T>::value, QString> GetTypeName<T>()
 {
-    return mapgen::key::type::INT64;
-}
+
+}*/
+
+} // namespace impl
 
 } // namespace kv
 
