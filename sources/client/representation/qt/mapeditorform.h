@@ -74,6 +74,8 @@ private slots:
 
     void on_set_value_push_button_clicked();
 
+    void on_unset_value_push_button_clicked();
+
 private:
     bool is_turf_selected_;
 

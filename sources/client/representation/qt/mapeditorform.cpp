@@ -405,6 +405,8 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         ui->unsupported_label->show();
         ui->set_value_push_button->setEnabled(false);
     }
+
+    UpdateVariablesColor(*ee);
 }
 
 void MapEditorForm::on_lineEditAsString_returnPressed()
@@ -610,29 +612,35 @@ void MapEditorForm::on_set_value_push_button_clicked()
     if (type == mapgen::key::type::STRING)
     {
         const QString variable_value = ui->string_line_edit->text();
-
         ee->variables[current_variable] = QJsonObject{{mapgen::key::type::STRING, variable_value}};
-
-        on_listWidgetVariables_itemSelectionChanged();
-        UpdateVariablesColor(*ee);
     }
     else if (type == mapgen::key::type::INT32)
     {
         const int variable_value = ui->int32_spin_box->value();
-
         ee->variables[current_variable] = QJsonObject{{mapgen::key::type::INT32, variable_value}};
-
-        on_listWidgetVariables_itemSelectionChanged();
-        UpdateVariablesColor(*ee);
     }
     else if (type == mapgen::key::type::BOOL)
     {
         const bool variable_value = ui->bool_check_box->isChecked();
-
         ee->variables[current_variable] = QJsonObject{{mapgen::key::type::BOOL, variable_value}};
-
-        on_listWidgetVariables_itemSelectionChanged();
-        UpdateVariablesColor(*ee);
     }
-    // TODO: other types
+
+    on_listWidgetVariables_itemSelectionChanged();
+    UpdateVariablesColor(*ee);
+}
+
+void MapEditorForm::on_unset_value_push_button_clicked()
+{
+    MapEditor::EditorEntry* ee = GetCurrentEditorEntry();
+    if (!ee)
+    {
+        return;
+    }
+
+    const QString current_variable = ui->listWidgetVariables->currentItem()->text();
+    qDebug() << current_variable;
+    ee->variables.remove(current_variable);
+
+    ResetVariablesPanel();
+    on_listWidgetVariables_itemSelectionChanged();
 }
