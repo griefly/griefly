@@ -18,13 +18,13 @@
 
 inline kv::FastSerializer& operator<<(kv::FastSerializer& file, const Dir& dir)
 {
-    file << static_cast<int>(dir);
+    file << static_cast<std::underlying_type_t<Dir>>(dir);
     return file;
 }
 
 inline kv::FastDeserializer& operator>>(kv::FastDeserializer& file, Dir& dir)
 {
-    int temp;
+    std::underlying_type_t<Dir> temp;
     file >> temp;
     dir = static_cast<Dir>(temp);
     return file;

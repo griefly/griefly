@@ -10,26 +10,8 @@ namespace kv
 namespace impl
 {
 
-template<class T>
-struct TypeName
-{
-    static QString Get()
-    {
-        return mapgen::key::type::UNKNOWN;
-    }
-    TypeName() = delete;
-};
-
-} // namespace impl
-
-template<class T>
-QString GetTypeName()
-{
-    return impl::TypeName<T>::Get();
-};
-
-namespace impl
-{
+template<class T, class Unused = void>
+struct TypeName;
 
 template<>
 struct TypeName<bool>
@@ -91,13 +73,34 @@ struct TypeName<qint64>
     TypeName() = delete;
 };
 
-/*template<class T>
-std::enable_if<std::is_enum<T>::value, QString> GetTypeName<T>()
+template<class T>
+struct TypeName<T, std::enable_if_t<std::is_enum<T>::value, void>>
 {
+    static QString Get()
+    {
+        return TypeName<std::underlying_type_t<T>>::Get();
+    }
+    TypeName() = delete;
+};
 
-}*/
+template<class T>
+// TODO: better solution with real default value
+struct TypeName<T, std::enable_if_t<!std::is_enum<T>::value, void>>
+{
+    static QString Get()
+    {
+        return mapgen::key::type::UNKNOWN;
+    }
+    TypeName() = delete;
+};
 
 } // namespace impl
+
+template<class T>
+QString GetTypeName()
+{
+    return impl::TypeName<T>::Get();
+};
 
 } // namespace kv
 

@@ -1,6 +1,8 @@
 #pragma once
 
-enum class Dir : int
+#include <qglobal.h>
+
+enum class Dir : qint32
 {
     ALL = -1, // Basically, the center of something
     WEST = 0,
