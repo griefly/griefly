@@ -16,25 +16,6 @@
 #define KV_UNREACHABLE kv::Abort(QString("Unreachable: %1").arg(__func__));
 #endif // KV_PARANOID
 
-inline kv::FastSerializer& operator<<(kv::FastSerializer& file, const Dir& dir)
-{
-    file << static_cast<std::underlying_type_t<Dir>>(dir);
-    return file;
-}
-
-inline kv::FastDeserializer& operator>>(kv::FastDeserializer& file, Dir& dir)
-{
-    std::underlying_type_t<Dir> temp;
-    file >> temp;
-    dir = static_cast<Dir>(temp);
-    return file;
-}
-
-inline unsigned int Hash(Dir dir)
-{
-    return kv::Hash(static_cast<int>(dir));
-}
-
 namespace kv
 {
 

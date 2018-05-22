@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QString>
 
+#include <type_traits>
 #include <vector>
 
 #include "KvAbort.h"
@@ -34,7 +35,8 @@ const QLatin1String END_TYPE("0~$");
 class FastSerializer
 {
     template<class T>
-    friend FastSerializer& operator<<(
+    friend std::enable_if_t<!std::is_enum<T>::value, kv::FastSerializer&>
+    operator<<(
         FastSerializer& serializer,
         const T& value);
 public:
@@ -176,7 +178,8 @@ private:
 };
 
 template<class T>
-inline FastSerializer& operator<<(FastSerializer& serializer, const T& value)
+std::enable_if_t<!std::is_enum<T>::value, kv::FastSerializer&>
+operator<<(FastSerializer& serializer, const T& value)
 {
     static_assert(
         !std::is_array<T>::value,
@@ -188,7 +191,8 @@ inline FastSerializer& operator<<(FastSerializer& serializer, const T& value)
 class FastDeserializer
 {
     template<class T>
-    friend FastDeserializer& operator>>(
+    friend std::enable_if_t<!std::is_enum<T>::value, FastDeserializer&>
+    operator>>(
         FastDeserializer& serializer,
         T& value);
 public:
@@ -381,7 +385,8 @@ private:
 };
 
 template<class T>
-inline FastDeserializer& operator>>(FastDeserializer& deserializer, T& value)
+std::enable_if_t<!std::is_enum<T>::value, FastDeserializer&>
+operator>>(FastDeserializer& deserializer, T& value)
 {
     deserializer.Read(&value);
     return deserializer;

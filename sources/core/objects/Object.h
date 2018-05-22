@@ -3,6 +3,7 @@
 #include "KvAbort.h"
 #include "KvGlobals.h"
 #include "Hashes.h"
+#include "SaveableOperators.h"
 
 #include "../FastIsType.h"
 #include "../Idptr.h"

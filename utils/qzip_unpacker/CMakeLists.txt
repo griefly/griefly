@@ -1,5 +1,7 @@
 message(STATUS "Running qzip_unpacker CMakeLists.txt...")
 
+set(CMAKE_CXX_STANDARD 14)
+
 find_package(Qt5 ${MINIMUM_QT_VERSION} COMPONENTS Core REQUIRED)
 
 file(GLOB_RECURSE UNPACKER_SOURCES "*.cpp")

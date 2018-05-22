@@ -9,6 +9,30 @@
 namespace kv
 {
 
+template<class T>
+std::enable_if_t<std::is_enum<T>::value, kv::FastSerializer&>
+operator<<(kv::FastSerializer& file, const T& dir)
+{
+    file << static_cast<std::underlying_type_t<T>>(dir);
+    return file;
+}
+
+template<class T>
+std::enable_if_t<std::is_enum<T>::value, kv::FastDeserializer&>
+operator>>(kv::FastDeserializer& file, T& dir)
+{
+    std::underlying_type_t<T> temp;
+    file >> temp;
+    dir = static_cast<T>(temp);
+    return file;
+}
+
+template<class T>
+std::enable_if_t<std::is_enum<T>::value, unsigned int> Hash(T value)
+{
+    return kv::Hash(static_cast<std::underlying_type_t<T>>(value));
+}
+
 template<class TKey, class TValue>
 inline FastSerializer& operator<<(FastSerializer& file, const QMap<TKey, TValue>& map)
 {
