@@ -6,7 +6,8 @@ Griefly
 [![Coverage Status](https://coveralls.io/repos/github/griefly/griefly/badge.svg?branch=master)](https://coveralls.io/github/griefly/griefly?branch=master)
 [![Join the chat at https://gitter.im/griefly/griefly](https://badges.gitter.im/kremius/karya-valya.svg)](https://gitter.im/griefly/griefly?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-It is **Griefly: Yet Another Space Station Remake**.
+It is **Griefly: Yet Another Space Station Remake**.  
+[Roadmap](https://github.com/griefly/griefly/blob/master/documentation/Roadmap.md) may be interesting to look into.
 
 Dependencies
 -------------
@@ -87,4 +88,4 @@ Launcher basically does same things, but in a more convenient for usual users wa
 
 Codestyle
 ----------
-See `CODESTYLE.md` file for C++ codestyle. Use default ones for Python and Go (PEP8 and Go Coding Style accordingly).
+See `documentation/CODESTYLE.md` file for C++ codestyle. Use default ones for Python and Go (PEP8 and Go Coding Style accordingly).
