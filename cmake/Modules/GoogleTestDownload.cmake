@@ -5,7 +5,7 @@ PROJECT(googletest-download NONE)
 INCLUDE(ExternalProject)
 ExternalProject_Add(googletest
     GIT_REPOSITORY    https://github.com/google/googletest.git
-    GIT_TAG           d225acc90bc3a8c420a9bcd1f033033c1ccd7fe0
+    GIT_TAG           145d05750b15324899473340c8dd5af50d125d33
     SOURCE_DIR        "${CMAKE_BINARY_DIR}/googletest-src"
     BINARY_DIR        "${CMAKE_BINARY_DIR}/googletest-build"
     CONFIGURE_COMMAND ""
