@@ -12,6 +12,6 @@ add_executable(Unpacker ${UNPACKER_SOURCES})
 target_include_directories(Unpacker PRIVATE "${SOURCES_PATH}")
 
 # Add Qt5 lib
-qt5_use_modules(Unpacker Core)
+target_link_libraries(Unpacker Qt5::Core)
 
 message(STATUS "Finished qzip_unpacker CMakeLists.txt")

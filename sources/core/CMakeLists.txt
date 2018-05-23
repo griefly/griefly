@@ -115,7 +115,7 @@ target_include_directories(
     "..")
 
 # Add Qt5 lib
-qt5_use_modules(KVEngine Core)
+target_link_libraries(KVEngine Qt5::Core)
 
 # Add tests target
 if(BUILD_TESTS)

@@ -9,8 +9,7 @@ qt5_wrap_ui(LAUNCHER_FORMS_HEADERS ${LAUNCHER_FORMS})
 add_executable(Launcher WIN32 ${LAUNCHER_SOURCES} ${LAUNCHER_HEADERS} ${LAUNCHER_FORMS_HEADERS})
 
 # Add Qt5 lib
-qt5_use_modules(Launcher Core)
-qt5_use_modules(Launcher Widgets)
+target_link_libraries(Launcher Qt5::Core Qt5::Widgets)
 
 if(WIN32)
     target_link_libraries(Launcher Qt5::WinMain)

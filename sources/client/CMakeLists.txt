@@ -45,11 +45,7 @@ target_include_directories(
 
 target_link_libraries(KVClient KVEngine)
 
-qt5_use_modules(KVClient Core)
-qt5_use_modules(KVClient Network)
-qt5_use_modules(KVClient Widgets)
-qt5_use_modules(KVClient OpenGL)
-qt5_use_modules(KVClient Multimedia)
+target_link_libraries(KVClient Qt5::Core Qt5::Network Qt5::Widgets Qt5::OpenGL Qt5::Multimedia)
 
 # Add opengl lib
 if(WIN32)
