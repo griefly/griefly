@@ -1,21 +1,21 @@
 version: 1.0.{build}
-image: Visual Studio 2015
+image: Visual Studio 2017
 
 environment:
-  QT5DIR: C:\Qt\5.8
+  QT5DIR: C:\Qt\5.10
   PYTHON: C:\Python35
 
 install:
-  - cmd: set CMAKE_PREFIX_PATH=%QT5DIR%\msvc2015_64
-  - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64'
+  - cmd: set CMAKE_PREFIX_PATH=%QT5DIR%\msvc2017_64
+  - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat" amd64'
   - cmd: set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
 
 build_script:
-  - cmd: cmake -G "Visual Studio 14 2015 Win64"  -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On -DPYTHON_ROOT_DIR=%PYTHON%
+  - cmd: cmake -G "Visual Studio 15 2017 Win64"  -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=On -DPYTHON_ROOT_DIR=%PYTHON%
   - cmd: cmake --build . --target install --config Release -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
-  - cmd: '%QT5DIR%\msvc2015_64\bin\windeployqt.exe Exec/KVClient.exe'
+  - cmd: '%QT5DIR%\msvc2017_64\bin\windeployqt.exe Exec/KVClient.exe'
   - cmd: for /f "tokens=* USEBACKQ" %%F in (`git describe --tags --abbrev^=4`) do set KVVERSION=%%F
   - cmd: set KVVERSION=Griefly-%KVVERSION%-win64
   - cmd: echo %KVVERSION%
