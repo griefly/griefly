@@ -79,7 +79,7 @@ public:
 
     virtual void AfterWorldCreation() override;
 
-    enum State
+    enum class State : qint32
     {
         OPEN,
         CLOSED,
@@ -94,7 +94,7 @@ public:
     virtual void AttackBy(IdPtr<Item> item) override;
     bool IsState(State state) const { return state == door_state_; }
 private:
-    int KV_SAVEABLE(door_state_);
+    State KV_SAVEABLE(door_state_);
     qint32 KV_SAVEABLE(last_tick_);
 
     QString KV_SAVEABLE(door_prefix_);

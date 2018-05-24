@@ -206,7 +206,7 @@ GlassDoor::GlassDoor()
 
     SetAnchored(true);
 
-    door_state_ = CLOSED;
+    door_state_ = State::CLOSED;
 
     SetSprite("icons/windoor.dmi");
     SetState(door_prefix_);
@@ -224,55 +224,55 @@ void GlassDoor::AfterWorldCreation()
 
 void GlassDoor::Open()
 {
-    if (!IsState(CLOSED))
+    if (!IsState(State::CLOSED))
     {
         return;
     }
     SetState(door_prefix_ + "opening");
     PlaySoundIfVisible("windowdoor.wav");
-    door_state_ = OPENING;
+    door_state_ = State::OPENING;
     last_tick_ = GetGameTick();
     SetFreq(1);
 }
 
 void GlassDoor::Close()
 {
-    if (!IsState(OPEN))
+    if (!IsState(State::OPEN))
     {
         return;
     }
     SetState(door_prefix_ + "closing");
     PlaySoundIfVisible("windowdoor.wav");
     SetPassable(GetDir(), passable::EMPTY);
-    door_state_ = CLOSING;
+    door_state_ = State::CLOSING;
     last_tick_ = GetGameTick();
 }
 
 void GlassDoor::Process()
 {
-    if (IsState(OPENING))
+    if (IsState(State::OPENING))
     {
         if (GetGameTick() - last_tick_ > 9)
         {
-            door_state_ = OPEN;
+            door_state_ = State::OPEN;
             SetPassable(GetDir(), passable::FULL);
             last_tick_ = GetGameTick();
             SetState(door_prefix_ + "open");
         }
         return;
     }
-    if (IsState(CLOSING))
+    if (IsState(State::CLOSING))
     {
         if (GetGameTick() - last_tick_ > 9)
         {
-            door_state_ = CLOSED;
+            door_state_ = State::CLOSED;
             last_tick_ = GetGameTick();
             SetState(door_prefix_);
             SetFreq(0);
         }
         return;
     }
-    if (IsState(OPEN))
+    if (IsState(State::OPEN))
     {
         if (GetGameTick() - last_tick_ > 50)
         {
@@ -285,7 +285,7 @@ void GlassDoor::Bump(const Vector& vector, IdPtr<Movable> item)
 {
     if (IdPtr<Mob> mob = item)
     {
-        if (IsState(CLOSED))
+        if (IsState(State::CLOSED))
         {
             Open();
         }
@@ -294,7 +294,7 @@ void GlassDoor::Bump(const Vector& vector, IdPtr<Movable> item)
 
 void GlassDoor::AttackBy(IdPtr<Item> item)
 {
-    if (IsState(OPEN))
+    if (IsState(State::OPEN))
     {
         Close();
     }
