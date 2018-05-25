@@ -13,9 +13,13 @@ public:
     REGISTER_CLASS_AS(Door);
     Door();
     
-    enum State
+    enum class State : qint32
     {
-        OPEN, CLOSED, OPENING, CLOSING, WELDED  
+        OPEN,
+        CLOSED,
+        OPENING,
+        CLOSING,
+        WELDED
     };
 
     virtual void Open();
@@ -26,7 +30,7 @@ public:
     bool IsState(State state) const { return state == door_state_; }
     void Weld();
 private:
-    int KV_SAVEABLE(door_state_);
+    State KV_SAVEABLE(door_state_);
     qint32 KV_SAVEABLE(last_tick_);
 };
 END_DECLARE(Door);

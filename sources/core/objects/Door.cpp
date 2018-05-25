@@ -24,7 +24,7 @@ Door::Door()
 
     SetVisibleLevel(OPEN_DOOR);
 
-    door_state_ = CLOSED;
+    door_state_ = State::CLOSED;
 
     SetSprite("icons/Doorglass.dmi");
     SetState("door_closed");
@@ -34,13 +34,13 @@ Door::Door()
 
 void Door::Open()
 {
-    if (!IsState(CLOSED))
+    if (!IsState(State::CLOSED))
     {
         return;
     }
     SetState("door_opening");
     PlaySoundIfVisible("airlock.wav");
-    door_state_ = OPENING;
+    door_state_ = State::OPENING;
     last_tick_ = GetGameTick();
     SetFreq(1);
     SetVisibleLevel(CLOSED_DOOR);
@@ -48,25 +48,25 @@ void Door::Open()
 
 void Door::Close()
 {
-    if (!IsState(OPEN))
+    if (!IsState(State::OPEN))
     {
         return;
     }
     SetState("door_closing");
     PlaySoundIfVisible("airlock.wav");
     SetPassable(Dir::ALL, passable::EMPTY);
-    door_state_ = CLOSING;
+    door_state_ = State::CLOSING;
     last_tick_ = GetGameTick();
     SetVisibleLevel(CLOSED_DOOR);
 }
 
 void Door::Process()
 {
-    if (IsState(OPENING))
+    if (IsState(State::OPENING))
     {
         if (GetGameTick() - last_tick_ > 11)
         {
-            door_state_ = OPEN;
+            door_state_ = State::OPEN;
             SetPassable(Dir::ALL, passable::FULL);
             last_tick_ = GetGameTick();
             SetState("door_open");
@@ -74,18 +74,18 @@ void Door::Process()
         }
         return;
     }
-    if (IsState(CLOSING))
+    if (IsState(State::CLOSING))
     {
         if (GetGameTick() - last_tick_ > 11)
         {
-            door_state_ = CLOSED;
+            door_state_ = State::CLOSED;
             last_tick_ = GetGameTick();
             SetState("door_closed");
             SetFreq(0);
         }
         return;
     }
-    if (IsState(OPEN))
+    if (IsState(State::OPEN))
     {
         if (GetGameTick() - last_tick_ > 50)
         {
@@ -98,7 +98,7 @@ void Door::Bump(const Vector& vector, IdPtr<Movable> item)
 {
     if (IdPtr<Mob> mob = item)
     {
-        if (IsState(CLOSED))
+        if (IsState(State::CLOSED))
         {
             Open();
         }
@@ -107,22 +107,22 @@ void Door::Bump(const Vector& vector, IdPtr<Movable> item)
 
 void Door::Weld()
 {
-    if (   !IsState(CLOSED)
-        && !IsState(WELDED))
+    if (   !IsState(State::CLOSED)
+        && !IsState(State::WELDED))
     {
         return;
     }
 
-    if (IsState(WELDED))
+    if (IsState(State::WELDED))
     {
         SetState("door_closed");
-        door_state_ = CLOSED;
+        door_state_ = State::CLOSED;
         GetView().RemoveOverlays();
     }
     else
     {
         GetView().AddOverlay("icons/Doorglass.dmi", "welded");
-        door_state_ = WELDED;
+        door_state_ = State::WELDED;
     }
     PlaySoundIfVisible("Welder.wav");
 }
@@ -131,7 +131,7 @@ void Door::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<Weldingtool> welding_tool = item)
     {
-        if ((IsState(CLOSED) || IsState(WELDED)) && welding_tool->IsWorking())
+        if ((IsState(State::CLOSED) || IsState(State::WELDED)) && welding_tool->IsWorking())
         {
             Weld();
         }
@@ -144,11 +144,11 @@ void Door::AttackBy(IdPtr<Item> item)
         return;
     }
 
-    if (IsState(OPEN))
+    if (IsState(State::OPEN))
     {
         Close();
     }
-    else if (IsState(CLOSED))
+    else if (IsState(State::CLOSED))
     {
         Open();
     }
@@ -168,7 +168,7 @@ NontransparentDoor::NontransparentDoor()
 
 void NontransparentDoor::Open()
 {
-    if (!IsState(CLOSED))
+    if (!IsState(State::CLOSED))
     {
         return;
     }
@@ -178,7 +178,7 @@ void NontransparentDoor::Open()
 
 void NontransparentDoor::Close()
 {
-    if (!IsState(OPEN))
+    if (!IsState(State::OPEN))
     {
         return;
     }
