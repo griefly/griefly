@@ -10,7 +10,7 @@
 
 #include "AutogenMetadata.h"
 
-QVector<QBitArray>* cast_table = nullptr;
+std::vector<QBitArray>* cast_table = nullptr;
 
 class FastTypeHelper
 {
@@ -20,7 +20,7 @@ public:
         static bool inited = false;
         if (!inited)
         {
-            cast_table = new QVector<QBitArray>;
+            cast_table = new std::vector<QBitArray>;
 
             QFile json_file("metadata.json");
             if (!json_file.open(QIODevice::ReadOnly))

@@ -14,7 +14,7 @@ namespace kv
     class Object;
 }
 
-extern KVENGINE_EXPORT QVector<QBitArray>* cast_table;
+extern KVENGINE_EXPORT std::vector<QBitArray>* cast_table;
 
 __forceinline bool FastIsType(int typeto, int typefrom)
 {
