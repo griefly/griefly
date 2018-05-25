@@ -2,7 +2,8 @@
 
 #include <vector>
 
-#include "core_headers/RawViewInfo.h"
+#include <RawViewInfo.h>
+
 #include "Metadata.h"
 #include "GLSprite.h"
 

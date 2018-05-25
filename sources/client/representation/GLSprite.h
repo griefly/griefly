@@ -6,7 +6,7 @@
 #include <QGLWidget>
 
 // TODO: fix me
-#include "client/platform/gl.h"
+#include "platform/gl.h"
 
 #include "Metadata.h"
 

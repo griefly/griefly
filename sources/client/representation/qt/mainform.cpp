@@ -17,8 +17,8 @@
 #include "qtopengl.h"
 
 #include "net/Network2.h"
-#include "core_headers/Messages.h"
-#include "core_headers/CoreInterface.h"
+#include <Messages.h>
+#include <CoreInterface.h>
 
 #include <QDebug>
 #include <QString>

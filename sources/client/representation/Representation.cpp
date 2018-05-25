@@ -6,7 +6,7 @@
 #include "net/Network2.h"
 #include "net/MagicStrings.h"
 
-#include "core_headers/NetworkMessages.h"
+#include <NetworkMessages.h>
 
 #include "Params.h"
 

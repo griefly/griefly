@@ -114,6 +114,11 @@ target_include_directories(
     KVEngine PRIVATE
     "..")
 
+# TODO: move 'core_headers' to 'core' folder
+target_include_directories(
+    KVEngine INTERFACE
+    "../core_headers")
+
 # Add Qt5 lib
 target_link_libraries(KVEngine Qt5::Core)
 

@@ -14,7 +14,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
-#include "core_headers/Messages.h"
+#include <Messages.h>
 
 const int MAX_WAIT_ON_QUEUE = 90;
 

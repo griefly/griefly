@@ -9,8 +9,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "core_headers/Mapgen.h"
-#include "core_headers/Dir.h"
+#include <Mapgen.h>
+#include <Dir.h>
 
 MapEditor::EditorEntry::EditorEntry()
 {

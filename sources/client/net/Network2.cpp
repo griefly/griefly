@@ -13,7 +13,7 @@
 
 #include <QCoreApplication>
 
-#include "core_headers/CoreInterface.h"
+#include <CoreInterface.h>
 
 using kv::Message;
 

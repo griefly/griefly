@@ -9,7 +9,7 @@
 #include <QThread>
 #include <QElapsedTimer>
 
-#include "core_headers/CoreInterface.h"
+#include <CoreInterface.h>
 
 #include "representation/Representation.h"
 

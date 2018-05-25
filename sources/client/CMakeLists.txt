@@ -39,9 +39,6 @@ file(GLOB_RECURSE FORMS "${CLIENT_DIR}*.ui")
 
 qt5_wrap_ui(FORMS_HEADERS ${FORMS})
 add_executable(KVClient WIN32 ${CLIENT_SOURCES} ${FORMS} ${FORMS_HEADERS})
-target_include_directories(
-    KVClient PRIVATE
-    "..")
 
 target_link_libraries(KVClient KVEngine)
 

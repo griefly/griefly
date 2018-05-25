@@ -1,8 +1,8 @@
 #include "mapeditorform.h"
 #include "ui_mapeditorform.h"
 
-#include "core_headers/Mapgen.h"
-#include "core_headers/CoreInterface.h"
+#include <Mapgen.h>
+#include <CoreInterface.h>
 
 #include "representation/View2.h"
 #include "representation/SpriteHolder.h"

@@ -9,7 +9,7 @@
 
 #include "MapEditor.h"
 
-#include "core_headers/CoreInterface.h"
+#include <CoreInterface.h>
 
 namespace Ui {
 class MapEditorForm;
