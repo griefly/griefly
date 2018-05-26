@@ -242,6 +242,10 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     int counter = 0;
     for (auto it = variables.begin(); it != variables.end(); ++it, ++counter)
     {
+        if (it->type == mapgen::key::type::UNKNOWN)
+        {
+            continue;
+        }
         ui->listWidgetVariables->addItem(it->name);
         if (it->name == name)
         {
@@ -297,15 +301,22 @@ QString MapEditorForm::GetCurrentVariableType()
         return QString();
     }
     const auto& variables = it->variables;
-    const int current_row = ui->listWidgetVariables->currentRow();
-    // TODO: is it possible?
-    if (current_row >= variables.size())
+    QListWidgetItem* current_item = ui->listWidgetVariables->currentItem();
+    if (current_item == nullptr)
     {
         return QString();
     }
-    auto variable = variables[current_row];
-    ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable.type));
-    return variable.type;
+
+    auto variable = std::find_if(variables.begin(), variables.end(), [name = current_item->text()](auto variable)
+    {
+        return variable.name == name;
+    });
+    if (variable == variables.end())
+    {
+        return QString();
+    }
+    ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable->type));
+    return variable->type;
 }
 
 void MapEditorForm::ResetVariablesPanel()
