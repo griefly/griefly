@@ -1,4 +1,4 @@
-set(PROJECT_NAME "basic_assets_generator")
+set(PROJECT_NAME "BasicAssetsGenerator")
 
 message(STATUS "Running ${PROJECT_NAME} CMakeLists.txt...")
 
