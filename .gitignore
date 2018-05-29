@@ -153,3 +153,4 @@ exec/libKVEngine.a
 exec/KVClient
 exec/KVEngineTests
 exec/libKVEngine.so
+exec/BasicAssetsGenerator
