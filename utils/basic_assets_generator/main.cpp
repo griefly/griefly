@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 
 #include <CoreInterface.h>
+#include <Mapgen.h>
 
 #include <QDebug>
 #include <QJsonArray>
@@ -29,6 +30,10 @@ int main(int argc, char* argv[])
         QJsonArray variables;
         for (const auto& variable : object_metadata.variables)
         {
+            if (variable.type == mapgen::key::type::UNKNOWN)
+            {
+                continue;
+            }
             variables.append(QJsonObject{{key::NAME, variable.name}, {key::TYPE, variable.type}});
         }
 
