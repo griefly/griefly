@@ -39,7 +39,7 @@ void Human::Hear(const Phrase& phrase)
         QString string_to_chat;
         if(phrase.text.isEmpty())
         {
-        	string_to_chat=QString("<b>%1</b> <i>%2</i>").arg(phrase.from).arg(phrase.expression);
+            string_to_chat=QString("<b>%1</b> <i>%2</i>").arg(phrase.from).arg(phrase.expression);
         }
         else
         {
