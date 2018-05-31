@@ -7,6 +7,7 @@
 #include <QCommandLineParser>
 #include <QDebug>
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
 
 namespace key
@@ -45,6 +46,8 @@ int main(int argc, char* argv[])
         return -2;
     }
 
+    const QString assets_directory = parser.value(assets_directory_option);
+
     const auto& metadata = kv::GetCoreInstance().GetObjectsMetadata();
     for (const auto& object_metadata : metadata)
     {
@@ -64,7 +67,9 @@ int main(int argc, char* argv[])
              {key::SPRITE_STATE, object_metadata.default_view.base_frameset.state},
              {key::IS_TURF, object_metadata.turf},
              {key::VARIABLES, variables}};
-        qDebug() << asset;
+
+        const QJsonDocument document(asset);
+        qDebug() << document.toJson(QJsonDocument::Indented);
     }
 
     return 0;
