@@ -192,8 +192,8 @@ void Human::ProcessMessage(const Message& message)
             phrase.text = text.toHtmlEscaped();
 	    
             int lastchar_position=phrase.text.length()-1;
-	    QChar lastchar=phrase.text[lastchar_position];
-	    switch(lastchar.unicode())
+	        QChar lastchar=phrase.text[lastchar_position];
+	        switch(lastchar.unicode())
             {
             case '!':
                     phrase.express="exclaims";
