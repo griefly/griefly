@@ -167,22 +167,22 @@ TEST(ChatFrameInfo, PostHear)
 
         phrase.from = "human1";
         phrase.text = "text1";
-	phrase.express = "express1";
+        phrase.express = "express1";
         info.PostHear(phrase, {1, 1, 0});
 
         phrase.from = "human2";
         phrase.text = "text2";
-	phrase.express = "express2";
+        phrase.express = "express2";
         info.PostHear(phrase, {3, 10, 0});
 
         phrase.from = "human3";
         phrase.text = "text3";
-	phrase.express = "express3";
+        phrase.express = "express3";
         info.PostHear(phrase, {3, 10, 0});
 
         phrase.from = "human5";
         phrase.text = "text5";
-	phrase.express = "express5";
+        phrase.express = "express5";
         info.PostHear(phrase, {111, 111, 111});
     }
 
