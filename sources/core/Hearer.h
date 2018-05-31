@@ -11,7 +11,7 @@ struct Phrase
 {
     QString text;
     QString from;
-    QString express;
+    QString expression;
 };
 
 class Hearer

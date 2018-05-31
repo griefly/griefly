@@ -167,22 +167,22 @@ TEST(ChatFrameInfo, PostHear)
 
         phrase.from = "human1";
         phrase.text = "text1";
-        phrase.express = "express1";
+        phrase.expression = "express1";
         info.PostHear(phrase, {1, 1, 0});
 
         phrase.from = "human2";
         phrase.text = "text2";
-        phrase.express = "express2";
+        phrase.expression = "express2";
         info.PostHear(phrase, {3, 10, 0});
 
         phrase.from = "human3";
         phrase.text = "text3";
-        phrase.express = "express3";
+        phrase.expression = "express3";
         info.PostHear(phrase, {3, 10, 0});
 
         phrase.from = "human5";
         phrase.text = "text5";
-        phrase.express = "express5";
+        phrase.expression = "express5";
         info.PostHear(phrase, {111, 111, 111});
     }
 
@@ -193,21 +193,21 @@ TEST(ChatFrameInfo, PostHear)
 
         info.ApplyHear(&hearer);
         EXPECT_EQ(info.GetPersonalTexts(10).size(), 3);
-        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human1:text1"));
-        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human2:text2"));
-        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human3:text3"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human1:text1:express1"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human2:text2:express2"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human3:text3:express3"));
     }
     {
         TestHearer hearer(&info, 100, {{111, 111, 111}});
 
         info.ApplyHear(&hearer);
         EXPECT_EQ(info.GetPersonalTexts(100).size(), 1);
-        EXPECT_TRUE(info.GetPersonalTexts(100).contains("human5:text5"));
+        EXPECT_TRUE(info.GetPersonalTexts(100).contains("human5:text5:express5"));
 
         EXPECT_EQ(info.GetPersonalTexts(10).size(), 3);
-        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human1:text1"));
-        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human2:text2"));
-        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human3:text3"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human1:text1:express1"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human2:text2:express2"));
+        EXPECT_TRUE(info.GetPersonalTexts(10).contains("human3:text3:express3"));
     }
 
     info.Reset();
