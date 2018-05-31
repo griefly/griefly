@@ -184,11 +184,16 @@ void Human::ProcessMessage(const Message& message)
         {
             Phrase phrase;
             phrase.from = GetName().toHtmlEscaped();
-            phrase.text = text.toHtmlEscaped().trimmed();
+            phrase.text = text.toHtmlEscaped();
 
             int lastchar_position=phrase.text.length()-1;
 	        QChar lastchar=phrase.text[lastchar_position];
 	        switch(lastchar.unicode())
+            phrase.text = text.toHtmlEscaped();
+	    
+            int lastchar_position=phrase.text.length()-1;
+	    QChar lastchar=phrase.text[lastchar_position];
+	    switch(lastchar.unicode())
             {
             case '!':
                     phrase.express="exclaims";
