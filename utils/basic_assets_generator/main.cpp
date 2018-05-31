@@ -3,6 +3,8 @@
 #include <CoreInterface.h>
 #include <Mapgen.h>
 
+#include <QCommandLineOption>
+#include <QCommandLineParser>
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
@@ -23,6 +25,25 @@ const QString VARIABLES("variables");
 int main(int argc, char* argv[])
 {
     QCoreApplication app(argc, argv);
+
+    QCommandLineOption assets_directory_option
+        ({"d", "directory"}, "Directory where assets will be created", "directory");
+
+    QCommandLineParser parser;
+    parser.addOption(assets_directory_option);
+    parser.addHelpOption();
+
+    if (!parser.parse(app.arguments()))
+    {
+        qDebug() << "Unable to parse params!";
+        return -1;
+    }
+
+    if (!parser.isSet(assets_directory_option))
+    {
+        qDebug() << "Directory option is missing, try '--help'!";
+        return -2;
+    }
 
     const auto& metadata = kv::GetCoreInstance().GetObjectsMetadata();
     for (const auto& object_metadata : metadata)
