@@ -148,7 +148,7 @@ public:
     }
     virtual void Hear(const Phrase &phrase) override
     {
-        info_->PostPersonal(QString("%1:%2").arg(phrase.from).arg(phrase.text), net_id_);
+        info_->PostPersonal(QString("%1:%2:%3").arg(phrase.from).arg(phrase.text).arg(phrase.expression), net_id_);
     }
 private:
     ChatFrameInfo* info_;
