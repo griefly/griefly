@@ -27,6 +27,7 @@ void GamingLineEdit::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_F2)
     {
         ToggleOOC();
+        return;
     }
     QLineEdit::keyPressEvent(event);
 }
