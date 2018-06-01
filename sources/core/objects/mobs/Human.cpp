@@ -188,14 +188,14 @@ void Human::ProcessMessage(const Message& message)
             Phrase phrase;
             phrase.from = GetName().toHtmlEscaped();
             phrase.text = text.toHtmlEscaped().trimmed();
-            
+
             phrase.expression = [&]()
             {
                 if (phrase.text.isEmpty())
                 {
                     return "keeps silence";
                 }
-                
+
                 auto lastchar_position = phrase.text.length() - 1;
                 auto lastchar = phrase.text[lastchar_position];
                 switch (lastchar.unicode())
@@ -205,7 +205,7 @@ void Human::ProcessMessage(const Message& message)
                 case '?':
                     return "asks";
                 default:
-                    return "says";       
+                    return "says";
                 }
             }();
 
