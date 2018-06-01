@@ -1,7 +1,5 @@
 #include "representation/qt/gaminglineedit.h"
 
-
-
 GamingLineEdit::GamingLineEdit(QWidget* parent)
     : QLineEdit(parent)
 {
@@ -28,8 +26,31 @@ void GamingLineEdit::keyPressEvent(QKeyEvent *event)
     }
     if (event->key() == Qt::Key_F2)
     {
-        setText("OOC ");
-        return;
+        ToggleOOC();
     }
     QLineEdit::keyPressEvent(event);
+}
+void GamingLineEdit::ToggleOOC(){
+    QString current_text = text();
+    if(IsOOCMessage(current_text))
+    {
+        setText(current_text.mid(current_text[3]==' '?4:3));
+    }
+    else
+    {
+        setText("OOC " + current_text);
+    }
+    return;
+}
+
+bool IsOOCMessage(const QString& text)
+{
+    if (    text.length() >= 3
+        && (   (text.left(3) == "OOC")
+            || (text.left(3) == "ooc"))
+        )
+    {
+        return true;
+    }
+    return false;
 }
