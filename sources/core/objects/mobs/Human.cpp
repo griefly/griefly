@@ -36,9 +36,12 @@ void Human::Hear(const Phrase& phrase)
 {
     if (IsMinded())
     {
-        GetGame().GetChatFrameInfo().PostPersonal(
-            QString("<b>%1</b> <i>says</i>, <span>\"%2\"</span>").arg(phrase.from).arg(phrase.text),
-            GetGame().GetNetId(GetId()));
+        QString string_to_chat = QString("<b>%1</b> <i>%2</i>").arg(phrase.from).arg(phrase.expression);
+        if (!phrase.text.isEmpty())
+        {
+            string_to_chat.append(QString(", <span>\"%1\"</span>").arg(phrase.text));
+        }
+        GetGame().GetChatFrameInfo().PostPersonal(string_to_chat, GetGame().GetNetId(GetId()));
     }
 }
 
@@ -184,7 +187,28 @@ void Human::ProcessMessage(const Message& message)
         {
             Phrase phrase;
             phrase.from = GetName().toHtmlEscaped();
-            phrase.text = text.toHtmlEscaped();
+            phrase.text = text.toHtmlEscaped().trimmed();
+
+            phrase.expression = [&]()
+            {
+                if (phrase.text.isEmpty())
+                {
+                    return "keeps silence";
+                }
+
+                auto lastchar_position = phrase.text.length() - 1;
+                auto lastchar = phrase.text[lastchar_position];
+                switch (lastchar.unicode())
+                {
+                case '!':
+                    return "exclaims";
+                case '?':
+                    return "asks";
+                default:
+                    return "says";
+                }
+            }();
+
             if (!phrase.text.isEmpty())
             {
                 phrase.text[0] = phrase.text[0].toUpper();
