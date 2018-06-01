@@ -36,18 +36,12 @@ void Human::Hear(const Phrase& phrase)
 {
     if (IsMinded())
     {
-        QString string_to_chat;
-        if(phrase.text.isEmpty())
+        QString string_to_chat = QString("<b>%1</b> <i>%2</i>").arg(phrase.from).arg(phrase.expression);
+        if (!phrase.text.isEmpty())
         {
-            string_to_chat=QString("<b>%1</b> <i>%2</i>").arg(phrase.from).arg(phrase.expression);
+            string_to_chat.append(QString(", <span>\"%1\"</span>").arg(phrase.text));
         }
-        else
-        {
-            string_to_chat=QString("<b>%1</b> <i>%2</i>, <span>\"%3\"</span>").arg(phrase.from).arg(phrase.expression).arg(phrase.text);
-        }
-        GetGame().GetChatFrameInfo().PostPersonal(
-            string_to_chat,
-            GetGame().GetNetId(GetId()));
+        GetGame().GetChatFrameInfo().PostPersonal(string_to_chat, GetGame().GetNetId(GetId()));
     }
 }
 
