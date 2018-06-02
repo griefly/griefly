@@ -32,7 +32,8 @@ void GamingLineEdit::keyPressEvent(QKeyEvent *event)
     QLineEdit::keyPressEvent(event);
 }
 
-void GamingLineEdit::ToggleOOC(){
+void GamingLineEdit::ToggleOOC()
+{
     const QString current_text = text();
     if (IsOOCMessage(current_text))
     {
