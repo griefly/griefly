@@ -33,16 +33,9 @@ void GamingLineEdit::keyPressEvent(QKeyEvent *event)
 }
 void GamingLineEdit::ToggleOOC(){
     QString current_text = text();
-    if(IsOOCMessage(current_text))
+    if (IsOOCMessage(current_text))
     {
-        if(current_text.length()>3)
-        {
-            setText(current_text.mid(current_text[3]==' '?4:3));
-        }
-        else
-        {
-            setText("");
-        }
+        setText(current_text.mid(3).trimmed());
     }
     else
     {
