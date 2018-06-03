@@ -69,10 +69,12 @@ public:
     int GetBurnDamage() { return burn_damage_; }
     int GetSuffocationDamage() { return suffocation_damage_; }
     int GetBruteDamage() { return brute_damage_; }
+    int GetToxinsDamage() { return toxins_damage_; }
     bool IsDead() { return dead_; }
     void ApplyBurnDamage(int damage);
     void ApplySuffocationDamage(int damage);
     void ApplyBruteDamage(int damage);
+    void ApplyToxinsDamage(int damage);
 protected:
     int KV_SAVEABLE(attack_cooldown_);
 
@@ -85,6 +87,7 @@ protected:
 
     int KV_SAVEABLE(max_health_);
     int KV_SAVEABLE(suffocation_damage_);
+    int KV_SAVEABLE(toxins_damage_);
     int KV_SAVEABLE(burn_damage_);
     int KV_SAVEABLE(brute_damage_);
 

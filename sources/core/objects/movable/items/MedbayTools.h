@@ -26,6 +26,7 @@ public:
 protected:
     int KV_SAVEABLE(burn_heal_);
     int KV_SAVEABLE(brute_heal_);
+    int KV_SAVEABLE(toxins_heal_);
 };
 END_DECLARE(Medicine);
 
@@ -46,5 +47,14 @@ public:
     BruisePack();
 };
 END_DECLARE(BruisePack);
+    
+class Charcoal : public Medicine
+{
+public:
+    DECLARE_SAVEABLE(Charcoal, Medicine);
+    REGISTER_CLASS_AS(Charcoal);
+    Charcoal();
+};
+END_DECLARE(Charcoal);
 
 }
