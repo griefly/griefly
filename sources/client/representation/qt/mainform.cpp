@@ -14,6 +14,8 @@
 #include "representation/Metadata.h"
 #include "representation/Representation.h"
 
+#include "representation/qt/gaminglineedit.h"
+
 #include "qtopengl.h"
 
 #include "net/Network2.h"
@@ -279,7 +281,7 @@ void MainForm::RemoveFirstBlockFromTextEditor()
 
 void MainForm::oocPrefixToLineEdit()
 {
-    ui->command_line_edit->setText("OOC ");
+    ui->command_line_edit->ToggleOOC();
 }
 
 void MainForm::uploadStarted()
@@ -361,18 +363,6 @@ void MainForm::AddSystemTexts()
 
     const qint64 mutex_ns = representation_->GetPerformance().mutex_ns;
     ui->client_text_edit->insertHtml(QString("Represent mutex lock max: %1 ms").arg(mutex_ns / 1e6));
-}
-
-bool IsOOCMessage(const QString& text)
-{
-    if (    text.length() >= 3
-        && (   (text.left(3) == "OOC")
-            || (text.left(3) == "ooc"))
-        )
-    {
-        return true;
-    }
-    return false;
 }
 
 void MainForm::on_command_line_edit_returnPressed()
