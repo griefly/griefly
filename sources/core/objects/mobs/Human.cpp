@@ -408,7 +408,7 @@ void Human::Live()
         const int temperature = holder->GetTemperature();
         const int pressure = holder->GetPressure();
 
-        interface_->UpdateEnvironment(temperature, pressure, oxygen);      
+        interface_->UpdateEnvironment(temperature, pressure, oxygen);   
 
         const int BURNING_THRESHOLD = 3;
         const int MIN_BURN_DAMAGE = 1;
