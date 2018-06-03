@@ -6,6 +6,7 @@
 #include <QCommandLineOption>
 #include <QCommandLineParser>
 #include <QDebug>
+#include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -46,7 +47,7 @@ int main(int argc, char* argv[])
         return -2;
     }
 
-    const QString assets_directory = parser.value(assets_directory_option);
+    const QString assets_directory = parser.value(assets_directory_option).append("/");
 
     const auto& metadata = kv::GetCoreInstance().GetObjectsMetadata();
     for (const auto& object_metadata : metadata)
@@ -69,7 +70,16 @@ int main(int argc, char* argv[])
              {key::VARIABLES, variables}};
 
         const QJsonDocument document(asset);
-        qDebug() << document.toJson(QJsonDocument::Indented);
+        const QByteArray data = document.toJson(QJsonDocument::Indented);
+
+        QFile file(assets_directory + object_metadata.name + ".json");
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            qDebug() << "Unable to open file:" << file.fileName();
+            return -3;
+        }
+        file.write(data);
+        qDebug() << file.fileName() << "has been created";
     }
 
     return 0;
