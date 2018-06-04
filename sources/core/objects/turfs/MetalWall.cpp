@@ -25,16 +25,19 @@ MetalWall::MetalWall()
     
     SetState("metal0");
 }
+
 void MetalWall::AfterWorldCreation()
 {
     UpdateState(Dir::ALL);
 }
+
 void MetalWall::Delete()
 {
     UpdateNeighborhoodState();
     MaterialObject::Delete();
 }
-void MetalWallInterface::CheckNeighborhood(Dir dir)
+
+void MetalWall::CheckNeighborhood(Dir dir)
 {
     if (dir == Dir::ALL)
     {
@@ -64,25 +67,7 @@ void MetalWallInterface::CheckNeighborhood(Dir dir)
     current_state_.set(bit, false);
 }
 
-MetalWallInterface::MetalWallInterface()
-{
-    //Nothing
-    SetTransparency(false);
-    SetPassable(Dir::ALL, passable::EMPTY);
-
-    SetVisibleLevel(visible_level::HIGH_TURF);
-
-    SetSprite("icons/walls.dmi");
-
-    SetName("Metal wall");
-    
-    default_state_="metal";
-    current_state_=0;
-    
-    SetState("metal0");
-}
-
-void MetalWallInterface::UpdateState(Dir dir)
+void MetalWall::UpdateState(Dir dir)
 {
     CheckNeighborhood(dir);
     if(dir == Dir::ALL)
@@ -91,7 +76,7 @@ void MetalWallInterface::UpdateState(Dir dir)
     }
     SetState(default_state_ + QString::number(current_state_.to_ulong()));
 }
-void MetalWallInterface::UpdateNeighborhoodState(Dir dir)
+void MetalWall::UpdateNeighborhoodState(Dir dir)
 {
     if (dir == Dir::ALL)
     {
@@ -131,7 +116,27 @@ ReinforcedWall::ReinforcedWall()
     SetVisibleLevel(visible_level::HIGH_TURF);
 
     SetSprite("icons/walls.dmi");
-    SetState("rwall0");
 
     SetName("Reinforced wall");
+    
+    default_state_="rwall";
+    current_state_=0;
+    
+    SetState("rwall0");
+}
+
+void ReinforcedWall::AfterWorldCreation()
+{
+    UpdateState(Dir::ALL);
+}
+
+void ReinforcedWall::Delete()
+{
+    UpdateNeighborhoodState();
+    MaterialObject::Delete();
+}
+
+void ReinforcedWall::AttackBy(IdPtr<Item> item)
+{   
+    //Nothing
 }
