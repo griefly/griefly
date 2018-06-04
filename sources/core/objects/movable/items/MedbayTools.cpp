@@ -98,7 +98,7 @@ BruisePack::BruisePack()
     SetName("Bruise pack");
 }
 
-Charcoal::Charcoal()
+AntitoxinBottle::AntitoxinBottle()
 {
     SetSprite("icons/chemical.dmi");
     SetState("bottle17");

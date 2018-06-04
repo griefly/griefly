@@ -8,6 +8,8 @@
 
 const int HUMAN_MAX_HEALTH = 10000;
 const int REGULAR_TEMPERATURE = 40;
+const int HUMAN_PLASMA_TOXINS_THRESHOLD = 35;
+const int HUMAN_PLASMA_TOXINS_DAMAGE = 50;
 
 namespace kv
 {

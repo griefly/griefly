@@ -42,7 +42,7 @@ namespace
         // Oxygen states
         const QString OXYGEN = "oxy0";
         const QString NO_OXYGEN = "oxy1";
-        
+
         // Toxins states
         const QString TOXINS = "tox1";
         const QString NO_TOXINS = "tox0";
@@ -399,10 +399,10 @@ void kv::HumanInterface::UpdateEnvironment(
 
     Button& temperature_indicator = GetButton(TEMPERATURE);
     temperature_indicator.view.SetState(states::TEMPERATURE_TEMPLATE.arg(state));
-    
+
     Button& toxins_indicator = GetButton(TOXINS);
     toxins_indicator.view.SetState(states::NO_TOXINS);
-    if (plasma > 35)
+    if (plasma > HUMAN_PLASMA_TOXINS_THRESHOLD)
     {
         toxins_indicator.view.SetState(states::TOXINS);
     }

@@ -47,14 +47,14 @@ public:
     BruisePack();
 };
 END_DECLARE(BruisePack);
-    
-class Charcoal : public Medicine
+
+class AntitoxinBottle : public Medicine
 {
 public:
-    DECLARE_SAVEABLE(Charcoal, Medicine);
-    REGISTER_CLASS_AS(Charcoal);
-    Charcoal();
+    DECLARE_SAVEABLE(AntitoxinBottle, Medicine);
+    REGISTER_CLASS_AS(AntitoxinBottle);
+    AntitoxinBottle();
 };
-END_DECLARE(Charcoal);
+END_DECLARE(AntitoxinBottle);
 
 }

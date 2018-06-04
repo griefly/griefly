@@ -429,12 +429,12 @@ void Human::Live()
                 }
             }
         }
-        if(plasma > 35)
+        if (plasma > HUMAN_PLASMA_TOXINS_THRESHOLD)
         {
             if (CalculateHealth() >= 0)
             {
                 holder->RemoveGase(atmos::PLASMA, 1);
-                ApplyToxinsDamage(50);
+                ApplyToxinsDamage(HUMAN_PLASMA_TOXINS_DAMAGE);
             }
         }
         if (oxygen > 0)
@@ -680,29 +680,29 @@ int Human::CalculateHealth() const
 void Human::ApplyBurnDamage(int damage)
 {
     burn_damage_ += damage;
-    burn_damage_ = qMax(0, burn_damage_);
+    burn_damage_ = std::max(0, burn_damage_);
 }
 
 void Human::ApplySuffocationDamage(int damage)
 {
     suffocation_damage_ += damage;
-    suffocation_damage_ = qMax(0, suffocation_damage_);
+    suffocation_damage_ = std::max(0, suffocation_damage_);
 }
 
 void Human::ApplyToxinsDamage(int damage)
 {
     toxins_damage_ += damage;
-    toxins_damage_ = qMax(0, toxins_damage_);
+    toxins_damage_ = std::max(0, toxins_damage_);
 }
 
 void Human::ApplyBruteDamage(int damage)
 {
     brute_damage_ += damage;
-    brute_damage_ = qMax(0, brute_damage_);
+    brute_damage_ = std::max(0, brute_damage_);
     if (damage > 0)
     {
         const int ALWAYS_BLOOD_BORDER = 1000;
-        int brute_helper = qMax(1, ALWAYS_BLOOD_BORDER - brute_damage_);
+        int brute_helper = std::max(1, ALWAYS_BLOOD_BORDER - brute_damage_);
         if ((GenerateRandom() % brute_helper) == 1)
         {
             return;
