@@ -26,6 +26,21 @@ MetalWall::MetalWall()
     SetState("metal0");
 }
 
+void MetalWall::AttackBy(IdPtr<Item> item)
+{   
+    if (IdPtr<Weldingtool> wtool = item)
+    {
+        if (wtool->IsWorking())
+        {
+            PlaySoundIfVisible("Welder.wav");
+            Create<Girder>(GetOwner());
+            Create<Metal>(GetOwner());
+            Create<Plating>(GetOwner());
+            Delete();
+        }
+    }
+}
+
 void MetalWall::AfterWorldCreation()
 {
     UpdateState(Dir::ALL);
@@ -76,6 +91,7 @@ void MetalWall::UpdateState(Dir dir)
     }
     SetState(default_state_ + QString::number(current_state_.to_ulong()));
 }
+
 void MetalWall::UpdateNeighborhoodState(Dir dir)
 {
     if (dir == Dir::ALL)
@@ -90,21 +106,6 @@ void MetalWall::UpdateNeighborhoodState(Dir dir)
     if(IdPtr<MetalWall> wall=GetNeighbour(dir)->GetTurf())
     {
         wall->UpdateState(RevertDir(dir));
-    }
-}
-
-void MetalWall::AttackBy(IdPtr<Item> item)
-{   
-    if (IdPtr<Weldingtool> wtool = item)
-    {
-        if (wtool->IsWorking())
-        {
-            PlaySoundIfVisible("Welder.wav");
-            Create<Girder>(GetOwner());
-            Create<Metal>(GetOwner());
-            Create<Plating>(GetOwner());
-            Delete();
-        }
     }
 }
 
