@@ -100,7 +100,8 @@ BruisePack::BruisePack()
 
 Charcoal::Charcoal()
 {
-    SetState("ointment"); //SetState("atoxinbottle");
+    SetSprite("icons/chemical.dmi");
+    SetState("bottle17");
     toxins_heal_ = 1000;
-    SetName("Charcoal");
+    SetName("Anti-Toxin bottle");
 }
