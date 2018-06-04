@@ -4,8 +4,6 @@
 #include "objects/movable/structures/Girder.h"
 #include "Floor.h"
 #include "objects/movable/items/Materials.h"
-#include "objects/mobs/Mob.h"
-#include "objects/mobs/Human.h"
 
 #include "ObjectFactory.h"
 
@@ -36,7 +34,8 @@ void MetalWall::Delete()
     UpdateNeighborhoodState();
     MaterialObject::Delete();
 }
-void MetalWall::CheckNeighborhood(Dir dir){
+void MetalWallInterface::CheckNeighborhood(Dir dir)
+{
     if (dir == Dir::ALL)
     {
         CheckNeighborhood(Dir::NORTH);
@@ -65,7 +64,25 @@ void MetalWall::CheckNeighborhood(Dir dir){
     current_state_.set(bit, false);
 }
 
-void MetalWall::UpdateState(Dir dir)
+MetalWallInterface::MetalWallInterface()
+{
+    //Nothing
+    SetTransparency(false);
+    SetPassable(Dir::ALL, passable::EMPTY);
+
+    SetVisibleLevel(visible_level::HIGH_TURF);
+
+    SetSprite("icons/walls.dmi");
+
+    SetName("Metal wall");
+    
+    default_state_="metal";
+    current_state_=0;
+    
+    SetState("metal0");
+}
+
+void MetalWallInterface::UpdateState(Dir dir)
 {
     CheckNeighborhood(dir);
     if(dir == Dir::ALL)
@@ -74,7 +91,7 @@ void MetalWall::UpdateState(Dir dir)
     }
     SetState(default_state_ + QString::number(current_state_.to_ulong()));
 }
-void MetalWall::UpdateNeighborhoodState(Dir dir)
+void MetalWallInterface::UpdateNeighborhoodState(Dir dir)
 {
     if (dir == Dir::ALL)
     {

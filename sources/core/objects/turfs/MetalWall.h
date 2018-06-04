@@ -5,24 +5,34 @@
 
 namespace kv
 {
-class MetalWall : public Turf
+class MetalWallInterface : public Turf
 {
 public:
-    DECLARE_SAVEABLE(MetalWall, Turf);
-    REGISTER_CLASS_AS(MetalWall);
-    MetalWall();
-
-    virtual void AttackBy(IdPtr<Item> item) override;
+    DECLARE_SAVEABLE(MetalWallInterface, Turf);
+    REGISTER_CLASS_AS(MetalWallInterface);
+    
+    MetalWallInterface();
     
     void UpdateState(Dir dir = Dir::ALL);
     void UpdateNeighborhoodState(Dir dir = Dir::ALL);
     void CheckNeighborhood(Dir dir = Dir::ALL);
-    
-    virtual void AfterWorldCreation() override;
-    virtual void Delete() override;
-private:
+protected:
     QString default_state_;
     std::bitset<4> current_state_;
+};
+END_DECLARE(MetalWallInterface);
+
+class MetalWall : public MetalWallInterface
+{
+public:
+    DECLARE_SAVEABLE(MetalWall, MetalWallInterface);
+    REGISTER_CLASS_AS(MetalWall);
+    MetalWall();
+
+    virtual void AttackBy(IdPtr<Item> item) override;
+
+    virtual void AfterWorldCreation() override;
+    virtual void Delete() override;
 };
 END_DECLARE(MetalWall);
 
