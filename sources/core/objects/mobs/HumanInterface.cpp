@@ -12,6 +12,7 @@ namespace
     const QString LAY = "switch_lay";
     const QString HEALTH = "health";
     const QString OXYGEN = "oxygen";
+    const QString TOXINS = "toxins";
     const QString TEMPERATURE = "temperature";
 
     // Slots & buttons & indicators sprites
@@ -41,6 +42,10 @@ namespace
         // Oxygen states
         const QString OXYGEN = "oxy0";
         const QString NO_OXYGEN = "oxy1";
+        
+        // Toxins states
+        const QString TOXINS = "tox1";
+        const QString NO_TOXINS = "tox0";
 
         // Temperature template
         const QString TEMPERATURE_TEMPLATE = "temp%1";
@@ -146,7 +151,7 @@ kv::HumanInterface::HumanInterface()
 
     {
         Button lay;
-        lay.position = {15, 11};
+        lay.position = {15, 12};
         lay.view.SetSprite(OLD_INTERFACE_SPRITE);
         lay.view.SetState(states::NOT_LAY);
         lay.name = LAY;
@@ -155,7 +160,7 @@ kv::HumanInterface::HumanInterface()
 
     {
         Button health;
-        health.position = {15, 10};
+        health.position = {15, 11};
         health.view.SetSprite(OLD_INTERFACE_SPRITE);
         health.view.SetState("health0");
         health.name = HEALTH;
@@ -169,6 +174,15 @@ kv::HumanInterface::HumanInterface()
         oxygen.view.SetState(states::OXYGEN);
         oxygen.name = OXYGEN;
         buttons_.append(oxygen);
+    }
+
+    {
+        Button toxins;
+        toxins.position = {15, 13};
+        toxins.view.SetSprite(OLD_INTERFACE_SPRITE);
+        toxins.view.SetState(states::TOXINS);
+        toxins.name = TOXINS;
+        buttons_.append(toxins);
     }
 
     {
@@ -366,7 +380,7 @@ void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
 }
 
 void kv::HumanInterface::UpdateEnvironment(
-    const int temperature, const int pressure, const int oxygen)
+    const int temperature, const int pressure, const int oxygen, const int plasma)
 {
     Button& oxygen_indicator = GetButton(OXYGEN);
 
@@ -385,6 +399,13 @@ void kv::HumanInterface::UpdateEnvironment(
 
     Button& temperature_indicator = GetButton(TEMPERATURE);
     temperature_indicator.view.SetState(states::TEMPERATURE_TEMPLATE.arg(state));
+    
+    Button& toxins_indicator = GetButton(TOXINS);
+    toxins_indicator.view.SetState(states::NO_TOXINS);
+    if (plasma > 35)
+    {
+        toxins_indicator.view.SetState(states::TOXINS);
+    }
 }
 
 void kv::HumanInterface::UpdateLaying(const bool is_laying)
