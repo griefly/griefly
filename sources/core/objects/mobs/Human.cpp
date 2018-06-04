@@ -430,8 +430,11 @@ void Human::Live()
             }
         }
         if(plasma > 35){
-            holder->RemoveGase(atmos::PLASMA, 1);
-            ApplyToxinsDamage(25);
+            if (CalculateHealth() >= 0)
+            {
+                holder->RemoveGase(atmos::PLASMA, 1);
+                ApplyToxinsDamage(25);
+            }
         }
         if (oxygen > 0)
         {
