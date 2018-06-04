@@ -27,7 +27,7 @@ MetalWall::MetalWall()
 }
 
 void MetalWall::AttackBy(IdPtr<Item> item)
-{   
+{
     if (IdPtr<Weldingtool> wtool = item)
     {
         if (wtool->IsWorking())
