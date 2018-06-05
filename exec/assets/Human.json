@@ -1,0 +1,108 @@
+{
+    "is_turf": false,
+    "sprite": "icons/human.dmi",
+    "sprite_state": "african1_m_s",
+    "typename": "Human",
+    "variables": [
+        {
+            "name": "passable_all_",
+            "type": "int32"
+        },
+        {
+            "name": "transparent_",
+            "type": "bool"
+        },
+        {
+            "name": "passable_left_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_up_",
+            "type": "int32"
+        },
+        {
+            "name": "v_level_",
+            "type": "int32"
+        },
+        {
+            "name": "force_error_per_main_",
+            "type": "int32"
+        },
+        {
+            "name": "name_",
+            "type": "string"
+        },
+        {
+            "name": "main_force_direction_",
+            "type": "int32"
+        },
+        {
+            "name": "lying_",
+            "type": "bool"
+        },
+        {
+            "name": "force_error_",
+            "type": "int32"
+        },
+        {
+            "name": "attack_cooldown_",
+            "type": "int32"
+        },
+        {
+            "name": "max_health_",
+            "type": "int32"
+        },
+        {
+            "name": "dead_",
+            "type": "bool"
+        },
+        {
+            "name": "burn_damage_",
+            "type": "int32"
+        },
+        {
+            "name": "suffocation_damage_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_right_",
+            "type": "int32"
+        },
+        {
+            "name": "secondary_force_direction_",
+            "type": "int32"
+        },
+        {
+            "name": "brute_damage_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_down_",
+            "type": "int32"
+        },
+        {
+            "name": "anchored_",
+            "type": "bool"
+        },
+        {
+            "name": "passable_level_",
+            "type": "int32"
+        },
+        {
+            "name": "last_move_",
+            "type": "int32"
+        },
+        {
+            "name": "direction_",
+            "type": "int32"
+        },
+        {
+            "name": "tick_speed_",
+            "type": "int32"
+        },
+        {
+            "name": "lay_timer_",
+            "type": "int32"
+        }
+    ]
+}

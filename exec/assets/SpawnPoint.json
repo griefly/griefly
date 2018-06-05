@@ -1,0 +1,48 @@
+{
+    "is_turf": false,
+    "sprite": "icons/screen1.dmi",
+    "sprite_state": "x",
+    "typename": "SpawnPoint",
+    "variables": [
+        {
+            "name": "name_",
+            "type": "string"
+        },
+        {
+            "name": "passable_level_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_all_",
+            "type": "int32"
+        },
+        {
+            "name": "v_level_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_down_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_left_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_up_",
+            "type": "int32"
+        },
+        {
+            "name": "transparent_",
+            "type": "bool"
+        },
+        {
+            "name": "spawn_type",
+            "type": "string"
+        },
+        {
+            "name": "passable_right_",
+            "type": "int32"
+        }
+    ]
+}
