@@ -151,7 +151,7 @@ kv::HumanInterface::HumanInterface()
 
     {
         Button lay;
-        lay.position = {15, 10};
+        lay.position = {15, 11};
         lay.view.SetSprite(OLD_INTERFACE_SPRITE);
         lay.view.SetState(states::NOT_LAY);
         lay.name = LAY;
@@ -160,7 +160,7 @@ kv::HumanInterface::HumanInterface()
 
     {
         Button health;
-        health.position = {15, 11};
+        health.position = {15, 10};
         health.view.SetSprite(OLD_INTERFACE_SPRITE);
         health.view.SetState("health0");
         health.name = HEALTH;
