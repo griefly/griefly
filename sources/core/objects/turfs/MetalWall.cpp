@@ -56,10 +56,7 @@ void MetalWall::CheckNeighborhood(Dir dir)
 {
     if (dir == Dir::ALL)
     {
-        CheckNeighborhood(Dir::NORTH);
-        CheckNeighborhood(Dir::SOUTH);
-        CheckNeighborhood(Dir::EAST);
-        CheckNeighborhood(Dir::WEST);
+        for(auto x : WALL_PROCESSING_DIRS) CheckNeighborhood(x);
         return;
     }
 
@@ -96,10 +93,7 @@ void MetalWall::UpdateNeighborhoodState(Dir dir)
 {
     if (dir == Dir::ALL)
     {
-        UpdateNeighborhoodState(Dir::NORTH);
-        UpdateNeighborhoodState(Dir::SOUTH);
-        UpdateNeighborhoodState(Dir::WEST);
-        UpdateNeighborhoodState(Dir::EAST);
+        for(auto x : WALL_PROCESSING_DIRS) UpdateNeighborhoodState(x);
         return;
     }
 

@@ -2,9 +2,13 @@
 
 #include "Turf.h"
 #include <bitset>
+#include <array>
 
 namespace kv
 {
+
+const std::array<Dir, 4> WALL_PROCESSING_DIRS = {Dir::NORTH, Dir::SOUTH, Dir::WEST, Dir::EAST};
+
 class MetalWall : public Turf
 {
 public:
