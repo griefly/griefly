@@ -10,13 +10,13 @@ class MetalWall : public Turf
 public:
     DECLARE_SAVEABLE(MetalWall, Turf);
     REGISTER_CLASS_AS(MetalWall);
-    
+
     MetalWall();
-    
+
     void UpdateState(Dir dir = Dir::ALL);
     void UpdateNeighborhoodState(Dir dir = Dir::ALL);
     void CheckNeighborhood(Dir dir = Dir::ALL);
-    
+
     virtual void AttackBy(IdPtr<Item> item) override;
 
     virtual void AfterWorldCreation() override;
@@ -33,7 +33,7 @@ public:
     DECLARE_SAVEABLE(ReinforcedWall, MetalWall);
     REGISTER_CLASS_AS(ReinforcedWall);
     ReinforcedWall();
-    
+
     virtual void AttackBy(IdPtr<Item> item) override;
 
     virtual void AfterWorldCreation() override;

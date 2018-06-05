@@ -19,10 +19,10 @@ MetalWall::MetalWall()
     SetSprite("icons/walls.dmi");
 
     SetName("Metal wall");
-    
+
     default_state_="metal";
     current_state_=0;
-    
+
     SetState("metal0");
 }
 
@@ -62,9 +62,9 @@ void MetalWall::CheckNeighborhood(Dir dir)
         CheckNeighborhood(Dir::WEST);
         return;
     }
-    
+
     int bit;
-    
+
     switch(dir)
     {
         case Dir::NORTH: bit=0; break;
@@ -73,10 +73,10 @@ void MetalWall::CheckNeighborhood(Dir dir)
         case Dir::WEST:  bit=3; break;
         default: return;
     }
-    
-    if(IdPtr<MetalWall> wall=GetNeighbour(dir)->GetTurf())
+
+    if (IdPtr<MetalWall> wall = GetNeighbour(dir)->GetTurf())
     {
-        current_state_.set(bit, true);  
+        current_state_.set(bit, true);
         return;
     }
     current_state_.set(bit, false);
@@ -85,7 +85,7 @@ void MetalWall::CheckNeighborhood(Dir dir)
 void MetalWall::UpdateState(Dir dir)
 {
     CheckNeighborhood(dir);
-    if(dir == Dir::ALL)
+    if (dir == Dir::ALL)
     {
         UpdateNeighborhoodState();
     }
@@ -102,8 +102,8 @@ void MetalWall::UpdateNeighborhoodState(Dir dir)
         UpdateNeighborhoodState(Dir::EAST);
         return;
     }
-    
-    if(IdPtr<MetalWall> wall=GetNeighbour(dir)->GetTurf())
+
+    if (IdPtr<MetalWall> wall = GetNeighbour(dir)->GetTurf())
     {
         wall->UpdateState(RevertDir(dir));
     }
@@ -119,10 +119,10 @@ ReinforcedWall::ReinforcedWall()
     SetSprite("icons/walls.dmi");
 
     SetName("Reinforced wall");
-    
+
     default_state_="rwall";
     current_state_=0;
-    
+
     SetState("rwall0");
 }
 
@@ -138,6 +138,6 @@ void ReinforcedWall::Delete()
 }
 
 void ReinforcedWall::AttackBy(IdPtr<Item> item)
-{   
+{
     //Nothing
 }
