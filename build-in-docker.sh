@@ -21,4 +21,5 @@ lcov --remove coverage.info '/opt/*' --output-file coverage.info
 lcov --remove coverage.info 'tests/*' --output-file coverage.info
 lcov --remove coverage.info 'build/*' --output-file coverage.info
 lcov --list coverage.info
+if [[ -z ${COVERALLS_TOKEN+x} ]]; then exit 0; fi
 coveralls-lcov --repo-token=${COVERALLS_TOKEN} coverage.info || true;

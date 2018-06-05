@@ -29,6 +29,22 @@ public slots:
     void keyPressEvent(QKeyEvent* event);
 };
 
+struct Asset
+{
+    QString name;
+    QString sprite;
+    QString state;
+    bool turf;
+
+    struct VariableInfo
+    {
+        QString name;
+        QString type;
+        // TODO: value?
+    };
+    QVector<VariableInfo> variables;
+};
+
 class MapEditorForm : public QWidget
 {
     Q_OBJECT
