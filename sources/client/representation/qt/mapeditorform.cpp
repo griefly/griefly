@@ -122,6 +122,9 @@ MapEditorForm::MapEditorForm(QWidget *parent)
             ui->listWidgetTurf->addItem(new_item);
         }
     }
+
+    LoadAssets();
+
     qDebug() << "End generating";
     showMaximized();
 }
@@ -654,4 +657,9 @@ void MapEditorForm::on_unset_value_push_button_clicked()
 
     ResetVariablesPanel();
     on_listWidgetVariables_itemSelectionChanged();
+}
+
+void MapEditorForm::LoadAssets()
+{
+    // TODO: load assets
 }
