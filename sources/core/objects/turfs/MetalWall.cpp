@@ -21,7 +21,6 @@ MetalWall::MetalWall()
     SetName("Metal wall");
 
     default_state_="metal";
-    current_state_=0;
 
     SetState("metal0");
 }
@@ -48,52 +47,43 @@ void MetalWall::AfterWorldCreation()
 
 void MetalWall::Delete()
 {
-    UpdateNeighborhoodState();
+    NotifyNeighborhood();
     MaterialObject::Delete();
 }
 
-void MetalWall::CheckNeighborhood(Dir dir)
+void MetalWall::CheckNeighborhood(const Dir dir)
 {
     if (dir == Dir::ALL)
     {
-        for(auto x : WALL_PROCESSING_DIRS) CheckNeighborhood(x);
+        for (const auto& x : WALL_PROCESSING_DIRS) CheckNeighborhood(x);
         return;
     }
-
-    int bit;
-
-    switch(dir)
-    {
-        case Dir::NORTH: bit=0; break;
-        case Dir::SOUTH: bit=1; break;
-        case Dir::EAST:  bit=2; break;
-        case Dir::WEST:  bit=3; break;
-        default: return;
-    }
-
+    
     if (IdPtr<MetalWall> wall = GetNeighbour(dir)->GetTurf())
     {
-        current_state_.set(bit, true);
-        return;
+        current_mask_.SetBitByDirection(dir, true);
     }
-    current_state_.set(bit, false);
+    else
+    {
+        current_mask_.SetBitByDirection(dir, false);
+    }
 }
 
-void MetalWall::UpdateState(Dir dir)
+void MetalWall::UpdateState(const Dir dir)
 {
     CheckNeighborhood(dir);
     if (dir == Dir::ALL)
     {
-        UpdateNeighborhoodState();
+        NotifyNeighborhood();
     }
-    SetState(default_state_ + QString::number(current_state_.to_ulong()));
+    SetState(current_mask_.GetState(default_state_));
 }
 
-void MetalWall::UpdateNeighborhoodState(Dir dir)
+void MetalWall::NotifyNeighborhood(const Dir dir)
 {
     if (dir == Dir::ALL)
     {
-        for(auto x : WALL_PROCESSING_DIRS) UpdateNeighborhoodState(x);
+        for (const auto& x : WALL_PROCESSING_DIRS) NotifyNeighborhood(x);
         return;
     }
 
@@ -115,23 +105,42 @@ ReinforcedWall::ReinforcedWall()
     SetName("Reinforced wall");
 
     default_state_="rwall";
-    current_state_=0;
 
     SetState("rwall0");
-}
-
-void ReinforcedWall::AfterWorldCreation()
-{
-    UpdateState(Dir::ALL);
-}
-
-void ReinforcedWall::Delete()
-{
-    UpdateNeighborhoodState();
-    MaterialObject::Delete();
 }
 
 void ReinforcedWall::AttackBy(IdPtr<Item> item)
 {
     //Nothing
+}
+
+WallBitMask::WallBitMask()
+{
+    value_=0;
+}
+
+void WallBitMask::SetBitByDirection(const Dir dir, const bool value)
+{
+    int bit;
+
+    switch (dir)
+    {
+        case Dir::NORTH: bit=0; break;
+        case Dir::SOUTH: bit=1; break;
+        case Dir::EAST:  bit=2; break;
+        case Dir::WEST:  bit=3; break;
+        default: return;
+    }
+
+    value_.set(bit, value);
+}
+
+QString WallBitMask::GetState(const QString& default_state)
+{
+    return default_state + QString::number(value_.to_ulong());
+}
+
+WallBitMask::operator qint32()
+{
+    return value_.to_ulong();
 }
