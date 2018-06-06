@@ -1,0 +1,699 @@
+{
+    "states": [
+        {
+            "state": "pill",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill1",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill2",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill3",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill4",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill5",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill6",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill7",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill8",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill9",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill10",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill11",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill12",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill13",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill14",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill15",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill16",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill17",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill18",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill19",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill20",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill0",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle1",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle2",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle3",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle4",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle5",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle6",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle7",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle8",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle9",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle10",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle11",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle12",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle13",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle14",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle15",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle16",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle17",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle18",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle19",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bottle20",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "pill_canister",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "solid",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "liquid",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "vapour",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "beaker",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "mixer0b",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "mixer1b",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "vial",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "vial0",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "vial1",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "vial-blue",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "vial-green",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "dropper0",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "beakerlarge",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "beakerlarge1",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "chempuff",
+            "loop": 1,
+            "frames": 5,
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 4
+        },
+        {
+            "state": "weedpuff",
+            "loop": 1,
+            "frames": 5,
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 4
+        },
+        {
+            "state": "chemg",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "chemg_ass",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "chemg_locked",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "chemg_armed",
+            "frames": 2,
+            "delay": [
+                1.0,
+                2.0
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "mixer0",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "mixer1",
+            "frames": 33,
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "mixer0_nopower",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "mixer1_nopower",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "mixer1_b",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "mixer0_b",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "waitlight",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "genesploicer0",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "genesploicer1",
+            "rewind": 1,
+            "frames": 4,
+            "delay": [
+                4.0,
+                4.0,
+                4.0,
+                4.0
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "large_grenade",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "large_grenade_ass",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "large_grenade_locked",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "large_grenade_armed",
+            "frames": 2,
+            "delay": [
+                1.0,
+                1.0
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "beakerbluespace",
+            "frames": 4,
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "beakernoreact",
+            "frames": 18,
+            "delay": [
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "disp_beaker",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bandaid",
+            "hotspot": [
+                16.0,
+                25.0,
+                1.0
+            ],
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bag",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "biobag",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bandaid_brute",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "bandaid_burn",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potgreen",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potred",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potpink",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potpurple",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potsilver",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potyellow",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potorange",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potblue",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potcyan",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "medspray",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potlightpink",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "potgrey",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "smoke1",
+            "frames": 4,
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "smoke0",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "smoke0-o",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "soda_dispenser",
+            "frames": 1,
+            "dirs": 4
+        },
+        {
+            "state": "booze_dispenser",
+            "frames": 1,
+            "dirs": 4
+        },
+        {
+            "state": "minidispenser",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "minidispenser_working",
+            "loop": 1,
+            "frames": 2,
+            "delay": [
+                2.0,
+                2.0
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "minidispenser_nopower",
+            "frames": 1,
+            "loop": 1,
+            "dirs": 1
+        },
+        {
+            "state": "minidispenser_panel-o",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "dispenser",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "dispenser_nopower",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "dispenser_working",
+            "frames": 4,
+            "delay": [
+                2.0,
+                2.0,
+                2.0,
+                2.0
+            ],
+            "dirs": 1
+        },
+        {
+            "state": "dispenser_panel-o",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "brutespray",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "burnspray",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "synthspray",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "beakerwhite",
+            "frames": 1,
+            "dirs": 1
+        },
+        {
+            "state": "beakergold",
+            "frames": 1,
+            "dirs": 1
+        }
+    ],
+    "info": {
+        "height": 32,
+        "version": 4.0,
+        "width": 32
+    }
+}

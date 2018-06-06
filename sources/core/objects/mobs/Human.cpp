@@ -64,6 +64,7 @@ Human::Human()
     suffocation_damage_ = 0;
     burn_damage_ = 0;
     brute_damage_ = 0;
+    toxins_damage_ = 0;
 
     pulled_object_ = 0;
 }
@@ -403,10 +404,11 @@ void Human::Live()
     if (atmos::AtmosHolder* holder = GetOwner()->GetAtmosHolder())
     {
         const int oxygen = holder->GetGase(atmos::OXYGEN);
+        const int plasma = holder->GetGase(atmos::PLASMA);
         const int temperature = holder->GetTemperature();
         const int pressure = holder->GetPressure();
 
-        interface_->UpdateEnvironment(temperature, pressure, oxygen);
+        interface_->UpdateEnvironment(temperature, pressure, oxygen, plasma);
 
         const int BURNING_THRESHOLD = 3;
         const int MIN_BURN_DAMAGE = 1;
@@ -425,6 +427,14 @@ void Human::Live()
                 {
                     PostHtmlFor("<font color=\"#0022FF\">It is too cold here!</font>", GetId());
                 }
+            }
+        }
+        if (plasma > HUMAN_PLASMA_TOXINS_THRESHOLD)
+        {
+            if (CalculateHealth() >= 0)
+            {
+                holder->RemoveGase(atmos::PLASMA, 1);
+                ApplyToxinsDamage(HUMAN_PLASMA_TOXINS_DAMAGE);
             }
         }
         if (oxygen > 0)
@@ -664,29 +674,35 @@ void Human::MakeEmote(const QString& emote)
 
 int Human::CalculateHealth() const
 {
-    return max_health_ - (suffocation_damage_ + burn_damage_ + brute_damage_);
+    return max_health_ - (suffocation_damage_ + burn_damage_ + brute_damage_ + toxins_damage_);
 }
 
 void Human::ApplyBurnDamage(int damage)
 {
     burn_damage_ += damage;
-    burn_damage_ = qMax(0, burn_damage_);
+    burn_damage_ = std::max(0, burn_damage_);
 }
 
 void Human::ApplySuffocationDamage(int damage)
 {
     suffocation_damage_ += damage;
-    suffocation_damage_ = qMax(0, suffocation_damage_);
+    suffocation_damage_ = std::max(0, suffocation_damage_);
+}
+
+void Human::ApplyToxinsDamage(int damage)
+{
+    toxins_damage_ += damage;
+    toxins_damage_ = std::max(0, toxins_damage_);
 }
 
 void Human::ApplyBruteDamage(int damage)
 {
     brute_damage_ += damage;
-    brute_damage_ = qMax(0, brute_damage_);
+    brute_damage_ = std::max(0, brute_damage_);
     if (damage > 0)
     {
         const int ALWAYS_BLOOD_BORDER = 1000;
-        int brute_helper = qMax(1, ALWAYS_BLOOD_BORDER - brute_damage_);
+        int brute_helper = std::max(1, ALWAYS_BLOOD_BORDER - brute_damage_);
         if ((GenerateRandom() % brute_helper) == 1)
         {
             return;
