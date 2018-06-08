@@ -20,6 +20,7 @@ MetalWall::MetalWall()
 
     SetName("Metal wall");
 
+    current_state_=0;
     default_state_="metal";
 
     SetState("metal0");
@@ -58,14 +59,14 @@ void MetalWall::CheckNeighborhood(const Dir dir)
         for (const auto& x : WALL_PROCESSING_DIRS) CheckNeighborhood(x);
         return;
     }
-    
+
     if (IdPtr<MetalWall> wall = GetNeighbour(dir)->GetTurf())
     {
-        current_mask_.SetBitByDirection(dir, true);
+        SetBitByDirection(dir, true);
     }
     else
     {
-        current_mask_.SetBitByDirection(dir, false);
+        SetBitByDirection(dir, false);
     }
 }
 
@@ -76,7 +77,7 @@ void MetalWall::UpdateState(const Dir dir)
     {
         NotifyNeighborhood();
     }
-    SetState(current_mask_.GetState(default_state_));
+    SetState(default_state_ + QString::number(current_state_.to_ulong()));
 }
 
 void MetalWall::NotifyNeighborhood(const Dir dir)
@@ -104,6 +105,7 @@ ReinforcedWall::ReinforcedWall()
 
     SetName("Reinforced wall");
 
+    current_state_=0;
     default_state_="rwall";
 
     SetState("rwall0");
@@ -114,12 +116,7 @@ void ReinforcedWall::AttackBy(IdPtr<Item> item)
     //Nothing
 }
 
-WallBitMask::WallBitMask()
-{
-    value_=0;
-}
-
-void WallBitMask::SetBitByDirection(const Dir dir, const bool value)
+void MetalWall::SetBitByDirection(const Dir dir, const bool value)
 {
     int bit;
 
@@ -132,15 +129,5 @@ void WallBitMask::SetBitByDirection(const Dir dir, const bool value)
         default: return;
     }
 
-    value_.set(bit, value);
-}
-
-QString WallBitMask::GetState(const QString& default_state)
-{
-    return default_state + QString::number(value_.to_ulong());
-}
-
-WallBitMask::operator qint32()
-{
-    return value_.to_ulong();
+    current_state_.set(bit, value);
 }

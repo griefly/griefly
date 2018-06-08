@@ -9,33 +9,23 @@ namespace kv
 
 const std::array<Dir, 4> WALL_PROCESSING_DIRS = {Dir::NORTH, Dir::SOUTH, Dir::WEST, Dir::EAST};
 
-class WallBitMask
-{
-friend inline FastDeserializer& operator>>(FastDeserializer& file, kv::WallBitMask& wbm);
-friend inline FastSerializer& operator<<(FastSerializer& file, const kv::WallBitMask& wbm);
-public:
-    WallBitMask();
-
-    void SetBitByDirection(const Dir dir, const bool value);
-    QString GetState(const QString& default_state);
-
-    operator qint32();
-private:
-    std::bitset<4> value_;
-};
-
-inline FastDeserializer& operator>>(FastDeserializer& file, kv::WallBitMask& wbm)
+inline FastDeserializer& operator>>(FastDeserializer& file, std::bitset<4>& bset)
 {
     qint32 number;
     file >> number;
-    wbm.value_ = std::bitset<4>(number);
+    bset = std::bitset<4>(number);
     return file;
 }
 
-inline FastSerializer& operator<<(FastSerializer& file, const kv::WallBitMask& wbm)
+inline FastSerializer& operator<<(FastSerializer& file, const std::bitset<4>& bset)
 {
-    file << static_cast<qint32>(wbm.value_.to_ulong());
+    file << static_cast<qint32>(bset.to_ulong());
     return file;
+}
+
+inline unsigned int Hash(const std::bitset<4>& value)
+{
+    return value.to_ulong();
 }
 
 class MetalWall : public Turf
@@ -50,12 +40,13 @@ public:
     virtual void AfterWorldCreation() override;
     virtual void Delete() override;
 protected:
-    WallBitMask KV_SAVEABLE(current_mask_);
+    std::bitset<4> KV_SAVEABLE(current_state_);
     QString KV_SAVEABLE(default_state_);
 private:
     void UpdateState(const Dir dir = Dir::ALL);
     void NotifyNeighborhood(const Dir dir = Dir::ALL);
     void CheckNeighborhood(const Dir dir = Dir::ALL);
+    void SetBitByDirection(const Dir dir, const bool value);
 };
 END_DECLARE(MetalWall);
 
