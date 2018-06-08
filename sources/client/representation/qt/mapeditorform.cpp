@@ -691,6 +691,15 @@ void MapEditorForm::LoadAssets()
             continue;
         }
         QJsonDocument document = QJsonDocument::fromJson(file.readAll());
-        qDebug() << document.object();
+        const QJsonObject asset_json = document.object();
+
+        // TODO: proper validation
+        Asset asset;
+        asset.turf = asset_json[key::IS_TURF].toBool();
+        asset.sprite = asset_json[key::SPRITE].toString();
+        asset.state = asset_json[key::SPRITE_STATE].toString();
+        asset.name = asset_json[key::TYPENAME].toString();
+        // TODO: variables
     }
+
 }
