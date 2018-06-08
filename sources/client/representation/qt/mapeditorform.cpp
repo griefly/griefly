@@ -660,6 +660,24 @@ void MapEditorForm::on_unset_value_push_button_clicked()
     on_listWidgetVariables_itemSelectionChanged();
 }
 
+namespace
+{
+
+namespace key
+{
+
+const QString IS_TURF("is_turf");
+const QString SPRITE("sprite");
+const QString SPRITE_STATE("sprite_state");
+const QString TYPENAME("typename");
+const QString VARIABLES("variables");
+const QString NAME("name");
+const QString TYPE("type");
+
+}
+
+} // namespace
+
 void MapEditorForm::LoadAssets()
 {
     QDir dir("assets/");
