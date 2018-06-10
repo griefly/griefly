@@ -37,3 +37,13 @@ TEST(HashesTest, String)
     s1[4] = '\0';
     EXPECT_EQ(Hash(s1), 2292011938);
 }
+
+TEST(HashesTest, bitset)
+{
+    std::bitset<4> bits;
+    for (int value = 0; value < 4; value++)
+    {
+        bits = std::bitset<4>(value);
+        EXPECT_EQ(Hash(bits), value);
+    }
+}
