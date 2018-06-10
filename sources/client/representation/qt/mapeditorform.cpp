@@ -19,6 +19,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QJsonDocument>
+#include <QJsonArray>
 
 using namespace kv;
 
@@ -699,7 +700,16 @@ void MapEditorForm::LoadAssets()
         asset.sprite = asset_json[key::SPRITE].toString();
         asset.state = asset_json[key::SPRITE_STATE].toString();
         asset.name = asset_json[key::TYPENAME].toString();
-        // TODO: variables
+
+        const QJsonArray variables = asset_json[key::VARIABLES].toArray();
+        for (const QJsonValue& value : variables)
+        {
+            const QJsonObject object = value.toObject();
+            Asset::VariableInfo info;
+            info.name = object[key::NAME].toString();
+            info.type = object[key::TYPE].toString();
+            asset.variables.append(info);
+        }
     }
 
 }
