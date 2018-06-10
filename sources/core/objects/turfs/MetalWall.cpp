@@ -20,8 +20,7 @@ MetalWall::MetalWall()
 
     SetName("Metal wall");
 
-    current_state_=0;
-    default_state_="metal";
+    base_state_ = "metal";
 
     SetState("metal0");
 }
@@ -43,12 +42,13 @@ void MetalWall::AttackBy(IdPtr<Item> item)
 
 void MetalWall::AfterWorldCreation()
 {
-    UpdateState(Dir::ALL);
+    CheckNeighborhood(Dir::ALL);
+    UpdateState();
 }
 
 void MetalWall::Delete()
 {
-    NotifyNeighborhood();
+    NotifyNeighborhood(Dir::ALL);
     MaterialObject::Delete();
 }
 
@@ -56,13 +56,19 @@ void MetalWall::CheckNeighborhood(const Dir dir)
 {
     if (dir == Dir::ALL)
     {
-        for (const auto& x : WALL_PROCESSING_DIRS) CheckNeighborhood(x);
+        for (const auto& x : WALL_PROCESSING_DIRS)
+        {
+            CheckNeighborhood(x);
+        }
         return;
     }
 
     if (IdPtr<MetalWall> wall = GetNeighbour(dir)->GetTurf())
     {
         SetBitByDirection(dir, true);
+
+        wall->SetBitByDirection(RevertDir(dir),true);
+        wall->UpdateState();
     }
     else
     {
@@ -70,27 +76,26 @@ void MetalWall::CheckNeighborhood(const Dir dir)
     }
 }
 
-void MetalWall::UpdateState(const Dir dir)
+void MetalWall::UpdateState()
 {
-    CheckNeighborhood(dir);
-    if (dir == Dir::ALL)
-    {
-        NotifyNeighborhood();
-    }
-    SetState(default_state_ + QString::number(current_state_.to_ulong()));
+    SetState(base_state_ + QString::number(current_state_.to_ulong()));
 }
 
 void MetalWall::NotifyNeighborhood(const Dir dir)
 {
     if (dir == Dir::ALL)
     {
-        for (const auto& x : WALL_PROCESSING_DIRS) NotifyNeighborhood(x);
+        for (const auto& x : WALL_PROCESSING_DIRS)
+        {
+            NotifyNeighborhood(x);
+        }
         return;
     }
 
     if (IdPtr<MetalWall> wall = GetNeighbour(dir)->GetTurf())
     {
-        wall->UpdateState(RevertDir(dir));
+        wall->SetBitByDirection(RevertDir(dir),false);
+        wall->UpdateState();
     }
 }
 
@@ -105,15 +110,14 @@ ReinforcedWall::ReinforcedWall()
 
     SetName("Reinforced wall");
 
-    current_state_=0;
-    default_state_="rwall";
+    base_state_ = "rwall";
 
     SetState("rwall0");
 }
 
 void ReinforcedWall::AttackBy(IdPtr<Item> item)
 {
-    //Nothing
+    // Nothing
 }
 
 void MetalWall::SetBitByDirection(const Dir dir, const bool value)
@@ -122,11 +126,20 @@ void MetalWall::SetBitByDirection(const Dir dir, const bool value)
 
     switch (dir)
     {
-        case Dir::NORTH: bit=0; break;
-        case Dir::SOUTH: bit=1; break;
-        case Dir::EAST:  bit=2; break;
-        case Dir::WEST:  bit=3; break;
-        default: return;
+    case Dir::NORTH:
+        bit=0;
+        break;
+    case Dir::SOUTH:
+        bit=1;
+        break;
+    case Dir::EAST:
+        bit=2;
+        break;
+    case Dir::WEST:
+        bit=3;
+        break;
+    default:
+        return;
     }
 
     current_state_.set(bit, value);
