@@ -71,17 +71,11 @@ private slots:
 
     void on_listWidgetVariables_itemSelectionChanged();
 
-    void on_lineEditAsString_returnPressed();
-
     void on_listWidgetTurf_clicked(const QModelIndex &index);
 
     void on_listWidget_clicked(const QModelIndex &index);
 
     void on_resizeMap_clicked();
-
-    void on_lineEditAsInt_returnPressed();
-
-    void on_lineEditAsBool_returnPressed();
 
     void on_saveMapJson_clicked();
 
