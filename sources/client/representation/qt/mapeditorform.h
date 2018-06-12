@@ -104,8 +104,6 @@ private:
     std::vector<QString> types_;
     std::vector<QString> turf_types_;
 
-    kv::CoreInterface::ObjectsMetadata objects_metadata_;
-
     std::vector<Asset> assets_;
 
     Ui::MapEditorForm *ui;

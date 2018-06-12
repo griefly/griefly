@@ -66,16 +66,20 @@ MapEditorForm::MapEditorForm(QWidget *parent)
 
     SetSpriter(new SpriteHolder);
 
+    LoadAssets();
+
     qDebug() << "Start generate images for creators";
-    objects_metadata_ = kv::GetCoreInstance().GetObjectsMetadata();
-    for (const kv::CoreInterface::ObjectMetadata& metadata : qAsConst(objects_metadata_))
+
+    for (const Asset& asset : qAsConst(assets_))
     {
-        const RawViewInfo& view_info = metadata.default_view;
+        RawViewInfo view_info;
+        view_info.base_frameset.sprite_name = asset.sprite;
+        view_info.base_frameset.state = asset.state;
 
         if (   view_info.base_frameset.sprite_name.isEmpty()
             || view_info.base_frameset.state.isEmpty())
         {
-            qDebug() << "EMPTY frameset:" << metadata.name;
+            qDebug() << "EMPTY frameset:" << asset.name;
             continue;
         }
 
@@ -86,7 +90,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
 
         if (view.GetBaseFrameset().GetMetadata() == nullptr)
         {
-            qDebug() << "EMPTY metadata:" << metadata.name;
+            qDebug() << "EMPTY metadata:" << asset.name;
             continue;
         }
 
@@ -102,7 +106,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
 
             images.push_back(QPixmap::fromImage(img));
         }
-        map_editor_->AddItemType(metadata.name, images);
+        map_editor_->AddItemType(asset.name, images);
 
         if (images.length() == 0)
         {
@@ -110,22 +114,20 @@ MapEditorForm::MapEditorForm(QWidget *parent)
         }
 
         QListWidgetItem* new_item
-            = new QListWidgetItem(QIcon(images[0]), metadata.name);
+            = new QListWidgetItem(QIcon(images[0]), asset.name);
 
-        if (!metadata.turf)
+        if (!asset.turf)
         {
-            types_.push_back(metadata.name);
+            types_.push_back(asset.name);
             ui->listWidget->addItem(new_item);
         }
         else
         {
-            turf_types_.push_back(metadata.name);
-            map_editor_->AddTurfType(metadata.name);
+            turf_types_.push_back(asset.name);
+            map_editor_->AddTurfType(asset.name);
             ui->listWidgetTurf->addItem(new_item);
         }
     }
-
-    LoadAssets();
 
     qDebug() << "End generating";
     showMaximized();
@@ -236,9 +238,12 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 
     const QString item_type = GetCurrentEditorEntry()->item_type;
 
-    const kv::CoreInterface::ObjectsMetadata& objects_metadata = objects_metadata_;
-    auto it = objects_metadata.find(item_type);
-    if (it == objects_metadata.end())
+    auto it = std::find_if(assets_.begin(), assets_.end(),
+    [&](const Asset& asset)
+    {
+        return asset.name == item_type;
+    });
+    if (it == assets_.end())
     {
         return;
     }
@@ -299,9 +304,12 @@ QString MapEditorForm::GetCurrentVariableType()
         return QString();
     }
 
-    const kv::CoreInterface::ObjectsMetadata& objects_metadata = objects_metadata_;
-    auto it = objects_metadata.find(ee->item_type);
-    if (it == objects_metadata.end())
+    auto it = std::find_if(assets_.begin(), assets_.end(),
+    [&](const Asset& asset)
+    {
+        return asset.name == ee->item_type;
+    });
+    if (it == assets_.end())
     {
         return QString();
     }
@@ -623,6 +631,8 @@ void MapEditorForm::LoadAssets()
             info.type = object[key::TYPE].toString();
             asset.variables.append(info);
         }
+
+        assets_.push_back(asset);
     }
 
 }
