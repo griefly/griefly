@@ -1,4 +1,5 @@
 {
+    "asset_name": "Revolver",
     "is_turf": false,
     "sprite": "icons/guns.dmi",
     "sprite_state": "revolver",

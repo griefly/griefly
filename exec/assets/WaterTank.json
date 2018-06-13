@@ -1,4 +1,5 @@
 {
+    "asset_name": "WaterTank",
     "is_turf": false,
     "sprite": "icons/objects.dmi",
     "sprite_state": "watertank",

@@ -1,13 +1,10 @@
 {
+    "asset_name": "Human",
     "is_turf": false,
     "sprite": "icons/human.dmi",
     "sprite_state": "african1_m_s",
     "typename": "Human",
     "variables": [
-        {
-            "name": "passable_all_",
-            "type": "int32"
-        },
         {
             "name": "transparent_",
             "type": "bool"
@@ -41,6 +38,10 @@
             "type": "bool"
         },
         {
+            "name": "lay_timer_",
+            "type": "int32"
+        },
+        {
             "name": "force_error_",
             "type": "int32"
         },
@@ -65,6 +66,22 @@
             "type": "int32"
         },
         {
+            "name": "passable_all_",
+            "type": "int32"
+        },
+        {
+            "name": "toxins_damage_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_level_",
+            "type": "int32"
+        },
+        {
+            "name": "last_move_",
+            "type": "int32"
+        },
+        {
             "name": "passable_right_",
             "type": "int32"
         },
@@ -77,6 +94,10 @@
             "type": "int32"
         },
         {
+            "name": "direction_",
+            "type": "int32"
+        },
+        {
             "name": "passable_down_",
             "type": "int32"
         },
@@ -85,23 +106,7 @@
             "type": "bool"
         },
         {
-            "name": "passable_level_",
-            "type": "int32"
-        },
-        {
-            "name": "last_move_",
-            "type": "int32"
-        },
-        {
-            "name": "direction_",
-            "type": "int32"
-        },
-        {
             "name": "tick_speed_",
-            "type": "int32"
-        },
-        {
-            "name": "lay_timer_",
             "type": "int32"
         }
     ]

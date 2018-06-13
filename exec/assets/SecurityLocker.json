@@ -1,4 +1,5 @@
 {
+    "asset_name": "SecurityLocker",
     "is_turf": false,
     "sprite": "icons/closet.dmi",
     "sprite_state": "secure1",

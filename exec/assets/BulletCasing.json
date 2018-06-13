@@ -1,4 +1,5 @@
 {
+    "asset_name": "BulletCasing",
     "is_turf": false,
     "sprite": "icons/ammo.dmi",
     "sprite_state": "s-casing",

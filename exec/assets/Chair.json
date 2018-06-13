@@ -1,4 +1,5 @@
 {
+    "asset_name": "Chair",
     "is_turf": false,
     "sprite": "icons/objects.dmi",
     "sprite_state": "chair",

@@ -1,4 +1,5 @@
 {
+    "asset_name": "ExternalDoor",
     "is_turf": false,
     "sprite": "icons/Doorext.dmi",
     "sprite_state": "door_closed",

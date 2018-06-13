@@ -1,4 +1,5 @@
 {
+    "asset_name": "Space",
     "is_turf": true,
     "sprite": "icons/space.dmi",
     "sprite_state": "10",

@@ -1,4 +1,5 @@
 {
+    "asset_name": "PipeBase",
     "is_turf": false,
     "sprite": "icons/pipes.dmi",
     "sprite_state": "",

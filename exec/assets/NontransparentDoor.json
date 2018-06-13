@@ -1,4 +1,5 @@
 {
+    "asset_name": "NontransparentDoor",
     "is_turf": false,
     "sprite": "icons/Doorsec.dmi",
     "sprite_state": "door_closed",

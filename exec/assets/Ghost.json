@@ -1,4 +1,5 @@
 {
+    "asset_name": "Ghost",
     "is_turf": false,
     "sprite": "icons/mob.dmi",
     "sprite_state": "ghost_grey",

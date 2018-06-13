@@ -1,4 +1,5 @@
 {
+    "asset_name": "PipePump",
     "is_turf": false,
     "sprite": "icons/pipes2.dmi",
     "sprite_state": "pipepump-run",

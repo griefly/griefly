@@ -1,4 +1,5 @@
 {
+    "asset_name": "Door",
     "is_turf": false,
     "sprite": "icons/Doorglass.dmi",
     "sprite_state": "door_closed",

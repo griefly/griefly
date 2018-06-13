@@ -1,4 +1,5 @@
 {
+    "asset_name": "Beer",
     "is_turf": false,
     "sprite": "icons/drinks.dmi",
     "sprite_state": "beer",

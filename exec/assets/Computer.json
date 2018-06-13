@@ -1,4 +1,5 @@
 {
+    "asset_name": "Computer",
     "is_turf": false,
     "sprite": "icons/computer.dmi",
     "sprite_state": "securityb",

@@ -1,4 +1,5 @@
 {
+    "asset_name": "Wirecutters",
     "is_turf": false,
     "sprite": "icons/items.dmi",
     "sprite_state": "cutters",

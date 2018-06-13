@@ -1,4 +1,5 @@
 {
+    "asset_name": "PlasmaGasTank",
     "is_turf": false,
     "sprite": "icons/atmos.dmi",
     "sprite_state": "orange",
