@@ -2,6 +2,7 @@
 
 #include <QMap>
 #include <QVector>
+#include <bitset>
 
 #include "Hashes.h"
 #include "FastSerializer.h"
