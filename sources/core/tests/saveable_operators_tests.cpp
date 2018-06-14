@@ -114,8 +114,8 @@ TEST(SaveableOperators, Bitset)
     for (int check_value = 0; check_value < 16; ++check_value)
     {
         deserializer >> value;
-        EXPECT_EQ(value, check_array[check_value]);
+        EXPECT_EQ(value, CHECK_ARRAY[check_value]);
 
-        EXPECT_EQ(kv::Hash(value), check_array[check_value]);
+        EXPECT_EQ(kv::Hash(value), CHECK_ARRAY[check_value]);
     }
 }
