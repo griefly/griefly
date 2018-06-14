@@ -2,7 +2,6 @@
 
 #include <QHash>
 #include <QString>
-#include <bitset>
 
 namespace std
 {

@@ -5,7 +5,6 @@
 
 #include <type_traits>
 #include <vector>
-#include <bitset>
 
 #include "KvAbort.h"
 
