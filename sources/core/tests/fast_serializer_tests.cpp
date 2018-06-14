@@ -660,10 +660,6 @@ TEST(FastSerializeDeserialize, VariousValues)
         serializer << QString("One two three");
         serializer << QString("Ехал грека через реку");
         serializer << 4294967294u;
-        serializer << std::bitset<4>(0);
-        serializer << std::bitset<4>(1);
-        serializer << std::bitset<4>(2);
-        serializer << std::bitset<4>(3);
 
         FastDeserializer deserializer(
             serializer.GetData(),
@@ -700,15 +696,6 @@ TEST(FastSerializeDeserialize, VariousValues)
 
             deserializer >> value;
             EXPECT_EQ(value, 4294967294u);
-        }
-        {
-            std::bitset<4> value;
-
-            for(int check_value = 0; check_value < 4; check_value++)
-            {
-                deserializer >> value;
-                EXPECT_EQ(value, check_value);
-            }
         }
 
         ASSERT_TRUE(deserializer.IsEnd());

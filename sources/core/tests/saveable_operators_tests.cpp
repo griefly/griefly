@@ -93,3 +93,29 @@ TEST(SaveableOperators, VectorOperators)
     EXPECT_EQ(other_vector[5], 43);
     EXPECT_EQ(Hash(other_vector), Hash(vector));
 }
+
+TEST(SaveableOperators, bitset)
+{
+    kv::FastSerializer serializer;
+    for(int i = 0; i < 16; i++)
+    {
+        serializer << std::bitset<16>(i);
+    }
+
+    kv::FastDeserializer deserializer(
+            serializer.GetData(),
+            serializer.GetIndex());
+
+    std::bitset<16> value;
+
+    int check_array[] = {0b0000, 0b0001, 0b0010, 0b0011, 0b0100, 0b0101, 0b0110, 0b0111,
+                         0b1000, 0b1001, 0b1010, 0b1011, 0b1100, 0b1101, 0b1110, 0b1111};
+
+    for(int check_value = 0; check_value < 16; check_value++)
+    {
+        deserializer >> value;
+        EXPECT_EQ(value, check_array[check_value]);
+
+        EXPECT_EQ(kv::Hash(value), check_array[check_value]);
+    }
+}

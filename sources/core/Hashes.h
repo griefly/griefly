@@ -58,9 +58,4 @@ inline unsigned int Hash(qint64 value)
     return static_cast<quint32>(value) + static_cast<quint32>(value >> 32);
 }
 
-inline unsigned int Hash(const std::bitset<4>& value)
-{
-    return value.to_ulong();
-}
-
 }

@@ -67,7 +67,7 @@ void MetalWall::CheckNeighborhood(const Dir dir)
     {
         SetBitByDirection(dir, true);
 
-        wall->SetBitByDirection(RevertDir(dir),true);
+        wall->SetBitByDirection(RevertDir(dir), true);
         wall->UpdateState();
     }
     else
@@ -94,7 +94,7 @@ void MetalWall::NotifyNeighborhood(const Dir dir)
 
     if (IdPtr<MetalWall> wall = GetNeighbour(dir)->GetTurf())
     {
-        wall->SetBitByDirection(RevertDir(dir),false);
+        wall->SetBitByDirection(RevertDir(dir), false);
         wall->UpdateState();
     }
 }
@@ -127,16 +127,16 @@ void MetalWall::SetBitByDirection(const Dir dir, const bool value)
     switch (dir)
     {
     case Dir::NORTH:
-        bit=0;
+        bit = 0;
         break;
     case Dir::SOUTH:
-        bit=1;
+        bit = 1;
         break;
     case Dir::EAST:
-        bit=2;
+        bit = 2;
         break;
     case Dir::WEST:
-        bit=3;
+        bit = 3;
         break;
     default:
         return;

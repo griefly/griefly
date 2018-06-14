@@ -450,20 +450,6 @@ inline QString Humanize(FastDeserializer* deserializer)
     return retval;
 }
 
-inline FastDeserializer& operator>>(FastDeserializer& file, std::bitset<4>& bset)
-{
-    qint32 number;
-    file >> number;
-    bset = std::bitset<4>(number);
-    return file;
-}
-
-inline FastSerializer& operator<<(FastSerializer& file, const std::bitset<4>& bset)
-{
-    file << static_cast<qint32>(bset.to_ulong());
-    return file;
-}
-
 }
 
 

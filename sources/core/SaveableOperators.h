@@ -9,6 +9,28 @@
 namespace kv
 {
 
+template<long unsigned int N>
+inline unsigned int Hash(std::bitset<N>& value)
+{
+    return value.to_ulong();
+}
+
+template<long unsigned int N>
+inline FastDeserializer& operator>>(FastDeserializer& file, std::bitset<N>& bset)
+{
+    qint32 number;
+    file >> number;
+    bset = std::bitset<N>(number);
+    return file;
+}
+
+template<long unsigned int N>
+inline FastSerializer& operator<<(FastSerializer& file, const std::bitset<N>& bset)
+{
+    file << static_cast<qint32>(bset.to_ulong());
+    return file;
+}
+
 template<class T>
 std::enable_if_t<std::is_enum<T>::value, kv::FastSerializer&>
 operator<<(kv::FastSerializer& file, const T& dir)
