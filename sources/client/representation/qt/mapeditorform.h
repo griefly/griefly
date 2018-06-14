@@ -31,7 +31,8 @@ public slots:
 
 struct Asset
 {
-    QString name;
+    QString type_name;
+    QString asset_name;
     QString sprite;
     QString state;
     bool turf;

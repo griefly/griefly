@@ -79,7 +79,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
         if (   view_info.base_frameset.sprite_name.isEmpty()
             || view_info.base_frameset.state.isEmpty())
         {
-            qDebug() << "EMPTY frameset:" << asset.name;
+            qDebug() << "EMPTY frameset:" << asset.asset_name;
             continue;
         }
 
@@ -90,7 +90,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
 
         if (view.GetBaseFrameset().GetMetadata() == nullptr)
         {
-            qDebug() << "EMPTY metadata:" << asset.name;
+            qDebug() << "EMPTY metadata:" << asset.asset_name;
             continue;
         }
 
@@ -106,7 +106,7 @@ MapEditorForm::MapEditorForm(QWidget *parent)
 
             images.push_back(QPixmap::fromImage(img));
         }
-        map_editor_->AddItemType(asset.name, images);
+        map_editor_->AddItemType(asset.asset_name, images);
 
         if (images.length() == 0)
         {
@@ -114,17 +114,17 @@ MapEditorForm::MapEditorForm(QWidget *parent)
         }
 
         QListWidgetItem* new_item
-            = new QListWidgetItem(QIcon(images[0]), asset.name);
+            = new QListWidgetItem(QIcon(images[0]), asset.asset_name);
 
         if (!asset.turf)
         {
-            types_.push_back(asset.name);
+            types_.push_back(asset.asset_name);
             ui->listWidget->addItem(new_item);
         }
         else
         {
-            turf_types_.push_back(asset.name);
-            map_editor_->AddTurfType(asset.name);
+            turf_types_.push_back(asset.asset_name);
+            map_editor_->AddTurfType(asset.asset_name);
             ui->listWidgetTurf->addItem(new_item);
         }
     }
@@ -241,7 +241,7 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
     auto it = std::find_if(assets_.begin(), assets_.end(),
     [&](const Asset& asset)
     {
-        return asset.name == item_type;
+        return asset.asset_name == item_type;
     });
     if (it == assets_.end())
     {
@@ -307,7 +307,7 @@ QString MapEditorForm::GetCurrentVariableType()
     auto it = std::find_if(assets_.begin(), assets_.end(),
     [&](const Asset& asset)
     {
-        return asset.name == ee->item_type;
+        return asset.asset_name == ee->item_type;
     });
     if (it == assets_.end())
     {
@@ -591,6 +591,7 @@ namespace key
 const QString IS_TURF("is_turf");
 const QString SPRITE("sprite");
 const QString SPRITE_STATE("sprite_state");
+const QString ASSET_NAME("asset_name");
 const QString TYPENAME("typename");
 const QString VARIABLES("variables");
 const QString NAME("name");
@@ -620,7 +621,8 @@ void MapEditorForm::LoadAssets()
         asset.turf = asset_json[key::IS_TURF].toBool();
         asset.sprite = asset_json[key::SPRITE].toString();
         asset.state = asset_json[key::SPRITE_STATE].toString();
-        asset.name = asset_json[key::TYPENAME].toString();
+        asset.type_name = asset_json[key::TYPENAME].toString();
+        asset.asset_name = asset_json[key::ASSET_NAME].toString();
 
         const QJsonArray variables = asset_json[key::VARIABLES].toArray();
         for (const QJsonValue& value : variables)
