@@ -182,10 +182,7 @@ void MapEditor::PasteFromAreaBuffer()
                 second_selection_x_, second_selection_y_);
 }
 
-namespace
-{
-
-QJsonObject EntryToJson(const MapEditor::EditorEntry& entry)
+QJsonObject MapEditor::EntryToJson(const MapEditor::EditorEntry& entry) const
 {
     using namespace mapgen;
 
@@ -204,8 +201,6 @@ QJsonObject EntryToJson(const MapEditor::EditorEntry& entry)
     object_info.insert(key::VARIABLES, variables);
 
     return object_info;
-}
-
 }
 
 QJsonObject MapEditor::SaveMapgenJson() const
@@ -375,12 +370,12 @@ void MapEditor::Resize(int posx, int posy, int posz)
                 second_selection_x_, second_selection_y_);
 }
 
-void MapEditor::AddItemType(const QString &item_type, QVector<QPixmap> image)
+void MapEditor::AddItemType(const QString& item_type, const QVector<QPixmap>& images)
 {
-    image_holder_[item_type] = image;
+    images_holder_[item_type] = images;
 }
 
-void MapEditor::AddTurfType(const QString &item_type)
+void MapEditor::AddTurfType(const QString& item_type)
 {
     turf_types_.insert(item_type);
 }
@@ -402,15 +397,19 @@ void MapEditor::AddItem(const QString &item_type)
 
 void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
 {
+    if (!ee)
+    {
+        return;
+    }
     const QJsonValue data = ee->variables["direction_"].toObject()[mapgen::key::type::INT32];
-    if (ee && !data.isNull())
+    if (!data.isNull())
     {
         Dir dir = static_cast<Dir>(data.toInt());
         int byond_dir = kv::helpers::DirToByond(dir);
 
-        if (byond_dir < image_holder_[ee->item_type].size())
+        if (byond_dir < images_holder_[ee->item_type].size())
         {
-            ee->pixmap_item->setPixmap(image_holder_[ee->item_type][byond_dir]);
+            ee->pixmap_item->setPixmap(images_holder_[ee->item_type][byond_dir]);
         }
     }
 }
@@ -445,7 +444,7 @@ MapEditor::EditorEntry& MapEditor::AddItem(const QString &item_type, int posx, i
 {
     EditorEntry new_entry;
     new_entry.item_type = item_type;
-    new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type][0]);
+    new_entry.pixmap_item = scene_->addPixmap(images_holder_[item_type][0]);
     new_entry.pixmap_item->setPos(posx * 32, posy * 32);
     new_entry.pixmap_item->setZValue(50);
 
@@ -489,7 +488,7 @@ MapEditor::EditorEntry& MapEditor::SetTurf(const QString &item_type, int posx, i
 
     EditorEntry new_entry;
     new_entry.item_type = item_type;
-    new_entry.pixmap_item = scene_->addPixmap(image_holder_[item_type][0]);
+    new_entry.pixmap_item = scene_->addPixmap(images_holder_[item_type][0]);
     new_entry.pixmap_item->setPos(posx * 32, posy * 32);
     editor_map_[posx][posy][posz].turf = new_entry;
     return editor_map_[posx][posy][posz].turf;

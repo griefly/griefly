@@ -1,4 +1,5 @@
 {
+    "asset_name": "MetalTable",
     "is_turf": false,
     "sprite": "icons/metaltables.dmi",
     "sprite_state": "metal_table_d0",

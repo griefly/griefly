@@ -1,4 +1,5 @@
 {
+    "asset_name": "FlatGlass",
     "is_turf": false,
     "sprite": "icons/structures.dmi",
     "sprite_state": "window",

@@ -1,4 +1,5 @@
 {
+    "asset_name": "BlackBoots",
     "is_turf": false,
     "sprite": "icons/shoes.dmi",
     "sprite_state": "black",

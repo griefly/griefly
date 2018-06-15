@@ -62,7 +62,7 @@ public:
 
     void Resize(int posx, int posy, int posz);
 
-    void AddItemType(const QString& item_type, QVector<QPixmap> images);
+    void AddItemType(const QString& item_type, const QVector<QPixmap>& images);
 
     void AddTurfType(const QString& item_type);
 
@@ -109,6 +109,7 @@ private:
     void CopyToAreaBuffer();
     void PasteFromAreaBuffer();
 
+    QJsonObject EntryToJson(const MapEditor::EditorEntry& entry) const;
 
     int selection_stage_;
 
@@ -122,7 +123,7 @@ private:
 
     Pointer pointer_;
 
-    QMap<QString, QVector<QPixmap>> image_holder_;
+    QMap<QString, QVector<QPixmap>> images_holder_;
 
     QSet<QString> turf_types_;
 

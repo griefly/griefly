@@ -1,4 +1,5 @@
 {
+    "asset_name": "Tophat",
     "is_turf": false,
     "sprite": "icons/hats.dmi",
     "sprite_state": "tophat",

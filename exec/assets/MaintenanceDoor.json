@@ -1,4 +1,5 @@
 {
+    "asset_name": "MaintenanceDoor",
     "is_turf": false,
     "sprite": "icons/Doormaint.dmi",
     "sprite_state": "door_closed",

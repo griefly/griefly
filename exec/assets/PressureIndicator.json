@@ -1,4 +1,5 @@
 {
+    "asset_name": "PressureIndicator",
     "is_turf": false,
     "sprite": "icons/numbers.dmi",
     "sprite_state": "empty",

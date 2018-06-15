@@ -1,4 +1,5 @@
 {
+    "asset_name": "MetalWall",
     "is_turf": true,
     "sprite": "icons/walls.dmi",
     "sprite_state": "metal0",

@@ -1,4 +1,5 @@
 {
+    "asset_name": "Laser",
     "is_turf": false,
     "sprite": "icons/projectiles.dmi",
     "sprite_state": "laser",

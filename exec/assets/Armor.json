@@ -1,4 +1,5 @@
 {
+    "asset_name": "Armor",
     "is_turf": false,
     "sprite": "icons/suits.dmi",
     "sprite_state": "armor",

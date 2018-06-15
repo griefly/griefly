@@ -1,4 +1,5 @@
 {
+    "asset_name": "ReinforcedWall",
     "is_turf": true,
     "sprite": "icons/walls.dmi",
     "sprite_state": "r_wall",

@@ -1,4 +1,5 @@
 {
+    "asset_name": "ReinforcedFlatGlass",
     "is_turf": false,
     "sprite": "icons/structures.dmi",
     "sprite_state": "rwindow",

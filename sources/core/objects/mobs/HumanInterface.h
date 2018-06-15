@@ -59,7 +59,7 @@ public:
     void UpdatePulling(bool is_pulling);
     void UpdateLaying(bool is_laying);
     void UpdateHealth(int health);
-    void UpdateEnvironment(int temperature, int pressure, int oxygen);
+    void UpdateEnvironment(int temperature, int pressure, int oxygen, int plasma);
 private:
     bool InsertItem(Slot* slot, IdPtr<Item> item);
     static void RemoveItem(Slot* slot);

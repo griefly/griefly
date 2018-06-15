@@ -1,4 +1,5 @@
 {
+    "asset_name": "Vent",
     "is_turf": false,
     "sprite": "icons/vent_pump.dmi",
     "sprite_state": "off",

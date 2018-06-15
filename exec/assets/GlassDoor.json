@@ -1,4 +1,5 @@
 {
+    "asset_name": "GlassDoor",
     "is_turf": false,
     "sprite": "icons/windoor.dmi",
     "sprite_state": "left",

@@ -1,4 +1,5 @@
 {
+    "asset_name": "Tea",
     "is_turf": false,
     "sprite": "icons/drinks.dmi",
     "sprite_state": "tea",

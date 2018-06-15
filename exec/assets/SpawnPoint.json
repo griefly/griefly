@@ -1,4 +1,5 @@
 {
+    "asset_name": "SpawnPoint",
     "is_turf": false,
     "sprite": "icons/screen1.dmi",
     "sprite_state": "x",

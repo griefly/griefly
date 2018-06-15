@@ -1,4 +1,5 @@
 {
+    "asset_name": "WallSign",
     "is_turf": false,
     "sprite": "icons/decals.dmi",
     "sprite_state": "bluecross2",

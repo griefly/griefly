@@ -14,6 +14,7 @@
 namespace key
 {
 
+const QString ASSET_NAME("asset_name");
 const QString TYPENAME("typename");
 const QString SPRITE("sprite");
 const QString SPRITE_STATE("sprite_state");
@@ -63,7 +64,8 @@ int main(int argc, char* argv[])
         }
 
         const QJsonObject asset
-            {{key::TYPENAME, object_metadata.name},
+            {{key::ASSET_NAME, object_metadata.name},
+             {key::TYPENAME, object_metadata.name},
              {key::SPRITE, object_metadata.default_view.base_frameset.sprite_name},
              {key::SPRITE_STATE, object_metadata.default_view.base_frameset.state},
              {key::IS_TURF, object_metadata.turf},

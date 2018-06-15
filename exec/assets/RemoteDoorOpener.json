@@ -1,4 +1,5 @@
 {
+    "asset_name": "RemoteDoorOpener",
     "is_turf": false,
     "sprite": "icons/device.dmi",
     "sprite_state": "multitool_red",

@@ -1,4 +1,5 @@
 {
+    "asset_name": "Shard",
     "is_turf": false,
     "sprite": "icons/shards.dmi",
     "sprite_state": "medium",

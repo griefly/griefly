@@ -1,4 +1,5 @@
 {
+    "asset_name": "Plating",
     "is_turf": true,
     "sprite": "icons/floors.dmi",
     "sprite_state": "plating",

@@ -19,7 +19,7 @@ class GraphicsScene: public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit GraphicsScene(QWidget *parent = 0);
+    explicit GraphicsScene(QWidget *parent = nullptr);
 signals:
     void mousePressed(QGraphicsSceneMouseEvent* mouseEvent);
     void keyboardPressed(QKeyEvent* event);
@@ -31,7 +31,8 @@ public slots:
 
 struct Asset
 {
-    QString name;
+    QString type_name;
+    QString asset_name;
     QString sprite;
     QString state;
     bool turf;
@@ -48,9 +49,8 @@ struct Asset
 class MapEditorForm : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit MapEditorForm(QWidget *parent = 0);
+    explicit MapEditorForm(QWidget *parent = nullptr);
     ~MapEditorForm();
 public slots:
     void newSelectionSetted(int first_x, int first_y, int second_x, int second_y);
@@ -72,17 +72,11 @@ private slots:
 
     void on_listWidgetVariables_itemSelectionChanged();
 
-    void on_lineEditAsString_returnPressed();
-
     void on_listWidgetTurf_clicked(const QModelIndex &index);
 
     void on_listWidget_clicked(const QModelIndex &index);
 
     void on_resizeMap_clicked();
-
-    void on_lineEditAsInt_returnPressed();
-
-    void on_lineEditAsBool_returnPressed();
 
     void on_saveMapJson_clicked();
 
@@ -93,6 +87,8 @@ private slots:
     void on_unset_value_push_button_clicked();
 
 private:
+    void LoadAssets();
+
     bool is_turf_selected_;
 
     MapEditor::EditorEntry* GetCurrentEditorEntry();
@@ -109,7 +105,7 @@ private:
     std::vector<QString> types_;
     std::vector<QString> turf_types_;
 
-    kv::CoreInterface::ObjectsMetadata objects_metadata_;
+    std::vector<Asset> assets_;
 
     Ui::MapEditorForm *ui;
 };

@@ -12,4 +12,5 @@ void LoadImages()
     GetSpriter().LoadImage("icons/space.dmi");
     GetSpriter().LoadImage("icons/human.dmi");
     GetSpriter().LoadImage("icons/device.dmi");
+    GetSpriter().LoadImage("icons/chemical.dmi");
 }

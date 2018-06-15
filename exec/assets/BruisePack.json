@@ -1,4 +1,5 @@
 {
+    "asset_name": "BruisePack",
     "is_turf": false,
     "sprite": "icons/items.dmi",
     "sprite_state": "brutepack",
@@ -9,15 +10,7 @@
             "type": "int32"
         },
         {
-            "name": "passable_level_",
-            "type": "int32"
-        },
-        {
-            "name": "last_move_",
-            "type": "int32"
-        },
-        {
-            "name": "direction_",
+            "name": "passable_up_",
             "type": "int32"
         },
         {
@@ -46,6 +39,22 @@
         },
         {
             "name": "brute_heal_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_level_",
+            "type": "int32"
+        },
+        {
+            "name": "toxins_heal_",
+            "type": "int32"
+        },
+        {
+            "name": "last_move_",
+            "type": "int32"
+        },
+        {
+            "name": "direction_",
             "type": "int32"
         },
         {
@@ -82,10 +91,6 @@
         },
         {
             "name": "passable_down_",
-            "type": "int32"
-        },
-        {
-            "name": "passable_up_",
             "type": "int32"
         }
     ]

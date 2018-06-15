@@ -1,4 +1,5 @@
 {
+    "asset_name": "ClownUniform",
     "is_turf": false,
     "sprite": "icons/uniforms.dmi",
     "sprite_state": "clown",
