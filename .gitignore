@@ -154,3 +154,4 @@ exec/KVClient
 exec/KVEngineTests
 exec/libKVEngine.so
 exec/BasicAssetsGenerator
+exec/MapEditor

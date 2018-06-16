@@ -44,6 +44,7 @@ set(SOURCES_PATH "../../sources/")
 add_subdirectory(utils/qzip_unpacker)
 
 add_subdirectory(utils/basic_assets_generator)
+add_subdirectory(utils/map_editor)
 
 # Building server
 set(GOPATH ${CMAKE_CURRENT_SOURCE_DIR}/gopath)
