@@ -13,7 +13,17 @@
 #include <QKeyEvent>
 #include <QVector>
 
+#include "representation/GLSprite.h"
+
 using MapgenVariablesType = QMap<QString, QJsonValue>;
+
+class SpriteCache
+{
+public:
+    const QVector<QPixmap>& GetSprite(const QString& sprite, const QString& state);
+private:
+    std::map<std::pair<QString, QString>, QVector<QPixmap>> sprites_;
+};
 
 class MapEditor : public QObject
 {
