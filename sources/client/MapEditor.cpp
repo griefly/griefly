@@ -12,6 +12,40 @@
 #include <Mapgen.h>
 #include <Dir.h>
 
+#include "representation/SpriteHolder.h"
+
+const QVector<QPixmap>& SpriteCache::GetSprite(const QString& sprite, const QString& state)
+{
+    auto it = sprites_.find({sprite, state});
+    if (it != sprites_.end())
+    {
+        return it->second;
+    }
+
+    GLSprite* gl_sprite = GetSpriter().GetSprite(sprite);
+    const auto& sprite_metadata = gl_sprite->GetMetadata();
+    if (!sprite_metadata.IsValidState(state))
+    {
+        return sprites_.insert({{sprite, state}, QVector<QPixmap>()}).first->second;
+    }
+    const auto& state_metadata = sprite_metadata.GetSpriteMetadata(state);
+
+    QVector<QPixmap> pixmaps;
+    for (qint32 dir = 0; dir < state_metadata.dirs; ++dir)
+    {
+        const int current_frame_pos = state_metadata.first_frame_pos + dir;
+
+        const int image_state_h = current_frame_pos / gl_sprite->FrameW();
+        const int image_state_w = current_frame_pos % gl_sprite->FrameW();
+
+        QImage image = gl_sprite->GetFrames()
+            [image_state_w * gl_sprite->FrameH() + image_state_h];
+
+        pixmaps.push_back(QPixmap::fromImage(image));
+    }
+    return sprites_.insert({{sprite, state}, pixmaps}).first->second;
+}
+
 MapEditor::EditorEntry::EditorEntry()
 {
     pixmap_item = nullptr;
@@ -580,4 +614,3 @@ MapEditor::EditorEntry& MapEditor::GetTurfFor(int posx, int posy, int posz)
 {
     return editor_map_[posx][posy][posz].turf;
 }
-

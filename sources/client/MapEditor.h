@@ -13,8 +13,6 @@
 #include <QKeyEvent>
 #include <QVector>
 
-#include "representation/GLSprite.h"
-
 using MapgenVariablesType = QMap<QString, QJsonValue>;
 
 class SpriteCache
