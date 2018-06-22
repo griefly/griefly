@@ -83,8 +83,6 @@ MapEditorForm::MapEditorForm(QWidget *parent)
             continue;
         }
 
-        QVector<QPixmap> images;
-
         View2 view;
         view.LoadViewInfo(view_info);
 
@@ -94,27 +92,22 @@ MapEditorForm::MapEditorForm(QWidget *parent)
             continue;
         }
 
-        for (quint32 dir = 0; dir < view.GetBaseFrameset().GetMetadata()->dirs; ++dir)
+        QPixmap pixmap = [&]()
         {
-            int current_frame_pos = view.GetBaseFrameset().GetMetadata()->first_frame_pos + dir;
+            const int current_frame_pos = view.GetBaseFrameset().GetMetadata()->first_frame_pos;
 
-            int image_state_h_ = current_frame_pos / view.GetBaseFrameset().GetSprite()->FrameW();
-            int image_state_w_ = current_frame_pos % view.GetBaseFrameset().GetSprite()->FrameW();
+            const int image_state_h_ = current_frame_pos / view.GetBaseFrameset().GetSprite()->FrameW();
+            const int image_state_w_ = current_frame_pos % view.GetBaseFrameset().GetSprite()->FrameW();
 
-            QImage img = view.GetBaseFrameset().GetSprite()->GetFrames()
+            QImage image = view.GetBaseFrameset().GetSprite()->GetFrames()
                 [image_state_w_ * view.GetBaseFrameset().GetSprite()->FrameH() + image_state_h_];
 
-            images.push_back(QPixmap::fromImage(img));
-        }
-        map_editor_->AddItemType(asset.asset_name, images, asset.sprite, asset.state);
-
-        if (images.length() == 0)
-        {
-            qDebug() << images.length();
-        }
+            return QPixmap::fromImage(image);
+        }();
+        map_editor_->AddItemType(asset.asset_name, asset.sprite, asset.state);
 
         QListWidgetItem* new_item
-            = new QListWidgetItem(QIcon(images[0]), asset.asset_name);
+            = new QListWidgetItem(QIcon(pixmap), asset.asset_name);
 
         if (!asset.turf)
         {

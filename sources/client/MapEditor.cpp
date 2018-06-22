@@ -424,7 +424,7 @@ void MapEditor::Resize(int posx, int posy, int posz)
 }
 
 void MapEditor::AddItemType(
-    const QString& item_type, const QVector<QPixmap>& images, const QString& sprite, const QString& state)
+    const QString& item_type, const QString& sprite, const QString& state)
 {
     sprite_state_names_holder_[item_type] = {sprite, state};
 }

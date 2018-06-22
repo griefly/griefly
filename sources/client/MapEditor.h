@@ -72,8 +72,7 @@ public:
 
     void Resize(int posx, int posy, int posz);
 
-    void AddItemType(
-        const QString& item_type, const QVector<QPixmap>& images, const QString& sprite, const QString& state);
+    void AddItemType(const QString& item_type, const QString& sprite, const QString& state);
 
     void AddTurfType(const QString& item_type);
 
