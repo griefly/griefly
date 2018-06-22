@@ -136,8 +136,8 @@ private:
 
     Pointer pointer_;
 
-    QMap<QString, QVector<QPixmap>> images_holder_;
     QMap<QString, std::pair<QString, QString>> sprite_state_names_holder_;
+    SpriteCache sprite_cache_;
 
     QSet<QString> turf_types_;
 

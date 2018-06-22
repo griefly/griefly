@@ -426,7 +426,6 @@ void MapEditor::Resize(int posx, int posy, int posz)
 void MapEditor::AddItemType(
     const QString& item_type, const QVector<QPixmap>& images, const QString& sprite, const QString& state)
 {
-    images_holder_[item_type] = images;
     sprite_state_names_holder_[item_type] = {sprite, state};
 }
 
@@ -459,12 +458,13 @@ void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
     const QJsonValue data = ee->variables["direction_"].toObject()[mapgen::key::type::INT32];
     if (!data.isNull())
     {
-        Dir dir = static_cast<Dir>(data.toInt());
-        int byond_dir = kv::helpers::DirToByond(dir);
+        const Dir dir = static_cast<Dir>(data.toInt());
+        const int byond_dir = kv::helpers::DirToByond(dir);
 
-        if (byond_dir < images_holder_[ee->item_type].size())
+        const QVector<QPixmap>& sprites = sprite_cache_.GetSprite(ee->sprite_name, ee->state);
+        if (byond_dir < sprites.size())
         {
-            ee->pixmap_item->setPixmap(images_holder_[ee->item_type][byond_dir]);
+            ee->pixmap_item->setPixmap(sprites[byond_dir]);
         }
     }
 }
@@ -500,7 +500,8 @@ MapEditor::EditorEntry& MapEditor::AddItem(
 {
     EditorEntry new_entry;
     new_entry.item_type = item_type;
-    new_entry.pixmap_item = scene_->addPixmap(images_holder_[item_type][0]);
+    const QVector<QPixmap>& sprites = sprite_cache_.GetSprite(sprite, state);
+    new_entry.pixmap_item = scene_->addPixmap(sprites[0]);
     new_entry.pixmap_item->setPos(posx * 32, posy * 32);
     new_entry.pixmap_item->setZValue(50);
     new_entry.sprite_name = sprite;
@@ -547,7 +548,8 @@ MapEditor::EditorEntry& MapEditor::SetTurf(
 
     EditorEntry new_entry;
     new_entry.item_type = item_type;
-    new_entry.pixmap_item = scene_->addPixmap(images_holder_[item_type][0]);
+    const QVector<QPixmap>& sprites = sprite_cache_.GetSprite(sprite, state);
+    new_entry.pixmap_item = scene_->addPixmap(sprites[0]);
     new_entry.pixmap_item->setPos(posx * 32, posy * 32);
     new_entry.sprite_name = sprite;
     new_entry.state = state;
