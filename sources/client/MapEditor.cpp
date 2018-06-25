@@ -226,6 +226,8 @@ QJsonObject MapEditor::EntryToJson(const MapEditor::EditorEntry& entry) const
 
     QJsonObject object_info;
     object_info.insert(key::TYPE, entry.item_type);
+    object_info.insert(key::SPRITE, entry.sprite_name);
+    object_info.insert(key::STATE, entry.state);
     QJsonObject variables;
     for (auto var = entry.variables.begin(); var != entry.variables.end(); ++var)
     {
@@ -419,8 +421,10 @@ void MapEditor::Resize(int posx, int posy, int posz)
     border_image_->setPolygon(p2);
 
     emit newSelectionSetted(
-                first_selection_x_, first_selection_y_,
-                second_selection_x_, second_selection_y_);
+        first_selection_x_,
+        first_selection_y_,
+        second_selection_x_,
+        second_selection_y_);
 }
 
 void MapEditor::AddItemType(
