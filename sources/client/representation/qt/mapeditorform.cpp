@@ -165,7 +165,7 @@ void MapEditorForm::on_createItem_clicked()
     {
         return asset.asset_name == type;
     });
-    map_editor_->AddItem(type, it->sprite, it->state);
+    map_editor_->AddItem(it->type_name, it->sprite, it->state);
 }
 
 void MapEditorForm::mapClicked()
@@ -193,7 +193,7 @@ void MapEditorForm::on_createTurf_clicked()
     {
         return asset.asset_name == type;
     });
-    map_editor_->SetTurf(type, it->sprite, it->state);
+    map_editor_->SetTurf(it->type_name, it->sprite, it->state);
 }
 
 void MapEditorForm::on_beginSelection_clicked()
