@@ -20,6 +20,7 @@ const QString Y("y");
 const QString Z("z");
 const QString SPRITE("sprite_name");
 const QString STATE("state");
+const QString VALUE("value");
 
 namespace type
 {

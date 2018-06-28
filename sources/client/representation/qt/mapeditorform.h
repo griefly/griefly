@@ -41,7 +41,7 @@ struct Asset
     {
         QString name;
         QString type;
-        // TODO: value?
+        QJsonValue value;
     };
     QVector<VariableInfo> variables;
 };

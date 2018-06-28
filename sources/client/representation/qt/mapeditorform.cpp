@@ -599,6 +599,7 @@ const QString TYPENAME("typename");
 const QString VARIABLES("variables");
 const QString NAME("name");
 const QString TYPE("type");
+const QString VALUE("value");
 
 }
 
@@ -634,6 +635,7 @@ void MapEditorForm::LoadAssets()
             Asset::VariableInfo info;
             info.name = object[key::NAME].toString();
             info.type = object[key::TYPE].toString();
+            info.value = object[key::VALUE];
             asset.variables.append(info);
         }
 

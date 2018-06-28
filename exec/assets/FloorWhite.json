@@ -27,7 +27,8 @@
         },
         {
             "name": "floor_type_",
-            "type": "string"
+            "type": "string",
+            "value": "white"
         },
         {
             "name": "open_",
