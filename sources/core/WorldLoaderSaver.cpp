@@ -190,6 +190,17 @@ void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position posit
         kv::FastDeserializer deserializer(serialized.data(), serialized.size());
         setter(object.operator->(), deserializer);
     }
+
+    {
+        const QString sprite = data.value(mapgen::key::SPRITE).toString();
+        object->SetSprite(sprite);
+    }
+
+    {
+        const QString state = data.value(mapgen::key::STATE).toString();
+        object->SetState(state);
+    }
+
     auto& tile = game->GetMap().At(position.x, position.y, position.z);
     if (is_turf)
     {
