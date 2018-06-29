@@ -147,7 +147,14 @@ void MapEditor::PasteItemsToCurrentTile()
 {
     for (auto it = copypaste_items_.begin(); it != copypaste_items_.end(); ++it)
     {
-        auto& new_item = AddItem(it->item_type, it->sprite_name, it->state, pointer_.first_posx, pointer_.first_posy, 0);
+        auto& new_item = AddItem(
+            it->item_type,
+            it->sprite_name,
+            it->state,
+            {},
+            pointer_.first_posx,
+            pointer_.first_posy,
+            0);
         new_item.variables = it->variables;
         UpdateDirs(&new_item);
     }
@@ -203,6 +210,7 @@ void MapEditor::PasteFromAreaBuffer()
                     it->item_type,
                     it->sprite_name,
                     it->state,
+                    {},
                     pointer_.first_posx + x,
                     pointer_.first_posy + y,
                     0);
@@ -359,7 +367,7 @@ void MapEditor::CreateEntity(int x, int y, int z, const QJsonObject& info, bool 
     }
     else
     {
-        entry = &AddItem(item_type, sprite, state, x, y, z);
+        entry = &AddItem(item_type, sprite, state, {}, x, y, z);
     }
 
     const QJsonObject variables = info.value(key::VARIABLES).toObject();
@@ -438,13 +446,16 @@ void MapEditor::AddTurfType(const QString& item_type)
     turf_types_.insert(item_type);
 }
 
-void MapEditor::AddItem(const QString &item_type, const QString& sprite, const QString& state)
+void MapEditor::AddItem(const QString &item_type,
+    const QString& sprite,
+    const QString& state,
+    const QVector<std::pair<QString, QJsonValue>>& variables)
 {
     for (int x = pointer_.first_posx; x <= pointer_.second_posx; ++x)
     {
         for (int y = pointer_.first_posy; y <= pointer_.second_posy; ++y)
         {
-            AddItem(item_type, sprite, state, x, y, 0);
+            AddItem(item_type, sprite, state, variables, x, y, 0);
         }
     }
 
@@ -500,7 +511,13 @@ void MapEditor::RemoveItems(int posx, int posy, int posz)
 }
 
 MapEditor::EditorEntry& MapEditor::AddItem(
-    const QString &item_type, const QString& sprite, const QString& state, int posx, int posy, int posz)
+    const QString &item_type,
+    const QString& sprite,
+    const QString& state,
+    const QVector<std::pair<QString, QJsonValue>>& variables,
+    int posx,
+    int posy,
+    int posz)
 {
     EditorEntry new_entry;
     new_entry.item_type = item_type;
@@ -510,6 +527,11 @@ MapEditor::EditorEntry& MapEditor::AddItem(
     new_entry.pixmap_item->setZValue(50);
     new_entry.sprite_name = sprite;
     new_entry.state = state;
+
+    for (const auto& variable : variables)
+    {
+        new_entry.variables[variable.first] = variable.second;
+    }
 
     editor_map_[posx][posy][posz].items.push_back(new_entry);
     return editor_map_[posx][posy][posz].items.back();

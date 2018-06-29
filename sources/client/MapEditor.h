@@ -76,7 +76,11 @@ public:
 
     void AddTurfType(const QString& item_type);
 
-    void AddItem(const QString& item_type, const QString& sprite, const QString& state);
+    void AddItem(
+        const QString& item_type,
+        const QString& sprite,
+        const QString& state,
+        const QVector<std::pair<QString, QJsonValue>>& variables = {});
 
     void UpdateDirs(EditorEntry* ee);
 
@@ -84,8 +88,13 @@ public:
 
     void RemoveItems(int posx, int posy, int posz);
 
-    MapEditor::EditorEntry& AddItem(
-        const QString& item_type, const QString& sprite, const QString& state, int posx, int posy, int posz);
+    MapEditor::EditorEntry& AddItem(const QString& item_type,
+        const QString& sprite,
+        const QString& state,
+        const QVector<std::pair<QString, QJsonValue>>& variables,
+        int posx,
+        int posy,
+        int posz);
 
     void SetTurf(const QString& item_type, const QString& sprite, const QString& state);
 
