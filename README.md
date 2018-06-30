@@ -24,7 +24,7 @@ _If you have any issues during the build process please report them_
 
 It should be possible to build everything without Qt Creator, but the guide assumes that Qt Creator is used.  
 
-1. All tools and libs from the depencies list should be available on your machine. Tools and libs should be present in `%PATH%`
+1. All tools and libs from the dependencies list should be available on your machine. Tools and libs should be present in `%PATH%`
 2. Open CMakeLists.txt in Qt Creator  
    Open Project -> Select CMakeLists.txt -> Select build folder
 3. Run CMake with param `-DCMAKE_BUILD_TYPE=Release` for Release verison.
@@ -52,7 +52,7 @@ How to build everything on MacOS
 --------------------------------
 
 1. Install dependencies using brew. `brew install qt`
-2. Look at the tips in `make.sh` and adjust your enviorment accordingly.
+2. Look at the tips in `make.sh` and adjust your environment accordingly.
 3. `./make.sh`. Build project will be placed under `exec` directory Server will be
    built in `gopath/src/griefly-server` directory.
 
