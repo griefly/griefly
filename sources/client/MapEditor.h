@@ -96,10 +96,20 @@ public:
         int posy,
         int posz);
 
-    void SetTurf(const QString& item_type, const QString& sprite, const QString& state);
+    void SetTurf(
+        const QString& item_type,
+        const QString& sprite,
+        const QString& state,
+        const QVector<std::pair<QString, QJsonValue>>& variables = {});
 
     MapEditor::EditorEntry& SetTurf(
-        const QString& item_type, const QString& sprite, const QString& state, int posx, int posy, int posz);
+        const QString& item_type,
+        const QString& sprite,
+        const QString& state,
+        const QVector<std::pair<QString, QJsonValue>>& variables,
+        int posx,
+        int posy,
+        int posz);
 
     void SetSelectionStage(int stage);
     int GetSelectionStage() const;
