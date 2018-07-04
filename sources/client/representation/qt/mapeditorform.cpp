@@ -165,7 +165,18 @@ void MapEditorForm::on_createItem_clicked()
     {
         return asset.asset_name == type;
     });
-    map_editor_->AddItem(it->type_name, it->sprite, it->state);
+
+    QVector<std::pair<QString, QJsonValue>> variables;
+    for (auto variable_info : it->variables)
+    {
+        if (variable_info.value.isNull())
+        {
+            continue;
+        }
+        variables.append({variable_info.name, variable_info.value});
+    }
+
+    map_editor_->AddItem(it->type_name, it->sprite, it->state, variables);
 }
 
 void MapEditorForm::mapClicked()
