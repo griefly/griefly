@@ -173,7 +173,7 @@ void MapEditorForm::on_createItem_clicked()
         {
             continue;
         }
-        variables.append({variable_info.name, variable_info.value});
+        variables.append({variable_info.name, QJsonObject{{variable_info.type, variable_info.value}}});
     }
 
     map_editor_->AddItem(it->type_name, it->sprite, it->state, variables);
@@ -208,11 +208,11 @@ void MapEditorForm::on_createTurf_clicked()
     QVector<std::pair<QString, QJsonValue>> variables;
     for (auto variable_info : it->variables)
     {
-        if (variable_info.value.isNull())
+        if (variable_info.value.isNull() || variable_info.value.isUndefined())
         {
             continue;
         }
-        variables.append({variable_info.name, variable_info.value});
+        variables.append({variable_info.name, QJsonObject{{variable_info.type, variable_info.value}}});
     }
 
     map_editor_->SetTurf(it->type_name, it->sprite, it->state, variables);
