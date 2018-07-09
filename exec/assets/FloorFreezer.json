@@ -1,0 +1,66 @@
+{
+    "asset_name": "FloorFreezer",
+    "is_turf": true,
+    "sprite": "icons/floors.dmi",
+    "sprite_state": "freezerfloor",
+    "typename": "Floor",
+    "variables": [
+        {
+            "name": "name_",
+            "type": "string"
+        },
+        {
+            "name": "passable_level_",
+            "type": "int32"
+        },
+        {
+            "name": "transparent_",
+            "type": "bool"
+        },
+        {
+            "name": "passable_right_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_down_",
+            "type": "int32"
+        },
+        {
+            "name": "floor_type_",
+            "type": "string",
+            "value": "freezerfloor"
+        },
+        {
+            "name": "open_",
+            "type": "bool"
+        },
+        {
+            "name": "passable_left_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_up_",
+            "type": "int32"
+        },
+        {
+            "name": "bloody_",
+            "type": "bool"
+        },
+        {
+            "name": "passable_all_",
+            "type": "int32"
+        },
+        {
+            "name": "friction_",
+            "type": "int32"
+        },
+        {
+            "name": "atmos_state_",
+            "type": "int32"
+        },
+        {
+            "name": "v_level_",
+            "type": "int32"
+        }
+    ]
+}
