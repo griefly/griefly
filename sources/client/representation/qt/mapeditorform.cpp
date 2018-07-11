@@ -251,6 +251,13 @@ void MapEditorForm::on_newMap_clicked()
     map_editor_->Resize(size_x, size_y, size_z);
 }
 
+namespace
+{
+
+const QString SPRITE_VARIABLE_NAME("[built-in] Sprite");
+const QString STATE_VARIABLE_NAME("[built-in] State");
+}
+
 void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
 {
     QString name;
@@ -288,6 +295,9 @@ void MapEditorForm::on_listWidgetTile_itemSelectionChanged()
             break;
         }
     }
+
+    ui->listWidgetVariables->addItem(SPRITE_VARIABLE_NAME);
+    ui->listWidgetVariables->addItem(STATE_VARIABLE_NAME);
 
     if (counter == variables.size())
     {
