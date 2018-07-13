@@ -355,16 +355,26 @@ QString MapEditorForm::GetCurrentVariableType()
         return QString();
     }
 
-    auto variable = std::find_if(variables.begin(), variables.end(), [name = current_item->text()](auto variable)
+    QString variable_type;
+    if (   current_item->text() == SPRITE_VARIABLE_NAME
+        || current_item->text() == STATE_VARIABLE_NAME)
     {
-        return variable.name == name;
-    });
-    if (variable == variables.end())
-    {
-        return QString();
+        variable_type = mapgen::key::type::STRING;
     }
-    ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable->type));
-    return variable->type;
+    else
+    {
+        auto variable = std::find_if(variables.begin(), variables.end(), [name = current_item->text()](auto variable)
+        {
+            return variable.name == name;
+        });
+        if (variable == variables.end())
+        {
+            return QString();
+        }
+        variable_type = variable->type;
+    }
+    ui->current_variable_type_label->setText(QString("Current type: %1").arg(variable_type));
+    return variable_type;
 }
 
 void MapEditorForm::ResetVariablesPanel()
@@ -383,7 +393,8 @@ void MapEditorForm::ResetVariablesPanel()
 
 void MapEditorForm::UpdateVariablesColor(MapEditor::EditorEntry& ee)
 {
-    for (int i = 0; i < ui->listWidgetVariables->count(); ++i)
+    // Last two always built-in sprite/state
+    for (int i = 0; i < ui->listWidgetVariables->count() - 2; ++i)
     {
         if (!ee.variables[ui->listWidgetVariables->item(i)->text()].isNull())
         {
