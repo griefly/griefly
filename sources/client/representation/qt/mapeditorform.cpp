@@ -421,8 +421,20 @@ void MapEditorForm::on_listWidgetVariables_itemSelectionChanged()
         return;
     }
 
-    const QJsonObject& variable_object
-        = ee->variables[ui->listWidgetVariables->currentItem()->text()].toObject();
+    const QString current_variable_name = ui->listWidgetVariables->currentItem()->text();
+
+    const QJsonObject& variable_object = [&]()
+    {
+        if (current_variable_name == SPRITE_VARIABLE_NAME)
+        {
+            return QJsonObject{{mapgen::key::type::STRING, ee->sprite_name}};
+        }
+        if (current_variable_name == STATE_VARIABLE_NAME)
+        {
+            return QJsonObject{{mapgen::key::type::STRING, ee->state}};
+        }
+        return ee->variables[current_variable_name].toObject();
+    }();
 
     ui->frame->show();
 
@@ -595,7 +607,18 @@ void MapEditorForm::on_set_value_push_button_clicked()
     if (type == mapgen::key::type::STRING)
     {
         const QString variable_value = ui->string_line_edit->text();
-        ee->variables[current_variable] = QJsonObject{{mapgen::key::type::STRING, variable_value}};
+        if (current_variable == SPRITE_VARIABLE_NAME)
+        {
+            ee->sprite_name = variable_value;
+        }
+        else if (current_variable == STATE_VARIABLE_NAME)
+        {
+            ee->state = variable_value;
+        }
+        else
+        {
+            ee->variables[current_variable] = QJsonObject{{mapgen::key::type::STRING, variable_value}};
+        }
     }
     else if (type == mapgen::key::type::INT32)
     {
