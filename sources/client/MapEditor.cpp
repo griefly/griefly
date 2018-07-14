@@ -156,7 +156,7 @@ void MapEditor::PasteItemsToCurrentTile()
             pointer_.first_posy,
             0);
         new_item.variables = it->variables;
-        UpdateDirs(&new_item);
+        UpdateSprite(&new_item);
     }
 
     emit newSelectionSetted(
@@ -202,7 +202,7 @@ void MapEditor::PasteFromAreaBuffer()
                 pointer_.first_posy + y,
                 0);
             new_item.variables = area_buffer_[x][y].turf.variables;
-            UpdateDirs(&new_item);
+            UpdateSprite(&new_item);
             for (auto it = area_buffer_[x][y].items.begin();
                       it != area_buffer_[x][y].items.end();
                     ++it)
@@ -216,7 +216,7 @@ void MapEditor::PasteFromAreaBuffer()
                     pointer_.first_posy + y,
                     0);
                 new_item.variables = it->variables;
-                UpdateDirs(&new_item);
+                UpdateSprite(&new_item);
             }
         }
     }
@@ -377,7 +377,7 @@ void MapEditor::CreateEntity(int x, int y, int z, const QJsonObject& info, bool 
     {
         entry->variables.insert(key, variables.value(key));
     }
-    UpdateDirs(entry);
+    UpdateSprite(entry);
 }
 
 void MapEditor::fix_borders(int *posx, int *posy)
@@ -466,23 +466,21 @@ void MapEditor::AddItem(
                 second_selection_x_, second_selection_y_);
 }
 
-void MapEditor::UpdateDirs(MapEditor::EditorEntry* ee)
+void MapEditor::UpdateSprite(MapEditor::EditorEntry* ee)
 {
     if (!ee)
     {
         return;
     }
     const QJsonValue data = ee->variables["direction_"].toObject()[mapgen::key::type::INT32];
-    if (!data.isNull())
-    {
-        const Dir dir = static_cast<Dir>(data.toInt());
-        const int byond_dir = kv::helpers::DirToByond(dir);
+    const Dir dir = static_cast<Dir>(data.toInt(static_cast<int>(Dir::SOUTH)));
+    const int byond_dir = kv::helpers::DirToByond(dir);
 
-        const QVector<QPixmap>& sprites = sprite_cache_.GetSprite(ee->sprite_name, ee->state);
-        if (byond_dir < sprites.size())
-        {
-            ee->pixmap_item->setPixmap(sprites[byond_dir]);
-        }
+    const QVector<QPixmap>& sprites = sprite_cache_.GetSprite(ee->sprite_name, ee->state);
+    if (byond_dir < sprites.size())
+    {
+        qDebug() << ee->sprite_name << ee->state;
+        ee->pixmap_item->setPixmap(sprites[byond_dir]);
     }
 }
 

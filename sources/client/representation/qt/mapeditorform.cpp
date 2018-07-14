@@ -632,6 +632,7 @@ void MapEditorForm::on_set_value_push_button_clicked()
     }
 
     on_listWidgetVariables_itemSelectionChanged();
+    map_editor_->UpdateSprite(ee);
     UpdateVariablesColor(*ee);
 }
 

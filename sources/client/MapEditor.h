@@ -82,7 +82,7 @@ public:
         const QString& state,
         const QVector<std::pair<QString, QJsonValue>>& variables = {});
 
-    void UpdateDirs(EditorEntry* ee);
+    void UpdateSprite(EditorEntry* ee);
 
     void RemoveItems();
 
