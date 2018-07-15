@@ -169,7 +169,7 @@ void MapEditorForm::on_createItem_clicked()
     QVector<std::pair<QString, QJsonValue>> variables;
     for (auto variable_info : it->variables)
     {
-        if (variable_info.value.isNull())
+        if (variable_info.value.isNull() || variable_info.value.isUndefined())
         {
             continue;
         }
