@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(KVEngineQt)
+project(Griefly)
 
 option(BUILD_TESTS "Build tests" OFF)
 option(BUILD_COVER "Generate test coverage" OFF)
