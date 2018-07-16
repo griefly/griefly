@@ -165,6 +165,12 @@ kv::Object* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
     return item;
 }
 
+quint32 ObjectFactory::CreateAssetImpl(const QString& name, quint32 owner)
+{
+    // TODO: implementation
+    return 0;
+}
+
 void ObjectFactory::DeleteLater(quint32 id)
 {
     ids_to_delete_.push_back(objects_table_[id].object);
