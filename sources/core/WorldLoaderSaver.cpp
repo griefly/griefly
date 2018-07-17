@@ -98,9 +98,6 @@ void LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer)
     factory.GetIdTable().resize(id + 1);
 }
 
-namespace
-{
-
 QByteArray ConvertJsonToSerialized(const QJsonValue& data)
 {
     using namespace mapgen;
@@ -149,6 +146,9 @@ QByteArray ConvertJsonToSerialized(const QJsonValue& data)
     qDebug() << "Unknown type:" << data;
     return QByteArray();
 }
+
+namespace
+{
 
 void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position position, bool is_turf)
 {
@@ -224,7 +224,7 @@ void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position posit
     }
 }
 
-}
+} // namespace
 
 void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data)
 {
@@ -281,5 +281,5 @@ void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data)
     game->GetMap().FillTilesAtmosHolders();
 }
 
-}
-}
+} // namespace world
+} // namespace kv

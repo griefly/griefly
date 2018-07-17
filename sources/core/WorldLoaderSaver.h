@@ -16,5 +16,7 @@ void LoadFromJsonMapGen(GameInterface* game, const QJsonObject& data);
 void SaveMapHeader(const GameInterface* game, kv::FastSerializer& serializer);
 void LoadMapHeader(GameInterface* game, kv::FastDeserializer& deserializer);
 
+QByteArray ConvertJsonToSerialized(const QJsonValue& data);
+
 }
 }

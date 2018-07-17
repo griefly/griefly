@@ -133,3 +133,8 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
         EXPECT_EQ(factory.Hash(), hash);
     }
 }
+
+TEST(WorldLoaderSaver, ConvertJsonToSerialized)
+{
+    EXPECT_EQ(world::ConvertJsonToSerialized(QJsonObject{{"test", "test"}}), QByteArray());
+}
