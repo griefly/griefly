@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <Mapgen.h>
+
 #include "WorldLoaderSaver.h"
 #include "ObjectFactory.h"
 #include "objects/test/TestObject.h"
@@ -136,5 +138,13 @@ TEST(WorldLoaderSaver, SaveAndLoadWithObjects)
 
 TEST(WorldLoaderSaver, ConvertJsonToSerialized)
 {
-    EXPECT_EQ(world::ConvertJsonToSerialized(QJsonObject{{"test", "test"}}), QByteArray());
+    // Unknown
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{"test", "test"}}), QByteArray());
+
+    // Bool
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::BOOL, true}}), QByteArray("\x01\x01"));
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::BOOL, false}}), QByteArray("\x01\x00", 2));
 }
