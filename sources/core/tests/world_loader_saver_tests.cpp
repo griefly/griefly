@@ -156,9 +156,20 @@ TEST(WorldLoaderSaver, ConvertJsonToSerialized)
         QJsonObject{{mapgen::key::type::INT32, 42}}),
         QByteArray("\x02\x2A\x00\x00\x00", 5));
     EXPECT_EQ(world::ConvertJsonToSerialized(
-        QJsonObject{{mapgen::key::type::INT32, std::numeric_limits<int>::max()}}),
+        QJsonObject{{mapgen::key::type::INT32, std::numeric_limits<qint32>::max()}}),
         QByteArray("\x02\xFF\xFF\xFF\x7F", 5));
     EXPECT_EQ(world::ConvertJsonToSerialized(
-        QJsonObject{{mapgen::key::type::INT32, std::numeric_limits<int>::min()}}),
+        QJsonObject{{mapgen::key::type::INT32, std::numeric_limits<qint32>::min()}}),
         QByteArray("\x02\x00\x00\x00\x80", 5));
+
+    // UInt32
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::UINT32, 0}}),
+        QByteArray("\x03\x00\x00\x00\x00", 5));
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::UINT32, 42}}),
+        QByteArray("\x03\x2A\x00\x00\x00", 5));
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::UINT32, static_cast<double>(std::numeric_limits<quint32>::max())}}),
+        QByteArray("\x03\xFF\xFF\xFF\xFF", 5));
 }
