@@ -147,4 +147,18 @@ TEST(WorldLoaderSaver, ConvertJsonToSerialized)
         QJsonObject{{mapgen::key::type::BOOL, true}}), QByteArray("\x01\x01"));
     EXPECT_EQ(world::ConvertJsonToSerialized(
         QJsonObject{{mapgen::key::type::BOOL, false}}), QByteArray("\x01\x00", 2));
+
+    // Int32
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::INT32, 0}}),
+        QByteArray("\x02\x00\x00\x00\x00", 5));
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::INT32, 42}}),
+        QByteArray("\x02\x2A\x00\x00\x00", 5));
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::INT32, std::numeric_limits<int>::max()}}),
+        QByteArray("\x02\xFF\xFF\xFF\x7F", 5));
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::INT32, std::numeric_limits<int>::min()}}),
+        QByteArray("\x02\x00\x00\x00\x80", 5));
 }
