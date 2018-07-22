@@ -140,7 +140,7 @@ QByteArray ConvertJsonToSerialized(const QJsonValue& data)
     }
     else if (type == key::type::TYPE)
     {
-        serializer << value.toString();
+        serializer.WriteType(value.toString());
         return QByteArray(serializer.GetData(), serializer.GetIndex());
     }
     qDebug() << "Unknown type:" << data;

@@ -191,4 +191,9 @@ TEST(WorldLoaderSaver, ConvertJsonToSerialized)
     EXPECT_EQ(world::ConvertJsonToSerialized(
         QJsonObject{{mapgen::key::type::BYTEARRAY, "ff03020100"}}),
         QByteArray("\x05\x02\x05\x00\x00\x00\xFF\x03\x02\x01\x00", 11));
+
+    // Type
+    EXPECT_EQ(world::ConvertJsonToSerialized(
+        QJsonObject{{mapgen::key::type::TYPE, "type"}}),
+        QByteArray("\x06\x02\x04\x00\x00\x00\x74\x00\x79\x00\x70\x00\x65\x00", 14));
 }
