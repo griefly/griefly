@@ -147,17 +147,14 @@ QByteArray ConvertJsonToSerialized(const QJsonValue& data)
     return QByteArray();
 }
 
-namespace
-{
-
-void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position position, bool is_turf)
+IdPtr<MaterialObject> LoadObject(GameInterface* game, const QJsonObject& data)
 {
     ObjectFactoryInterface& factory = game->GetFactory();
 
     if (data.isEmpty())
     {
         qDebug() << "Json data is empty!";
-        return;
+        return 0;
     }
 
     const QString object_type = data.value(mapgen::key::TYPE).toString();
@@ -201,6 +198,20 @@ void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position posit
         object->SetState(state);
     }
 
+    return object;
+}
+
+namespace
+{
+
+void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position position, bool is_turf)
+{
+    auto object = world::LoadObject(game, data);
+    if (!object.IsValid())
+    {
+        return;
+    }
+
     auto& tile = game->GetMap().At(position.x, position.y, position.z);
     if (is_turf)
     {
@@ -215,7 +226,9 @@ void LoadObject(GameInterface* game, const QJsonObject& data, kv::Position posit
         }
         else
         {
-            kv::Abort(QString("Object is not turf: %1").arg(object_type));
+            kv::Abort(
+                QString("Object is not turf: %1")
+                    .arg(data.value(mapgen::key::TYPE).toString()));
         }
     }
     else
