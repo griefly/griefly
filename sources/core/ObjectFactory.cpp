@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "SynchronizedRandom.h"
 #include "AutogenMetadata.h"
+#include "WorldLoaderSaver.h"
 
 #include "objects/GlobalObjectsHolder.h"
 
@@ -60,6 +61,13 @@ kv::Object* ObjectFactory::NewVoidObjectSaved(const QString& type)
         kv::Abort(QString("Unable to find void creator for type: %1").arg(type));
     }
     return creator->second();
+}
+
+const QJsonObject& ObjectFactory::GetAsset(const QString& name) const
+{
+    // TODO:
+    static QJsonObject object;
+    return object;
 }
 
 void ObjectFactory::Clear()
@@ -165,10 +173,22 @@ kv::Object* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
     return item;
 }
 
-quint32 ObjectFactory::CreateAssetImpl(const QString& name, quint32 owner)
+quint32 ObjectFactory::CreateAssetImpl(const QString& name, quint32 owner_id)
 {
-    // TODO: implementation
-    return 0;
+    auto object = kv::world::LoadObject(game_, GetAsset(name));
+    IdPtr<kv::MapObject> owner = owner_id;
+    if (owner.IsValid())
+    {
+        if (CastTo<kv::Turf>(object.operator->()) != nullptr)
+        {
+            owner->SetTurf(object->GetId());
+        }
+        else if (!owner->AddObject(object->GetId()))
+        {
+            kv::Abort("AddItem failed");
+        }
+    }
+    return object->GetId();
 }
 
 void ObjectFactory::DeleteLater(quint32 id)
