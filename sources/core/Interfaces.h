@@ -79,7 +79,7 @@ public:
     virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) = 0;
     virtual kv::Object* CreateVoid(const QString& hash, quint32 id_new) = 0;
 
-    virtual quint32 CreateAssetImpl(const QString& name, quint32 owner = 0) = 0;
+    virtual quint32 CreateAssetImpl(const QJsonObject& asset, quint32 owner = 0) = 0;
 
     virtual void DeleteLater(quint32 id) = 0;
     virtual void ProcessDeletion() = 0;

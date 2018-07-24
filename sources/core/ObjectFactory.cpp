@@ -63,13 +63,6 @@ kv::Object* ObjectFactory::NewVoidObjectSaved(const QString& type)
     return creator->second();
 }
 
-const QJsonObject& ObjectFactory::GetAsset(const QString& name) const
-{
-    // TODO:
-    static QJsonObject object;
-    return object;
-}
-
 void ObjectFactory::Clear()
 {
     quint32 table_size = objects_table_.size();
@@ -173,9 +166,9 @@ kv::Object* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
     return item;
 }
 
-quint32 ObjectFactory::CreateAssetImpl(const QString& name, quint32 owner_id)
+quint32 ObjectFactory::CreateAssetImpl(const QJsonObject& asset, quint32 owner_id)
 {
-    auto object = kv::world::LoadObject(game_, GetAsset(name));
+    auto object = kv::world::LoadObject(game_, asset);
     IdPtr<kv::MapObject> owner = owner_id;
     if (owner.IsValid())
     {
