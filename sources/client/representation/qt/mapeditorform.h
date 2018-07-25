@@ -10,6 +10,7 @@
 #include "MapEditor.h"
 
 #include <CoreInterface.h>
+#include <Asset.h>
 
 namespace Ui {
 class MapEditorForm;
@@ -27,23 +28,6 @@ signals:
 public slots:
     void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
     void keyPressEvent(QKeyEvent* event);
-};
-
-struct Asset
-{
-    QString type_name;
-    QString asset_name;
-    QString sprite;
-    QString state;
-    bool turf;
-
-    struct VariableInfo
-    {
-        QString name;
-        QString type;
-        QJsonValue value;
-    };
-    QVector<VariableInfo> variables;
 };
 
 class MapEditorForm : public QWidget
@@ -105,7 +89,7 @@ private:
     std::vector<QString> types_;
     std::vector<QString> turf_types_;
 
-    std::vector<Asset> assets_;
+    std::vector<kv::Asset> assets_;
 
     Ui::MapEditorForm *ui;
 };
