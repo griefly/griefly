@@ -1,13 +1,12 @@
 #pragma once
 
-#include <list>
+#include <QString>
 
 #include "KvGlobals.h"
+#include "core_headers/Asset.h"
 #include "core_headers/CoreInterface.h"
 
 #include "Idptr.h"
-
-#include <QString>
 
 class Names;
 namespace kv
