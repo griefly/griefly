@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QJsonObject>
 #include <QJsonValue>
 #include <QString>
 #include <QVector>
@@ -22,6 +23,9 @@ struct Asset
         QJsonValue value;
     };
     QVector<VariableInfo> variables;
+
+    static Asset FromJson(const QJsonObject& json);
+    QJsonObject ToJson() const;
 };
 
 }
