@@ -47,6 +47,22 @@ kv::Asset kv::Asset::FromJson(const QJsonObject& json)
 
 QJsonObject kv::Asset::ToJson() const
 {
-    // TODO
-    return QJsonObject();
+    QJsonObject json;
+    json.insert(key::IS_TURF, turf);
+    json.insert(key::SPRITE, sprite);
+    json.insert(key::SPRITE_STATE, state);
+    json.insert(key::TYPENAME, type_name);
+    json.insert(key::ASSET_NAME, asset_name);
+
+    QJsonArray array;
+    for (auto& variable : variables)
+    {
+        array.push_back(QJsonObject{
+            {key::NAME, variable.name},
+            {key::TYPE, variable.type},
+            {key::VALUE, variable.value}});
+    }
+    json.insert(key::VARIABLES, array);
+
+    return json;
 }
