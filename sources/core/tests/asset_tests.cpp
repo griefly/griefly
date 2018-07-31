@@ -31,3 +31,31 @@ TEST(Asset, FromJson)
     EXPECT_EQ(asset.variables[0].type, "type");
     EXPECT_EQ(asset.variables[0].value, QJsonValue("value"));
 }
+
+TEST(Asset, ToJson)
+{
+    kv::Asset asset;
+    asset.turf = true;
+    asset.sprite = "sprite";
+    asset.state = "state";
+    asset.type_name = "typename";
+    asset.asset_name = "asset";
+    asset.variables.push_back({"name", "type", QJsonValue("value")});
+
+    const QJsonObject asset_json = asset.ToJson();
+    const QJsonObject test_json{
+        {"is_turf", true},
+        {"sprite", "sprite"},
+        {"sprite_state", "state"},
+        {"typename", "typename"},
+        {"asset_name", "asset"},
+        {"variables", QJsonArray{
+            QJsonObject{
+                {"name", "name"},
+                {"type", "type"},
+                {"value", QJsonValue("value")}
+                }
+            }}
+        };
+    EXPECT_EQ(asset_json, test_json);
+}
