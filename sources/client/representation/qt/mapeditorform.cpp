@@ -686,27 +686,7 @@ void MapEditorForm::LoadAssets()
         }
         QJsonDocument document = QJsonDocument::fromJson(file.readAll());
         const QJsonObject asset_json = document.object();
-
-        // TODO: proper validation
-        Asset asset;
-        asset.turf = asset_json[key::IS_TURF].toBool();
-        asset.sprite = asset_json[key::SPRITE].toString();
-        asset.state = asset_json[key::SPRITE_STATE].toString();
-        asset.type_name = asset_json[key::TYPENAME].toString();
-        asset.asset_name = asset_json[key::ASSET_NAME].toString();
-
-        const QJsonArray variables = asset_json[key::VARIABLES].toArray();
-        for (const QJsonValue& value : variables)
-        {
-            const QJsonObject object = value.toObject();
-            Asset::VariableInfo info;
-            info.name = object[key::NAME].toString();
-            info.type = object[key::TYPE].toString();
-            info.value = object[key::VALUE];
-            asset.variables.append(info);
-        }
-
-        assets_.push_back(asset);
+        assets_.push_back(Asset::FromJson(asset_json));
     }
 
 }
