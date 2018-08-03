@@ -48,7 +48,7 @@ public:
     MOCK_METHOD0(MarkWorldAsCreated, void());
     MOCK_METHOD2(CreateImpl, quint32(const QString&, quint32));
     MOCK_METHOD2(CreateVoid, kv::Object*(const QString& hash, quint32 id_new));
-    MOCK_METHOD2(CreateAssetImpl, quint32(const QJsonObject&, quint32));
+    MOCK_METHOD2(CreateAssetImpl, quint32(const kv::Asset& asset, quint32));
     MOCK_METHOD1(DeleteLater, void(quint32 id));
     MOCK_METHOD0(ProcessDeletion, void());
     MOCK_METHOD0(Clear, void());

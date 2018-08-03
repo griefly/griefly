@@ -23,7 +23,7 @@ public:
     virtual quint32 CreateImpl(const QString& type, quint32 owner = 0) override;
     virtual kv::Object* CreateVoid(const QString& hash, quint32 id_new) override;
 
-    virtual quint32 CreateAssetImpl(const QJsonObject& asset, quint32 owner_id = 0) override;
+    virtual quint32 CreateAssetImpl(const kv::Asset& asset, quint32 owner_id = 0) override;
 
     virtual void DeleteLater(quint32 id) override;
     virtual void ProcessDeletion() override;
