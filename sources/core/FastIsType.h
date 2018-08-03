@@ -5,7 +5,7 @@
 
 #include <kvengine_export.h>
 
-#if defined(__linux__) || defined(__APPLE__)
+#if !defined(_MSC_VER)
 #define __forceinline __attribute__((always_inline)) inline
 #endif
 
