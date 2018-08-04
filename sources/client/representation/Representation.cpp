@@ -18,6 +18,8 @@
 #include <QMutexLocker>
 #include <QCoreApplication>
 
+#include <cstdlib>
+
 namespace
 {
 
