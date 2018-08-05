@@ -168,7 +168,7 @@ kv::Object* ObjectFactory::CreateVoid(const QString &hash, quint32 id_new)
 
 quint32 ObjectFactory::CreateAssetImpl(const kv::Asset& asset, quint32 owner_id)
 {
-    auto object = kv::world::LoadObject(game_, asset.ToJson());
+    auto object = kv::world::LoadObject(game_, asset.ToJsonForObjectCreation());
     IdPtr<kv::MapObject> owner = owner_id;
     if (owner.IsValid())
     {

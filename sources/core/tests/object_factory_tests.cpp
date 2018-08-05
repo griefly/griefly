@@ -120,6 +120,37 @@ TEST(ObjectFactory, CreateImpl)
     }
 }
 
+TEST(ObjectFactory, CreateAssetImpl)
+{
+    // TODO: check why it should be called manually
+    // something is off here
+    InitSettersForTypes();
+
+    MockIGame game;
+    MockIAtmosphere atmos;
+    ObjectFactory factory(&game);
+    EXPECT_CALL(game, GetFactory())
+        .WillRepeatedly(ReturnRef(factory));
+    {
+        kv::Asset asset;
+        asset.sprite = "test sprite";
+        asset.state = "test state";
+        asset.turf = false;
+        asset.type_name = kv::MaterialObject::GetTypeStatic();
+        quint32 id = factory.CreateAssetImpl(asset);
+        EXPECT_EQ(id, 1);
+
+        ASSERT_GT(factory.GetIdTable().size(), 2);
+        kv::Object* object = factory.GetIdTable()[1].object;
+        ASSERT_EQ(object->GetType(), kv::MaterialObject::GetTypeStatic());
+        EXPECT_EQ(object->GetId(), 1);
+        kv::MaterialObject* material_object = static_cast<kv::MaterialObject*>(object);
+        EXPECT_EQ(material_object->GetView().GetBaseFrameset().GetSprite(), asset.sprite);
+        EXPECT_EQ(material_object->GetView().GetBaseFrameset().GetState(), asset.state);
+    }
+}
+
+
 TEST(ObjectFactory, CreateImplResizeTable)
 {
     MockIGame game;

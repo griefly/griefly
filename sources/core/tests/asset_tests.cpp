@@ -42,12 +42,12 @@ TEST(Asset, ToJson)
     asset.asset_name = "asset";
     asset.variables.push_back({"name", "type", QJsonValue("value")});
 
-    const QJsonObject asset_json = asset.ToJson();
+    const QJsonObject asset_json = asset.ToJsonForObjectCreation();
     const QJsonObject test_json{
         {"is_turf", true},
-        {"sprite", "sprite"},
-        {"sprite_state", "state"},
-        {"typename", "typename"},
+        {"sprite_name", "sprite"},
+        {"state", "state"},
+        {"type", "typename"},
         {"asset_name", "asset"},
         {"variables", QJsonArray{
             QJsonObject{

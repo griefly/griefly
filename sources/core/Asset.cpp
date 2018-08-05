@@ -2,6 +2,8 @@
 
 #include <QJsonArray>
 
+#include "core_headers/Mapgen.h"
+
 namespace
 {
 
@@ -45,13 +47,13 @@ kv::Asset kv::Asset::FromJson(const QJsonObject& json)
     return asset;
 }
 
-QJsonObject kv::Asset::ToJson() const
+QJsonObject kv::Asset::ToJsonForObjectCreation() const
 {
     QJsonObject json;
     json.insert(key::IS_TURF, turf);
-    json.insert(key::SPRITE, sprite);
-    json.insert(key::SPRITE_STATE, state);
-    json.insert(key::TYPENAME, type_name);
+    json.insert(mapgen::key::SPRITE, sprite);
+    json.insert(mapgen::key::STATE, state);
+    json.insert(mapgen::key::TYPE, type_name);
     json.insert(key::ASSET_NAME, asset_name);
 
     QJsonArray array;

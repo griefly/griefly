@@ -166,6 +166,7 @@ IdPtr<MaterialObject> LoadObject(GameInterface* game, const QJsonObject& data)
     auto it = setters_for_types.find(object_type);
     if (it == setters_for_types.end())
     {
+        qDebug() << setters_for_types.size();
         kv::Abort(QString("Unable to find setters for type: %1").arg(object_type));
     }
     const VariablesForType& setters_for_type = it->second;

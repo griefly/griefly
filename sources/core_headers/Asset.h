@@ -25,7 +25,7 @@ struct Asset
     QVector<VariableInfo> variables;
 
     static Asset FromJson(const QJsonObject& json);
-    QJsonObject ToJson() const;
+    QJsonObject ToJsonForObjectCreation() const;
 };
 
 }
