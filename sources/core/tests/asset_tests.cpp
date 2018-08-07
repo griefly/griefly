@@ -49,12 +49,8 @@ TEST(Asset, ToJson)
         {"state", "state"},
         {"type", "typename"},
         {"asset_name", "asset"},
-        {"variables", QJsonArray{
-            QJsonObject{
-                {"name", "name"},
-                {"type", "type"},
-                {"value", QJsonValue("value")}
-                }
+        {"variables", QJsonObject{
+                {"name", QJsonObject{{"type", QJsonValue("value")}}},
             }}
         };
     EXPECT_EQ(asset_json, test_json);

@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <Mapgen.h>
+
 #include "interfaces_mocks.h"
 
 #include "ObjectFactory.h"
@@ -147,6 +149,26 @@ TEST(ObjectFactory, CreateAssetImpl)
         kv::MaterialObject* material_object = static_cast<kv::MaterialObject*>(object);
         EXPECT_EQ(material_object->GetView().GetBaseFrameset().GetSprite(), asset.sprite);
         EXPECT_EQ(material_object->GetView().GetBaseFrameset().GetState(), asset.state);
+    }
+    {
+        kv::Asset asset;
+        asset.sprite = "test sprite 2";
+        asset.state = "test state 2";
+        asset.turf = false;
+        asset.type_name = kv::MaterialObject::GetTypeStatic();
+        asset.variables.push_back(Asset::VariableInfo{"name_", mapgen::key::type::STRING, QJsonValue("test name")});
+        quint32 id = factory.CreateAssetImpl(asset);
+        EXPECT_EQ(id, 2);
+
+        ASSERT_GT(factory.GetIdTable().size(), 3);
+        kv::Object* object = factory.GetIdTable()[2].object;
+        ASSERT_EQ(object->GetType(), kv::MaterialObject::GetTypeStatic());
+        EXPECT_EQ(object->GetId(), 2);
+        kv::MaterialObject* material_object = static_cast<kv::MaterialObject*>(object);
+        EXPECT_EQ(material_object->GetView().GetBaseFrameset().GetSprite(), asset.sprite);
+        EXPECT_EQ(material_object->GetView().GetBaseFrameset().GetState(), asset.state);
+        qDebug() << material_object->GetName();
+        EXPECT_EQ(material_object->GetName(), QString("test name"));
     }
 }
 

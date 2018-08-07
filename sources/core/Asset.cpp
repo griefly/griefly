@@ -56,15 +56,16 @@ QJsonObject kv::Asset::ToJsonForObjectCreation() const
     json.insert(mapgen::key::TYPE, type_name);
     json.insert(key::ASSET_NAME, asset_name);
 
-    QJsonArray array;
+    QJsonObject variables_object;
     for (auto& variable : variables)
     {
-        array.push_back(QJsonObject{
-            {key::NAME, variable.name},
-            {key::TYPE, variable.type},
-            {key::VALUE, variable.value}});
+        if (variable.value.isNull() || variable.value.isUndefined())
+        {
+            continue;
+        }
+        variables_object.insert(variable.name, QJsonObject{{variable.type, variable.value}});
     }
-    json.insert(key::VARIABLES, array);
+    json.insert(key::VARIABLES, variables_object);
 
     return json;
 }
