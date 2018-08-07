@@ -65,7 +65,7 @@ kv::Object* ObjectFactory::NewVoidObjectSaved(const QString& type)
 
 void ObjectFactory::Clear()
 {
-    quint32 table_size = objects_table_.size();
+    const quint32 table_size = static_cast<quint32>(objects_table_.size());
     for (quint32 i = 1; i < table_size; ++i)
     {
         if (objects_table_[i].object != nullptr)
@@ -91,7 +91,7 @@ void ObjectFactory::BeginWorldCreation()
 void ObjectFactory::FinishWorldCreation()
 {
     MarkWorldAsCreated();
-    quint32 table_size = objects_table_.size();
+    const quint32 table_size = static_cast<quint32>(objects_table_.size());
     for (quint32 i = 1; i < table_size; ++i)
     {
         if (objects_table_[i].object != nullptr)
@@ -202,8 +202,8 @@ void ObjectFactory::ProcessDeletion()
 quint32 ObjectFactory::Hash() const
 {
     unsigned int h = 0;
-    int table_size = objects_table_.size();
-    for (int i = 1; i < table_size; ++i)
+    const quint32 table_size = static_cast<quint32>(objects_table_.size());
+    for (quint32 i = 1; i < table_size; ++i)
     {
         if (objects_table_[i].object != nullptr)
         {
