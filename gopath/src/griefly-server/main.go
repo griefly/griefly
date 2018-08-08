@@ -44,6 +44,6 @@ func main() {
 
 	err = ListenAndServe(*listen, registry, collector)
 	if err != nil {
-		log.Fatal("main: error listening on", *listen, err)
+		log.Fatal("main: error listening on ", *listen, " ", err)
 	}
 }
