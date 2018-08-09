@@ -162,7 +162,7 @@ namespace
     const int ANIMATION_MUL = 100;
 }
 
-void View2::FramesetState::Draw(quint32 shift, int x, int y, int angle, int transparency)
+void View2::FramesetState::Draw(qint32 shift, int x, int y, int angle, int transparency)
 {
     if (!GetSprite() || GetSprite()->Fail() || !GetMetadata())
     {
@@ -197,7 +197,7 @@ void View2::FramesetState::Draw(quint32 shift, int x, int y, int angle, int tran
         return;
     }
 
-    int time_diff = last_frame_tick_.elapsed();
+    qint64 time_diff = last_frame_tick_.elapsed();
 
     int next_state = image_state_;
     while (true)
@@ -252,16 +252,16 @@ View2::View2()
 bool View2::IsTransp(int x, int y, qint32 shift) const
 {
     //qDebug() << GetX() << "," << GetY();
-    for (int i = overlays_.size() - 1; i >= 0; --i)
+    for (int i = static_cast<int>(overlays_.size()) - 1; i >= 0; --i)
     {
-        int sum_angle = info_.angle + info_.overlays[i].angle;
-        if (!overlays_[i].IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
+        const int sum_angle = info_.angle + info_.overlays[i].angle;
+        if (!overlays_[static_cast<quint32>(i)].IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
         }
     }
     {
-        int sum_angle = info_.angle + info_.base_frameset.angle;
+        const int sum_angle = info_.angle + info_.base_frameset.angle;
         if (!base_frameset_.IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
@@ -269,8 +269,8 @@ bool View2::IsTransp(int x, int y, qint32 shift) const
     }
     for (int i = 0; i < static_cast<int>(underlays_.size()); ++i)
     {
-        int sum_angle = info_.angle + info_.underlays[i].angle;
-        if (!underlays_[i].IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
+        const int sum_angle = info_.angle + info_.underlays[i].angle;
+        if (!underlays_[static_cast<quint32>(i)].IsTransp(x - GetX(), y - GetY(), shift, sum_angle))
         {
             return false;
         }
@@ -278,19 +278,19 @@ bool View2::IsTransp(int x, int y, qint32 shift) const
     return true;
 }
 
-void View2::Draw(int x_shift, int y_shift, quint32 shift)
+void View2::Draw(int x_shift, int y_shift, qint32 shift)
 {
-    int transparency = info_.transparency;
-    for (int i = underlays_.size() - 1; i >= 0; --i)
+    const int transparency = info_.transparency;
+    for (int i = static_cast<int>(underlays_.size()) - 1; i >= 0; --i)
     {
         const auto& underlay = info_.underlays[i];
-        int sum_angle = info_.angle + underlay.angle;
-        int sum_x = GetX() + x_shift + underlay.shift_x;
-        int sum_y = GetY() + y_shift + underlay.shift_y;
-        underlays_[i].Draw(shift, sum_x, sum_y, sum_angle, transparency);
+        const int sum_angle = info_.angle + underlay.angle;
+        const int sum_x = GetX() + x_shift + underlay.shift_x;
+        const int sum_y = GetY() + y_shift + underlay.shift_y;
+        underlays_[static_cast<quint32>(i)].Draw(shift, sum_x, sum_y, sum_angle, transparency);
     }
     {
-        int sum_angle = info_.angle + info_.base_frameset.angle;
+        const int sum_angle = info_.angle + info_.base_frameset.angle;
         base_frameset_.Draw(shift, GetX() + x_shift, GetY() + y_shift, sum_angle, transparency);
     }
     for (int i = 0; i < static_cast<int>(overlays_.size()); ++i)
@@ -299,7 +299,7 @@ void View2::Draw(int x_shift, int y_shift, quint32 shift)
         int sum_angle = info_.angle + overlay.angle;
         int sum_x = GetX() + x_shift + overlay.shift_x;
         int sum_y = GetY() + y_shift + overlay.shift_y;
-        overlays_[i].Draw(shift, sum_x, sum_y, sum_angle, transparency);
+        overlays_[static_cast<quint32>(i)].Draw(shift, sum_x, sum_y, sum_angle, transparency);
     }
 }
 
@@ -324,8 +324,8 @@ void View2::LoadViewInfo(const kv::RawViewInfo& view_info)
         for (; counter < intermediate_size; ++counter)
         {
             if (!IsSameSprites(
-                    new_overlays[counter],
-                    info_.overlays[counter]))
+                new_overlays[counter],
+                info_.overlays[counter]))
             {
                 overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
             }

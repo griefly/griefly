@@ -23,7 +23,7 @@ public:
         const ImageMetadata::SpriteMetadata* GetMetadata() const { return metadata_; }
 
         bool IsTransp(int x, int y, int shift, int angle) const;
-        void Draw(quint32 shift, int x, int y, int angle = 0, int transparency = MAX_TRANSPARENCY);
+        void Draw(qint32 shift, int x, int y, int angle = 0, int transparency = MAX_TRANSPARENCY);
         void RandomizeImageStateIfLooped();
     private:
         void Reset();
@@ -47,7 +47,7 @@ public:
     int GetY() const { return pixel_y_; }
 
     bool IsTransp(int x, int y, qint32 shift) const;
-    void Draw(int x_shift, int y_shift, quint32 shift);
+    void Draw(int x_shift, int y_shift, qint32 shift);
 
     void LoadViewInfo(const kv::RawViewInfo& view_info);
 
