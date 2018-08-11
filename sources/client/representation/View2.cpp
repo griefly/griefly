@@ -318,41 +318,45 @@ void View2::LoadViewInfo(const kv::RawViewInfo& view_info)
 
     {
         const auto& new_overlays = view_info.overlays;
-        overlays_.resize(new_overlays.size());
+        overlays_.resize(static_cast<size_t>(new_overlays.size()));
         unsigned int counter = 0;
-        unsigned int intermediate_size = std::min(info_.overlays.size(), new_overlays.size());
+        const unsigned int intermediate_size
+            = static_cast<unsigned int>(std::min(info_.overlays.size(), new_overlays.size()));
         for (; counter < intermediate_size; ++counter)
         {
+            const int signed_counter = static_cast<int>(counter);
             if (!IsSameSprites(
-                new_overlays[counter],
-                info_.overlays[counter]))
+                new_overlays[signed_counter],
+                info_.overlays[signed_counter]))
             {
-                overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
+                overlays_[counter].LoadFramesetInfo(new_overlays[signed_counter]);
             }
         }
-        for (; counter < new_overlays.size(); ++counter)
+        for (; counter < static_cast<unsigned int>(new_overlays.size()); ++counter)
         {
-            overlays_[counter].LoadFramesetInfo(new_overlays[counter]);
+            overlays_[counter].LoadFramesetInfo(new_overlays[static_cast<int>(counter)]);
         }
     }
 
     {
         const auto& new_underlays = view_info.underlays;
-        underlays_.resize(new_underlays.size());
+        underlays_.resize(static_cast<size_t>(new_underlays.size()));
         unsigned int counter = 0;
-        unsigned int intermediate_size = std::min(info_.underlays.size(), new_underlays.size());
+        const unsigned int intermediate_size
+            = static_cast<unsigned int>(std::min(info_.underlays.size(), new_underlays.size()));
         for (; counter < intermediate_size; ++counter)
         {
+            const int signed_counter = static_cast<int>(counter);
             if (!IsSameSprites(
-                    new_underlays[counter],
-                    info_.underlays[counter]))
+                    new_underlays[signed_counter],
+                    info_.underlays[signed_counter]))
             {
-                underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
+                underlays_[counter].LoadFramesetInfo(new_underlays[signed_counter]);
             }
         }
-        for (; counter < new_underlays.size(); ++counter)
+        for (; counter < static_cast<unsigned int>(new_underlays.size()); ++counter)
         {
-            underlays_[counter].LoadFramesetInfo(new_underlays[counter]);
+            underlays_[counter].LoadFramesetInfo(new_underlays[static_cast<int>(counter)]);
         }
     }
 
