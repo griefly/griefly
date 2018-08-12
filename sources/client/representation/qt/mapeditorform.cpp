@@ -324,7 +324,7 @@ MapEditor::EditorEntry* MapEditorForm::GetCurrentEditorEntry()
     }
 
     auto& entries = map_editor_->GetEntriesFor(current_x, current_y, 0);
-    if (entries.size() > static_cast<quint32>(current_index))
+    if (entries.size() > current_index)
     {
         return &entries[current_index];
     }
