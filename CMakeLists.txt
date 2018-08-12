@@ -33,6 +33,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+if (MSVC)
+    add_definitions(/WX)
+endif()
+
 # Main game project
 add_subdirectory(sources)
 
