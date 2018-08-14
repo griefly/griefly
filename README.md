@@ -12,7 +12,7 @@ It is **Griefly: Yet Another Space Station Remake**.
 Dependencies
 -------------
 1. Some C++14 compiler (it works at least with compiler from **Visual Studio 2015** and **g++**)
-2. Qt5.8+ (newer is better). Qt Creator is optional, but desired.
+2. Qt5.8+
 3. Python 3.5
 4. Golang 1.5+ (https://golang.org/dl/)
 5. Git
