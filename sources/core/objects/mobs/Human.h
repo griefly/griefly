@@ -62,17 +62,17 @@ public:
 
     void UpdateOverlays();
 
-    int GetHealth() { return CalculateHealth(); }
+    int GetHealth() const { return CalculateHealth(); }
 
     void RotationAction(IdPtr<MapObject> item);
     void PullAction(IdPtr<MapObject> item);
     void StopPull();
     
-    int GetBurnDamage() { return burn_damage_; }
-    int GetSuffocationDamage() { return suffocation_damage_; }
-    int GetBruteDamage() { return brute_damage_; }
-    int GetToxinsDamage() { return toxins_damage_; }
-    bool IsDead() { return dead_; }
+    int GetBurnDamage() const { return burn_damage_; }
+    int GetSuffocationDamage() const { return suffocation_damage_; }
+    int GetBruteDamage() const { return brute_damage_; }
+    int GetToxinsDamage() const { return toxins_damage_; }
+    bool IsDead() const { return dead_; }
     void ApplyBurnDamage(int damage);
     void ApplySuffocationDamage(int damage);
     void ApplyBruteDamage(int damage);
