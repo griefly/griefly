@@ -605,6 +605,11 @@ void Human::Bump(const Vector& force, IdPtr<Movable> item)
     Movable::Bump(force, item);
 }
 
+bool Human::RemoveObject(IdPtr<MapObject> object)
+{
+    return interface_->RemoveItem(object);
+}
+
 void Human::RotationAction(IdPtr<MapObject> item)
 {
     if (IdPtr<Movable> movable = item)

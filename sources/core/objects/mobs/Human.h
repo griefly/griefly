@@ -50,6 +50,8 @@ public:
 
     virtual void Bump(const Vector& force, IdPtr<Movable> item) override;
 
+    virtual bool RemoveObject(IdPtr<MapObject> object) override;
+
     virtual void AttackBy(IdPtr<Item> item) override;
 
     virtual void Represent(GrowingFrame* frame, IdPtr<Mob> mob) const override;

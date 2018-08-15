@@ -355,16 +355,17 @@ void kv::HumanInterface::Represent(GrowingFrame* frame)
     }
 }
 
-void kv::HumanInterface::RemoveItem(IdPtr<Item> item)
+bool kv::HumanInterface::RemoveItem(IdPtr<Item> item)
 {
     for (Slot& slot : slots_)
     {
         if (slot.item == item)
         {
             slot.item = 0;
-            return;
+            return true;
         }
     }
+    return false;
 }
 
 void kv::HumanInterface::AddOverlays(ViewInfo* view_info)

@@ -52,7 +52,7 @@ public:
 
     void Represent(GrowingFrame* frame);
 
-    void RemoveItem(IdPtr<Item> item);
+    bool RemoveItem(IdPtr<Item> item);
 
     void AddOverlays(ViewInfo* view_info);
 
