@@ -607,7 +607,12 @@ void Human::Bump(const Vector& force, IdPtr<Movable> item)
 
 bool Human::RemoveObject(IdPtr<MapObject> object)
 {
-    return interface_->RemoveItem(object);
+    if (interface_->RemoveItem(object))
+    {
+        UpdateOverlays();
+        return true;
+    }
+    return false;
 }
 
 void Human::RotationAction(IdPtr<MapObject> item)
