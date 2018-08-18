@@ -321,6 +321,7 @@ bool kv::HumanInterface::InsertItem(Slot* slot, IdPtr<Item> item)
     }
     slot->item = item;
     item->SetOwner(human_owner_);
+    human_owner_->UpdateOverlays();
     return true;
 }
 
