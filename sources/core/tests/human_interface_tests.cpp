@@ -61,7 +61,7 @@ TEST_F(HumanInterfaceTest, Constructor)
     EXPECT_EQ(view_info.GetRawData(), empty_view_info.GetRawData());
 }
 
-TEST_F(HumanInterfaceTest, PickDropItem)
+/*TEST_F(HumanInterfaceTest, PickDropItem)
 {
     // TODO (?): replace it with real human object
     interface->SetOwner(42);
@@ -93,9 +93,9 @@ TEST_F(HumanInterfaceTest, PickDropItem)
         // DropItem should not do anything with item itself
         EXPECT_EQ(item->GetOwner().Id(), 42);
     }
-}
+}*/
 
-TEST_F(HumanInterfaceTest, InsertRemoveGetItem)
+/*TEST_F(HumanInterfaceTest, InsertRemoveGetItem)
 {
     // TODO (?): replace it with real human object
     interface->SetOwner(42);
@@ -155,9 +155,9 @@ TEST_F(HumanInterfaceTest, InsertRemoveGetItem)
             EXPECT_FALSE(item->GetOwner().IsValid());
         }
     }
-}
+}*/
 
-TEST_F(HumanInterfaceTest, RemoveItemByItem)
+/*TEST_F(HumanInterfaceTest, RemoveItemByItem)
 {
     // TODO (?): replace it with real human object
     interface->SetOwner(42);
@@ -201,4 +201,4 @@ TEST_F(HumanInterfaceTest, RemoveItemByItem)
             EXPECT_EQ(interface->GetItem(TYPE_AND_SLOT_LIST[after_item_id].second), items[after_item_id]);
         }
     }
-}
+}*/
