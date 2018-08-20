@@ -371,14 +371,23 @@ bool kv::HumanInterface::RemoveItem(IdPtr<Item> item)
 
 void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
 {
-    for (const Slot& slot : slots_)
+    auto add_overlay = [this, view_info](const QString& slot_name)
     {
-        if (slot.item.IsValid())
+        const auto& slot = GetSlot(slot_name);
+        if (!slot.item.IsValid())
         {
-            const QString state_name = slot.item->GetView().GetBaseFrameset().GetState();
-            view_info->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
+            return;
         }
-    }
+        const QString state_name = slot.item->GetView().GetBaseFrameset().GetState();
+        view_info->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
+    };
+
+    add_overlay(slot::UNIFORM);
+    add_overlay(slot::FEET);
+    add_overlay(slot::HEAD);
+    add_overlay(slot::SUIT);
+    add_overlay(slot::LEFT_HAND);
+    add_overlay(slot::RIGHT_HAND);
 }
 
 void kv::HumanInterface::UpdateEnvironment(
