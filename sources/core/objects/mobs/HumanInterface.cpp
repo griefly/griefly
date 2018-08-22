@@ -371,7 +371,7 @@ bool kv::HumanInterface::RemoveItem(IdPtr<Item> item)
 
 void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
 {
-    auto add_overlay = [this, view_info](const QString& slot_name)
+    auto add_lay = [this](auto adder, const QString& slot_name)
     {
         const auto& slot = GetSlot(slot_name);
         if (!slot.item.IsValid())
@@ -379,7 +379,16 @@ void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
             return;
         }
         const QString state_name = slot.item->GetView().GetBaseFrameset().GetState();
-        view_info->AddOverlay(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
+        adder(slot.overlay_sprite, state_name + slot.overlay_state_postfix);
+    };
+    auto add_overlay = [view_info, &add_lay](const QString& slot_name)
+    {
+        add_lay(
+            [view_info](const QString& sprite, const QString& state)
+            {
+                view_info->AddOverlay(sprite, state);
+            },
+            slot_name);
     };
 
     add_overlay(slot::UNIFORM);
