@@ -385,13 +385,38 @@ void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
     {
         add_lay(&ViewInfo::AddOverlay, slot_name);
     };
+    auto add_underlay = [&add_lay](const QString& slot_name)
+    {
+        add_lay(&ViewInfo::AddUnderlay, slot_name);
+    };
+
+    if (human_owner_->GetDir() == Dir::WEST)
+    {
+        add_underlay(slot::RIGHT_HAND);
+    }
+    else if (human_owner_->GetDir() == Dir::EAST)
+    {
+        add_underlay(slot::LEFT_HAND);
+    }
 
     add_overlay(slot::UNIFORM);
     add_overlay(slot::FEET);
     add_overlay(slot::HEAD);
     add_overlay(slot::SUIT);
-    add_overlay(slot::LEFT_HAND);
-    add_overlay(slot::RIGHT_HAND);
+
+    if (human_owner_->GetDir() == Dir::WEST)
+    {
+        add_overlay(slot::LEFT_HAND);
+    }
+    else if (human_owner_->GetDir() == Dir::EAST)
+    {
+        add_overlay(slot::RIGHT_HAND);
+    }
+    else
+    {
+        add_overlay(slot::LEFT_HAND);
+        add_overlay(slot::RIGHT_HAND);
+    }
 }
 
 void kv::HumanInterface::UpdateEnvironment(

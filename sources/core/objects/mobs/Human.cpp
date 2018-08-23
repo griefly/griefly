@@ -328,6 +328,7 @@ void Human::ProcessMessage(const Message& message)
 void Human::UpdateOverlays()
 {
     GetView().RemoveOverlays();
+    GetView().RemoveUnderlays();
     interface_->AddOverlays(&GetView());
 }
 
