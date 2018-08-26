@@ -137,6 +137,16 @@ bool Human::TryMove(Dir direct)
     return false;
 }
 
+bool Human::Rotate(Dir direct)
+{
+    if (Mob::Rotate(direct))
+    {
+        UpdateOverlays();
+        return true;
+    }
+    return false;
+}
+
 void Human::ProcessMessage(const Message& message)
 {
     if (   message.type == message_type::ORDINARY

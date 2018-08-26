@@ -57,6 +57,7 @@ public:
     virtual void Represent(GrowingFrame* frame, IdPtr<Mob> mob) const override;
 
     virtual bool TryMove(Dir direct) override;
+    virtual bool Rotate(Dir direct) override;
 
     IdPtr<HumanInterface> GetHumanInterface() { return interface_; }
 
