@@ -53,7 +53,7 @@ TEST_F(HumanInterfaceTest, Constructor)
     EXPECT_FALSE(interface->GetItemInActiveHand().IsValid());
 
     ViewInfo view_info;
-    interface->AddOverlays(&view_info);
+    interface->AddOverlays(Dir::NORTH, &view_info);
     EXPECT_EQ(view_info.GetOverlays().Size(), 0);
     EXPECT_EQ(view_info.GetUnderlays().Size(), 0);
 

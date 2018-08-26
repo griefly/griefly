@@ -329,7 +329,7 @@ void Human::UpdateOverlays()
 {
     GetView().RemoveOverlays();
     GetView().RemoveUnderlays();
-    interface_->AddOverlays(&GetView());
+    interface_->AddOverlays(GetDir(), &GetView());
 }
 
 void Human::Process()

@@ -54,7 +54,7 @@ public:
 
     bool RemoveItem(IdPtr<Item> item);
 
-    void AddOverlays(ViewInfo* view_info);
+    void AddOverlays(Dir dir, ViewInfo* view_info);
 
     void UpdatePulling(bool is_pulling);
     void UpdateLaying(bool is_laying);

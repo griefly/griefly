@@ -369,7 +369,7 @@ bool kv::HumanInterface::RemoveItem(IdPtr<Item> item)
     return false;
 }
 
-void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
+void kv::HumanInterface::AddOverlays(Dir dir, ViewInfo* view_info)
 {
     auto add_lay = [view_info, this](auto adder, const QString& slot_name)
     {
@@ -390,11 +390,11 @@ void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
         add_lay(&ViewInfo::AddUnderlay, slot_name);
     };
 
-    if (human_owner_->GetDir() == Dir::WEST)
+    if (dir == Dir::WEST)
     {
         add_underlay(slot::RIGHT_HAND);
     }
-    else if (human_owner_->GetDir() == Dir::EAST)
+    else if (dir == Dir::EAST)
     {
         add_underlay(slot::LEFT_HAND);
     }
@@ -404,11 +404,11 @@ void kv::HumanInterface::AddOverlays(ViewInfo* view_info)
     add_overlay(slot::HEAD);
     add_overlay(slot::SUIT);
 
-    if (human_owner_->GetDir() == Dir::WEST)
+    if (dir == Dir::WEST)
     {
         add_overlay(slot::LEFT_HAND);
     }
-    else if (human_owner_->GetDir() == Dir::EAST)
+    else if (dir == Dir::EAST)
     {
         add_overlay(slot::RIGHT_HAND);
     }
