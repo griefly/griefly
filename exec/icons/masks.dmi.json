@@ -1,0 +1,128 @@
+{
+    "info": {
+        "height": 32,
+        "width": 32,
+        "version": 4.0
+    },
+    "states": [
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "medical"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "gas_mask"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "swat"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "sterile"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "death"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "breath"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "clown"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "gas_alt"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "owl"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "muzzle"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "cigoff"
+        },
+        {
+            "dirs": 1,
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "frames": 8,
+            "state": "cigon"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "cigbutt"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "cigaroff"
+        },
+        {
+            "dirs": 1,
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "frames": 7,
+            "state": "cigaron"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "cigarbutt"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "plaguedoctor"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "mime"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "s-ninja"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": ""
+        }
+    ]
+}

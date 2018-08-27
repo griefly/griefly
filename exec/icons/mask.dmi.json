@@ -1,0 +1,247 @@
+{
+    "states": [
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "muzzle"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "muzzle2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "gas_mask"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "gas_mask2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "medical"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "medical2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "sterile"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "sterile2"
+        },
+        {
+            "delay": [
+                1.0,
+                1.0
+            ],
+            "dirs": 4,
+            "frames": 2,
+            "state": "swat"
+        },
+        {
+            "delay": [
+                1.0,
+                1.0
+            ],
+            "dirs": 1,
+            "frames": 2,
+            "state": "swat2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "gas_alt"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "gas_alt2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "owl"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "owl2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "clown"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "clown2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "death"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "death2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "breath"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "breath2"
+        },
+        {
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 4,
+            "frames": 8,
+            "state": "cigon"
+        },
+        {
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 1,
+            "frames": 8,
+            "state": "cigon2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "cigoff"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "cigoff2"
+        },
+        {
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 4,
+            "frames": 8,
+            "state": "cigaron"
+        },
+        {
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "dirs": 1,
+            "frames": 8,
+            "state": "cigaron2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "cigaroff"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "cigaroff2"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "facehugger"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "facehugger2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "plaguedoctor"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "plaguedoctor2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "mime"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "mime2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "s-ninja"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "s-ninja2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "horsehead"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "horsehead2"
+        }
+    ],
+    "info": {
+        "version": 4.0,
+        "width": 32,
+        "height": 32
+    }
+}
