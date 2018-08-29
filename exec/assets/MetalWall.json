@@ -22,11 +22,11 @@
             "type": "int32"
         },
         {
-            "name": "atmos_state_",
+            "name": "passable_left_",
             "type": "int32"
         },
         {
-            "name": "passable_down_",
+            "name": "passable_up_",
             "type": "int32"
         },
         {
@@ -38,15 +38,19 @@
             "type": "int32"
         },
         {
+            "name": "base_state_",
+            "type": "string"
+        },
+        {
+            "name": "atmos_state_",
+            "type": "int32"
+        },
+        {
+            "name": "passable_down_",
+            "type": "int32"
+        },
+        {
             "name": "v_level_",
-            "type": "int32"
-        },
-        {
-            "name": "passable_left_",
-            "type": "int32"
-        },
-        {
-            "name": "passable_up_",
             "type": "int32"
         }
     ]
