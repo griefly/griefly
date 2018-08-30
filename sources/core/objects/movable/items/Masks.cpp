@@ -7,7 +7,7 @@ Mask::Mask()
     SetSprite("icons/masks.dmi");
     SetState("gas_mask");
 
-    SetItemType(SlotType::DEFAULT);
+    SetItemType(SlotType::MASK);
 
     SetName("Gas mask");
 }

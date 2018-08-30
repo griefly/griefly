@@ -89,6 +89,17 @@ kv::HumanInterface::HumanInterface()
     }
 
     {
+        Slot mask;
+        mask.position = {0, 13};
+        mask.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        mask.view.SetState("mask");
+        mask.overlay_sprite = "icons/mask.dmi";
+        mask.name = slot::HEAD;
+        mask.type = SlotType::HEAD;
+        slots_.append(mask);
+    }
+
+    {
         Slot uniform;
         uniform.position = {1, 15};
         uniform.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
