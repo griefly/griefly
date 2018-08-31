@@ -23,6 +23,7 @@ const QString HEAD = "head";
 const QString SUIT = "suit";
 const QString UNIFORM = "uniform";
 const QString FEET = "feet";
+const QString MASK = "mask";
 
 }
 

@@ -94,8 +94,8 @@ kv::HumanInterface::HumanInterface()
         mask.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         mask.view.SetState("mask");
         mask.overlay_sprite = "icons/mask.dmi";
-        mask.name = slot::HEAD;
-        mask.type = SlotType::HEAD;
+        mask.name = slot::MASK;
+        mask.type = SlotType::MASK;
         slots_.append(mask);
     }
 
@@ -412,6 +412,7 @@ void kv::HumanInterface::AddOverlays(Dir dir, ViewInfo* view_info)
 
     add_overlay(slot::UNIFORM);
     add_overlay(slot::FEET);
+    add_overlay(slot::MASK);
     add_overlay(slot::HEAD);
     add_overlay(slot::SUIT);
 
