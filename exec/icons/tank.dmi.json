@@ -1,0 +1,62 @@
+{
+    "info": {
+        "width": 32,
+        "height": 32,
+        "version": 4.0
+    },
+    "states": [
+        {
+            "frames": 1,
+            "state": "oxygen",
+            "dirs": 1
+        },
+        {
+            "frames": 1,
+            "state": "anesthetic",
+            "dirs": 1
+        },
+        {
+            "frames": 1,
+            "state": "plasma",
+            "dirs": 1
+        },
+        {
+            "frames": 1,
+            "state": "jetpack0",
+            "dirs": 1
+        },
+        {
+            "frames": 2,
+            "delay": [
+                1.0,
+                1.0
+            ],
+            "state": "jetpack1",
+            "dirs": 1
+        },
+        {
+            "frames": 1,
+            "state": "emergency",
+            "dirs": 1
+        },
+        {
+            "frames": 1,
+            "state": "canister",
+            "dirs": 1
+        },
+        {
+            "frames": 1,
+            "state": "voidjetpack0",
+            "dirs": 1
+        },
+        {
+            "frames": 2,
+            "delay": [
+                5.0,
+                5.0
+            ],
+            "state": "voidjetpack1",
+            "dirs": 1
+        }
+    ]
+}
