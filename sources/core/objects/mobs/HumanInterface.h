@@ -24,6 +24,8 @@ const QString SUIT = "suit";
 const QString UNIFORM = "uniform";
 const QString FEET = "feet";
 const QString MASK = "mask";
+const QString BACK = "back";
+
 
 }
 

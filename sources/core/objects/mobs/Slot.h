@@ -21,7 +21,8 @@ enum class SlotType : SlotTypeBase
     ANYTHING,
     FEET,
     UNIFORM,
-    MASK
+    MASK,
+    BACK
 };
 
 inline FastSerializer& operator<<(FastSerializer& serializer, const SlotType& slot_type)

@@ -1,0 +1,217 @@
+{
+    "states": [
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "backpack"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "backpack2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "oxygen"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "oxygen2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "jetpack0"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "jetpack02"
+        },
+        {
+            "dirs": 4,
+            "frames": 2,
+            "delay": [
+                1.0,
+                1.0
+            ],
+            "state": "jetpack1"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "jetpack12"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "anesthetic"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "anesthetic2"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "electropack0"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "electropack02"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "electropack1"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "electropack12"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "witch"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "witch2"
+        },
+        {
+            "dirs": 1,
+            "frames": 7,
+            "delay": [
+                2.0,
+                2.0,
+                2.0,
+                2.0,
+                2.0,
+                2.0,
+                2.0
+            ],
+            "state": "cape"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "cape2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "shotgun"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "shotgun2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "clownpack"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "clownpack2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "medicalpack"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "medicalpack2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "securitypack"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "securitypack2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "cshotgun"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "cshotgun2"
+        },
+        {
+            "dirs": 4,
+            "frames": 7,
+            "delay": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "state": "holdingpack"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "holdingpack2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "brokenpack"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "brokenpack2"
+        },
+        {
+            "dirs": 4,
+            "frames": 1,
+            "state": "voidjetpack0"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "voidjetpack02"
+        },
+        {
+            "dirs": 4,
+            "frames": 2,
+            "delay": [
+                4.0,
+                4.0,
+                4.0,
+                4.0
+            ],
+            "state": "voidjetpack1"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "voidjetpack12"
+        }
+    ],
+    "info": {
+        "width": 32,
+        "height": 32,
+        "version": 4.0
+    }
+}

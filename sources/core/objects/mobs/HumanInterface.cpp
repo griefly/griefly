@@ -134,6 +134,17 @@ kv::HumanInterface::HumanInterface()
     }
 
     {
+        Slot back;
+        back.position = {2, 13};
+        back.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
+        back.view.SetState("back");
+        back.overlay_sprite = "icons/back.dmi";
+        back.type = SlotType::BACK;
+        back.name = slot::BACK;
+        slots_.append(back);
+    }
+
+    {
         Button drop;
         drop.position = {7, 15};
         drop.view.SetSprite(OLD_INTERFACE_SPRITE);
