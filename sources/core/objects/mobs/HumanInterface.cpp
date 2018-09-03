@@ -426,6 +426,7 @@ void kv::HumanInterface::AddOverlays(Dir dir, ViewInfo* view_info)
     add_overlay(slot::MASK);
     add_overlay(slot::HEAD);
     add_overlay(slot::SUIT);
+    add_overlay(slot::BACK);
 
     if (dir == Dir::WEST)
     {

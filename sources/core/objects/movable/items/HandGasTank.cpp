@@ -7,7 +7,7 @@ HandGasTank::HandGasTank()
     SetSprite("icons/tank.dmi");
     SetState("oxygen");
 
-    SetItemType(SlotType::DEFAULT);
+    SetItemType(SlotType::BACK);
 
     SetName("Gas tank");
 }
