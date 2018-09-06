@@ -10,4 +10,6 @@ HandGasTank::HandGasTank()
     SetItemType(SlotType::BACK);
 
     SetName("Gas tank");
+
+    atmos_holder_.AddGase(atmos::OXYGEN, 1000);
 }
