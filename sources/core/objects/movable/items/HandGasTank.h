@@ -12,7 +12,7 @@ public:
     REGISTER_CLASS_AS(HandGasTank);
     HandGasTank();
 
-    virtual atmos::AtmosHolder* GetAtmosHolder() { return &atmos_holder_; };
+    virtual atmos::AtmosHolder* GetAtmosHolder() override { return &atmos_holder_; }
 private:
     atmos::AtmosHolder KV_SAVEABLE(atmos_holder_);
 };
