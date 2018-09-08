@@ -16,7 +16,7 @@ namespace
     const QString TEMPERATURE = "temperature";
 
     // Slots & buttons & indicators sprites
-    const QString DEFAULT_INTERFACE_SPRITE = "icons/screen_retro.dmi";
+    const QString DEFAULT_INTERFACE_SPRITE = "icons/screen1.dmi";
     const QString OLD_INTERFACE_SPRITE = "icons/screen1_old.dmi";
 
     namespace states
@@ -59,7 +59,7 @@ kv::HumanInterface::HumanInterface()
         Slot right_hand;
         right_hand.position = {0, 14};
         right_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
-        right_hand.view.SetState(states::RIGHT_HAND_ACTIVE);
+        right_hand.view.SetState("hand_right");
         right_hand.overlay_sprite = "icons/items_righthand.dmi";
         right_hand.name = slot::RIGHT_HAND;
         right_hand.type = SlotType::ANYTHING;
@@ -70,7 +70,7 @@ kv::HumanInterface::HumanInterface()
         Slot left_hand;
         left_hand.position = {2, 14};
         left_hand.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
-        left_hand.view.SetState(states::LEFT_HAND_INACTIVE);
+        left_hand.view.SetState("hand_left");
         left_hand.overlay_sprite = "icons/items_lefthand.dmi";
         left_hand.name = slot::LEFT_HAND;
         left_hand.type = SlotType::ANYTHING;
@@ -103,7 +103,7 @@ kv::HumanInterface::HumanInterface()
         Slot uniform;
         uniform.position = {1, 15};
         uniform.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
-        uniform.view.SetState("uniform");
+        uniform.view.SetState("center");
         uniform.overlay_sprite = "icons/uniform.dmi";
         uniform.overlay_state_postfix = "_s";
         uniform.type = SlotType::UNIFORM;

@@ -604,45 +604,80 @@
             "state": "pocket"
         }, 
         {
-            "dirs": 1, 
-            "frames": 1, 
+            "dirs": 1,
+            "frames": 1,
             "state": "gloves"
         }, 
         {
-            "dirs": 1, 
-            "frames": 1, 
+            "dirs": 1,
+            "frames": 1,
             "state": "shoes"
         }, 
         {
-            "dirs": 1, 
-            "frames": 1, 
+            "dirs": 1,
+            "frames": 1,
             "state": "glasses"
         }, 
         {
-            "dirs": 1, 
-            "frames": 1, 
+            "dirs": 1,
+            "frames": 1,
             "state": "ears"
         }, 
         {
-            "dirs": 1, 
-            "frames": 1, 
+            "dirs": 1,
+            "frames": 1,
             "state": "hair"
         }, 
         {
-            "dirs": 1, 
-            "frames": 1, 
+            "dirs": 1,
+            "frames": 1,
             "state": "belt"
         }, 
         {
-            "dirs": 1, 
-            "frames": 1, 
+            "dirs": 1,
+            "frames": 1,
             "state": "center"
         }, 
         {
-            "dirs": 8, 
-            "frames": 1, 
-            "state": "equip"
-        }, 
+            "dirs": 1,
+            "frames": 1,
+            "state": "suit"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "head"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "hand_left"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "hand_right"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "ear"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "id_card"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "back"
+        },
+        {
+            "dirs": 1,
+            "frames": 1,
+            "state": "nothing"
+        },
         {
             "dirs": 1, 
             "frames": 1, 
