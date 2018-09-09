@@ -626,7 +626,7 @@
         {
             "dirs": 1,
             "frames": 1,
-            "state": "hair"
+            "state": "head"
         }, 
         {
             "dirs": 1,
@@ -646,7 +646,7 @@
         {
             "dirs": 1,
             "frames": 1,
-            "state": "head"
+            "state": "mask"
         },
         {
             "dirs": 1,
