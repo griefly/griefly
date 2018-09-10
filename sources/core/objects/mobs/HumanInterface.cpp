@@ -174,7 +174,7 @@ kv::HumanInterface::HumanInterface()
     {
         Button lay;
         lay.position = {15, 11};
-        lay.view.SetSprite(OLD_INTERFACE_SPRITE);
+        lay.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         lay.view.SetState(states::NOT_LAY);
         lay.name = LAY;
         buttons_.append(lay);
@@ -183,7 +183,7 @@ kv::HumanInterface::HumanInterface()
     {
         Button health;
         health.position = {15, 10};
-        health.view.SetSprite(OLD_INTERFACE_SPRITE);
+        health.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         health.view.SetState("health0");
         health.name = HEALTH;
         buttons_.append(health);
@@ -192,7 +192,7 @@ kv::HumanInterface::HumanInterface()
     {
         Button oxygen;
         oxygen.position = {15, 12};
-        oxygen.view.SetSprite(OLD_INTERFACE_SPRITE);
+        oxygen.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         oxygen.view.SetState(states::OXYGEN);
         oxygen.name = OXYGEN;
         buttons_.append(oxygen);

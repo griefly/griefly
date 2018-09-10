@@ -63,7 +63,7 @@
         {
             "dirs": 1, 
             "frames": 1, 
-            "state": "health0old"
+            "state": "health0"
         }, 
         {
             "dirs": 1, 
@@ -456,7 +456,7 @@
         {
             "dirs": 1, 
             "frames": 1, 
-            "state": "health0"
+            "state": "health0_new"
         }, 
         {
             "dirs": 1, 
