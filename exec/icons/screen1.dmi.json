@@ -584,9 +584,24 @@
             "state": "act_hand"
         }, 
         {
-            "dirs": 4, 
+            "dirs": 1, 
             "frames": 1, 
-            "state": "hand"
+            "state": "lhand"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "rhand"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hand_3"
+        }, 
+        {
+            "dirs": 1, 
+            "frames": 1, 
+            "state": "hand_4"
         }, 
         {
             "dirs": 1, 

@@ -28,8 +28,8 @@ namespace
         const QString LEFT_HAND_ACTIVE = "hand_left";
 
         // Swap indicator states
-        const QString RIGHT_HAND = "hand_right";
-        const QString LEFT_HAND = "hand_left";
+        const QString RIGHT_HAND = "rhand";
+        const QString LEFT_HAND = "lhand";
 
         // Pull indicator states
         const QString NOT_PULL = "pull0";
@@ -147,7 +147,7 @@ kv::HumanInterface::HumanInterface()
     {
         Button drop;
         drop.position = {7, 15};
-        drop.view.SetSprite(OLD_INTERFACE_SPRITE);
+        drop.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         drop.view.SetState("act_drop");
         drop.name = DROP;
         buttons_.append(drop);
@@ -156,7 +156,7 @@ kv::HumanInterface::HumanInterface()
     {
         Button pull;
         pull.position = {8, 15};
-        pull.view.SetSprite(OLD_INTERFACE_SPRITE);
+        pull.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         pull.view.SetState(states::NOT_PULL);
         pull.name = STOP_PULL;
         buttons_.append(pull);
@@ -165,7 +165,7 @@ kv::HumanInterface::HumanInterface()
     {
         Button swap;
         swap.position = {6, 15};
-        swap.view.SetSprite(OLD_INTERFACE_SPRITE);
+        swap.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         swap.view.SetState(states::RIGHT_HAND);
         swap.name = SWAP;
         buttons_.append(swap);
