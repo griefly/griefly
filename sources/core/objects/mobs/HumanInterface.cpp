@@ -17,7 +17,6 @@ namespace
 
     // Slots & buttons & indicators sprites
     const QString DEFAULT_INTERFACE_SPRITE = "icons/screen1.dmi";
-    const QString OLD_INTERFACE_SPRITE = "icons/screen1_old.dmi";
 
     namespace states
     {
@@ -201,7 +200,7 @@ kv::HumanInterface::HumanInterface()
     {
         Button toxins;
         toxins.position = {15, 13};
-        toxins.view.SetSprite(OLD_INTERFACE_SPRITE);
+        toxins.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         toxins.view.SetState(states::TOXINS);
         toxins.name = TOXINS;
         buttons_.append(toxins);
@@ -210,7 +209,7 @@ kv::HumanInterface::HumanInterface()
     {
         Button temperature;
         temperature.position = {15, 9};
-        temperature.view.SetSprite(OLD_INTERFACE_SPRITE);
+        temperature.view.SetSprite(DEFAULT_INTERFACE_SPRITE);
         temperature.view.SetState(states::TEMPERATURE_TEMPLATE.arg(0));
         temperature.name = TEMPERATURE;
         buttons_.append(temperature);
