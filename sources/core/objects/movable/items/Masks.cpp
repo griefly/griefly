@@ -9,5 +9,10 @@ Mask::Mask()
 
     SetItemType(SlotType::MASK);
 
+    SetName("Mask");
+}
+
+GasMask::GasMask()
+{
     SetName("Gas mask");
 }

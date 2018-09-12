@@ -14,5 +14,14 @@ public:
 };
 END_DECLARE(Mask);
 
+class GasMask : public Mask
+{
+public:
+    DECLARE_SAVEABLE(GasMask, Mask);
+    REGISTER_CLASS_AS(GasMask);
+    GasMask();
+};
+END_DECLARE(GasMask);
+
 }
 
