@@ -12,6 +12,8 @@ public:
     REGISTER_CLASS_AS(HandGasTank);
     HandGasTank();
 
+    virtual void AttackBy(IdPtr<Item> item) override;
+
     virtual atmos::AtmosHolder* GetAtmosHolder() override { return &atmos_holder_; }
 private:
     atmos::AtmosHolder KV_SAVEABLE(atmos_holder_);
