@@ -71,6 +71,8 @@ public:
     void PullAction(IdPtr<MapObject> item);
     void StopPull();
     
+    void InterfaceChanges();
+
     int GetBurnDamage() const { return burn_damage_; }
     int GetSuffocationDamage() const { return suffocation_damage_; }
     int GetBruteDamage() const { return brute_damage_; }

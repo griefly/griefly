@@ -663,6 +663,11 @@ void Human::StopPull()
     interface_->UpdatePulling(false);
 }
 
+void Human::InterfaceChanges()
+{
+    // TODO
+}
+
 void Human::TryClownBootsHonk()
 {
     if (lying_)

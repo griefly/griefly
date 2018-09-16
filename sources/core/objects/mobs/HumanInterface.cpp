@@ -312,6 +312,7 @@ void kv::HumanInterface::RemoveItem(const QString& slot_name)
 void kv::HumanInterface::RemoveItem(Slot* slot)
 {
     slot->item = 0;
+    human_owner_->InterfaceChanges();
 }
 
 bool kv::HumanInterface::InsertItem(const QString& slot_name, IdPtr<Item> item)

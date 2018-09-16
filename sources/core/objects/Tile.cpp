@@ -315,7 +315,7 @@ bool CubeTile::RemoveObject(IdPtr<MapObject> item_raw)
     }
 
     auto itr = content_.begin();
-    while(itr != content_.end())
+    while (itr != content_.end())
     {
         if (itr->Id() == item->GetId())
         {
@@ -327,8 +327,6 @@ bool CubeTile::RemoveObject(IdPtr<MapObject> item_raw)
     }
     return false;
 }
-
-
 
 IdPtr<MapObject> CubeTile::GetNeighbour(Dir direct) const
 {
