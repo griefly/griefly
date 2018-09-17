@@ -20,6 +20,8 @@
 #include "objects/movable/items/Drinks.h"
 #include "objects/movable/items/MedbayTools.h"
 #include "objects/PhysicsEngine.h"
+#include "objects/movable/items/HandGasTank.h"
+#include "objects/movable/items/Masks.h"
 
 #include "ChatFrameInfo.h"
 
@@ -665,7 +667,11 @@ void Human::StopPull()
 
 void Human::InterfaceChanges()
 {
-    // TODO
+    IdPtr<GasMask> mask = interface_->GetItem(slot::MASK);
+    if (!mask.IsValid())
+    {
+        return;
+    }
 }
 
 void Human::TryClownBootsHonk()

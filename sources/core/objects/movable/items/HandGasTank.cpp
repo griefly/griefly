@@ -27,7 +27,16 @@ void HandGasTank::AttackBy(IdPtr<Item> item)
             IdPtr<Item> mask = human->GetHumanInterface()->GetItem(slot::MASK);
             if (IdPtr<GasMask> gas_mask = mask)
             {
+                if (IdPtr<HandGasTank> gas_tank = gas_mask->GetGasTank())
+                {
+                    gas_tank->SetGasMask(0);
+                }
+                if (IdPtr<GasMask> mask = GetGasMask())
+                {
+                    mask->SetGasTank(0);
+                }
                 gas_mask->SetGasTank(GetId());
+                SetGasMask(gas_mask);
                 PostHtmlFor("Gas tank has been connected to the mask!", human);
             }
         }
