@@ -665,13 +665,10 @@ void Human::StopPull()
     interface_->UpdatePulling(false);
 }
 
-void Human::InterfaceChanges()
+void Human::InterfaceChanges(IdPtr<Item> item)
 {
-    IdPtr<GasMask> mask = interface_->GetItem(slot::MASK);
-    if (!mask.IsValid())
-    {
-        return;
-    }
+    // TODO
+    Q_UNUSED(item)
 }
 
 void Human::TryClownBootsHonk()
