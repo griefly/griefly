@@ -667,8 +667,32 @@ void Human::StopPull()
 
 void Human::InterfaceChanges(IdPtr<Item> item)
 {
-    // TODO
-    Q_UNUSED(item)
+    if (![&]()
+    {
+        if (IdPtr<GasMask> mask = item)
+        {
+            if (IdPtr<HandGasTank> gas_tank = mask->GetGasTank())
+            {
+                gas_tank->SetGasMask(0);
+                mask->SetGasTank(0);
+                return true;
+            }
+        }
+        else if (IdPtr<HandGasTank> gas_tank = item)
+        {
+            if (IdPtr<GasMask> mask = gas_tank->GetGasMask())
+            {
+                gas_tank->SetGasMask(0);
+                mask->SetGasTank(0);
+                return true;
+            }
+        }
+        return false;
+    }())
+    {
+        return;
+    }
+    PostHtmlFor("Gas tank has been disconnected from the mask!", GetId());
 }
 
 void Human::TryClownBootsHonk()
