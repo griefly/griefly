@@ -22,6 +22,16 @@ void HandGasTank::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<Hand> hand = item)
     {
+        if (IdPtr<GasMask> mask = GetGasMask())
+        {
+            mask->SetGasTank(0);
+            SetGasMask(0);
+            if (IdPtr<Human> human = GetOwner())
+            {
+                PostHtmlFor("Gas tank has been disconnected from the mask!", human);
+            }
+            return;
+        }
         if (IdPtr<Human> human = GetOwner())
         {
             IdPtr<Item> mask = human->GetHumanInterface()->GetItem(slot::MASK);
@@ -38,6 +48,7 @@ void HandGasTank::AttackBy(IdPtr<Item> item)
                 gas_mask->SetGasTank(GetId());
                 SetGasMask(gas_mask);
                 PostHtmlFor("Gas tank has been connected to the mask!", human);
+                return;
             }
         }
     }
