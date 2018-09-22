@@ -6,10 +6,6 @@
     "typename": "HandGasTank",
     "variables": [
         {
-            "name": "passable_all_",
-            "type": "int32"
-        },
-        {
             "name": "passable_level_",
             "type": "int32"
         },
@@ -26,11 +22,15 @@
             "type": "int32"
         },
         {
-            "name": "force_error_per_main_",
+            "name": "passable_all_",
             "type": "int32"
         },
         {
             "name": "damage_",
+            "type": "int32"
+        },
+        {
+            "name": "force_error_per_main_",
             "type": "int32"
         },
         {
@@ -42,7 +42,7 @@
             "type": "int32"
         },
         {
-            "name": "force_error_",
+            "name": "passable_right_",
             "type": "int32"
         },
         {
@@ -50,7 +50,7 @@
             "type": "int32"
         },
         {
-            "name": "passable_right_",
+            "name": "force_error_",
             "type": "int32"
         },
         {
