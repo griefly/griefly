@@ -22,6 +22,7 @@ void HandGasTank::AttackBy(IdPtr<Item> item)
 {
     if (IdPtr<Hand> hand = item)
     {
+        qDebug() << "HandGasTank: hand";
         if (IdPtr<GasMask> mask = GetGasMask())
         {
             mask->SetGasTank(0);
@@ -34,6 +35,7 @@ void HandGasTank::AttackBy(IdPtr<Item> item)
         }
         if (IdPtr<Human> human = GetOwner())
         {
+            qDebug() << "HandGasTank: human";
             IdPtr<Item> mask = human->GetHumanInterface()->GetItem(slot::MASK);
             if (IdPtr<GasMask> gas_mask = mask)
             {

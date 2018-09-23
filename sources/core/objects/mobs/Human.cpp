@@ -87,6 +87,14 @@ void Human::AfterWorldCreation()
     SetName(GetGame().GetNames().GetMaleName());
 }
 
+void Human::Delete()
+{
+    hand_->Delete();
+    interface_->Delete();
+
+    Mob::Delete();
+}
+
 void Human::MindEnter()
 {
     // Nothing

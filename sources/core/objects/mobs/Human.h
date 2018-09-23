@@ -27,6 +27,7 @@ public:
     Human();
 
     virtual void AfterWorldCreation() override;
+    virtual void Delete() override;
 
     virtual void MindExit() override;
     virtual void MindEnter() override;
