@@ -83,6 +83,8 @@ public:
     void ApplySuffocationDamage(int damage);
     void ApplyBruteDamage(int damage);
     void ApplyToxinsDamage(int damage);
+
+    IdPtr<Hand> GetHand() const { return hand_; }
 protected:
     int KV_SAVEABLE(attack_cooldown_);
 

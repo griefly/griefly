@@ -551,7 +551,14 @@ void kv::HumanInterface::ApplyActiveHandOnSlot(Slot* slot)
     }
     else if (slot->item.IsValid())
     {
-        PerformAttack(slot->item, active_hand.item);
+        if (!active_hand.item.IsValid())
+        {
+            PerformAttack(slot->item, human_owner_->GetHand());
+        }
+        else
+        {
+            PerformAttack(slot->item, active_hand.item);
+        }
     }
 }
 
