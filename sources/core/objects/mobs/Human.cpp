@@ -421,8 +421,18 @@ void Human::Live()
     {
         return;
     }
-
-    if (atmos::AtmosHolder* holder = GetOwner()->GetAtmosHolder())
+    atmos::AtmosHolder* holder = [&]()
+    {
+        if (IdPtr<GasMask> mask = GetHumanInterface()->GetItem(slot::MASK))
+        {
+            if (IdPtr<HandGasTank> tank = mask->GetGasTank())
+            {
+                return tank->GetAtmosHolder();
+            }
+        }
+        return GetOwner()->GetAtmosHolder();
+    }();
+    if (holder)
     {
         const int oxygen = holder->GetGase(atmos::OXYGEN);
         const int plasma = holder->GetGase(atmos::PLASMA);
