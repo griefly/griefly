@@ -487,10 +487,7 @@ void Human::Live()
 
     interface_->UpdateHealth(CalculateHealth());
 
-    if (lay_timer_ > 0)
-    {
-        --lay_timer_;
-    }
+    lay_timer_ = std::max(0, lay_timer_ - 1);
 
     if (CalculateHealth() < 0)
     {
@@ -562,7 +559,7 @@ void Human::AttackBy(IdPtr<Item> item)
     {
         ApplyBruteDamage(hand->GetDamage() * 100);
 
-        unsigned int punch_value = (GenerateRandom() % 4) + 1;
+        const unsigned int punch_value = (GenerateRandom() % 4) + 1;
         PlaySoundIfVisible(QString("punch%1.wav").arg(punch_value));
 
         if (GenerateRandom() % 5 == 0)
@@ -577,7 +574,7 @@ void Human::AttackBy(IdPtr<Item> item)
     if (item.IsValid() && (item->GetDamage() > 0))
     {
         ApplyBruteDamage(item->GetDamage() * 100);
-        QString sound = QString("genhit%1.wav").arg(GenerateRandom() % 3 + 1);
+        const QString sound = QString("genhit%1.wav").arg(GenerateRandom() % 3 + 1);
         PlaySoundIfVisible(sound);
         if (IdPtr<MaterialObject> item_owner = item->GetOwner())
         {
@@ -598,27 +595,28 @@ void Human::Represent(GrowingFrame* frame, IdPtr<kv::Mob> mob) const
     ent.pos_y = GetPosition().y;
     ent.vlevel = GetVisibleLevel();
     ent.view = GetView().GetRawData();
-    if (!lying_)
+    ent.dir = [&]()
     {
-        ent.dir = GetDir();
-    }
-    else
-    {
-        ent.dir = Dir::SOUTH;
-    }
+        if (lying_)
+        {
+            return Dir::SOUTH;
+        }
+        return GetDir();
+    }();
     frame->Append(ent);
 }
 
 void Human::CalculateVisible(QVector<Position>* visible_list) const
 {
-    if (CalculateHealth() >= 0)
+    if (CalculateHealth() < 0)
     {
-        GetGame().GetMap().CalculateLos(
-            visible_list,
-            GetPosition().x,
-            GetPosition().y,
-            GetPosition().z);
+        return;
     }
+    GetGame().GetMap().CalculateLos(
+        visible_list,
+        GetPosition().x,
+        GetPosition().y,
+        GetPosition().z);
 }
 
 void Human::Bump(const Vector& force, IdPtr<Movable> item)
